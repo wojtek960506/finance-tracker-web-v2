@@ -1,22 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useTheme } from '@/context/theme-context'
 
-type Theme = 'light' | 'dark'
 
 function App() {
-  const getCurrentTheme = (): Theme =>
-    document.documentElement.classList.contains('dark') ? 'dark' : 'light'
-
-  const [theme, setTheme] = useState<Theme>(getCurrentTheme)
-
-  useEffect(() => {
-    const isDark = theme === 'dark'
-    document.documentElement.classList.toggle('dark', isDark)
-    localStorage.setItem('theme', theme)
-  }, [theme])
-
-  const toggleTheme = () => {
-    setTheme((current) => (current === 'dark' ? 'light' : 'dark'))
-  }
+  const { theme, toggleTheme } = useTheme();
 
   return (
     <main className="min-h-screen bg-bg text-text">
