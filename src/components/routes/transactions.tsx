@@ -2,7 +2,11 @@ import { MobileLayout } from "@components/layout";
 import { useNavigate } from "react-router-dom";
 
 
-export const Transactions = () => {
+type TransactionsProps = {
+  handleIsAuthenticated: (val: boolean) => void;
+}
+
+export const Transactions = ({ handleIsAuthenticated }: TransactionsProps) => {
   const navigate = useNavigate();
 
   return (
@@ -10,7 +14,10 @@ export const Transactions = () => {
       <h1>Transactions will be here</h1>
       <button
         className="border border-fg py-2 px-4 rounded-xl mt-1 bg-bg hover:bg-fg/20 cursor-pointer"
-        onClick={() => { navigate("/login") }}
+        onClick={() => {
+          handleIsAuthenticated(false);
+          navigate("/login");
+        }}
       >
         Navigate to login
       </button>

@@ -3,7 +3,11 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 
-export const Login = () => {
+type LoginProps = {
+  handleIsAuthenticated: (val: boolean) => void;
+}
+
+export const Login = ({ handleIsAuthenticated }: LoginProps) => {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
@@ -13,7 +17,8 @@ export const Login = () => {
     e.preventDefault();
 
     if (email === "wz" && password === "123") {
-      navigate("/transactions")
+      handleIsAuthenticated(true);
+      navigate("/transactions");
     }
     else {
       alert("invalid credentials")
