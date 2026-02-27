@@ -12,7 +12,7 @@
   --primary: oklch(0.61 0.17 255);
   --primary-foreground: oklch(0.98 0.01 260);
 
-  --topbar-h: 4rem;
+  --topbar-h: 4rem; /* 64px */  
 }
 
 .dark {

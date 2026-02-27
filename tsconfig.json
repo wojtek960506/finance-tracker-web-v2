@@ -10,6 +10,7 @@
       "@/*": ["src/*"],
       "@store/*": ["src/store/*"],
       "@context/*": ["src/context/*"],
+      "@components/*": ["src/components/*"],
     }
   }
 }
