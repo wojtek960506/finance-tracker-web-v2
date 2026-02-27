@@ -1,14 +1,13 @@
+import { useLocalStorage } from "@/hooks";
 import { MobileLayout } from "@components/layout";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 
-type LoginProps = {
-  handleIsAuthenticated: (val: boolean) => void;
-}
 
-export const Login = ({ handleIsAuthenticated }: LoginProps) => {
+export const Login = () => {
   const navigate = useNavigate();
+  const { setItem } = useLocalStorage<string>("token");
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -17,7 +16,7 @@ export const Login = ({ handleIsAuthenticated }: LoginProps) => {
     e.preventDefault();
 
     if (email === "wz" && password === "123") {
-      handleIsAuthenticated(true);
+      setItem("some-token");
       navigate("/transactions");
     }
     else {

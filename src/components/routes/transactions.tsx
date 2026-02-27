@@ -1,13 +1,11 @@
+import { useLocalStorage } from "@/hooks";
 import { MobileLayout } from "@components/layout";
 import { useNavigate } from "react-router-dom";
 
 
-type TransactionsProps = {
-  handleIsAuthenticated: (val: boolean) => void;
-}
-
-export const Transactions = ({ handleIsAuthenticated }: TransactionsProps) => {
+export const Transactions = () => {
   const navigate = useNavigate();
+  const { removeItem } = useLocalStorage("token");
 
   return (
     <MobileLayout>
@@ -15,7 +13,7 @@ export const Transactions = ({ handleIsAuthenticated }: TransactionsProps) => {
       <button
         className="border border-fg py-2 px-4 rounded-xl mt-1 bg-bg hover:bg-fg/20 cursor-pointer"
         onClick={() => {
-          handleIsAuthenticated(false);
+          removeItem();
           navigate("/login");
         }}
       >

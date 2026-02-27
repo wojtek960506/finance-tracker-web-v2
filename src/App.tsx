@@ -1,5 +1,5 @@
-import { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
+import { useLocalStorage } from './hooks/use-local-storage';
 import {
   Login,
   Transactions,
@@ -9,13 +9,18 @@ import {
 
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
+  const { item: token } = useLocalStorage<string>("token")
+
+  const isAuthenticated = !!token;
+
+  console.log("token", token);
   console.log("isAuthenticated", isAuthenticated);
+  console.log("---------------------");
 
   const loginElement = (
     <PublicOnlyRoute isAuthenticated={isAuthenticated}>
-      <Login handleIsAuthenticated={(val: boolean) => setIsAuthenticated(val)} />
+      <Login />
     </PublicOnlyRoute>
   );
 
@@ -25,7 +30,7 @@ function App() {
       <Route path="/login" element={loginElement}/>
       <Route path="/transactions" element={
         <ProtectedRoute isAuthenticated={isAuthenticated}>
-          <Transactions handleIsAuthenticated={(val: boolean) => setIsAuthenticated(val)} />
+          <Transactions />
         </ProtectedRoute>
       } />
     </Routes>
