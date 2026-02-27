@@ -3,6 +3,7 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
+  --fg: oklch(0.19 0.02 260);
   --bg: oklch(0.985 0.003 260);
   --surface: oklch(1 0 0);
   --text: oklch(0.2 0.015 260);
@@ -15,6 +16,7 @@
 }
 
 .dark {
+  --fg: oklch(0.985 0.003 260);
   --bg: oklch(0.19 0.02 260);
   --surface: oklch(0.24 0.02 260);
   --text: oklch(0.95 0.01 260);
@@ -25,6 +27,7 @@
 }
 
 @theme inline {
+  --color-fg: var(--fg);
   --color-bg: var(--bg);
   --color-surface: var(--surface);
   --color-text: var(--text);
