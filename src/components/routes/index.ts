@@ -1,4 +1,4 @@
 export * from "./login";
 export * from "./transactions";
-export * from "./protected-route";
-export * from "./public-only-route";
+export * from "./public-layout";
+export * from "./protected-layout";
