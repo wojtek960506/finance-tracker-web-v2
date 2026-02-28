@@ -5,6 +5,8 @@ import { type Theme, type ThemeContextType } from "@context/theme-context";
 
 type ThemeState = Pick<ThemeContextType, "theme" | "toggleTheme">;
 
+export const THEME_STORE_KEY = "theme-store";
+
 export const useThemeStore = create<ThemeState>()(
   persist(
     set => ({
@@ -13,6 +15,6 @@ export const useThemeStore = create<ThemeState>()(
         state => ({ theme: state.theme === "light" ? "dark" : "light"  })
       ),
     }),
-    { name: "theme-store" }
+    { name: THEME_STORE_KEY }
   )
 );
