@@ -1,11 +1,11 @@
-import { useLocalStorage } from "@/hooks";
-import { MobileLayout } from "@components/layout";
 import { useNavigate } from "react-router-dom";
+import { MobileLayout } from "@components/layout";
+import { useAuthToken } from "@/hooks/use-auth-token";
 
 
 export const Transactions = () => {
   const navigate = useNavigate();
-  const { removeItem } = useLocalStorage("token");
+  const { removeAuthToken } = useAuthToken();
 
   return (
     <MobileLayout>
@@ -13,12 +13,12 @@ export const Transactions = () => {
       <button
         className="border border-fg py-2 px-4 rounded-xl mt-1 bg-bg hover:bg-fg/20 cursor-pointer"
         onClick={() => {
-          removeItem();
+          removeAuthToken();
           navigate("/login");
         }}
       >
-        Navigate to login
+        Logout
       </button>
     </MobileLayout>
-  )
+  );
 }

@@ -1,5 +1,5 @@
+import { useAuthToken } from './hooks';
 import { Navigate, Route, Routes } from 'react-router-dom';
-import { useLocalStorage } from './hooks/use-local-storage';
 import {
   Login,
   Transactions,
@@ -10,9 +10,8 @@ import {
 
 function App() {
 
-  const { item: token } = useLocalStorage<string>("token");
-
-  const isAuthenticated = !!token;
+  const { authToken } = useAuthToken();
+  const isAuthenticated = !!authToken;
 
   return (
     <Routes>

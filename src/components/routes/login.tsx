@@ -1,35 +1,31 @@
-import { useLocalStorage } from "@/hooks";
-import { MobileLayout } from "@components/layout";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-
+import { login } from "@/api/login";
+import { MobileLayout } from "@components/layout";
+import { useAuthToken } from "@/hooks/use-auth-token";
 
 
 export const Login = () => {
-  const navigate = useNavigate();
-  const { setItem } = useLocalStorage<string>("token");
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
+  const { setAuthToken } = useAuthToken();
+
+  const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (email === "wz" && password === "123") {
-      setItem("some-token");
-      navigate("/transactions");
+    try {
+      const res = await login(email, password);
+      setAuthToken(res);
+    } catch (error) {
+      alert(error)
     }
-    else {
-      alert("invalid credentials")
-    }
-
   }
 
 
   return (
     <MobileLayout>
-      <h1>Login will be here</h1>
-
+    
       <form onSubmit={handleSubmit}>
         <label htmlFor="email">Email</label>
         <input
