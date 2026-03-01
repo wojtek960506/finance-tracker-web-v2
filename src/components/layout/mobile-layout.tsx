@@ -1,4 +1,6 @@
+import clsx from "clsx";
 import { Topbar } from "./topbar";
+import { useAuthToken } from "@/hooks";
 import { Drawer } from "@components/ui";
 import { Menu, Moon, Sun } from "lucide-react";
 import { useState, type ReactNode } from "react";
@@ -8,11 +10,16 @@ import { useTheme } from "@context/theme-context";
 export const MobileLayout = ({ children }: { children: ReactNode }) => {
   const { theme, toggleTheme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
+  const { authToken } = useAuthToken();
+  const isAuthenticated = !!authToken;
 
   return (
     <div className="flex h-screen flex-col overflow-hidden">
       <Topbar>
-        <button onClick={() => setIsOpen(true)} className="p-4 cursor-pointer">
+        <button
+          onClick={() => setIsOpen(true)}
+          className={clsx("p-4 cursor-pointer", `${isAuthenticated ? "visible" : "invisible"}`)}
+        >
           <Menu className="w-6 h-6" />
         </button>
         <h1 className="text-3xl font-bold text">Finance Tracker</h1>
