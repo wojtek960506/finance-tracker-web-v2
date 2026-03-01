@@ -22,17 +22,16 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     switch(variant) {
       case "default":
-        variantClassName = "bg-fg text-bg border-bg hover:bg-hover";
+        variantClassName = "bg-fg text-bg border-bg hover:bg-hover disabled:bg-fg/40";
         break;
       case "primary":
-        variantClassName = (
-          "bg-bt-primary text-bt-primary-subtle border-bt-primary-border " +
+        variantClassName = clsx(
+          "bg-bt-primary text-bt-primary-subtle border-bt-primary-border",
           "hover:bg-bt-primary-hover"
         );
         break;
       default:
-        
-        variantClassName = "bg-bg text-fg border-fg hover:bg-fg/20";
+        variantClassName = "bg-bg text-fg border-fg hover:bg-fg/20 disabled:bg-fg/40";
     }
 
     return (
@@ -41,7 +40,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         className={clsx(
           className,
-          "border px-2 py-2 rounded-xl cursor-pointer",
+          "border px-2 py-2 rounded-xl cursor-pointer disabled:cursor-not-allowed",
           variantClassName,
         )}
       >
