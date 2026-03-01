@@ -34,7 +34,7 @@ export const MobileLayout = ({ children }: { children: ReactNode }) => {
         </button>
       </Topbar>
 
-      <main className="p-[calc(1.25rem-0.25rem)]"> {/* p-1 == p-[0.25rem] == p-[4px] */}
+      <main className="p-[calc(1.25rem-0.25rem)] h-full"> {/* p-1 == p-[0.25rem] == p-[4px] */}
         {children}
       </main>
 
