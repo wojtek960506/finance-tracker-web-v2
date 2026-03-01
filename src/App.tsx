@@ -1,4 +1,5 @@
 import { useAuthToken } from './hooks';
+import { MobileLayout } from './components/layout';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import {
   Login,
@@ -14,18 +15,20 @@ function App() {
   const isAuthenticated = !!authToken;
 
   return (
-    <Routes>
+    <MobileLayout>
+      <Routes>
 
-      <Route element={<PublicLayout isAuthenticated={isAuthenticated} />}>
-        <Route path="/" element={<Navigate to="/login" replace />} />
-        <Route path="/login" element={<Login />} />
-      </Route>
-      
-      <Route element={<ProtectedLayout isAuthenticated={isAuthenticated} />}>
-        <Route path="/transactions" element={<Transactions />} />
-      </Route>
+        <Route element={<PublicLayout isAuthenticated={isAuthenticated} />}>
+          <Route path="/" element={<Navigate to="/login" replace />} />
+          <Route path="/login" element={<Login />} />
+        </Route>
+        
+        <Route element={<ProtectedLayout isAuthenticated={isAuthenticated} />}>
+          <Route path="/transactions" element={<Transactions />} />
+        </Route>
 
-    </Routes>
+      </Routes>
+    </MobileLayout>
   )
 }
 

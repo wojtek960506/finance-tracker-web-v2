@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { login } from "@/api/login";
-import { MobileLayout } from "@components/layout";
 import { useAuthToken } from "@/hooks/use-auth-token";
 
 
@@ -22,34 +21,26 @@ export const Login = () => {
     }
   }
 
-
   return (
-    <MobileLayout>
-    
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="email">Email</label>
-        <input
-          id="email"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-          placeholder="Email"
-        />
-        
-        <label htmlFor="password">Password</label>
-        <input
-          id="password"
-          type="password"
-          value={password}
-          onChange={e => setPassword(e.target.value)}
-          placeholder="Password"
-        />
+    <form onSubmit={handleSubmit}>
+      <label htmlFor="email">Email</label>
+      <input
+        id="email"
+        value={email}
+        onChange={e => setEmail(e.target.value)}
+        placeholder="Email"
+      />
+      
+      <label htmlFor="password">Password</label>
+      <input
+        id="password"
+        type="password"
+        value={password}
+        onChange={e => setPassword(e.target.value)}
+        placeholder="Password"
+      />
 
-        <button type="submit">Login</button>
-
-      </form>
-
-
-
-    </MobileLayout>
+      <button type="submit">Login</button>
+    </form>
   )
 }
