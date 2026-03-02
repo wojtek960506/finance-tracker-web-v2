@@ -6,12 +6,14 @@ type NavigationItemProps = {
   to: string,
   handleIsDrawerOpen: (val: boolean) => void,
   children: ReactNode,
+  additionalAction?: () => void;
 }
 
 export const NavigationItem = ({
   to,
   handleIsDrawerOpen,
   children,
+  additionalAction,
 }: NavigationItemProps) => {
 
   const commonClassName = "w-full p-1 rounded-md flex justify-between"
@@ -24,7 +26,10 @@ export const NavigationItem = ({
       className={({ isActive }) => isActive
         ? clsx("text-blue-500 font-bold hover:bg-fg/50  hover:text-blue-200", commonClassName)
         : clsx("hover:bg-fg/50", commonClassName)}
-      onClick={() => { handleIsDrawerOpen(false)}}
+      onClick={() => {
+        handleIsDrawerOpen(false);
+        additionalAction?.();
+      }}
     >
       {children}
     </NavLink>

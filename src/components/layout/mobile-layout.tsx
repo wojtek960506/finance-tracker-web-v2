@@ -20,7 +20,7 @@ export const MobileLayout = ({ children }: { children: ReactNode }) => {
       <Topbar>
         <button
           onClick={() => setIsOpen(true)}
-          className={clsx("p-4 cursor-pointer", `${isAuthenticated ? "visible" : "visible"}`)}
+          className={clsx("p-4 cursor-pointer", `${isAuthenticated ? "visible" : "invisible"}`)}
         >
           <Menu className="w-6 h-6" />
         </button>
