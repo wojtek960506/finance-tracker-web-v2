@@ -25,6 +25,12 @@ function App() {
         
         <Route element={<ProtectedLayout isAuthenticated={isAuthenticated} />}>
           <Route path="/transactions" element={<Transactions />} />
+          <Route path="/categories" element={<p>Categories will be there</p>} />
+          <Route path="/paymentMethods" element={<p>Payment methods will be there</p>} />
+          <Route path="/accounts" element={<p>Accounts will be there</p>} />
+          <Route path="/vehicles" element={<p>Vehicles will be there</p>} />
+          <Route path="/sports" element={<p>Sports will be there</p>} />
+          <Route path="/settings" element={<p>Settings will be there</p>} />
         </Route>
 
       </Routes>

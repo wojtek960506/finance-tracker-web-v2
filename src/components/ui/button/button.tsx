@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import { twMerge } from "tailwind-merge";
 import { forwardRef, type ComponentProps } from "react";
 
 
@@ -30,6 +31,11 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           "hover:bg-bt-primary-hover"
         );
         break;
+      case "ghost":
+        variantClassName = clsx(
+          "border-none hover:bg-fg/40"
+        )
+        break;
       default:
         variantClassName = "bg-bg text-fg border-fg hover:bg-fg/20 disabled:bg-fg/40";
     }
@@ -38,11 +44,11 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       <button
         {...props}
         ref={ref}
-        className={clsx(
-          className,
+        className={twMerge(clsx(
           "border px-2 py-2 rounded-xl cursor-pointer disabled:cursor-not-allowed",
           variantClassName,
-        )}
+          className,
+        ))}
       >
         {children}
       </button>

@@ -3,20 +3,16 @@ import { Topbar } from "./topbar";
 import { useAuthToken } from "@/hooks";
 import { Drawer } from "@components/ui";
 import { Menu, Moon, Sun } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 import { useState, type ReactNode } from "react";
 import { useTheme } from "@context/theme-context";
-import { useQueryClient } from "@tanstack/react-query";
+import { Navigation } from "@components/navigation";
 
 
 export const MobileLayout = ({ children }: { children: ReactNode }) => {
   const { theme, toggleTheme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
   
-  
-  const navigate = useNavigate();
-  const { authToken, removeAuthToken } = useAuthToken();
-  const queryClient = useQueryClient();
+  const { authToken } = useAuthToken();
   const isAuthenticated = !!authToken;
 
   return (
@@ -39,35 +35,7 @@ export const MobileLayout = ({ children }: { children: ReactNode }) => {
       </main>
 
       <Drawer isOpen={isOpen} onClose={() => setIsOpen(false)}>
-        <ul className="space-y-2">
-          {isAuthenticated
-            ? <>
-              <li>Transactions</li>
-              <li>Vehicles</li>
-              <li>Sports</li>
-              <li>Settings</li>
-              <li>
-                <button
-                  className={clsx(
-                    "border border-fg py-2 px-4 rounded-xl mt-1 bg-bg hover:bg-fg/20",
-                    "cursor-pointer"
-                  )}
-                  onClick={() => {
-                    removeAuthToken();
-                    queryClient.clear();
-                    setIsOpen(false);
-                    navigate("/login");
-                  }}
-                >
-                  Logout
-                </button>
-              </li>
-            </>
-            : <>
-              <li>Language</li>
-            </>
-          }
-        </ul>
+        <Navigation handleIsDrawerOpen={setIsOpen} />
       </Drawer>
     </div>
   );

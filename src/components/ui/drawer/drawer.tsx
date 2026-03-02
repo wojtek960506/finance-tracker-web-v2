@@ -23,7 +23,7 @@ export const Drawer = ({ isOpen, onClose, children }: DrawerProps) => (
     {/* Drawer panel */}
     <div
       className={clsx(
-        "z-100 fixed top-0 left-0 h-full w-64 bg-bg shadow-lg transform duration-300",
+        "z-100 fixed top-0 left-0 h-full min-w-64 bg-bg shadow-lg transform duration-300",
         `transition-transform ${isOpen ? "translate-x-0" : "-translate-x-full"}`,
       )}
     >
