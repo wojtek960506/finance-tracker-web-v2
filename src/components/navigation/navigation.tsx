@@ -5,11 +5,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { Banknote, Bike, Car, LogOut, Settings } from "lucide-react";
 
 
-type NavigationProps = {
-  handleIsDrawerOpen: (val: boolean) => void;
-}
-
-export const Navigation = ({ handleIsDrawerOpen }: NavigationProps) => {
+export const Navigation = () => {
 
   const queryClient = useQueryClient();
   const { authToken, removeAuthToken } = useAuthToken();
@@ -21,70 +17,72 @@ export const Navigation = ({ handleIsDrawerOpen }: NavigationProps) => {
       <li>
         <Collapsible
           header={
-            <NavigationItem to="/transactions" handleIsDrawerOpen={handleIsDrawerOpen}>
-              Transactions
-              <Banknote className="w-6 h-6" />
-            </NavigationItem>
+            <NavigationItem
+              to="/transactions"
+              title="Transactions"
+              Icon={Banknote}
+            />
           }
         >
           <ul>
             <li>
-              <NavigationItem to="/categories" handleIsDrawerOpen={handleIsDrawerOpen}>
-                Categories
-                <div className="w-6 h-6" />
-              </NavigationItem>
+              <NavigationItem
+                to="/categories"
+                title="Categories"
+              />
             </li>
       
             <li>
-              <NavigationItem to="/paymentMethods" handleIsDrawerOpen={handleIsDrawerOpen}>
-                Payment Methods
-                <div className="w-6 h-6" />
-              </NavigationItem>
+              <NavigationItem
+                to="/paymentMethods"
+                title="Payment Methods"
+              />
             </li>
 
             <li>
-              <NavigationItem to="/accounts" handleIsDrawerOpen={handleIsDrawerOpen}>
-                Accounts
-                <div className="w-6 h-6" />
-              </NavigationItem>
+              <NavigationItem
+                to="/accounts"
+                title="Accounts"
+              />
             </li>
           </ul>
         </Collapsible>
       </li>
       
       <li>
-        <NavigationItem to="/vehicles" handleIsDrawerOpen={handleIsDrawerOpen}>
-          Vehicles
-          <Car className="w-6 h-6" />
-        </NavigationItem>
+        <NavigationItem
+          to="/vehicles"
+          title="Vehicles"
+          Icon={Car}
+        />
       </li>
 
       <li>
-        <NavigationItem to="/sports" handleIsDrawerOpen={handleIsDrawerOpen}>
-          Sports
-          <Bike className="w-6 h-6" />
-        </NavigationItem>
+        <NavigationItem
+          to="/sports"
+          title="Sports"
+          Icon={Bike}
+        />
       </li>
       
       <li>
-        <NavigationItem to="/settings" handleIsDrawerOpen={handleIsDrawerOpen}>
-          Settings
-          <Settings className="w-6 h-6" />
-        </NavigationItem>
+        <NavigationItem
+          to="/settings"
+          title="Settings"
+          Icon={Settings}
+        />
       </li>
 
       <li>
         <NavigationItem
           to="/login"
-          handleIsDrawerOpen={handleIsDrawerOpen}
           additionalAction={() => {
             removeAuthToken();
             queryClient.clear();
-          }}  
-        >
-          Logout
-          <LogOut className="w-6 h-6" />
-        </NavigationItem>
+          }}
+          title="Logout"
+          Icon={LogOut}
+        /> 
       </li>
     </ul>
   )
