@@ -34,21 +34,20 @@ export const Navigation = ({ handleIsDrawerOpen }: NavigationProps) => {
                   <Banknote className="w-6 h-6" />
                 </NavLink>
               }
-              content={[
-                <NavLink
-                  to="/categories"
-                  className={({ isActive }) => isActive
-                    ? "text-blue-500 font-bold w-full inline-block hover:bg-fg/40 p-1 rounded-md hover:text-blue-200"
-                    : "w-full inline-block hover:bg-fg/50 p-1 rounded-md"
-                  }
-                  onClick={() => { handleIsDrawerOpen(false)}}
-                >
-                  Categories
-                </NavLink>,
-                <p className="p-1">Payment Methods</p>,
-                "Accounts",
-              ]}
-            />
+            >
+              <NavLink
+                to="/categories"
+                className={({ isActive }) => isActive
+                  ? "text-blue-500 font-bold w-full inline-block hover:bg-fg/40 p-1 rounded-md hover:text-blue-200"
+                  : "w-full inline-block hover:bg-fg/50 p-1 rounded-md"
+                }
+                onClick={() => { handleIsDrawerOpen(false)}}
+              >
+                Categories
+              </NavLink>
+              <p className="p-1">Payment Methods</p>
+              Accounts
+            </Collapsible>
           </li>
           
           <li>

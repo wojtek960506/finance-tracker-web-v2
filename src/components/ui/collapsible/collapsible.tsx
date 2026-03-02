@@ -5,10 +5,10 @@ import { useState, type ReactNode } from "react";
 
 type CollapsibleProps = {
   header: ReactNode,
-  content: ReactNode[],
+  children: ReactNode,
 }
 
-export const Collapsible = ({ header, content }: CollapsibleProps) => {
+export const Collapsible = ({ header, children }: CollapsibleProps) => {
   const [isOpen, setIsOpen] = useState(false)
   
   return (
@@ -24,16 +24,23 @@ export const Collapsible = ({ header, content }: CollapsibleProps) => {
         >
           <ChevronRight
             className={clsx(
-              "h-4 w-4 transition-transform cursor-pointer",
+              "h-4 w-4 cursor-pointer transition-transform duration-300 ease-out",
               isOpen && "rotate-90",
             )}
           />
         </button>
         {header}
       </div>
-      <ul className={clsx("pl-9 space-y-1", !isOpen && "hidden")}>
-        {content.map((node, index) => (<li key={index}>{node}</li>))}
-      </ul>
+      <div
+        className={clsx(
+          "pl-9 space-y-1 grid transition-[grid-template-rows,opacity] duration-300 ease-out",
+          isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+        )}
+      >
+        <div className="overflow-hidden">
+          {children}
+        </div>
+      </div>
     </div>
   )
 }
