@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import { Button } from "@components/ui";
 import { ChevronRight } from "lucide-react";
 import { useState, type ReactNode } from "react";
 
@@ -12,11 +13,10 @@ export const Collapsible = ({ header, children }: CollapsibleProps) => {
   const [isOpen, setIsOpen] = useState(false)
   
   return (
-    <div className="space-y-1">
-      <div className="flex items-center gap-1">
-        <button
-          type="button"
-          className="px-1 py-2"
+    <div>
+      <div className="flex items-center w-full">
+        <Button
+          variant="ghost"
           aria-label={isOpen ? "Collapse menu" : "Expand menu"}
           aria-expanded={isOpen}
           aria-controls="collapsible-submenu"
@@ -28,12 +28,12 @@ export const Collapsible = ({ header, children }: CollapsibleProps) => {
               isOpen && "rotate-90",
             )}
           />
-        </button>
+        </Button>
         {header}
       </div>
       <div
         className={clsx(
-          "pl-9 space-y-1 grid transition-[grid-template-rows,opacity] duration-300 ease-out",
+          "pl-9 grid transition-[grid-template-rows,opacity] duration-300 ease-out",
           isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
         )}
       >

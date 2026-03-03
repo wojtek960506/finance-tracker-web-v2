@@ -33,7 +33,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         break;
       case "ghost":
         variantClassName = clsx(
-          "border-none hover:bg-fg/40"
+          "border-transparent bg-transparent hover:bg-fg/20"
         )
         break;
       default:
@@ -46,6 +46,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         className={twMerge(clsx(
           "border px-2 py-2 rounded-xl cursor-pointer disabled:cursor-not-allowed",
+          "flex items-center justify-center",
           variantClassName,
           className,
         ))}

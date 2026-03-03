@@ -1,5 +1,7 @@
 import clsx from "clsx";
+import { Button } from "@components/ui";
 import { useEffect, useRef, useState, type ReactNode } from "react";
+
 
 type DropdownItem = {
   label: string;
@@ -44,26 +46,24 @@ export const Dropdown = ({ trigger, items }: DropdownProps) => {
       {isOpen && (
         <div
           className={clsx(
-            "absolute right-0 top-full mt-2 bg-bg text-fg shadow-lg rounded-md z-150",
-            "border border-fg"
+            "absolute right-0 top-full mt-1 bg-bg text-fg shadow-lg rounded-md z-150",
+            "border border-fg p-2"
           )}
         >
           {items.map((item, idx) => (
-            <div
+            <Button
               key={idx}
-              className={clsx(
-                "px-4 py-2 hover:bg-fg/10 cursor-pointer rounded",
-                "flex gap-4 justify-start items-center",
-              )}
+              variant="ghost"
+              className="w-full justify-start gap-2"
               onClick={() => {
                 item.onSelect();
                 setIsOpen(false);
               }}
             >
-              
               {item.icon}
               {item.label}
-            </div>
+            </Button>
+
           ))}
 
         </div>
