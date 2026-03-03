@@ -50,3 +50,8 @@ i18n
   })
 
 export default i18n
+
+// ä: Ctrl+Shift+U then e4
+// ö: Ctrl+Shift+U then f6
+// ü: Ctrl+Shift+U then fc
+// ß: Ctrl+Shift+U then df

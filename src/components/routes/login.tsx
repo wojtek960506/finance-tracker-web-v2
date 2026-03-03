@@ -49,25 +49,25 @@ export const Login = () => {
         className="flex flex-col border border-fg rounded-3xl p-5 max-w-120 gap-2"
       >
         <Label>
-          <span>Email</span>
+          <span>{t('email')}</span>
           <Input
             id="email"
             value={email}
             onChange={e => setEmail(e.target.value)}
-            placeholder="Email"
+            placeholder={t('emailPlaceholder')}
             onBlur={() => setIsEmailInputTouched(true)}
           />
         </Label>
-        {showEmailError && <span className="text-destructive">Invalid email format</span>}
+        {showEmailError && <span className="text-destructive">{t('invalidEmailFormat')}</span>}
 
         <Label>
-          <span>Password</span>
+          <span>{t('password')}</span>
           <Input
             id="password"
             value={password}
             type="password"
             onChange={(e) => setPassword(e.target.value)}
-            placeholder="Password"
+            placeholder={t('passwordPlaceholder')}
           />
         </Label>
 
