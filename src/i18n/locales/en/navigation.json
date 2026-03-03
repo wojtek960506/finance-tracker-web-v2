@@ -1,0 +1,10 @@
+{
+  "transactions": "Transactions",
+  "categories": "Categories",
+  "paymentMethods": "Payment Methods",
+  "bankAccounts": "Bank Accounts",
+  "vehicles": "Vehicles",
+  "sports": "Sports",
+  "settings": "Settings",
+  "logout": "Log out"
+}

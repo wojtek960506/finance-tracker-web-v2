@@ -12,6 +12,11 @@ import plAuth from "./locales/pl/auth.json";
 import ruAuth from "./locales/ru/auth.json";
 import deAuth from "./locales/de/auth.json";
 
+import enNavigation from "./locales/en/navigation.json";
+import plNavigation from "./locales/pl/navigation.json";
+import ruNavigation from "./locales/ru/navigation.json";
+import deNavigation from "./locales/de/navigation.json";
+
 i18n
   // .use(LanguageDetector)
   .use(initReactI18next)
@@ -28,18 +33,22 @@ i18n
       en: {
         auth: enAuth,
         common: enCommon,
+        navigation: enNavigation,
       },
       pl: {
         auth: plAuth,
         common: plCommon,
+        navigation: plNavigation,
       },
       ru: {
         auth: ruAuth,
         common: ruCommon,
+        navigation: ruNavigation,
       },
       de: {
         auth: deAuth,
         common: deCommon,
+        navigation: deNavigation,
       },
     },
 

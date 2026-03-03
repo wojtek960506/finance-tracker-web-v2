@@ -3,9 +3,11 @@ import { Collapsible } from "@components/ui";
 import { NavigationItem } from "./navigation-item";
 import { useQueryClient } from "@tanstack/react-query";
 import { Banknote, Bike, Car, LogOut, Settings } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 
 export const Navigation = () => {
+  const { t } = useTranslation("navigation");
 
   const queryClient = useQueryClient();
   const { authToken, removeAuthToken } = useAuthToken();
@@ -19,7 +21,7 @@ export const Navigation = () => {
           header={
             <NavigationItem
               to="/transactions"
-              title="Transactions"
+              title={t("transactions")}
               Icon={Banknote}
             />
           }
@@ -28,21 +30,21 @@ export const Navigation = () => {
             <li>
               <NavigationItem
                 to="/categories"
-                title="Categories"
+                title={t("categories")}
               />
             </li>
       
             <li>
               <NavigationItem
                 to="/paymentMethods"
-                title="Payment Methods"
+                title={t("paymentMethods")}
               />
             </li>
 
             <li>
               <NavigationItem
                 to="/accounts"
-                title="Accounts"
+                title={t("bankAccounts")}
               />
             </li>
           </ul>
@@ -52,7 +54,7 @@ export const Navigation = () => {
       <li>
         <NavigationItem
           to="/vehicles"
-          title="Vehicles"
+          title={t("vehicles")}
           Icon={Car}
         />
       </li>
@@ -60,7 +62,7 @@ export const Navigation = () => {
       <li>
         <NavigationItem
           to="/sports"
-          title="Sports"
+          title={t("sports")}
           Icon={Bike}
         />
       </li>
@@ -68,7 +70,7 @@ export const Navigation = () => {
       <li>
         <NavigationItem
           to="/settings"
-          title="Settings"
+          title={t("settings")}
           Icon={Settings}
         />
       </li>
@@ -80,7 +82,7 @@ export const Navigation = () => {
             removeAuthToken();
             queryClient.clear();
           }}
-          title="Logout"
+          title={t("logout")}
           Icon={LogOut}
         /> 
       </li>
