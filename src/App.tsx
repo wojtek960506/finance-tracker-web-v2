@@ -1,5 +1,5 @@
 import { useAuthToken } from './hooks';
-import { MobileLayout } from './components/layout';
+import { MainLayout } from './components/layout';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import {
   Login,
@@ -11,11 +11,10 @@ import {
 
 function App() {
 
-  const { authToken } = useAuthToken();
-  const isAuthenticated = !!authToken;
+  const { isAuthenticated } = useAuthToken();
 
   return (
-    <MobileLayout>
+    <MainLayout>
       <Routes>
 
         <Route element={<PublicLayout isAuthenticated={isAuthenticated} />}>
@@ -34,7 +33,7 @@ function App() {
         </Route>
 
       </Routes>
-    </MobileLayout>
+    </MainLayout>
   )
 }
 

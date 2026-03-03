@@ -1,2 +1,2 @@
 export * from "./topbar";
-export * from "./mobile-layout";
+export * from "./main-layout";

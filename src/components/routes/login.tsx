@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { useState } from "react";
 import { login } from "@/api/login";
 import { useTranslation } from "react-i18next";
@@ -42,8 +43,10 @@ export const Login = () => {
     } 
   };
 
+  const labelCn = "text-lg md:text-xl font-bold"
+
   return (
-    <div className="h-full flex justify-center items-center text-lg">
+    <div className="h-full flex justify-center items-center text-md md:text-lg">
       <form
         onSubmit={handleSubmit}
         className="flex flex-col g rounded-3xl p-5 w-120 bg-modal-bg"
@@ -51,7 +54,7 @@ export const Login = () => {
       >
         
         <Label>
-          <span className="text-xl font-bold">{t('email')}</span>
+          <span className={labelCn}>{t('email')}</span>
           <Input
             id="email"
             value={email}
@@ -61,12 +64,12 @@ export const Login = () => {
             autoComplete="off"
           />
         </Label>
-        <p className="text-destructive text-sm min-h-5 my-1">
+        <p className="text-destructive text-xs md:text-sm h-4 md:h-5 my-1">
           {showEmailError ? t('invalidEmailFormat') : ""}
         </p>
 
         <Label>
-          <span className="text-xl font-bold">{t('password')}</span>
+          <span className={labelCn}>{t('password')}</span>
           <Input
             id="password"
             value={password}
@@ -80,7 +83,7 @@ export const Login = () => {
         <Button
           disabled={email === "" || password === "" || showEmailError}
           type="submit"
-          className="mt-10"
+          className={clsx("mt-10", labelCn)}
         >  
           {t('logIn')}
         </Button>

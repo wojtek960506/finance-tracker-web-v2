@@ -10,5 +10,5 @@ export const useAuthToken = () => {
     removeItem: removeAuthToken,
   } = useLocalStorage<string>(AUTH_TOKEN_STORE_KEY);
 
-  return { authToken, setAuthToken, removeAuthToken };
+  return { authToken, setAuthToken, removeAuthToken, isAuthenticated: !!authToken };
 }

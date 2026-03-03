@@ -27,7 +27,10 @@ export const Drawer = ({ isOpen, onClose, children }: DrawerProps) => (
         `transition-transform ${isOpen ? "translate-x-0" : "-translate-x-full"}`,
       )}
     >
-      <div className="flex p-2 justify-end h-[var(--topbar-h)] border-b border-foreground">
+      <div className={clsx(
+        "flex p-2 justify-end h-[var(--topbar-h)] border-b border-foreground",
+        "min-h-[var(--topbar-h)] md:min-h-[var(--topbar-h-md)]",
+      )}>
         <button onClick={onClose} className="p-2 cursor-pointer">
           <X className="w-6 h-6" />
         </button>

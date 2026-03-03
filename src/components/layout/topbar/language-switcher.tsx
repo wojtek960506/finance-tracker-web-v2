@@ -2,14 +2,14 @@ import clsx from "clsx";
 import Flag from "react-flagkit";
 import { useLanguage } from "@/hooks";
 import type { Language } from "@/types";
-import { Button } from "@components/ui";
-import { SUPPORTED_LANGUAGES } from "@/consts";
-import { Dropdown } from "../ui/dropdown/dropdown";
+import { Button, Dropdown } from "@components/ui";
+import { ICON_CLASS_NAME, SUPPORTED_LANGUAGES } from "@/consts";
 
 
 const RoundedFlag = ({ isoCode }: { isoCode: string }) => (
   <span className={clsx(
-    "inline-block w-8 h-8 rounded-full overflow-hidden shrink-0 border border-fg border-2"
+    "inline-block rounded-full overflow-hidden shrink-0 border border-fg border-2",
+    ICON_CLASS_NAME,
   )}>
     <Flag
       country={isoCode}
