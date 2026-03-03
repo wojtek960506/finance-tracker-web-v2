@@ -19,31 +19,31 @@ export const MobileLayout = ({ children }: { children: ReactNode }) => {
   const { authToken } = useAuthToken();
   const isAuthenticated = !!authToken;
 
-  const centralizeTitleClass = "min-w-50 items-center"; 
+  const centralizeTitleClass = " items-center"; 
 
   return (
     <div className="flex h-screen flex-col overflow-hidden">
       <Topbar>
+        <h1 className="text-2xl font-bold text">{t('title')}</h1>
         
-        <div className={clsx(centralizeTitleClass)}>
+        <div className={clsx("flex justify-between gap-1", centralizeTitleClass)}>
+          
+          <LanguageSwitcher />
+          
+          <button onClick={toggleTheme} className="p-1 cursor-pointer">
+            {theme === "dark" ? <Sun className="w-8 h-8" /> : <Moon className="w-8 h-8" />}
+          </button>
+  
           <button
             onClick={() => setIsNavOpen(true)}
             className={clsx(
-              "p-1 cursor-pointer border border-fg",
-              `${isAuthenticated ? "visible" : "invisible"}`
+              "p-1 cursor-pointer flex items-center",
+              `${isAuthenticated ? "visible" : "hidden"}`
             )}
           >
             <Menu className="w-8 h-8" />
           </button>
-        </div>
-
-        <h1 className="text-3xl font-bold text">{t('title')}</h1>
-
-        <div className={clsx("flex justify-end gap-3", centralizeTitleClass)}>
-          <LanguageSwitcher />
-          <button onClick={toggleTheme} className="p-1 cursor-pointer border border-fg">
-            {theme === "dark" ? <Sun className="w-8 h-8" /> : <Moon className="w-8 h-8" />}
-          </button>
+          
         </div>
       </Topbar>
 
