@@ -1,4 +1,5 @@
 import Flag from "react-flagkit";
+import type { Language } from "@/types";
 import { SUPPORTED_LANGUAGES } from "@/consts";
 import { useTranslation } from "react-i18next";
 import { Dropdown } from "../ui/dropdown/dropdown";
@@ -7,7 +8,7 @@ import { Dropdown } from "../ui/dropdown/dropdown";
 export const LanguageSwitcher = () => {
   const { i18n } = useTranslation();
 
-  const currentLanguage = i18n.language as "en" | "ru" | "de" | "pl";
+  const currentLanguage = i18n.language as Language;
 
   return (
     <Dropdown
