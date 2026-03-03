@@ -43,11 +43,13 @@ export const Login = () => {
   };
 
   return (
-    <div className="h-full flex justify-center items-center">
+    <div className="h-full flex justify-center items-center text-lg">
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col border border-fg rounded-3xl p-5 max-w-120 gap-2"
+        className="flex flex-col g rounded-3xl p-5 w-120 bg-modal-bg"
+        autoComplete="off"
       >
+        
         <Label>
           <span>{t('email')}</span>
           <Input
@@ -56,9 +58,12 @@ export const Login = () => {
             onChange={e => setEmail(e.target.value)}
             placeholder={t('emailPlaceholder')}
             onBlur={() => setIsEmailInputTouched(true)}
+            autoComplete="off"
           />
         </Label>
-        {showEmailError && <span className="text-destructive">{t('invalidEmailFormat')}</span>}
+        <p className="text-destructive text-sm min-h-5 my-1">
+          {showEmailError ? t('invalidEmailFormat') : ""}
+        </p>
 
         <Label>
           <span>{t('password')}</span>
@@ -68,13 +73,15 @@ export const Login = () => {
             type="password"
             onChange={(e) => setPassword(e.target.value)}
             placeholder={t('passwordPlaceholder')}
+            autoComplete="off"
           />
         </Label>
 
         <Button
           disabled={email === "" || password === "" || showEmailError}
-          type="submit" className="mt-2"
-        >
+          type="submit"
+          className="mt-10"
+        >  
           {t('logIn')}
         </Button>
       </form>

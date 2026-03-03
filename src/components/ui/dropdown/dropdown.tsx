@@ -46,8 +46,8 @@ export const Dropdown = ({ trigger, items }: DropdownProps) => {
       {isOpen && (
         <div
           className={clsx(
-            "absolute right-0 top-full mt-1 bg-bg text-fg shadow-lg rounded-md z-150",
-            "border border-fg p-2"
+            "absolute right-0 top-full mt-1 bg-modal-bg text-fg shadow-lg",
+            "rounded-md z-150  p-2"
           )}
         >
           {items.map((item, idx) => (
