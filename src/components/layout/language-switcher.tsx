@@ -1,9 +1,9 @@
 import clsx from "clsx";
 import Flag from "react-flagkit";
+import { useLanguage } from "@/hooks";
 import type { Language } from "@/types";
 import { Button } from "@components/ui";
 import { SUPPORTED_LANGUAGES } from "@/consts";
-import { useTranslation } from "react-i18next";
 import { Dropdown } from "../ui/dropdown/dropdown";
 
 
@@ -19,22 +19,20 @@ const RoundedFlag = ({ isoCode }: { isoCode: string }) => (
 );
 
 export const LanguageSwitcher = () => {
-  const { i18n } = useTranslation();
-
-  const currentLanguage = i18n.language as Language;
+  const { language, setLanguage } = useLanguage();
 
   return (
     <Dropdown
       trigger={
         <Button variant="ghost">
-          <RoundedFlag isoCode={SUPPORTED_LANGUAGES[currentLanguage].isoCode} />
+          <RoundedFlag isoCode={SUPPORTED_LANGUAGES[language].isoCode} />
         </Button>
       }
       items={Object.entries(SUPPORTED_LANGUAGES).map(([code, { isoCode, label }]) => (
         {
           label,
           icon: (<RoundedFlag isoCode={isoCode} />),
-          onSelect: () => i18n.changeLanguage(code),
+          onSelect: () => setLanguage(code as Language),
         }
       ))}
     />

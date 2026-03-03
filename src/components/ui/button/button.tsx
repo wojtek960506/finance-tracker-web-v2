@@ -23,7 +23,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     switch(variant) {
       case "default":
-        variantClassName = "bg-fg text-bg border-bg hover:bg-hover";
+        variantClassName = "bg-fg text-bg hover:bg-hover";
         break;
       case "primary":
         variantClassName = clsx(
@@ -33,7 +33,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         break;
       case "ghost":
         variantClassName = clsx(
-          "border-transparent bg-transparent hover:bg-bt-ghost-hover"
+          "bg-transparent hover:bg-bt-ghost-hover"
         )
         break;
       default:
@@ -45,7 +45,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         {...props}
         ref={ref}
         className={twMerge(clsx(
-          "border px-2 py-2 rounded-xl cursor-pointer disabled:cursor-not-allowed",
+          "border border-transparent px-2 py-2 rounded-xl cursor-pointer disabled:cursor-not-allowed",
           "flex items-center justify-center disabled:bg-bt-disabled",
           variantClassName,
           className,

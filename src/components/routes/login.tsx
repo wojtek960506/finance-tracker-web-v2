@@ -51,7 +51,7 @@ export const Login = () => {
       >
         
         <Label>
-          <span>{t('email')}</span>
+          <span className="text-xl font-bold">{t('email')}</span>
           <Input
             id="email"
             value={email}
@@ -66,7 +66,7 @@ export const Login = () => {
         </p>
 
         <Label>
-          <span>{t('password')}</span>
+          <span className="text-xl font-bold">{t('password')}</span>
           <Input
             id="password"
             value={password}

@@ -1,7 +1,11 @@
+import { LANGUAGE_STORE_KEY } from "@/consts";
+import { readLocalStorage } from "@/utils";
 import i18n from "i18next"
 import { initReactI18next } from "react-i18next"
-// import LanguageDetector from "i18next-browser-languagedetector"
 
+
+const FALLBACK_LNG = "en";
+const savedLanguage = readLocalStorage<string>(LANGUAGE_STORE_KEY) || FALLBACK_LNG;
 
 const localeModules = import.meta.glob<{ default: Record<string, unknown> }>(
   "./locales/*/*.json",
@@ -23,10 +27,10 @@ const resources = Object.entries(localeModules).reduce<
 
 
 i18n
-  // .use(LanguageDetector)
   .use(initReactI18next)
   .init({
-    fallbackLng: "pl",
+    lng: savedLanguage,
+    fallbackLng: FALLBACK_LNG,
     debug: true,
 
     // saveMissing: true,
@@ -35,7 +39,6 @@ i18n
     // },
 
     resources,
-
     defaultNS: "common",
     interpolation: {
       escapeValue: false,
