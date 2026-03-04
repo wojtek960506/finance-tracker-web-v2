@@ -3,6 +3,7 @@ import { Collapsible } from "@components/ui";
 import { useTranslation } from "react-i18next";
 import { NavigationItem } from "./navigation-item";
 import { useQueryClient } from "@tanstack/react-query";
+import { useNavigation } from "@/context/navigation-context";
 import { Banknote, Bike, Car, LogOut, Settings } from "lucide-react";
 
 
@@ -11,16 +12,19 @@ export const Navigation = () => {
 
   const queryClient = useQueryClient();
   const { authToken, removeAuthToken } = useAuthToken();
+  const { fromLeft } = useNavigation();
   
   if (!authToken) return;
 
   return (
-    <ul>
+    
+    <ul className="text-md md:text-lg">
       <li>
         <Collapsible
           header={
             <NavigationItem to="/transactions" title={t("transactions")} Icon={Banknote} />
           }
+          indicatorPosition={fromLeft ? "left" : "right"} 
         >
           <ul>
             <li><NavigationItem to="/categories" title={t("categories")} /></li>

@@ -1,20 +1,26 @@
 import clsx from "clsx";
 import { Button } from "@components/ui";
-import { ChevronRight } from "lucide-react";
 import { useState, type ReactNode } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 
 type CollapsibleProps = {
   header: ReactNode,
+  indicatorPosition: "left" | "right",
   children: ReactNode,
 }
 
-export const Collapsible = ({ header, children }: CollapsibleProps) => {
+export const Collapsible = ({ header, indicatorPosition, children }: CollapsibleProps) => {
   const [isOpen, setIsOpen] = useState(false)
-  
+
+  const isIndicatorLeft = indicatorPosition === "left";
+  const Comp = isIndicatorLeft ? ChevronRight : ChevronLeft;
+
   return (
     <div>
-      <div className="flex items-center w-full">
+      <div className={clsx(
+        "flex items-center w-full", isIndicatorLeft ? "" : "flex-row-reverse")
+      }>
         <Button
           variant="ghost"
           aria-label={isOpen ? "Collapse menu" : "Expand menu"}
@@ -22,10 +28,10 @@ export const Collapsible = ({ header, children }: CollapsibleProps) => {
           aria-controls="collapsible-submenu"
           onClick={() => setIsOpen(prev => !prev)}
         >
-          <ChevronRight
+          <Comp
             className={clsx(
               "h-4 w-4 cursor-pointer transition-transform duration-300 ease-out",
-              isOpen && "rotate-90",
+              isOpen && (isIndicatorLeft ? "rotate-90" : "-rotate-90"),
             )}
           />
         </Button>
@@ -33,7 +39,7 @@ export const Collapsible = ({ header, children }: CollapsibleProps) => {
       </div>
       <div
         className={clsx(
-          "pl-9 grid transition-[grid-template-rows,opacity] duration-300 ease-out",
+          "pl-10 grid transition-[grid-template-rows,opacity] duration-300 ease-out",
           isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
         )}
       >

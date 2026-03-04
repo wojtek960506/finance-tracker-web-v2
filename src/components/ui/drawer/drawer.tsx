@@ -1,15 +1,17 @@
 import clsx from "clsx";
 import { X } from "lucide-react";
 import type { ReactNode } from "react";
+import { Button } from "@components/ui";
 
 
 type DrawerProps = {
   isOpen: boolean;
+  fromLeft: boolean; 
   onClose: () => void;
   children: ReactNode;
 }
 
-export const Drawer = ({ isOpen, onClose, children }: DrawerProps) => (
+export const Drawer = ({ isOpen, fromLeft, onClose, children }: DrawerProps) => (
   <>
     {/* Overlay */}
     <div
@@ -23,17 +25,21 @@ export const Drawer = ({ isOpen, onClose, children }: DrawerProps) => (
     {/* Drawer panel */}
     <div
       className={clsx(
-        "z-100 fixed top-0 left-0 h-full min-w-64 bg-bg shadow-lg transform duration-300",
-        `transition-transform ${isOpen ? "translate-x-0" : "-translate-x-full"}`,
+        "z-100 fixed top-0 h-full min-w-64 bg-bg shadow-lg transform duration-300",
+        `transition-transform ${fromLeft ? "left-0" : "right-0"}`,
+        `${fromLeft
+          ? (isOpen ? "translate-x-0" : "-translate-x-full")
+          : (isOpen ? "translate-x-0" : "translate-x-full")}`
       )}
     >
       <div className={clsx(
-        "flex p-2 justify-end h-[var(--topbar-h)] border-b border-foreground",
+        "flex p-2 h-[var(--topbar-h)] border-b border-foreground",
         "min-h-[var(--topbar-h)] md:min-h-[var(--topbar-h-md)]",
+        fromLeft ? "justify-end" : "justify-start",
       )}>
-        <button onClick={onClose} className="p-2 cursor-pointer">
+        <Button onClick={onClose} variant="ghost" className={fromLeft ? "mx-2" : "mx-1"}>
           <X className="w-6 h-6" />
-        </button>
+        </Button>
       </div>
       <nav className="px-4 py-2">
         {children}
