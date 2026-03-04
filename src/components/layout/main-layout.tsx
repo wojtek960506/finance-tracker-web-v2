@@ -22,7 +22,7 @@ export const MainLayout = ({ children }: { children: ReactNode }) => {
       </main>
 
       <Drawer isOpen={isNavOpen} fromLeft={isDesktop} onClose={() => setIsNavOpen(false)}>
-        <NavigationProvider fromLeft={true}>
+        <NavigationProvider fromLeft={isDesktop}>
           <Navigation />
         </NavigationProvider>
       </Drawer>

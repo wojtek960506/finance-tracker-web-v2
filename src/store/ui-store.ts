@@ -1,5 +1,6 @@
 import { create } from "zustand";
 
+
 type UIState = {
   isNavOpen: boolean;
   setIsNavOpen: (val: boolean) => void;
@@ -11,5 +12,5 @@ export const useUIStore = create<UIState>()(
   set => ({
     isNavOpen: false,
     setIsNavOpen: (isNavOpen: boolean) => set({ isNavOpen }),
-  })
+  }),
 );

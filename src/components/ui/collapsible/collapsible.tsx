@@ -8,10 +8,16 @@ type CollapsibleProps = {
   header: ReactNode,
   indicatorPosition: "left" | "right",
   children: ReactNode,
+  isInitiallyOpen?: boolean, 
 }
 
-export const Collapsible = ({ header, indicatorPosition, children }: CollapsibleProps) => {
-  const [isOpen, setIsOpen] = useState(false)
+export const Collapsible = ({
+  header,
+  indicatorPosition,
+  children,
+  isInitiallyOpen,
+}: CollapsibleProps) => {
+  const [isOpen, setIsOpen] = useState(isInitiallyOpen ?? false);
 
   const isIndicatorLeft = indicatorPosition === "left";
   const Comp = isIndicatorLeft ? ChevronRight : ChevronLeft;
@@ -39,8 +45,9 @@ export const Collapsible = ({ header, indicatorPosition, children }: Collapsible
       </div>
       <div
         className={clsx(
-          "pl-10 grid transition-[grid-template-rows,opacity] duration-300 ease-out",
-          isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+          "grid transition-[grid-template-rows,opacity] duration-300 ease-out",
+          isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0",
+          isIndicatorLeft ? "pl-10 " : "pr-10"
         )}
       >
         <div className="overflow-hidden">
