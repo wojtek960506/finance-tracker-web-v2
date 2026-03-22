@@ -8,9 +8,12 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
-      "@store/*": ["src/store/*"],
-      "@context/*": ["src/context/*"],
-      "@components/*": ["src/components/*"],
+      "@app/*": ["src/app/*"],
+      "@features/*": ["src/features/*"],
+      "@ui": ["src/shared/ui/index.ts"],
+      "@shared/*": ["src/shared/*"],
+      "@store/*": ["src/shared/store/*"],
+      "@context/*": ["src/shared/context/*"]
     }
   }
 }

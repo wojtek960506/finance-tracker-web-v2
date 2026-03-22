@@ -3,16 +3,18 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 
-
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src'),
-      '@store': path.resolve(__dirname, './src/store'),
-      '@context': path.resolve(__dirname, './src/context'),
-      '@components': path.resolve(__dirname, './src/components'),
+      "@": path.resolve(__dirname, "./src"),
+      "@app": path.resolve(__dirname, "./src/app"),
+      "@features": path.resolve(__dirname, "./src/features"),
+      "@ui": path.resolve(__dirname, "./src/shared/ui"),
+      "@store": path.resolve(__dirname, "./src/shared/store"),
+      "@context": path.resolve(__dirname, "./src/shared/context"),
+      "@shared": path.resolve(__dirname, "./src/shared"),
     }
   }
 });
