@@ -1,9 +1,8 @@
-import { useSyncExternalStore } from "react";
+import { useSyncExternalStore } from 'react';
 
-import { readLocalStorage } from "@shared/utils";
+import { readLocalStorage } from '@shared/utils';
 
-
-const LOCAL_STORAGE_CHANGE_EVENT = "local-storage-change";
+const LOCAL_STORAGE_CHANGE_EVENT = 'local-storage-change';
 
 export const useLocalStorage = <T>(key: string, defaultValue: T | null = null) => {
   const subscribe = (onStoreChange: () => void) => {
@@ -16,11 +15,11 @@ export const useLocalStorage = <T>(key: string, defaultValue: T | null = null) =
       if (customEvent.detail?.key === key) onStoreChange();
     };
 
-    window.addEventListener("storage", handleStorage);
+    window.addEventListener('storage', handleStorage);
     window.addEventListener(LOCAL_STORAGE_CHANGE_EVENT, handleLocalStorageChange);
 
     return () => {
-      window.removeEventListener("storage", handleStorage);
+      window.removeEventListener('storage', handleStorage);
       window.removeEventListener(LOCAL_STORAGE_CHANGE_EVENT, handleLocalStorageChange);
     };
   };
@@ -31,14 +30,14 @@ export const useLocalStorage = <T>(key: string, defaultValue: T | null = null) =
   const setItem = (value: T | null) => {
     window.localStorage.setItem(key, JSON.stringify(value));
     window.dispatchEvent(
-      new CustomEvent(LOCAL_STORAGE_CHANGE_EVENT, { detail: { key } })
+      new CustomEvent(LOCAL_STORAGE_CHANGE_EVENT, { detail: { key } }),
     );
   };
 
   const removeItem = () => {
     window.localStorage.removeItem(key);
     window.dispatchEvent(
-      new CustomEvent(LOCAL_STORAGE_CHANGE_EVENT, { detail: { key } })
+      new CustomEvent(LOCAL_STORAGE_CHANGE_EVENT, { detail: { key } }),
     );
   };
 

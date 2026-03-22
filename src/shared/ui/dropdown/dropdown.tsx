@@ -1,8 +1,7 @@
-import clsx from "clsx";
-import { type ReactNode,useEffect, useRef, useState } from "react";
+import clsx from 'clsx';
+import { type ReactNode, useEffect, useRef, useState } from 'react';
 
-import { Button } from "@ui";
-
+import { Button } from '@ui';
 
 type DropdownItem = {
   label: string;
@@ -29,17 +28,16 @@ export const Dropdown = ({ trigger, items }: DropdownProps) => {
       }
     };
 
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [isOpen]);
 
   return (
-    <div
-      ref={dropdownRef}
-      className="relative"
-    >
-      <div 
-        onClick={() => { setIsOpen((prev) => !prev) }}
+    <div ref={dropdownRef} className="relative">
+      <div
+        onClick={() => {
+          setIsOpen((prev) => !prev);
+        }}
       >
         {trigger}
       </div>
@@ -47,8 +45,8 @@ export const Dropdown = ({ trigger, items }: DropdownProps) => {
       {isOpen && (
         <div
           className={clsx(
-            "absolute right-0 top-full mt-1 bg-modal-bg text-fg shadow-lg",
-            "rounded-md z-150  p-2"
+            'absolute right-0 top-full mt-1 bg-modal-bg text-fg shadow-lg',
+            'rounded-md z-150  p-2',
           )}
         >
           {items.map((item, idx) => (
@@ -64,11 +62,9 @@ export const Dropdown = ({ trigger, items }: DropdownProps) => {
               {item.icon}
               {item.label}
             </Button>
-
           ))}
-
         </div>
       )}
     </div>
-  )
-}
+  );
+};

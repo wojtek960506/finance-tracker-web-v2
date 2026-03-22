@@ -1,7 +1,6 @@
-import type { ReactNode } from "react";
+import type { ReactNode } from 'react';
 
-import { NavigationContext } from "./navigation-context";
-
+import { NavigationContext } from './navigation-context';
 
 type NavigationProviderProps = {
   fromLeft: boolean;
@@ -10,8 +9,8 @@ type NavigationProviderProps = {
 
 export const NavigationProvider = ({ fromLeft, children }: NavigationProviderProps) => {
   return (
-  <NavigationContext.Provider value={{ fromLeft }}>
-    {children}
-  </NavigationContext.Provider>
-  )
-}
+    <NavigationContext.Provider value={{ fromLeft }}>
+      {children}
+    </NavigationContext.Provider>
+  );
+};

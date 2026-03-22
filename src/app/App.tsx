@@ -5,22 +5,19 @@ import { useAuthToken } from '@shared/hooks';
 import { TransactionsRoute } from '@transactions/routes';
 
 import { MainLayout } from './layout';
-import { ProtectedLayout,PublicLayout } from './routes';
-
+import { ProtectedLayout, PublicLayout } from './routes';
 
 function App() {
-
   const { isAuthenticated } = useAuthToken();
 
   return (
     <MainLayout>
       <Routes>
-
         <Route element={<PublicLayout isAuthenticated={isAuthenticated} />}>
           <Route path="/" element={<Navigate to="/login" replace />} />
           <Route path="/login" element={<LoginRoute />} />
         </Route>
-        
+
         <Route element={<ProtectedLayout isAuthenticated={isAuthenticated} />}>
           <Route path="/transactions" element={<TransactionsRoute />} />
           <Route path="/categories" element={<p>Categories will be there</p>} />
@@ -30,10 +27,9 @@ function App() {
           <Route path="/sports" element={<p>Sports will be there</p>} />
           <Route path="/settings" element={<p>Settings will be there</p>} />
         </Route>
-
       </Routes>
     </MainLayout>
-  )
+  );
 }
 
 export default App;

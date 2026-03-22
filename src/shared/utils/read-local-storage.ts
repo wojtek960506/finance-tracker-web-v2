@@ -1,9 +1,8 @@
 export const readLocalStorage = <T>(
   key: string,
-  defaultValue: T | null = null
+  defaultValue: T | null = null,
 ): T | null => {
-
-  if (typeof window === "undefined") return defaultValue;
+  if (typeof window === 'undefined') return defaultValue;
 
   const rawValue = window.localStorage.getItem(key);
   if (rawValue === null) return defaultValue;

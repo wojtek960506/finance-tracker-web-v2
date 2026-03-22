@@ -1,15 +1,14 @@
-import i18n from "i18next"
-import { initReactI18next } from "react-i18next"
+import i18n from 'i18next';
+import { initReactI18next } from 'react-i18next';
 
-import { LANGUAGE_STORE_KEY } from "@shared/consts";
-import { readLocalStorage } from "@shared/utils";
+import { LANGUAGE_STORE_KEY } from '@shared/consts';
+import { readLocalStorage } from '@shared/utils';
 
-
-const FALLBACK_LNG = "en";
+const FALLBACK_LNG = 'en';
 const savedLanguage = readLocalStorage<string>(LANGUAGE_STORE_KEY) || FALLBACK_LNG;
 
 const localeModules = import.meta.glob<{ default: Record<string, unknown> }>(
-  "./locales/*/*.json",
+  './locales/*/*.json',
   { eager: true },
 );
 
@@ -24,29 +23,26 @@ const resources = Object.entries(localeModules).reduce<
   acc[lang][ns] = mod.default;
 
   return acc;
-}, {})
+}, {});
 
+i18n.use(initReactI18next).init({
+  lng: savedLanguage,
+  fallbackLng: FALLBACK_LNG,
+  debug: true,
 
-i18n
-  .use(initReactI18next)
-  .init({
-    lng: savedLanguage,
-    fallbackLng: FALLBACK_LNG,
-    debug: true,
+  // saveMissing: true,
+  // missingKeyHandler: (lng, ns, key) => {
+  //   console.warn(`Missing translation -> ${lng}:${ns}:${key}`)
+  // },
 
-    // saveMissing: true,
-    // missingKeyHandler: (lng, ns, key) => {
-    //   console.warn(`Missing translation -> ${lng}:${ns}:${key}`)
-    // },
+  resources,
+  defaultNS: 'common',
+  interpolation: {
+    escapeValue: false,
+  },
+});
 
-    resources,
-    defaultNS: "common",
-    interpolation: {
-      escapeValue: false,
-    },
-  })
-
-export default i18n
+export default i18n;
 
 // ä: Ctrl+Shift+U then e4
 // ö: Ctrl+Shift+U then f6

@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @custom-variant dark (&:where(.dark, .dark *));
 
@@ -8,7 +8,7 @@
 
   --fg: rgba(var(--dark-base));
   --bg: rgba(var(--light-base));
-  --hover:  oklch(0.35 0.03 260);
+  --hover: oklch(0.35 0.03 260);
   --surface: oklch(1 0 0);
   --text: oklch(0.2 0.015 260);
   --text-muted: oklch(0.45 0.02 260);
@@ -16,7 +16,7 @@
   --primary: oklch(0.61 0.17 255);
   --primary-foreground: oklch(0.98 0.01 260);
 
-  --modal-bg: rgba(215,215,215);
+  --modal-bg: rgba(215, 215, 215);
 
   --bt-ghost-hover: rgba(var(--dark-base), 0.2);
 
@@ -31,14 +31,13 @@
 
   --destructive: rgb(200, 25, 25);
 
-  --active-nav: rgb(43, 150, 212);  
+  --active-nav: rgb(43, 150, 212);
 
-  --topbar-h: 3.5rem;   /* 56px */
-  --topbar-h-md: 4rem;  /* 64px */
+  --topbar-h: 3.5rem; /* 56px */
+  --topbar-h-md: 4rem; /* 64px */
 }
 
 .dark {
-
   --bg: rgba(var(--dark-base));
   --fg: rgba(var(--light-base));
   --hover: oklch(0.9 0.006 260);
@@ -59,13 +58,11 @@
   --bt-primary-hover: oklch(0.77 0.16 150);
   --bt-primary-active: oklch(0.67 0.16 150);
   --bt-primary-subtle: oklch(0.28 0.04 150);
-  --bt-primary-border: oklch(0.40 0.07 150);
+  --bt-primary-border: oklch(0.4 0.07 150);
   --bt-primary-ring: oklch(0.75 0.17 150);
 
   /* --destructive: oklch(0.70 0.18 25); */
-  --destructive: rgba(235,60,60)
-  
-  --active-nav: rgb(53, 129, 216);
+  --destructive: rgba(235, 60, 60) --active-nav: rgb(53, 129, 216);
 }
 
 @theme inline {

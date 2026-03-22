@@ -1,17 +1,16 @@
-import clsx from "clsx";
-import { useState } from "react";
-import { useTranslation } from "react-i18next";
+import clsx from 'clsx';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
-import { login } from "@auth/api";
-import { useAuthToken } from "@shared/hooks";
-import { Button, Input,Label } from "@ui";
-
+import { login } from '@auth/api';
+import { useAuthToken } from '@shared/hooks';
+import { Button, Input, Label } from '@ui';
 
 export const LoginRoute = () => {
-  const { t } = useTranslation("auth");
+  const { t } = useTranslation('auth');
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const [isEmailInputTouched, setIsEmailInputTouched] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -37,14 +36,14 @@ export const LoginRoute = () => {
       // those probably not needed as it will reset during next render
       setIsSubmitted(false);
       setIsEmailInputTouched(false);
-      setEmail("");
-      setPassword("");
+      setEmail('');
+      setPassword('');
     } catch (error) {
       alert(error);
-    } 
+    }
   };
 
-  const labelCn = "text-lg md:text-xl font-bold"
+  const labelCn = 'text-lg md:text-xl font-bold';
 
   return (
     <div className="h-full flex justify-center items-center text-md md:text-lg">
@@ -53,20 +52,19 @@ export const LoginRoute = () => {
         className="flex flex-col g rounded-3xl p-5 w-120 bg-modal-bg"
         autoComplete="off"
       >
-        
         <Label>
           <span className={labelCn}>{t('email')}</span>
           <Input
             id="email"
             value={email}
-            onChange={e => setEmail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
             placeholder={t('emailPlaceholder')}
             onBlur={() => setIsEmailInputTouched(true)}
             autoComplete="off"
           />
         </Label>
         <p className="text-destructive text-xs md:text-sm h-4 md:h-5 my-1">
-          {showEmailError ? t('invalidEmailFormat') : ""}
+          {showEmailError ? t('invalidEmailFormat') : ''}
         </p>
 
         <Label>
@@ -82,10 +80,10 @@ export const LoginRoute = () => {
         </Label>
 
         <Button
-          disabled={email === "" || password === "" || showEmailError}
+          disabled={email === '' || password === '' || showEmailError}
           type="submit"
-          className={clsx("mt-10", labelCn)}
-        >  
+          className={clsx('mt-10', labelCn)}
+        >
           {t('logIn')}
         </Button>
       </form>

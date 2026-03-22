@@ -1,1 +1,1 @@
-export * from "./read-local-storage";
+export * from './read-local-storage';
