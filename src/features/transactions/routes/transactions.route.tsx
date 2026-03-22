@@ -3,7 +3,7 @@ import { getTransactions } from "@features/transactions/api/get-transactions";
 import { useQuery } from "@tanstack/react-query";
 
 
-export const Transactions = () => {
+export const TransactionsRoute = () => {
   
   const { authToken } = useAuthToken();
   const { data, isLoading, error } = useQuery({
@@ -24,8 +24,6 @@ export const Transactions = () => {
           </li>
         ))}
       </ul>
-
-      
     </>
   );
 }

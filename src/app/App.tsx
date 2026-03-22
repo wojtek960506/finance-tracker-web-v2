@@ -1,12 +1,9 @@
 import { useAuthToken } from '@shared/hooks';
 import { MainLayout } from './layout';
 import { Navigate, Route, Routes } from 'react-router-dom';
-import {
-  Login,
-  Transactions,
-  PublicLayout,
-  ProtectedLayout,
-} from './routes';
+import { PublicLayout, ProtectedLayout } from './routes';
+import { TransactionsRoute } from '@/features/transactions/routes';
+import { LoginRoute } from '@/features/auth/routes';
 
 
 function App() {
@@ -19,11 +16,11 @@ function App() {
 
         <Route element={<PublicLayout isAuthenticated={isAuthenticated} />}>
           <Route path="/" element={<Navigate to="/login" replace />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/login" element={<LoginRoute />} />
         </Route>
         
         <Route element={<ProtectedLayout isAuthenticated={isAuthenticated} />}>
-          <Route path="/transactions" element={<Transactions />} />
+          <Route path="/transactions" element={<TransactionsRoute />} />
           <Route path="/categories" element={<p>Categories will be there</p>} />
           <Route path="/paymentMethods" element={<p>Payment methods will be there</p>} />
           <Route path="/accounts" element={<p>Accounts will be there</p>} />

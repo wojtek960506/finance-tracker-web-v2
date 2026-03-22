@@ -6,7 +6,7 @@ import { useAuthToken } from "@shared/hooks/use-auth-token";
 import { Label, Button, Input } from "@ui";
 
 
-export const Login = () => {
+export const LoginRoute = () => {
   const { t } = useTranslation("auth");
 
   const [email, setEmail] = useState("");
