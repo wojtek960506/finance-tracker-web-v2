@@ -13,7 +13,9 @@
       "@ui": ["src/shared/ui/index.ts"],
       "@shared/*": ["src/shared/*"],
       "@store/*": ["src/shared/store/*"],
-      "@context/*": ["src/shared/context/*"]
+      "@context/*": ["src/shared/context/*"],
+      "@auth/*": ["src/features/auth/*"],
+      "@transactions/*": ["src/features/transactions/*"]
     }
   }
 }

@@ -15,6 +15,8 @@ export default defineConfig({
       "@store": path.resolve(__dirname, "./src/shared/store"),
       "@context": path.resolve(__dirname, "./src/shared/context"),
       "@shared": path.resolve(__dirname, "./src/shared"),
+      "@auth/*": path.resolve(__dirname, "./src/features/auth"),
+      "@transactions/*": path.resolve(__dirname, "./src/features/transactions")
     }
   }
 });

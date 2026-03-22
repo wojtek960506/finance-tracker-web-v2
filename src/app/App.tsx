@@ -2,8 +2,8 @@ import { useAuthToken } from '@shared/hooks';
 import { MainLayout } from './layout';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { PublicLayout, ProtectedLayout } from './routes';
-import { TransactionsRoute } from '@/features/transactions/routes';
-import { LoginRoute } from '@/features/auth/routes';
+import { TransactionsRoute } from '@transactions/routes';
+import { LoginRoute } from '@auth/routes';
 
 
 function App() {

@@ -1,5 +1,5 @@
-import { useAuthToken } from "@shared/hooks/use-auth-token";
-import { getTransactions } from "@features/transactions/api/get-transactions";
+import { useAuthToken } from "@shared/hooks";
+import { getTransactions } from "@transactions/api";
 import { useQuery } from "@tanstack/react-query";
 
 

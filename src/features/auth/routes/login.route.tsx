@@ -1,8 +1,8 @@
 import clsx from "clsx";
 import { useState } from "react";
-import { login } from "@features/auth/api/login";
+import { login } from "@auth/api";
 import { useTranslation } from "react-i18next";
-import { useAuthToken } from "@shared/hooks/use-auth-token";
+import { useAuthToken } from "@shared/hooks";
 import { Label, Button, Input } from "@ui";
 
 
