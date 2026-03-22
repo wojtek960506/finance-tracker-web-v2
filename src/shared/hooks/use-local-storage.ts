@@ -1,5 +1,6 @@
-import { readLocalStorage } from "@shared/utils";
 import { useSyncExternalStore } from "react";
+
+import { readLocalStorage } from "@shared/utils";
 
 
 const LOCAL_STORAGE_CHANGE_EVENT = "local-storage-change";

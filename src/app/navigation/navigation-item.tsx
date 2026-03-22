@@ -1,10 +1,11 @@
 import clsx from "clsx";
-import { Button } from "@ui";
 import type { ComponentType } from "react";
 import { NavLink } from "react-router-dom";
+
+import { useNavigation } from "@context/navigation-context";
 import { ICON_CLASS_NAME } from "@shared/consts";
 import { useUIStore } from "@store/ui-store";
-import { useNavigation } from "@context/navigation-context";
+import { Button } from "@ui";
 
 
 type NavigationItemProps = {

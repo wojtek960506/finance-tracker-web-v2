@@ -1,10 +1,12 @@
+import { useQueryClient } from "@tanstack/react-query";
+import { Banknote, Bike, Car, LogOut, Settings } from "lucide-react";
+import { useTranslation } from "react-i18next";
+
+import { useNavigation } from "@context/navigation-context";
 import { useAuthToken, useLocalStorage } from "@shared/hooks";
 import { Collapsible } from "@ui";
-import { useTranslation } from "react-i18next";
+
 import { NavigationItem } from "./navigation-item";
-import { useQueryClient } from "@tanstack/react-query";
-import { useNavigation } from "@context/navigation-context";
-import { Banknote, Bike, Car, LogOut, Settings } from "lucide-react";
 
 
 // when more collapsibles in navigation think about some more dynamic solution

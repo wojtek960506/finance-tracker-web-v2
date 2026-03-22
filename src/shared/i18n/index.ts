@@ -1,7 +1,8 @@
-import { LANGUAGE_STORE_KEY } from "@shared/consts";
-import { readLocalStorage } from "@shared/utils";
 import i18n from "i18next"
 import { initReactI18next } from "react-i18next"
+
+import { LANGUAGE_STORE_KEY } from "@shared/consts";
+import { readLocalStorage } from "@shared/utils";
 
 
 const FALLBACK_LNG = "en";

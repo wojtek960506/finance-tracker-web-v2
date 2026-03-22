@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { forwardRef, type ComponentProps } from "react";
+import { type ComponentProps,forwardRef } from "react";
 
 
 export const Label = forwardRef<HTMLLabelElement, ComponentProps<"label">>(

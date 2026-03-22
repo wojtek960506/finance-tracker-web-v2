@@ -1,6 +1,8 @@
-import type { Language } from "@shared/types";
-import { LANGUAGE_STORE_KEY } from "@shared/consts";
 import { useTranslation } from "react-i18next";
+
+import { LANGUAGE_STORE_KEY } from "@shared/consts";
+import type { Language } from "@shared/types";
+
 import { useLocalStorage } from "./use-local-storage";
 
 

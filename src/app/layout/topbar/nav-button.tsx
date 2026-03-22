@@ -1,9 +1,10 @@
 import clsx from "clsx";
 import { Menu } from "lucide-react";
-import { useAuthToken } from "@shared/hooks";
-import { Button } from "@ui";
+
 import { ICON_CLASS_NAME } from "@shared/consts";
+import { useAuthToken } from "@shared/hooks";
 import { useUIStore } from "@store/ui-store";
+import { Button } from "@ui";
 
 
 export const NavButton = () => {

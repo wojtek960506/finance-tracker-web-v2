@@ -1,9 +1,11 @@
-import { useAuthToken } from '@shared/hooks';
-import { MainLayout } from './layout';
 import { Navigate, Route, Routes } from 'react-router-dom';
-import { PublicLayout, ProtectedLayout } from './routes';
-import { TransactionsRoute } from '@transactions/routes';
+
 import { LoginRoute } from '@auth/routes';
+import { useAuthToken } from '@shared/hooks';
+import { TransactionsRoute } from '@transactions/routes';
+
+import { MainLayout } from './layout';
+import { ProtectedLayout,PublicLayout } from './routes';
 
 
 function App() {

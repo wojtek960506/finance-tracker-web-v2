@@ -1,6 +1,7 @@
+import { useQuery } from "@tanstack/react-query";
+
 import { useAuthToken } from "@shared/hooks";
 import { getTransactions } from "@transactions/api";
-import { useQuery } from "@tanstack/react-query";
 
 
 export const TransactionsRoute = () => {

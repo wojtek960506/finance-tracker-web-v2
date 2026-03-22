@@ -1,9 +1,10 @@
 import clsx from "clsx";
 import { useState } from "react";
-import { login } from "@auth/api";
 import { useTranslation } from "react-i18next";
+
+import { login } from "@auth/api";
 import { useAuthToken } from "@shared/hooks";
-import { Label, Button, Input } from "@ui";
+import { Button, Input,Label } from "@ui";
 
 
 export const LoginRoute = () => {

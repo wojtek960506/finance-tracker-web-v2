@@ -1,7 +1,8 @@
 import { Moon, Sun } from "lucide-react";
-import { Button } from "@ui";
-import { ICON_CLASS_NAME } from "@shared/consts";
+
 import { useTheme } from "@context/theme-context";
+import { ICON_CLASS_NAME } from "@shared/consts";
+import { Button } from "@ui";
 
 
 export const ThemeButton = () => {

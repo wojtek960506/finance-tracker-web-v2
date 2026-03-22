@@ -1,7 +1,8 @@
 import clsx from "clsx";
-import { Button } from "@ui";
-import { useState, type ReactNode } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { type ReactNode,useState } from "react";
+
+import { Button } from "@ui";
 
 
 type CollapsibleProps = {

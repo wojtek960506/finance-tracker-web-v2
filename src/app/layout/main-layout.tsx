@@ -1,8 +1,10 @@
 import { type ReactNode } from "react";
-import { Drawer } from "@ui";
-import { useUIStore } from "@store/ui-store";
+
 import { Navigation } from "@app/navigation";
 import { NavigationProvider } from "@context/navigation-context";
+import { useUIStore } from "@store/ui-store";
+import { Drawer } from "@ui";
+
 import { Topbar } from "./topbar";
 
 

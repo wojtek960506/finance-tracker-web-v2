@@ -1,9 +1,10 @@
 import clsx from "clsx";
 import Flag from "react-flagkit";
+
+import { ICON_CLASS_NAME, SUPPORTED_LANGUAGES } from "@shared/consts";
 import { useLanguage } from "@shared/hooks";
 import type { Language } from "@shared/types";
 import { Button, Dropdown } from "@ui";
-import { ICON_CLASS_NAME, SUPPORTED_LANGUAGES } from "@shared/consts";
 
 
 const RoundedFlag = ({ isoCode }: { isoCode: string }) => (

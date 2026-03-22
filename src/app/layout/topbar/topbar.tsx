@@ -1,8 +1,9 @@
 import clsx from "clsx";
-import { NavButton } from "./nav-button";
-import { Title } from "./title";
+
 import { LanguageSwitcher } from "./language-switcher";
+import { NavButton } from "./nav-button";
 import { ThemeButton } from "./theme-button";
+import { Title } from "./title";
 
 
 export const Topbar = () => {
