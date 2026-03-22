@@ -1,28 +1,25 @@
 import { type ReactNode } from "react";
 import { Drawer } from "@components/ui";
 import { useUIStore } from "@/store/ui-store";
-import { IS_DESKTOP_MEDIA_QUERY } from "@/consts";
 import { Navigation } from "@components/navigation";
-import { MobileTopbar, DesktopTopbar } from "./topbar";
-import { useMediaQuery } from "@/hooks/use-media-query";
 import { NavigationProvider } from "@/context/navigation-context";
+import { Topbar } from "./topbar";
 
 
 export const MainLayout = ({ children }: { children: ReactNode }) => {  
   const { isNavOpen, setIsNavOpen } = useUIStore();
-  const isDesktop = useMediaQuery(IS_DESKTOP_MEDIA_QUERY);
+  const isDrawerFromLeft = true;
   
   return (
     <div className="flex h-screen flex-col overflow-hidden">
-
-      {isDesktop ? <DesktopTopbar /> : <MobileTopbar />}
+      <Topbar />
 
       <main className="p-4 h-full"> {/* p-1 == p-[0.25rem] == p-[4px] */}
         {children}
       </main>
 
-      <Drawer isOpen={isNavOpen} fromLeft={isDesktop} onClose={() => setIsNavOpen(false)}>
-        <NavigationProvider fromLeft={isDesktop}>
+      <Drawer isOpen={isNavOpen} fromLeft={isDrawerFromLeft} onClose={() => setIsNavOpen(false)}>
+        <NavigationProvider fromLeft={isDrawerFromLeft}>
           <Navigation />
         </NavigationProvider>
       </Drawer>

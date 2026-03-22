@@ -25,11 +25,12 @@ export const Drawer = ({ isOpen, fromLeft, onClose, children }: DrawerProps) => 
     {/* Drawer panel */}
     <div
       className={clsx(
-        "z-100 fixed top-0 h-full min-w-64 bg-bg shadow-lg transform duration-300",
-        `transition-transform ${fromLeft ? "left-0" : "right-0"}`,
+        "z-100 fixed top-0 h-full min-w-64 bg-bg shadow-lg transform ",
+        'transition-transform duration-300',
+        fromLeft ? "left-0" : "right-0",
         `${fromLeft
           ? (isOpen ? "translate-x-0" : "-translate-x-full")
-          : (isOpen ? "translate-x-0" : "translate-x-full")}`
+          : (isOpen ? "translate-x-0" : "translate-x-full")}`,
       )}
     >
       <div className={clsx(
