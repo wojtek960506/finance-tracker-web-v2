@@ -11,8 +11,8 @@
     "format": "prettier . --check",
     "format:fix": "prettier . --write",
     "fix": "pnpm lint:fix && pnpm format:fix",
-    "test": "vitest",
-    "test:run": "vitest run",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "preview": "vite preview"
   },

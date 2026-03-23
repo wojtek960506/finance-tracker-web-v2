@@ -60,7 +60,7 @@ export default defineConfig(
             ['^\\u0000'],
             ['^@?\\w'],
             [
-              '^(@/|@app|@features|@ui|@shared|@store|@context|@auth|@transactions)(/.*|$)',
+              '^(@/|@app|@features|@ui|@shared|@store|@context|@auth|@transactions|@test-utils)(/.*|$)',
             ],
             ['^\\.\\.(?!/?$)', '^\\.\\./?$'],
             ['^\\./(?=.*/)(?!/?$)', '^\\.(?!/?$)', '^\\./?$'],

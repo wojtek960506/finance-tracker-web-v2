@@ -23,6 +23,7 @@ export default mergeConfig(
           'src/**/*.spec.{ts,tsx}',
           'src/**/index.ts',
           'src/**/*types*.ts',
+          'src/**/test-utils/*',
         ],
       },
     },

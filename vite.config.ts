@@ -17,6 +17,7 @@ export default defineConfig({
       '@shared': path.resolve(__dirname, './src/shared'),
       '@auth': path.resolve(__dirname, './src/features/auth'),
       '@transactions': path.resolve(__dirname, './src/features/transactions'),
+      '@test-utils': path.resolve(__dirname, './src/test-utils'),
     },
   },
 });
