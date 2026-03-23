@@ -2,15 +2,23 @@
   "files": [],
   "references": [
     { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
+    { "path": "./tsconfig.node.json" },
+    { "path": "./tsconfig.vitest.json" }
   ],
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
-      "@store/*": ["src/store/*"],
-      "@context/*": ["src/context/*"],
-      "@components/*": ["src/components/*"],
+      "@app/*": ["src/app/*"],
+      "@features/*": ["src/features/*"],
+      "@ui": ["src/shared/ui/index.ts"],
+      "@shared/*": ["src/shared/*"],
+      "@store/*": ["src/shared/store/*"],
+      "@context/*": ["src/shared/context/*"],
+      "@auth/*": ["src/features/auth/*"],
+      "@transactions/*": ["src/features/transactions/*"],
+      "@test-utils/*": ["src/test-utils/*"],
+      "@test-utils": ["src/test-utils/index.ts"]
     }
   }
 }
