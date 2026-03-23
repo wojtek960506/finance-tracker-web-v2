@@ -60,9 +60,6 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           'bg-fg text-bg hover:bg-hover',
           'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bt-secondary-ring',
         );
-
-      // default:
-      //   variantClassName = 'bg-bg text-fg border-fg hover:bg-fg/20 ';
     }
 
     return (
@@ -71,7 +68,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         className={twMerge(
           clsx(
-            'border border-transparent px-2 py-2 rounded-xl cursor-pointer disabled:cursor-not-allowed',
+            'border border-transparent p-1 md:p-2 rounded-lg md:rounded-xl cursor-pointer disabled:cursor-not-allowed',
             'flex items-center justify-center disabled:bg-bt-disabled',
             variantClassName,
             className,
