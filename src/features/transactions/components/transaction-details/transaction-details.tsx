@@ -11,7 +11,7 @@ const Detail = ({ title, children }: { title: string; children: ReactNode }) => 
   return (
     <div className="flex flex-col gap-0 px-4">
       <span className="text-text-muted text-left text-sm">{title}</span>
-      <span className="text-md md:text-lg">{children}</span>
+      <span className="text-base md:text-lg">{children}</span>
     </div>
   );
 };

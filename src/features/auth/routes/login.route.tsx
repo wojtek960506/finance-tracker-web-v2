@@ -46,7 +46,7 @@ export const LoginRoute = () => {
   const labelCn = 'text-lg md:text-xl font-bold';
 
   return (
-    <div className="h-full flex justify-center items-center text-md md:text-lg">
+    <div className="h-full flex justify-center items-center text-base md:text-lg">
       <Card className="w-120">
         <form
           onSubmit={handleSubmit}

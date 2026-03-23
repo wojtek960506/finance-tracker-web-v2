@@ -68,7 +68,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         className={twMerge(
           clsx(
-            'border border-transparent p-1 md:p-2 rounded-lg md:rounded-xl cursor-pointer disabled:cursor-not-allowed',
+            'border border-transparent p-1 sm:p-2 rounded-lg sm:rounded-xl cursor-pointer disabled:cursor-not-allowed',
             'flex items-center justify-center disabled:bg-bt-disabled',
             variantClassName,
             className,
