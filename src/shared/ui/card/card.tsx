@@ -10,7 +10,9 @@ export const Card = ({ className = '', children }: CardProps) => {
   return (
     <div
       className={clsx(
-        'flex flex-col border border-fg rounded-3xl p-4 gap-2 bg-card-bg',
+        'flex flex-col border border-fg rounded-3xl p-4 gap-2 bg-modal-bg',
+        'shadow-[0_12px_30px_-20px_rgba(0,0,0,0.35)]',
+        'dark:shadow-[0_12px_30px_-20px_rgba(0,0,0,0.7)]',
         className,
       )}
     >

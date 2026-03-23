@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import { login } from '@auth/api';
 import { useAuthToken } from '@shared/hooks';
-import { Button, Input, Label } from '@ui';
+import { Button, Card, Input, Label } from '@ui';
 
 export const LoginRoute = () => {
   const { t } = useTranslation('auth');
@@ -47,46 +47,48 @@ export const LoginRoute = () => {
 
   return (
     <div className="h-full flex justify-center items-center text-md md:text-lg">
-      <form
-        onSubmit={handleSubmit}
-        className="flex flex-col g rounded-3xl p-5 w-120 bg-modal-bg"
-        autoComplete="off"
-      >
-        <Label>
-          <span className={labelCn}>{t('email')}</span>
-          <Input
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder={t('emailPlaceholder')}
-            onBlur={() => setIsEmailInputTouched(true)}
-            autoComplete="off"
-          />
-        </Label>
-        <p className="text-destructive text-xs md:text-sm h-4 md:h-5 my-1">
-          {showEmailError ? t('invalidEmailFormat') : ''}
-        </p>
-
-        <Label>
-          <span className={labelCn}>{t('password')}</span>
-          <Input
-            id="password"
-            value={password}
-            type="password"
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder={t('passwordPlaceholder')}
-            autoComplete="off"
-          />
-        </Label>
-
-        <Button
-          disabled={email === '' || password === '' || showEmailError}
-          type="submit"
-          className={clsx('mt-10', labelCn)}
+      <Card className="w-120">
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col" /* rounded-3xl p-5 w-120 bg-modal-bg */
+          autoComplete="off"
         >
-          {t('logIn')}
-        </Button>
-      </form>
+          <Label>
+            <span className={labelCn}>{t('email')}</span>
+            <Input
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder={t('emailPlaceholder')}
+              onBlur={() => setIsEmailInputTouched(true)}
+              autoComplete="off"
+            />
+          </Label>
+          <p className="text-destructive text-xs md:text-sm h-4 md:h-5 my-1">
+            {showEmailError ? t('invalidEmailFormat') : ''}
+          </p>
+
+          <Label>
+            <span className={labelCn}>{t('password')}</span>
+            <Input
+              id="password"
+              value={password}
+              type="password"
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder={t('passwordPlaceholder')}
+              autoComplete="off"
+            />
+          </Label>
+
+          <Button
+            disabled={email === '' || password === '' || showEmailError}
+            type="submit"
+            className={clsx('mt-10', labelCn)}
+          >
+            {t('logIn')}
+          </Button>
+        </form>
+      </Card>
     </div>
   );
 };

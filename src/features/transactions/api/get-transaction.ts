@@ -6,9 +6,6 @@ export const getTransaction = async (
   authToken: string | null,
   id: string,
 ): Promise<Transaction> => {
-  
-  console.log('abc')
-
   const res = await fetch(`${BASE_URL}/api/transactions/${id}`, {
     headers: { Authorization: `Bearer ${authToken}` },
   });

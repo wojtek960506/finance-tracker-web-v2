@@ -2,8 +2,6 @@ import { BASE_URL } from '@shared/consts';
 
 import type { TransactionsResponse } from './types';
 
-
-
 export const getTransactions = async (
   authToken: string | null,
 ): Promise<TransactionsResponse> => {

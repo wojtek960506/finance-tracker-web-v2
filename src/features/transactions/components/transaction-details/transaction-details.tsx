@@ -1,21 +1,22 @@
-import { useQuery } from "@tanstack/react-query";
-import { useTranslation } from "react-i18next";
-import { useParams } from "react-router-dom"
+import { useQuery } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
+import { Link, useParams } from 'react-router-dom';
 
-import { getTransaction } from "@transactions/api";
-
-import { useAuthToken } from "@/shared/hooks";
-import { Button, Card } from "@/shared/ui";
+import { useAuthToken } from '@shared/hooks';
+import { Button, Card } from '@shared/ui';
+import { getTransaction } from '@transactions/api';
 
 export const TransactionDetails = () => {
-  const { t } = useTranslation("transactions");
+  const { t } = useTranslation('transactions');
 
   const { transactionId } = useParams<{ transactionId: string }>();
 
-  console.log('transactionId', transactionId);
-
   const { authToken } = useAuthToken();
-  const { data: transaction, isLoading, error } = useQuery({
+  const {
+    data: transaction,
+    isLoading,
+    error,
+  } = useQuery({
     queryKey: ['transaction', transactionId],
     queryFn: async () => await getTransaction(authToken, transactionId!),
   });
@@ -24,16 +25,14 @@ export const TransactionDetails = () => {
   if (error) return <p>{error.message}</p>;
   if (!transaction) return <p>No transaction</p>;
 
-  console.log('transaction', transaction);
-
-  return ( 
+  return (
     <>
-      
       <Card className="max-w-150 m-auto">
-        <Button variant='primary'>{t('update')}</Button>
+        <Button variant="secondary">{t('update')}</Button>
+        <h1 className="text-xl font-medium">{transaction.description}</h1>
         <div className="grid grid-cols-[auto_auto] gap-2">
-          <span>{t('description')}</span>
-          <span>{transaction.description}</span>
+          {/* <span>{t('description')}</span>
+          <span>{transaction.description}</span> */}
 
           <span>{t('date')}</span>
           <time>{transaction.date}</time>
@@ -49,16 +48,19 @@ export const TransactionDetails = () => {
 
           <span>{t('category')}</span>
           <span>{transaction.category.name}</span>
-          
-          <span>{t('paymentMethod')}</span>
-          <span>{transaction.paymentMethod.name}</span>
+
+          <Link to="/paymentMethods" className="hover:text-active-nav">
+            <span>{t('paymentMethod')}</span>
+          </Link>
+          <Link to="/paymentMethods">
+            <span>{transaction.paymentMethod.name}</span>
+          </Link>
 
           <span>{t('account')}</span>
           <span>{transaction.account.name}</span>
-
         </div>
-        <Button variant='destructive'>{t('delete')}</Button>
+        <Button variant="destructive">{t('delete')}</Button>
       </Card>
     </>
-  )
-}
+  );
+};
