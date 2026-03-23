@@ -8,7 +8,12 @@ type CardProps = {
 
 export const Card = ({ className = '', children }: CardProps) => {
   return (
-    <div className={clsx('flex flex-col border border-fg rounded-3xl p-4', className)}>
+    <div
+      className={clsx(
+        'flex flex-col border border-fg rounded-3xl p-4 gap-2 bg-card-bg',
+        className,
+      )}
+    >
       {children}
     </div>
   );

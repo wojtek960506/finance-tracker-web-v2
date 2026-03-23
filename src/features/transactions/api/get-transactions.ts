@@ -1,12 +1,16 @@
 import { BASE_URL } from '@shared/consts';
 
+export type NamedResource = {
+  id: string;
+  type: string;
+  name: string;
+};
+
 export type Transaction = {
   date: string;
   description: string;
   amount: number;
   currency: string;
-  paymentMethod: string;
-  account: string;
   transactionType: string;
   id: string;
   ownerId: string;
@@ -17,11 +21,9 @@ export type Transaction = {
   refId?: string;
   currencies: string;
   exchangeRate: string;
-  category: {
-    id: string;
-    type: string;
-    name: string;
-  };
+  category: NamedResource;
+  paymentMethod: NamedResource;
+  account: NamedResource;
 };
 
 export type TransactionsResponse = {

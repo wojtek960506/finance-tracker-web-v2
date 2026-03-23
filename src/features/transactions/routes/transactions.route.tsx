@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { useAuthToken } from '@shared/hooks';
 import { getTransactions } from '@transactions/api';
+import { TransactionsList } from '@transactions/components/transactions-list';
 
 export const TransactionsRoute = () => {
   const { authToken } = useAuthToken();
@@ -15,12 +16,7 @@ export const TransactionsRoute = () => {
 
   return (
     <>
-      <h1>Transactions will be here</h1>
-      <ul>
-        {data?.items.map((transaction) => (
-          <li key={transaction.id}>{`${transaction.date} ${transaction.description}`}</li>
-        ))}
-      </ul>
+      <TransactionsList transactions={data?.items} />
     </>
   );
 };
