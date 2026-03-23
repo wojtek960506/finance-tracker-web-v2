@@ -2,6 +2,7 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 
 import { LoginRoute } from '@auth/routes';
 import { useAuthToken } from '@shared/hooks';
+import { TransactionDetails } from '@transactions/components/transaction-details';
 import { TransactionsRoute } from '@transactions/routes';
 
 import { MainLayout } from './layout';
@@ -20,6 +21,7 @@ function App() {
 
         <Route element={<ProtectedLayout isAuthenticated={isAuthenticated} />}>
           <Route path="/transactions" element={<TransactionsRoute />} />
+          <Route path="/transactions/:transactionId" element={<TransactionDetails />} />
           <Route path="/categories" element={<p>Categories will be there</p>} />
           <Route path="/paymentMethods" element={<p>Payment methods will be there</p>} />
           <Route path="/accounts" element={<p>Accounts will be there</p>} />
