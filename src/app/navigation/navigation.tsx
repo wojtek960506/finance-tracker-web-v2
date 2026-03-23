@@ -25,7 +25,7 @@ export const Navigation = () => {
   if (!authToken) return;
 
   return (
-    <ul className="text-base md:text-lg">
+    <ul className="text-base sm:text-lg">
       <li>
         <Collapsible
           header={

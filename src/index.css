@@ -49,7 +49,7 @@
   --active-nav: var(--color-blue-600);
 
   --topbar-h: 3.5rem; /* 56px */
-  --topbar-h-md: 4rem; /* 64px */
+  --topbar-h-sm: 4rem; /* 64px */
 }
 
 .dark {

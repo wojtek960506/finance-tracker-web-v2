@@ -36,7 +36,7 @@ export const NavigationItem = ({
     >
       <Button
         className={clsx(
-          'w-full justify-between gap-3 md:gap-4',
+          'w-full justify-between gap-3 sm:gap-4',
           fromLeft ? 'text-left' : 'flex-row-reverse text-right',
         )}
         variant="ghost"

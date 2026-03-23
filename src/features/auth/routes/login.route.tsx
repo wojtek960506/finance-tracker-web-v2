@@ -9,8 +9,8 @@ import { Button, Card, Input, Label } from '@ui';
 export const LoginRoute = () => {
   const { t } = useTranslation('auth');
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('w@z.pl');
+  const [password, setPassword] = useState('123');
 
   const [isEmailInputTouched, setIsEmailInputTouched] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -43,10 +43,10 @@ export const LoginRoute = () => {
     }
   };
 
-  const labelCn = 'text-lg md:text-xl font-bold';
+  const labelCn = 'text-lg sm:text-xl font-bold';
 
   return (
-    <div className="h-full flex justify-center items-center text-base md:text-lg">
+    <div className="h-full flex justify-center items-center text-base sm:text-lg">
       <Card className="w-120">
         <form
           onSubmit={handleSubmit}
@@ -64,7 +64,7 @@ export const LoginRoute = () => {
               autoComplete="off"
             />
           </Label>
-          <p className="text-destructive text-xs md:text-sm h-4 md:h-5 my-1">
+          <p className="text-destructive text-xs sm:text-sm h-4 sm:h-5 my-1">
             {showEmailError ? t('invalidEmailFormat') : ''}
           </p>
 

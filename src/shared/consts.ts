@@ -18,4 +18,4 @@ export const IS_LG_MEDIA_QUERY = '(min-width: 1024px)';
 export const IS_XL_MEDIA_QUERY = '(min-width: 1280px)';
 export const IS_2XL_MEDIA_QUERY = '(min-width: 1536px)';
 
-export const ICON_CLASS_NAME = 'w-7 h-7 md:w-8 md:h-8';
+export const ICON_CLASS_NAME = 'w-7 h-7 sm:w-8 sm:h-8';

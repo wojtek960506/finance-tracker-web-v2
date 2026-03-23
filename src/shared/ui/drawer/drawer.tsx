@@ -41,8 +41,8 @@ export const Drawer = ({ isOpen, fromLeft, onClose, children }: DrawerProps) => 
     >
       <div
         className={clsx(
-          'flex p-2 h-[var(--topbar-h)] border-b border-foreground',
-          'min-h-[var(--topbar-h)] md:min-h-[var(--topbar-h-md)]',
+          'flex p-2 h-[var(--topbar-h)] sm:h-[var(--topbar-h-sm)] border-b border-foreground',
+          'min-h-[var(--topbar-h)] sm:min-h-[var(--topbar-h-sm)]',
           fromLeft ? 'justify-end' : 'justify-start',
         )}
       >

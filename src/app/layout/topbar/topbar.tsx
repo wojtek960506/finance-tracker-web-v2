@@ -11,7 +11,7 @@ export const Topbar = () => {
       className={clsx(
         'sticky top-0 z-50 border-b border-foreground px-3',
         'grid grid-cols-[1fr_auto_1fr] items-center text-foreground bg-background',
-        'min-h-[var(--topbar-h)] md:min-h-[var(--topbar-h-md)]',
+        'min-h-[var(--topbar-h)] sm:min-h-[var(--topbar-h-sm)]',
       )}
     >
       <div className="flex justify-self-start">

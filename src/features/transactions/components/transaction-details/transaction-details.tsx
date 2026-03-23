@@ -9,9 +9,9 @@ import { getTransaction } from '@transactions/api';
 
 const Detail = ({ title, children }: { title: string; children: ReactNode }) => {
   return (
-    <div className="flex flex-col gap-0 px-4">
+    <div className="flex flex-col gap-0">
       <span className="text-text-muted text-left text-sm">{title}</span>
-      <span className="text-base md:text-lg">{children}</span>
+      <span className="text-base sm:text-lg">{children}</span>
     </div>
   );
 };
@@ -37,10 +37,10 @@ export const TransactionDetails = () => {
   if (!transaction) return <p>No transaction</p>;
 
   return (
-    <>
-      <Card className="max-w-100 m-auto gap-3 md:gap-4">
-        <Button variant="secondary">{t('updateTransaction')}</Button>
-        <h1 className="text-lg md:text-xl font-semibold text-left px-4">
+    <div className="flex flex-col max-w-100 m-auto gap-2 sm:gap-3">
+      <Button variant="secondary">{t('updateTransaction')}</Button>
+      <Card className="gap-3 sm:gap-4 p-4 sm:p-5">
+        <h1 className="text-lg sm:text-xl font-semibold text-left">
           {transaction.description}
         </h1>
         <div className="flex flex-col gap-2">
@@ -67,8 +67,8 @@ export const TransactionDetails = () => {
             </Link>
           </Detail>
         </div>
-        <Button variant="destructive">{t('deleteTransaction')}</Button>
       </Card>
-    </>
+      <Button variant="destructive">{t('deleteTransaction')}</Button>
+    </div>
   );
 };
