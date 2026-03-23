@@ -7,14 +7,14 @@ import { useAuthToken, useLanguage } from '@shared/hooks';
 import { Button, Card } from '@shared/ui';
 import { getTransaction } from '@transactions/api';
 
-const Detail = ({ title, children }: { title: string, children: ReactNode }) => {
+const Detail = ({ title, children }: { title: string; children: ReactNode }) => {
   return (
     <div className="flex flex-col gap-0 px-4">
       <span className="text-text-muted text-left text-sm">{title}</span>
       <span className="text-md md:text-lg">{children}</span>
     </div>
-  )
-}
+  );
+};
 
 export const TransactionDetails = () => {
   const { t } = useTranslation('transactions');
@@ -39,7 +39,7 @@ export const TransactionDetails = () => {
   return (
     <>
       <Card className="max-w-100 m-auto gap-3 md:gap-4">
-        <Button variant="secondary">{t('update')}</Button>
+        <Button variant="secondary">{t('updateTransaction')}</Button>
         <h1 className="text-lg md:text-xl font-semibold text-left px-4">
           {transaction.description}
         </h1>
@@ -52,7 +52,7 @@ export const TransactionDetails = () => {
           </Detail>
           <Detail title={t('transactionType')}>{transaction.transactionType}</Detail>
           <Detail title={t('category')}>
-            <Link to="/categories"  className="hover:text-active-nav">
+            <Link to="/categories" className="hover:text-active-nav">
               {transaction.category.name}
             </Link>
           </Detail>
@@ -67,7 +67,7 @@ export const TransactionDetails = () => {
             </Link>
           </Detail>
         </div>
-        <Button variant="destructive">{t('delete')}</Button>
+        <Button variant="destructive">{t('deleteTransaction')}</Button>
       </Card>
     </>
   );

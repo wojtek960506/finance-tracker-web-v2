@@ -23,7 +23,9 @@ export const TransactionPreview = ({ transaction }: { transaction: Transaction }
           </header>
 
           <main className="py-1">
-            <h1 className="text-lg md:text-xl font-semibold">{transaction.description}</h1>
+            <h1 className="text-lg md:text-xl font-semibold">
+              {transaction.description}
+            </h1>
           </main>
         </Link>
 

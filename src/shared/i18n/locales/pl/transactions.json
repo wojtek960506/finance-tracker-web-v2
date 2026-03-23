@@ -1,0 +1,11 @@
+{
+  "newTransaction": "Nowa transakcja",
+  "updateTransaction": "Edytuj transakcję",
+  "deleteTransaction": "Usuń transakcję",
+  "date": "Data",
+  "amount": "Kwota",
+  "transactionType": "Typ transakcji",
+  "category": "Kategoria",
+  "paymentMethod": "Metoda płatności",
+  "account": "Konto"
+}
