@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { LANGUAGE_STORE_KEY } from '@shared/consts';
@@ -14,10 +15,14 @@ export const useLanguage = () => {
     currentLanguage,
   );
 
-  const setLanguage = (code: Language) => {
-    setItem(code);
-    i18n.changeLanguage(code);
-  };
+  useEffect(() => {
+    if (item && item != i18n.language) {
+      console.log('language changed')
+      void i18n.changeLanguage(item);
+    }
+  }, [item, i18n]);
+
+  const setLanguage = (code: Language) => setItem(code);
 
   return { language: item ?? 'en', setLanguage };
 };
