@@ -8,7 +8,7 @@
 
   --fg: rgba(var(--dark-base));
   --bg: rgba(var(--light-base));
-  --hover: oklch(0.35 0.03 260);
+  --hover: oklch(42.035% 0.03597 257.811);
   --surface: oklch(1 0 0);
   --text: oklch(0.2 0.015 260);
   --text-muted: oklch(0.45 0.02 260);
@@ -55,7 +55,7 @@
 .dark {
   --bg: rgba(var(--dark-base));
   --fg: rgba(var(--light-base));
-  --hover: oklch(0.9 0.006 260);
+  --hover: oklch(76.666% 0.00752 268.567);
   --surface: oklch(0.24 0.02 260);
   --text: oklch(0.95 0.01 260);
   --text-muted: oklch(0.77 0.015 260);

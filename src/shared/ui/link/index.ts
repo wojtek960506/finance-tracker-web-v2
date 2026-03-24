@@ -1,2 +1,2 @@
-export * from './ghost-link';
+export * from './button-link';
 export * from './hover-link';

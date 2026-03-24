@@ -2,13 +2,14 @@ import clsx from 'clsx';
 import { type ComponentProps, forwardRef } from 'react';
 import { twMerge } from 'tailwind-merge';
 
-type ButtonVariant =
+export type ButtonVariant =
   | 'default'
   | 'inverse'
   | 'primary'
   | 'secondary'
   | 'destructive'
-  | 'ghost';
+  | 'ghost'
+  | 'outline';
 
 type ButtonProps = ComponentProps<'button'> & {
   variant?: ButtonVariant;
@@ -52,6 +53,12 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         variantClassName = clsx(
           'bg-bg text-fg border-fg hover:bg-fg/10',
           'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg',
+        );
+        break;
+      case 'outline':
+        variantClassName = clsx(
+          'bg-transparent hover:bg-bt-ghost-hover border-fg',
+          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border',
         );
         break;
       case 'default':

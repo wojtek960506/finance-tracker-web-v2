@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 
 import type { Transaction } from '@transactions/api';
 import { EXCHANGE_CATEGORY, TRANSFER_CATEGORY } from '@transactions/consts';
-import { GhostLink } from '@ui';
+import { ButtonLink } from '@ui';
 
 import { Detail } from './detail';
 
@@ -30,9 +30,9 @@ export const AdditionalDetails = ({ transaction }: { transaction: Transaction })
       )}
 
       {refId && (
-        <GhostLink to={`/transactions/${refId}`} className="justify-self-center w-full">
+        <ButtonLink to={`/transactions/${refId}`} className="justify-self-center w-full">
           {t('goToReferencedTransaction')}
-        </GhostLink>
+        </ButtonLink>
       )}
     </>
   );

@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 import { useLanguage } from '@shared/hooks';
 import type { Transaction } from '@transactions/api';
-import { Card, GhostLink } from '@ui';
+import { ButtonLink, Card } from '@ui';
 
 export const TransactionPreview = ({ transaction }: { transaction: Transaction }) => {
   const { language } = useLanguage();
@@ -31,15 +31,15 @@ export const TransactionPreview = ({ transaction }: { transaction: Transaction }
         </Link>
 
         <footer className="flex justify-end gap-1">
-          <GhostLink to="/accounts" className={ghostLinkCn}>
+          <ButtonLink to="/accounts" className={ghostLinkCn}>
             {transaction.account.name}
-          </GhostLink>
-          <GhostLink to="/paymentMethods" className={ghostLinkCn}>
+          </ButtonLink>
+          <ButtonLink to="/paymentMethods" className={ghostLinkCn}>
             {transaction.paymentMethod.name}
-          </GhostLink>
-          <GhostLink to="/categories" className={ghostLinkCn}>
+          </ButtonLink>
+          <ButtonLink to="/categories" className={ghostLinkCn}>
             {transaction.category.name}
-          </GhostLink>
+          </ButtonLink>
         </footer>
       </Card>
     </li>
