@@ -1,16 +1,8 @@
-import { BASE_URL } from '@shared/consts';
+import { api } from '@shared/api';
 
 import type { Transaction } from './types';
 
-export const getTransaction = async (
-  authToken: string | null,
-  id: string,
-): Promise<Transaction> => {
-  const res = await fetch(`${BASE_URL}/api/transactions/${id}`, {
-    headers: { Authorization: `Bearer ${authToken}` },
-  });
-
-  if (!res.ok) throw new Error('error getting transaction');
-
-  return res.json();
+export const getTransaction = async (id: string): Promise<Transaction> => {
+  const res = await api.get<Transaction>(`/transactions/${id}`);
+  return res.data;
 };

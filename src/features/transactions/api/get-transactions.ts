@@ -1,10 +1,8 @@
-import { BASE_URL } from '@shared/consts';
-
 import type { TransactionsResponse } from './types';
 
-export const getTransactions = async (
-  authToken: string | null,
-): Promise<TransactionsResponse> => {
+import { api } from '@/shared/api';
+
+export const getTransactions = async (): Promise<TransactionsResponse> => {
   const params = new URLSearchParams({
     page: '1',
     limit: '30',
@@ -12,11 +10,6 @@ export const getTransactions = async (
     sortOrder: 'desc',
   });
 
-  const res = await fetch(`${BASE_URL}/api/transactions?${params}`, {
-    headers: { Authorization: `Bearer ${authToken}` },
-  });
-
-  if (!res.ok) throw new Error('error getting transactions');
-
-  return res.json();
+  const res = await api.get(`/transactions?${params}`);
+  return res.data;
 };

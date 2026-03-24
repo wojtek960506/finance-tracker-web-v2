@@ -1,16 +1,6 @@
-import { BASE_URL } from '@shared/consts';
+import { api } from '@shared/api';
 
 export const login = async (email: string, password: string) => {
-  const res = await fetch(`${BASE_URL}/api/auth/login`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ email, password }),
-  });
-
-  if (!res.ok) throw new Error('login failure');
-
-  const resJSON = await res.json();
-  return resJSON['accessToken'];
+  const res = await api.post<{ accessToken: string }>('/auth/login', { email, password });
+  return res.data.accessToken;
 };

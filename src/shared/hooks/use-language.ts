@@ -16,10 +16,7 @@ export const useLanguage = () => {
   );
 
   useEffect(() => {
-    if (item && item != i18n.language) {
-      console.log('language changed')
-      void i18n.changeLanguage(item);
-    }
+    if (item && item != i18n.language) void i18n.changeLanguage(item);
   }, [item, i18n]);
 
   const setLanguage = (code: Language) => setItem(code);

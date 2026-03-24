@@ -1,7 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 
-import { useAuthToken } from '@shared/hooks';
 import { Button } from '@shared/ui';
 import { getTransactions } from '@transactions/api';
 
@@ -10,10 +9,9 @@ import { TransactionPreview } from './transaction-preview';
 export const TransactionsList = () => {
   const { t } = useTranslation('transactions');
 
-  const { authToken } = useAuthToken();
   const { data, isLoading, error } = useQuery({
     queryKey: ['transactions'],
-    queryFn: async () => await getTransactions(authToken),
+    queryFn: async () => await getTransactions(),
   });
 
   if (isLoading) return <p>Loading</p>;

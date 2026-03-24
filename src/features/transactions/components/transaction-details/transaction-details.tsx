@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
-import { useAuthToken, useLanguage } from '@shared/hooks';
+import { useLanguage } from '@shared/hooks';
 import { getTransaction } from '@transactions/api';
 import { Button, Card, HoverLink } from '@ui';
 
@@ -15,14 +15,13 @@ export const TransactionDetails = () => {
 
   const { transactionId } = useParams<{ transactionId: string }>();
 
-  const { authToken } = useAuthToken();
   const {
     data: transaction,
     isLoading,
     error,
   } = useQuery({
     queryKey: ['transaction', transactionId],
-    queryFn: async () => await getTransaction(authToken, transactionId!),
+    queryFn: async () => await getTransaction(transactionId!),
   });
 
   if (isLoading) return <p>Loading</p>;
