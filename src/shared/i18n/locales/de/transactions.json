@@ -7,5 +7,7 @@
   "transactionType": "Transaktionstyp",
   "category": "Kategorie",
   "paymentMethod": "Zahlungsmethode",
-  "account": "Konto"
+  "account": "Konto",
+  "exchangeRate": "Wechselkurs",
+  "goToReferencedTransaction": "Zur verknüpften Transaktion gehen"
 }

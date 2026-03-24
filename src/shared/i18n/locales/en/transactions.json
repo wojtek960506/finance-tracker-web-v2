@@ -7,5 +7,7 @@
   "transactionType": "Transaction type",
   "category": "Category",
   "paymentMethod": "Payment method",
-  "account": "Account"
+  "account": "Account",
+  "exchangeRate": "Exchange rate",
+  "goToReferencedTransaction": "Go to referenced transaction"
 }

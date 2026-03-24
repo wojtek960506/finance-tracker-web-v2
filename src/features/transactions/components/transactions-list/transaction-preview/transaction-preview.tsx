@@ -1,18 +1,13 @@
-import type { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 
 import { useLanguage } from '@shared/hooks';
 import type { Transaction } from '@transactions/api';
-import { Button, Card } from '@ui';
-
-const GhostLink = ({ to, children }: { to: string, children: ReactNode }) => (
-  <Link to={to}>
-    <Button variant="ghost" className="py-0 sm:py-0">{children}</Button>
-  </Link>
-)
+import { Card, GhostLink } from '@ui';
 
 export const TransactionPreview = ({ transaction }: { transaction: Transaction }) => {
   const { language } = useLanguage();
+
+  const ghostLinkCn = 'text-sm sm:text-base';
 
   return (
     <li>
@@ -35,10 +30,16 @@ export const TransactionPreview = ({ transaction }: { transaction: Transaction }
           </main>
         </Link>
 
-        <footer className="flex justify-end text-xs sm:text-sm gap-1">
-          <GhostLink to="/accounts">{transaction.account.name}</GhostLink>
-          <GhostLink to="/paymentMethods">{transaction.paymentMethod.name}</GhostLink>
-          <GhostLink to="/categories">{transaction.category.name}</GhostLink>
+        <footer className="flex justify-end gap-1">
+          <GhostLink to="/accounts" className={ghostLinkCn}>
+            {transaction.account.name}
+          </GhostLink>
+          <GhostLink to="/paymentMethods" className={ghostLinkCn}>
+            {transaction.paymentMethod.name}
+          </GhostLink>
+          <GhostLink to="/categories" className={ghostLinkCn}>
+            {transaction.category.name}
+          </GhostLink>
         </footer>
       </Card>
     </li>

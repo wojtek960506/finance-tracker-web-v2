@@ -7,5 +7,7 @@
   "transactionType": "Тип транзакции",
   "category": "Категория",
   "paymentMethod": "Способ оплаты",
-  "account": "Счёт"
+  "account": "Счёт",
+  "exchangeRate": "Обменный курс",
+  "goToReferencedTransaction": "Перейти к связанной транзакции"
 }

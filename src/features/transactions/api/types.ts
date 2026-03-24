@@ -17,8 +17,8 @@ export type Transaction = {
   sourceIndex: string;
   sourceRefIndex?: string;
   refId?: string;
-  currencies: string;
-  exchangeRate: string;
+  currencies?: string;
+  exchangeRate?: number;
   category: NamedResource;
   paymentMethod: NamedResource;
   account: NamedResource;
