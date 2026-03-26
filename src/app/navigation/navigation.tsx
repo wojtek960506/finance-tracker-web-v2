@@ -2,6 +2,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { Banknote, Bike, Car, LogOut, Settings } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
+import { logout } from '@auth/api';
 import { useNavigation } from '@context/navigation-context';
 import { useAuthToken, useLocalStorage } from '@shared/hooks';
 import { Collapsible } from '@ui';
@@ -92,7 +93,8 @@ export const Navigation = () => {
       <li>
         <NavigationItem
           to="/login"
-          additionalAction={() => {
+          additionalAction={async () => {
+            await logout();
             removeAuthToken();
             queryClient.clear();
             setIsCollapsibleInitiallyOpen(false);

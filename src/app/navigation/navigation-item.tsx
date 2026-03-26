@@ -31,7 +31,7 @@ export const NavigationItem = ({
       }
       onClick={() => {
         setIsNavOpen(false);
-        additionalAction?.();
+        void additionalAction?.();
       }}
     >
       <Button

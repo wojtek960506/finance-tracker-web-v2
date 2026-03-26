@@ -5,6 +5,7 @@ export const BASE_URL = 'http://192.168.0.244:5000';
 
 export const LANGUAGE_STORE_KEY = 'language';
 export const AUTH_TOKEN_STORE_KEY = 'auth-token';
+export const LOCAL_STORAGE_CHANGE_EVENT = 'local-storage-change';
 
 export const SUPPORTED_LANGUAGES: Record<Language, LanguageProps> = {
   en: { label: 'English', isoCode: 'GB' },
