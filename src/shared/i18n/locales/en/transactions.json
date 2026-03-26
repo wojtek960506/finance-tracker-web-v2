@@ -1,0 +1,13 @@
+{
+  "newTransaction": "New transaction",
+  "updateTransaction": "Update transaction",
+  "deleteTransaction": "Delete transaction",
+  "date": "Date",
+  "amount": "Amount",
+  "transactionType": "Transaction type",
+  "category": "Category",
+  "paymentMethod": "Payment method",
+  "account": "Account",
+  "exchangeRate": "Exchange rate",
+  "goToReferencedTransaction": "Go to referenced transaction"
+}

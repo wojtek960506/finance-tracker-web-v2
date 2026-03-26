@@ -15,7 +15,7 @@ export const MainLayout = ({ children }: { children: ReactNode }) => {
     <div className="flex h-screen flex-col overflow-hidden">
       <Topbar />
 
-      <main className="p-4 h-full">
+      <main className="p-4 h-full w-full overflow-y-auto">
         {/* p-1 == p-[0.25rem] == p-[4px] */}
         {children}
       </main>

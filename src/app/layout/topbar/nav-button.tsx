@@ -13,7 +13,7 @@ export const NavButton = () => {
   return (
     <Button
       onClick={() => setIsNavOpen(true)}
-      className={clsx(`${isAuthenticated ? 'visible' : 'hidden md:block md:invisible'}`)}
+      className={clsx(`${isAuthenticated ? 'visible' : 'hidden sm:block sm:invisible'}`)}
       variant="ghost"
     >
       <Menu className={ICON_CLASS_NAME} />

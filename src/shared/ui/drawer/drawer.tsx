@@ -25,7 +25,7 @@ export const Drawer = ({ isOpen, fromLeft, onClose, children }: DrawerProps) => 
     {/* Drawer panel */}
     <div
       className={clsx(
-        'z-100 fixed top-0 h-full min-w-64 bg-bg shadow-lg transform ',
+        'z-100 fixed flex flex-col top-0 h-full w-72 bg-bg shadow-lg transform ',
         'transition-transform duration-300',
         fromLeft ? 'left-0' : 'right-0',
         `${
@@ -41,8 +41,8 @@ export const Drawer = ({ isOpen, fromLeft, onClose, children }: DrawerProps) => 
     >
       <div
         className={clsx(
-          'flex p-2 h-[var(--topbar-h)] border-b border-foreground',
-          'min-h-[var(--topbar-h)] md:min-h-[var(--topbar-h-md)]',
+          'flex p-2 h-[var(--topbar-h)] sm:h-[var(--topbar-h-sm)] border-b border-foreground',
+          'min-h-[var(--topbar-h)] sm:min-h-[var(--topbar-h-sm)]',
           fromLeft ? 'justify-end' : 'justify-start',
         )}
       >
@@ -50,7 +50,7 @@ export const Drawer = ({ isOpen, fromLeft, onClose, children }: DrawerProps) => 
           <X className="w-6 h-6" />
         </Button>
       </div>
-      <nav className="px-4 py-2">{children}</nav>
+      <nav className="px-4 py-2 overflow-y-auto h-full">{children}</nav>
     </div>
   </>
 );

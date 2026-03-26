@@ -1,8 +1,7 @@
 import { useSyncExternalStore } from 'react';
 
+import { LOCAL_STORAGE_CHANGE_EVENT } from '@shared/consts';
 import { readLocalStorage } from '@shared/utils';
-
-const LOCAL_STORAGE_CHANGE_EVENT = 'local-storage-change';
 
 export const useLocalStorage = <T>(key: string, defaultValue: T | null = null) => {
   const subscribe = (onStoreChange: () => void) => {

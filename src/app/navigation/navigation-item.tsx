@@ -31,13 +31,13 @@ export const NavigationItem = ({
       }
       onClick={() => {
         setIsNavOpen(false);
-        additionalAction?.();
+        void additionalAction?.();
       }}
     >
       <Button
         className={clsx(
-          'w-full justify-between gap-3 md:gap-4',
-          fromLeft ? '' : 'flex-row-reverse',
+          'w-full justify-between gap-3 sm:gap-4',
+          fromLeft ? 'text-left' : 'flex-row-reverse text-right',
         )}
         variant="ghost"
       >
