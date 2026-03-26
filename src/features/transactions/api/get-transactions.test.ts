@@ -15,7 +15,7 @@ describe('getTransactions', () => {
   it('get transaction info', async () => {
     const getMock = vi.mocked(api.get);
     getMock.mockResolvedValueOnce({ data: mockResult });
-    const query = "page=1&limit=30&sortBy=date&sortOrder=desc";
+    const query = 'page=1&limit=30&sortBy=date&sortOrder=desc';
 
     const result = await getTransactions();
 
