@@ -27,11 +27,7 @@ describe('Collapsible', () => {
 
   it('respects initial open state and right indicator', () => {
     render(
-      <Collapsible
-        header={<span>Header</span>}
-        indicatorPosition="right"
-        isInitiallyOpen
-      >
+      <Collapsible header={<span>Header</span>} indicatorPosition="right" isInitiallyOpen>
         <div>Content</div>
       </Collapsible>,
     );

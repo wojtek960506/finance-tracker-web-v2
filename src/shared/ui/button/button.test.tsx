@@ -15,9 +15,7 @@ describe('Button', () => {
   it('renders primary variant styles', () => {
     render(<Button variant="primary">Primary</Button>);
 
-    expect(screen.getByRole('button', { name: 'Primary' })).toHaveClass(
-      'bg-bt-primary',
-    );
+    expect(screen.getByRole('button', { name: 'Primary' })).toHaveClass('bg-bt-primary');
   });
 
   it('renders secondary variant styles', () => {
@@ -31,9 +29,7 @@ describe('Button', () => {
   it('renders ghost variant styles', () => {
     render(<Button variant="ghost">Ghost</Button>);
 
-    expect(screen.getByRole('button', { name: 'Ghost' })).toHaveClass(
-      'bg-transparent',
-    );
+    expect(screen.getByRole('button', { name: 'Ghost' })).toHaveClass('bg-transparent');
   });
 
   it('renders destructive variant styles', () => {
@@ -60,8 +56,6 @@ describe('Button', () => {
   it('merges custom className', () => {
     render(<Button className="custom-class">Custom</Button>);
 
-    expect(screen.getByRole('button', { name: 'Custom' })).toHaveClass(
-      'custom-class',
-    );
+    expect(screen.getByRole('button', { name: 'Custom' })).toHaveClass('custom-class');
   });
 });
