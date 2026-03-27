@@ -1,0 +1,13 @@
+{
+  "newCategory": "Nowa kategoria",
+  "newPaymentMethod": "Nowa metoda płatności",
+  "newAccount": "Nowe konto bankowe",
+
+  "exchange": "Wymiana waluty",
+  "myAccount": "Przelew wewnętrzny",
+
+  "atm": "Bankomat",
+  "card": "Karta",
+  "cash": "Gotówka",
+  "bankTransfer": "Przelew bankowy"
+}

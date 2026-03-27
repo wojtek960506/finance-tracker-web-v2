@@ -1,0 +1,13 @@
+{
+  "newCategory": "Neue Kategorie",
+  "newPaymentMethod": "Neue Zahlungsmethode",
+  "newAccount": "Neues Bankkonto",
+
+  "exchange": "Währungsumtausch",
+  "myAccount": "Interne Überweisung",
+
+  "atm": "Geldautomat",
+  "card": "Karte",
+  "cash": "Bergeld",
+  "bankTransfer": "Banküberweisung"
+}

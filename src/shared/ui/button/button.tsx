@@ -1,6 +1,7 @@
 import clsx from 'clsx';
 import { type ComponentProps, forwardRef } from 'react';
-import { twMerge } from 'tailwind-merge';
+
+import { cn } from '@shared/utils';
 
 export type ButtonVariant =
   | 'default'
@@ -73,14 +74,12 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       <button
         {...props}
         ref={ref}
-        className={twMerge(
-          clsx(
-            'border border-transparent p-1 sm:p-2 rounded-lg sm:rounded-xl',
-            'text-base sm:text-lg cursor-pointer disabled:cursor-not-allowed',
-            'flex items-center justify-center disabled:bg-bt-disabled',
-            variantClassName,
-            className,
-          ),
+        className={cn(
+          'border border-transparent p-1 sm:p-2 rounded-lg sm:rounded-xl',
+          'text-base sm:text-lg cursor-pointer disabled:cursor-not-allowed',
+          'flex items-center justify-center disabled:bg-bt-disabled',
+          variantClassName,
+          className,
         )}
       >
         {children}

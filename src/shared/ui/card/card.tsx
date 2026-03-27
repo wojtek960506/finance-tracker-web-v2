@@ -1,5 +1,6 @@
-import clsx from 'clsx';
 import type { ReactNode } from 'react';
+
+import { cn } from '@shared/utils';
 
 type CardProps = {
   className?: string;
@@ -9,7 +10,7 @@ type CardProps = {
 export const Card = ({ className = '', children }: CardProps) => {
   return (
     <div
-      className={clsx(
+      className={cn(
         'flex flex-col border border-fg bg-modal-bg',
         'rounded-2xl sm:rounded-3xl p-3 sm:p-4 gap-1 sm:gap-2 ',
         'shadow-[0_12px_30px_-20px_rgba(0,0,0,0.35)]',

@@ -18,18 +18,18 @@ import { Button, Card, Input } from '@/shared/ui';
 const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
 
 export const NamedResourcesList = ({ kind }: { kind: NamedResourceKind }) => {
-  const { t } = useTranslation(kind);
+  const { t } = useTranslation('namedResources');
 
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   const [isCreating, setIsCreating] = useState(false);
-  const [newResourceName, setNewResourceName] = useState("");
+  const [newResourceName, setNewResourceName] = useState('');
 
   const queryClient = useQueryClient();
   // TODO handle errors while creating
   const createMutation = useMutation({
     mutationFn: async (name: string) => await createNamedResource(kind, name),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: [kind]}),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: [kind] }),
   });
 
   useEffect(() => {
@@ -57,34 +57,36 @@ export const NamedResourcesList = ({ kind }: { kind: NamedResourceKind }) => {
         {t(`new${capitalize(NAMED_RESOURCE[kind])}`)}
       </Button>
 
-
-      {isCreating && <Card className="flex-row">
-        <Input
-          ref={inputRef}
-          value={newResourceName}
-          onChange={event => setNewResourceName(event.target.value)}  
-        />
-        <Button
-          disabled={newResourceName === ""}
-          variant="primary"
-          onClick={() => {
-            createMutation.mutate(newResourceName);
-            setIsCreating(false);
-            setNewResourceName("");
-          }}
-        >
-          <Check />
-        </Button>
-        <Button
-          variant="destructive"
-          onClick={() => {
-            setIsCreating(false);
-            setNewResourceName("");
-          }}
-        >
-          <X />
-        </Button>
-      </Card>}
+      {isCreating && (
+        <Card className="flex-row gap-1 sm:gap-1">
+          <Input
+            ref={inputRef}
+            value={newResourceName}
+            className="w-full"
+            onChange={(event) => setNewResourceName(event.target.value)}
+          />
+          <Button
+            disabled={newResourceName === ''}
+            variant="primary"
+            onClick={() => {
+              createMutation.mutate(newResourceName);
+              setIsCreating(false);
+              setNewResourceName('');
+            }}
+          >
+            <Check />
+          </Button>
+          <Button
+            variant="destructive"
+            onClick={() => {
+              setIsCreating(false);
+              setNewResourceName('');
+            }}
+          >
+            <X />
+          </Button>
+        </Card>
+      )}
 
       <ul className="flex flex-col gap-2 sm-gap-3">
         {data.map((namedResource) => (

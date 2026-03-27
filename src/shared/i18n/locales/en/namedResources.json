@@ -1,0 +1,13 @@
+{
+  "newCategory": "New category",
+  "newPaymentMethod": "New payment method",
+  "newAccount": "New bank account",
+
+  "exchange": "Currency exchange",
+  "myAccount": "Internal transfer",
+
+  "atm": "ATM",
+  "card": "Card",
+  "cash": "Cash",
+  "bankTransfer": "Bank transfer"
+}
