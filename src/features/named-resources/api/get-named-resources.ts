@@ -1,10 +1,10 @@
 import { api } from '@shared/api';
 
-import type { INamedResource, NamedResourceName } from './types';
+import type { INamedResource, NamedResourceKind } from './types';
 
 export const getNamedResources = async (
-  name: NamedResourceName,
+  kind: NamedResourceKind,
 ): Promise<INamedResource[]> => {
-  const res = await api.get<INamedResource[]>(`/${name}`);
+  const res = await api.get<INamedResource[]>(`/${kind}`);
   return res.data;
 };

@@ -10,4 +10,4 @@ export interface INamedResource {
   nameNormalized: string;
 }
 
-export type NamedResourceName = keyof typeof NAMED_RESOURCE;
+export type NamedResourceKind = keyof typeof NAMED_RESOURCE;

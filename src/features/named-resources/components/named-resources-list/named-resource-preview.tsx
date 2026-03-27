@@ -1,18 +1,26 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import clsx from 'clsx';
 import { Lock, Pencil, Star, Trash } from 'lucide-react';
 import { useState } from 'react';
 
-import type { INamedResource, NamedResourceName } from '@named-resources/api';
+import { deleteNamedResource, type INamedResource, type NamedResourceKind } from '@named-resources/api';
 import { Button, Card } from '@ui';
 
 export const NamedResourcePreview = ({
-  name,
+  kind,
   namedResource,
 }: {
-  name: NamedResourceName;
+  kind: NamedResourceKind;
   namedResource: INamedResource;
 }) => {
   const [isFavorite, setIsFavorite] = useState(false);
+  const queryClient = useQueryClient();
+
+  // TODO handle errors while removing and also add confirmation dialog
+    const deleteMutation = useMutation({
+      mutationFn: async (id: string) => await deleteNamedResource(kind, id),
+      onSuccess: () => queryClient.invalidateQueries({ queryKey: [kind]}),
+    })
 
   return (
     <li>
@@ -24,7 +32,10 @@ export const NamedResourcePreview = ({
               <Button variant="ghost">
                 <Pencil />
               </Button>
-              <Button variant="ghost">
+              <Button
+                variant="ghost"
+                onClick={() => deleteMutation.mutate(namedResource.id)}
+              >
                 <Trash />
               </Button>
             </>

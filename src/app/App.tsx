@@ -22,12 +22,12 @@ function App() {
         <Route element={<ProtectedLayout isAuthenticated={isAuthenticated} />}>
           <Route path="/transactions" element={<TransactionsList />} />
           <Route path="/transactions/:transactionId" element={<TransactionDetails />} />
-          <Route path="/categories" element={<NamedResourcesList name="categories" />} />
+          <Route path="/categories" element={<NamedResourcesList kind="categories" />} />
           <Route
             path="/paymentMethods"
-            element={<NamedResourcesList name="paymentMethods" />}
+            element={<NamedResourcesList kind="paymentMethods" />}
           />
-          <Route path="/accounts" element={<NamedResourcesList name="accounts" />} />
+          <Route path="/accounts" element={<NamedResourcesList kind="accounts" />} />
           <Route path="/vehicles" element={<p>Vehicles will be there</p>} />
           <Route path="/sports" element={<p>Sports will be there</p>} />
           <Route path="/settings" element={<p>Settings will be there</p>} />
