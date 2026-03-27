@@ -27,8 +27,6 @@ export const Login = () => {
 
     setIsSubmitted(true);
 
-    if (isInvalidEmail) return;
-
     try {
       const res = await login(email, password);
       setAuthToken(res);

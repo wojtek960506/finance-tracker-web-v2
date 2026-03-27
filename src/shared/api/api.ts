@@ -51,9 +51,7 @@ api.interceptors.response.use(
         // retry original request
         originalRequest.headers.Authorization = `Bearer ${newToken}`;
         return api(originalRequest);
-      } catch (err) {
-        console.log('error while refreshing auth token', err);
-
+      } catch {
         // logout user and update data in the current tab
         window.localStorage.removeItem(AUTH_TOKEN_STORE_KEY);
         window.dispatchEvent(
