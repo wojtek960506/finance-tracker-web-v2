@@ -40,6 +40,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         variantClassName = clsx(
           'bg-transparent hover:bg-bt-ghost-hover',
           'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border',
+          'disabled:bg-transparent disabled:text-text-muted'
         );
         break;
       case 'destructive':
