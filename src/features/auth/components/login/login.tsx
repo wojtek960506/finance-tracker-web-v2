@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { login } from '@auth/api';
+import { MAIN_BUTTON_TEXT } from '@shared/consts';
 import { useAuthToken } from '@shared/hooks';
 import { Button, Card, Input, Label } from '@ui';
 
@@ -81,7 +82,7 @@ export const Login = () => {
           <Button
             disabled={email === '' || password === '' || showEmailError}
             type="submit"
-            className={clsx('mt-10', labelCn)}
+            className={clsx('mt-10', MAIN_BUTTON_TEXT)}
           >
             {t('logIn')}
           </Button>

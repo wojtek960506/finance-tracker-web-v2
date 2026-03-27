@@ -6,6 +6,9 @@ import {
   NAMED_RESOURCE,
   type NamedResourceName,
 } from '@named-resources/api';
+import { MAIN_BUTTON_TEXT } from '@shared/consts';
+
+import { NamedResourcePreview } from './named-resource-preview';
 
 import { Button } from '@/shared/ui';
 
@@ -25,15 +28,18 @@ export const NamedResourcesList = ({ name }: { name: NamedResourceName }) => {
     return <p>There are no {name} - TODO add button to create one</p>;
 
   return (
-    <div className="flex flex-col gap-2 sm:gap-3 max-w-150 m-auto">
-      <Button variant="primary">{t(`new${capitalize(NAMED_RESOURCE[name])}`)}</Button>
+    <div className="flex flex-col gap-2 sm:gap-3 max-w-100 m-auto">
+      <Button variant="primary" className={MAIN_BUTTON_TEXT}>
+        {t(`new${capitalize(NAMED_RESOURCE[name])}`)}
+      </Button>
 
       <ul className="flex flex-col gap-2 sm-gap-3">
         {data.map((namedResource) => (
-          <li key={namedResource.id}>
-            <p>{namedResource.name}</p>
-            <p>{namedResource.type}</p>
-          </li>
+          <NamedResourcePreview
+            key={namedResource.id}
+            name={name}
+            namedResource={namedResource}
+          />
         ))}
       </ul>
     </div>

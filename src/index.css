@@ -88,7 +88,7 @@
   --destructive: oklch(0.62 0.16 25);
   --destructive-hover: oklch(0.68 0.16 25);
   --destructive-active: oklch(0.56 0.17 25);
-  --destructive-foreground: oklch(0.98 0.01 260);
+  --destructive-foreground: oklch(0.28 0.04 255);
   --destructive-border: oklch(0.5 0.1 25);
   --destructive-ring: oklch(0.7 0.16 25);
 

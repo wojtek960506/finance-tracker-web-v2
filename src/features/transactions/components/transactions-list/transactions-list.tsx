@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 
+import { MAIN_BUTTON_TEXT } from '@shared/consts';
 import { Button } from '@shared/ui';
 import { getTransactions } from '@transactions/api';
 
@@ -22,7 +23,9 @@ export const TransactionsList = () => {
 
   return (
     <div className="flex flex-col gap-2 sm:gap-3 max-w-150 m-auto">
-      <Button variant="primary">{t('newTransaction')}</Button>
+      <Button variant="primary" className={MAIN_BUTTON_TEXT}>
+        {t('newTransaction')}
+      </Button>
 
       <ul className="flex flex-col gap-2 sm:gap-3">
         {data.items.map((transaction) => (
