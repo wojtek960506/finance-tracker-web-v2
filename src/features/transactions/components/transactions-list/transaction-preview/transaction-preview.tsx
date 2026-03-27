@@ -15,6 +15,7 @@ export const TransactionPreview = ({ transaction }: { transaction: Transaction }
         <Link
           className="hover:text-active-nav border-fg border-b pb-2 mb-2"
           to={`/transactions/${transaction.id}`}
+          data-testid="transaction-preview-link"
         >
           <header className="flex justify-between text-text-muted text-sm sm:text-base">
             <time>{new Date(transaction.date).toLocaleDateString(language)}</time>

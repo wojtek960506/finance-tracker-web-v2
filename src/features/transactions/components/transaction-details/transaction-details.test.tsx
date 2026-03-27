@@ -3,6 +3,7 @@ import { render, screen } from '@testing-library/react';
 import type { ComponentProps, ReactNode } from 'react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
+import { makeTransaction } from '@test-utils/factories/transaction';
 import type { Transaction } from '@transactions/api';
 
 import { TransactionDetails } from './transaction-details';
@@ -50,21 +51,7 @@ vi.mock('./additional-details', () => ({
   AdditionalDetails: () => <div data-testid="additional-details" />,
 }));
 
-const baseTransaction: Transaction = {
-  id: 'tx-1',
-  ownerId: 'owner-1',
-  createdAt: '2024-01-01',
-  updatedAt: '2024-01-02',
-  sourceIndex: 'source-1',
-  date: '2024-01-03',
-  description: 'Test transaction',
-  amount: 10,
-  currency: 'USD',
-  transactionType: 'expense',
-  category: { id: 'cat-1', type: 'category', name: 'Food' },
-  paymentMethod: { id: 'pm-1', type: 'paymentMethod', name: 'Card' },
-  account: { id: 'acc-1', type: 'account', name: 'Main' },
-};
+const baseTransaction: Transaction = makeTransaction();
 
 describe('TransactionDetails', () => {
   beforeEach(() => {
