@@ -58,7 +58,7 @@ export const NamedResourcesList = ({ kind }: { kind: NamedResourceKind }) => {
       </Button>
 
       {isCreating && (
-        <Card className="flex-row gap-1 sm:gap-1">
+        <Card className="flex-row gap-1 sm:gap-1 bg-bt-primary">
           <Input
             ref={inputRef}
             value={newResourceName}
@@ -88,7 +88,7 @@ export const NamedResourcesList = ({ kind }: { kind: NamedResourceKind }) => {
         </Card>
       )}
 
-      <ul className="flex flex-col gap-2 sm-gap-3">
+      <ul className="flex flex-col gap-2 sm:gap-3">
         {data.map((namedResource) => (
           <NamedResourcePreview
             key={namedResource.id}

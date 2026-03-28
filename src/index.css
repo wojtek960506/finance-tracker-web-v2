@@ -22,7 +22,7 @@
 
   --bt-ghost-hover: rgba(var(--dark-base), 0.2);
 
-  --bt-disabled: rgba(var(--dark-base), 0.4);
+  --bt-disabled: oklch(47.837% 0.04176 258.846);
 
   --bt-primary: oklch(0.62 0.17 150);
   --bt-primary-hover: oklch(0.57 0.17 150);
@@ -69,7 +69,7 @@
 
   --bt-ghost-hover: rgba(var(--light-base), 0.2);
 
-  --bt-disabled: rgba(var(--light-base), 0.4);
+  --bt-disabled: oklch(74.496% 0.01032 273.302);
 
   --bt-primary: oklch(0.72 0.16 150);
   --bt-primary-hover: oklch(0.77 0.16 150);

@@ -38,11 +38,11 @@ export const NamedResourcePreview = ({
         <div className="flex items-center gap-1">
           {namedResource.type !== 'system' ? (
             <>
-              <Button variant="ghost">
+              <Button variant="secondary">
                 <Pencil />
               </Button>
               <Button
-                variant="ghost"
+                variant="destructive"
                 onClick={() => deleteMutation.mutate(namedResource.id)}
               >
                 <Trash />
@@ -51,8 +51,8 @@ export const NamedResourcePreview = ({
           ) : (
             <Lock className="mx-1 sm:mx-2" />
           )}
-          <Button variant="ghost" onClick={() => setIsFavorite((prev) => !prev)}>
-            <Star className={clsx('transition-all', isFavorite ? 'fill-fg' : '')} />
+          <Button variant="default" onClick={() => setIsFavorite((prev) => !prev)}>
+            <Star className={clsx('transition-all', isFavorite ? 'fill-bg' : '')} />
           </Button>
         </div>
       </Card>
