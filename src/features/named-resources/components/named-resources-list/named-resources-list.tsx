@@ -58,7 +58,7 @@ export const NamedResourcesList = ({ kind }: { kind: NamedResourceKind }) => {
       </Button>
 
       {isCreating && (
-        <Card className="flex-row gap-1 sm:gap-1 bg-bt-primary">
+        <Card className="flex-row gap-1 sm:gap-1 bg-bt-primary items-center">
           <Input
             ref={inputRef}
             value={newResourceName}
