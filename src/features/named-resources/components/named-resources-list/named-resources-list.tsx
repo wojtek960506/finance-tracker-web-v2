@@ -1,19 +1,19 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Check, X } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import {
+  createNamedResource,
   getNamedResources,
   NAMED_RESOURCE,
   type NamedResourceKind,
 } from '@named-resources/api';
-import { createNamedResource } from '@named-resources/api';
 import { MAIN_BUTTON_TEXT } from '@shared/consts';
+import { Button } from '@shared/ui';
+
+import { NamedResourceInput } from '../named-resource-input';
 
 import { NamedResourcePreview } from './named-resource-preview';
-
-import { Button, Card, Input } from '@/shared/ui';
 
 const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
 
@@ -21,9 +21,7 @@ export const NamedResourcesList = ({ kind }: { kind: NamedResourceKind }) => {
   const { t } = useTranslation('namedResources');
 
   const inputRef = useRef<HTMLInputElement | null>(null);
-
   const [isCreating, setIsCreating] = useState(false);
-  const [newResourceName, setNewResourceName] = useState('');
 
   const queryClient = useQueryClient();
   // TODO handle errors while creating
@@ -58,34 +56,13 @@ export const NamedResourcesList = ({ kind }: { kind: NamedResourceKind }) => {
       </Button>
 
       {isCreating && (
-        <Card className="flex-row gap-1 sm:gap-1 bg-bt-primary items-center">
-          <Input
-            ref={inputRef}
-            value={newResourceName}
-            className="w-full"
-            onChange={(event) => setNewResourceName(event.target.value)}
-          />
-          <Button
-            disabled={newResourceName === ''}
-            variant="primary"
-            onClick={() => {
-              createMutation.mutate(newResourceName);
-              setIsCreating(false);
-              setNewResourceName('');
-            }}
-          >
-            <Check />
-          </Button>
-          <Button
-            variant="destructive"
-            onClick={() => {
-              setIsCreating(false);
-              setNewResourceName('');
-            }}
-          >
-            <X />
-          </Button>
-        </Card>
+        <NamedResourceInput
+          inputRef={inputRef}
+          initialValue=''
+          action={(name: string) => createMutation.mutate(name)}
+          setIsVisible={setIsCreating}
+          isCreate={true}
+        />
       )}
 
       <ul className="flex flex-col gap-2 sm:gap-3">
