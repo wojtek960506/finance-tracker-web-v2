@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import { CircleAlert, CircleCheck, Info, X } from 'lucide-react';
 import { useEffect } from 'react';
 
-import { type Toast,useToastStore } from '@store/toast-store';
+import { type Toast, useToastStore } from '@store/toast-store';
 
 import { Button } from '../button';
 import { Card } from '../card';
@@ -19,23 +19,8 @@ const TOAST_STYLES = {
   info: 'border-bt-secondary-border bg-bt-secondary text-text',
 } as const;
 
-// type ToastVariant = 'error' | 'success' | 'info';
-
-const ToastItem = ({
-  id,
-  title,
-  message,
-  variant = 'info',
-  visibilityTime = 5,
-}: Toast
-
-// {
-//   id: string;
-//   title?: string;
-//   message: string;
-//   variant?: ToastVariant;
-//   visibilityTime?: number;
-// }
+const ToastItem = (
+  { id, title, message, variant = 'info', visibilityTime = 5 }: Toast,
 ) => {
   const removeToast = useToastStore((state) => state.removeToast);
   const Icon = TOAST_ICON[variant];

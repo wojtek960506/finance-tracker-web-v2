@@ -17,11 +17,16 @@ vi.mock('@store/ui-store', () => ({
   useUIStore: () => ({ setIsNavOpen: mocks.setIsNavOpen }),
 }));
 
-vi.mock('lucide-react', () => ({
-  Menu: (props: { className?: string }) => (
-    <svg data-testid="menu-icon" className={props.className} />
-  ),
-}));
+vi.mock('lucide-react', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('lucide-react')>();
+
+  return {
+    ...actual,
+    Menu: (props: { className?: string }) => (
+      <svg data-testid="menu-icon" className={props.className} />
+    ),
+  };
+});
 
 describe('NavButton', () => {
   it('shows button when authenticated', () => {

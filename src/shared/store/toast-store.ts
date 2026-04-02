@@ -22,7 +22,7 @@ export const useToastStore = create<ToastState>()((set) => ({
     set((state) => ({
       toasts: [
         ...state.toasts,
-        { id: crypto.randomUUID(), variant: 'info', visibilityTime: 5, ...toast }
+        { id: crypto.randomUUID(), variant: 'info', visibilityTime: 5, ...toast },
       ],
     })),
   removeToast: (id) =>
