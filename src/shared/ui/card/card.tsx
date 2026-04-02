@@ -1,16 +1,14 @@
-import { forwardRef, type ReactNode } from 'react';
+import { type ComponentProps, forwardRef } from 'react';
 
 import { cn } from '@shared/utils';
 
-type CardProps = {
-  className?: string;
-  children: ReactNode;
-};
+type CardProps = ComponentProps<'div'>;
 
 export const Card = forwardRef<HTMLDivElement, CardProps>(
-  ({ className = '', children }, ref) => {
+  ({ className = '', children, ...props }, ref) => {
     return (
       <div
+        {...props}
         ref={ref}
         className={cn(
           'flex flex-col border border-fg bg-modal-bg',

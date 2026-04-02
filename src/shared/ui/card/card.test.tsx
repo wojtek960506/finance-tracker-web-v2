@@ -17,4 +17,14 @@ describe('Card', () => {
     expect(card).toBeInTheDocument();
     expect(card).toHaveClass('custom-class');
   });
+
+  it('accepts native div props', () => {
+    render(
+      <Card role="status" aria-label="Notification">
+        <div>Toast</div>
+      </Card>,
+    );
+
+    expect(screen.getByRole('status', { name: 'Notification' })).toBeInTheDocument();
+  });
 });

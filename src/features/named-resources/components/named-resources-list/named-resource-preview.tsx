@@ -10,6 +10,8 @@ import {
   type NamedResourceKind,
   updateNamedResource,
 } from '@named-resources/api';
+import { normalizeApiError } from '@shared/api/api-error';
+import { useToastStore } from '@store/toast-store';
 import { Button, Card } from '@ui';
 
 import { NamedResourceInput } from '../named-resource-input';
@@ -27,6 +29,7 @@ export const NamedResourcePreview = ({
   const [isEditing, setIsEditing] = useState(false);
   const [name, setName] = useState(namedResource.name);
   const queryClient = useQueryClient();
+  const pushToast = useToastStore((state) => state.pushToast);
 
   const inputRef = useRef<HTMLInputElement | null>(null);
 
@@ -57,7 +60,15 @@ export const NamedResourcePreview = ({
             setName(nextName);
             setIsEditing(false);
           }}
-          onError={(err) => console.log('update error: ', err)}
+          onError={(error) => {
+            const apiError = normalizeApiError(error);
+
+            pushToast({
+              variant: 'error',
+              title: name,
+              message: apiError.code ? t(apiError.code) : apiError.message,
+            });
+          }}
           setIsVisible={setIsEditing}
           isCreate={false}
           autoCloseOnSubmit={false}

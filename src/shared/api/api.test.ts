@@ -33,6 +33,9 @@ const mocks = vi.hoisted(() => {
     apiInstance,
     axiosCreate: vi.fn(() => apiInstance),
     axiosGet: vi.fn(),
+    axiosIsAxiosError: vi.fn((error: unknown) =>
+      Boolean((error as { isAxiosError?: boolean })?.isAxiosError),
+    ),
     getRequestHandler: () => requestHandler,
     getResponseSuccessHandler: () => responseSuccessHandler,
     getResponseErrorHandler: () => responseErrorHandler,
@@ -43,6 +46,7 @@ vi.mock('axios', () => ({
   default: {
     create: mocks.axiosCreate,
     get: mocks.axiosGet,
+    isAxiosError: mocks.axiosIsAxiosError,
   },
 }));
 
@@ -116,6 +120,7 @@ describe('api', () => {
     mocks.apiInstance.mockResolvedValueOnce('retried');
 
     const error = {
+      isAxiosError: true,
       response: { status: 401 },
       config: { headers: {}, _retry: false },
     };
@@ -151,11 +156,15 @@ describe('api', () => {
     window.localStorage.setItem(AUTH_TOKEN_STORE_KEY, JSON.stringify('old-token'));
 
     const error = {
+      isAxiosError: true,
       response: { status: 401 },
       config: { headers: {}, _retry: false },
     };
 
-    const result = await responseErrorHandler!(error);
+    await expect(responseErrorHandler!(error)).rejects.toMatchObject({
+      name: 'ApiError',
+      statusCode: 401,
+    });
 
     expect(mocks.axiosGet).toHaveBeenCalled();
     expect(window.localStorage.getItem(AUTH_TOKEN_STORE_KEY)).toBeNull();
@@ -165,24 +174,37 @@ describe('api', () => {
         detail: { key: AUTH_TOKEN_STORE_KEY },
       }),
     );
-    expect(result).toBeUndefined();
   });
 
-  it('does nothing for non-401 errors or already retried requests', async () => {
+  it('rejects normalized errors for non-401 errors or already retried requests', async () => {
     const responseErrorHandler = mocks.getResponseErrorHandler();
     expect(responseErrorHandler).toBeTypeOf('function');
 
     const error = {
-      response: { status: 500 },
+      isAxiosError: true,
+      response: {
+        status: 500,
+        data: {
+          details: { field: 'name' },
+        },
+      },
       config: { headers: {}, _retry: false },
     };
     const retriedError = {
+      isAxiosError: true,
       response: { status: 401 },
       config: { headers: {}, _retry: true },
     };
 
-    await responseErrorHandler!(error);
-    await responseErrorHandler!(retriedError);
+    await expect(responseErrorHandler!(error)).rejects.toMatchObject({
+      message: 'Unexpected server error.',
+      statusCode: 500,
+      details: { field: 'name' },
+    });
+    await expect(responseErrorHandler!(retriedError)).rejects.toMatchObject({
+      message: 'Unexpected server error.',
+      statusCode: 401,
+    });
 
     expect(mocks.axiosGet).not.toHaveBeenCalled();
   });

@@ -8,8 +8,10 @@ import {
   NAMED_RESOURCE,
   type NamedResourceKind,
 } from '@named-resources/api';
+import { normalizeApiError } from '@shared/api/api-error';
 import { MAIN_BUTTON_TEXT } from '@shared/consts';
 import { Button } from '@shared/ui';
+import { useToastStore } from '@store/toast-store';
 
 import { NamedResourceInput } from '../named-resource-input';
 
@@ -22,6 +24,7 @@ export const NamedResourcesList = ({ kind }: { kind: NamedResourceKind }) => {
 
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [isCreating, setIsCreating] = useState(false);
+  const pushToast = useToastStore((state) => state.pushToast);
 
   const queryClient = useQueryClient();
   // TODO handle errors while creating
@@ -61,6 +64,15 @@ export const NamedResourcesList = ({ kind }: { kind: NamedResourceKind }) => {
           initialValue=""
           action={async (name: string) => {
             await createMutation.mutateAsync(name);
+          }}
+          onError={(error) => {
+            const apiError = normalizeApiError(error);
+
+            pushToast({
+              variant: 'error',
+              title: t(`new${capitalize(NAMED_RESOURCE[kind])}`),
+              message: apiError.code ? t(apiError.code) : apiError.message,
+            });
           }}
           setIsVisible={setIsCreating}
           isCreate={true}

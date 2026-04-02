@@ -3,7 +3,7 @@ import { type ReactNode, useRef } from 'react';
 import { Navigation } from '@app/navigation';
 import { NavigationProvider } from '@context/navigation-context';
 import { useUIStore } from '@store/ui-store';
-import { Drawer } from '@ui';
+import { Drawer, Toaster } from '@ui';
 
 import { Topbar } from './topbar';
 
@@ -32,6 +32,7 @@ export const MainLayout = ({ children }: { children: ReactNode }) => {
           <Navigation />
         </NavigationProvider>
       </Drawer>
+      <Toaster />
     </div>
   );
 };
