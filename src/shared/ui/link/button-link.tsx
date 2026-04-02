@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import type { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 
-import { Button, type ButtonVariant } from '@ui';
+import { type ButtonVariant, getButtonClassName } from '@ui';
 
 export const ButtonLink = ({
   to,
@@ -15,9 +15,13 @@ export const ButtonLink = ({
   variant?: ButtonVariant;
   children: ReactNode;
 }) => (
-  <Link to={to}>
-    <Button variant={variant} className={clsx('py-0 sm:py-0', className)}>
-      {children}
-    </Button>
+  <Link
+    to={to}
+    className={getButtonClassName({
+      variant,
+      className: clsx('py-0 sm:py-0', className),
+    })}
+  >
+    {children}
   </Link>
 );

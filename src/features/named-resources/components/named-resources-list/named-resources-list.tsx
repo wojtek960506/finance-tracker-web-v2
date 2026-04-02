@@ -58,8 +58,10 @@ export const NamedResourcesList = ({ kind }: { kind: NamedResourceKind }) => {
       {isCreating && (
         <NamedResourceInput
           inputRef={inputRef}
-          initialValue=''
-          action={(name: string) => createMutation.mutate(name)}
+          initialValue=""
+          action={async (name: string) => {
+            await createMutation.mutateAsync(name);
+          }}
           setIsVisible={setIsCreating}
           isCreate={true}
         />

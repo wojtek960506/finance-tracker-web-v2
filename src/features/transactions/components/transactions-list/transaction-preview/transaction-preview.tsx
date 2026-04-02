@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { Link } from 'react-router-dom';
 
 import { useLanguage } from '@shared/hooks';
@@ -13,7 +14,11 @@ export const TransactionPreview = ({ transaction }: { transaction: Transaction }
     <li>
       <Card>
         <Link
-          className="hover:text-active-nav border-fg border-b pb-2 mb-2"
+          className={clsx(
+            ' hover:text-active-nav block ',
+            'focus-visible:rounded-md focus-visible:outline-solid focus-visible:outline-2',
+            'focus-visible:outline-fg focus-visible:outline-offset-2',
+          )}
           to={`/transactions/${transaction.id}`}
           data-testid="transaction-preview-link"
         >

@@ -52,30 +52,20 @@ export const NamedResourcePreview = ({
         <NamedResourceInput
           inputRef={inputRef}
           initialValue={name}
-          action={(nextName: string) => {
-            updateMutation.mutate(
-              { id: namedResource.id, name: nextName },
-              {
-                onSuccess: () => {
-                  setName(nextName);
-                  setIsEditing(false);
-                },
-                onError: (err) => console.log('update error', err),
-              },
-            );
+          action={async (nextName: string) => {
+            await updateMutation.mutateAsync({ id: namedResource.id, name: nextName });
+            setName(nextName);
+            setIsEditing(false);
           }}
+          onError={(err) => console.log('update error: ', err)}
           setIsVisible={setIsEditing}
           isCreate={false}
           autoCloseOnSubmit={false}
         />
-
-
       ) : (
-        <Card className='flex-row gap-1 sm:gap-1 items-center justify-between'>
+        <Card className="flex-row gap-1 sm:gap-1 items-center justify-between">
           <p className="text-base sm:text-lg px-2 sm:px-3">
-            {namedResource.type === 'system'
-              ? t(name)
-              : name}
+            {namedResource.type === 'system' ? t(name) : name}
           </p>
           <div className="flex items-center gap-1">
             {namedResource.type !== 'system' ? (
