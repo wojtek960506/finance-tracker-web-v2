@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { login } from '@auth/api';
@@ -9,6 +9,7 @@ import { Button, Card, Input, Label } from '@ui';
 
 export const Login = () => {
   const { t } = useTranslation('auth');
+  const emailInputRef = useRef<HTMLInputElement>(null);
 
   const [email, setEmail] = useState('w@z.pl');
   const [password, setPassword] = useState('123');
@@ -22,6 +23,10 @@ export const Login = () => {
   const showEmailError = isInvalidEmail && (isEmailInputTouched || isSubmitted);
 
   const { setAuthToken } = useAuthToken();
+
+  useEffect(() => {
+    emailInputRef.current?.focus();
+  }, []);
 
   const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -55,6 +60,7 @@ export const Login = () => {
           <Label>
             <span className={labelCn}>{t('email')}</span>
             <Input
+              ref={emailInputRef}
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}

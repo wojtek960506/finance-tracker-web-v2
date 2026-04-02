@@ -36,7 +36,8 @@ export const Drawer = ({
 
     if (!wasOpen && isOpen) {
       const firstFocusableElement =
-        navRef.current?.querySelector<HTMLElement>(FOCUSABLE_SELECTOR) ?? panelRef.current;
+        navRef.current?.querySelector<HTMLElement>(FOCUSABLE_SELECTOR) ??
+        panelRef.current;
 
       firstFocusableElement?.focus();
     }
