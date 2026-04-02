@@ -17,7 +17,7 @@
     "test:coverage": "vitest run --reporter=dot --coverage",
     "coverage:missing": "node scripts/coverage-missing.mjs",
     "coverage:summary-only": "pnpm test:coverage --coverage.reporter=json-summary",
-    "coverage:check-missing": "pnpm coverage:summary-only && node scripts/coverage-missing.mjs",
+    "coverage:check-missing": "vitest run --reporter=dot --coverage --coverage.reporter=json-summary --coverage.reporter=lcov && node scripts/coverage-missing.mjs",
     "preview": "vite preview"
   },
   "dependencies": {

@@ -5,10 +5,90 @@ const COVERAGE_SUMMARY_PATH = new URL(
   '../coverage/coverage-summary.json',
   import.meta.url,
 );
+const COVERAGE_LCOV_PATH = new URL('../coverage/lcov.info', import.meta.url);
 const PROJECT_ROOT_SEGMENT = `${process.platform === 'win32' ? 'finance-tracker-web-v2\\' : 'finance-tracker-web-v2/'}`;
 
-const summaryRaw = await readFile(COVERAGE_SUMMARY_PATH, 'utf8');
+const toProjectPath = (filePath) =>
+  filePath.includes(PROJECT_ROOT_SEGMENT)
+    ? filePath.slice(
+        filePath.indexOf(PROJECT_ROOT_SEGMENT) + PROJECT_ROOT_SEGMENT.length,
+      )
+    : filePath;
+
+const parseLcov = (lcovRaw) => {
+  const uncoveredLinesByFile = new Map();
+
+  let currentFile = null;
+  let currentUncoveredLines = [];
+
+  for (const line of lcovRaw.split('\n')) {
+    if (line.startsWith('SF:')) {
+      currentFile = toProjectPath(line.slice(3).trim());
+      currentUncoveredLines = [];
+      continue;
+    }
+
+    if (line.startsWith('DA:')) {
+      const [lineNumber, hits] = line.slice(3).split(',');
+
+      if (Number(hits) === 0) {
+        currentUncoveredLines.push(Number(lineNumber));
+      }
+
+      continue;
+    }
+
+    if (line === 'end_of_record' && currentFile) {
+      uncoveredLinesByFile.set(currentFile, currentUncoveredLines);
+      currentFile = null;
+      currentUncoveredLines = [];
+    }
+  }
+
+  return uncoveredLinesByFile;
+};
+
+const formatUncoveredLines = (lines) => {
+  if (lines.length === 0) {
+    return '-';
+  }
+
+  const ranges = [];
+  let rangeStart = lines[0];
+  let previousLine = lines[0];
+
+  for (let index = 1; index < lines.length; index += 1) {
+    const currentLine = lines[index];
+
+    if (currentLine === previousLine + 1) {
+      previousLine = currentLine;
+      continue;
+    }
+
+    ranges.push(
+      rangeStart === previousLine
+        ? `${rangeStart}`
+        : `${rangeStart}-${previousLine}`,
+    );
+    rangeStart = currentLine;
+    previousLine = currentLine;
+  }
+
+  ranges.push(
+    rangeStart === previousLine
+      ? `${rangeStart}`
+      : `${rangeStart}-${previousLine}`,
+  );
+
+  return ranges.join(', ');
+};
+
+const [summaryRaw, lcovRaw] = await Promise.all([
+  readFile(COVERAGE_SUMMARY_PATH, 'utf8'),
+  readFile(COVERAGE_LCOV_PATH, 'utf8'),
+]);
 const summary = JSON.parse(summaryRaw);
+const uncoveredLinesByFile = parseLcov(lcovRaw);
 
 const filesWithMissingCoverage = Object.entries(summary)
   .filter(([filePath]) => filePath !== 'total')
@@ -27,11 +107,7 @@ if (filesWithMissingCoverage.length === 0) {
 
 const rows = filesWithMissingCoverage
   .map(([filePath, metrics]) => {
-    const shortPath = filePath.includes(PROJECT_ROOT_SEGMENT)
-      ? filePath.slice(
-          filePath.indexOf(PROJECT_ROOT_SEGMENT) + PROJECT_ROOT_SEGMENT.length,
-        )
-      : filePath;
+    const shortPath = toProjectPath(filePath);
     const directory = path.dirname(shortPath);
 
     return {
@@ -41,6 +117,9 @@ const rows = filesWithMissingCoverage
       branches: `${metrics.branches.pct}%`,
       functions: `${metrics.functions.pct}%`,
       lines: `${metrics.lines.pct}%`,
+      uncoveredLines: formatUncoveredLines(
+        uncoveredLinesByFile.get(shortPath) ?? [],
+      ),
     };
   })
   .sort(
@@ -56,28 +135,46 @@ const groupedRows = rows.reduce((acc, row) => {
   return acc;
 }, new Map());
 
+const FILE = 'File';
+const STATEMENTS = 'Stmnts';
+const BRANCHES = 'Brnchs';
+const FUNCTIONS = 'Fns';
+const LINES = 'Lines';
+const UNCOVERED_LINES = 'Uncovered lines';
+
 const fileWidth = Math.max(
-  'File'.length,
+  FILE.length,
   ...rows.map((row) => Math.max(row.directory.length, row.file.length)),
 );
 const statementsWidth = Math.max(
-  'Statements'.length,
+  STATEMENTS.length,
   ...rows.map((row) => row.statements.length),
 );
 const branchesWidth = Math.max(
-  'Branches'.length,
+  BRANCHES.length,
   ...rows.map((row) => row.branches.length),
 );
 const functionsWidth = Math.max(
-  'Functions'.length,
+  FUNCTIONS.length,
   ...rows.map((row) => row.functions.length),
 );
-const linesWidth = Math.max('Lines'.length, ...rows.map((row) => row.lines.length));
+const linesWidth = Math.max(LINES.length, ...rows.map((row) => row.lines.length));
+const uncoveredLinesWidth = Math.max(
+  UNCOVERED_LINES.length,
+  ...rows.map((row) => row.uncoveredLines.length),
+);
 
-const createDataRow = (file, statements, branches, functions, lines) =>
+const createDataRow = (
+  file,
+  statements,
+  branches,
+  functions,
+  lines,
+  uncoveredLines,
+) =>
   `${file.padEnd(fileWidth)} | ${statements.padEnd(statementsWidth)} | ` +
   `${branches.padEnd(branchesWidth)} | ${functions.padEnd(functionsWidth)} | ` +
-  `${lines.padEnd(linesWidth)} |`;
+  `${lines.padEnd(linesWidth)} | ${uncoveredLines.padEnd(uncoveredLinesWidth)} |`;
 
 const createDirectoryRow = (directory) => {
   const fileColumn =
@@ -90,16 +187,27 @@ const createDirectoryRow = (directory) => {
     `-|-${'-'.repeat(statementsWidth)}-|-` +
     `${'-'.repeat(branchesWidth)}-|-` +
     `${'-'.repeat(functionsWidth)}-|-` +
-    `${'-'.repeat(linesWidth)}-|`
+    `${'-'.repeat(linesWidth)}-|-` +
+    `${'-'.repeat(uncoveredLinesWidth)}-|`
   );
 };
 
 const separator =
   `${'-'.repeat(fileWidth)}-+-${'-'.repeat(statementsWidth)}-+-` +
-  `${'-'.repeat(branchesWidth)}-+-${'-'.repeat(functionsWidth)}-+-${'-'.repeat(linesWidth)}-|`;
+  `${'-'.repeat(branchesWidth)}-+-${'-'.repeat(functionsWidth)}-+-` +
+  `${'-'.repeat(linesWidth)}-+-${'-'.repeat(uncoveredLinesWidth)}-|`;
 
 console.log('FILES WHICH DO NOT HAVE 100% COVERAGE\n');
-console.log(createDataRow('File', 'Statements', 'Branches', 'Functions', 'Lines'));
+console.log(
+  createDataRow(
+    FILE,
+    STATEMENTS,
+    BRANCHES,
+    FUNCTIONS,
+    LINES,
+    UNCOVERED_LINES,
+  ),
+);
 console.log(separator);
 
 for (const [directory, directoryRows] of groupedRows) {
@@ -107,7 +215,14 @@ for (const [directory, directoryRows] of groupedRows) {
 
   for (const row of directoryRows) {
     console.log(
-      createDataRow(row.file, row.statements, row.branches, row.functions, row.lines),
+      createDataRow(
+        row.file,
+        row.statements,
+        row.branches,
+        row.functions,
+        row.lines,
+        row.uncoveredLines,
+      ),
     );
   }
 
