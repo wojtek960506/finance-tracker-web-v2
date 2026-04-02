@@ -38,4 +38,18 @@ describe('Collapsible', () => {
     const container = toggle.closest('div');
     expect(container).toHaveClass('flex-row-reverse');
   });
+
+  it('makes collapsed content inert and hidden from accessibility tree', () => {
+    render(
+      <Collapsible header={<span>Header</span>} indicatorPosition="left">
+        <a href="/nested">Nested link</a>
+      </Collapsible>,
+    );
+
+    const toggle = screen.getByRole('button', { name: 'Expand menu' });
+    const content = document.getElementById(toggle.getAttribute('aria-controls') ?? '');
+
+    expect(content).toHaveAttribute('aria-hidden', 'true');
+    expect(content).toHaveAttribute('inert');
+  });
 });

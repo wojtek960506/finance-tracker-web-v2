@@ -42,11 +42,7 @@ export const NavigationItem = ({
       }}
     >
       {title}
-      {Icon ? (
-        <Icon className={ICON_CLASS_NAME} />
-      ) : (
-        <div className={ICON_CLASS_NAME} />
-      )}
+      {Icon ? <Icon className={ICON_CLASS_NAME} /> : <div className={ICON_CLASS_NAME} />}
     </NavLink>
   );
 };

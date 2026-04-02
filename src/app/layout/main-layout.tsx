@@ -1,4 +1,4 @@
-import { type ReactNode } from 'react';
+import { type ReactNode, useRef } from 'react';
 
 import { Navigation } from '@app/navigation';
 import { NavigationProvider } from '@context/navigation-context';
@@ -10,10 +10,11 @@ import { Topbar } from './topbar';
 export const MainLayout = ({ children }: { children: ReactNode }) => {
   const { isNavOpen, setIsNavOpen } = useUIStore();
   const isDrawerFromLeft = true;
+  const navButtonRef = useRef<HTMLButtonElement>(null);
 
   return (
     <div className="flex h-screen flex-col overflow-hidden">
-      <Topbar />
+      <Topbar navButtonRef={navButtonRef} />
 
       <main className="p-4 h-full w-full overflow-y-auto">
         {/* p-1 == p-[0.25rem] == p-[4px] */}
@@ -24,6 +25,7 @@ export const MainLayout = ({ children }: { children: ReactNode }) => {
         isOpen={isNavOpen}
         fromLeft={isDrawerFromLeft}
         onClose={() => setIsNavOpen(false)}
+        restoreFocusRef={navButtonRef}
       >
         <NavigationProvider fromLeft={isDrawerFromLeft}>
           <Navigation />

@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { type ReactNode, useState } from 'react';
+import { type ReactNode, useId, useState } from 'react';
 
 import { Button } from '@ui';
 
@@ -18,6 +18,7 @@ export const Collapsible = ({
   isInitiallyOpen,
 }: CollapsibleProps) => {
   const [isOpen, setIsOpen] = useState(isInitiallyOpen ?? false);
+  const contentId = useId();
 
   const isIndicatorLeft = indicatorPosition === 'left';
   const Comp = isIndicatorLeft ? ChevronRight : ChevronLeft;
@@ -34,7 +35,7 @@ export const Collapsible = ({
           variant="ghost"
           aria-label={isOpen ? 'Collapse menu' : 'Expand menu'}
           aria-expanded={isOpen}
-          aria-controls="collapsible-submenu"
+          aria-controls={contentId}
           onClick={() => setIsOpen((prev) => !prev)}
         >
           <Comp
@@ -47,13 +48,16 @@ export const Collapsible = ({
         {header}
       </div>
       <div
+        id={contentId}
+        aria-hidden={!isOpen}
+        inert={!isOpen}
         className={clsx(
           'grid transition-[grid-template-rows,opacity] duration-300 ease-out',
           isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0',
           isIndicatorLeft ? 'pl-10 ' : 'pr-10',
         )}
       >
-        <div className="overflow-hidden">{children}</div>
+        <div className="-m-2 overflow-y-auto p-2">{children}</div>
       </div>
     </div>
   );

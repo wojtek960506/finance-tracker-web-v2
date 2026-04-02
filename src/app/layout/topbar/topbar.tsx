@@ -1,11 +1,16 @@
 import clsx from 'clsx';
+import type { RefObject } from 'react';
 
 import { LanguageSwitcher } from './language-switcher';
 import { NavButton } from './nav-button';
 import { ThemeButton } from './theme-button';
 import { Title } from './title';
 
-export const Topbar = () => {
+export const Topbar = ({
+  navButtonRef,
+}: {
+  navButtonRef?: RefObject<HTMLButtonElement | null>;
+}) => {
   return (
     <header
       className={clsx(
@@ -15,7 +20,7 @@ export const Topbar = () => {
       )}
     >
       <div className="flex justify-self-start">
-        <NavButton />
+        <NavButton ref={navButtonRef} />
       </div>
       <Title />
       <div className="flex justify-self-end">
