@@ -19,9 +19,13 @@ const TOAST_STYLES = {
   info: 'border-bt-secondary-border bg-bt-secondary text-text',
 } as const;
 
-const ToastItem = (
-  { id, title, message, variant = 'info', visibilityTime = 5 }: Toast,
-) => {
+const ToastItem = ({
+  id,
+  title,
+  message,
+  variant = 'info',
+  visibilityTime = 5,
+}: Toast) => {
   const removeToast = useToastStore((state) => state.removeToast);
   const Icon = TOAST_ICON[variant];
 
