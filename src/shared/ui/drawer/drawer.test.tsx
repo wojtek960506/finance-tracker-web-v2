@@ -34,7 +34,7 @@ describe('Drawer', () => {
       </Drawer>,
     );
 
-    await user.click(screen.getByRole('button'));
+    await user.click(screen.getByRole('button', { name: 'Close drawer' }));
 
     expect(onClose).toHaveBeenCalled();
   });
@@ -78,6 +78,19 @@ describe('Drawer', () => {
     expect(panel).toHaveClass('-translate-x-full');
   });
 
+  it('makes closed drawer content inert and hidden from assistive technologies', () => {
+    const { container } = render(
+      <Drawer isOpen={false} fromLeft onClose={() => {}}>
+        <a href="/transactions">Transactions</a>
+      </Drawer>,
+    );
+
+    const panel = container.querySelector('div.fixed.flex');
+
+    expect(panel).toHaveAttribute('aria-hidden', 'true');
+    expect(panel).toHaveAttribute('inert');
+  });
+
   it('renders open state when fromLeft is false', () => {
     const { container } = render(
       <Drawer isOpen fromLeft={false} onClose={() => {}}>
@@ -88,6 +101,19 @@ describe('Drawer', () => {
     const panel = container.querySelector('div.fixed.flex');
     expect(panel).toHaveClass('right-0');
     expect(panel).toHaveClass('translate-x-0');
+  });
+
+  it('uses dialog semantics when open', () => {
+    render(
+      <Drawer isOpen fromLeft onClose={() => {}} ariaLabel="Navigation menu">
+        <div>Content</div>
+      </Drawer>,
+    );
+
+    expect(screen.getByRole('dialog', { name: 'Navigation menu' })).toHaveAttribute(
+      'aria-modal',
+      'true',
+    );
   });
 
   it('focuses the first navigation element when opened', () => {
@@ -130,5 +156,42 @@ describe('Drawer', () => {
     );
 
     expect(screen.getByRole('button', { name: 'Open navigation' })).toHaveFocus();
+  });
+
+  it('keeps Tab navigation inside the drawer', async () => {
+    const user = userEvent.setup();
+
+    render(
+      <>
+        <button type="button">Outside action</button>
+        <Drawer isOpen fromLeft onClose={() => {}}>
+          <a href="/transactions">Transactions</a>
+        </Drawer>
+      </>,
+    );
+
+    expect(screen.getByRole('link', { name: 'Transactions' })).toHaveFocus();
+
+    await user.tab();
+
+    expect(screen.getByRole('button', { name: 'Close drawer' })).toHaveFocus();
+  });
+
+  it('keeps reverse Tab navigation inside the drawer', async () => {
+    const user = userEvent.setup();
+
+    render(
+      <Drawer isOpen fromLeft onClose={() => {}}>
+        <a href="/transactions">Transactions</a>
+      </Drawer>,
+    );
+
+    await user.tab({ shift: true });
+
+    expect(screen.getByRole('button', { name: 'Close drawer' })).toHaveFocus();
+
+    await user.tab({ shift: true });
+
+    expect(screen.getByRole('link', { name: 'Transactions' })).toHaveFocus();
   });
 });

@@ -4,13 +4,20 @@ import { type ReactNode, type RefObject, useEffect, useRef } from 'react';
 
 import { Button } from '@ui';
 
+const FOCUSABLE_SELECTOR =
+  'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
 type DrawerProps = {
   isOpen: boolean;
   fromLeft: boolean;
   onClose: () => void;
   children: ReactNode;
   restoreFocusRef?: RefObject<HTMLElement | null>;
+  ariaLabel?: string;
 };
+
+const getFocusableElements = (container: HTMLElement | null) =>
+  Array.from(container?.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR) ?? []);
 
 export const Drawer = ({
   isOpen,
@@ -18,17 +25,18 @@ export const Drawer = ({
   onClose,
   children,
   restoreFocusRef,
+  ariaLabel = 'Drawer',
 }: DrawerProps) => {
   const navRef = useRef<HTMLElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
   const wasOpenRef = useRef(false);
 
   useEffect(() => {
     const wasOpen = wasOpenRef.current;
 
     if (!wasOpen && isOpen) {
-      const firstFocusableElement = navRef.current?.querySelector<HTMLElement>(
-        'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
-      );
+      const firstFocusableElement =
+        navRef.current?.querySelector<HTMLElement>(FOCUSABLE_SELECTOR) ?? panelRef.current;
 
       firstFocusableElement?.focus();
     }
@@ -44,9 +52,35 @@ export const Drawer = ({
     if (!isOpen) return;
 
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key !== 'Escape') return;
+      if (event.key === 'Escape') {
+        onClose();
+        return;
+      }
 
-      onClose();
+      if (event.key !== 'Tab') return;
+
+      const focusableElements = getFocusableElements(panelRef.current);
+
+      if (focusableElements.length === 0) {
+        event.preventDefault();
+        panelRef.current?.focus();
+        return;
+      }
+
+      const firstFocusableElement = focusableElements[0];
+      const lastFocusableElement = focusableElements[focusableElements.length - 1];
+      const activeElement = document.activeElement;
+
+      if (event.shiftKey && activeElement === firstFocusableElement) {
+        event.preventDefault();
+        lastFocusableElement.focus();
+        return;
+      }
+
+      if (!event.shiftKey && activeElement === lastFocusableElement) {
+        event.preventDefault();
+        firstFocusableElement.focus();
+      }
     };
 
     document.addEventListener('keydown', handleKeyDown);
@@ -69,6 +103,13 @@ export const Drawer = ({
 
       {/* Drawer panel */}
       <div
+        aria-hidden={!isOpen}
+        inert={!isOpen}
+        ref={panelRef}
+        role="dialog"
+        aria-modal="true"
+        aria-label={ariaLabel}
+        tabIndex={-1}
         className={clsx(
           'z-100 fixed flex flex-col top-0 h-full w-72 bg-bg shadow-lg transform ',
           'transition-transform duration-300',
@@ -94,6 +135,7 @@ export const Drawer = ({
           <Button
             onClick={onClose}
             variant="ghost"
+            aria-label="Close drawer"
             className={fromLeft ? 'mx-2' : 'mx-1'}
           >
             <X className="w-6 h-6" />

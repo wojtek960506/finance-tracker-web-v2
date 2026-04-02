@@ -26,6 +26,7 @@ export const MainLayout = ({ children }: { children: ReactNode }) => {
         fromLeft={isDrawerFromLeft}
         onClose={() => setIsNavOpen(false)}
         restoreFocusRef={navButtonRef}
+        ariaLabel="Navigation menu"
       >
         <NavigationProvider fromLeft={isDrawerFromLeft}>
           <Navigation />
