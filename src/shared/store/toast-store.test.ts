@@ -1,10 +1,14 @@
-import { beforeEach, describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { useToastStore } from './toast-store';
+import { createToastId, useToastStore } from './toast-store';
 
 describe('useToastStore', () => {
   beforeEach(() => {
     useToastStore.setState({ toasts: [] });
+  });
+
+  afterEach(() => {
+    vi.unstubAllGlobals();
   });
 
   it('pushes toast with default variant and visibility time', () => {
@@ -37,5 +41,14 @@ describe('useToastStore', () => {
 
     expect(useToastStore.getState().toasts).toHaveLength(1);
     expect(useToastStore.getState().toasts[0].message).toBe('Second');
+  });
+
+  it('creates a fallback id when randomUUID is unavailable', () => {
+    vi.stubGlobal('crypto', {
+      getRandomValues: undefined,
+      randomUUID: undefined,
+    });
+
+    expect(createToastId()).toMatch(/^toast-/);
   });
 });

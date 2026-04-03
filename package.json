@@ -10,7 +10,7 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier . --check",
     "format:fix": "prettier . --write",
-    "fix": "pnpm lint:fix && pnpm format:fix",
+    "fix": "node scripts/fix.mjs",
     "test": "vitest run",
     "test:quiet": "vitest run --reporter=dot",
     "test:watch": "vitest",
