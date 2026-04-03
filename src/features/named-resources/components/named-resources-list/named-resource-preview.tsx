@@ -7,15 +7,18 @@ import { useTranslation } from 'react-i18next';
 import {
   deleteNamedResource,
   type INamedResource,
+  NAMED_RESOURCE,
   NAMED_RESOURCE_ERROR_NAMESPACE,
   type NamedResourceKind,
   updateNamedResource,
 } from '@named-resources/api';
 import { normalizeApiError } from '@shared/api/api-error';
 import { useToastStore } from '@store/toast-store';
-import { Button, Card } from '@ui';
+import { Button, Card, Modal } from '@ui';
 
 import { NamedResourceInput } from '../named-resource-input';
+
+const capitalize = (value: string) => value.charAt(0).toUpperCase() + value.slice(1);
 
 export const NamedResourcePreview = ({
   kind,
@@ -29,13 +32,34 @@ export const NamedResourcePreview = ({
 
   const [isFavorite, setIsFavorite] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [deleteErrorMessage, setDeleteErrorMessage] = useState<string | null>(null);
   const [name, setName] = useState(namedResource.name);
   const queryClient = useQueryClient();
   const pushToast = useToastStore((state) => state.pushToast);
 
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const deleteButtonRef = useRef<HTMLButtonElement | null>(null);
+  const closeDeleteErrorButtonRef = useRef<HTMLButtonElement | null>(null);
+  const resourceKindKeySuffix = capitalize(NAMED_RESOURCE[kind]);
+  const deleteModalTitle = tNamedResource(
+    `deleteResourceModalTitle${resourceKindKeySuffix}`,
+    { resourceName: name },
+  );
+  const deleteModalHint = tNamedResource(
+    `deleteResourceModalHint${resourceKindKeySuffix}`,
+  );
+  const deleteErrorTitle = tNamedResource(
+    `deleteResourceErrorTitle${resourceKindKeySuffix}`,
+    { resourceName: name },
+  );
+  const updateSuccessTitle = (resourceName: string) =>
+    tNamedResource(`resourceUpdatedTitle${resourceKindKeySuffix}`, { resourceName });
+  const resourceDeletedTitle = tNamedResource(
+    `resourceDeletedTitle${resourceKindKeySuffix}`,
+    { resourceName: name },
+  );
 
-  // TODO handle errors while removing and also add confirmation dialog
   const deleteMutation = useMutation({
     mutationFn: async (id: string) => await deleteNamedResource(kind, id),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: [kind] }),
@@ -51,8 +75,82 @@ export const NamedResourcePreview = ({
     if (isEditing) inputRef.current?.focus();
   }, [isEditing]);
 
+  useEffect(() => {
+    if (deleteErrorMessage) {
+      closeDeleteErrorButtonRef.current?.focus();
+    }
+  }, [deleteErrorMessage]);
+
+  const openDeleteModal = () => {
+    setDeleteErrorMessage(null);
+    setIsDeleteModalOpen(true);
+  };
+
+  const closeDeleteModal = () => {
+    setDeleteErrorMessage(null);
+    setIsDeleteModalOpen(false);
+  };
+
+  const handleDelete = async () => {
+    try {
+      await deleteMutation.mutateAsync(namedResource.id);
+      closeDeleteModal();
+      pushToast({
+        variant: 'success',
+        title: resourceDeletedTitle,
+      });
+    } catch (error) {
+      const apiError = normalizeApiError(error);
+
+      setDeleteErrorMessage(apiError.code ? tError(apiError.code) : apiError.message);
+    }
+  };
+
   return (
     <li>
+      <Modal
+        isOpen={isDeleteModalOpen}
+        onClose={closeDeleteModal}
+        ariaLabel={deleteModalTitle}
+        restoreFocusRef={deleteButtonRef}
+      >
+        <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-2">
+            <h2 className="text-lg font-semibold">
+              {deleteErrorMessage ? deleteErrorTitle : deleteModalTitle}
+            </h2>
+            {deleteErrorMessage ? (
+              <p className="text-sm sm:text-base">{deleteErrorMessage}</p>
+            ) : (
+              <p className="text-sm sm:text-base">{deleteModalHint}</p>
+            )}
+          </div>
+          <div className="flex justify-end gap-2">
+            {deleteErrorMessage ? (
+              <Button
+                ref={closeDeleteErrorButtonRef}
+                variant="primary"
+                onClick={closeDeleteModal}
+              >
+                {tNamedResource('closeModal')}
+              </Button>
+            ) : (
+              <>
+                <Button variant="secondary" onClick={closeDeleteModal}>
+                  {tNamedResource('cancelDeletion')}
+                </Button>
+                <Button
+                  variant="destructive"
+                  onClick={() => void handleDelete()}
+                  disabled={deleteMutation.isPending}
+                >
+                  {tNamedResource('confirmDeletion')}
+                </Button>
+              </>
+            )}
+          </div>
+        </div>
+      </Modal>
       {isEditing ? (
         <NamedResourceInput
           inputRef={inputRef}
@@ -61,6 +159,10 @@ export const NamedResourcePreview = ({
             await updateMutation.mutateAsync({ id: namedResource.id, name: nextName });
             setName(nextName);
             setIsEditing(false);
+            pushToast({
+              variant: 'success',
+              title: updateSuccessTitle(nextName),
+            });
           }}
           onError={(error) => {
             const apiError = normalizeApiError(error);
@@ -88,8 +190,9 @@ export const NamedResourcePreview = ({
                   <Pencil />
                 </Button>
                 <Button
+                  ref={deleteButtonRef}
                   variant="destructive"
-                  onClick={() => deleteMutation.mutate(namedResource.id)}
+                  onClick={openDeleteModal}
                 >
                   <Trash />
                 </Button>

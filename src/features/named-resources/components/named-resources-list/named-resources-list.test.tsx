@@ -204,6 +204,10 @@ describe('NamedResourcesList', () => {
       expect(createNamedResource).toHaveBeenCalledWith('categories', 'Created name'),
     );
     expect(invalidateQueriesSpy).toHaveBeenCalledWith({ queryKey: ['categories'] });
+    expect(pushToast).toHaveBeenCalledWith({
+      variant: 'success',
+      title: 'namedResources:resourceCreatedTitleCategory',
+    });
   });
 
   it('shows an error toast when create fails', async () => {

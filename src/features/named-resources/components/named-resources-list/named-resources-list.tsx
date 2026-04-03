@@ -23,6 +23,7 @@ const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
 export const NamedResourcesList = ({ kind }: { kind: NamedResourceKind }) => {
   const { t: tNamedResource } = useTranslation('namedResources');
   const { t: tError } = useTranslation(NAMED_RESOURCE_ERROR_NAMESPACE[kind]);
+  const resourceKindKeySuffix = capitalize(NAMED_RESOURCE[kind]);
 
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [isCreating, setIsCreating] = useState(false);
@@ -64,8 +65,14 @@ export const NamedResourcesList = ({ kind }: { kind: NamedResourceKind }) => {
         <NamedResourceInput
           inputRef={inputRef}
           initialValue=""
-          action={async (name: string) => {
-            await createMutation.mutateAsync(name);
+          action={async (resourceName: string) => {
+            await createMutation.mutateAsync(resourceName);
+            pushToast({
+              variant: 'success',
+              title: tNamedResource(`resourceCreatedTitle${resourceKindKeySuffix}`, {
+                resourceName,
+              }),
+            });
           }}
           onError={(error) => {
             const apiError = normalizeApiError(error);

@@ -26,6 +26,21 @@ describe('useToastStore', () => {
     expect(toast.id).toBeTypeOf('string');
   });
 
+  it('pushes a title-only toast', () => {
+    useToastStore.getState().pushToast({
+      title: 'Deleted category "Groceries"',
+    });
+
+    const [toast] = useToastStore.getState().toasts;
+
+    expect(toast).toMatchObject({
+      title: 'Deleted category "Groceries"',
+      variant: 'info',
+      visibilityTime: 5,
+    });
+    expect(toast.message).toBeUndefined();
+  });
+
   it('removes toast by id', () => {
     useToastStore.getState().pushToast({
       message: 'First',

@@ -20,6 +20,11 @@ vi.mock('react-i18next', () => ({
 }));
 
 vi.mock('@named-resources/api', () => ({
+  NAMED_RESOURCE: {
+    categories: 'category',
+    paymentMethods: 'paymentMethod',
+    accounts: 'account',
+  },
   NAMED_RESOURCE_ERROR_NAMESPACE: {
     categories: 'category-errors',
     paymentMethods: 'payment-method-errors',
@@ -164,6 +169,10 @@ describe('NamedResourcePreview', () => {
       ),
     );
     expect(screen.getByText('Updated groceries')).toBeInTheDocument();
+    expect(pushToast).toHaveBeenCalledWith({
+      variant: 'success',
+      title: 'namedResources:resourceUpdatedTitleCategory',
+    });
   });
 
   it('shows an error toast when update fails', async () => {
@@ -244,17 +253,140 @@ describe('NamedResourcePreview', () => {
     );
   });
 
-  it('deletes a user resource', async () => {
+  it('opens a confirmation modal before deleting a user resource', async () => {
     const user = userEvent.setup();
-
-    deleteNamedResource.mockResolvedValueOnce({ acknowledged: true, deletedCount: 1 });
 
     renderPreview();
 
     await user.click(screen.getAllByRole('button')[1]);
 
+    expect(
+      screen.getByRole('dialog', {
+        name: 'namedResources:deleteResourceModalTitleCategory',
+      }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText('namedResources:deleteResourceModalHintCategory'),
+    ).toBeInTheDocument();
+    expect(deleteNamedResource).not.toHaveBeenCalled();
+  });
+
+  it('deletes a user resource after confirmation and shows a success toast', async () => {
+    const user = userEvent.setup();
+
+    deleteNamedResource.mockResolvedValueOnce({ acknowledged: true, deletedCount: 1 });
+
+    const { client } = renderPreview();
+    const invalidateQueriesSpy = vi.spyOn(client, 'invalidateQueries');
+
+    await user.click(screen.getAllByRole('button')[1]);
+    await user.click(
+      screen.getByRole('button', { name: 'namedResources:confirmDeletion' }),
+    );
+
     await waitFor(() =>
       expect(deleteNamedResource).toHaveBeenCalledWith('categories', 'category-1'),
     );
+    expect(invalidateQueriesSpy).toHaveBeenCalledWith({ queryKey: ['categories'] });
+    expect(pushToast).toHaveBeenCalledWith({
+      variant: 'success',
+      title: 'namedResources:resourceDeletedTitleCategory',
+    });
+  });
+
+  it('shows an error modal when deletion fails without closing the modal', async () => {
+    const user = userEvent.setup();
+    const error = new Error('boom');
+
+    deleteNamedResource.mockRejectedValueOnce(error);
+    normalizeApiError.mockReturnValue({
+      code: 'CATEGORY_DEPENDENCY_ERROR',
+      message: 'Fallback delete error',
+    });
+
+    renderPreview();
+
+    await user.click(screen.getAllByRole('button')[1]);
+    await user.click(
+      screen.getByRole('button', { name: 'namedResources:confirmDeletion' }),
+    );
+
+    expect(
+      await screen.findByRole('heading', {
+        name: 'namedResources:deleteResourceErrorTitleCategory',
+      }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText('category-errors:CATEGORY_DEPENDENCY_ERROR'),
+    ).toBeInTheDocument();
+    expect(screen.getByRole('dialog')).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: 'namedResources:closeModal' }),
+    ).toHaveFocus();
+    expect(screen.getAllByRole('button')[1]).not.toHaveFocus();
+    expect(pushToast).not.toHaveBeenCalled();
+  });
+
+  it('falls back to the api error message when delete error code is missing', async () => {
+    const user = userEvent.setup();
+    const error = new Error('boom');
+
+    deleteNamedResource.mockRejectedValueOnce(error);
+    normalizeApiError.mockReturnValue({
+      message: 'Plain delete error message',
+    });
+
+    renderPreview();
+
+    await user.click(screen.getAllByRole('button')[1]);
+    await user.click(
+      screen.getByRole('button', { name: 'namedResources:confirmDeletion' }),
+    );
+
+    expect(
+      await screen.findByRole('heading', {
+        name: 'namedResources:deleteResourceErrorTitleCategory',
+      }),
+    ).toBeInTheDocument();
+    expect(screen.getByText('Plain delete error message')).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: 'namedResources:closeModal' }),
+    ).toHaveFocus();
+  });
+
+  it('moves focus back to the preview delete button when the modal closes', async () => {
+    const user = userEvent.setup();
+    const error = new Error('boom');
+
+    deleteNamedResource.mockRejectedValueOnce(error);
+    normalizeApiError.mockReturnValue({
+      code: 'CATEGORY_DEPENDENCY_ERROR',
+      message: 'Fallback delete error',
+    });
+
+    renderPreview();
+
+    const previewDeleteButton = screen.getAllByRole('button')[1];
+
+    await user.click(previewDeleteButton);
+    await user.click(
+      screen.getByRole('button', { name: 'namedResources:confirmDeletion' }),
+    );
+    expect(
+      await screen.findByText('category-errors:CATEGORY_DEPENDENCY_ERROR'),
+    ).toBeInTheDocument();
+
+    expect(previewDeleteButton).not.toHaveFocus();
+
+    await user.click(screen.getByRole('button', { name: 'namedResources:closeModal' }));
+
+    await waitFor(() =>
+      expect(
+        screen.queryByRole('dialog', {
+          name: 'namedResources:deleteResourceModalTitleCategory',
+        }),
+      ).not.toBeInTheDocument(),
+    );
+    expect(previewDeleteButton).toHaveFocus();
   });
 });

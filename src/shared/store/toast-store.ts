@@ -5,7 +5,7 @@ type ToastVariant = 'error' | 'success' | 'info';
 export type Toast = {
   id: string;
   title?: string;
-  message: string;
+  message?: string;
   variant?: ToastVariant;
   visibilityTime?: number;
 };

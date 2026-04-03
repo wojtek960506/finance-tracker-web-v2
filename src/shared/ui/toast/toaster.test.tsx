@@ -41,6 +41,24 @@ describe('Toaster', () => {
     expect(screen.getByText('Resource already exists.')).toBeInTheDocument();
   });
 
+  it('renders a title-only toast without an empty message row', () => {
+    useToastStore.setState({
+      toasts: [
+        {
+          id: 'toast-1',
+          title: 'Deleted category "Groceries"',
+          variant: 'success',
+          visibilityTime: 5,
+        },
+      ],
+    });
+
+    render(<Toaster />);
+
+    expect(screen.getByText('Deleted category "Groceries"')).toBeInTheDocument();
+    expect(screen.getByRole('status')).toBeInTheDocument();
+  });
+
   it('removes toast when dismiss button is clicked', async () => {
     const user = userEvent.setup();
 

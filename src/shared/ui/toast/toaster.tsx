@@ -14,9 +14,9 @@ const TOAST_ICON = {
 } as const;
 
 const TOAST_STYLES = {
-  error: 'border-destructive-border bg-destructive text-text',
-  success: 'border-bt-primary-border bg-bt-primary text-text',
-  info: 'border-bt-secondary-border bg-bt-secondary text-text',
+  error: 'border-destructive-border bg-destructive text-bg',
+  success: 'border-bt-primary-border bg-bt-primary text-bg',
+  info: 'border-bt-secondary-border bg-bt-secondary text-bg',
 } as const;
 
 const ToastItem = ({
@@ -52,7 +52,7 @@ const ToastItem = ({
         <Icon className="mt-0.5 size-5 shrink-0" />
         <div className="min-w-0">
           {title ? <p className="font-semibold">{title}</p> : null}
-          <p className="break-words text-sm sm:text-base">{message}</p>
+          {message ? <p className="break-words text-sm sm:text-base">{message}</p> : null}
         </div>
       </div>
       <Button
