@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
+import { MAIN_BUTTON_TEXT } from '@shared/consts';
 import { useLanguage } from '@shared/hooks';
 import { getTransaction } from '@transactions/api';
 import { Button, Card, HoverLink } from '@ui';
@@ -30,7 +31,9 @@ export const TransactionDetails = () => {
 
   return (
     <div className="flex flex-col max-w-100 m-auto gap-2 sm:gap-3">
-      <Button variant="secondary">{t('updateTransaction')}</Button>
+      <Button variant="secondary" className={MAIN_BUTTON_TEXT}>
+        {t('updateTransaction')}
+      </Button>
       <Card className="gap-3 sm:gap-4 p-4 sm:p-5">
         <h1 className="text-lg sm:text-xl font-semibold text-left">
           {transaction.description}
@@ -55,7 +58,9 @@ export const TransactionDetails = () => {
           <AdditionalDetails transaction={transaction} />
         </div>
       </Card>
-      <Button variant="destructive">{t('deleteTransaction')}</Button>
+      <Button variant="destructive" className={MAIN_BUTTON_TEXT}>
+        {t('deleteTransaction')}
+      </Button>
     </div>
   );
 };

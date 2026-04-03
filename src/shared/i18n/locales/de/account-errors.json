@@ -1,0 +1,10 @@
+{
+  "ACCOUNT_ALREADY_EXISTS": "Konto „{{resourceName}}“ existiert bereits.",
+  "ACCOUNT_DEPENDENCY_ERROR": "Dieses Konto wird in einigen Transaktionen verwendet.",
+  "ACCOUNT_NOT_FOUND": "Konto nicht gefunden.",
+  "ACCOUNT_OWNERSHIP_VIOLATION": "Dieses Konto gehört nicht dem aktuellen Benutzer.",
+  "ACCOUNT_SYSTEM_NAME_CONFLICT": "Dieser Kontoname ist für ein Systemkonto reserviert. Wähle einen anderen Namen.",
+  "SYSTEM_ACCOUNT_DELETION_NOT_ALLOWED": "Das Löschen eines Systemkontos ist nicht erlaubt.",
+  "SYSTEM_ACCOUNT_UPDATE_NOT_ALLOWED": "Das Aktualisieren eines Systemkontos ist nicht erlaubt.",
+  "USER_ACCOUNT_MISSING_OWNER": "Ungültiger Kontostatus. Ein Benutzerkonto hat keinen Eigentümer."
+}

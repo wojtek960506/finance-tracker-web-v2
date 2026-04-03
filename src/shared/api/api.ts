@@ -7,6 +7,8 @@ import {
 } from '@shared/consts';
 import { readLocalStorage } from '@shared/utils';
 
+import { normalizeApiError } from './api-error';
+
 export const api = axios.create({
   baseURL: `${BASE_URL}/api`,
   withCredentials: true, // when later support for refresh token will be added
@@ -61,5 +63,7 @@ api.interceptors.response.use(
         );
       }
     }
+
+    return Promise.reject(normalizeApiError(error));
   },
 );

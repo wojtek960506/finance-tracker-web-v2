@@ -1,0 +1,12 @@
+{
+  "RANDOM_TRANSACTIONS_INSERT_INCOMPLETE": "Not all test transactions were inserted.",
+  "RANDOM_TRANSACTIONS_REFERENCE_UPDATE_INCOMPLETE": "Not all test transactions were updated with reference IDs.",
+  "TEST_TRANSACTIONS_USER_HAS_TRANSACTIONS": "Test transactions cannot be added because this user already has transactions.",
+  "TRANSACTION_EXCHAGE_CATEGORY_ERROR": "Invalid category for an exchange transaction.",
+  "TRANSACTION_MISSING_REFERENCE_ERROR": "Referenced transaction is missing.",
+  "TRANSACTION_NOT_FOUND_ERROR": "Transaction not found.",
+  "TRANSACTION_OWNERSHIP_VIOLATION": "This transaction does not belong to the current user.",
+  "TRANSACTION_TRANSFER_CATEGORY_ERROR": "Invalid category for a transfer transaction.",
+  "TRANSACTION_WRONG_REFERENCE_ERROR": "Referenced transaction is invalid.",
+  "TRANSACTION_WRONG_TYPES_ERROR": "Transaction types are invalid."
+}

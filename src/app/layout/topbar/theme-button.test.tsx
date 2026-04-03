@@ -13,10 +13,15 @@ vi.mock('@context/theme-context', () => ({
   useTheme: () => ({ theme: mocks.theme.value, toggleTheme: mocks.toggleTheme }),
 }));
 
-vi.mock('lucide-react', () => ({
-  Sun: () => <svg data-testid="sun-icon" />,
-  Moon: () => <svg data-testid="moon-icon" />,
-}));
+vi.mock('lucide-react', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('lucide-react')>();
+
+  return {
+    ...actual,
+    Sun: () => <svg data-testid="sun-icon" />,
+    Moon: () => <svg data-testid="moon-icon" />,
+  };
+});
 
 describe('ThemeButton', () => {
   it('renders moon icon for light theme', () => {

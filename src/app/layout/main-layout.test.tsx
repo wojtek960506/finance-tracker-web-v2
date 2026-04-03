@@ -29,6 +29,7 @@ vi.mock('@ui', () => ({
       {children}
     </div>
   ),
+  Toaster: () => <div data-testid="toaster" />,
 }));
 
 vi.mock('@app/navigation', () => ({
@@ -55,6 +56,7 @@ describe('MainLayout', () => {
     expect(screen.getByText('Content')).toBeInTheDocument();
     expect(screen.getByTestId('drawer')).toHaveAttribute('data-open', 'true');
     expect(screen.getByTestId('navigation')).toBeInTheDocument();
+    expect(screen.getByTestId('toaster')).toBeInTheDocument();
   });
 
   it('closes the drawer via onClose', async () => {

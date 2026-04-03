@@ -21,3 +21,5 @@ export const IS_XL_MEDIA_QUERY = '(min-width: 1280px)';
 export const IS_2XL_MEDIA_QUERY = '(min-width: 1536px)';
 
 export const ICON_CLASS_NAME = 'w-7 h-7 sm:w-8 sm:h-8';
+
+export const MAIN_BUTTON_TEXT = 'text-lg sm:text-xl font-semibold sm:font-bold';

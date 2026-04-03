@@ -1,0 +1,8 @@
+{
+  "ACCESS_DENIED_DIFFERENT_USER_INFO": "Brak dostępu. Nie możesz przeglądać danych innego użytkownika.",
+  "USER_CREATE_ERROR": "Nie udało się utworzyć użytkownika.",
+  "USER_EMAIL_ALREADY_EXISTS": "Użytkownik z tym adresem email już istnieje.",
+  "USER_NOT_AUTHORIZED_TO_DELETE_ERROR": "Ten użytkownik nie ma uprawnień do usunięcia wybranego użytkownika.",
+  "USER_NOT_DELETED_ERROR": "Użytkownik nie został usunięty.",
+  "USER_NOT_FOUND_ERROR": "Nie znaleziono użytkownika."
+}

@@ -38,6 +38,12 @@ describe('Login', () => {
     expect(submitButton).toBeEnabled();
   });
 
+  it('focuses email input on initial render', () => {
+    render(<Login />);
+
+    expect(screen.getByLabelText('email')).toHaveFocus();
+  });
+
   it('shows validation error after email blur and disables submit', async () => {
     const user = userEvent.setup();
 

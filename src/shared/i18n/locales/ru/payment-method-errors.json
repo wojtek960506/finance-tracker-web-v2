@@ -1,0 +1,10 @@
+{
+  "PAYMENT_METHOD_ALREADY_EXISTS": "Способ оплаты «{{resourceName}}» уже существует.",
+  "PAYMENT_METHOD_DEPENDENCY_ERROR": "Этот способ оплаты используется в некоторых транзакциях.",
+  "PAYMENT_METHOD_NOT_FOUND": "Способ оплаты не найден.",
+  "PAYMENT_METHOD_OWNERSHIP_VIOLATION": "Этот способ оплаты не принадлежит текущему пользователю.",
+  "PAYMENT_METHOD_SYSTEM_NAME_CONFLICT": "Это название способа оплаты зарезервировано системным способом оплаты. Выберите другое название.",
+  "SYSTEM_PAYMENT_METHOD_DELETION_NOT_ALLOWED": "Удаление системного способа оплаты запрещено.",
+  "SYSTEM_PAYMENT_METHOD_UPDATE_NOT_ALLOWED": "Изменение системного способа оплаты запрещено.",
+  "USER_PAYMENT_METHOD_MISSING_OWNER": "Некорректное состояние способа оплаты. У пользовательского способа оплаты отсутствует владелец."
+}

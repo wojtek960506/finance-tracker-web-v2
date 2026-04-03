@@ -1,0 +1,13 @@
+{
+  "CATEGORY_ALREADY_EXISTS": "Kategoria o nazwie „{{resourceName}}” już istnieje.",
+  "CATEGORY_DEPENDENCY_ERROR": "Ta kategoria jest używana przez niektóre transakcje.",
+  "CATEGORY_NOT_FOUND": "Nie znaleziono kategorii.",
+  "CATEGORY_OWNERSHIP_VIOLATION": "Ta kategoria nie należy do bieżącego użytkownika.",
+  "CATEGORY_SYSTEM_NAME_CONFLICT": "Ta nazwa kategorii jest zarezerwowana przez kategorię systemową. Wybierz inną nazwę.",
+  "SYSTEM_CATEGORY_DELETION_NOT_ALLOWED": "Usuwanie kategorii systemowej jest niedozwolone.",
+  "SYSTEM_CATEGORY_HAS_OWNER": "Nieprawidłowy stan kategorii. Kategoria systemowa nie powinna mieć właściciela.",
+  "SYSTEM_CATEGORY_NOT_ALLOWED": "Ta kategoria systemowa nie jest dozwolona w zwykłej transakcji.",
+  "SYSTEM_CATEGORY_UPDATE_NOT_ALLOWED": "Aktualizacja kategorii systemowej jest niedozwolona.",
+  "SYSTEM_CATEGORY_WRONG_TYPE": "Nieprawidłowy stan kategorii. Ta kategoria powinna być kategorią systemową.",
+  "USER_CATEGORY_MISSING_OWNER": "Nieprawidłowy stan kategorii. Kategoria użytkownika nie ma właściciela."
+}

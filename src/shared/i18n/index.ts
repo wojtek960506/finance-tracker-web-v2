@@ -28,6 +28,7 @@ const resources = Object.entries(localeModules).reduce<
 i18n.use(initReactI18next).init({
   lng: savedLanguage,
   fallbackLng: FALLBACK_LNG,
+  showSupportNotice: false,
   // debug: true,
 
   // saveMissing: true,

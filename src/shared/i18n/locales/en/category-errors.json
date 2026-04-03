@@ -1,0 +1,13 @@
+{
+  "CATEGORY_ALREADY_EXISTS": "Category \"{{resourceName}}\" already exists.",
+  "CATEGORY_DEPENDENCY_ERROR": "This category is used by some transactions.",
+  "CATEGORY_NOT_FOUND": "Category not found.",
+  "CATEGORY_OWNERSHIP_VIOLATION": "This category does not belong to the current user.",
+  "CATEGORY_SYSTEM_NAME_CONFLICT": "This category name is reserved by a system category. Choose a different name.",
+  "SYSTEM_CATEGORY_DELETION_NOT_ALLOWED": "Deleting a system category is not allowed.",
+  "SYSTEM_CATEGORY_HAS_OWNER": "Invalid category state. A system category should not have an owner.",
+  "SYSTEM_CATEGORY_NOT_ALLOWED": "This system category is not allowed in a standard transaction.",
+  "SYSTEM_CATEGORY_UPDATE_NOT_ALLOWED": "Updating a system category is not allowed.",
+  "SYSTEM_CATEGORY_WRONG_TYPE": "Invalid category state. This category should be a system category.",
+  "USER_CATEGORY_MISSING_OWNER": "Invalid category state. User category is missing an owner."
+}

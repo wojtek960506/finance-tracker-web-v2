@@ -18,6 +18,7 @@ export default defineConfig({
       '@auth': path.resolve(__dirname, './src/features/auth'),
       '@transactions': path.resolve(__dirname, './src/features/transactions'),
       '@test-utils': path.resolve(__dirname, './src/test-utils'),
+      '@named-resources': path.resolve(__dirname, './src/features/named-resources'),
     },
   },
 });

@@ -35,8 +35,8 @@ describe('NavigationItem', () => {
       <NavigationItem to="/home" title="Home" />,
     );
 
-    expect(screen.getByRole('button', { name: 'Home' })).toBeInTheDocument();
-    expect(container.querySelector('button div.w-7.h-7')).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Home' })).toBeInTheDocument();
+    expect(container.querySelector('a div.w-7.h-7')).toBeInTheDocument();
   });
 
   it('renders the provided icon', () => {
@@ -91,6 +91,6 @@ describe('NavigationItem', () => {
 
     renderNavigationItem(<NavigationItem to="/right" title="Right" />);
 
-    expect(screen.getByRole('button', { name: 'Right' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Right' })).toBeInTheDocument();
   });
 });

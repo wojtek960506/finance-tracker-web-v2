@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom';
 import { useNavigation } from '@context/navigation-context';
 import { ICON_CLASS_NAME } from '@shared/consts';
 import { useUIStore } from '@store/ui-store';
-import { Button } from '@ui';
+import { getButtonClassName } from '@ui';
 
 type NavigationItemProps = {
   to: string;
@@ -27,27 +27,22 @@ export const NavigationItem = ({
     <NavLink
       to={to}
       className={({ isActive }) =>
-        isActive ? clsx('text-active-nav w-full') : clsx('w-full')
+        getButtonClassName({
+          variant: 'ghost',
+          className: clsx(
+            'w-full justify-between gap-3 sm:gap-4',
+            isActive && 'text-active-nav',
+            fromLeft ? 'text-left' : 'flex-row-reverse text-right',
+          ),
+        })
       }
       onClick={() => {
         setIsNavOpen(false);
         void additionalAction?.();
       }}
     >
-      <Button
-        className={clsx(
-          'w-full justify-between gap-3 sm:gap-4',
-          fromLeft ? 'text-left' : 'flex-row-reverse text-right',
-        )}
-        variant="ghost"
-      >
-        {title}
-        {Icon ? (
-          <Icon className={ICON_CLASS_NAME} />
-        ) : (
-          <div className={ICON_CLASS_NAME} />
-        )}
-      </Button>
+      {title}
+      {Icon ? <Icon className={ICON_CLASS_NAME} /> : <div className={ICON_CLASS_NAME} />}
     </NavLink>
   );
 };
