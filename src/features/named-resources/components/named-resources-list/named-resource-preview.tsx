@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import {
   deleteNamedResource,
   type INamedResource,
+  NAMED_RESOURCE_ERROR_NAMESPACE,
   type NamedResourceKind,
   updateNamedResource,
 } from '@named-resources/api';
@@ -23,7 +24,8 @@ export const NamedResourcePreview = ({
   kind: NamedResourceKind;
   namedResource: INamedResource;
 }) => {
-  const { t } = useTranslation('namedResources');
+  const { t: tNamedResource } = useTranslation('namedResources');
+  const { t: tError } = useTranslation(NAMED_RESOURCE_ERROR_NAMESPACE[kind]);
 
   const [isFavorite, setIsFavorite] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -62,11 +64,12 @@ export const NamedResourcePreview = ({
           }}
           onError={(error) => {
             const apiError = normalizeApiError(error);
+            const attemptedName = inputRef.current?.value ?? name;
 
             pushToast({
               variant: 'error',
-              title: name,
-              message: apiError.code ? t(apiError.code) : apiError.message,
+              title: attemptedName,
+              message: apiError.code ? tError(apiError.code) : apiError.message,
             });
           }}
           setIsVisible={setIsEditing}
@@ -76,7 +79,7 @@ export const NamedResourcePreview = ({
       ) : (
         <Card className="flex-row gap-1 sm:gap-1 items-center justify-between">
           <p className="text-base sm:text-lg px-2 sm:px-3">
-            {namedResource.type === 'system' ? t(name) : name}
+            {namedResource.type === 'system' ? tNamedResource(name) : name}
           </p>
           <div className="flex items-center gap-1">
             {namedResource.type !== 'system' ? (

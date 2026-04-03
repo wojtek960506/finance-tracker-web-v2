@@ -1,0 +1,12 @@
+{
+  "RANDOM_TRANSACTIONS_INSERT_INCOMPLETE": "Не все тестовые транзакции были добавлены.",
+  "RANDOM_TRANSACTIONS_REFERENCE_UPDATE_INCOMPLETE": "Не все тестовые транзакции были обновлены ссылочными идентификаторами.",
+  "TEST_TRANSACTIONS_USER_HAS_TRANSACTIONS": "Нельзя добавить тестовые транзакции, потому что у этого пользователя уже есть транзакции.",
+  "TRANSACTION_EXCHAGE_CATEGORY_ERROR": "Недопустимая категория для транзакции обмена.",
+  "TRANSACTION_MISSING_REFERENCE_ERROR": "Связанная транзакция отсутствует.",
+  "TRANSACTION_NOT_FOUND_ERROR": "Транзакция не найдена.",
+  "TRANSACTION_OWNERSHIP_VIOLATION": "Эта транзакция не принадлежит текущему пользователю.",
+  "TRANSACTION_TRANSFER_CATEGORY_ERROR": "Недопустимая категория для транзакции перевода.",
+  "TRANSACTION_WRONG_REFERENCE_ERROR": "Связанная транзакция недействительна.",
+  "TRANSACTION_WRONG_TYPES_ERROR": "Типы транзакций недопустимы."
+}

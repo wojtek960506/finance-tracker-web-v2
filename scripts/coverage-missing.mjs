@@ -10,9 +10,7 @@ const PROJECT_ROOT_SEGMENT = `${process.platform === 'win32' ? 'finance-tracker-
 
 const toProjectPath = (filePath) =>
   filePath.includes(PROJECT_ROOT_SEGMENT)
-    ? filePath.slice(
-        filePath.indexOf(PROJECT_ROOT_SEGMENT) + PROJECT_ROOT_SEGMENT.length,
-      )
+    ? filePath.slice(filePath.indexOf(PROJECT_ROOT_SEGMENT) + PROJECT_ROOT_SEGMENT.length)
     : filePath;
 
 const parseLcov = (lcovRaw) => {
@@ -66,18 +64,14 @@ const formatUncoveredLines = (lines) => {
     }
 
     ranges.push(
-      rangeStart === previousLine
-        ? `${rangeStart}`
-        : `${rangeStart}-${previousLine}`,
+      rangeStart === previousLine ? `${rangeStart}` : `${rangeStart}-${previousLine}`,
     );
     rangeStart = currentLine;
     previousLine = currentLine;
   }
 
   ranges.push(
-    rangeStart === previousLine
-      ? `${rangeStart}`
-      : `${rangeStart}-${previousLine}`,
+    rangeStart === previousLine ? `${rangeStart}` : `${rangeStart}-${previousLine}`,
   );
 
   return ranges.join(', ');
@@ -117,9 +111,7 @@ const rows = filesWithMissingCoverage
       branches: `${metrics.branches.pct}%`,
       functions: `${metrics.functions.pct}%`,
       lines: `${metrics.lines.pct}%`,
-      uncoveredLines: formatUncoveredLines(
-        uncoveredLinesByFile.get(shortPath) ?? [],
-      ),
+      uncoveredLines: formatUncoveredLines(uncoveredLinesByFile.get(shortPath) ?? []),
     };
   })
   .sort(
@@ -164,14 +156,7 @@ const uncoveredLinesWidth = Math.max(
   ...rows.map((row) => row.uncoveredLines.length),
 );
 
-const createDataRow = (
-  file,
-  statements,
-  branches,
-  functions,
-  lines,
-  uncoveredLines,
-) =>
+const createDataRow = (file, statements, branches, functions, lines, uncoveredLines) =>
   `${file.padEnd(fileWidth)} | ${statements.padEnd(statementsWidth)} | ` +
   `${branches.padEnd(branchesWidth)} | ${functions.padEnd(functionsWidth)} | ` +
   `${lines.padEnd(linesWidth)} | ${uncoveredLines.padEnd(uncoveredLinesWidth)} |`;
@@ -198,16 +183,7 @@ const separator =
   `${'-'.repeat(linesWidth)}-+-${'-'.repeat(uncoveredLinesWidth)}-|`;
 
 console.log('FILES WHICH DO NOT HAVE 100% COVERAGE\n');
-console.log(
-  createDataRow(
-    FILE,
-    STATEMENTS,
-    BRANCHES,
-    FUNCTIONS,
-    LINES,
-    UNCOVERED_LINES,
-  ),
-);
+console.log(createDataRow(FILE, STATEMENTS, BRANCHES, FUNCTIONS, LINES, UNCOVERED_LINES));
 console.log(separator);
 
 for (const [directory, directoryRows] of groupedRows) {

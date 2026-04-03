@@ -1,0 +1,7 @@
+{
+  "APP_ERROR": "Wystąpił błąd.",
+  "INTERNAL_SERVER_ERROR": "Wewnętrzny błąd serwera.",
+  "NAMED_RESOURCE_UPDATE_ERROR": "Nie udało się zaktualizować elementu.",
+  "NOT_FOUND_ERROR": "Nie znaleziono zasobu.",
+  "VALIDATION_ERROR": "Błąd walidacji."
+}

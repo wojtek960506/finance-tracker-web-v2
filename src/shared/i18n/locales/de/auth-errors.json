@@ -1,0 +1,8 @@
+{
+  "UNAUTHORIZED_INVALID_CREDENTIALS_ERROR": "Ungültige E-Mail oder ungültiges Passwort.",
+  "UNAUTHORIZED_INVALID_REFRESH_TOKEN_ERROR": "Ungültiger Refresh-Token.",
+  "UNAUTHORIZED_INVALID_TOKEN_ERROR": "Ungültiger Zugriffstoken.",
+  "UNAUTHORIZED_MISSING_REFRESH_TOKEN_ERROR": "Refresh-Token fehlt.",
+  "UNAUTHORIZED_MISSING_TOKEN_ERROR": "Zugriffstoken fehlt.",
+  "UNAUTHORIZED_USER_NOT_FOUND_ERROR": "Benutzer nicht gefunden."
+}

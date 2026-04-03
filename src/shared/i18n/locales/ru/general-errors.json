@@ -1,0 +1,7 @@
+{
+  "APP_ERROR": "Произошла ошибка.",
+  "INTERNAL_SERVER_ERROR": "Внутренняя ошибка сервера.",
+  "NAMED_RESOURCE_UPDATE_ERROR": "Не удалось обновить элемент.",
+  "NOT_FOUND_ERROR": "Ресурс не найден.",
+  "VALIDATION_ERROR": "Ошибка валидации."
+}

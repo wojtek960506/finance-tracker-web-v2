@@ -1,0 +1,12 @@
+{
+  "RANDOM_TRANSACTIONS_INSERT_INCOMPLETE": "Nie wszystkie testowe transakcje zostały dodane.",
+  "RANDOM_TRANSACTIONS_REFERENCE_UPDATE_INCOMPLETE": "Nie wszystkie testowe transakcje zostały zaktualizowane o identyfikatory referencji.",
+  "TEST_TRANSACTIONS_USER_HAS_TRANSACTIONS": "Nie można dodać testowych transakcji, ponieważ ten użytkownik ma już transakcje.",
+  "TRANSACTION_EXCHAGE_CATEGORY_ERROR": "Nieprawidłowa kategoria dla transakcji wymiany.",
+  "TRANSACTION_MISSING_REFERENCE_ERROR": "Brakuje powiązanej transakcji.",
+  "TRANSACTION_NOT_FOUND_ERROR": "Nie znaleziono transakcji.",
+  "TRANSACTION_OWNERSHIP_VIOLATION": "Ta transakcja nie należy do bieżącego użytkownika.",
+  "TRANSACTION_TRANSFER_CATEGORY_ERROR": "Nieprawidłowa kategoria dla transakcji transferu.",
+  "TRANSACTION_WRONG_REFERENCE_ERROR": "Powiązana transakcja jest nieprawidłowa.",
+  "TRANSACTION_WRONG_TYPES_ERROR": "Typy transakcji są nieprawidłowe."
+}

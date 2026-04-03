@@ -1,0 +1,8 @@
+{
+  "ACCESS_DENIED_DIFFERENT_USER_INFO": "Zugriff verweigert. Du kannst die Daten eines anderen Benutzers nicht ansehen.",
+  "USER_CREATE_ERROR": "Der Benutzer konnte nicht erstellt werden.",
+  "USER_EMAIL_ALREADY_EXISTS": "Ein Benutzer mit dieser E-Mail-Adresse existiert bereits.",
+  "USER_NOT_AUTHORIZED_TO_DELETE_ERROR": "Dieser Benutzer ist nicht berechtigt, den ausgewählten Benutzer zu löschen.",
+  "USER_NOT_DELETED_ERROR": "Der Benutzer wurde nicht gelöscht.",
+  "USER_NOT_FOUND_ERROR": "Benutzer nicht gefunden."
+}

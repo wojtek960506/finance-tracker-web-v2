@@ -1,0 +1,10 @@
+{
+  "ACCOUNT_ALREADY_EXISTS": "Konto o tej nazwie już istnieje.",
+  "ACCOUNT_DEPENDENCY_ERROR": "To konto jest używane przez niektóre transakcje.",
+  "ACCOUNT_NOT_FOUND": "Nie znaleziono konta.",
+  "ACCOUNT_OWNERSHIP_VIOLATION": "To konto nie należy do bieżącego użytkownika.",
+  "ACCOUNT_SYSTEM_NAME_CONFLICT": "Ta nazwa konta jest zarezerwowana przez konto systemowe. Wybierz inną nazwę.",
+  "SYSTEM_ACCOUNT_DELETION_NOT_ALLOWED": "Usuwanie konta systemowego jest niedozwolone.",
+  "SYSTEM_ACCOUNT_UPDATE_NOT_ALLOWED": "Aktualizacja konta systemowego jest niedozwolona.",
+  "USER_ACCOUNT_MISSING_OWNER": "Nieprawidłowy stan konta. Konto użytkownika nie ma właściciela."
+}

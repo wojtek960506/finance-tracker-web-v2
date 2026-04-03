@@ -1,0 +1,10 @@
+{
+  "ACCOUNT_ALREADY_EXISTS": "Счёт с таким названием уже существует.",
+  "ACCOUNT_DEPENDENCY_ERROR": "Этот счёт используется в некоторых транзакциях.",
+  "ACCOUNT_NOT_FOUND": "Счёт не найден.",
+  "ACCOUNT_OWNERSHIP_VIOLATION": "Этот счёт не принадлежит текущему пользователю.",
+  "ACCOUNT_SYSTEM_NAME_CONFLICT": "Это название счёта зарезервировано системным счётом. Выберите другое название.",
+  "SYSTEM_ACCOUNT_DELETION_NOT_ALLOWED": "Удаление системного счёта запрещено.",
+  "SYSTEM_ACCOUNT_UPDATE_NOT_ALLOWED": "Изменение системного счёта запрещено.",
+  "USER_ACCOUNT_MISSING_OWNER": "Некорректное состояние счёта. У пользовательского счёта отсутствует владелец."
+}

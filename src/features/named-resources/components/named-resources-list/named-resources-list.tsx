@@ -6,6 +6,7 @@ import {
   createNamedResource,
   getNamedResources,
   NAMED_RESOURCE,
+  NAMED_RESOURCE_ERROR_NAMESPACE,
   type NamedResourceKind,
 } from '@named-resources/api';
 import { normalizeApiError } from '@shared/api/api-error';
@@ -20,7 +21,8 @@ import { NamedResourcePreview } from './named-resource-preview';
 const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
 
 export const NamedResourcesList = ({ kind }: { kind: NamedResourceKind }) => {
-  const { t } = useTranslation('namedResources');
+  const { t: tNamedResource } = useTranslation('namedResources');
+  const { t: tError } = useTranslation(NAMED_RESOURCE_ERROR_NAMESPACE[kind]);
 
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [isCreating, setIsCreating] = useState(false);
@@ -55,7 +57,7 @@ export const NamedResourcesList = ({ kind }: { kind: NamedResourceKind }) => {
         disabled={isCreating}
         onClick={() => setIsCreating(true)}
       >
-        {t(`new${capitalize(NAMED_RESOURCE[kind])}`)}
+        {tNamedResource(`new${capitalize(NAMED_RESOURCE[kind])}`)}
       </Button>
 
       {isCreating && (
@@ -70,8 +72,8 @@ export const NamedResourcesList = ({ kind }: { kind: NamedResourceKind }) => {
 
             pushToast({
               variant: 'error',
-              title: t(`new${capitalize(NAMED_RESOURCE[kind])}`),
-              message: apiError.code ? t(apiError.code) : apiError.message,
+              title: tNamedResource(`new${capitalize(NAMED_RESOURCE[kind])}`),
+              message: apiError.code ? tError(apiError.code) : apiError.message,
             });
           }}
           setIsVisible={setIsCreating}

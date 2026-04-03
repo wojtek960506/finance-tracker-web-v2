@@ -1,0 +1,10 @@
+{
+  "PAYMENT_METHOD_ALREADY_EXISTS": "A payment method with this name already exists.",
+  "PAYMENT_METHOD_DEPENDENCY_ERROR": "This payment method is used by some transactions.",
+  "PAYMENT_METHOD_NOT_FOUND": "Payment method not found.",
+  "PAYMENT_METHOD_OWNERSHIP_VIOLATION": "This payment method does not belong to the current user.",
+  "PAYMENT_METHOD_SYSTEM_NAME_CONFLICT": "This payment method name is reserved by a system payment method. Choose a different name.",
+  "SYSTEM_PAYMENT_METHOD_DELETION_NOT_ALLOWED": "Deleting a system payment method is not allowed.",
+  "SYSTEM_PAYMENT_METHOD_UPDATE_NOT_ALLOWED": "Updating a system payment method is not allowed.",
+  "USER_PAYMENT_METHOD_MISSING_OWNER": "Invalid payment method state. User payment method is missing an owner."
+}

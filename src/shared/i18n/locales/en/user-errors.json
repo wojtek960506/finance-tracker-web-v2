@@ -1,0 +1,8 @@
+{
+  "ACCESS_DENIED_DIFFERENT_USER_INFO": "Access denied. You cannot view another user's data.",
+  "USER_CREATE_ERROR": "Could not create the user.",
+  "USER_EMAIL_ALREADY_EXISTS": "A user with this email already exists.",
+  "USER_NOT_AUTHORIZED_TO_DELETE_ERROR": "This user is not allowed to delete the selected user.",
+  "USER_NOT_DELETED_ERROR": "User was not deleted.",
+  "USER_NOT_FOUND_ERROR": "User not found."
+}

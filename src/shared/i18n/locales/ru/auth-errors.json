@@ -1,0 +1,8 @@
+{
+  "UNAUTHORIZED_INVALID_CREDENTIALS_ERROR": "Неверная электронная почта или пароль.",
+  "UNAUTHORIZED_INVALID_REFRESH_TOKEN_ERROR": "Недействительный refresh token.",
+  "UNAUTHORIZED_INVALID_TOKEN_ERROR": "Недействительный токен доступа.",
+  "UNAUTHORIZED_MISSING_REFRESH_TOKEN_ERROR": "Отсутствует refresh token.",
+  "UNAUTHORIZED_MISSING_TOKEN_ERROR": "Отсутствует токен доступа.",
+  "UNAUTHORIZED_USER_NOT_FOUND_ERROR": "Пользователь не найден."
+}

@@ -1,0 +1,10 @@
+{
+  "ACCOUNT_ALREADY_EXISTS": "An account with this name already exists.",
+  "ACCOUNT_DEPENDENCY_ERROR": "This account is used by some transactions.",
+  "ACCOUNT_NOT_FOUND": "Account not found.",
+  "ACCOUNT_OWNERSHIP_VIOLATION": "This account does not belong to the current user.",
+  "ACCOUNT_SYSTEM_NAME_CONFLICT": "This account name is reserved by a system account. Choose a different name.",
+  "SYSTEM_ACCOUNT_DELETION_NOT_ALLOWED": "Deleting a system account is not allowed.",
+  "SYSTEM_ACCOUNT_UPDATE_NOT_ALLOWED": "Updating a system account is not allowed.",
+  "USER_ACCOUNT_MISSING_OWNER": "Invalid account state. User account is missing an owner."
+}
