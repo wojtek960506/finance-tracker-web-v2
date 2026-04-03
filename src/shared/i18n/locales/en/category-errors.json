@@ -1,5 +1,5 @@
 {
-  "CATEGORY_ALREADY_EXISTS": "A category with this name already exists.",
+  "CATEGORY_ALREADY_EXISTS": "Category \"{{resourceName}}\" already exists.",
   "CATEGORY_DEPENDENCY_ERROR": "This category is used by some transactions.",
   "CATEGORY_NOT_FOUND": "Category not found.",
   "CATEGORY_OWNERSHIP_VIOLATION": "This category does not belong to the current user.",

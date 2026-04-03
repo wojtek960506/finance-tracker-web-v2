@@ -18,6 +18,8 @@ import { Button, Card, Modal } from '@ui';
 
 import { NamedResourceInput } from '../named-resource-input';
 
+import { getNamedResourceErrorToast } from './get-named-resource-error-toast';
+
 const capitalize = (value: string) => value.charAt(0).toUpperCase() + value.slice(1);
 
 export const NamedResourcePreview = ({
@@ -170,8 +172,12 @@ export const NamedResourcePreview = ({
 
             pushToast({
               variant: 'error',
-              title: attemptedName,
-              message: apiError.code ? tError(apiError.code) : apiError.message,
+              ...getNamedResourceErrorToast({
+                apiError,
+                fallbackTitle: attemptedName,
+                resourceName: attemptedName,
+                tError,
+              }),
             });
           }}
           setIsVisible={setIsEditing}

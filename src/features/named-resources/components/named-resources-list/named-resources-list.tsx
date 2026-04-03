@@ -16,6 +16,7 @@ import { useToastStore } from '@store/toast-store';
 
 import { NamedResourceInput } from '../named-resource-input';
 
+import { getNamedResourceErrorToast } from './get-named-resource-error-toast';
 import { NamedResourcePreview } from './named-resource-preview';
 
 const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
@@ -79,8 +80,12 @@ export const NamedResourcesList = ({ kind }: { kind: NamedResourceKind }) => {
 
             pushToast({
               variant: 'error',
-              title: tNamedResource(`new${capitalize(NAMED_RESOURCE[kind])}`),
-              message: apiError.code ? tError(apiError.code) : apiError.message,
+              ...getNamedResourceErrorToast({
+                apiError,
+                fallbackTitle: tNamedResource(`new${capitalize(NAMED_RESOURCE[kind])}`),
+                resourceName: inputRef.current?.value ?? '',
+                tError,
+              }),
             });
           }}
           setIsVisible={setIsCreating}

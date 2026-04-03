@@ -1,5 +1,5 @@
 {
-  "ACCOUNT_ALREADY_EXISTS": "Счёт с таким названием уже существует.",
+  "ACCOUNT_ALREADY_EXISTS": "Счёт «{{resourceName}}» уже существует.",
   "ACCOUNT_DEPENDENCY_ERROR": "Этот счёт используется в некоторых транзакциях.",
   "ACCOUNT_NOT_FOUND": "Счёт не найден.",
   "ACCOUNT_OWNERSHIP_VIOLATION": "Этот счёт не принадлежит текущему пользователю.",

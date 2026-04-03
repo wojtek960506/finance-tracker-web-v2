@@ -181,7 +181,7 @@ describe('NamedResourcePreview', () => {
 
     updateNamedResource.mockRejectedValueOnce(error);
     normalizeApiError.mockReturnValue({
-      code: 'RESOURCE_EXISTS',
+      code: 'CATEGORY_ALREADY_EXISTS',
       message: 'Already exists',
     });
 
@@ -196,8 +196,7 @@ describe('NamedResourcePreview', () => {
     await waitFor(() =>
       expect(pushToast).toHaveBeenCalledWith({
         variant: 'error',
-        title: 'Duplicate',
-        message: 'category-errors:RESOURCE_EXISTS',
+        title: 'category-errors:CATEGORY_ALREADY_EXISTS',
       }),
     );
   });

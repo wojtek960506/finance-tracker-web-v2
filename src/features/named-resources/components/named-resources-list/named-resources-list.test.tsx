@@ -68,6 +68,17 @@ vi.mock('../named-resource-input', () => ({
       >
         submit new named resource
       </button>
+      <button
+        type="button"
+        onClick={() =>
+          action(inputRef.current?.value ?? 'Created name').catch((error) => {
+            inputRef.current = null;
+            onError?.(error);
+          })
+        }
+      >
+        submit new named resource without ref
+      </button>
     </div>
   ),
 }));
@@ -225,7 +236,7 @@ describe('NamedResourcesList', () => {
     ]);
     createNamedResource.mockRejectedValueOnce(error);
     normalizeApiError.mockReturnValue({
-      code: 'RESOURCE_EXISTS',
+      code: 'CATEGORY_ALREADY_EXISTS',
       message: 'Already exists',
     });
 
@@ -239,8 +250,7 @@ describe('NamedResourcesList', () => {
     await waitFor(() =>
       expect(pushToast).toHaveBeenCalledWith({
         variant: 'error',
-        title: 'namedResources:newCategory',
-        message: 'category-errors:RESOURCE_EXISTS',
+        title: 'category-errors:CATEGORY_ALREADY_EXISTS',
       }),
     );
   });
@@ -275,6 +285,44 @@ describe('NamedResourcesList', () => {
         variant: 'error',
         title: 'namedResources:newCategory',
         message: 'Plain api error message',
+      }),
+    );
+  });
+
+  it('falls back to an empty resource name when the create input ref is unavailable', async () => {
+    const user = userEvent.setup();
+    const error = new Error('boom');
+
+    getNamedResources.mockResolvedValueOnce([
+      {
+        id: 'category-1',
+        name: 'Groceries',
+        ownerId: 'user-1',
+        type: 'user',
+        nameNormalized: 'groceries',
+      },
+    ]);
+    createNamedResource.mockRejectedValueOnce(error);
+    normalizeApiError.mockReturnValue({
+      code: 'CATEGORY_ALREADY_EXISTS',
+      message: 'Already exists',
+    });
+
+    renderList();
+
+    await user.click(
+      await screen.findByRole('button', { name: 'namedResources:newCategory' }),
+    );
+    await user.click(
+      screen.getByRole('button', {
+        name: 'submit new named resource without ref',
+      }),
+    );
+
+    await waitFor(() =>
+      expect(pushToast).toHaveBeenCalledWith({
+        variant: 'error',
+        title: 'category-errors:CATEGORY_ALREADY_EXISTS',
       }),
     );
   });

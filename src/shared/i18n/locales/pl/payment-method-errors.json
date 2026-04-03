@@ -1,5 +1,5 @@
 {
-  "PAYMENT_METHOD_ALREADY_EXISTS": "Metoda płatności o tej nazwie już istnieje.",
+  "PAYMENT_METHOD_ALREADY_EXISTS": "Metoda płatności o nazwie „{{resourceName}}” już istnieje.",
   "PAYMENT_METHOD_DEPENDENCY_ERROR": "Ta metoda płatności jest używana przez niektóre transakcje.",
   "PAYMENT_METHOD_NOT_FOUND": "Nie znaleziono metody płatności.",
   "PAYMENT_METHOD_OWNERSHIP_VIOLATION": "Ta metoda płatności nie należy do bieżącego użytkownika.",

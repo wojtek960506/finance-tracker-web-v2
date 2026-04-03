@@ -1,5 +1,5 @@
 {
-  "PAYMENT_METHOD_ALREADY_EXISTS": "Способ оплаты с таким названием уже существует.",
+  "PAYMENT_METHOD_ALREADY_EXISTS": "Способ оплаты «{{resourceName}}» уже существует.",
   "PAYMENT_METHOD_DEPENDENCY_ERROR": "Этот способ оплаты используется в некоторых транзакциях.",
   "PAYMENT_METHOD_NOT_FOUND": "Способ оплаты не найден.",
   "PAYMENT_METHOD_OWNERSHIP_VIOLATION": "Этот способ оплаты не принадлежит текущему пользователю.",

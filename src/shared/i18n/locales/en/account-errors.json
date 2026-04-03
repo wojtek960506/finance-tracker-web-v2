@@ -1,5 +1,5 @@
 {
-  "ACCOUNT_ALREADY_EXISTS": "An account with this name already exists.",
+  "ACCOUNT_ALREADY_EXISTS": "Account \"{{resourceName}}\" already exists.",
   "ACCOUNT_DEPENDENCY_ERROR": "This account is used by some transactions.",
   "ACCOUNT_NOT_FOUND": "Account not found.",
   "ACCOUNT_OWNERSHIP_VIOLATION": "This account does not belong to the current user.",
