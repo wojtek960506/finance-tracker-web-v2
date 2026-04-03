@@ -66,4 +66,15 @@ describe('api-error', () => {
       message: 'Boom',
     });
   });
+
+  it('falls back to the default ApiError for unknown values', () => {
+    vi.mocked(axios.isAxiosError).mockReturnValue(false);
+
+    const normalized = normalizeApiError('boom');
+
+    expect(normalized).toMatchObject({
+      name: 'ApiError',
+      message: 'Unexpected server error.',
+    });
+  });
 });

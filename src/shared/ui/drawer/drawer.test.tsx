@@ -1,9 +1,10 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { createRef } from 'react';
 import { describe, expect, it, vi } from 'vitest';
 
 import { Drawer } from './drawer';
+import { getFocusableElements } from './get-focusable-elements';
 
 describe('Drawer', () => {
   it('calls onClose when overlay is clicked', async () => {
@@ -193,5 +194,28 @@ describe('Drawer', () => {
     await user.tab({ shift: true });
 
     expect(screen.getByRole('link', { name: 'Transactions' })).toHaveFocus();
+  });
+
+  it('keeps focus on the panel when no focusable elements are found', () => {
+    const { container } = render(
+      <Drawer isOpen fromLeft onClose={() => {}}>
+        <div>Content</div>
+      </Drawer>,
+    );
+
+    const panel = container.querySelector('div.fixed.flex');
+    expect(panel).toBeInTheDocument();
+
+    vi.spyOn(panel as HTMLDivElement, 'querySelectorAll').mockReturnValue([] as never);
+
+    expect(panel).toHaveFocus();
+
+    fireEvent.keyDown(document, { key: 'Tab' });
+
+    expect(panel).toHaveFocus();
+  });
+
+  it('returns an empty list when focusable elements are requested from a missing container', () => {
+    expect(getFocusableElements(null)).toEqual([]);
   });
 });

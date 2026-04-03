@@ -4,8 +4,7 @@ import { type ReactNode, type RefObject, useEffect, useRef } from 'react';
 
 import { Button } from '@ui';
 
-const FOCUSABLE_SELECTOR =
-  'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+import { getFocusableElements } from './get-focusable-elements';
 
 type DrawerProps = {
   isOpen: boolean;
@@ -15,9 +14,6 @@ type DrawerProps = {
   restoreFocusRef?: RefObject<HTMLElement | null>;
   ariaLabel?: string;
 };
-
-const getFocusableElements = (container: HTMLElement | null) =>
-  Array.from(container?.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR) ?? []);
 
 export const Drawer = ({
   isOpen,
@@ -36,8 +32,7 @@ export const Drawer = ({
 
     if (!wasOpen && isOpen) {
       const firstFocusableElement =
-        navRef.current?.querySelector<HTMLElement>(FOCUSABLE_SELECTOR) ??
-        panelRef.current;
+        getFocusableElements(navRef.current)[0] ?? panelRef.current;
 
       firstFocusableElement?.focus();
     }

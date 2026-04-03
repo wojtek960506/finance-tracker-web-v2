@@ -51,4 +51,16 @@ describe('useToastStore', () => {
 
     expect(createToastId()).toMatch(/^toast-/);
   });
+
+  it('creates an RFC 4122-like id from getRandomValues when randomUUID is unavailable', () => {
+    vi.stubGlobal('crypto', {
+      getRandomValues: vi.fn((array: Uint8Array) => {
+        array.set([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]);
+        return array;
+      }),
+      randomUUID: undefined,
+    });
+
+    expect(createToastId()).toBe('00010203-0405-4607-8809-0a0b0c0d0e0f');
+  });
 });
