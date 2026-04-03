@@ -1,6 +1,6 @@
-import type { INamedResource, NamedResourceKind } from './types';
+import { api } from '@shared/api';
 
-import { api } from '@/shared/api';
+import type { INamedResource, NamedResourceKind } from './types';
 
 export const getNamedResource = async (
   kind: NamedResourceKind,
