@@ -32,6 +32,7 @@ export const NamedResourcePreview = ({
   const { t: tNamedResource } = useTranslation('namedResources');
   const { t: tError } = useTranslation(NAMED_RESOURCE_ERROR_NAMESPACE[kind]);
 
+  // TODO: Persist favorited named resources once the dedicated endpoint is available.
   const [isFavorite, setIsFavorite] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
