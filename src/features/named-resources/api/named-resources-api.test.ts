@@ -5,8 +5,10 @@ import { api } from '@shared/api';
 import {
   createNamedResource,
   deleteNamedResource,
+  favoriteNamedResource,
   getNamedResource,
   getNamedResources,
+  unfavoriteNamedResource,
   updateNamedResource,
 } from './index';
 
@@ -25,6 +27,7 @@ const category = {
   ownerId: 'user-1',
   type: 'user' as const,
   nameNormalized: 'groceries',
+  isFavorite: false,
 };
 
 describe('named resources api', () => {
@@ -78,6 +81,27 @@ describe('named resources api', () => {
     const result = await deleteNamedResource('categories', 'category-1');
 
     expect(deleteMock).toHaveBeenCalledWith('/categories/category-1');
+    expect(result).toEqual(response);
+  });
+
+  it('favorites a named resource', async () => {
+    const postMock = vi.mocked(api.post);
+    postMock.mockResolvedValueOnce({ data: category });
+
+    const result = await favoriteNamedResource('categories', 'category-1');
+
+    expect(postMock).toHaveBeenCalledWith('/categories/category-1/favorite');
+    expect(result).toEqual(category);
+  });
+
+  it('unfavorites a named resource', async () => {
+    const deleteMock = vi.mocked(api.delete);
+    const response = { acknowledged: true, deletedCount: 1 };
+    deleteMock.mockResolvedValueOnce({ data: response });
+
+    const result = await unfavoriteNamedResource('categories', 'category-1');
+
+    expect(deleteMock).toHaveBeenCalledWith('/categories/category-1/favorite');
     expect(result).toEqual(response);
   });
 });

@@ -26,6 +26,8 @@
   "resourceDeletedTitleCategory": "Kategorie „{{resourceName}}“ gelöscht",
   "resourceDeletedTitlePaymentMethod": "Zahlungsmethode „{{resourceName}}“ gelöscht",
   "resourceDeletedTitleAccount": "Konto „{{resourceName}}“ gelöscht",
+  "favoriteNamedResource": "Ressource zu Favoriten hinzufügen",
+  "unfavoriteNamedResource": "Ressource aus Favoriten entfernen",
 
   "exchange": "Währungsumtausch",
   "myAccount": "Interne Überweisung",

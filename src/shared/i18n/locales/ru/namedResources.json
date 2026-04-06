@@ -26,6 +26,8 @@
   "resourceDeletedTitleCategory": "Категория «{{resourceName}}» удалена",
   "resourceDeletedTitlePaymentMethod": "Способ оплаты «{{resourceName}}» удалён",
   "resourceDeletedTitleAccount": "Счёт «{{resourceName}}» удалён",
+  "favoriteNamedResource": "Добавить ресурс в избранное",
+  "unfavoriteNamedResource": "Удалить ресурс из избранного",
 
   "exchange": "Обмен валюты",
   "myAccount": "Внутренний перевод",

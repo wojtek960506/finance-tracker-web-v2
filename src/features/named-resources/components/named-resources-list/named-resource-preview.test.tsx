@@ -10,7 +10,9 @@ import { NamedResourcePreview } from './named-resource-preview';
 
 const pushToast = vi.fn();
 const deleteNamedResource = vi.fn();
+const favoriteNamedResource = vi.fn();
 const updateNamedResource = vi.fn();
+const unfavoriteNamedResource = vi.fn();
 const normalizeApiError = vi.fn();
 
 vi.mock('react-i18next', () => ({
@@ -31,7 +33,9 @@ vi.mock('@named-resources/api', () => ({
     accounts: 'account-errors',
   },
   deleteNamedResource: (...args: unknown[]) => deleteNamedResource(...args),
+  favoriteNamedResource: (...args: unknown[]) => favoriteNamedResource(...args),
   updateNamedResource: (...args: unknown[]) => updateNamedResource(...args),
+  unfavoriteNamedResource: (...args: unknown[]) => unfavoriteNamedResource(...args),
 }));
 
 vi.mock('@shared/api/api-error', () => ({
@@ -92,6 +96,7 @@ const userResource = {
   ownerId: 'user-1',
   type: 'user' as NamedResourceType,
   nameNormalized: 'groceries',
+  isFavorite: false,
 };
 
 const renderPreview = (namedResource = userResource) => {
@@ -111,8 +116,10 @@ describe('NamedResourcePreview', () => {
   beforeEach(() => {
     pushToast.mockReset();
     deleteNamedResource.mockReset();
+    favoriteNamedResource.mockReset();
     updateNamedResource.mockReset();
     normalizeApiError.mockReset();
+    unfavoriteNamedResource.mockReset();
   });
 
   it('renders translated system resources as locked', () => {
@@ -128,19 +135,85 @@ describe('NamedResourcePreview', () => {
     expect(container.querySelector('svg.lucide-lock')).toBeInTheDocument();
   });
 
-  it('toggles favorite styling', async () => {
+  it('favorites a resource and invalidates named resources query', async () => {
     const user = userEvent.setup();
-    const { container } = renderPreview();
-
-    const buttons = screen.getAllByRole('button');
-    const favoriteButton = buttons[2];
-    const starIcon = container.querySelector('svg.lucide-star');
-
-    expect(starIcon).not.toHaveClass('fill-bg');
+    favoriteNamedResource.mockResolvedValueOnce({ ...userResource, isFavorite: true });
+    const { client } = renderPreview();
+    const favoriteButton = screen.getByRole('button', {
+      name: 'namedResources:favoriteNamedResource',
+    });
+    const invalidateQueriesSpy = vi.spyOn(client, 'invalidateQueries');
 
     await user.click(favoriteButton);
 
-    expect(starIcon).toHaveClass('fill-bg');
+    expect(favoriteNamedResource).toHaveBeenCalledWith('categories', 'category-1');
+    await waitFor(() =>
+      expect(invalidateQueriesSpy).toHaveBeenCalledWith({ queryKey: ['categories'] }),
+    );
+  });
+
+  it('unfavorites a resource and invalidates named resources query', async () => {
+    const user = userEvent.setup();
+    unfavoriteNamedResource.mockResolvedValueOnce({ acknowledged: true, deletedCount: 1 });
+    const { client } = renderPreview({ ...userResource, isFavorite: true });
+    const favoriteButton = screen.getByRole('button', {
+      name: 'namedResources:unfavoriteNamedResource',
+    });
+    const invalidateQueriesSpy = vi.spyOn(client, 'invalidateQueries');
+    await user.click(favoriteButton);
+
+    expect(unfavoriteNamedResource).toHaveBeenCalledWith('categories', 'category-1');
+    await waitFor(() =>
+      expect(invalidateQueriesSpy).toHaveBeenCalledWith({ queryKey: ['categories'] }),
+    );
+  });
+
+  it('shows an error toast when favorite update fails with an api code', async () => {
+    const user = userEvent.setup();
+    const error = new Error('boom');
+
+    favoriteNamedResource.mockRejectedValueOnce(error);
+    normalizeApiError.mockReturnValue({
+      code: 'CATEGORY_ALREADY_EXISTS',
+      message: 'Already exists',
+    });
+
+    renderPreview();
+
+    await user.click(
+      screen.getByRole('button', { name: 'namedResources:favoriteNamedResource' }),
+    );
+
+    await waitFor(() =>
+      expect(pushToast).toHaveBeenCalledWith({
+        variant: 'error',
+        title: 'category-errors:CATEGORY_ALREADY_EXISTS',
+      }),
+    );
+  });
+
+  it('shows an error toast with fallback message when favorite update fails without code', async () => {
+    const user = userEvent.setup();
+    const error = new Error('boom');
+
+    favoriteNamedResource.mockRejectedValueOnce(error);
+    normalizeApiError.mockReturnValue({
+      message: 'Plain favorite error message',
+    });
+
+    renderPreview();
+
+    await user.click(
+      screen.getByRole('button', { name: 'namedResources:favoriteNamedResource' }),
+    );
+
+    await waitFor(() =>
+      expect(pushToast).toHaveBeenCalledWith({
+        variant: 'error',
+        title: 'Groceries',
+        message: 'Plain favorite error message',
+      }),
+    );
   });
 
   it('updates a user resource name after a successful edit', async () => {

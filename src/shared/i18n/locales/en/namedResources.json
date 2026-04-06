@@ -26,6 +26,8 @@
   "resourceDeletedTitleCategory": "Deleted category \"{{resourceName}}\"",
   "resourceDeletedTitlePaymentMethod": "Deleted payment method \"{{resourceName}}\"",
   "resourceDeletedTitleAccount": "Deleted account \"{{resourceName}}\"",
+  "favoriteNamedResource": "Favorite named resource",
+  "unfavoriteNamedResource": "Unfavorite named resource",
 
   "exchange": "Currency exchange",
   "myAccount": "Internal transfer",

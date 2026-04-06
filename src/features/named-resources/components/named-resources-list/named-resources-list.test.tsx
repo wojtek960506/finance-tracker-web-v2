@@ -84,8 +84,8 @@ vi.mock('../named-resource-input', () => ({
 }));
 
 vi.mock('./named-resource-preview', () => ({
-  NamedResourcePreview: ({ namedResource }: { namedResource: { name: string } }) => (
-    <li>{namedResource.name}</li>
+  NamedResourcePreview: ({ namedResource }: { namedResource: { name: string; isFavorite: boolean } }) => (
+    <li>{`${namedResource.name}:${namedResource.isFavorite ? 'favorite' : 'regular'}`}</li>
   ),
 }));
 
@@ -149,13 +149,42 @@ describe('NamedResourcesList', () => {
         ownerId: 'user-1',
         type: 'user',
         nameNormalized: 'groceries',
+        isFavorite: false,
       },
     ]);
 
     renderList();
 
     expect(await screen.findByText('namedResources:newCategory')).toBeInTheDocument();
-    expect(screen.getByText('Groceries')).toBeInTheDocument();
+    expect(screen.getByText('Groceries:regular')).toBeInTheDocument();
+  });
+
+  it('keeps backend order while still passing favorite information', async () => {
+    getNamedResources.mockResolvedValueOnce([
+      {
+        id: 'category-1',
+        name: 'Groceries',
+        ownerId: 'user-1',
+        type: 'user',
+        nameNormalized: 'groceries',
+        isFavorite: false,
+      },
+      {
+        id: 'category-2',
+        name: 'Salary',
+        ownerId: 'user-1',
+        type: 'user',
+        nameNormalized: 'salary',
+        isFavorite: true,
+      },
+    ]);
+
+    renderList();
+
+    const items = await screen.findAllByRole('listitem');
+
+    expect(items[0]).toHaveTextContent('Groceries:regular');
+    expect(items[1]).toHaveTextContent('Salary:favorite');
   });
 
   it('opens the create input and focuses it', async () => {
@@ -168,6 +197,7 @@ describe('NamedResourcesList', () => {
         ownerId: 'user-1',
         type: 'user',
         nameNormalized: 'groceries',
+        isFavorite: false,
       },
     ]);
 
@@ -193,6 +223,7 @@ describe('NamedResourcesList', () => {
         ownerId: 'user-1',
         type: 'user',
         nameNormalized: 'groceries',
+        isFavorite: false,
       },
     ]);
     createNamedResource.mockResolvedValueOnce({
@@ -201,6 +232,7 @@ describe('NamedResourcesList', () => {
       ownerId: 'user-1',
       type: 'user',
       nameNormalized: 'created name',
+      isFavorite: false,
     });
 
     const { client } = renderList();
@@ -232,6 +264,7 @@ describe('NamedResourcesList', () => {
         ownerId: 'user-1',
         type: 'user',
         nameNormalized: 'groceries',
+        isFavorite: false,
       },
     ]);
     createNamedResource.mockRejectedValueOnce(error);
@@ -266,6 +299,7 @@ describe('NamedResourcesList', () => {
         ownerId: 'user-1',
         type: 'user',
         nameNormalized: 'groceries',
+        isFavorite: false,
       },
     ]);
     createNamedResource.mockRejectedValueOnce(error);
@@ -300,6 +334,7 @@ describe('NamedResourcesList', () => {
         ownerId: 'user-1',
         type: 'user',
         nameNormalized: 'groceries',
+        isFavorite: false,
       },
     ]);
     createNamedResource.mockRejectedValueOnce(error);

@@ -26,6 +26,8 @@
   "resourceDeletedTitleCategory": "Usunięto kategorię „{{resourceName}}”",
   "resourceDeletedTitlePaymentMethod": "Usunięto metodę płatności „{{resourceName}}”",
   "resourceDeletedTitleAccount": "Usunięto konto „{{resourceName}}”",
+  "favoriteNamedResource": "Dodaj zasób do ulubionych",
+  "unfavoriteNamedResource": "Usuń zasób z ulubionych",
 
   "exchange": "Wymiana waluty",
   "myAccount": "Przelew wewnętrzny",
