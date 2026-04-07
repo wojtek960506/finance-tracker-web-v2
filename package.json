@@ -29,6 +29,7 @@
     "i18next-browser-languagedetector": "^8.2.1",
     "lucide-react": "^0.575.0",
     "react": "^19.2.0",
+    "react-day-picker": "^9.14.0",
     "react-dom": "^19.2.0",
     "react-flagkit": "^2.0.4",
     "react-hook-form": "^7.72.1",
