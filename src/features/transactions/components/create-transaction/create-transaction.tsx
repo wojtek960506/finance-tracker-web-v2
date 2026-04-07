@@ -1,12 +1,13 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import clsx from 'clsx';
 import { Controller, type SubmitHandler, useForm, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { z } from 'zod';
 
 import { normalizeApiError } from '@shared/api/api-error';
-import { Button, Card, DateInput, Input, Label, NumberInput } from '@shared/ui';
+import { Button, Card, DateInput, Input, NumberInput } from '@shared/ui';
 import { useToastStore } from '@store/toast-store';
 import {
   createStandardTransaction,
@@ -47,6 +48,12 @@ const getDefaultValues = (): TransactionFormValues => ({
 
 const transactionTypeOptions: TransactionType[] = ['expense', 'income'];
 const FIELD_CONTROL_CLASS_NAME = 'rounded-xl px-3 py-2 text-base sm:text-lg';
+
+type FieldSectionProps = React.ComponentProps<'div'>;
+
+const FieldSection = ({ className, ...props }: FieldSectionProps) => (
+  <div {...props} className={clsx('flex flex-col gap-2', className)} />
+);
 
 export const CreateTransaction = () => {
   const navigate = useNavigate();
@@ -97,7 +104,7 @@ export const CreateTransaction = () => {
   return (
     <Card className="mx-auto w-full max-w-3xl gap-4">
       <form className="grid gap-4 sm:grid-cols-2" onSubmit={form.handleSubmit(onSubmit)}>
-        <Label>
+        <FieldSection>
           <span>{t('date')}</span>
           <Controller
             control={form.control}
@@ -111,9 +118,9 @@ export const CreateTransaction = () => {
               {t(form.formState.errors.date.message!)}
             </span>
           )}
-        </Label>
+        </FieldSection>
 
-        <Label>
+        <FieldSection>
           <span>{t('transactionType')}</span>
           <div className="grid grid-cols-2 gap-2">
             {transactionTypeOptions.map((transactionType) => {
@@ -131,9 +138,9 @@ export const CreateTransaction = () => {
               );
             })}
           </div>
-        </Label>
+        </FieldSection>
 
-        <Label className="sm:col-span-2">
+        <FieldSection className="sm:col-span-2">
           <span>{t('description')}</span>
           <Input {...form.register('description')} className={FIELD_CONTROL_CLASS_NAME} />
           {form.formState.errors.description && (
@@ -141,9 +148,9 @@ export const CreateTransaction = () => {
               {t(form.formState.errors.description.message!)}
             </span>
           )}
-        </Label>
+        </FieldSection>
 
-        <Label>
+        <FieldSection>
           <span>{t('amount')}</span>
           <Controller
             control={form.control}
@@ -164,9 +171,9 @@ export const CreateTransaction = () => {
               {t(form.formState.errors.amount.message!)}
             </span>
           )}
-        </Label>
+        </FieldSection>
 
-        <Label>
+        <FieldSection>
           <span>{t('currency')}</span>
           <Controller
             control={form.control}
@@ -186,9 +193,9 @@ export const CreateTransaction = () => {
               {t(form.formState.errors.currency.message!)}
             </span>
           )}
-        </Label>
+        </FieldSection>
 
-        <Label className="sm:col-span-2">
+        <FieldSection className="sm:col-span-2">
           <span>{t('category')}</span>
           <Controller
             control={form.control}
@@ -211,9 +218,9 @@ export const CreateTransaction = () => {
               {t(form.formState.errors.categoryId.message!)}
             </span>
           )}
-        </Label>
+        </FieldSection>
 
-        <Label>
+        <FieldSection>
           <span>{t('paymentMethod')}</span>
           <Controller
             control={form.control}
@@ -236,9 +243,9 @@ export const CreateTransaction = () => {
               {t(form.formState.errors.paymentMethodId.message!)}
             </span>
           )}
-        </Label>
+        </FieldSection>
 
-        <Label>
+        <FieldSection>
           <span>{t('account')}</span>
           <Controller
             control={form.control}
@@ -261,7 +268,7 @@ export const CreateTransaction = () => {
               {t(form.formState.errors.accountId.message!)}
             </span>
           )}
-        </Label>
+        </FieldSection>
 
         <div className="flex flex-col gap-2 sm:col-span-2 sm:flex-row sm:justify-end">
           <Button type="button" variant="ghost" onClick={() => navigate('/transactions')}>
