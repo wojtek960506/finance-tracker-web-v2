@@ -74,9 +74,8 @@ export const NamedResourcePreview = ({
 
     const previousResources = queryClient.getQueryData<INamedResource[]>([kind]);
 
-    queryClient.setQueryData<INamedResource[] | undefined>(
-      [kind],
-      (resources) => setNamedResourceFavoriteState(resources, id, isFavorite),
+    queryClient.setQueryData<INamedResource[] | undefined>([kind], (resources) =>
+      setNamedResourceFavoriteState(resources, id, isFavorite),
     );
 
     return { previousResources };

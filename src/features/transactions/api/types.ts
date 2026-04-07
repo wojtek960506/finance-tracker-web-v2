@@ -4,6 +4,19 @@ export type NamedResource = {
   name: string;
 };
 
+export type TransactionType = 'expense' | 'income';
+
+export type TransactionStandardCreateDTO = {
+  date: string;
+  description: string;
+  amount: number;
+  currency: string;
+  categoryId: string;
+  paymentMethodId: string;
+  accountId: string;
+  transactionType: TransactionType;
+};
+
 export type Transaction = {
   date: string;
   description: string;

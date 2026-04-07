@@ -1,5 +1,6 @@
 {
   "transactions": "Transactions",
+  "newTransaction": "New Transaction",
   "transactionDetails": "Transaction Details",
   "categories": "Categories",
   "paymentMethods": "Payment Methods",

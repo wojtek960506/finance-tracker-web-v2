@@ -84,7 +84,11 @@ vi.mock('../named-resource-input', () => ({
 }));
 
 vi.mock('./named-resource-preview', () => ({
-  NamedResourcePreview: ({ namedResource }: { namedResource: { name: string; isFavorite: boolean } }) => (
+  NamedResourcePreview: ({
+    namedResource,
+  }: {
+    namedResource: { name: string; isFavorite: boolean };
+  }) => (
     <li>{`${namedResource.name}:${namedResource.isFavorite ? 'favorite' : 'regular'}`}</li>
   ),
 }));

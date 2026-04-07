@@ -1,6 +1,7 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { render, screen } from '@testing-library/react';
 import type { ReactNode } from 'react';
+import { MemoryRouter } from 'react-router-dom';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { makeTransaction } from '@test-utils/factories/transaction';
@@ -53,7 +54,9 @@ describe('TransactionsList', () => {
 
     render(
       <QueryClientProvider client={client}>
-        <TransactionsList />
+        <MemoryRouter>
+          <TransactionsList />
+        </MemoryRouter>
       </QueryClientProvider>,
     );
 
@@ -68,7 +71,9 @@ describe('TransactionsList', () => {
 
     render(
       <QueryClientProvider client={client}>
-        <TransactionsList />
+        <MemoryRouter>
+          <TransactionsList />
+        </MemoryRouter>
       </QueryClientProvider>,
     );
 
@@ -83,7 +88,9 @@ describe('TransactionsList', () => {
 
     render(
       <QueryClientProvider client={client}>
-        <TransactionsList />
+        <MemoryRouter>
+          <TransactionsList />
+        </MemoryRouter>
       </QueryClientProvider>,
     );
 
@@ -130,7 +137,9 @@ describe('TransactionsList', () => {
 
     render(
       <QueryClientProvider client={client}>
-        <TransactionsList />
+        <MemoryRouter>
+          <TransactionsList />
+        </MemoryRouter>
       </QueryClientProvider>,
     );
 

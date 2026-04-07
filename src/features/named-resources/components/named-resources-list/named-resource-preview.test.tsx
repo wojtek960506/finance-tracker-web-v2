@@ -154,7 +154,10 @@ describe('NamedResourcePreview', () => {
 
   it('unfavorites a resource and invalidates named resources query', async () => {
     const user = userEvent.setup();
-    unfavoriteNamedResource.mockResolvedValueOnce({ acknowledged: true, deletedCount: 1 });
+    unfavoriteNamedResource.mockResolvedValueOnce({
+      acknowledged: true,
+      deletedCount: 1,
+    });
     const { client } = renderPreview({ ...userResource, isFavorite: true });
     const favoriteButton = screen.getByRole('button', {
       name: 'namedResources:unfavoriteNamedResource',

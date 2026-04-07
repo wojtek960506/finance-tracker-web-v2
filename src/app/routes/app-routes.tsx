@@ -3,7 +3,11 @@ import { matchPath, Navigate } from 'react-router-dom';
 
 import { Login } from '@auth/components';
 import { NamedResourcesList } from '@named-resources/components';
-import { TransactionDetails, TransactionsList } from '@transactions/components';
+import {
+  CreateTransaction,
+  TransactionDetails,
+  TransactionsList,
+} from '@transactions/components';
 
 type RouteTitle = {
   key: string;
@@ -33,6 +37,11 @@ export const PROTECTED_APP_ROUTES: AppRouteConfig[] = [
     path: '/transactions',
     element: <TransactionsList />,
     title: { namespace: 'navigation', key: 'transactions' },
+  },
+  {
+    path: '/transactions/new',
+    element: <CreateTransaction />,
+    title: { namespace: 'navigation', key: 'newTransaction' },
   },
   {
     path: '/transactions/:transactionId',
