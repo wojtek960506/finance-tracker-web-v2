@@ -5,20 +5,45 @@ import { describe, expect, it, vi } from 'vitest';
 import { Title } from './title';
 
 vi.mock('react-i18next', () => ({
-  useTranslation: () => ({
-    t: (key: string) => `label-${key}`,
+  useTranslation: (namespace: string) => ({
+    t: (key: string) => `${namespace}:${key}`,
   }),
 }));
 
 describe('Title', () => {
-  it('renders the translated title and links to root', () => {
+  it('renders the app title and links to root on login page', () => {
     render(
-      <MemoryRouter>
+      <MemoryRouter initialEntries={['/login']}>
         <Title />
       </MemoryRouter>,
     );
 
-    const link = screen.getByRole('link', { name: 'label-title' });
+    const link = screen.getByRole('link', { name: 'common:title' });
     expect(link).toHaveAttribute('href', '/');
+  });
+
+  it('renders transactions title on transactions page', () => {
+    render(
+      <MemoryRouter initialEntries={['/transactions']}>
+        <Title />
+      </MemoryRouter>,
+    );
+
+    expect(
+      screen.getByRole('heading', { name: 'navigation:transactions' }),
+    ).toBeInTheDocument();
+    expect(screen.queryByRole('link')).not.toBeInTheDocument();
+  });
+
+  it('renders transaction details title on transaction details page', () => {
+    render(
+      <MemoryRouter initialEntries={['/transactions/123']}>
+        <Title />
+      </MemoryRouter>,
+    );
+
+    expect(
+      screen.getByRole('heading', { name: 'navigation:transactionDetails' }),
+    ).toBeInTheDocument();
   });
 });

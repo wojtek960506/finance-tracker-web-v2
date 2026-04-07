@@ -1,5 +1,6 @@
 {
   "transactions": "Transactions",
+  "transactionDetails": "Transaction Details",
   "categories": "Categories",
   "paymentMethods": "Payment Methods",
   "bankAccounts": "Bank Accounts",

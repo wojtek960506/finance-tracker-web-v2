@@ -1,5 +1,6 @@
 {
   "transactions": "Транзакции",
+  "transactionDetails": "Детали транзакции",
   "categories": "Категории",
   "paymentMethods": "Способы оплаты",
   "bankAccounts": "Банковские счета",
