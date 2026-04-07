@@ -46,4 +46,16 @@ describe('Title', () => {
       screen.getByRole('heading', { name: 'navigation:transactionDetails' }),
     ).toBeInTheDocument();
   });
+
+  it('renders specific title on transfer create page', () => {
+    render(
+      <MemoryRouter initialEntries={['/transactions/new/transfer']}>
+        <Title />
+      </MemoryRouter>,
+    );
+
+    expect(
+      screen.getByRole('heading', { name: 'navigation:newTransferTransaction' }),
+    ).toBeInTheDocument();
+  });
 });

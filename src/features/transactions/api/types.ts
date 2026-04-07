@@ -17,6 +17,27 @@ export type TransactionStandardCreateDTO = {
   transactionType: TransactionType;
 };
 
+export type TransactionTransferCreateDTO = {
+  date: string;
+  additionalDescription?: string;
+  amount: number;
+  currency: string;
+  accountExpenseId: string;
+  accountIncomeId: string;
+  paymentMethodId: string;
+};
+
+export type TransactionExchangeCreateDTO = {
+  date: string;
+  additionalDescription?: string;
+  amountExpense: number;
+  amountIncome: number;
+  currencyExpense: string;
+  currencyIncome: string;
+  accountId: string;
+  paymentMethodId: string;
+};
+
 export type Transaction = {
   date: string;
   description: string;

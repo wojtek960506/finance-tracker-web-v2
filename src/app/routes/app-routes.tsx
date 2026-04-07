@@ -4,7 +4,10 @@ import { matchPath, Navigate } from 'react-router-dom';
 import { Login } from '@auth/components';
 import { NamedResourcesList } from '@named-resources/components';
 import {
+  CreateExchangeTransaction,
+  CreateStandardTransaction,
   CreateTransaction,
+  CreateTransferTransaction,
   TransactionDetails,
   TransactionsList,
 } from '@transactions/components';
@@ -42,6 +45,21 @@ export const PROTECTED_APP_ROUTES: AppRouteConfig[] = [
     path: '/transactions/new',
     element: <CreateTransaction />,
     title: { namespace: 'navigation', key: 'newTransaction' },
+  },
+  {
+    path: '/transactions/new/standard',
+    element: <CreateStandardTransaction />,
+    title: { namespace: 'navigation', key: 'newStandardTransaction' },
+  },
+  {
+    path: '/transactions/new/transfer',
+    element: <CreateTransferTransaction />,
+    title: { namespace: 'navigation', key: 'newTransferTransaction' },
+  },
+  {
+    path: '/transactions/new/exchange',
+    element: <CreateExchangeTransaction />,
+    title: { namespace: 'navigation', key: 'newExchangeTransaction' },
   },
   {
     path: '/transactions/:transactionId',

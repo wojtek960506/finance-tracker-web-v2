@@ -1,6 +1,9 @@
 {
   "transactions": "Transaktionen",
   "newTransaction": "Neue Transaktion",
+  "newStandardTransaction": "Neue Standardtransaktion",
+  "newTransferTransaction": "Neue Transfertransaktion",
+  "newExchangeTransaction": "Neue Wechseltransaktion",
   "transactionDetails": "Transaktionsdetails",
   "categories": "Kategorien",
   "paymentMethods": "Zahlungsmethoden",
