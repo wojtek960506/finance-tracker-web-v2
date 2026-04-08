@@ -1,5 +1,6 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import type { ReactNode } from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
@@ -11,6 +12,7 @@ import { TransactionsList } from './transactions-list';
 
 const mocks = vi.hoisted(() => ({
   getTransactions: vi.fn(),
+  navigate: vi.fn(),
 }));
 
 vi.mock('react-i18next', () => ({
@@ -21,9 +23,20 @@ vi.mock('@transactions/api', () => ({
   getTransactions: (...args: unknown[]) => mocks.getTransactions(...args),
 }));
 
+vi.mock('react-router-dom', async () => {
+  const actual =
+    await vi.importActual<typeof import('react-router-dom')>('react-router-dom');
+  return { ...actual, useNavigate: () => mocks.navigate };
+});
+
 vi.mock('@shared/ui', () => ({
-  Button: ({ children }: { children: ReactNode }) => (
-    <button type="button">{children}</button>
+  Button: ({
+    children,
+    ...props
+  }: React.ButtonHTMLAttributes<HTMLButtonElement> & { children: ReactNode }) => (
+    <button type="button" {...props}>
+      {children}
+    </button>
   ),
 }));
 
@@ -146,5 +159,31 @@ describe('TransactionsList', () => {
     expect(await screen.findByText('Groceries')).toBeInTheDocument();
     expect(screen.getByText('Salary')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'newTransaction' })).toBeInTheDocument();
+  });
+
+  it('navigates to the create transaction page', async () => {
+    const user = userEvent.setup();
+    const response: TransactionsResponse = {
+      ...emptyResponse,
+      total: 1,
+      totalPages: 1,
+      items: [makeTransaction({ description: 'Groceries' })],
+    };
+    mocks.getTransactions.mockResolvedValueOnce(response);
+    const client = new QueryClient({
+      defaultOptions: { queries: { retry: false } },
+    });
+
+    render(
+      <QueryClientProvider client={client}>
+        <MemoryRouter>
+          <TransactionsList />
+        </MemoryRouter>
+      </QueryClientProvider>,
+    );
+
+    await user.click(await screen.findByRole('button', { name: 'newTransaction' }));
+
+    expect(mocks.navigate).toHaveBeenCalledWith('/transactions/new');
   });
 });

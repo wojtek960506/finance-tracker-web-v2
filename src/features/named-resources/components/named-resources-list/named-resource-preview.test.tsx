@@ -195,6 +195,107 @@ describe('NamedResourcePreview', () => {
     );
   });
 
+  it('rolls back favorite optimistic updates when the request fails', async () => {
+    const user = userEvent.setup();
+    const error = new Error('boom');
+    const secondResource = {
+      ...userResource,
+      id: 'category-2',
+      name: 'Travel',
+      nameNormalized: 'travel',
+      isFavorite: true,
+    };
+    favoriteNamedResource.mockRejectedValueOnce(error);
+    normalizeApiError.mockReturnValue({
+      message: 'Plain favorite error message',
+    });
+    const { client } = renderPreview();
+    client.setQueryData(['categories'], [
+      { ...userResource, isFavorite: false },
+      secondResource,
+    ]);
+
+    await user.click(
+      screen.getByRole('button', { name: 'namedResources:favoriteNamedResource' }),
+    );
+
+    await waitFor(() =>
+      expect(client.getQueryData(['categories'])).toEqual([
+        { ...userResource, isFavorite: false },
+        secondResource,
+      ]),
+    );
+  });
+
+  it('shows a favorite error toast when optimistic setup fails before context is created', async () => {
+    const user = userEvent.setup();
+    const error = new Error('cancel failed');
+
+    normalizeApiError.mockReturnValue({
+      message: 'Cancel failed',
+    });
+
+    const { client } = renderPreview();
+    vi.spyOn(client, 'cancelQueries').mockRejectedValueOnce(error);
+
+    await user.click(
+      screen.getByRole('button', { name: 'namedResources:favoriteNamedResource' }),
+    );
+
+    await waitFor(() =>
+      expect(pushToast).toHaveBeenCalledWith({
+        variant: 'error',
+        title: 'Groceries',
+        message: 'Cancel failed',
+      }),
+    );
+  });
+
+  it('shows an unfavorite error toast when optimistic setup fails before context is created', async () => {
+    const user = userEvent.setup();
+    const error = new Error('cancel failed');
+
+    normalizeApiError.mockReturnValue({
+      message: 'Cancel failed',
+    });
+
+    const { client } = renderPreview({ ...userResource, isFavorite: true });
+    vi.spyOn(client, 'cancelQueries').mockRejectedValueOnce(error);
+
+    await user.click(
+      screen.getByRole('button', { name: 'namedResources:unfavoriteNamedResource' }),
+    );
+
+    await waitFor(() =>
+      expect(pushToast).toHaveBeenCalledWith({
+        variant: 'error',
+        title: 'Groceries',
+        message: 'Cancel failed',
+      }),
+    );
+  });
+
+  it('does not trigger a mutation when favorite state changes between the two guard checks', async () => {
+    const user = userEvent.setup();
+    let accessCount = 0;
+    const flickeringFavoriteResource = {
+      ...userResource,
+      get isFavorite() {
+        accessCount += 1;
+        return accessCount >= 4;
+      },
+    };
+
+    renderPreview(flickeringFavoriteResource);
+
+    await user.click(
+      screen.getByRole('button', { name: 'namedResources:favoriteNamedResource' }),
+    );
+
+    expect(favoriteNamedResource).not.toHaveBeenCalled();
+    expect(unfavoriteNamedResource).not.toHaveBeenCalled();
+  });
+
   it('shows an error toast with fallback message when favorite update fails without code', async () => {
     const user = userEvent.setup();
     const error = new Error('boom');
@@ -216,6 +317,37 @@ describe('NamedResourcePreview', () => {
         title: 'Groceries',
         message: 'Plain favorite error message',
       }),
+    );
+  });
+
+  it('rolls back unfavorite optimistic updates when the request fails', async () => {
+    const user = userEvent.setup();
+    const error = new Error('boom');
+    const secondResource = {
+      ...userResource,
+      id: 'category-2',
+      name: 'Travel',
+      nameNormalized: 'travel',
+    };
+    unfavoriteNamedResource.mockRejectedValueOnce(error);
+    normalizeApiError.mockReturnValue({
+      message: 'Plain favorite error message',
+    });
+    const { client } = renderPreview({ ...userResource, isFavorite: true });
+    client.setQueryData(['categories'], [
+      { ...userResource, isFavorite: true },
+      secondResource,
+    ]);
+
+    await user.click(
+      screen.getByRole('button', { name: 'namedResources:unfavoriteNamedResource' }),
+    );
+
+    await waitFor(() =>
+      expect(client.getQueryData(['categories'])).toEqual([
+        { ...userResource, isFavorite: true },
+        secondResource,
+      ]),
     );
   });
 
