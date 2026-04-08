@@ -4,3 +4,6 @@ export * from './create-transfer-transaction';
 export * from './get-transaction';
 export * from './get-transactions';
 export * from './types';
+export * from './update-exchange-transaction';
+export * from './update-standard-transaction';
+export * from './update-transfer-transaction';

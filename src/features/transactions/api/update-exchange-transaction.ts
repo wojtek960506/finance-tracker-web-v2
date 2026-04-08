@@ -2,11 +2,12 @@ import { api } from '@shared/api';
 
 import type { Transaction, TransactionExchangeDTO } from './types';
 
-export const createExchangeTransaction = async (
+export const updateExchangeTransaction = async (
+  id: string,
   payload: TransactionExchangeDTO,
 ): Promise<[Transaction, Transaction]> => {
-  const res = await api.post<[Transaction, Transaction]>(
-    '/transactions/exchange',
+  const res = await api.put<[Transaction, Transaction]>(
+    `/transactions/exchange/${id}`,
     payload,
   );
   return res.data;

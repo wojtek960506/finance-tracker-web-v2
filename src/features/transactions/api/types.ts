@@ -6,7 +6,7 @@ export type NamedResource = {
 
 export type TransactionType = 'expense' | 'income';
 
-export type TransactionStandardCreateDTO = {
+export type TransactionStandardDTO = {
   date: string;
   description: string;
   amount: number;
@@ -17,7 +17,7 @@ export type TransactionStandardCreateDTO = {
   transactionType: TransactionType;
 };
 
-export type TransactionTransferCreateDTO = {
+export type TransactionTransferDTO = {
   date: string;
   additionalDescription?: string;
   amount: number;
@@ -27,7 +27,7 @@ export type TransactionTransferCreateDTO = {
   paymentMethodId: string;
 };
 
-export type TransactionExchangeCreateDTO = {
+export type TransactionExchangeDTO = {
   date: string;
   additionalDescription?: string;
   amountExpense: number;
@@ -43,7 +43,7 @@ export type Transaction = {
   description: string;
   amount: number;
   currency: string;
-  transactionType: string;
+  transactionType: TransactionType;
   id: string;
   ownerId: string;
   createdAt: string;

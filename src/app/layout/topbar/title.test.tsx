@@ -58,4 +58,16 @@ describe('Title', () => {
       screen.getByRole('heading', { name: 'navigation:newTransferTransaction' }),
     ).toBeInTheDocument();
   });
+
+  it('renders edit title on transaction edit page', () => {
+    render(
+      <MemoryRouter initialEntries={['/transactions/123/edit']}>
+        <Title />
+      </MemoryRouter>,
+    );
+
+    expect(
+      screen.getByRole('heading', { name: 'navigation:editTransaction' }),
+    ).toBeInTheDocument();
+  });
 });

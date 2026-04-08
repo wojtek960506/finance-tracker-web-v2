@@ -19,14 +19,19 @@ export const FieldError = ({ message }: FieldErrorProps) =>
 
 type TransactionFormActionsProps = {
   isPending: boolean;
+  mode: 'create' | 'update';
   onCancel: () => void;
 };
 
 export const TransactionFormActions = ({
   isPending,
+  mode,
   onCancel,
 }: TransactionFormActionsProps) => {
   const { t } = useTranslation('transactions');
+  const submitLabel = mode === 'create' ? t('saveTransaction') : t('updateTransaction');
+  const pendingLabel =
+    mode === 'create' ? t('creatingTransaction') : t('updatingTransaction');
 
   return (
     <div className="flex flex-col gap-2 sm:col-span-2 sm:flex-row sm:justify-end">
@@ -34,7 +39,7 @@ export const TransactionFormActions = ({
         {t('cancel')}
       </Button>
       <Button type="submit" variant="primary" disabled={isPending}>
-        {isPending ? t('creatingTransaction') : t('saveTransaction')}
+        {isPending ? pendingLabel : submitLabel}
       </Button>
     </div>
   );

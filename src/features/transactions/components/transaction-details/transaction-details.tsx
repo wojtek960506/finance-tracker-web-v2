@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { MAIN_BUTTON_TEXT } from '@shared/consts';
 import { useLanguage } from '@shared/hooks';
@@ -13,6 +13,7 @@ import { Detail } from './detail';
 export const TransactionDetails = () => {
   const { t } = useTranslation('transactions');
   const { language } = useLanguage();
+  const navigate = useNavigate();
 
   const { transactionId } = useParams<{ transactionId: string }>();
 
@@ -31,7 +32,11 @@ export const TransactionDetails = () => {
 
   return (
     <div className="flex flex-col max-w-100 m-auto gap-2 sm:gap-3">
-      <Button variant="secondary" className={MAIN_BUTTON_TEXT}>
+      <Button
+        variant="secondary"
+        className={MAIN_BUTTON_TEXT}
+        onClick={() => navigate(`/transactions/${transaction.id}/edit`)}
+      >
         {t('updateTransaction')}
       </Button>
       <Card className="gap-3 sm:gap-4 p-4 sm:p-5">

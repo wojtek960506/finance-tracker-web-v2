@@ -1,5 +1,6 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import type { ComponentProps, ReactNode } from 'react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
@@ -11,6 +12,7 @@ import { TransactionDetails } from './transaction-details';
 const mocks = vi.hoisted(() => ({
   getTransaction: vi.fn(),
   language: 'en-US',
+  navigate: vi.fn(),
   params: { transactionId: 'tx-1' },
 }));
 
@@ -29,7 +31,11 @@ vi.mock('@transactions/api', () => ({
 vi.mock('react-router-dom', async () => {
   const actual =
     await vi.importActual<typeof import('react-router-dom')>('react-router-dom');
-  return { ...actual, useParams: () => mocks.params };
+  return {
+    ...actual,
+    useNavigate: () => mocks.navigate,
+    useParams: () => mocks.params,
+  };
 });
 
 vi.mock('@ui', () => ({
@@ -131,5 +137,23 @@ describe('TransactionDetails', () => {
     expect(screen.getByText('Card')).toBeInTheDocument();
     expect(screen.getByText('Main')).toBeInTheDocument();
     expect(screen.getByTestId('additional-details')).toBeInTheDocument();
+  });
+
+  it('navigates to update route after clicking update button', async () => {
+    mocks.getTransaction.mockResolvedValueOnce(baseTransaction);
+    const client = new QueryClient({
+      defaultOptions: { queries: { retry: false } },
+    });
+    const user = userEvent.setup();
+
+    render(
+      <QueryClientProvider client={client}>
+        <TransactionDetails />
+      </QueryClientProvider>,
+    );
+
+    await user.click(await screen.findByRole('button', { name: 'updateTransaction' }));
+
+    expect(mocks.navigate).toHaveBeenCalledWith('/transactions/tx-1/edit');
   });
 });

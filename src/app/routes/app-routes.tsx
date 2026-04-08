@@ -10,6 +10,7 @@ import {
   CreateTransferTransaction,
   TransactionDetails,
   TransactionsList,
+  UpdateTransaction,
 } from '@transactions/components';
 
 type RouteTitle = {
@@ -65,6 +66,11 @@ export const PROTECTED_APP_ROUTES: AppRouteConfig[] = [
     path: '/transactions/:transactionId',
     element: <TransactionDetails />,
     title: { namespace: 'navigation', key: 'transactionDetails' },
+  },
+  {
+    path: '/transactions/:transactionId/edit',
+    element: <UpdateTransaction />,
+    title: { namespace: 'navigation', key: 'editTransaction' },
   },
   {
     path: '/categories',

@@ -1,0 +1,173 @@
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { render, screen } from '@testing-library/react';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+
+import { makeTransaction } from '@test-utils/factories/transaction';
+
+import { UpdateTransaction } from './update-transaction';
+
+const mocks = vi.hoisted(() => ({
+  getTransaction: vi.fn(),
+  standardForm: vi.fn(() => <div data-testid="standard-form" />),
+  transferForm: vi.fn(() => <div data-testid="transfer-form" />),
+  exchangeForm: vi.fn(() => <div data-testid="exchange-form" />),
+}));
+
+vi.mock('react-i18next', () => ({
+  useTranslation: () => ({ t: (key: string) => key }),
+}));
+
+vi.mock('@transactions/api', () => ({
+  getTransaction: (...args: unknown[]) => mocks.getTransaction(...args),
+}));
+
+vi.mock('../create-transaction', async () => {
+  const actual = await vi.importActual<typeof import('../create-transaction')>(
+    '../create-transaction',
+  );
+
+  return {
+    ...actual,
+    StandardTransactionForm: mocks.standardForm,
+    TransferTransactionForm: mocks.transferForm,
+    ExchangeTransactionForm: mocks.exchangeForm,
+  };
+});
+
+const renderUpdateTransaction = (transactionId = 'tx-1') => {
+  const client = new QueryClient({
+    defaultOptions: { queries: { retry: false } },
+  });
+
+  render(
+    <QueryClientProvider client={client}>
+      <MemoryRouter initialEntries={[`/transactions/${transactionId}/edit`]}>
+        <Routes>
+          <Route
+            path="/transactions/:transactionId/edit"
+            element={<UpdateTransaction />}
+          />
+        </Routes>
+      </MemoryRouter>
+    </QueryClientProvider>,
+  );
+};
+
+describe('UpdateTransaction', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  it('renders the standard transaction form with current transaction defaults', async () => {
+    const transaction = makeTransaction();
+    mocks.getTransaction.mockResolvedValueOnce(transaction);
+
+    renderUpdateTransaction();
+
+    expect(await screen.findByTestId('standard-form')).toBeInTheDocument();
+    expect(mocks.standardForm).toHaveBeenCalled();
+
+    const [{ defaultValues, mode }] = mocks.standardForm.mock.calls.at(-1);
+    expect(mode).toBe('update');
+    expect(defaultValues).toEqual({
+      date: '2024-01-03',
+      description: 'Test transaction',
+      amount: '10',
+      currency: 'USD',
+      categoryId: 'cat-1',
+      paymentMethodId: 'pm-1',
+      accountId: 'acc-1',
+      transactionType: 'expense',
+    });
+  });
+
+  it('renders the transfer form with derived pair defaults', async () => {
+    const incomeTransaction = makeTransaction({
+      id: 'tx-income',
+      refId: 'tx-expense',
+      description: 'Checking --> Savings (Monthly move)',
+      transactionType: 'income',
+      category: { id: 'cat-transfer', name: 'myAccount' },
+      account: { id: 'acc-income', name: 'Savings' },
+      paymentMethod: { id: 'pm-transfer', name: 'Bank transfer' },
+    });
+    const expenseTransaction = makeTransaction({
+      id: 'tx-expense',
+      refId: 'tx-income',
+      description: 'Checking --> Savings (Monthly move)',
+      transactionType: 'expense',
+      category: { id: 'cat-transfer', name: 'myAccount' },
+      account: { id: 'acc-expense', name: 'Checking' },
+      paymentMethod: { id: 'pm-transfer', name: 'Bank transfer' },
+    });
+
+    mocks.getTransaction
+      .mockResolvedValueOnce(incomeTransaction)
+      .mockResolvedValueOnce(expenseTransaction);
+
+    renderUpdateTransaction('tx-income');
+
+    expect(await screen.findByTestId('transfer-form')).toBeInTheDocument();
+    expect(mocks.transferForm).toHaveBeenCalled();
+
+    const [{ defaultValues, mode }] = mocks.transferForm.mock.calls.at(-1);
+    expect(mode).toBe('update');
+    expect(defaultValues).toEqual({
+      date: '2024-01-03',
+      additionalDescription: 'Monthly move',
+      amount: '10',
+      currency: 'USD',
+      paymentMethodId: 'pm-transfer',
+      accountExpenseId: 'acc-expense',
+      accountIncomeId: 'acc-income',
+    });
+  });
+
+  it('renders the exchange form with derived pair defaults', async () => {
+    const incomeTransaction = makeTransaction({
+      id: 'tx-income',
+      refId: 'tx-expense',
+      description: 'USD -> EUR (Vacation cash)',
+      transactionType: 'income',
+      amount: 8,
+      currency: 'EUR',
+      category: { id: 'cat-exchange', name: 'exchange' },
+      account: { id: 'acc-exchange', name: 'Wallet' },
+      paymentMethod: { id: 'pm-exchange', name: 'Cash' },
+    });
+    const expenseTransaction = makeTransaction({
+      id: 'tx-expense',
+      refId: 'tx-income',
+      description: 'USD -> EUR (Vacation cash)',
+      transactionType: 'expense',
+      amount: 10,
+      currency: 'USD',
+      category: { id: 'cat-exchange', name: 'exchange' },
+      account: { id: 'acc-exchange', name: 'Wallet' },
+      paymentMethod: { id: 'pm-exchange', name: 'Cash' },
+    });
+
+    mocks.getTransaction
+      .mockResolvedValueOnce(incomeTransaction)
+      .mockResolvedValueOnce(expenseTransaction);
+
+    renderUpdateTransaction('tx-income');
+
+    expect(await screen.findByTestId('exchange-form')).toBeInTheDocument();
+    expect(mocks.exchangeForm).toHaveBeenCalled();
+
+    const [{ defaultValues, mode }] = mocks.exchangeForm.mock.calls.at(-1);
+    expect(mode).toBe('update');
+    expect(defaultValues).toEqual({
+      date: '2024-01-03',
+      additionalDescription: 'Vacation cash',
+      amountExpense: '10',
+      amountIncome: '8',
+      currencyExpense: 'USD',
+      currencyIncome: 'EUR',
+      paymentMethodId: 'pm-exchange',
+      accountId: 'acc-exchange',
+    });
+  });
+});

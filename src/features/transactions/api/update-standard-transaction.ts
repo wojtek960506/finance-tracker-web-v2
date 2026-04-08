@@ -2,9 +2,10 @@ import { api } from '@shared/api';
 
 import type { Transaction, TransactionStandardDTO } from './types';
 
-export const createStandardTransaction = async (
+export const updateStandardTransaction = async (
+  id: string,
   payload: TransactionStandardDTO,
 ): Promise<Transaction> => {
-  const res = await api.post<Transaction>('/transactions/standard', payload);
+  const res = await api.put<Transaction>(`/transactions/standard/${id}`, payload);
   return res.data;
 };
