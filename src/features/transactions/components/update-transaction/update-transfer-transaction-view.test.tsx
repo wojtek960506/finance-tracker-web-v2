@@ -1,0 +1,167 @@
+import { QueryClientProvider } from '@tanstack/react-query';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { describe, expect, it, vi } from 'vitest';
+
+import { createTestQueryClient } from '@test-utils/create-test-query-client';
+import { makeTransaction } from '@test-utils/factories/transaction';
+
+import { UpdateTransferTransactionView } from './update-transfer-transaction-view';
+
+const mocks = vi.hoisted(() => ({
+  updateTransferTransaction: vi.fn(),
+  normalizeApiError: vi.fn(),
+  navigate: vi.fn(),
+  pushToast: vi.fn(),
+}));
+
+vi.mock('react-i18next', () => ({
+  useTranslation: () => ({ t: (key: string) => key }),
+}));
+
+vi.mock('react-router-dom', () => ({
+  useNavigate: () => mocks.navigate,
+}));
+
+vi.mock('@transactions/api', async () => {
+  const actual =
+    await vi.importActual<typeof import('@transactions/api')>('@transactions/api');
+  return {
+    ...actual,
+    updateTransferTransaction: (...args: unknown[]) =>
+      mocks.updateTransferTransaction(...args),
+  };
+});
+
+vi.mock('@shared/api/api-error', () => ({
+  normalizeApiError: (error: unknown) => mocks.normalizeApiError(error),
+}));
+
+vi.mock('@store/toast-store', () => ({
+  useToastStore: (selector: (state: { pushToast: typeof mocks.pushToast }) => unknown) =>
+    selector({ pushToast: mocks.pushToast }),
+}));
+
+vi.mock('../create-transaction', async () => {
+  const actual = await vi.importActual<typeof import('../create-transaction')>(
+    '../create-transaction',
+  );
+
+  return {
+    ...actual,
+    TransferTransactionForm: ({
+      onSubmit,
+      onCancel,
+    }: {
+      onSubmit: (values: unknown) => Promise<void>;
+      onCancel: () => void;
+    }) => (
+      <div>
+        <button
+          type="button"
+          onClick={() =>
+            void onSubmit({
+              date: '2024-01-03',
+              additionalDescription: 'Move funds',
+              amount: '10',
+              currency: 'USD',
+              paymentMethodId: 'pm-1',
+              accountExpenseId: 'acc-1',
+              accountIncomeId: 'acc-2',
+            })
+          }
+        >
+          submit
+        </button>
+        <button type="button" onClick={onCancel}>
+          cancel
+        </button>
+      </div>
+    ),
+  };
+});
+
+describe('UpdateTransferTransactionView', () => {
+  const transaction = makeTransaction({
+    id: 'tx-1',
+    transactionType: 'expense',
+    refId: 'tx-2',
+    category: { id: 'cat-transfer', type: 'category', name: 'myAccount' },
+  });
+  const transactionRef = makeTransaction({
+    id: 'tx-2',
+    transactionType: 'income',
+    refId: 'tx-1',
+    category: { id: 'cat-transfer', type: 'category', name: 'myAccount' },
+  });
+
+  it('updates a transfer transaction', async () => {
+    const user = userEvent.setup();
+    const client = createTestQueryClient();
+    const invalidateQueriesSpy = vi.spyOn(client, 'invalidateQueries');
+    mocks.updateTransferTransaction.mockResolvedValueOnce([
+      { id: 'tx-1' },
+      { id: 'tx-2' },
+    ]);
+
+    render(
+      <QueryClientProvider client={client}>
+        <UpdateTransferTransactionView
+          transaction={transaction}
+          transactionRef={transactionRef}
+        />
+      </QueryClientProvider>,
+    );
+
+    await user.click(screen.getByRole('button', { name: 'submit' }));
+
+    await waitFor(() =>
+      expect(mocks.updateTransferTransaction).toHaveBeenCalledWith('tx-1', {
+        date: '2024-01-03',
+        additionalDescription: 'Move funds',
+        amount: 10,
+        currency: 'USD',
+        paymentMethodId: 'pm-1',
+        accountExpenseId: 'acc-1',
+        accountIncomeId: 'acc-2',
+      }),
+    );
+    expect(invalidateQueriesSpy).toHaveBeenCalledWith({ queryKey: ['transactions'] });
+    expect(invalidateQueriesSpy).toHaveBeenCalledWith({ queryKey: ['transaction'] });
+    expect(mocks.pushToast).toHaveBeenCalledWith({
+      variant: 'success',
+      title: 'transactionUpdated',
+    });
+    expect(mocks.navigate).toHaveBeenCalledWith('/transactions/tx-1');
+  });
+
+  it('shows an error toast and handles cancel', async () => {
+    const user = userEvent.setup();
+    const client = createTestQueryClient();
+    const error = new Error('boom');
+    mocks.updateTransferTransaction.mockRejectedValueOnce(error);
+    mocks.normalizeApiError.mockReturnValueOnce({ message: 'Update failed' });
+
+    render(
+      <QueryClientProvider client={client}>
+        <UpdateTransferTransactionView
+          transaction={transaction}
+          transactionRef={transactionRef}
+        />
+      </QueryClientProvider>,
+    );
+
+    await user.click(screen.getByRole('button', { name: 'submit' }));
+
+    await waitFor(() =>
+      expect(mocks.pushToast).toHaveBeenCalledWith({
+        variant: 'error',
+        title: 'transactionUpdateFailed',
+        message: 'Update failed',
+      }),
+    );
+
+    await user.click(screen.getByRole('button', { name: 'cancel' }));
+    expect(mocks.navigate).toHaveBeenCalledWith('/transactions/tx-1');
+  });
+});

@@ -6,10 +6,12 @@ import { useTranslation } from 'react-i18next';
 
 import {
   deleteNamedResource,
+  favoriteNamedResource,
   type INamedResource,
   NAMED_RESOURCE,
   NAMED_RESOURCE_ERROR_NAMESPACE,
   type NamedResourceKind,
+  unfavoriteNamedResource,
   updateNamedResource,
 } from '@named-resources/api';
 import { normalizeApiError } from '@shared/api/api-error';
@@ -21,6 +23,14 @@ import { NamedResourceInput } from '../named-resource-input';
 import { getNamedResourceErrorToast } from './get-named-resource-error-toast';
 
 const capitalize = (value: string) => value.charAt(0).toUpperCase() + value.slice(1);
+const setNamedResourceFavoriteState = (
+  resources: INamedResource[] | undefined,
+  id: string,
+  isFavorite: boolean,
+) =>
+  resources?.map((resource) =>
+    resource.id === id ? { ...resource, isFavorite } : resource,
+  );
 
 export const NamedResourcePreview = ({
   kind,
@@ -31,9 +41,6 @@ export const NamedResourcePreview = ({
 }) => {
   const { t: tNamedResource } = useTranslation('namedResources');
   const { t: tError } = useTranslation(NAMED_RESOURCE_ERROR_NAMESPACE[kind]);
-
-  // TODO: Persist favorited named resources once the dedicated endpoint is available.
-  const [isFavorite, setIsFavorite] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [deleteErrorMessage, setDeleteErrorMessage] = useState<string | null>(null);
@@ -62,7 +69,17 @@ export const NamedResourcePreview = ({
     `resourceDeletedTitle${resourceKindKeySuffix}`,
     { resourceName: name },
   );
+  const optimisticallySetFavoriteState = async (id: string, isFavorite: boolean) => {
+    await queryClient.cancelQueries({ queryKey: [kind] });
 
+    const previousResources = queryClient.getQueryData<INamedResource[]>([kind]);
+
+    queryClient.setQueryData<INamedResource[] | undefined>([kind], (resources) =>
+      setNamedResourceFavoriteState(resources, id, isFavorite),
+    );
+
+    return { previousResources };
+  };
   const deleteMutation = useMutation({
     mutationFn: async (id: string) => await deleteNamedResource(kind, id),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: [kind] }),
@@ -71,6 +88,26 @@ export const NamedResourcePreview = ({
   const updateMutation = useMutation({
     mutationFn: async ({ id, name }: { id: string; name: string }) =>
       await updateNamedResource(kind, id, name),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: [kind] }),
+  });
+  const favoriteMutation = useMutation({
+    mutationFn: async (id: string) => await favoriteNamedResource(kind, id),
+    onMutate: async (id: string) => await optimisticallySetFavoriteState(id, true),
+    onError: (_error, _id, context) => {
+      if (context) {
+        queryClient.setQueryData([kind], context.previousResources);
+      }
+    },
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: [kind] }),
+  });
+  const unfavoriteMutation = useMutation({
+    mutationFn: async (id: string) => await unfavoriteNamedResource(kind, id),
+    onMutate: async (id: string) => await optimisticallySetFavoriteState(id, false),
+    onError: (_error, _id, context) => {
+      if (context) {
+        queryClient.setQueryData([kind], context.previousResources);
+      }
+    },
     onSuccess: () => queryClient.invalidateQueries({ queryKey: [kind] }),
   });
 
@@ -108,6 +145,29 @@ export const NamedResourcePreview = ({
       setDeleteErrorMessage(apiError.code ? tError(apiError.code) : apiError.message);
     }
   };
+
+  const handleFavoriteClick = async () => {
+    try {
+      if (namedResource.isFavorite) {
+        await unfavoriteMutation.mutateAsync(namedResource.id);
+        return;
+      }
+
+      if (!namedResource.isFavorite) {
+        await favoriteMutation.mutateAsync(namedResource.id);
+      }
+    } catch (error) {
+      const apiError = normalizeApiError(error);
+      pushToast({
+        variant: 'error',
+        title: apiError.code ? tError(apiError.code) : name,
+        ...(apiError.code ? {} : { message: apiError.message }),
+      });
+    }
+  };
+
+  const isFavoriteMutationPending =
+    favoriteMutation.isPending || unfavoriteMutation.isPending;
 
   return (
     <li>
@@ -207,8 +267,22 @@ export const NamedResourcePreview = ({
             ) : (
               <Lock className="mx-1 sm:mx-2" />
             )}
-            <Button variant="default" onClick={() => setIsFavorite((prev) => !prev)}>
-              <Star className={clsx('transition-all', isFavorite ? 'fill-bg' : '')} />
+            <Button
+              variant="default"
+              onClick={() => void handleFavoriteClick()}
+              disabled={isFavoriteMutationPending}
+              aria-label={
+                namedResource.isFavorite
+                  ? tNamedResource('unfavoriteNamedResource')
+                  : tNamedResource('favoriteNamedResource')
+              }
+            >
+              <Star
+                className={clsx(
+                  'transition-all',
+                  namedResource.isFavorite ? 'fill-bg' : '',
+                )}
+              />
             </Button>
           </div>
         </Card>

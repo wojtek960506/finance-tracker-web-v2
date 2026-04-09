@@ -8,6 +8,12 @@ export interface INamedResource {
   ownerId: string;
   type: NamedResourceType;
   nameNormalized: string;
+  isFavorite: boolean;
 }
 
 export type NamedResourceKind = keyof typeof NAMED_RESOURCE;
+
+export type DeleteResponse = {
+  acknowledged: boolean;
+  deletedCount: number;
+};

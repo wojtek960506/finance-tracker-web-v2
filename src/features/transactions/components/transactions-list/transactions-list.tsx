@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 import { MAIN_BUTTON_TEXT } from '@shared/consts';
 import { Button } from '@shared/ui';
@@ -9,6 +10,7 @@ import { TransactionPreview } from './transaction-preview';
 
 export const TransactionsList = () => {
   const { t } = useTranslation('transactions');
+  const navigate = useNavigate();
 
   const { data, isLoading, error } = useQuery({
     queryKey: ['transactions'],
@@ -23,7 +25,11 @@ export const TransactionsList = () => {
 
   return (
     <div className="flex flex-col gap-2 sm:gap-3 max-w-150 m-auto">
-      <Button variant="primary" className={MAIN_BUTTON_TEXT}>
+      <Button
+        variant="primary"
+        className={MAIN_BUTTON_TEXT}
+        onClick={() => navigate('/transactions/new')}
+      >
         {t('newTransaction')}
       </Button>
 

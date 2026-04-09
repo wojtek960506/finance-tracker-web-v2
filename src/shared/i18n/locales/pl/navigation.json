@@ -1,5 +1,11 @@
 {
   "transactions": "Transakcje",
+  "newTransaction": "Nowa transakcja",
+  "newStandardTransaction": "Nowa transakcja standardowa",
+  "newTransferTransaction": "Nowy transfer",
+  "newExchangeTransaction": "Nowa wymiana walut",
+  "transactionDetails": "Szczegóły transakcji",
+  "editTransaction": "Edytuj transakcję",
   "categories": "Kategorie",
   "paymentMethods": "Metody płatności",
   "bankAccounts": "Konta bankowe",

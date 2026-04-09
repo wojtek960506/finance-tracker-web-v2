@@ -94,7 +94,7 @@ export const NamedResourcesList = ({ kind }: { kind: NamedResourceKind }) => {
       )}
 
       <ul className="flex flex-col gap-2 sm:gap-3">
-        {data.map((namedResource) => (
+        {data?.map((namedResource) => (
           <NamedResourcePreview
             key={namedResource.id}
             kind={kind}

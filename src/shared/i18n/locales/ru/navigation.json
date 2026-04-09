@@ -1,5 +1,11 @@
 {
   "transactions": "Транзакции",
+  "newTransaction": "Новая транзакция",
+  "newStandardTransaction": "Новая стандартная транзакция",
+  "newTransferTransaction": "Новый перевод",
+  "newExchangeTransaction": "Новая валютная операция",
+  "transactionDetails": "Детали транзакции",
+  "editTransaction": "Редактировать транзакцию",
   "categories": "Категории",
   "paymentMethods": "Способы оплаты",
   "bankAccounts": "Банковские счета",
