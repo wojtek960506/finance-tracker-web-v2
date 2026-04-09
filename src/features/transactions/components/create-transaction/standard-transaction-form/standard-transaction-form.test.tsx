@@ -9,18 +9,21 @@ vi.mock('react-i18next', () => ({
 }));
 
 vi.mock('../../shared/currency-select-field', () => ({
-  CurrencySelectField: ({ value }: { value: string }) => <div>{value || 'currency-field'}</div>,
+  CurrencySelectField: ({ value }: { value: string }) => (
+    <div>{value || 'currency-field'}</div>
+  ),
 }));
 
 vi.mock('../../shared/named-resource-select-field', () => ({
-  NamedResourceSelectField: ({ value }: { value: string }) => <div>{value || 'resource-field'}</div>,
+  NamedResourceSelectField: ({ value }: { value: string }) => (
+    <div>{value || 'resource-field'}</div>
+  ),
 }));
 
 vi.mock('@shared/ui', () => ({
-  Button: ({
-    children,
-    ...props
-  }: React.ButtonHTMLAttributes<HTMLButtonElement>) => <button {...props}>{children}</button>,
+  Button: ({ children, ...props }: React.ButtonHTMLAttributes<HTMLButtonElement>) => (
+    <button {...props}>{children}</button>
+  ),
   Card: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
   DateInput: ({
     value,
@@ -28,7 +31,13 @@ vi.mock('@shared/ui', () => ({
   }: {
     value?: string;
     onChange?: (value: string) => void;
-  }) => <input aria-label="date" value={value} onChange={(event) => onChange?.(event.target.value)} />,
+  }) => (
+    <input
+      aria-label="date"
+      value={value}
+      onChange={(event) => onChange?.(event.target.value)}
+    />
+  ),
   Input: (props: React.InputHTMLAttributes<HTMLInputElement>) => <input {...props} />,
   NumberInput: ({
     value,
@@ -36,7 +45,13 @@ vi.mock('@shared/ui', () => ({
   }: {
     value: string;
     onValueChange: (value: string) => void;
-  }) => <input aria-label="amount" value={value} onChange={(event) => onValueChange(event.target.value)} />,
+  }) => (
+    <input
+      aria-label="amount"
+      value={value}
+      onChange={(event) => onValueChange(event.target.value)}
+    />
+  ),
 }));
 
 describe('StandardTransactionForm', () => {

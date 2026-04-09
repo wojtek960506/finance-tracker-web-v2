@@ -64,7 +64,9 @@ describe('exchange transaction form utils', () => {
       account: { id: 'acc-exchange', name: 'Wallet', type: 'user' },
     });
 
-    expect(getExchangeTransactionFormValues(incomeTransaction, expenseTransaction)).toEqual({
+    expect(
+      getExchangeTransactionFormValues(incomeTransaction, expenseTransaction),
+    ).toEqual({
       date: '2024-01-03',
       additionalDescription: 'Vacation cash',
       amountExpense: '10',

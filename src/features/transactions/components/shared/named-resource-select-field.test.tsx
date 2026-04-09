@@ -42,7 +42,9 @@ vi.mock('@shared/ui', () => ({
     children,
     disabled: _disabled,
     ...props
-  }: React.ButtonHTMLAttributes<HTMLButtonElement>) => <button {...props}>{children}</button>,
+  }: React.ButtonHTMLAttributes<HTMLButtonElement>) => (
+    <button {...props}>{children}</button>
+  ),
   Input: (props: React.InputHTMLAttributes<HTMLInputElement>) => <input {...props} />,
   SearchableSelect: ({
     placeholder,
@@ -90,7 +92,9 @@ vi.mock('@shared/ui', () => ({
   ),
 }));
 
-const renderField = (props?: Partial<React.ComponentProps<typeof NamedResourceSelectField>>) => {
+const renderField = (
+  props?: Partial<React.ComponentProps<typeof NamedResourceSelectField>>,
+) => {
   const client = createTestQueryClient();
   const onChange = vi.fn();
 

@@ -210,10 +210,10 @@ describe('NamedResourcePreview', () => {
       message: 'Plain favorite error message',
     });
     const { client } = renderPreview();
-    client.setQueryData(['categories'], [
-      { ...userResource, isFavorite: false },
-      secondResource,
-    ]);
+    client.setQueryData(
+      ['categories'],
+      [{ ...userResource, isFavorite: false }, secondResource],
+    );
 
     await user.click(
       screen.getByRole('button', { name: 'namedResources:favoriteNamedResource' }),
@@ -334,10 +334,10 @@ describe('NamedResourcePreview', () => {
       message: 'Plain favorite error message',
     });
     const { client } = renderPreview({ ...userResource, isFavorite: true });
-    client.setQueryData(['categories'], [
-      { ...userResource, isFavorite: true },
-      secondResource,
-    ]);
+    client.setQueryData(
+      ['categories'],
+      [{ ...userResource, isFavorite: true }, secondResource],
+    );
 
     await user.click(
       screen.getByRole('button', { name: 'namedResources:unfavoriteNamedResource' }),

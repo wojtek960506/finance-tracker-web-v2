@@ -5,14 +5,12 @@ import { describe, expect, it, vi } from 'vitest';
 import { SearchableSelect } from './searchable-select';
 
 vi.mock('@ui', () => ({
-  Button: ({
-    children,
-    ...props
-  }: React.ButtonHTMLAttributes<HTMLButtonElement>) => <button {...props}>{children}</button>,
-  Card: ({
-    children,
-    ...props
-  }: React.HTMLAttributes<HTMLDivElement>) => <div {...props}>{children}</div>,
+  Button: ({ children, ...props }: React.ButtonHTMLAttributes<HTMLButtonElement>) => (
+    <button {...props}>{children}</button>
+  ),
+  Card: ({ children, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
+    <div {...props}>{children}</div>
+  ),
 }));
 
 const groups = [
@@ -126,9 +124,13 @@ describe('SearchableSelect', () => {
     await user.click(screen.getByRole('button', { name: /banana/i }));
     expect(screen.queryByPlaceholderText('Search')).not.toBeInTheDocument();
 
-    fireEvent.keyDown(screen.getByRole('button', { name: /banana/i }), { key: 'ArrowUp' });
+    fireEvent.keyDown(screen.getByRole('button', { name: /banana/i }), {
+      key: 'ArrowUp',
+    });
     expect(screen.queryByPlaceholderText('Search')).not.toBeInTheDocument();
-    fireEvent.keyDown(screen.getByRole('button', { name: /banana/i }), { key: 'ArrowDown' });
+    fireEvent.keyDown(screen.getByRole('button', { name: /banana/i }), {
+      key: 'ArrowDown',
+    });
     expect(screen.getByPlaceholderText('Search')).toBeInTheDocument();
 
     await user.keyboard('{Escape}');
@@ -176,7 +178,9 @@ describe('SearchableSelect', () => {
     );
 
     await user.click(screen.getByRole('button', { name: /pick one/i }));
-    fireEvent.keyDown(screen.getByRole('button', { name: /pick one/i }), { key: 'Enter' });
+    fireEvent.keyDown(screen.getByRole('button', { name: /pick one/i }), {
+      key: 'Enter',
+    });
     fireEvent.keyDown(screen.getByRole('button', { name: /pick one/i }), { key: ' ' });
 
     expect(onOpenChange).toHaveBeenNthCalledWith(1, true);

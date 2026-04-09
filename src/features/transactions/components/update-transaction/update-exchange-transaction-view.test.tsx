@@ -24,10 +24,12 @@ vi.mock('react-router-dom', () => ({
 }));
 
 vi.mock('@transactions/api', async () => {
-  const actual = await vi.importActual<typeof import('@transactions/api')>('@transactions/api');
+  const actual =
+    await vi.importActual<typeof import('@transactions/api')>('@transactions/api');
   return {
     ...actual,
-    updateExchangeTransaction: (...args: unknown[]) => mocks.updateExchangeTransaction(...args),
+    updateExchangeTransaction: (...args: unknown[]) =>
+      mocks.updateExchangeTransaction(...args),
   };
 });
 
@@ -98,7 +100,10 @@ describe('UpdateExchangeTransactionView', () => {
     const user = userEvent.setup();
     const client = createTestQueryClient();
     const invalidateQueriesSpy = vi.spyOn(client, 'invalidateQueries');
-    mocks.updateExchangeTransaction.mockResolvedValueOnce([{ id: 'tx-1' }, { id: 'tx-2' }]);
+    mocks.updateExchangeTransaction.mockResolvedValueOnce([
+      { id: 'tx-1' },
+      { id: 'tx-2' },
+    ]);
 
     render(
       <QueryClientProvider client={client}>

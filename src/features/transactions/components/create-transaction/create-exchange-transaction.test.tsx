@@ -23,7 +23,8 @@ vi.mock('react-router-dom', () => ({
 }));
 
 vi.mock('@transactions/api', () => ({
-  createExchangeTransaction: (...args: unknown[]) => mocks.createExchangeTransaction(...args),
+  createExchangeTransaction: (...args: unknown[]) =>
+    mocks.createExchangeTransaction(...args),
 }));
 
 vi.mock('@shared/api/api-error', () => ({
@@ -83,7 +84,10 @@ describe('CreateExchangeTransaction', () => {
     const user = userEvent.setup();
     const client = createTestQueryClient();
     const invalidateQueriesSpy = vi.spyOn(client, 'invalidateQueries');
-    mocks.createExchangeTransaction.mockResolvedValueOnce([{ id: 'tx-1' }, { id: 'tx-2' }]);
+    mocks.createExchangeTransaction.mockResolvedValueOnce([
+      { id: 'tx-1' },
+      { id: 'tx-2' },
+    ]);
 
     render(
       <QueryClientProvider client={client}>

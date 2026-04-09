@@ -16,13 +16,17 @@ vi.mock('@ui', () => ({
       <input {...props} ref={ref} type={type} onChange={onChange} />
       <button
         type="button"
-        onClick={() => onChange?.({ target: { value: '1,2' } } as React.ChangeEvent<HTMLInputElement>)}
+        onClick={() =>
+          onChange?.({ target: { value: '1,2' } } as React.ChangeEvent<HTMLInputElement>)
+        }
       >
         emit comma
       </button>
       <button
         type="button"
-        onClick={() => onChange?.({ target: { value: 'abc' } } as React.ChangeEvent<HTMLInputElement>)}
+        onClick={() =>
+          onChange?.({ target: { value: 'abc' } } as React.ChangeEvent<HTMLInputElement>)
+        }
       >
         emit invalid
       </button>
@@ -33,7 +37,12 @@ vi.mock('@ui', () => ({
 describe('NumberInput', () => {
   it('renders as a numeric input with default step and input mode', () => {
     render(
-      <NumberInput value="10" onValueChange={() => {}} decimalPlaces={2} aria-label="amount" />,
+      <NumberInput
+        value="10"
+        onValueChange={() => {}}
+        decimalPlaces={2}
+        aria-label="amount"
+      />,
     );
 
     const input = screen.getByLabelText('amount');
@@ -67,7 +76,12 @@ describe('NumberInput', () => {
     const onValueChange = vi.fn();
 
     render(
-      <NumberInput value="" onValueChange={onValueChange} decimalPlaces={2} aria-label="amount" />,
+      <NumberInput
+        value=""
+        onValueChange={onValueChange}
+        decimalPlaces={2}
+        aria-label="amount"
+      />,
     );
 
     fireEvent.click(screen.getByRole('button', { name: 'emit invalid' }));

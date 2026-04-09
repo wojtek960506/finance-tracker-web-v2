@@ -24,10 +24,12 @@ vi.mock('react-router-dom', () => ({
 }));
 
 vi.mock('@transactions/api', async () => {
-  const actual = await vi.importActual<typeof import('@transactions/api')>('@transactions/api');
+  const actual =
+    await vi.importActual<typeof import('@transactions/api')>('@transactions/api');
   return {
     ...actual,
-    updateStandardTransaction: (...args: unknown[]) => mocks.updateStandardTransaction(...args),
+    updateStandardTransaction: (...args: unknown[]) =>
+      mocks.updateStandardTransaction(...args),
   };
 });
 

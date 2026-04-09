@@ -23,7 +23,8 @@ vi.mock('react-router-dom', () => ({
 }));
 
 vi.mock('@transactions/api', () => ({
-  createStandardTransaction: (...args: unknown[]) => mocks.createStandardTransaction(...args),
+  createStandardTransaction: (...args: unknown[]) =>
+    mocks.createStandardTransaction(...args),
 }));
 
 vi.mock('@shared/api/api-error', () => ({

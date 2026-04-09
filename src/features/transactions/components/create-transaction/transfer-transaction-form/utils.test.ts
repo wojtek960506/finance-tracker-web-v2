@@ -58,7 +58,9 @@ describe('transfer transaction form utils', () => {
       paymentMethod: { id: 'pm-transfer', name: 'Bank transfer', type: 'user' },
     });
 
-    expect(getTransferTransactionFormValues(incomeTransaction, expenseTransaction)).toEqual({
+    expect(
+      getTransferTransactionFormValues(incomeTransaction, expenseTransaction),
+    ).toEqual({
       date: '2024-01-03',
       additionalDescription: 'Monthly move',
       amount: '10',

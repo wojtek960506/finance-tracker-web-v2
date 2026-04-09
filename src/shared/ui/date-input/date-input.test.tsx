@@ -1,8 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { describe, expect, it, vi } from 'vitest';
-
 import type { DropdownProps } from 'react-day-picker';
+import { describe, expect, it, vi } from 'vitest';
 
 import { DateInput } from './date-input';
 
@@ -15,15 +14,10 @@ vi.mock('@shared/hooks', () => ({
 }));
 
 vi.mock('@ui', () => ({
-  Card: ({
-    children,
-    ...props
-  }: React.HTMLAttributes<HTMLDivElement>) => <div {...props}>{children}</div>,
-  getButtonClassName: ({
-    className,
-  }: {
-    className?: string;
-  }) => className ?? '',
+  Card: ({ children, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
+    <div {...props}>{children}</div>
+  ),
+  getButtonClassName: ({ className }: { className?: string }) => className ?? '',
 }));
 
 vi.mock('react-day-picker', async () => {
@@ -53,10 +47,18 @@ vi.mock('react-day-picker', async () => {
               onChange={() => {}}
             />
           ) : null}
-          <button type="button" onClick={() => props.onSelect?.(new Date(2024, 1, 4), {}, {} as never, {} as never)}>
+          <button
+            type="button"
+            onClick={() =>
+              props.onSelect?.(new Date(2024, 1, 4), {}, {} as never, {} as never)
+            }
+          >
             pick day
           </button>
-          <button type="button" onClick={() => props.onSelect?.(undefined, {}, {} as never, {} as never)}>
+          <button
+            type="button"
+            onClick={() => props.onSelect?.(undefined, {}, {} as never, {} as never)}
+          >
             clear day
           </button>
           <button
@@ -88,7 +90,12 @@ describe('DateInput', () => {
     }).format(new Date(2024, 0, 3));
 
     render(
-      <DateInput value="2024-01-03" onChange={onChange} onBlur={onBlur} className="custom" />,
+      <DateInput
+        value="2024-01-03"
+        onChange={onChange}
+        onBlur={onBlur}
+        className="custom"
+      />,
     );
 
     const trigger = screen.getByRole('button', { name: formattedDate });

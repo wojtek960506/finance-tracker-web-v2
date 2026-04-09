@@ -31,7 +31,9 @@ describe('transaction shared components', () => {
     const user = userEvent.setup();
     const onCancel = vi.fn();
 
-    render(<TransactionFormActions isPending={false} mode="create" onCancel={onCancel} />);
+    render(
+      <TransactionFormActions isPending={false} mode="create" onCancel={onCancel} />,
+    );
 
     await user.click(screen.getByRole('button', { name: 'cancel' }));
 
