@@ -65,12 +65,14 @@ vi.mock('@transactions/components/shared', async () => {
       isOpen,
       title,
       onConfirm,
+      onClose,
       confirmLabel,
       children,
     }: {
       isOpen: boolean;
       title: string;
       onConfirm: () => void;
+      onClose: () => void;
       confirmLabel: string;
       children: ReactNode;
     }) =>
@@ -78,6 +80,9 @@ vi.mock('@transactions/components/shared', async () => {
         <div>
           <h2>{title}</h2>
           <div>{children}</div>
+          <button type="button" onClick={onClose}>
+            close
+          </button>
           <button
             type="button"
             data-testid="transaction-action-modal-confirm"
@@ -101,6 +106,51 @@ const baseTransaction: ApiTrashedTransactionDetails = makeTrashedTransaction();
 describe('TrashedTransactionDetails', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+  });
+
+  it('renders loading state', () => {
+    mocks.getTrashedTransaction.mockReturnValueOnce(new Promise(() => {}));
+    const client = new QueryClient({
+      defaultOptions: { queries: { retry: false } },
+    });
+
+    render(
+      <QueryClientProvider client={client}>
+        <TrashedTransactionDetailsView />
+      </QueryClientProvider>,
+    );
+
+    expect(screen.getByText('Loading')).toBeInTheDocument();
+  });
+
+  it('renders error state', async () => {
+    mocks.getTrashedTransaction.mockRejectedValueOnce(new Error('Oops'));
+    const client = new QueryClient({
+      defaultOptions: { queries: { retry: false } },
+    });
+
+    render(
+      <QueryClientProvider client={client}>
+        <TrashedTransactionDetailsView />
+      </QueryClientProvider>,
+    );
+
+    expect(await screen.findByText('Oops')).toBeInTheDocument();
+  });
+
+  it('renders info that no trashed transaction was returned', async () => {
+    mocks.getTrashedTransaction.mockResolvedValueOnce(null);
+    const client = new QueryClient({
+      defaultOptions: { queries: { retry: false } },
+    });
+
+    render(
+      <QueryClientProvider client={client}>
+        <TrashedTransactionDetailsView />
+      </QueryClientProvider>,
+    );
+
+    expect(await screen.findByText('No transaction')).toBeInTheDocument();
   });
 
   it('renders trashed transaction details actions', async () => {
@@ -160,6 +210,33 @@ describe('TrashedTransactionDetails', () => {
     });
   });
 
+  it('closes restore modal without confirming', async () => {
+    mocks.getTrashedTransaction.mockResolvedValueOnce(baseTransaction);
+    const client = new QueryClient({
+      defaultOptions: { queries: { retry: false } },
+    });
+    const user = userEvent.setup();
+
+    render(
+      <QueryClientProvider client={client}>
+        <TrashedTransactionDetailsView />
+      </QueryClientProvider>,
+    );
+
+    await user.click(await screen.findByRole('button', { name: 'restoreTransaction' }));
+    expect(
+      screen.getByRole('heading', { name: 'restoreTransactionModalTitle' }),
+    ).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: 'close' }));
+
+    await waitFor(() =>
+      expect(
+        screen.queryByRole('heading', { name: 'restoreTransactionModalTitle' }),
+      ).not.toBeInTheDocument(),
+    );
+  });
+
   it('navigates back to trash list after clicking back button', async () => {
     mocks.getTrashedTransaction.mockResolvedValueOnce(baseTransaction);
     const client = new QueryClient({
@@ -176,5 +253,127 @@ describe('TrashedTransactionDetails', () => {
     await user.click(await screen.findByRole('button', { name: 'backToTrash' }));
 
     expect(mocks.navigate).toHaveBeenCalledWith('/transactions/trash');
+  });
+
+  it('shows an error toast when restore fails', async () => {
+    mocks.getTrashedTransaction.mockResolvedValueOnce({
+      ...baseTransaction,
+      refId: 'tx-2',
+      category: { id: 'cat-transfer', type: 'system', name: 'myAccount' },
+    });
+    mocks.restoreTransaction.mockRejectedValueOnce(new Error('restore boom'));
+    const client = new QueryClient({
+      defaultOptions: { queries: { retry: false } },
+    });
+    const user = userEvent.setup();
+
+    render(
+      <QueryClientProvider client={client}>
+        <TrashedTransactionDetailsView />
+      </QueryClientProvider>,
+    );
+
+    await user.click(await screen.findByRole('button', { name: 'restoreTransaction' }));
+    expect(screen.getByText('restoreTransferReferenceHint')).toBeInTheDocument();
+    await user.click(screen.getByTestId('transaction-action-modal-confirm'));
+
+    await waitFor(() =>
+      expect(mocks.pushToast).toHaveBeenCalledWith({
+        variant: 'error',
+        title: 'transactionRestoreFailed',
+        message: 'restore boom',
+      }),
+    );
+  });
+
+  it('permanently deletes a trashed transaction after confirmation', async () => {
+    mocks.getTrashedTransaction.mockResolvedValueOnce({
+      ...baseTransaction,
+      refId: 'tx-2',
+      category: { id: 'cat-exchange', type: 'system', name: 'exchange' },
+    });
+    mocks.deleteTrashedTransaction.mockResolvedValueOnce({
+      acknowledged: true,
+      deletedCount: 1,
+    });
+    const client = new QueryClient({
+      defaultOptions: { queries: { retry: false } },
+    });
+    const removeQueriesSpy = vi.spyOn(client, 'removeQueries');
+    const user = userEvent.setup();
+
+    const { unmount } = render(
+      <QueryClientProvider client={client}>
+        <TrashedTransactionDetailsView />
+      </QueryClientProvider>,
+    );
+
+    await user.click(
+      await screen.findByRole('button', { name: 'deleteTransactionPermanently' }),
+    );
+    expect(screen.getByText('permanentDeleteExchangeReferenceHint')).toBeInTheDocument();
+    await user.click(screen.getByTestId('transaction-action-modal-confirm'));
+
+    await waitFor(() =>
+      expect(mocks.pushToast).toHaveBeenCalledWith({
+        variant: 'success',
+        title: 'transactionDeletedPermanently',
+      }),
+    );
+    expect(mocks.navigate).toHaveBeenCalledWith('/transactions/trash');
+
+    unmount();
+
+    expect(removeQueriesSpy).toHaveBeenCalledWith({
+      queryKey: ['trashed-transaction', 'tx-1'],
+      exact: true,
+    });
+    expect(removeQueriesSpy).toHaveBeenCalledWith({
+      queryKey: ['trashed-transaction', 'tx-2'],
+      exact: true,
+    });
+  });
+
+  it('shows an error toast when permanent delete fails and allows closing the modal', async () => {
+    mocks.getTrashedTransaction.mockResolvedValueOnce(baseTransaction);
+    mocks.deleteTrashedTransaction.mockRejectedValueOnce(new Error('delete boom'));
+    const client = new QueryClient({
+      defaultOptions: { queries: { retry: false } },
+    });
+    const user = userEvent.setup();
+
+    render(
+      <QueryClientProvider client={client}>
+        <TrashedTransactionDetailsView />
+      </QueryClientProvider>,
+    );
+
+    await user.click(
+      await screen.findByRole('button', { name: 'deleteTransactionPermanently' }),
+    );
+    expect(
+      screen.getByRole('heading', { name: 'permanentDeleteModalTitle' }),
+    ).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: 'close' }));
+
+    await waitFor(() =>
+      expect(
+        screen.queryByRole('heading', { name: 'permanentDeleteModalTitle' }),
+      ).not.toBeInTheDocument(),
+    );
+
+    await user.click(
+      await screen.findByRole('button', { name: 'deleteTransactionPermanently' }),
+    );
+    await user.click(screen.getByTestId('transaction-action-modal-confirm'));
+
+    await waitFor(() =>
+      expect(mocks.pushToast).toHaveBeenCalledWith({
+        variant: 'error',
+        title: 'transactionPermanentDeleteFailed',
+        message: 'delete boom',
+      }),
+    );
   });
 });

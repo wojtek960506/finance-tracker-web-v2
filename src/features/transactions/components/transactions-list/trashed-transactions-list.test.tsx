@@ -59,18 +59,23 @@ vi.mock('@transactions/components/shared', async () => {
       title,
       children,
       onConfirm,
+      onClose,
       confirmLabel,
     }: {
       isOpen: boolean;
       title: string;
       children: ReactNode;
       onConfirm: () => void;
+      onClose: () => void;
       confirmLabel: string;
     }) =>
       isOpen ? (
         <div>
           <h2>{title}</h2>
           <div>{children}</div>
+          <button type="button" onClick={onClose}>
+            close
+          </button>
           <button
             type="button"
             data-testid="transaction-action-modal-confirm"
@@ -104,6 +109,40 @@ describe('TrashedTransactionsList', () => {
 
   it('renders empty state when trash is empty', async () => {
     mocks.getTrashedTransactions.mockResolvedValueOnce(emptyResponse);
+    const client = new QueryClient({
+      defaultOptions: { queries: { retry: false } },
+    });
+
+    render(
+      <QueryClientProvider client={client}>
+        <MemoryRouter>
+          <TrashedTransactionsList />
+        </MemoryRouter>
+      </QueryClientProvider>,
+    );
+
+    expect(await screen.findByText('trashIsEmpty')).toBeInTheDocument();
+  });
+
+  it('renders error state when trash query fails', async () => {
+    mocks.getTrashedTransactions.mockRejectedValueOnce(new Error('Oops'));
+    const client = new QueryClient({
+      defaultOptions: { queries: { retry: false } },
+    });
+
+    render(
+      <QueryClientProvider client={client}>
+        <MemoryRouter>
+          <TrashedTransactionsList />
+        </MemoryRouter>
+      </QueryClientProvider>,
+    );
+
+    expect(await screen.findByText('Oops')).toBeInTheDocument();
+  });
+
+  it('renders empty state when trash query returns no data', async () => {
+    mocks.getTrashedTransactions.mockResolvedValue(null);
     const client = new QueryClient({
       defaultOptions: { queries: { retry: false } },
     });
@@ -154,5 +193,73 @@ describe('TrashedTransactionsList', () => {
         title: 'trashEmptied',
       });
     });
+  });
+
+  it('closes the empty trash modal without confirming', async () => {
+    const user = userEvent.setup();
+    mocks.getTrashedTransactions.mockResolvedValueOnce({
+      ...emptyResponse,
+      total: 1,
+      totalPages: 1,
+      items: [makeTrashedTransaction()],
+    });
+    const client = new QueryClient({
+      defaultOptions: { queries: { retry: false } },
+    });
+
+    render(
+      <QueryClientProvider client={client}>
+        <MemoryRouter>
+          <TrashedTransactionsList />
+        </MemoryRouter>
+      </QueryClientProvider>,
+    );
+
+    await user.click(await screen.findByRole('button', { name: 'emptyTrash' }));
+    expect(
+      screen.getByRole('heading', { name: 'emptyTrashModalTitle' }),
+    ).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: 'close' }));
+
+    await waitFor(() =>
+      expect(
+        screen.queryByRole('heading', { name: 'emptyTrashModalTitle' }),
+      ).not.toBeInTheDocument(),
+    );
+  });
+
+  it('shows an error toast when empty trash fails', async () => {
+    const user = userEvent.setup();
+    mocks.getTrashedTransactions.mockResolvedValueOnce({
+      ...emptyResponse,
+      total: 1,
+      totalPages: 1,
+      items: [makeTrashedTransaction()],
+    });
+    mocks.emptyTrash.mockRejectedValueOnce(new Error('empty failed'));
+    const client = new QueryClient({
+      defaultOptions: { queries: { retry: false } },
+    });
+
+    render(
+      <QueryClientProvider client={client}>
+        <MemoryRouter>
+          <TrashedTransactionsList />
+        </MemoryRouter>
+      </QueryClientProvider>,
+    );
+
+    await user.click(await screen.findByRole('button', { name: 'emptyTrash' }));
+    await user.type(screen.getByPlaceholderText('DELETE'), 'DELETE');
+    await user.click(screen.getByTestId('transaction-action-modal-confirm'));
+
+    await waitFor(() =>
+      expect(mocks.pushToast).toHaveBeenCalledWith({
+        variant: 'error',
+        title: 'emptyTrashFailed',
+        message: 'empty failed',
+      }),
+    );
   });
 });

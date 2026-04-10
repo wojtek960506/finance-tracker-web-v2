@@ -3,7 +3,10 @@ import type { ReactNode } from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { describe, expect, it, vi } from 'vitest';
 
-import { makeTransaction } from '@test-utils/factories/transaction';
+import {
+  makeTransaction,
+  makeTrashedTransaction,
+} from '@test-utils/factories/transaction';
 
 import { TransactionDetailsCard } from './transaction-details-card';
 
@@ -55,5 +58,30 @@ describe('TransactionDetailsCard', () => {
       'text-bt-primary',
       'font-semibold',
     );
+  });
+
+  it('renders trash mode metadata and icon for trashed transaction details', () => {
+    render(
+      <MemoryRouter>
+        <TransactionDetailsCard
+          transaction={makeTrashedTransaction({
+            category: { id: 'cat-transfer', type: 'system', name: 'myAccount' },
+            paymentMethod: { id: 'pm-system', type: 'system', name: 'cash' },
+            account: { id: 'acc-system', type: 'system', name: 'savings' },
+          })}
+          mode="trash"
+        />
+      </MemoryRouter>,
+    );
+
+    expect(screen.getByLabelText('trashedTransaction')).toBeInTheDocument();
+    expect(screen.getByText('deletedAt')).toHaveClass('text-transaction-expense-label');
+    expect(screen.getByText('purgeAt')).toHaveClass('text-transaction-expense-label');
+    expect(screen.getByText(/1\/10\/2024, .*:00:00 PM/).parentElement).toHaveClass(
+      'text-destructive',
+    );
+    expect(screen.getByText('myAccount')).toBeInTheDocument();
+    expect(screen.getByText('cash')).toBeInTheDocument();
+    expect(screen.getByText('savings')).toBeInTheDocument();
   });
 });

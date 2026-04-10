@@ -67,12 +67,14 @@ vi.mock('@transactions/components/shared', async () => {
       isOpen,
       title,
       onConfirm,
+      onClose,
       confirmLabel,
       children,
     }: {
       isOpen: boolean;
       title: string;
       onConfirm: () => void;
+      onClose: () => void;
       confirmLabel: string;
       children: ReactNode;
     }) =>
@@ -80,6 +82,9 @@ vi.mock('@transactions/components/shared', async () => {
         <div>
           <h2>{title}</h2>
           <div>{children}</div>
+          <button type="button" onClick={onClose}>
+            close
+          </button>
           <button
             type="button"
             data-testid="transaction-action-modal-confirm"
@@ -239,6 +244,103 @@ describe('TransactionDetails', () => {
         variant: 'success',
         title: 'transactionMovedToTrash',
       });
+    });
+  });
+
+  it('closes move to trash modal without confirming', async () => {
+    mocks.getTransaction.mockResolvedValueOnce(baseTransaction);
+    const client = new QueryClient({
+      defaultOptions: { queries: { retry: false } },
+    });
+    const user = userEvent.setup();
+
+    render(
+      <QueryClientProvider client={client}>
+        <TransactionDetails />
+      </QueryClientProvider>,
+    );
+
+    await user.click(await screen.findByRole('button', { name: 'moveToTrash' }));
+    expect(
+      screen.getByRole('heading', { name: 'moveToTrashModalTitle' }),
+    ).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: 'close' }));
+
+    await waitFor(() =>
+      expect(
+        screen.queryByRole('heading', { name: 'moveToTrashModalTitle' }),
+      ).not.toBeInTheDocument(),
+    );
+  });
+
+  it('shows an error toast and re-enables the query when move to trash fails', async () => {
+    mocks.getTransaction.mockResolvedValueOnce({
+      ...baseTransaction,
+      refId: 'tx-2',
+      category: { id: 'cat-transfer', type: 'system', name: 'myAccount' },
+    });
+    mocks.moveTransactionToTrash.mockRejectedValueOnce(new Error('boom'));
+    const client = new QueryClient({
+      defaultOptions: { queries: { retry: false } },
+    });
+    const user = userEvent.setup();
+
+    render(
+      <QueryClientProvider client={client}>
+        <TransactionDetails />
+      </QueryClientProvider>,
+    );
+
+    await user.click(await screen.findByRole('button', { name: 'moveToTrash' }));
+    expect(screen.getByText('moveToTrashTransferReferenceHint')).toBeInTheDocument();
+    await user.click(screen.getByTestId('transaction-action-modal-confirm'));
+
+    await waitFor(() =>
+      expect(mocks.pushToast).toHaveBeenCalledWith({
+        variant: 'error',
+        title: 'transactionMoveToTrashFailed',
+        message: 'boom',
+      }),
+    );
+  });
+
+  it('removes affected transaction detail queries on unmount after a successful move', async () => {
+    mocks.getTransaction.mockResolvedValueOnce({
+      ...baseTransaction,
+      refId: 'tx-2',
+    });
+    mocks.moveTransactionToTrash.mockResolvedValueOnce({
+      acknowledged: true,
+      matchedCount: 1,
+      modifiedCount: 1,
+    });
+    const client = new QueryClient({
+      defaultOptions: { queries: { retry: false } },
+    });
+    const removeQueriesSpy = vi.spyOn(client, 'removeQueries');
+    const user = userEvent.setup();
+
+    const { unmount } = render(
+      <QueryClientProvider client={client}>
+        <TransactionDetails />
+      </QueryClientProvider>,
+    );
+
+    await user.click(await screen.findByRole('button', { name: 'moveToTrash' }));
+    await user.click(screen.getByTestId('transaction-action-modal-confirm'));
+
+    await waitFor(() => expect(mocks.navigate).toHaveBeenCalledWith('/transactions'));
+
+    unmount();
+
+    expect(removeQueriesSpy).toHaveBeenCalledWith({
+      queryKey: ['transaction', 'tx-1'],
+      exact: true,
+    });
+    expect(removeQueriesSpy).toHaveBeenCalledWith({
+      queryKey: ['transaction', 'tx-2'],
+      exact: true,
     });
   });
 });
