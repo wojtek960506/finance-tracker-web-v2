@@ -8,6 +8,14 @@ import { EXCHANGE_CATEGORY, TRANSFER_CATEGORY } from '@transactions/consts';
 
 import { AdditionalDetails } from './additional-details';
 
+const mocks = vi.hoisted(() => ({
+  language: 'en' as const,
+}));
+
+vi.mock('@shared/hooks', () => ({
+  useLanguage: () => ({ language: mocks.language }),
+}));
+
 vi.mock('react-i18next', () => ({
   useTranslation: () => ({ t: (key: string) => key }),
 }));
@@ -104,7 +112,7 @@ describe('AdditionalDetails', () => {
     );
   });
 
-  it('does not treat a user category with a reserved system name as linked transaction kind', () => {
+  it('does not treat a user category with a reserved system name as a linked transaction kind', () => {
     const transaction: Transaction = {
       ...baseTransaction,
       category: { ...baseTransaction.category, name: TRANSFER_CATEGORY, type: 'user' },
@@ -112,8 +120,10 @@ describe('AdditionalDetails', () => {
       exchangeRate: 3.5,
     };
 
-    const { container } = render(<AdditionalDetails transaction={transaction} />);
+    render(<AdditionalDetails transaction={transaction} />);
 
-    expect(container).toBeEmptyDOMElement();
+    expect(screen.getByText('exchangeRate')).toBeInTheDocument();
+    expect(screen.getByText('1 USD = 3.5000 PLN')).toBeInTheDocument();
+    expect(screen.queryByText('goToReferencedTransaction')).not.toBeInTheDocument();
   });
 });

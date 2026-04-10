@@ -62,7 +62,7 @@ describe('TransactionPreview', () => {
     );
     expect(screen.getByTestId('transaction-kind-icon')).toHaveClass(
       'border',
-      'border-border',
+      'border-fg/50',
     );
     expect(screen.getByTestId('transaction-preview-link')).toHaveAttribute(
       'href',

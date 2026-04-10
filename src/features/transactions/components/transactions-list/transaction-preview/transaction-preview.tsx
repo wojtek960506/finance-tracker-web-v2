@@ -74,10 +74,7 @@ export const TransactionPreview = ({
             title={t(`${transactionKind}Transaction`)}
             data-testid="transaction-kind-icon"
           >
-            <TransactionKindIcon
-              kind={transactionKind}
-              aria-hidden
-            />
+            <TransactionKindIcon kind={transactionKind} aria-hidden />
           </span>
           <div className="flex flex-wrap justify-end gap-1">
             <ButtonLink to="/accounts" className={ghostLinkCn}>

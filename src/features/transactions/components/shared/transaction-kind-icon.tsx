@@ -1,8 +1,4 @@
-import {
-  ArrowRightLeft,
-  Euro,  
-  Wallet,
-} from 'lucide-react';
+import { ArrowRightLeft, Euro, Wallet } from 'lucide-react';
 import type { ComponentType } from 'react';
 
 import type { TransactionKind } from '@transactions/consts';
@@ -34,5 +30,5 @@ export const TransactionKindIcon = ({
 }: TransactionKindIconProps) => {
   const Icon = transactionKindIcons[kind];
 
-  return <Icon className={className}  aria-hidden={ariaHidden} />;
+  return <Icon className={className} aria-hidden={ariaHidden} />;
 };

@@ -1,5 +1,4 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { ArrowLeft } from 'lucide-react';
 import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -11,6 +10,7 @@ import { getTransaction, moveTransactionToTrash } from '@transactions/api';
 import {
   getReferenceActionMessage,
   TransactionActionModal,
+  TransactionBackButton,
   useInvalidateTransactionQueries,
 } from '@transactions/components/shared';
 import { Button } from '@ui';
@@ -92,15 +92,11 @@ export const TransactionDetails = () => {
         {linkedMoveToTrashMessage ? <p>{linkedMoveToTrashMessage}</p> : null}
         <p>{t('moveToTrashModalRestoreHint')}</p>
       </TransactionActionModal>
-      <Button
-        variant="ghost"
-        className="w-fit gap-2 self-start px-0 py-0 text-sm sm:px-0 sm:py-0 sm:text-base"
-        onClick={() => navigate('/transactions')}
+      <TransactionBackButton
+        label={t('backToTransactions')}
+        to="/transactions"
         disabled={moveToTrashMutation.isPending}
-      >
-        <ArrowLeft className="size-4 sm:size-5" aria-hidden="true" />
-        {t('backToTransactions')}
-      </Button>
+      />
       <Button
         variant="secondary"
         className={MAIN_BUTTON_TEXT}
