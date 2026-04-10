@@ -68,4 +68,24 @@ describe('AdditionalDetails', () => {
     expect(screen.queryByText('exchangeRate')).not.toBeInTheDocument();
     expect(screen.queryByText('goToReferencedTransaction')).not.toBeInTheDocument();
   });
+
+  it('uses a custom reference path prefix when provided', () => {
+    const transaction: Transaction = {
+      ...baseTransaction,
+      category: { ...baseTransaction.category, name: TRANSFER_CATEGORY },
+      refId: 'trash-ref-123',
+    };
+
+    render(
+      <AdditionalDetails
+        transaction={transaction}
+        referencePathPrefix="/transactions/trash"
+      />,
+    );
+
+    expect(screen.getByText('goToReferencedTransaction')).toHaveAttribute(
+      'href',
+      '/transactions/trash/trash-ref-123',
+    );
+  });
 });

@@ -5,12 +5,16 @@ import { api } from '@shared/api';
 import { createExchangeTransaction } from './create-exchange-transaction';
 import { createStandardTransaction } from './create-standard-transaction';
 import { createTransferTransaction } from './create-transfer-transaction';
+import { deleteTrashedTransaction } from './delete-trashed-transaction';
+import { emptyTrash } from './empty-trash';
+import { moveTransactionToTrash } from './move-transaction-to-trash';
+import { restoreTransaction } from './restore-transaction';
 import { updateExchangeTransaction } from './update-exchange-transaction';
 import { updateStandardTransaction } from './update-standard-transaction';
 import { updateTransferTransaction } from './update-transfer-transaction';
 
 vi.mock('@shared/api', () => ({
-  api: { post: vi.fn(), put: vi.fn() },
+  api: { post: vi.fn(), put: vi.fn(), delete: vi.fn() },
 }));
 
 describe('transaction mutations api', () => {
@@ -129,6 +133,46 @@ describe('transaction mutations api', () => {
     const result = await updateExchangeTransaction('tx-1', payload);
 
     expect(api.put).toHaveBeenCalledWith('/transactions/exchange/tx-1', payload);
+    expect(result).toEqual(response);
+  });
+
+  it('moves a transaction to trash', async () => {
+    const response = { acknowledged: true, matchedCount: 1, modifiedCount: 1 };
+    vi.mocked(api.delete).mockResolvedValueOnce({ data: response });
+
+    const result = await moveTransactionToTrash('tx-1');
+
+    expect(api.delete).toHaveBeenCalledWith('/transactions/tx-1');
+    expect(result).toEqual(response);
+  });
+
+  it('restores a transaction from trash', async () => {
+    const response = { acknowledged: true, matchedCount: 1, modifiedCount: 1 };
+    vi.mocked(api.post).mockResolvedValueOnce({ data: response });
+
+    const result = await restoreTransaction('tx-1');
+
+    expect(api.post).toHaveBeenCalledWith('/transactions/trash/tx-1/restore');
+    expect(result).toEqual(response);
+  });
+
+  it('deletes a trashed transaction permanently', async () => {
+    const response = { acknowledged: true, deletedCount: 1 };
+    vi.mocked(api.delete).mockResolvedValueOnce({ data: response });
+
+    const result = await deleteTrashedTransaction('tx-1');
+
+    expect(api.delete).toHaveBeenCalledWith('/transactions/trash/tx-1');
+    expect(result).toEqual(response);
+  });
+
+  it('empties transaction trash', async () => {
+    const response = { acknowledged: true, deletedCount: 3 };
+    vi.mocked(api.delete).mockResolvedValueOnce({ data: response });
+
+    const result = await emptyTrash();
+
+    expect(api.delete).toHaveBeenCalledWith('/transactions/trash');
     expect(result).toEqual(response);
   });
 });

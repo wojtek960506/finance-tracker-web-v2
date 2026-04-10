@@ -10,6 +10,8 @@ import {
   CreateTransferTransaction,
   TransactionDetails,
   TransactionsList,
+  TrashedTransactionDetails,
+  TrashedTransactionsList,
   UpdateTransaction,
 } from '@transactions/components';
 
@@ -41,6 +43,16 @@ export const PROTECTED_APP_ROUTES: AppRouteConfig[] = [
     path: '/transactions',
     element: <TransactionsList />,
     title: { namespace: 'navigation', key: 'transactions' },
+  },
+  {
+    path: '/transactions/trash',
+    element: <TrashedTransactionsList />,
+    title: { namespace: 'navigation', key: 'transactionsTrash' },
+  },
+  {
+    path: '/transactions/trash/:transactionId',
+    element: <TrashedTransactionDetails />,
+    title: { namespace: 'navigation', key: 'trashedTransactionDetails' },
   },
   {
     path: '/transactions/new',

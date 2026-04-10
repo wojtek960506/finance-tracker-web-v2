@@ -1,8 +1,8 @@
 import { api } from '@shared/api';
 
-import type { Transaction } from './types';
+import type { TransactionDetails } from './types';
 
-export const getTransaction = async (id: string): Promise<Transaction> => {
-  const res = await api.get<Transaction>(`/transactions/${id}`);
+export const getTransaction = async (id: string): Promise<TransactionDetails> => {
+  const res = await api.get<TransactionDetails>(`/transactions/${id}`);
   return res.data;
 };

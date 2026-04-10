@@ -2,6 +2,8 @@ export { CreateExchangeTransaction } from './create-transaction';
 export { CreateStandardTransaction } from './create-transaction';
 export { CreateTransaction } from './create-transaction';
 export { CreateTransferTransaction } from './create-transaction';
+export { TrashedTransactionDetails } from './transaction-details';
 export { TransactionDetails } from './transaction-details';
+export { TrashedTransactionsList } from './transactions-list';
 export { TransactionsList } from './transactions-list';
 export { UpdateTransaction } from './update-transaction';

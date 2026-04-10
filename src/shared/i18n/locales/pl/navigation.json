@@ -1,10 +1,12 @@
 {
   "transactions": "Transakcje",
+  "transactionsTrash": "Kosz transakcji",
   "newTransaction": "Nowa transakcja",
   "newStandardTransaction": "Nowa transakcja standardowa",
   "newTransferTransaction": "Nowy transfer",
   "newExchangeTransaction": "Nowa wymiana walut",
   "transactionDetails": "Szczegóły transakcji",
+  "trashedTransactionDetails": "Szczegóły transakcji w koszu",
   "editTransaction": "Edytuj transakcję",
   "categories": "Kategorie",
   "paymentMethods": "Metody płatności",

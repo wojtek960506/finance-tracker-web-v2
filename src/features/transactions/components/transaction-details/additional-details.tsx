@@ -12,7 +12,13 @@ const formatExchangeRate = (exchangeRate: number, currencies: string) => {
   return `1 ${baseCurrency} = ${exchangeRate.toFixed(4)} ${quoteCurrency}`;
 };
 
-export const AdditionalDetails = ({ transaction }: { transaction: Transaction }) => {
+export const AdditionalDetails = ({
+  transaction,
+  referencePathPrefix = '/transactions',
+}: {
+  transaction: Transaction;
+  referencePathPrefix?: string;
+}) => {
   const { t } = useTranslation('transactions');
 
   if (![TRANSFER_CATEGORY, EXCHANGE_CATEGORY].includes(transaction.category.name))
@@ -30,7 +36,10 @@ export const AdditionalDetails = ({ transaction }: { transaction: Transaction })
       )}
 
       {refId && (
-        <ButtonLink to={`/transactions/${refId}`} className="justify-self-center w-full">
+        <ButtonLink
+          to={`${referencePathPrefix}/${refId}`}
+          className="justify-self-center w-full"
+        >
           {t('goToReferencedTransaction')}
         </ButtonLink>
       )}

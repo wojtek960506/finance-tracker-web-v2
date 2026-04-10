@@ -9,14 +9,13 @@ import {
   type TransactionStandardDTO,
   updateStandardTransaction,
 } from '@transactions/api';
+import { useInvalidateTransactionQueries } from '@transactions/components/use-invalidate-transaction-queries';
 
 import {
   getStandardTransactionFormValues,
   StandardTransactionForm,
   type StandardTransactionFormValues,
 } from '../create-transaction';
-
-import { useInvalidateTransactionQueries } from './use-invalidate-transaction-queries';
 
 type UpdateStandardTransactionViewProps = {
   transaction: Transaction;

@@ -1,11 +1,20 @@
 import clsx from 'clsx';
+import type { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 
 import { useLanguage } from '@shared/hooks';
-import type { Transaction } from '@transactions/api';
+import type { Transaction, TrashedTransaction } from '@transactions/api';
 import { ButtonLink, Card } from '@ui';
 
-export const TransactionPreview = ({ transaction }: { transaction: Transaction }) => {
+export const TransactionPreview = ({
+  transaction,
+  detailsPathPrefix = '/transactions',
+  metadata,
+}: {
+  transaction: Transaction | TrashedTransaction;
+  detailsPathPrefix?: string;
+  metadata?: ReactNode;
+}) => {
   const { language } = useLanguage();
 
   const ghostLinkCn = 'text-sm sm:text-base';
@@ -19,7 +28,7 @@ export const TransactionPreview = ({ transaction }: { transaction: Transaction }
             'focus-visible:rounded-md focus-visible:outline-solid focus-visible:outline-2',
             'focus-visible:outline-fg focus-visible:outline-offset-2',
           )}
-          to={`/transactions/${transaction.id}`}
+          to={`${detailsPathPrefix}/${transaction.id}`}
           data-testid="transaction-preview-link"
         >
           <header className="flex justify-between text-text-muted text-sm sm:text-base">
@@ -33,6 +42,7 @@ export const TransactionPreview = ({ transaction }: { transaction: Transaction }
             <h1 className="text-lg sm:text-xl font-semibold">
               {transaction.description}
             </h1>
+            {metadata ? <div className="pt-1">{metadata}</div> : null}
           </main>
         </Link>
 

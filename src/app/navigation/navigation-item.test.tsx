@@ -58,6 +58,18 @@ describe('NavigationItem', () => {
     );
   });
 
+  it('does not mark the link as current for nested routes when exact matching is enabled', () => {
+    renderNavigationItem(
+      <NavigationItem to="/transactions" title="Transactions" end />,
+      '/transactions/trash',
+    );
+
+    expect(screen.getByRole('link', { name: 'Transactions' })).not.toHaveAttribute(
+      'aria-current',
+      'page',
+    );
+  });
+
   it('closes navigation when clicked without an additional action', async () => {
     const user = userEvent.setup();
 

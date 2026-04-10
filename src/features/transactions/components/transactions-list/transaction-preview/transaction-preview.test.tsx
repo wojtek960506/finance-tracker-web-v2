@@ -3,8 +3,11 @@ import type { ReactNode } from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { describe, expect, it, vi } from 'vitest';
 
-import { makeTransaction } from '@test-utils/factories/transaction';
-import type { Transaction } from '@transactions/api';
+import {
+  makeTransaction,
+  makeTrashedTransaction,
+} from '@test-utils/factories/transaction';
+import type { Transaction, TrashedTransaction } from '@transactions/api';
 
 import { TransactionPreview } from './transaction-preview';
 
@@ -30,6 +33,7 @@ vi.mock('@ui', () => ({
 }));
 
 const baseTransaction: Transaction = makeTransaction();
+const baseTrashedTransaction: TrashedTransaction = makeTrashedTransaction();
 
 describe('TransactionPreview', () => {
   it('renders transaction info and links', () => {
@@ -50,6 +54,24 @@ describe('TransactionPreview', () => {
     expect(screen.getByTestId('transaction-preview-link')).toHaveAttribute(
       'href',
       '/transactions/tx-1',
+    );
+  });
+
+  it('supports custom details path and metadata', () => {
+    render(
+      <MemoryRouter>
+        <TransactionPreview
+          transaction={baseTrashedTransaction}
+          detailsPathPrefix="/transactions/trash"
+          metadata={<span>deleted meta</span>}
+        />
+      </MemoryRouter>,
+    );
+
+    expect(screen.getByText('deleted meta')).toBeInTheDocument();
+    expect(screen.getByTestId('transaction-preview-link')).toHaveAttribute(
+      'href',
+      '/transactions/trash/tx-1',
     );
   });
 });

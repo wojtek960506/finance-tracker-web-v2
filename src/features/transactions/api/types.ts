@@ -58,10 +58,46 @@ export type Transaction = {
   account: NamedResource;
 };
 
+export type TransactionDeletion = {
+  deletedAt: string;
+  purgeAt: string;
+};
+
+export type TransactionDetails = Transaction & {
+  reference?: Transaction;
+};
+
+export type TrashedTransaction = Transaction & {
+  deletion: TransactionDeletion;
+};
+
+export type TrashedTransactionDetails = TrashedTransaction & {
+  reference?: TrashedTransaction;
+};
+
 export type TransactionsResponse = {
   page: number;
   limit: number;
   total: number;
   totalPages: number;
   items: Transaction[];
+};
+
+export type TrashedTransactionsResponse = {
+  page: number;
+  limit: number;
+  total: number;
+  totalPages: number;
+  items: TrashedTransaction[];
+};
+
+export type UpdateManyReply = {
+  acknowledged: boolean;
+  matchedCount: number;
+  modifiedCount: number;
+};
+
+export type DeleteManyReply = {
+  acknowledged: boolean;
+  deletedCount: number;
 };
