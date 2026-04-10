@@ -35,7 +35,13 @@ export const TrashedTransactionsList = () => {
 
   const emptyTrashMutation = useMutation({
     mutationFn: async () => await emptyTrash(),
-    onSuccess: invalidateQueries,
+    onSuccess: async () =>
+      await invalidateQueries({
+        includeTransactions: false,
+        includeTransactionDetails: false,
+        includeTrashedTransactionDetails: false,
+        removeAllTrashedTransactionDetails: true,
+      }),
   });
 
   if (isLoading) return <p>Loading</p>;

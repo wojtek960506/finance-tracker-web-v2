@@ -1,5 +1,5 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
-import { useRef, useState } from 'react';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -20,12 +20,15 @@ import { TransactionDetailsCard } from './transaction-details-card';
 export const TransactionDetails = () => {
   const { t } = useTranslation('transactions');
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const pushToast = useToastStore((state) => state.pushToast);
   const invalidateQueries = useInvalidateTransactionQueries();
 
   const { transactionId } = useParams<{ transactionId: string }>();
   const [isMoveToTrashModalOpen, setIsMoveToTrashModalOpen] = useState(false);
+  const [isTransactionQueryEnabled, setIsTransactionQueryEnabled] = useState(true);
   const moveToTrashButtonRef = useRef<HTMLButtonElement | null>(null);
+  const queriesToRemoveRef = useRef<string[]>([]);
 
   const {
     data: transaction,
@@ -34,12 +37,29 @@ export const TransactionDetails = () => {
   } = useQuery({
     queryKey: ['transaction', transactionId],
     queryFn: async () => await getTransaction(transactionId!),
+    enabled: Boolean(transactionId) && isTransactionQueryEnabled,
   });
 
   const moveToTrashMutation = useMutation({
     mutationFn: async (id: string) => await moveTransactionToTrash(id),
-    onSuccess: invalidateQueries,
+    onSuccess: async () =>
+      await invalidateQueries({
+        includeTransactionDetails: false,
+        includeTrashedTransactionDetails: false,
+      }),
   });
+
+  useEffect(
+    () => () => {
+      for (const queryId of queriesToRemoveRef.current) {
+        queryClient.removeQueries({
+          queryKey: ['transaction', queryId],
+          exact: true,
+        });
+      }
+    },
+    [queryClient],
+  );
 
   if (isLoading) return <p>Loading</p>;
   if (error) return <p>{error.message}</p>;
@@ -53,7 +73,11 @@ export const TransactionDetails = () => {
 
   const handleMoveToTrash = async () => {
     try {
+      setIsTransactionQueryEnabled(false);
       await moveToTrashMutation.mutateAsync(transaction.id);
+      queriesToRemoveRef.current = [transaction!.id, transaction!.refId].filter(
+        (queryId) => queryId !== undefined 
+      );
       setIsMoveToTrashModalOpen(false);
       pushToast({
         variant: 'success',
@@ -61,6 +85,7 @@ export const TransactionDetails = () => {
       });
       navigate('/transactions');
     } catch (moveError) {
+      setIsTransactionQueryEnabled(true);
       const apiError = normalizeApiError(moveError);
       pushToast({
         variant: 'error',

@@ -1,5 +1,5 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
-import { useRef, useState } from 'react';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -24,14 +24,17 @@ import { TransactionDetailsCard } from './transaction-details-card';
 export const TrashedTransactionDetails = () => {
   const { t } = useTranslation('transactions');
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const { transactionId } = useParams<{ transactionId: string }>();
   const pushToast = useToastStore((state) => state.pushToast);
   const invalidateQueries = useInvalidateTransactionQueries();
+  const [isTransactionQueryEnabled, setIsTransactionQueryEnabled] = useState(true);
 
   const [isRestoreModalOpen, setIsRestoreModalOpen] = useState(false);
   const [isPermanentDeleteModalOpen, setIsPermanentDeleteModalOpen] = useState(false);
   const restoreButtonRef = useRef<HTMLButtonElement | null>(null);
   const deleteButtonRef = useRef<HTMLButtonElement | null>(null);
+  const queriesToRemoveRef = useRef<string[]>([]);
 
   const {
     data: transaction,
@@ -40,16 +43,38 @@ export const TrashedTransactionDetails = () => {
   } = useQuery({
     queryKey: ['trashed-transaction', transactionId],
     queryFn: async () => await getTrashedTransaction(transactionId!),
+    enabled: Boolean(transactionId) && isTransactionQueryEnabled,
   });
 
   const restoreMutation = useMutation({
     mutationFn: async (id: string) => await restoreTransaction(id),
-    onSuccess: invalidateQueries,
+    onSuccess: async () =>
+      await invalidateQueries({
+        includeTransactionDetails: false,
+        includeTrashedTransactionDetails: false,
+      }),
   });
   const permanentDeleteMutation = useMutation({
     mutationFn: async (id: string) => await deleteTrashedTransaction(id),
-    onSuccess: invalidateQueries,
+    onSuccess: async () =>
+      await invalidateQueries({
+        includeTransactions: false,
+        includeTransactionDetails: false,
+        includeTrashedTransactionDetails: false,
+      }),
   });
+
+  useEffect(
+    () => () => {
+      for (const queryId of queriesToRemoveRef.current) {
+        queryClient.removeQueries({
+          queryKey: ['trashed-transaction', queryId],
+          exact: true,
+        });
+      }
+    },
+    [queryClient],
+  );
 
   if (isLoading) return <p>Loading</p>;
   if (error) return <p>{error.message}</p>;
@@ -66,7 +91,11 @@ export const TrashedTransactionDetails = () => {
 
   const handleRestore = async () => {
     try {
+      setIsTransactionQueryEnabled(false);
       await restoreMutation.mutateAsync(transaction.id);
+      queriesToRemoveRef.current = [transaction.id, transaction.refId].filter(
+        (queryId) => queryId !== undefined 
+      );
       setIsRestoreModalOpen(false);
       pushToast({
         variant: 'success',
@@ -74,6 +103,7 @@ export const TrashedTransactionDetails = () => {
       });
       navigate(`/transactions/${transaction.id}`);
     } catch (restoreError) {
+      setIsTransactionQueryEnabled(true);
       const apiError = normalizeApiError(restoreError);
       pushToast({
         variant: 'error',
@@ -85,7 +115,11 @@ export const TrashedTransactionDetails = () => {
 
   const handlePermanentDelete = async () => {
     try {
+      setIsTransactionQueryEnabled(false);
       await permanentDeleteMutation.mutateAsync(transaction.id);
+      queriesToRemoveRef.current = [transaction.id, transaction.refId].filter(
+        (queryId) => queryId !== undefined 
+      );
       setIsPermanentDeleteModalOpen(false);
       pushToast({
         variant: 'success',
@@ -93,6 +127,7 @@ export const TrashedTransactionDetails = () => {
       });
       navigate('/transactions/trash');
     } catch (deleteError) {
+      setIsTransactionQueryEnabled(true);
       const apiError = normalizeApiError(deleteError);
       pushToast({
         variant: 'error',
