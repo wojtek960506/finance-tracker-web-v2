@@ -1,10 +1,12 @@
 {
   "transactions": "Транзакции",
+  "transactionsTrash": "Корзина транзакций",
   "newTransaction": "Новая транзакция",
   "newStandardTransaction": "Новая стандартная транзакция",
   "newTransferTransaction": "Новый перевод",
   "newExchangeTransaction": "Новая валютная операция",
   "transactionDetails": "Детали транзакции",
+  "trashedTransactionDetails": "Детали транзакции в корзине",
   "editTransaction": "Редактировать транзакцию",
   "categories": "Категории",
   "paymentMethods": "Способы оплаты",

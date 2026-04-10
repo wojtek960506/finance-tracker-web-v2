@@ -1,18 +1,20 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import type { ComponentProps, ReactNode } from 'react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { makeTransaction } from '@test-utils/factories/transaction';
-import type { Transaction } from '@transactions/api';
+import type { TransactionDetails as ApiTransactionDetails } from '@transactions/api';
 
 import { TransactionDetails } from './transaction-details';
 
 const mocks = vi.hoisted(() => ({
   getTransaction: vi.fn(),
+  moveTransactionToTrash: vi.fn(),
   language: 'en-US',
   navigate: vi.fn(),
+  pushToast: vi.fn(),
   params: { transactionId: 'tx-1' },
 }));
 
@@ -26,6 +28,12 @@ vi.mock('@shared/hooks', () => ({
 
 vi.mock('@transactions/api', () => ({
   getTransaction: (...args: unknown[]) => mocks.getTransaction(...args),
+  moveTransactionToTrash: (...args: unknown[]) => mocks.moveTransactionToTrash(...args),
+}));
+
+vi.mock('@store/toast-store', () => ({
+  useToastStore: (selector: (state: { pushToast: typeof mocks.pushToast }) => unknown) =>
+    selector({ pushToast: mocks.pushToast }),
 }));
 
 vi.mock('react-router-dom', async () => {
@@ -47,17 +55,55 @@ vi.mock('@ui', () => ({
       {children}
     </button>
   ),
-  Card: ({ children }: { children: ReactNode }) => <div>{children}</div>,
-  HoverLink: ({ to, children }: { to: string; children: ReactNode }) => (
-    <a href={to}>{children}</a>
+}));
+
+vi.mock('@transactions/components/shared', async () => {
+  const actual = await vi.importActual<typeof import('@transactions/components/shared')>(
+    '@transactions/components/shared',
+  );
+  return {
+    ...actual,
+    TransactionActionModal: ({
+      isOpen,
+      title,
+      onConfirm,
+      onClose,
+      confirmLabel,
+      children,
+    }: {
+      isOpen: boolean;
+      title: string;
+      onConfirm: () => void;
+      onClose: () => void;
+      confirmLabel: string;
+      children: ReactNode;
+    }) =>
+      isOpen ? (
+        <div>
+          <h2>{title}</h2>
+          <div>{children}</div>
+          <button type="button" onClick={onClose}>
+            close
+          </button>
+          <button
+            type="button"
+            data-testid="transaction-action-modal-confirm"
+            onClick={onConfirm}
+          >
+            {confirmLabel}
+          </button>
+        </div>
+      ) : null,
+  };
+});
+
+vi.mock('./transaction-details-card', () => ({
+  TransactionDetailsCard: ({ transaction }: { transaction: { description: string } }) => (
+    <div data-testid="transaction-details-card">{transaction.description}</div>
   ),
 }));
 
-vi.mock('./additional-details', () => ({
-  AdditionalDetails: () => <div data-testid="additional-details" />,
-}));
-
-const baseTransaction: Transaction = makeTransaction();
+const baseTransaction: ApiTransactionDetails = makeTransaction();
 
 describe('TransactionDetails', () => {
   beforeEach(() => {
@@ -124,19 +170,9 @@ describe('TransactionDetails', () => {
     expect(
       await screen.findByRole('button', { name: 'updateTransaction' }),
     ).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'deleteTransaction' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'moveToTrash' })).toBeInTheDocument();
     expect(screen.getByText('Test transaction')).toBeInTheDocument();
-
-    const formattedDate = new Date(baseTransaction.date).toLocaleDateString(
-      mocks.language,
-    );
-    expect(screen.getByText(formattedDate)).toBeInTheDocument();
-    expect(screen.getByText('10.00 USD')).toBeInTheDocument();
-    expect(screen.getByText('expense')).toBeInTheDocument();
-    expect(screen.getByText('Food')).toBeInTheDocument();
-    expect(screen.getByText('Card')).toBeInTheDocument();
-    expect(screen.getByText('Main')).toBeInTheDocument();
-    expect(screen.getByTestId('additional-details')).toBeInTheDocument();
+    expect(screen.getByTestId('transaction-details-card')).toBeInTheDocument();
   });
 
   it('navigates to update route after clicking update button', async () => {
@@ -155,5 +191,156 @@ describe('TransactionDetails', () => {
     await user.click(await screen.findByRole('button', { name: 'updateTransaction' }));
 
     expect(mocks.navigate).toHaveBeenCalledWith('/transactions/tx-1/edit');
+  });
+
+  it('navigates back to transactions list after clicking back button', async () => {
+    mocks.getTransaction.mockResolvedValueOnce(baseTransaction);
+    const client = new QueryClient({
+      defaultOptions: { queries: { retry: false } },
+    });
+    const user = userEvent.setup();
+
+    render(
+      <QueryClientProvider client={client}>
+        <TransactionDetails />
+      </QueryClientProvider>,
+    );
+
+    await user.click(await screen.findByRole('button', { name: 'backToTransactions' }));
+
+    expect(mocks.navigate).toHaveBeenCalledWith('/transactions');
+  });
+
+  it('moves transaction to trash after confirmation', async () => {
+    mocks.getTransaction.mockResolvedValue(baseTransaction);
+    mocks.moveTransactionToTrash.mockResolvedValueOnce({
+      acknowledged: true,
+      matchedCount: 1,
+      modifiedCount: 1,
+    });
+    const client = new QueryClient({
+      defaultOptions: { queries: { retry: false } },
+    });
+    const user = userEvent.setup();
+
+    render(
+      <QueryClientProvider client={client}>
+        <TransactionDetails />
+      </QueryClientProvider>,
+    );
+
+    await user.click(await screen.findByRole('button', { name: 'moveToTrash' }));
+    await screen.findByRole('heading', { name: 'moveToTrashModalTitle' });
+    await user.click(screen.getByTestId('transaction-action-modal-confirm'));
+
+    await waitFor(() => {
+      expect(mocks.moveTransactionToTrash).toHaveBeenCalledWith('tx-1');
+    });
+    await waitFor(() => {
+      expect(mocks.navigate).toHaveBeenCalledWith('/transactions');
+    });
+    await waitFor(() => {
+      expect(mocks.pushToast).toHaveBeenCalledWith({
+        variant: 'success',
+        title: 'transactionMovedToTrash',
+      });
+    });
+  });
+
+  it('closes move to trash modal without confirming', async () => {
+    mocks.getTransaction.mockResolvedValueOnce(baseTransaction);
+    const client = new QueryClient({
+      defaultOptions: { queries: { retry: false } },
+    });
+    const user = userEvent.setup();
+
+    render(
+      <QueryClientProvider client={client}>
+        <TransactionDetails />
+      </QueryClientProvider>,
+    );
+
+    await user.click(await screen.findByRole('button', { name: 'moveToTrash' }));
+    expect(
+      screen.getByRole('heading', { name: 'moveToTrashModalTitle' }),
+    ).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: 'close' }));
+
+    await waitFor(() =>
+      expect(
+        screen.queryByRole('heading', { name: 'moveToTrashModalTitle' }),
+      ).not.toBeInTheDocument(),
+    );
+  });
+
+  it('shows an error toast and re-enables the query when move to trash fails', async () => {
+    mocks.getTransaction.mockResolvedValueOnce({
+      ...baseTransaction,
+      refId: 'tx-2',
+      category: { id: 'cat-transfer', type: 'system', name: 'myAccount' },
+    });
+    mocks.moveTransactionToTrash.mockRejectedValueOnce(new Error('boom'));
+    const client = new QueryClient({
+      defaultOptions: { queries: { retry: false } },
+    });
+    const user = userEvent.setup();
+
+    render(
+      <QueryClientProvider client={client}>
+        <TransactionDetails />
+      </QueryClientProvider>,
+    );
+
+    await user.click(await screen.findByRole('button', { name: 'moveToTrash' }));
+    expect(screen.getByText('moveToTrashTransferReferenceHint')).toBeInTheDocument();
+    await user.click(screen.getByTestId('transaction-action-modal-confirm'));
+
+    await waitFor(() =>
+      expect(mocks.pushToast).toHaveBeenCalledWith({
+        variant: 'error',
+        title: 'transactionMoveToTrashFailed',
+        message: 'boom',
+      }),
+    );
+  });
+
+  it('removes affected transaction detail queries on unmount after a successful move', async () => {
+    mocks.getTransaction.mockResolvedValueOnce({
+      ...baseTransaction,
+      refId: 'tx-2',
+    });
+    mocks.moveTransactionToTrash.mockResolvedValueOnce({
+      acknowledged: true,
+      matchedCount: 1,
+      modifiedCount: 1,
+    });
+    const client = new QueryClient({
+      defaultOptions: { queries: { retry: false } },
+    });
+    const removeQueriesSpy = vi.spyOn(client, 'removeQueries');
+    const user = userEvent.setup();
+
+    const { unmount } = render(
+      <QueryClientProvider client={client}>
+        <TransactionDetails />
+      </QueryClientProvider>,
+    );
+
+    await user.click(await screen.findByRole('button', { name: 'moveToTrash' }));
+    await user.click(screen.getByTestId('transaction-action-modal-confirm'));
+
+    await waitFor(() => expect(mocks.navigate).toHaveBeenCalledWith('/transactions'));
+
+    unmount();
+
+    expect(removeQueriesSpy).toHaveBeenCalledWith({
+      queryKey: ['transaction', 'tx-1'],
+      exact: true,
+    });
+    expect(removeQueriesSpy).toHaveBeenCalledWith({
+      queryKey: ['transaction', 'tx-2'],
+      exact: true,
+    });
   });
 });

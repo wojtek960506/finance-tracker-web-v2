@@ -1,5 +1,15 @@
 import { useQueryClient } from '@tanstack/react-query';
-import { Banknote, Bike, Car, LogOut, Settings } from 'lucide-react';
+import {
+  Banknote,
+  Bike,
+  Car,
+  Landmark,
+  LogOut,
+  Settings,
+  Tags,
+  Trash2,
+  WalletCards,
+} from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 import { logout } from '@auth/api';
@@ -34,6 +44,7 @@ export const Navigation = () => {
               to="/transactions"
               title={t('transactions')}
               Icon={Banknote}
+              end
               additionalAction={() => setIsCollapsibleInitiallyOpen(false)}
             />
           }
@@ -45,6 +56,7 @@ export const Navigation = () => {
               <NavigationItem
                 to="/categories"
                 title={t('categories')}
+                Icon={Tags}
                 additionalAction={() => setIsCollapsibleInitiallyOpen(true)}
               />
             </li>
@@ -52,6 +64,7 @@ export const Navigation = () => {
               <NavigationItem
                 to="/paymentMethods"
                 title={t('paymentMethods')}
+                Icon={WalletCards}
                 additionalAction={() => setIsCollapsibleInitiallyOpen(true)}
               />
             </li>
@@ -59,6 +72,15 @@ export const Navigation = () => {
               <NavigationItem
                 to="/accounts"
                 title={t('bankAccounts')}
+                Icon={Landmark}
+                additionalAction={() => setIsCollapsibleInitiallyOpen(true)}
+              />
+            </li>
+            <li>
+              <NavigationItem
+                to="/transactions/trash"
+                title={t('transactionsTrash')}
+                Icon={Trash2}
                 additionalAction={() => setIsCollapsibleInitiallyOpen(true)}
               />
             </li>

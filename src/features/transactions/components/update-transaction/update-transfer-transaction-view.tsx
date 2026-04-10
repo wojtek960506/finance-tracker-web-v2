@@ -9,6 +9,7 @@ import {
   type TransactionTransferDTO,
   updateTransferTransaction,
 } from '@transactions/api';
+import { useInvalidateTransactionQueries } from '@transactions/components/shared';
 
 import {
   getTransferTransactionFormValues,
@@ -16,8 +17,6 @@ import {
   type TransferTransactionFormValues,
 } from '../create-transaction';
 import { toOptionalTrimmedString } from '../create-transaction/shared-utils';
-
-import { useInvalidateTransactionQueries } from './use-invalidate-transaction-queries';
 
 type UpdateTransferTransactionViewProps = {
   transaction: Transaction;
@@ -36,7 +35,13 @@ export const UpdateTransferTransactionView = ({
   const updateTransactionMutation = useMutation({
     mutationFn: async (payload: TransactionTransferDTO) =>
       await updateTransferTransaction(transaction.id, payload),
-    onSuccess: invalidateQueries,
+    onSuccess: async () =>
+      await invalidateQueries({
+        includeTransactionDetails: false,
+        includeTrashedTransactions: false,
+        includeTrashedTransactionDetails: false,
+        invalidateTransactionIds: [transaction.id, transactionRef.id],
+      }),
   });
 
   const handleSubmit = async (values: TransferTransactionFormValues) => {

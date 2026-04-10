@@ -12,6 +12,7 @@ type NavigationItemProps = {
   title: string;
   Icon?: ComponentType<{ className?: string }>;
   additionalAction?: () => void;
+  end?: boolean;
 };
 
 export const NavigationItem = ({
@@ -19,6 +20,7 @@ export const NavigationItem = ({
   title,
   additionalAction,
   Icon,
+  end = false,
 }: NavigationItemProps) => {
   const { setIsNavOpen } = useUIStore();
   const { fromLeft } = useNavigation();
@@ -26,6 +28,7 @@ export const NavigationItem = ({
   return (
     <NavLink
       to={to}
+      end={end}
       className={({ isActive }) =>
         getButtonClassName({
           variant: 'ghost',

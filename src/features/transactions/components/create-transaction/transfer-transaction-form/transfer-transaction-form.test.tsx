@@ -8,17 +8,20 @@ vi.mock('react-i18next', () => ({
   useTranslation: () => ({ t: (key: string) => key }),
 }));
 
-vi.mock('../../shared/currency-select-field', () => ({
-  CurrencySelectField: ({ value }: { value: string }) => (
-    <div>{value || 'currency-field'}</div>
-  ),
-}));
-
-vi.mock('../../shared/named-resource-select-field', () => ({
-  NamedResourceSelectField: ({ value }: { value: string }) => (
-    <div>{value || 'resource-field'}</div>
-  ),
-}));
+vi.mock('@transactions/components/shared', async () => {
+  const actual = await vi.importActual<typeof import('@transactions/components/shared')>(
+    '@transactions/components/shared',
+  );
+  return {
+    ...actual,
+    CurrencySelectField: ({ value }: { value: string }) => (
+      <div>{value || 'currency-field'}</div>
+    ),
+    NamedResourceSelectField: ({ value }: { value: string }) => (
+      <div>{value || 'resource-field'}</div>
+    ),
+  };
+});
 
 vi.mock('@shared/ui', () => ({
   Button: ({ children, ...props }: React.ButtonHTMLAttributes<HTMLButtonElement>) => (

@@ -9,14 +9,13 @@ import {
   type TransactionStandardDTO,
   updateStandardTransaction,
 } from '@transactions/api';
+import { useInvalidateTransactionQueries } from '@transactions/components/shared';
 
 import {
   getStandardTransactionFormValues,
   StandardTransactionForm,
   type StandardTransactionFormValues,
 } from '../create-transaction';
-
-import { useInvalidateTransactionQueries } from './use-invalidate-transaction-queries';
 
 type UpdateStandardTransactionViewProps = {
   transaction: Transaction;
@@ -33,7 +32,13 @@ export const UpdateStandardTransactionView = ({
   const updateTransactionMutation = useMutation({
     mutationFn: async (payload: TransactionStandardDTO) =>
       await updateStandardTransaction(transaction.id, payload),
-    onSuccess: invalidateQueries,
+    onSuccess: async () =>
+      await invalidateQueries({
+        includeTransactionDetails: false,
+        includeTrashedTransactions: false,
+        includeTrashedTransactionDetails: false,
+        invalidateTransactionIds: [transaction.id],
+      }),
   });
 
   const handleSubmit = async (values: StandardTransactionFormValues) => {

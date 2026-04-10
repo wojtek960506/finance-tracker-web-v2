@@ -146,12 +146,13 @@ describe('Navigation', () => {
     await user.click(screen.getByRole('button', { name: 'categories' }));
     await user.click(screen.getByRole('button', { name: 'paymentMethods' }));
     await user.click(screen.getByRole('button', { name: 'bankAccounts' }));
+    await user.click(screen.getByRole('button', { name: 'transactionsTrash' }));
     await user.click(screen.getByRole('button', { name: 'vehicles' }));
     await user.click(screen.getByRole('button', { name: 'sports' }));
     await user.click(screen.getByRole('button', { name: 'settings' }));
     await user.click(screen.getByRole('button', { name: 'transactions' }));
 
-    expect(mocks.setIsCollapsibleInitiallyOpen).toHaveBeenCalledTimes(7);
+    expect(mocks.setIsCollapsibleInitiallyOpen).toHaveBeenCalledTimes(8);
     expect(mocks.setIsCollapsibleInitiallyOpen).toHaveBeenCalledWith(true);
     expect(mocks.setIsCollapsibleInitiallyOpen).toHaveBeenCalledWith(false);
   });

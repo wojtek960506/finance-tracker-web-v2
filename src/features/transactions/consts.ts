@@ -8,7 +8,15 @@ export type TransactionKind = 'standard' | 'transfer' | 'exchange';
 export const getTransactionKind = (
   transaction: Pick<Transaction, 'category'>,
 ): TransactionKind => {
-  if (transaction.category.name === TRANSFER_CATEGORY) return 'transfer';
-  if (transaction.category.name === EXCHANGE_CATEGORY) return 'exchange';
+  const isSystemCategory = transaction.category.type === 'system';
+
+  if (isSystemCategory && transaction.category.name === TRANSFER_CATEGORY) {
+    return 'transfer';
+  }
+
+  if (isSystemCategory && transaction.category.name === EXCHANGE_CATEGORY) {
+    return 'exchange';
+  }
+
   return 'standard';
 };

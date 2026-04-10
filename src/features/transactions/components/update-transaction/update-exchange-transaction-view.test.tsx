@@ -129,7 +129,14 @@ describe('UpdateExchangeTransactionView', () => {
       }),
     );
     expect(invalidateQueriesSpy).toHaveBeenCalledWith({ queryKey: ['transactions'] });
-    expect(invalidateQueriesSpy).toHaveBeenCalledWith({ queryKey: ['transaction'] });
+    expect(invalidateQueriesSpy).toHaveBeenCalledWith({
+      queryKey: ['transaction', 'tx-1'],
+      exact: true,
+    });
+    expect(invalidateQueriesSpy).toHaveBeenCalledWith({
+      queryKey: ['transaction', 'tx-2'],
+      exact: true,
+    });
     expect(mocks.pushToast).toHaveBeenCalledWith({
       variant: 'success',
       title: 'transactionUpdated',

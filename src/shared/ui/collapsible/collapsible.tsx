@@ -52,12 +52,12 @@ export const Collapsible = ({
         aria-hidden={!isOpen}
         inert={!isOpen}
         className={clsx(
-          'grid transition-[grid-template-rows,opacity] duration-300 ease-out',
+          'grid overflow-hidden transition-[grid-template-rows,opacity] duration-300 ease-out',
           isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0',
           isIndicatorLeft ? 'pl-10 ' : 'pr-10',
         )}
       >
-        <div className="-m-2 overflow-y-auto p-2">{children}</div>
+        <div className="-m-2 overflow-hidden p-2">{children}</div>
       </div>
     </div>
   );

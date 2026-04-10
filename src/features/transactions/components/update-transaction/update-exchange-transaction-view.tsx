@@ -9,6 +9,7 @@ import {
   type TransactionExchangeDTO,
   updateExchangeTransaction,
 } from '@transactions/api';
+import { useInvalidateTransactionQueries } from '@transactions/components/shared';
 
 import {
   ExchangeTransactionForm,
@@ -16,8 +17,6 @@ import {
   getExchangeTransactionFormValues,
 } from '../create-transaction';
 import { toOptionalTrimmedString } from '../create-transaction/shared-utils';
-
-import { useInvalidateTransactionQueries } from './use-invalidate-transaction-queries';
 
 type UpdateExchangeTransactionViewProps = {
   transaction: Transaction;
@@ -36,7 +35,13 @@ export const UpdateExchangeTransactionView = ({
   const updateTransactionMutation = useMutation({
     mutationFn: async (payload: TransactionExchangeDTO) =>
       await updateExchangeTransaction(transaction.id, payload),
-    onSuccess: invalidateQueries,
+    onSuccess: async () =>
+      await invalidateQueries({
+        includeTransactionDetails: false,
+        includeTrashedTransactions: false,
+        includeTrashedTransactionDetails: false,
+        invalidateTransactionIds: [transaction.id, transactionRef.id],
+      }),
   });
 
   const handleSubmit = async (values: ExchangeTransactionFormValues) => {
