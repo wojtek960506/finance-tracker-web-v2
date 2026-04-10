@@ -48,34 +48,40 @@ vi.mock('@ui', () => ({
   Label: ({ children }: { children: ReactNode }) => <label>{children}</label>,
 }));
 
-vi.mock('../transaction-action-modal', () => ({
-  TransactionActionModal: ({
-    isOpen,
-    title,
-    children,
-    onConfirm,
-    confirmLabel,
-  }: {
-    isOpen: boolean;
-    title: string;
-    children: ReactNode;
-    onConfirm: () => void;
-    confirmLabel: string;
-  }) =>
-    isOpen ? (
-      <div>
-        <h2>{title}</h2>
-        <div>{children}</div>
-        <button
-          type="button"
-          data-testid="transaction-action-modal-confirm"
-          onClick={onConfirm}
-        >
-          {confirmLabel}
-        </button>
-      </div>
-    ) : null,
-}));
+vi.mock('@transactions/components/shared', async () => {
+  const actual = await vi.importActual<typeof import('@transactions/components/shared')>(
+    '@transactions/components/shared',
+  );
+  return {
+    ...actual,
+    TransactionActionModal: ({
+      isOpen,
+      title,
+      children,
+      onConfirm,
+      confirmLabel,
+    }: {
+      isOpen: boolean;
+      title: string;
+      children: ReactNode;
+      onConfirm: () => void;
+      confirmLabel: string;
+    }) =>
+      isOpen ? (
+        <div>
+          <h2>{title}</h2>
+          <div>{children}</div>
+          <button
+            type="button"
+            data-testid="transaction-action-modal-confirm"
+            onClick={onConfirm}
+          >
+            {confirmLabel}
+          </button>
+        </div>
+      ) : null,
+  };
+});
 
 vi.mock('./transaction-preview', () => ({
   TransactionPreview: ({ transaction }: { transaction: { description: string } }) => (

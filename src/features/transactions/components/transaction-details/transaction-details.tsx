@@ -7,11 +7,12 @@ import { normalizeApiError } from '@shared/api/api-error';
 import { MAIN_BUTTON_TEXT } from '@shared/consts';
 import { useToastStore } from '@store/toast-store';
 import { getTransaction, moveTransactionToTrash } from '@transactions/api';
-import { useInvalidateTransactionQueries } from '@transactions/components/use-invalidate-transaction-queries';
+import {
+  getReferenceActionMessage,
+  TransactionActionModal,
+  useInvalidateTransactionQueries,
+} from '@transactions/components/shared';
 import { Button } from '@ui';
-
-import { getReferenceActionMessage } from '../transaction-action-copy';
-import { TransactionActionModal } from '../transaction-action-modal';
 
 import { TransactionDetailsCard } from './transaction-details-card';
 

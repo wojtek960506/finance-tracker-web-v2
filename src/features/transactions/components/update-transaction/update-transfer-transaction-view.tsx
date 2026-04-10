@@ -9,7 +9,7 @@ import {
   type TransactionTransferDTO,
   updateTransferTransaction,
 } from '@transactions/api';
-import { useInvalidateTransactionQueries } from '@transactions/components/use-invalidate-transaction-queries';
+import { useInvalidateTransactionQueries } from '@transactions/components/shared';
 
 import {
   getTransferTransactionFormValues,

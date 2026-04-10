@@ -8,10 +8,11 @@ import { MAIN_BUTTON_TEXT } from '@shared/consts';
 import { useLanguage } from '@shared/hooks';
 import { useToastStore } from '@store/toast-store';
 import { emptyTrash, getTrashedTransactions } from '@transactions/api';
+import {
+  TransactionActionModal,
+  useInvalidateTransactionQueries,
+} from '@transactions/components/shared';
 import { Button, Input, Label } from '@ui';
-
-import { TransactionActionModal } from '../transaction-action-modal';
-import { useInvalidateTransactionQueries } from '../use-invalidate-transaction-queries';
 
 import { TransactionPreview } from './transaction-preview';
 

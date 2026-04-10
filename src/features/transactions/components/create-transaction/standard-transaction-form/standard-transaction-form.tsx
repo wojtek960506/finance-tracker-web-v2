@@ -3,9 +3,11 @@ import { Controller, type SubmitHandler, useForm, useWatch } from 'react-hook-fo
 import { useTranslation } from 'react-i18next';
 
 import { Button, Card, DateInput, Input, NumberInput } from '@shared/ui';
+import {
+  CurrencySelectField,
+  NamedResourceSelectField,
+} from '@transactions/components/shared';
 
-import { CurrencySelectField } from '../../shared/currency-select-field';
-import { NamedResourceSelectField } from '../../shared/named-resource-select-field';
 import { FieldError, FieldSection, TransactionFormActions } from '../shared-components';
 import { FIELD_CONTROL_CLASS_NAME } from '../shared-utils';
 

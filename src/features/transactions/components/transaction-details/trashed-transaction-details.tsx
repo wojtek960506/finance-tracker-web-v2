@@ -11,11 +11,12 @@ import {
   getTrashedTransaction,
   restoreTransaction,
 } from '@transactions/api';
-import { useInvalidateTransactionQueries } from '@transactions/components/use-invalidate-transaction-queries';
+import {
+  getReferenceActionMessage,
+  TransactionActionModal,
+  useInvalidateTransactionQueries,
+} from '@transactions/components/shared';
 import { Button } from '@ui';
-
-import { getReferenceActionMessage } from '../transaction-action-copy';
-import { TransactionActionModal } from '../transaction-action-modal';
 
 import { TransactionDetailsCard } from './transaction-details-card';
 
