@@ -5,7 +5,7 @@ import type { ComponentProps, ReactNode } from 'react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { makeTransaction } from '@test-utils/factories/transaction';
-import type { TransactionDetails } from '@transactions/api';
+import type { TransactionDetails as ApiTransactionDetails } from '@transactions/api';
 
 import { TransactionDetails } from './transaction-details';
 
@@ -98,7 +98,7 @@ vi.mock('./transaction-details-card', () => ({
   ),
 }));
 
-const baseTransaction: TransactionDetails = makeTransaction();
+const baseTransaction: ApiTransactionDetails = makeTransaction();
 
 describe('TransactionDetails', () => {
   beforeEach(() => {
@@ -186,6 +186,24 @@ describe('TransactionDetails', () => {
     await user.click(await screen.findByRole('button', { name: 'updateTransaction' }));
 
     expect(mocks.navigate).toHaveBeenCalledWith('/transactions/tx-1/edit');
+  });
+
+  it('navigates back to transactions list after clicking back button', async () => {
+    mocks.getTransaction.mockResolvedValueOnce(baseTransaction);
+    const client = new QueryClient({
+      defaultOptions: { queries: { retry: false } },
+    });
+    const user = userEvent.setup();
+
+    render(
+      <QueryClientProvider client={client}>
+        <TransactionDetails />
+      </QueryClientProvider>,
+    );
+
+    await user.click(await screen.findByRole('button', { name: 'backToTransactions' }));
+
+    expect(mocks.navigate).toHaveBeenCalledWith('/transactions');
   });
 
   it('moves transaction to trash after confirmation', async () => {

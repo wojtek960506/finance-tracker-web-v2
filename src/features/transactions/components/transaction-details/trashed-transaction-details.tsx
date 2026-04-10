@@ -1,4 +1,5 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
+import { ArrowLeft } from 'lucide-react';
 import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -142,6 +143,15 @@ export const TrashedTransactionDetails = () => {
         {linkedPermanentDeleteMessage ? <p>{linkedPermanentDeleteMessage}</p> : null}
         <p>{t('permanentDeleteModalNoUndoHint')}</p>
       </TransactionActionModal>
+      <Button
+        variant="ghost"
+        className="w-fit gap-2 self-start px-1 py-1 text-sm sm:px-1 sm:py-1 sm:text-base"
+        onClick={() => navigate('/transactions/trash')}
+        disabled={isAnyMutationPending}
+      >
+        <ArrowLeft className="size-4 sm:size-5" aria-hidden="true" />
+        {t('backToTrash')}
+      </Button>
       <Button
         ref={restoreButtonRef}
         variant="secondary"

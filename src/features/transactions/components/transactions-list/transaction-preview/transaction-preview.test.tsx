@@ -45,7 +45,7 @@ describe('TransactionPreview', () => {
 
     const formattedDate = new Date(baseTransaction.date).toLocaleDateString('en-US');
     expect(screen.getByText(formattedDate)).toBeInTheDocument();
-    expect(screen.getByText('10.00 USD')).toBeInTheDocument();
+    expect(screen.getByText('-10.00 USD')).toHaveClass('text-destructive');
     expect(screen.getByText('Test transaction')).toBeInTheDocument();
 
     expect(screen.getByText('Main')).toHaveAttribute('href', '/accounts');
@@ -73,5 +73,17 @@ describe('TransactionPreview', () => {
       'href',
       '/transactions/trash/tx-1',
     );
+  });
+
+  it('renders income amounts with primary styling', () => {
+    render(
+      <MemoryRouter>
+        <TransactionPreview
+          transaction={makeTransaction({ transactionType: 'income' })}
+        />
+      </MemoryRouter>,
+    );
+
+    expect(screen.getByText('+10.00 USD')).toHaveClass('text-bt-primary');
   });
 });

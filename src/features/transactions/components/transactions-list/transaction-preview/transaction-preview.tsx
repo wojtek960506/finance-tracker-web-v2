@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 
 import { useLanguage } from '@shared/hooks';
 import type { Transaction, TrashedTransaction } from '@transactions/api';
+import { getTransactionAmountPresentation } from '@transactions/utils/transaction-amount';
 import { ButtonLink, Card } from '@ui';
 
 export const TransactionPreview = ({
@@ -16,6 +17,7 @@ export const TransactionPreview = ({
   metadata?: ReactNode;
 }) => {
   const { language } = useLanguage();
+  const amountPresentation = getTransactionAmountPresentation(transaction);
 
   const ghostLinkCn = 'text-sm sm:text-base';
 
@@ -33,8 +35,8 @@ export const TransactionPreview = ({
         >
           <header className="flex justify-between text-text-muted text-sm sm:text-base">
             <time>{new Date(transaction.date).toLocaleDateString(language)}</time>
-            <span className="font-semibold">
-              {transaction.amount.toFixed(2)} {transaction.currency}
+            <span className={clsx('font-semibold', amountPresentation.valueClassName)}>
+              {amountPresentation.formattedAmount}
             </span>
           </header>
 

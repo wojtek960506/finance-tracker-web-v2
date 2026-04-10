@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import { useLanguage } from '@shared/hooks';
 import type { Transaction, TrashedTransaction } from '@transactions/api';
+import { getTransactionAmountPresentation } from '@transactions/utils/transaction-amount';
 import { Card, HoverLink } from '@ui';
 
 import { AdditionalDetails } from './additional-details';
@@ -25,6 +26,7 @@ export const TransactionDetailsCard = ({
   const { t } = useTranslation('transactions');
   const { language } = useLanguage();
   const isTrashMode = mode === 'trash';
+  const amountPresentation = getTransactionAmountPresentation(transaction);
 
   return (
     <Card className="relative gap-3 p-4 sm:gap-4 sm:p-5">
@@ -45,10 +47,13 @@ export const TransactionDetailsCard = ({
         <Detail title={t('date')}>
           <time>{new Date(transaction.date).toLocaleDateString(language)}</time>
         </Detail>
-        <Detail title={t('amount')}>
-          {transaction.amount.toFixed(2)} {transaction.currency}
+        <Detail
+          title={t('amount')}
+          titleClassName={amountPresentation.labelClassName}
+          valueClassName={clsx('font-semibold', amountPresentation.valueClassName)}
+        >
+          {amountPresentation.formattedAmount}
         </Detail>
-        <Detail title={t('transactionType')}>{transaction.transactionType}</Detail>
         <Detail title={t('category')}>
           <HoverLink to="/categories">{transaction.category.name}</HoverLink>
         </Detail>

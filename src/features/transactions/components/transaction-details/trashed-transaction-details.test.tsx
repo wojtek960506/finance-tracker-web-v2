@@ -5,7 +5,7 @@ import type { ComponentProps, ReactNode } from 'react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { makeTrashedTransaction } from '@test-utils/factories/transaction';
-import type { TrashedTransactionDetails } from '@transactions/api';
+import type { TrashedTransactionDetails as ApiTrashedTransactionDetails } from '@transactions/api';
 
 import { TrashedTransactionDetails as TrashedTransactionDetailsView } from './trashed-transaction-details';
 
@@ -96,7 +96,7 @@ vi.mock('./transaction-details-card', () => ({
   ),
 }));
 
-const baseTransaction: TrashedTransactionDetails = makeTrashedTransaction();
+const baseTransaction: ApiTrashedTransactionDetails = makeTrashedTransaction();
 
 describe('TrashedTransactionDetails', () => {
   beforeEach(() => {
@@ -158,5 +158,23 @@ describe('TrashedTransactionDetails', () => {
         title: 'transactionRestored',
       });
     });
+  });
+
+  it('navigates back to trash list after clicking back button', async () => {
+    mocks.getTrashedTransaction.mockResolvedValueOnce(baseTransaction);
+    const client = new QueryClient({
+      defaultOptions: { queries: { retry: false } },
+    });
+    const user = userEvent.setup();
+
+    render(
+      <QueryClientProvider client={client}>
+        <TrashedTransactionDetailsView />
+      </QueryClientProvider>,
+    );
+
+    await user.click(await screen.findByRole('button', { name: 'backToTrash' }));
+
+    expect(mocks.navigate).toHaveBeenCalledWith('/transactions/trash');
   });
 });
