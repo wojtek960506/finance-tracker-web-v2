@@ -5,6 +5,8 @@ type InvalidateTransactionQueriesOptions = {
   includeTransactionDetails?: boolean;
   includeTrashedTransactions?: boolean;
   includeTrashedTransactionDetails?: boolean;
+  invalidateTransactionIds?: Array<string | undefined>;
+  invalidateTrashedTransactionIds?: Array<string | undefined>;
   removeTransactionIds?: Array<string | undefined>;
   removeTrashedTransactionIds?: Array<string | undefined>;
   removeAllTrashedTransactionDetails?: boolean;
@@ -19,6 +21,8 @@ export const useInvalidateTransactionQueries = () => {
       includeTransactionDetails = true,
       includeTrashedTransactions = true,
       includeTrashedTransactionDetails = true,
+      invalidateTransactionIds = [],
+      invalidateTrashedTransactionIds = [],
       removeTransactionIds = [],
       removeTrashedTransactionIds = [],
       removeAllTrashedTransactionDetails = false,
@@ -51,12 +55,28 @@ export const useInvalidateTransactionQueries = () => {
       ...(includeTransactionDetails
         ? [queryClient.invalidateQueries({ queryKey: ['transaction'] })]
         : []),
+      ...invalidateTransactionIds
+        .filter((transactionId): transactionId is string => Boolean(transactionId))
+        .map((transactionId) =>
+          queryClient.invalidateQueries({
+            queryKey: ['transaction', transactionId],
+            exact: true,
+          }),
+        ),
       ...(includeTrashedTransactions
         ? [queryClient.invalidateQueries({ queryKey: ['trashed-transactions'] })]
         : []),
       ...(includeTrashedTransactionDetails
         ? [queryClient.invalidateQueries({ queryKey: ['trashed-transaction'] })]
         : []),
+      ...invalidateTrashedTransactionIds
+        .filter((transactionId): transactionId is string => Boolean(transactionId))
+        .map((transactionId) =>
+          queryClient.invalidateQueries({
+            queryKey: ['trashed-transaction', transactionId],
+            exact: true,
+          }),
+        ),
     ]);
   };
 };

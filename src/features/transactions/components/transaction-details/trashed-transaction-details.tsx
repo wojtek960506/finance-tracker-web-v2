@@ -94,7 +94,7 @@ export const TrashedTransactionDetails = () => {
       setIsTransactionQueryEnabled(false);
       await restoreMutation.mutateAsync(transaction.id);
       queriesToRemoveRef.current = [transaction.id, transaction.refId].filter(
-        (queryId) => queryId !== undefined 
+        (queryId) => queryId !== undefined,
       );
       setIsRestoreModalOpen(false);
       pushToast({
@@ -118,7 +118,7 @@ export const TrashedTransactionDetails = () => {
       setIsTransactionQueryEnabled(false);
       await permanentDeleteMutation.mutateAsync(transaction.id);
       queriesToRemoveRef.current = [transaction.id, transaction.refId].filter(
-        (queryId) => queryId !== undefined 
+        (queryId) => queryId !== undefined,
       );
       setIsPermanentDeleteModalOpen(false);
       pushToast({

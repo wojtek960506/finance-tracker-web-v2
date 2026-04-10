@@ -35,7 +35,13 @@ export const UpdateExchangeTransactionView = ({
   const updateTransactionMutation = useMutation({
     mutationFn: async (payload: TransactionExchangeDTO) =>
       await updateExchangeTransaction(transaction.id, payload),
-    onSuccess: invalidateQueries,
+    onSuccess: async () =>
+      await invalidateQueries({
+        includeTransactionDetails: false,
+        includeTrashedTransactions: false,
+        includeTrashedTransactionDetails: false,
+        invalidateTransactionIds: [transaction.id, transactionRef.id],
+      }),
   });
 
   const handleSubmit = async (values: ExchangeTransactionFormValues) => {

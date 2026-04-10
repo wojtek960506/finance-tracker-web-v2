@@ -76,7 +76,7 @@ export const TransactionDetails = () => {
       setIsTransactionQueryEnabled(false);
       await moveToTrashMutation.mutateAsync(transaction.id);
       queriesToRemoveRef.current = [transaction!.id, transaction!.refId].filter(
-        (queryId) => queryId !== undefined 
+        (queryId) => queryId !== undefined,
       );
       setIsMoveToTrashModalOpen(false);
       pushToast({
