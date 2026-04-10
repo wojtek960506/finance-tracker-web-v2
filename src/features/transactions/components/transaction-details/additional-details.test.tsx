@@ -37,10 +37,23 @@ describe('AdditionalDetails', () => {
     expect(container).toBeEmptyDOMElement();
   });
 
-  it('renders exchange rate and reference link for transfer/exchange', () => {
+  it('renders reference link for transfer transactions', () => {
     const transaction: Transaction = {
       ...baseTransaction,
-      category: { ...baseTransaction.category, name: TRANSFER_CATEGORY },
+      category: { ...baseTransaction.category, name: TRANSFER_CATEGORY, type: 'system' },
+      refId: 'ref-123',
+    };
+
+    render(<AdditionalDetails transaction={transaction} />);
+
+    const link = screen.getByText('goToReferencedTransaction');
+    expect(link).toHaveAttribute('href', '/transactions/ref-123');
+  });
+
+  it('renders exchange rate and reference link for exchange transactions', () => {
+    const transaction: Transaction = {
+      ...baseTransaction,
+      category: { ...baseTransaction.category, name: EXCHANGE_CATEGORY, type: 'system' },
       currencies: 'USD/PLN',
       exchangeRate: 3.5,
       refId: 'ref-123',
@@ -50,14 +63,16 @@ describe('AdditionalDetails', () => {
 
     expect(screen.getByText('exchangeRate')).toBeInTheDocument();
     expect(screen.getByText('1 USD = 3.5000 PLN')).toBeInTheDocument();
-    const link = screen.getByText('goToReferencedTransaction');
-    expect(link).toHaveAttribute('href', '/transactions/ref-123');
+    expect(screen.getByText('goToReferencedTransaction')).toHaveAttribute(
+      'href',
+      '/transactions/ref-123',
+    );
   });
 
   it('handles missing exchange data and reference id', () => {
     const transaction: Transaction = {
       ...baseTransaction,
-      category: { ...baseTransaction.category, name: EXCHANGE_CATEGORY },
+      category: { ...baseTransaction.category, name: EXCHANGE_CATEGORY, type: 'system' },
       currencies: undefined,
       exchangeRate: undefined,
       refId: undefined,
@@ -72,7 +87,7 @@ describe('AdditionalDetails', () => {
   it('uses a custom reference path prefix when provided', () => {
     const transaction: Transaction = {
       ...baseTransaction,
-      category: { ...baseTransaction.category, name: TRANSFER_CATEGORY },
+      category: { ...baseTransaction.category, name: TRANSFER_CATEGORY, type: 'system' },
       refId: 'trash-ref-123',
     };
 
@@ -87,5 +102,19 @@ describe('AdditionalDetails', () => {
       'href',
       '/transactions/trash/trash-ref-123',
     );
+  });
+
+  it('does not treat a user category with a reserved system name as linked transaction kind', () => {
+    const transaction: Transaction = {
+      ...baseTransaction,
+      category: { ...baseTransaction.category, name: TRANSFER_CATEGORY, type: 'user' },
+      refId: 'ref-123',
+      currencies: 'USD/PLN',
+      exchangeRate: 3.5,
+    };
+
+    const { container } = render(<AdditionalDetails transaction={transaction} />);
+
+    expect(container).toBeEmptyDOMElement();
   });
 });

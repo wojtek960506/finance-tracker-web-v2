@@ -19,7 +19,7 @@ const getLastCallArgs = (mockFn: typeof mocks.standardForm) => {
   const lastCall = mockFn.mock.calls.at(-1);
   expect(lastCall).toBeDefined();
 
-  return lastCall!;
+  return (lastCall as any)[0];
 };
 
 vi.mock('react-i18next', () => ({
@@ -27,7 +27,7 @@ vi.mock('react-i18next', () => ({
 }));
 
 vi.mock('@transactions/api', () => ({
-  getTransaction: (...args: unknown[]) => mocks.getTransaction(...args),
+  getTransaction: mocks.getTransaction as (id: string) => Promise<Transaction | null>,
 }));
 
 vi.mock('../create-transaction', async () => {
@@ -76,7 +76,7 @@ describe('UpdateTransaction', () => {
     expect(await screen.findByTestId('standard-form')).toBeInTheDocument();
     expect(mocks.standardForm).toHaveBeenCalled();
 
-    const [{ defaultValues, mode }] = getLastCallArgs(mocks.standardForm);
+    const { defaultValues, mode } = getLastCallArgs(mocks.standardForm);
     expect(mode).toBe('update');
     expect(defaultValues).toEqual({
       date: '2024-01-03',
@@ -106,18 +106,18 @@ describe('UpdateTransaction', () => {
       refId: 'tx-expense',
       description: 'Checking --> Savings (Monthly move)',
       transactionType: 'income',
-      category: { id: 'cat-transfer', name: 'myAccount' },
-      account: { id: 'acc-income', name: 'Savings' },
-      paymentMethod: { id: 'pm-transfer', name: 'Bank transfer' },
+      category: { id: 'cat-transfer', type: 'system', name: 'myAccount' },
+      account: { id: 'acc-income', name: 'Savings', type: 'user' },
+      paymentMethod: { id: 'pm-transfer', name: 'Bank transfer', type: 'user' },
     });
     const expenseTransaction = makeTransaction({
       id: 'tx-expense',
       refId: 'tx-income',
       description: 'Checking --> Savings (Monthly move)',
       transactionType: 'expense',
-      category: { id: 'cat-transfer', name: 'myAccount' },
-      account: { id: 'acc-expense', name: 'Checking' },
-      paymentMethod: { id: 'pm-transfer', name: 'Bank transfer' },
+      category: { id: 'cat-transfer', type: 'system', name: 'myAccount' },
+      account: { id: 'acc-expense', name: 'Checking', type: 'user' },
+      paymentMethod: { id: 'pm-transfer', name: 'Bank transfer', type: 'user' },
     });
 
     mocks.getTransaction
@@ -129,7 +129,9 @@ describe('UpdateTransaction', () => {
     expect(await screen.findByTestId('transfer-form')).toBeInTheDocument();
     expect(mocks.transferForm).toHaveBeenCalled();
 
-    const [{ defaultValues, mode }] = getLastCallArgs(mocks.transferForm);
+    const { defaultValues, mode } = getLastCallArgs(
+      mocks.transferForm as typeof mocks.standardForm,
+    );
     expect(mode).toBe('update');
     expect(defaultValues).toEqual({
       date: '2024-01-03',
@@ -150,9 +152,9 @@ describe('UpdateTransaction', () => {
       transactionType: 'income',
       amount: 8,
       currency: 'EUR',
-      category: { id: 'cat-exchange', name: 'exchange' },
-      account: { id: 'acc-exchange', name: 'Wallet' },
-      paymentMethod: { id: 'pm-exchange', name: 'Cash' },
+      category: { id: 'cat-exchange', type: 'system', name: 'exchange' },
+      account: { id: 'acc-exchange', name: 'Wallet', type: 'user' },
+      paymentMethod: { id: 'pm-exchange', name: 'Cash', type: 'user' },
     });
     const expenseTransaction = makeTransaction({
       id: 'tx-expense',
@@ -161,9 +163,9 @@ describe('UpdateTransaction', () => {
       transactionType: 'expense',
       amount: 10,
       currency: 'USD',
-      category: { id: 'cat-exchange', name: 'exchange' },
-      account: { id: 'acc-exchange', name: 'Wallet' },
-      paymentMethod: { id: 'pm-exchange', name: 'Cash' },
+      category: { id: 'cat-exchange', type: 'system', name: 'exchange' },
+      account: { id: 'acc-exchange', name: 'Wallet', type: 'user' },
+      paymentMethod: { id: 'pm-exchange', name: 'Cash', type: 'user' },
     });
 
     mocks.getTransaction
@@ -175,7 +177,9 @@ describe('UpdateTransaction', () => {
     expect(await screen.findByTestId('exchange-form')).toBeInTheDocument();
     expect(mocks.exchangeForm).toHaveBeenCalled();
 
-    const [{ defaultValues, mode }] = getLastCallArgs(mocks.exchangeForm);
+    const { defaultValues, mode } = getLastCallArgs(
+      mocks.exchangeForm as typeof mocks.standardForm,
+    );
     expect(mode).toBe('update');
     expect(defaultValues).toEqual({
       date: '2024-01-03',
@@ -205,7 +209,7 @@ describe('UpdateTransaction', () => {
           refId: 'tx-expense',
           description: 'Checking --> Savings',
           transactionType: 'income',
-          category: { id: 'cat-transfer', name: 'myAccount' },
+          category: { id: 'cat-transfer', type: 'system', name: 'myAccount' },
         }),
       )
       .mockRejectedValueOnce(new Error('Reference failed'));
@@ -231,7 +235,7 @@ describe('UpdateTransaction', () => {
           refId: 'tx-expense',
           description: 'Checking --> Savings',
           transactionType: 'income',
-          category: { id: 'cat-transfer', name: 'myAccount' },
+          category: { id: 'cat-transfer', type: 'system', name: 'myAccount' },
         }),
       )
       .mockResolvedValueOnce(null);

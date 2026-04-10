@@ -1,9 +1,12 @@
 import clsx from 'clsx';
 import type { ReactNode } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 import { useLanguage } from '@shared/hooks';
 import type { Transaction, TrashedTransaction } from '@transactions/api';
+import { TransactionKindIcon } from '@transactions/components/shared';
+import { getTransactionKind } from '@transactions/consts';
 import { getTransactionAmountPresentation } from '@transactions/utils/transaction-amount';
 import { ButtonLink, Card } from '@ui';
 
@@ -16,14 +19,16 @@ export const TransactionPreview = ({
   detailsPathPrefix?: string;
   metadata?: ReactNode;
 }) => {
+  const { t } = useTranslation('transactions');
   const { language } = useLanguage();
   const amountPresentation = getTransactionAmountPresentation(transaction);
+  const transactionKind = getTransactionKind(transaction);
 
   const ghostLinkCn = 'text-sm sm:text-base';
 
   return (
     <li>
-      <Card>
+      <Card className="sm:gap-1">
         <Link
           className={clsx(
             ' hover:text-active-nav block ',
@@ -48,16 +53,31 @@ export const TransactionPreview = ({
           </main>
         </Link>
 
-        <footer className="flex justify-end gap-1">
-          <ButtonLink to="/accounts" className={ghostLinkCn}>
-            {transaction.account.name}
-          </ButtonLink>
-          <ButtonLink to="/paymentMethods" className={ghostLinkCn}>
-            {transaction.paymentMethod.name}
-          </ButtonLink>
-          <ButtonLink to="/categories" className={ghostLinkCn}>
-            {transaction.category.name}
-          </ButtonLink>
+        <footer className="flex items-center justify-between gap-1">
+          <span
+            className="inline-flex items-center rounded-xl border border-border bg-bg p-1.5 text-text-muted shadow-sm"
+            aria-label={t(`${transactionKind}Transaction`)}
+            title={t(`${transactionKind}Transaction`)}
+            data-testid="transaction-kind-icon"
+          >
+            <TransactionKindIcon
+              kind={transactionKind}
+              variant="compact"
+              className="size-4"
+              aria-hidden
+            />
+          </span>
+          <div className="flex flex-wrap justify-end gap-1">
+            <ButtonLink to="/accounts" className={ghostLinkCn}>
+              {transaction.account.name}
+            </ButtonLink>
+            <ButtonLink to="/paymentMethods" className={ghostLinkCn}>
+              {transaction.paymentMethod.name}
+            </ButtonLink>
+            <ButtonLink to="/categories" className={ghostLinkCn}>
+              {transaction.category.name}
+            </ButtonLink>
+          </div>
         </footer>
       </Card>
     </li>

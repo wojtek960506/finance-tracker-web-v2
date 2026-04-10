@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 
 import type { Transaction } from '@transactions/api';
-import { EXCHANGE_CATEGORY, TRANSFER_CATEGORY } from '@transactions/consts';
+import { getTransactionKind } from '@transactions/consts';
 import { ButtonLink } from '@ui';
 
 import { Detail } from './detail';
@@ -20,16 +20,16 @@ export const AdditionalDetails = ({
   referencePathPrefix?: string;
 }) => {
   const { t } = useTranslation('transactions');
+  const transactionKind = getTransactionKind(transaction);
 
-  if (![TRANSFER_CATEGORY, EXCHANGE_CATEGORY].includes(transaction.category.name))
-    return null;
+  if (transactionKind === 'standard') return null;
 
   const { refId, currencies, exchangeRate } = transaction;
 
   return (
     <>
       <div className="border-t-[1px] border-text-muted" />
-      {currencies && exchangeRate && (
+      {transactionKind === 'exchange' && currencies && exchangeRate && (
         <Detail title={t('exchangeRate')}>
           {formatExchangeRate(exchangeRate, currencies)}
         </Detail>
