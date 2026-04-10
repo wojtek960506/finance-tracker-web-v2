@@ -75,6 +75,7 @@
   "incomeCurrency": "Received currency",
   "additionalDescription": "Additional description",
   "exchangeRate": "Exchange rate",
+  "referencedTransaction": "Referenced transaction",
   "goToReferencedTransaction": "Go to referenced transaction",
   "expense": "Expense",
   "income": "Income",

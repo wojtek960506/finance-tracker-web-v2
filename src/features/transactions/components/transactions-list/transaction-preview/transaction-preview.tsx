@@ -7,6 +7,7 @@ import { useLanguage } from '@shared/hooks';
 import type { Transaction, TrashedTransaction } from '@transactions/api';
 import { TransactionKindIcon } from '@transactions/components/shared';
 import { getTransactionKind } from '@transactions/consts';
+import { getTransactionNamedResourceLabel } from '@transactions/utils/get-transaction-named-resource-label';
 import { getTransactionAmountPresentation } from '@transactions/utils/transaction-amount';
 import { ButtonLink, Card } from '@ui';
 
@@ -20,9 +21,22 @@ export const TransactionPreview = ({
   metadata?: ReactNode;
 }) => {
   const { t } = useTranslation('transactions');
+  const { t: tNamedResources } = useTranslation('namedResources');
   const { language } = useLanguage();
   const amountPresentation = getTransactionAmountPresentation(transaction);
   const transactionKind = getTransactionKind(transaction);
+  const accountLabel = getTransactionNamedResourceLabel(
+    transaction.account,
+    tNamedResources,
+  );
+  const paymentMethodLabel = getTransactionNamedResourceLabel(
+    transaction.paymentMethod,
+    tNamedResources,
+  );
+  const categoryLabel = getTransactionNamedResourceLabel(
+    transaction.category,
+    tNamedResources,
+  );
 
   const ghostLinkCn = 'text-sm sm:text-base';
 
@@ -55,27 +69,25 @@ export const TransactionPreview = ({
 
         <footer className="flex items-center justify-between gap-1">
           <span
-            className="inline-flex items-center rounded-xl border border-border bg-bg p-1.5 text-text-muted shadow-sm"
+            className="inline-flex items-center rounded-xl border border-fg/50 bg-bg p-1 text-text-muted shadow-sm"
             aria-label={t(`${transactionKind}Transaction`)}
             title={t(`${transactionKind}Transaction`)}
             data-testid="transaction-kind-icon"
           >
             <TransactionKindIcon
               kind={transactionKind}
-              variant="compact"
-              className="size-4"
               aria-hidden
             />
           </span>
           <div className="flex flex-wrap justify-end gap-1">
             <ButtonLink to="/accounts" className={ghostLinkCn}>
-              {transaction.account.name}
+              {accountLabel}
             </ButtonLink>
             <ButtonLink to="/paymentMethods" className={ghostLinkCn}>
-              {transaction.paymentMethod.name}
+              {paymentMethodLabel}
             </ButtonLink>
             <ButtonLink to="/categories" className={ghostLinkCn}>
-              {transaction.category.name}
+              {categoryLabel}
             </ButtonLink>
           </div>
         </footer>

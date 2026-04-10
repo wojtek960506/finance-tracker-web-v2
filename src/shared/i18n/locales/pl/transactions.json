@@ -75,6 +75,7 @@
   "incomeCurrency": "Waluta otrzymana",
   "additionalDescription": "Dodatkowy opis",
   "exchangeRate": "Kurs wymiany",
+  "referencedTransaction": "Powiązana transakcja",
   "goToReferencedTransaction": "Przejdź do powiązanej transakcji",
   "expense": "Wydatek",
   "income": "Przychód",

@@ -108,7 +108,6 @@ describe('AdditionalDetails', () => {
     const transaction: Transaction = {
       ...baseTransaction,
       category: { ...baseTransaction.category, name: TRANSFER_CATEGORY, type: 'user' },
-      refId: 'ref-123',
       currencies: 'USD/PLN',
       exchangeRate: 3.5,
     };

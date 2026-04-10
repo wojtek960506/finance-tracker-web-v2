@@ -75,6 +75,7 @@
   "incomeCurrency": "Получаемая валюта",
   "additionalDescription": "Дополнительное описание",
   "exchangeRate": "Обменный курс",
+  "referencedTransaction": "Связанная транзакция",
   "goToReferencedTransaction": "Перейти к связанной транзакции",
   "expense": "Расход",
   "income": "Доход",

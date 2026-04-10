@@ -75,6 +75,7 @@
   "incomeCurrency": "Empfangswährung",
   "additionalDescription": "Zusätzliche Beschreibung",
   "exchangeRate": "Wechselkurs",
+  "referencedTransaction": "Verknüpfte Transaktion",
   "goToReferencedTransaction": "Zur verknüpften Transaktion gehen",
   "expense": "Ausgabe",
   "income": "Einnahme",
