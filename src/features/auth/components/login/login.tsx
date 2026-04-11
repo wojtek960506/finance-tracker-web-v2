@@ -1,24 +1,30 @@
 import clsx from 'clsx';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSearchParams } from 'react-router-dom';
 
 import { login } from '@auth/api';
+import { normalizeApiError } from '@shared/api/api-error';
 import { MAIN_BUTTON_TEXT } from '@shared/consts';
 import { useAuthToken } from '@shared/hooks';
-import { Button, Card, Input, Label } from '@ui';
+import { Button, ButtonLink, Card, Input, Label } from '@ui';
 
 export const Login = () => {
   const { t } = useTranslation('auth');
+  const { t: tAuthErrors } = useTranslation('auth-errors');
   const emailInputRef = useRef<HTMLInputElement>(null);
+  const [searchParams] = useSearchParams();
+  const redirectedEmail = searchParams.get('email') ?? '';
 
-  const [email, setEmail] = useState('w@z.pl');
-  const [password, setPassword] = useState('123');
+  const [email, setEmail] = useState(redirectedEmail || 'w@z.pl');
+  const [password, setPassword] = useState(redirectedEmail ? '' : '123');
 
   const [isEmailInputTouched, setIsEmailInputTouched] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const isInvalidEmail = !emailRegex.test(email);
+  const normalizedEmail = email.trim();
+  const isInvalidEmail = !emailRegex.test(normalizedEmail);
 
   const showEmailError = isInvalidEmail && (isEmailInputTouched || isSubmitted);
 
@@ -32,9 +38,10 @@ export const Login = () => {
     e.preventDefault();
 
     setIsSubmitted(true);
+    if (isInvalidEmail || normalizedEmail === '' || password === '') return;
 
     try {
-      const res = await login(email, password);
+      const res = await login(normalizedEmail, password);
       setAuthToken(res);
 
       // those probably not needed as it will reset during next render
@@ -43,7 +50,12 @@ export const Login = () => {
       setEmail('');
       setPassword('');
     } catch (error) {
-      alert(error);
+      const apiError = normalizeApiError(error);
+      alert(
+        apiError.code
+          ? tAuthErrors(apiError.code, { defaultValue: apiError.message })
+          : apiError.message,
+      );
     }
   };
 
@@ -92,6 +104,9 @@ export const Login = () => {
           >
             {t('logIn')}
           </Button>
+          <ButtonLink to="/register" variant="outline" className={clsx('mt-3', MAIN_BUTTON_TEXT)}>
+            {t('goToCreateAccount')}
+          </ButtonLink>
         </form>
       </Card>
     </div>
