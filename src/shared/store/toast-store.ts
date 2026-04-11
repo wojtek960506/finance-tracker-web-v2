@@ -1,5 +1,4 @@
 import type { ReactNode } from 'react';
-
 import { create } from 'zustand';
 
 type ToastVariant = 'error' | 'success' | 'info';

@@ -144,6 +144,28 @@ describe('CreateUser', () => {
     expect(screen.queryByText('/login?email=john%40example.com')).not.toBeInTheDocument();
   });
 
+  it('trims submitted values before creating a user', async () => {
+    const user = userEvent.setup();
+
+    renderCreateUser();
+
+    await user.type(screen.getByLabelText('firstName'), '  John  ');
+    await user.type(screen.getByLabelText('lastName'), '  Doe  ');
+    await user.type(screen.getByLabelText('email'), '  john@example.com  ');
+    await user.type(screen.getByLabelText('password'), 'secret');
+    await user.type(screen.getByLabelText('confirmPassword'), 'secret');
+    await user.click(screen.getByRole('button', { name: 'createAccount' }));
+
+    await waitFor(() => {
+      expect(mocks.createUser).toHaveBeenCalledWith({
+        firstName: 'John',
+        lastName: 'Doe',
+        email: 'john@example.com',
+        password: 'secret',
+      });
+    });
+  });
+
   it('renders link back to login', () => {
     renderCreateUser();
 
