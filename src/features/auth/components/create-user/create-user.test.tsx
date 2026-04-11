@@ -1,3 +1,4 @@
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter, Route, Routes, useLocation } from 'react-router-dom';
@@ -40,12 +41,23 @@ const LocationDisplay = () => {
 describe('CreateUser', () => {
   const renderCreateUser = () =>
     render(
-      <MemoryRouter initialEntries={['/register']}>
-        <Routes>
-          <Route path="/register" element={<CreateUser />} />
-          <Route path="/login" element={<LocationDisplay />} />
-        </Routes>
-      </MemoryRouter>,
+      <QueryClientProvider
+        client={
+          new QueryClient({
+            defaultOptions: {
+              queries: { retry: false },
+              mutations: { retry: false },
+            },
+          })
+        }
+      >
+        <MemoryRouter initialEntries={['/register']}>
+          <Routes>
+            <Route path="/register" element={<CreateUser />} />
+            <Route path="/login" element={<LocationDisplay />} />
+          </Routes>
+        </MemoryRouter>
+      </QueryClientProvider>,
     );
 
   beforeEach(() => {
@@ -53,10 +65,12 @@ describe('CreateUser', () => {
     mocks.normalizeApiError.mockImplementation((error) => error);
   });
 
-  it('focuses first name input on initial render', () => {
+  it('focuses first name input on initial render', async () => {
     renderCreateUser();
 
-    expect(screen.getByLabelText('firstName')).toHaveFocus();
+    await waitFor(() => {
+      expect(screen.getByLabelText('firstName')).toHaveFocus();
+    });
   });
 
   it('shows validation errors and disables submit for invalid values', async () => {
@@ -107,10 +121,17 @@ describe('CreateUser', () => {
       });
     });
 
-    expect(mocks.pushToast).toHaveBeenCalledWith({
-      variant: 'success',
-      message: 'User John Doe was successfully created',
+    await waitFor(() => {
+      expect(mocks.pushToast).toHaveBeenCalled();
     });
+
+    const successToast = mocks.pushToast.mock.calls.find(
+      ([toast]) => toast?.variant === 'success',
+    )?.[0];
+
+    expect(successToast?.variant).toBe('success');
+    const { container } = render(<>{successToast?.message}</>);
+    expect(container).toHaveTextContent('User John Doe was successfully created');
     expect(screen.getByText('/login?email=john%40example.com')).toBeInTheDocument();
   });
 
@@ -142,6 +163,32 @@ describe('CreateUser', () => {
 
     expect(screen.getByRole('button', { name: 'createAccount' })).toBeInTheDocument();
     expect(screen.queryByText('/login?email=john%40example.com')).not.toBeInTheDocument();
+  });
+
+  it('shows raw api error message in a toast when there is no error code', async () => {
+    const user = userEvent.setup();
+
+    mocks.createUser.mockRejectedValueOnce(new Error('duplicate'));
+    mocks.normalizeApiError.mockReturnValueOnce({
+      message: 'Could not create user right now',
+    });
+
+    renderCreateUser();
+
+    await user.type(screen.getByLabelText('firstName'), 'John');
+    await user.type(screen.getByLabelText('lastName'), 'Doe');
+    await user.type(screen.getByLabelText('email'), 'john@example.com');
+    await user.type(screen.getByLabelText('password'), 'secret');
+    await user.type(screen.getByLabelText('confirmPassword'), 'secret');
+    await user.click(screen.getByRole('button', { name: 'createAccount' }));
+
+    await waitFor(() => {
+      expect(mocks.pushToast).toHaveBeenCalledWith({
+        variant: 'error',
+        title: 'createAccountFailed',
+        message: 'Could not create user right now',
+      });
+    });
   });
 
   it('trims submitted values before creating a user', async () => {

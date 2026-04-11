@@ -78,13 +78,10 @@ describe('Toaster', () => {
     render(<Toaster />);
 
     const boldName = screen.getByText('John Doe');
+    const toast = screen.getByRole('status');
 
     expect(boldName.tagName).toBe('STRONG');
-    expect(
-      screen.getByText(
-        (_, element) => element?.textContent === 'User John Doe was successfully created',
-      ),
-    ).toBeInTheDocument();
+    expect(toast).toHaveTextContent('User John Doe was successfully created');
   });
 
   it('removes toast when dismiss button is clicked', async () => {

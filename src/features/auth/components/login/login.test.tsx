@@ -145,6 +145,26 @@ describe('Login', () => {
     alertSpy.mockRestore();
   });
 
+  it('alerts raw api error message when there is no error code', async () => {
+    const user = userEvent.setup();
+    const alertSpy = vi.spyOn(window, 'alert').mockImplementation(() => {});
+
+    mocks.login.mockRejectedValueOnce(new Error('boom'));
+    mocks.normalizeApiError.mockReturnValueOnce({
+      message: 'Temporary auth outage',
+    });
+
+    renderLogin();
+
+    await user.click(screen.getByRole('button', { name: 'logIn' }));
+
+    await waitFor(() => {
+      expect(alertSpy).toHaveBeenCalledWith('Temporary auth outage');
+    });
+
+    alertSpy.mockRestore();
+  });
+
   it('prefills email from query params after registration redirect', () => {
     renderLogin(['/login?email=new.user%40example.com']);
 
