@@ -41,7 +41,7 @@ const baseTransaction: Transaction = makeTransaction();
 const baseTrashedTransaction: TrashedTransaction = makeTrashedTransaction();
 
 describe('TransactionPreview', () => {
-  it('renders transaction info and links', () => {
+  it('renders transaction info and details link', () => {
     render(
       <MemoryRouter>
         <TransactionPreview transaction={baseTransaction} />
@@ -53,9 +53,6 @@ describe('TransactionPreview', () => {
     expect(screen.getByText('-10.00 USD')).toHaveClass('text-destructive');
     expect(screen.getByText('Test transaction')).toBeInTheDocument();
 
-    expect(screen.getByText('Main')).toHaveAttribute('href', '/accounts');
-    expect(screen.getByText('Card')).toHaveAttribute('href', '/paymentMethods');
-    expect(screen.getByText('Food')).toHaveAttribute('href', '/categories');
     expect(screen.getByTestId('transaction-kind-icon')).toHaveAttribute(
       'aria-label',
       'standardTransaction',

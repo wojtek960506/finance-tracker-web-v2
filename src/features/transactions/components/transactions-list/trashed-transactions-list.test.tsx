@@ -23,6 +23,7 @@ vi.mock('react-i18next', () => ({
 
 vi.mock('@shared/hooks', () => ({
   useLanguage: () => ({ language: mocks.language }),
+  useMediaQuery: () => true,
 }));
 
 vi.mock('@transactions/api', () => ({

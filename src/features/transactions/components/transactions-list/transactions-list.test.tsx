@@ -19,6 +19,10 @@ vi.mock('react-i18next', () => ({
   useTranslation: () => ({ t: (key: string) => key }),
 }));
 
+vi.mock('@shared/hooks', () => ({
+  useMediaQuery: () => true,
+}));
+
 vi.mock('@transactions/api', () => ({
   getTransactions: (...args: unknown[]) => mocks.getTransactions(...args),
 }));
