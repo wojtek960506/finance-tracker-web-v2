@@ -1,11 +1,12 @@
+import type { ReactNode } from 'react';
 import { create } from 'zustand';
 
 type ToastVariant = 'error' | 'success' | 'info';
 
 export type Toast = {
   id: string;
-  title?: string;
-  message?: string;
+  title?: ReactNode;
+  message?: ReactNode;
   variant?: ToastVariant;
   visibilityTime?: number;
 };

@@ -1,5 +1,4 @@
 import { render, screen } from '@testing-library/react';
-import type { ReactNode } from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { describe, expect, it, vi } from 'vitest';
 
@@ -12,6 +11,7 @@ vi.mock('react-i18next', () => ({
 }));
 
 vi.mock('@auth/components', () => ({
+  CreateUser: () => <div>register</div>,
   Login: () => <div>login</div>,
 }));
 
@@ -31,21 +31,27 @@ vi.mock('@transactions/components', () => ({
   UpdateTransaction: () => <div>update</div>,
 }));
 
-vi.mock('@ui', () => ({
-  getButtonClassName: ({ className }: { className?: string }) => className ?? '',
-  Button: ({ children }: { children: ReactNode }) => <button>{children}</button>,
-}));
-
 describe('Title', () => {
-  it('renders the app title and links to root on login page', () => {
+  it('renders a plain heading on login page', () => {
     render(
       <MemoryRouter initialEntries={['/login']}>
         <Title />
       </MemoryRouter>,
     );
 
-    const link = screen.getByRole('link', { name: 'common:title' });
-    expect(link).toHaveAttribute('href', '/');
+    expect(screen.getByRole('heading', { name: 'common:title' })).toBeInTheDocument();
+    expect(screen.queryByRole('link')).not.toBeInTheDocument();
+  });
+
+  it('renders a plain heading on register page', () => {
+    render(
+      <MemoryRouter initialEntries={['/register']}>
+        <Title />
+      </MemoryRouter>,
+    );
+
+    expect(screen.getByRole('heading', { name: 'common:title' })).toBeInTheDocument();
+    expect(screen.queryByRole('link')).not.toBeInTheDocument();
   });
 
   it('renders transactions title on transactions page', () => {

@@ -186,4 +186,82 @@ describe('TransactionsList', () => {
 
     expect(mocks.navigate).toHaveBeenCalledWith('/transactions/new');
   });
+
+  it('switches to a different transactions page', async () => {
+    const user = userEvent.setup();
+    mocks.getTransactions.mockImplementation((page?: number) =>
+      Promise.resolve(
+        page === 2
+          ? {
+              ...emptyResponse,
+              page: 2,
+              total: 40,
+              totalPages: 2,
+              items: [makeTransaction({ id: 'tx-2', description: 'Page 2 transaction' })],
+            }
+          : {
+              ...emptyResponse,
+              page: 1,
+              total: 40,
+              totalPages: 2,
+              items: [makeTransaction({ id: 'tx-1', description: 'Page 1 transaction' })],
+            },
+      ),
+    );
+    const client = new QueryClient({
+      defaultOptions: { queries: { retry: false } },
+    });
+
+    render(
+      <QueryClientProvider client={client}>
+        <MemoryRouter>
+          <TransactionsList />
+        </MemoryRouter>
+      </QueryClientProvider>,
+    );
+
+    expect(await screen.findByText('Page 1 transaction')).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: '2' }));
+
+    expect(await screen.findByText('Page 2 transaction')).toBeInTheDocument();
+    expect(mocks.getTransactions).toHaveBeenCalledWith(1);
+    expect(mocks.getTransactions).toHaveBeenCalledWith(2);
+  });
+
+  it('renders compact pagination with ellipses around current page', async () => {
+    mocks.getTransactions.mockResolvedValueOnce({
+      ...emptyResponse,
+      page: 27,
+      total: 1230,
+      totalPages: 123,
+      items: [makeTransaction({ id: 'tx-27', description: 'Paged transaction' })],
+    });
+    const client = new QueryClient({
+      defaultOptions: { queries: { retry: false } },
+    });
+
+    render(
+      <QueryClientProvider client={client}>
+        <MemoryRouter>
+          <TransactionsList />
+        </MemoryRouter>
+      </QueryClientProvider>,
+    );
+
+    expect(await screen.findByText('Paged transaction')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '1' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '25' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '26' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '27' })).toHaveAttribute(
+      'aria-current',
+      'page',
+    );
+    expect(screen.getByRole('button', { name: '28' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '29' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '123' })).toBeInTheDocument();
+    expect(screen.getAllByText('...')).toHaveLength(2);
+    expect(screen.getByRole('button', { name: 'previousPage' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'nextPage' })).toBeInTheDocument();
+  });
 });

@@ -262,4 +262,89 @@ describe('TrashedTransactionsList', () => {
       }),
     );
   });
+
+  it('switches to a different trashed transactions page', async () => {
+    const user = userEvent.setup();
+    mocks.getTrashedTransactions.mockImplementation((page?: number) =>
+      Promise.resolve(
+        page === 2
+          ? {
+              ...emptyResponse,
+              page: 2,
+              total: 40,
+              totalPages: 2,
+              items: [
+                makeTrashedTransaction({
+                  id: 'trash-2',
+                  description: 'Trash page 2 item',
+                }),
+              ],
+            }
+          : {
+              ...emptyResponse,
+              page: 1,
+              total: 40,
+              totalPages: 2,
+              items: [
+                makeTrashedTransaction({
+                  id: 'trash-1',
+                  description: 'Trash page 1 item',
+                }),
+              ],
+            },
+      ),
+    );
+    const client = new QueryClient({
+      defaultOptions: { queries: { retry: false } },
+    });
+
+    render(
+      <QueryClientProvider client={client}>
+        <MemoryRouter>
+          <TrashedTransactionsList />
+        </MemoryRouter>
+      </QueryClientProvider>,
+    );
+
+    expect(await screen.findByText('Trash page 1 item')).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: '2' }));
+
+    expect(await screen.findByText('Trash page 2 item')).toBeInTheDocument();
+    expect(mocks.getTrashedTransactions).toHaveBeenCalledWith(1);
+    expect(mocks.getTrashedTransactions).toHaveBeenCalledWith(2);
+  });
+
+  it('renders compact pagination in trashed transactions list', async () => {
+    mocks.getTrashedTransactions.mockResolvedValueOnce({
+      ...emptyResponse,
+      page: 3,
+      total: 80,
+      totalPages: 8,
+      items: [makeTrashedTransaction({ id: 'trash-3', description: 'Trash paged item' })],
+    });
+    const client = new QueryClient({
+      defaultOptions: { queries: { retry: false } },
+    });
+
+    render(
+      <QueryClientProvider client={client}>
+        <MemoryRouter>
+          <TrashedTransactionsList />
+        </MemoryRouter>
+      </QueryClientProvider>,
+    );
+
+    expect(await screen.findByText('Trash paged item')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '1' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '2' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '3' })).toHaveAttribute(
+      'aria-current',
+      'page',
+    );
+    expect(screen.getByRole('button', { name: '4' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '5' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '8' })).toBeInTheDocument();
+    expect(screen.getAllByText('...')).toHaveLength(1);
+  });
 });

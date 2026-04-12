@@ -15,6 +15,7 @@ import {
 import { Button, Input, Label } from '@ui';
 
 import { TransactionPreview } from './transaction-preview';
+import { TransactionsPagination } from './transactions-pagination';
 
 const EMPTY_TRASH_CONFIRMATION_VALUE = 'DELETE';
 
@@ -27,10 +28,11 @@ export const TrashedTransactionsList = () => {
 
   const [isEmptyTrashModalOpen, setIsEmptyTrashModalOpen] = useState(false);
   const [emptyTrashConfirmation, setEmptyTrashConfirmation] = useState('');
+  const [page, setPage] = useState(1);
 
   const { data, isLoading, error } = useQuery({
-    queryKey: ['trashed-transactions'],
-    queryFn: async () => await getTrashedTransactions(),
+    queryKey: ['trashed-transactions', page],
+    queryFn: async () => await getTrashedTransactions(page),
   });
 
   const emptyTrashMutation = useMutation({
@@ -147,6 +149,11 @@ export const TrashedTransactionsList = () => {
           />
         ))}
       </ul>
+      <TransactionsPagination
+        currentPage={data.page}
+        totalPages={data.totalPages}
+        onPageChange={setPage}
+      />
     </div>
   );
 };

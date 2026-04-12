@@ -59,6 +59,31 @@ describe('Toaster', () => {
     expect(screen.getByRole('status')).toBeInTheDocument();
   });
 
+  it('renders rich toast content with partial bold text', () => {
+    useToastStore.setState({
+      toasts: [
+        {
+          id: 'toast-1',
+          message: (
+            <>
+              User <strong>John Doe</strong> was successfully created
+            </>
+          ),
+          variant: 'success',
+          visibilityTime: 5,
+        },
+      ],
+    });
+
+    render(<Toaster />);
+
+    const boldName = screen.getByText('John Doe');
+    const toast = screen.getByRole('status');
+
+    expect(boldName.tagName).toBe('STRONG');
+    expect(toast).toHaveTextContent('User John Doe was successfully created');
+  });
+
   it('removes toast when dismiss button is clicked', async () => {
     const user = userEvent.setup();
 

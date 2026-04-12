@@ -9,7 +9,7 @@ vi.mock('@shared/api', () => ({
 }));
 
 describe('getTrashedTransactions', () => {
-  it('gets trashed transactions', async () => {
+  it('gets first trashed page by default', async () => {
     const getMock = vi.mocked(api.get);
     getMock.mockResolvedValueOnce({ data: [{ id: 'tx-1' }] });
     const query = 'page=1&limit=30&sortBy=deletedAt&sortOrder=desc';
@@ -18,5 +18,15 @@ describe('getTrashedTransactions', () => {
 
     expect(getMock).toHaveBeenCalledWith(`/transactions/trash?${query}`);
     expect(result).toEqual([{ id: 'tx-1' }]);
+  });
+
+  it('gets requested trashed page', async () => {
+    const getMock = vi.mocked(api.get);
+    getMock.mockResolvedValueOnce({ data: [{ id: 'tx-1' }] });
+    const query = 'page=7&limit=30&sortBy=deletedAt&sortOrder=desc';
+
+    await getTrashedTransactions(7);
+
+    expect(getMock).toHaveBeenCalledWith(`/transactions/trash?${query}`);
   });
 });

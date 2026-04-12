@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
@@ -7,14 +8,16 @@ import { Button } from '@shared/ui';
 import { getTransactions } from '@transactions/api';
 
 import { TransactionPreview } from './transaction-preview';
+import { TransactionsPagination } from './transactions-pagination';
 
 export const TransactionsList = () => {
   const { t } = useTranslation('transactions');
   const navigate = useNavigate();
+  const [page, setPage] = useState(1);
 
   const { data, isLoading, error } = useQuery({
-    queryKey: ['transactions'],
-    queryFn: async () => await getTransactions(),
+    queryKey: ['transactions', page],
+    queryFn: async () => await getTransactions(page),
   });
 
   if (isLoading) return <p>Loading</p>;
@@ -38,6 +41,11 @@ export const TransactionsList = () => {
           <TransactionPreview transaction={transaction} key={transaction.id} />
         ))}
       </ul>
+      <TransactionsPagination
+        currentPage={data.page}
+        totalPages={data.totalPages}
+        onPageChange={setPage}
+      />
     </div>
   );
 };
