@@ -2,9 +2,9 @@ import type { TransactionsResponse } from './types';
 
 import { api } from '@/shared/api';
 
-export const getTransactions = async (): Promise<TransactionsResponse> => {
+export const getTransactions = async (page = 1): Promise<TransactionsResponse> => {
   const params = new URLSearchParams({
-    page: '1',
+    page: String(page),
     limit: '30',
     sortBy: 'date',
     sortOrder: 'desc',
