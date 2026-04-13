@@ -83,6 +83,24 @@ export type TransactionsResponse = {
   items: Transaction[];
 };
 
+export type TransactionFilters = {
+  startDate?: string;
+  endDate?: string;
+  minAmount?: number;
+  maxAmount?: number;
+  transactionType?: TransactionType;
+  currency?: string;
+  categoryId?: string;
+  excludeCategoryIds?: string[];
+  paymentMethodId?: string;
+  accountId?: string;
+};
+
+export type GetTransactionsQuery = {
+  page?: number;
+  filters?: TransactionFilters;
+};
+
 export type TrashedTransactionsResponse = {
   page: number;
   limit: number;

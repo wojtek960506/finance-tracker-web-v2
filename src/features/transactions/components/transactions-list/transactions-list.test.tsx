@@ -20,7 +20,7 @@ vi.mock('react-i18next', () => ({
 }));
 
 vi.mock('@shared/hooks', () => ({
-  useMediaQuery: () => true,
+  useMediaQuery: (query: string) => query === '(min-width: 640px)',
 }));
 
 vi.mock('@transactions/api', () => ({
@@ -42,12 +42,17 @@ vi.mock('@shared/ui', () => ({
       {children}
     </button>
   ),
+  Drawer: ({ children }: { children: ReactNode }) => <div>{children}</div>,
 }));
 
 vi.mock('./transaction-preview', () => ({
   TransactionPreview: ({ transaction }: { transaction: { description: string } }) => (
     <li>{transaction.description}</li>
   ),
+}));
+
+vi.mock('./transactions-filters-panel', () => ({
+  TransactionsFiltersPanel: () => <div>filters-panel</div>,
 }));
 
 const emptyResponse: TransactionsResponse = {
@@ -193,24 +198,29 @@ describe('TransactionsList', () => {
 
   it('switches to a different transactions page', async () => {
     const user = userEvent.setup();
-    mocks.getTransactions.mockImplementation((page?: number) =>
-      Promise.resolve(
-        page === 2
-          ? {
-              ...emptyResponse,
-              page: 2,
-              total: 40,
-              totalPages: 2,
-              items: [makeTransaction({ id: 'tx-2', description: 'Page 2 transaction' })],
-            }
-          : {
-              ...emptyResponse,
-              page: 1,
-              total: 40,
-              totalPages: 2,
-              items: [makeTransaction({ id: 'tx-1', description: 'Page 1 transaction' })],
-            },
-      ),
+    mocks.getTransactions.mockImplementation(
+      ({ page }: { page?: number; filters?: Record<string, unknown> }) =>
+        Promise.resolve(
+          page === 2
+            ? {
+                ...emptyResponse,
+                page: 2,
+                total: 40,
+                totalPages: 2,
+                items: [
+                  makeTransaction({ id: 'tx-2', description: 'Page 2 transaction' }),
+                ],
+              }
+            : {
+                ...emptyResponse,
+                page: 1,
+                total: 40,
+                totalPages: 2,
+                items: [
+                  makeTransaction({ id: 'tx-1', description: 'Page 1 transaction' }),
+                ],
+              },
+        ),
     );
     const client = new QueryClient({
       defaultOptions: { queries: { retry: false } },
@@ -229,8 +239,8 @@ describe('TransactionsList', () => {
     await user.click(screen.getByRole('button', { name: '2' }));
 
     expect(await screen.findByText('Page 2 transaction')).toBeInTheDocument();
-    expect(mocks.getTransactions).toHaveBeenCalledWith(1);
-    expect(mocks.getTransactions).toHaveBeenCalledWith(2);
+    expect(mocks.getTransactions).toHaveBeenCalledWith({ page: 1, filters: {} });
+    expect(mocks.getTransactions).toHaveBeenCalledWith({ page: 2, filters: {} });
   });
 
   it('renders compact pagination with ellipses around current page', async () => {

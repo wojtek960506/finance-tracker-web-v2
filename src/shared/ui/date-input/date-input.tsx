@@ -77,6 +77,7 @@ const DayPickerDropdown = ({
   disabled,
   options,
   value,
+  classNames, // to avoid 'React does not recognize the `classNames` prop on a DOM element'
   ...props
 }: DropdownProps) => {
   return (
@@ -207,16 +208,14 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
           onKeyDown={handleTriggerKeyDown}
           onBlur={onBlur}
         >
-          <span className="truncate">{formattedValue || value || ''}</span>
+          <span className="truncate">{formattedValue || value || '\u00A0'}</span>
           <CalendarDays className="size-4 shrink-0 text-text-muted" aria-hidden="true" />
         </div>
 
         {isOpen && (
           <>
-            <button
-              type="button"
+            <div
               aria-hidden="true"
-              tabIndex={-1}
               className="fixed inset-0 z-140 cursor-default bg-transparent"
               onMouseDown={(event) => {
                 event.preventDefault();
@@ -225,7 +224,7 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
               }}
             />
 
-            <Card className="absolute z-150 mt-2 w-auto min-w-full gap-3 rounded-2xl border border-fg bg-modal-bg p-3">
+            <Card className="absolute z-150 mt-2 w-full min-w-full max-w-full gap-3 overflow-x-auto rounded-2xl border border-fg bg-modal-bg p-3">
               <DayPicker
                 mode="single"
                 required
