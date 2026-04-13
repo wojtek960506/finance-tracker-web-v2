@@ -19,7 +19,6 @@ import { TransactionPreview } from './transaction-preview';
 import { TransactionsFiltersPanel } from './transactions-filters-panel';
 import { TransactionsPagination } from './transactions-pagination';
 
-
 // TODO:
 // 1. refactor this file
 // 2. in forms also do some refactor for single fields
@@ -56,10 +55,10 @@ export const TransactionsList = () => {
   useEffect(() => {
     if (data && data.totalPages < data.page && data.total > 0) {
       setSearchParams(
-        buildTransactionsRouteSearchParams({ page: data.totalPages, filters })
+        buildTransactionsRouteSearchParams({ page: data.totalPages, filters }),
       );
     }
-  }, [data, filters, setSearchParams])
+  }, [data, filters, setSearchParams]);
 
   if (isLoading) return <p>Loading</p>;
   if (error) return <p>{error.message}</p>;
@@ -131,8 +130,7 @@ export const TransactionsList = () => {
             isSidebarVisible && !isXlScreen
               ? 'w-full lg:mx-0 lg:max-w-150'
               : 'mx-auto w-full max-w-150',
-            isLargeSidebarLayout &&
-              'xl:col-start-2 xl:mx-auto xl:w-full xl:max-w-150',
+            isLargeSidebarLayout && 'xl:col-start-2 xl:mx-auto xl:w-full xl:max-w-150',
           )}
         >
           <div className="flex flex-wrap items-center justify-between gap-2 sm:gap-3">

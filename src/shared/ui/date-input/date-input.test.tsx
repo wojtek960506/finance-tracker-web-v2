@@ -122,7 +122,7 @@ describe('DateInput', () => {
     await user.click(trigger);
     expect(screen.getByRole('button', { name: 'pick day' })).toBeInTheDocument();
 
-    const overlay = container.querySelector('button.fixed.inset-0');
+    const overlay = container.querySelector('div.fixed.inset-0');
     fireEvent.mouseDown(overlay as HTMLElement);
     expect(screen.queryByRole('button', { name: 'pick day' })).not.toBeInTheDocument();
 

@@ -125,29 +125,30 @@ export const TransactionsFiltersPanel = ({
   }, [favoriteCategories, otherCategories, showMoreExcludedCategories, tNamedResources]);
 
   const handleApply = () => {
-    
     console.log('handleApply in filters');
-    console.log('before validateion', form.getValues())
+    console.log('before validateion', form.getValues());
 
     void form.handleSubmit(
       (values) => {
-        console.log('after validation'); 
+        console.log('after validation');
 
         console.log('values', values);
 
-        onApply(normalizeTransactionFiltersFormValues(values))
+        onApply(normalizeTransactionFiltersFormValues(values));
       },
       (errors) => {
         console.log('invalid', errors);
-      }
+      },
     )();
-  }
+  };
 
   return (
-    <Card className={clsx(
-      "relative z-[141] w-full min-w-0 max-w-full gap-4 overflow-visible",
-      "rounded-3xl border-fg/20 bg-modal-bg/95"
-    )}>
+    <Card
+      className={clsx(
+        'relative z-[141] w-full min-w-0 max-w-full gap-4 overflow-visible',
+        'rounded-3xl border-fg/20 bg-modal-bg/95',
+      )}
+    >
       <div className="flex flex-col gap-1">
         <h2 className="text-lg font-semibold sm:text-xl">{t('filters')}</h2>
         <p className="text-sm text-text-muted">{t('filtersDescription')}</p>
@@ -241,13 +242,15 @@ export const TransactionsFiltersPanel = ({
               control={form.control}
               name="transactionType"
               render={({ field }) => (
-                <div className={clsx(
-                  "gap-2",
-                  "2xl:grid 2xl:grid-cols-3",
-                  "lg:flex lg:flex-col",
-                  "sm:grid sm:grid-cols-3",
-                  "flex flex-col",
-                )}>
+                <div
+                  className={clsx(
+                    'gap-2',
+                    '2xl:grid 2xl:grid-cols-3',
+                    'lg:flex lg:flex-col',
+                    'sm:grid sm:grid-cols-3',
+                    'flex flex-col',
+                  )}
+                >
                   {filterTypeOptions.map((transactionType) => {
                     const isActive = field.value === transactionType;
 
@@ -306,13 +309,15 @@ export const TransactionsFiltersPanel = ({
               control={form.control}
               name="categoryMode"
               render={({ field }) => (
-                <div className={clsx(
-                  "gap-2",
-                  "2xl:grid 2xl:grid-cols-2",
-                  "lg:flex lg:flex-col",
-                  "sm:grid sm:grid-cols-2",
-                  "flex flex-col",
-                )}>
+                <div
+                  className={clsx(
+                    'gap-2',
+                    '2xl:grid 2xl:grid-cols-2',
+                    'lg:flex lg:flex-col',
+                    'sm:grid sm:grid-cols-2',
+                    'flex flex-col',
+                  )}
+                >
                   <Button
                     type="button"
                     variant={field.value === 'include' ? 'primary' : 'outline'}
