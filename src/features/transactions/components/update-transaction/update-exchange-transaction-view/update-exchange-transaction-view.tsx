@@ -6,35 +6,34 @@ import { normalizeApiError } from '@shared/api/api-error';
 import { useToastStore } from '@store/toast-store';
 import {
   type Transaction,
-  type TransactionTransferDTO,
-  updateTransferTransaction,
+  type TransactionExchangeDTO,
+  updateExchangeTransaction,
 } from '@transactions/api';
+import {
+  ExchangeTransactionForm,
+  type ExchangeTransactionFormValues,
+  getExchangeTransactionFormValues,
+  toOptionalTrimmedString,
+} from '@transactions/components/create-transaction';
 import { useInvalidateTransactionQueries } from '@transactions/components/shared';
 
-import {
-  getTransferTransactionFormValues,
-  TransferTransactionForm,
-  type TransferTransactionFormValues,
-} from '../create-transaction';
-import { toOptionalTrimmedString } from '../create-transaction/shared';
-
-type UpdateTransferTransactionViewProps = {
+type UpdateExchangeTransactionViewProps = {
   transaction: Transaction;
   transactionRef: Transaction;
 };
 
-export const UpdateTransferTransactionView = ({
+export const UpdateExchangeTransactionView = ({
   transaction,
   transactionRef,
-}: UpdateTransferTransactionViewProps) => {
+}: UpdateExchangeTransactionViewProps) => {
   const navigate = useNavigate();
   const pushToast = useToastStore((state) => state.pushToast);
   const invalidateQueries = useInvalidateTransactionQueries();
   const { t } = useTranslation('transactions');
 
   const updateTransactionMutation = useMutation({
-    mutationFn: async (payload: TransactionTransferDTO) =>
-      await updateTransferTransaction(transaction.id, payload),
+    mutationFn: async (payload: TransactionExchangeDTO) =>
+      await updateExchangeTransaction(transaction.id, payload),
     onSuccess: async () =>
       await invalidateQueries({
         includeTransactionDetails: false,
@@ -44,11 +43,12 @@ export const UpdateTransferTransactionView = ({
       }),
   });
 
-  const handleSubmit = async (values: TransferTransactionFormValues) => {
+  const handleSubmit = async (values: ExchangeTransactionFormValues) => {
     try {
       await updateTransactionMutation.mutateAsync({
         ...values,
-        amount: Number(values.amount),
+        amountExpense: Number(values.amountExpense),
+        amountIncome: Number(values.amountIncome),
         additionalDescription: toOptionalTrimmedString(values.additionalDescription),
       });
 
@@ -68,9 +68,9 @@ export const UpdateTransferTransactionView = ({
   };
 
   return (
-    <TransferTransactionForm
+    <ExchangeTransactionForm
       key={`${transaction.id}:${transactionRef.id}`}
-      defaultValues={getTransferTransactionFormValues(transaction, transactionRef)}
+      defaultValues={getExchangeTransactionFormValues(transaction, transactionRef)}
       isPending={updateTransactionMutation.isPending}
       mode="update"
       onSubmit={handleSubmit}

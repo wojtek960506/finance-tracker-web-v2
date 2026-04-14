@@ -6,10 +6,10 @@ import { describe, expect, it, vi } from 'vitest';
 import { createTestQueryClient } from '@test-utils/create-test-query-client';
 import { makeTransaction } from '@test-utils/factories/transaction';
 
-import { UpdateExchangeTransactionView } from './update-exchange-transaction-view';
+import { UpdateStandardTransactionView } from './update-standard-transaction-view';
 
 const mocks = vi.hoisted(() => ({
-  updateExchangeTransaction: vi.fn(),
+  updateStandardTransaction: vi.fn(),
   normalizeApiError: vi.fn(),
   navigate: vi.fn(),
   pushToast: vi.fn(),
@@ -28,8 +28,8 @@ vi.mock('@transactions/api', async () => {
     await vi.importActual<typeof import('@transactions/api')>('@transactions/api');
   return {
     ...actual,
-    updateExchangeTransaction: (...args: unknown[]) =>
-      mocks.updateExchangeTransaction(...args),
+    updateStandardTransaction: (...args: unknown[]) =>
+      mocks.updateStandardTransaction(...args),
   };
 });
 
@@ -42,14 +42,14 @@ vi.mock('@store/toast-store', () => ({
     selector({ pushToast: mocks.pushToast }),
 }));
 
-vi.mock('../create-transaction', async () => {
-  const actual = await vi.importActual<typeof import('../create-transaction')>(
-    '../create-transaction',
-  );
+vi.mock('@transactions/components/create-transaction', async () => {
+  const actual = await vi.importActual<
+    typeof import('@transactions/components/create-transaction')
+  >('@transactions/components/create-transaction');
 
   return {
     ...actual,
-    ExchangeTransactionForm: ({
+    StandardTransactionForm: ({
       onSubmit,
       onCancel,
     }: {
@@ -62,13 +62,13 @@ vi.mock('../create-transaction', async () => {
           onClick={() =>
             void onSubmit({
               date: '2024-01-03',
-              additionalDescription: 'Exchange',
-              amountExpense: '10',
-              amountIncome: '8',
-              currencyExpense: 'USD',
-              currencyIncome: 'EUR',
+              description: 'Groceries',
+              amount: '10',
+              currency: 'USD',
+              categoryId: 'cat-1',
               paymentMethodId: 'pm-1',
               accountId: 'acc-1',
+              transactionType: 'expense',
             })
           }
         >
@@ -82,59 +82,36 @@ vi.mock('../create-transaction', async () => {
   };
 });
 
-describe('UpdateExchangeTransactionView', () => {
-  const transaction = makeTransaction({
-    id: 'tx-1',
-    transactionType: 'expense',
-    refId: 'tx-2',
-    category: { id: 'cat-exchange', type: 'category', name: 'exchange' },
-  });
-  const transactionRef = makeTransaction({
-    id: 'tx-2',
-    transactionType: 'income',
-    refId: 'tx-1',
-    category: { id: 'cat-exchange', type: 'category', name: 'exchange' },
-  });
-
-  it('updates an exchange transaction', async () => {
+describe('UpdateStandardTransactionView', () => {
+  it('updates a standard transaction', async () => {
     const user = userEvent.setup();
     const client = createTestQueryClient();
     const invalidateQueriesSpy = vi.spyOn(client, 'invalidateQueries');
-    mocks.updateExchangeTransaction.mockResolvedValueOnce([
-      { id: 'tx-1' },
-      { id: 'tx-2' },
-    ]);
+    mocks.updateStandardTransaction.mockResolvedValueOnce({ id: 'tx-1' });
 
     render(
       <QueryClientProvider client={client}>
-        <UpdateExchangeTransactionView
-          transaction={transaction}
-          transactionRef={transactionRef}
-        />
+        <UpdateStandardTransactionView transaction={makeTransaction()} />
       </QueryClientProvider>,
     );
 
     await user.click(screen.getByRole('button', { name: 'submit' }));
 
     await waitFor(() =>
-      expect(mocks.updateExchangeTransaction).toHaveBeenCalledWith('tx-1', {
+      expect(mocks.updateStandardTransaction).toHaveBeenCalledWith('tx-1', {
         date: '2024-01-03',
-        additionalDescription: 'Exchange',
-        amountExpense: 10,
-        amountIncome: 8,
-        currencyExpense: 'USD',
-        currencyIncome: 'EUR',
+        description: 'Groceries',
+        amount: 10,
+        currency: 'USD',
+        categoryId: 'cat-1',
         paymentMethodId: 'pm-1',
         accountId: 'acc-1',
+        transactionType: 'expense',
       }),
     );
     expect(invalidateQueriesSpy).toHaveBeenCalledWith({ queryKey: ['transactions'] });
     expect(invalidateQueriesSpy).toHaveBeenCalledWith({
       queryKey: ['transaction', 'tx-1'],
-      exact: true,
-    });
-    expect(invalidateQueriesSpy).toHaveBeenCalledWith({
-      queryKey: ['transaction', 'tx-2'],
       exact: true,
     });
     expect(mocks.pushToast).toHaveBeenCalledWith({
@@ -148,15 +125,12 @@ describe('UpdateExchangeTransactionView', () => {
     const user = userEvent.setup();
     const client = createTestQueryClient();
     const error = new Error('boom');
-    mocks.updateExchangeTransaction.mockRejectedValueOnce(error);
+    mocks.updateStandardTransaction.mockRejectedValueOnce(error);
     mocks.normalizeApiError.mockReturnValueOnce({ message: 'Update failed' });
 
     render(
       <QueryClientProvider client={client}>
-        <UpdateExchangeTransactionView
-          transaction={transaction}
-          transactionRef={transactionRef}
-        />
+        <UpdateStandardTransactionView transaction={makeTransaction()} />
       </QueryClientProvider>,
     );
 
