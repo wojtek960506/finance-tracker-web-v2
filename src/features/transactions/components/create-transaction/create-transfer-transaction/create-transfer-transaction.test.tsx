@@ -36,7 +36,7 @@ vi.mock('@store/toast-store', () => ({
     selector({ pushToast: mocks.pushToast }),
 }));
 
-vi.mock('./transfer-transaction-form', () => ({
+vi.mock('@transactions/components/transaction-forms', () => ({
   getDefaultTransferTransactionFormValues: () => ({
     date: '2024-01-03',
     additionalDescription: '',
@@ -46,6 +46,7 @@ vi.mock('./transfer-transaction-form', () => ({
     accountExpenseId: '',
     accountIncomeId: '',
   }),
+  toOptionalTrimmedString: (value: string) => value.trim() || undefined,
   TransferTransactionForm: ({
     onSubmit,
     onCancel,

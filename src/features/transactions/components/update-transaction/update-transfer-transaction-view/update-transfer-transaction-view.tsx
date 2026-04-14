@@ -9,13 +9,13 @@ import {
   type TransactionTransferDTO,
   updateTransferTransaction,
 } from '@transactions/api';
+import { useInvalidateTransactionQueries } from '@transactions/components/shared';
 import {
   getTransferTransactionFormValues,
   toOptionalTrimmedString,
   TransferTransactionForm,
   type TransferTransactionFormValues,
-} from '@transactions/components/create-transaction';
-import { useInvalidateTransactionQueries } from '@transactions/components/shared';
+} from '@transactions/components/transaction-forms';
 
 type UpdateTransferTransactionViewProps = {
   transaction: Transaction;

@@ -8,12 +8,11 @@ import {
   createStandardTransaction,
   type TransactionStandardDTO,
 } from '@transactions/api';
-
 import {
   getDefaultStandardTransactionFormValues,
   StandardTransactionForm,
   type StandardTransactionFormValues,
-} from './standard-transaction-form';
+} from '@transactions/components/transaction-forms';
 
 export const CreateStandardTransaction = () => {
   const navigate = useNavigate();

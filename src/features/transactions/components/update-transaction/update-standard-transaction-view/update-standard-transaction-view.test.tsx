@@ -42,10 +42,10 @@ vi.mock('@store/toast-store', () => ({
     selector({ pushToast: mocks.pushToast }),
 }));
 
-vi.mock('@transactions/components/create-transaction', async () => {
+vi.mock('@transactions/components/transaction-forms', async () => {
   const actual = await vi.importActual<
-    typeof import('@transactions/components/create-transaction')
-  >('@transactions/components/create-transaction');
+    typeof import('@transactions/components/transaction-forms')
+  >('@transactions/components/transaction-forms');
 
   return {
     ...actual,

@@ -7,7 +7,7 @@ import {
   getTransactionAmountValue,
   getTransactionDateValue,
   getTransactionPairByType,
-} from '@transactions/components/create-transaction/shared';
+} from '@transactions/components/transaction-forms';
 
 export const transferTransactionFormSchema = z
   .object({

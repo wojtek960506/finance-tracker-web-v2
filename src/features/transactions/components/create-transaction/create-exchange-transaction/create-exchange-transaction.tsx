@@ -8,13 +8,12 @@ import {
   createExchangeTransaction,
   type TransactionExchangeDTO,
 } from '@transactions/api';
-import { toOptionalTrimmedString } from '@transactions/components/create-transaction/shared';
-
 import {
   ExchangeTransactionForm,
   type ExchangeTransactionFormValues,
   getDefaultExchangeTransactionFormValues,
-} from './exchange-transaction-form';
+  toOptionalTrimmedString,
+} from '@transactions/components/transaction-forms';
 
 export const CreateExchangeTransaction = () => {
   const navigate = useNavigate();

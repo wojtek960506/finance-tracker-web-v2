@@ -9,13 +9,13 @@ import {
   type TransactionExchangeDTO,
   updateExchangeTransaction,
 } from '@transactions/api';
+import { useInvalidateTransactionQueries } from '@transactions/components/shared';
 import {
   ExchangeTransactionForm,
   type ExchangeTransactionFormValues,
   getExchangeTransactionFormValues,
   toOptionalTrimmedString,
-} from '@transactions/components/create-transaction';
-import { useInvalidateTransactionQueries } from '@transactions/components/shared';
+} from '@transactions/components/transaction-forms';
 
 type UpdateExchangeTransactionViewProps = {
   transaction: Transaction;

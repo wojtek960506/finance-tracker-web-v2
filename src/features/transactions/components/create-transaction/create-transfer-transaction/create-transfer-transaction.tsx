@@ -8,13 +8,12 @@ import {
   createTransferTransaction,
   type TransactionTransferDTO,
 } from '@transactions/api';
-import { toOptionalTrimmedString } from '@transactions/components/create-transaction/shared';
-
 import {
   getDefaultTransferTransactionFormValues,
+  toOptionalTrimmedString,
   TransferTransactionForm,
   type TransferTransactionFormValues,
-} from './transfer-transaction-form';
+} from '@transactions/components/transaction-forms';
 
 export const CreateTransferTransaction = () => {
   const navigate = useNavigate();

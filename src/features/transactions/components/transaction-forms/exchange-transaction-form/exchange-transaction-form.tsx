@@ -4,15 +4,15 @@ import { useTranslation } from 'react-i18next';
 
 import { Card, DateInput, Input, NumberInput } from '@shared/ui';
 import {
+  CurrencySelectField,
+  NamedResourceSelectField,
+} from '@transactions/components/shared';
+import {
   FIELD_CONTROL_CLASS_NAME,
   FieldError,
   FieldSection,
   TransactionFormActions,
-} from '@transactions/components/create-transaction/shared';
-import {
-  CurrencySelectField,
-  NamedResourceSelectField,
-} from '@transactions/components/shared';
+} from '@transactions/components/transaction-forms';
 
 import {
   exchangeTransactionFormSchema,

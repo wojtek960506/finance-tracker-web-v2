@@ -5,7 +5,7 @@ import {
   getDefaultTransactionDate,
   getTransactionAmountValue,
   getTransactionDateValue,
-} from '@transactions/components/create-transaction/shared';
+} from '@transactions/components/transaction-forms';
 
 export const standardTransactionFormSchema = z.object({
   date: z.string().min(1, 'dateRequired'),

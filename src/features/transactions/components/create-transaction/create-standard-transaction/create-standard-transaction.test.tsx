@@ -36,7 +36,7 @@ vi.mock('@store/toast-store', () => ({
     selector({ pushToast: mocks.pushToast }),
 }));
 
-vi.mock('./standard-transaction-form', () => ({
+vi.mock('@transactions/components/transaction-forms', () => ({
   getDefaultStandardTransactionFormValues: () => ({
     date: '2024-01-03',
     description: '',
