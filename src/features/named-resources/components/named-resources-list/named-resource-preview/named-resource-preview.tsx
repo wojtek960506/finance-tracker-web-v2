@@ -14,13 +14,12 @@ import {
   unfavoriteNamedResource,
   updateNamedResource,
 } from '@named-resources/api';
+import { NamedResourceInput } from '@named-resources/components/named-resource-input';
 import { normalizeApiError } from '@shared/api/api-error';
 import { useToastStore } from '@store/toast-store';
 import { Button, Card, Modal } from '@ui';
 
-import { NamedResourceInput } from '../named-resource-input';
-
-import { getNamedResourceErrorToast } from './get-named-resource-error-toast';
+import { getNamedResourceErrorToast } from '../get-named-resource-error-toast';
 
 const capitalize = (value: string) => value.charAt(0).toUpperCase() + value.slice(1);
 const setNamedResourceFavoriteState = (

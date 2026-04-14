@@ -4,16 +4,15 @@ import { useEffect } from 'react';
 import { type SubmitHandler, useForm, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
+import { AuthFormShell } from '@auth/components/auth-form-shell';
 import { MAIN_BUTTON_TEXT } from '@shared/consts';
 import { Button, ButtonLink, Input, Label } from '@ui';
-
-import { AuthFormShell } from '../auth-form-shell';
 
 import {
   createUserFormSchema,
   type CreateUserFormValues,
   getDefaultCreateUserFormValues,
-} from './utils';
+} from '../utils';
 
 type CreateUserFormProps = {
   isPending: boolean;

@@ -1,6 +1,6 @@
 import { AUTH_TOKEN_STORE_KEY } from '@shared/consts';
 
-import { useLocalStorage } from './use-local-storage';
+import { useLocalStorage } from '../use-local-storage';
 
 export const useAuthToken = () => {
   const {

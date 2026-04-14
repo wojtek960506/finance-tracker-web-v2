@@ -47,7 +47,7 @@ vi.mock('@store/toast-store', () => ({
     selector({ pushToast }),
 }));
 
-vi.mock('../named-resource-input', () => ({
+vi.mock('@named-resources/components/named-resource-input', () => ({
   NamedResourceInput: ({
     action,
     initialValue,

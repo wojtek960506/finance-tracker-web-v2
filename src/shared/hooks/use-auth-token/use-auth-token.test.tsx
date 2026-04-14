@@ -9,7 +9,7 @@ const mocks = vi.hoisted(() => ({
   removeItem: vi.fn(),
 }));
 
-vi.mock('./use-local-storage', () => ({
+vi.mock('../use-local-storage', () => ({
   useLocalStorage: () => ({
     item: mocks.authToken.value,
     setItem: mocks.setItem,

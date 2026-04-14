@@ -19,7 +19,7 @@ vi.mock('react-i18next', () => ({
   }),
 }));
 
-vi.mock('./use-local-storage', () => ({
+vi.mock('../use-local-storage', () => ({
   useLocalStorage: () => ({
     item: mocks.storedLanguage.value,
     setItem: mocks.setItem,
