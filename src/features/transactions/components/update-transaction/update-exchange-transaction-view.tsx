@@ -16,7 +16,7 @@ import {
   type ExchangeTransactionFormValues,
   getExchangeTransactionFormValues,
 } from '../create-transaction';
-import { toOptionalTrimmedString } from '../create-transaction/shared-utils';
+import { toOptionalTrimmedString } from '../create-transaction/shared';
 
 type UpdateExchangeTransactionViewProps = {
   transaction: Transaction;

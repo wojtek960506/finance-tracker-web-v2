@@ -1,48 +1,46 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Controller, type SubmitHandler, useForm, useWatch } from 'react-hook-form';
+import { Controller, type SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { Button, Card, DateInput, Input, NumberInput } from '@shared/ui';
+import { Card, DateInput, Input, NumberInput } from '@shared/ui';
+import {
+  FIELD_CONTROL_CLASS_NAME,
+  FieldError,
+  FieldSection,
+  TransactionFormActions,
+} from '@transactions/components/create-transaction/shared';
 import {
   CurrencySelectField,
   NamedResourceSelectField,
 } from '@transactions/components/shared';
 
-import { FieldError, FieldSection, TransactionFormActions } from '../shared-components';
-import { FIELD_CONTROL_CLASS_NAME } from '../shared-utils';
-
 import {
-  standardTransactionFormSchema,
-  type StandardTransactionFormValues,
-  standardTransactionTypeOptions,
+  transferTransactionFormSchema,
+  type TransferTransactionFormValues,
 } from './utils';
 
-type StandardTransactionFormProps = {
-  defaultValues: StandardTransactionFormValues;
+type TransferTransactionFormProps = {
+  defaultValues: TransferTransactionFormValues;
   isPending: boolean;
   mode: 'create' | 'update';
-  onSubmit: (values: StandardTransactionFormValues) => Promise<void> | void;
+  onSubmit: (values: TransferTransactionFormValues) => Promise<void> | void;
   onCancel: () => void;
 };
 
-export const StandardTransactionForm = ({
+export const TransferTransactionForm = ({
   defaultValues,
   isPending,
   mode,
   onSubmit,
   onCancel,
-}: StandardTransactionFormProps) => {
+}: TransferTransactionFormProps) => {
   const { t } = useTranslation('transactions');
-  const form = useForm<StandardTransactionFormValues>({
-    resolver: zodResolver(standardTransactionFormSchema),
+  const form = useForm<TransferTransactionFormValues>({
+    resolver: zodResolver(transferTransactionFormSchema),
     defaultValues,
   });
-  const selectedTransactionType = useWatch({
-    control: form.control,
-    name: 'transactionType',
-  });
 
-  const handleSubmit: SubmitHandler<StandardTransactionFormValues> = async (values) => {
+  const handleSubmit: SubmitHandler<TransferTransactionFormValues> = async (values) => {
     await onSubmit(values);
   };
 
@@ -69,32 +67,27 @@ export const StandardTransactionForm = ({
         </FieldSection>
 
         <FieldSection>
-          <span>{t('transactionType')}</span>
-          <div className="grid grid-cols-2 gap-2">
-            {standardTransactionTypeOptions.map((transactionType) => {
-              const isActive = selectedTransactionType === transactionType;
-
-              return (
-                <Button
-                  key={transactionType}
-                  type="button"
-                  variant={isActive ? 'primary' : 'outline'}
-                  onClick={() => form.setValue('transactionType', transactionType)}
-                >
-                  {t(transactionType)}
-                </Button>
-              );
-            })}
-          </div>
-        </FieldSection>
-
-        <FieldSection className="sm:col-span-2">
-          <span>{t('description')}</span>
-          <Input {...form.register('description')} className={FIELD_CONTROL_CLASS_NAME} />
+          <span>{t('paymentMethod')}</span>
+          <Controller
+            control={form.control}
+            name="paymentMethodId"
+            render={({ field }) => (
+              <NamedResourceSelectField
+                kind="paymentMethods"
+                value={field.value}
+                onChange={field.onChange}
+                placeholder={t('paymentMethodPlaceholder')}
+                searchPlaceholder={t('searchPaymentMethodPlaceholder')}
+                emptyMessage={t('noPaymentMethodsFound')}
+                showMoreLabel={t('showMorePaymentMethods')}
+                showLessLabel={t('showLessPaymentMethods')}
+              />
+            )}
+          />
           <FieldError
             message={
-              form.formState.errors.description?.message &&
-              t(form.formState.errors.description.message)
+              form.formState.errors.paymentMethodId?.message &&
+              t(form.formState.errors.paymentMethodId.message)
             }
           />
         </FieldSection>
@@ -146,69 +139,17 @@ export const StandardTransactionForm = ({
           />
         </FieldSection>
 
-        <FieldSection className="sm:col-span-2">
-          <span>{t('category')}</span>
-          <Controller
-            control={form.control}
-            name="categoryId"
-            render={({ field }) => (
-              <NamedResourceSelectField
-                kind="categories"
-                value={field.value}
-                onChange={field.onChange}
-                placeholder={t('categoryPlaceholder')}
-                searchPlaceholder={t('searchCategoryPlaceholder')}
-                emptyMessage={t('noCategoriesFound')}
-                showMoreLabel={t('showMoreCategories')}
-                showLessLabel={t('showLessCategories')}
-              />
-            )}
-          />
-          <FieldError
-            message={
-              form.formState.errors.categoryId?.message &&
-              t(form.formState.errors.categoryId.message)
-            }
-          />
-        </FieldSection>
-
         <FieldSection>
-          <span>{t('paymentMethod')}</span>
+          <span>{t('fromAccount')}</span>
           <Controller
             control={form.control}
-            name="paymentMethodId"
-            render={({ field }) => (
-              <NamedResourceSelectField
-                kind="paymentMethods"
-                value={field.value}
-                onChange={field.onChange}
-                placeholder={t('paymentMethodPlaceholder')}
-                searchPlaceholder={t('searchPaymentMethodPlaceholder')}
-                emptyMessage={t('noPaymentMethodsFound')}
-                showMoreLabel={t('showMorePaymentMethods')}
-                showLessLabel={t('showLessPaymentMethods')}
-              />
-            )}
-          />
-          <FieldError
-            message={
-              form.formState.errors.paymentMethodId?.message &&
-              t(form.formState.errors.paymentMethodId.message)
-            }
-          />
-        </FieldSection>
-
-        <FieldSection>
-          <span>{t('account')}</span>
-          <Controller
-            control={form.control}
-            name="accountId"
+            name="accountExpenseId"
             render={({ field }) => (
               <NamedResourceSelectField
                 kind="accounts"
                 value={field.value}
                 onChange={field.onChange}
-                placeholder={t('accountPlaceholder')}
+                placeholder={t('fromAccountPlaceholder')}
                 searchPlaceholder={t('searchAccountPlaceholder')}
                 emptyMessage={t('noAccountsFound')}
                 showMoreLabel={t('showMoreAccounts')}
@@ -218,9 +159,44 @@ export const StandardTransactionForm = ({
           />
           <FieldError
             message={
-              form.formState.errors.accountId?.message &&
-              t(form.formState.errors.accountId.message)
+              form.formState.errors.accountExpenseId?.message &&
+              t(form.formState.errors.accountExpenseId.message)
             }
+          />
+        </FieldSection>
+
+        <FieldSection>
+          <span>{t('toAccount')}</span>
+          <Controller
+            control={form.control}
+            name="accountIncomeId"
+            render={({ field }) => (
+              <NamedResourceSelectField
+                kind="accounts"
+                value={field.value}
+                onChange={field.onChange}
+                placeholder={t('toAccountPlaceholder')}
+                searchPlaceholder={t('searchAccountPlaceholder')}
+                emptyMessage={t('noAccountsFound')}
+                showMoreLabel={t('showMoreAccounts')}
+                showLessLabel={t('showLessAccounts')}
+              />
+            )}
+          />
+          <FieldError
+            message={
+              form.formState.errors.accountIncomeId?.message &&
+              t(form.formState.errors.accountIncomeId.message)
+            }
+          />
+        </FieldSection>
+
+        <FieldSection className="sm:col-span-2">
+          <span>{t('additionalDescription')}</span>
+          <Input
+            {...form.register('additionalDescription')}
+            className={FIELD_CONTROL_CLASS_NAME}
+            placeholder={t('additionalDescriptionPlaceholder')}
           />
         </FieldSection>
 

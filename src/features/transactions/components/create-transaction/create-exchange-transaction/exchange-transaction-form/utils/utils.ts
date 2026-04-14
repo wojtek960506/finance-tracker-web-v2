@@ -1,14 +1,13 @@
 import { z } from 'zod';
 
 import type { Transaction } from '@transactions/api';
-
 import {
   extractAdditionalDescription,
   getDefaultTransactionDate,
   getTransactionAmountValue,
   getTransactionDateValue,
   getTransactionPairByType,
-} from '../shared-utils';
+} from '@transactions/components/create-transaction/shared';
 
 export const exchangeTransactionFormSchema = z.object({
   date: z.string().min(1, 'dateRequired'),

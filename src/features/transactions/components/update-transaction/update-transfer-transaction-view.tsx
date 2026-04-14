@@ -16,7 +16,7 @@ import {
   TransferTransactionForm,
   type TransferTransactionFormValues,
 } from '../create-transaction';
-import { toOptionalTrimmedString } from '../create-transaction/shared-utils';
+import { toOptionalTrimmedString } from '../create-transaction/shared';
 
 type UpdateTransferTransactionViewProps = {
   transaction: Transaction;

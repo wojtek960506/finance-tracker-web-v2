@@ -1,12 +1,11 @@
 import { z } from 'zod';
 
 import type { Transaction, TransactionType } from '@transactions/api';
-
 import {
   getDefaultTransactionDate,
   getTransactionAmountValue,
   getTransactionDateValue,
-} from '../shared-utils';
+} from '@transactions/components/create-transaction/shared';
 
 export const standardTransactionFormSchema = z.object({
   date: z.string().min(1, 'dateRequired'),

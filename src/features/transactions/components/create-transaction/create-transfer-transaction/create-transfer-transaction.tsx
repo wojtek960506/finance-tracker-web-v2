@@ -8,8 +8,8 @@ import {
   createTransferTransaction,
   type TransactionTransferDTO,
 } from '@transactions/api';
+import { toOptionalTrimmedString } from '@transactions/components/create-transaction/shared';
 
-import { toOptionalTrimmedString } from './shared-utils';
 import {
   getDefaultTransferTransactionFormValues,
   TransferTransactionForm,

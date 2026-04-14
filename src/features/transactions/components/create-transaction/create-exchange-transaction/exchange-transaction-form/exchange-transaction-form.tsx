@@ -4,40 +4,43 @@ import { useTranslation } from 'react-i18next';
 
 import { Card, DateInput, Input, NumberInput } from '@shared/ui';
 import {
+  FIELD_CONTROL_CLASS_NAME,
+  FieldError,
+  FieldSection,
+  TransactionFormActions,
+} from '@transactions/components/create-transaction/shared';
+import {
   CurrencySelectField,
   NamedResourceSelectField,
 } from '@transactions/components/shared';
 
-import { FieldError, FieldSection, TransactionFormActions } from '../shared-components';
-import { FIELD_CONTROL_CLASS_NAME } from '../shared-utils';
-
 import {
-  transferTransactionFormSchema,
-  type TransferTransactionFormValues,
+  exchangeTransactionFormSchema,
+  type ExchangeTransactionFormValues,
 } from './utils';
 
-type TransferTransactionFormProps = {
-  defaultValues: TransferTransactionFormValues;
+type ExchangeTransactionFormProps = {
+  defaultValues: ExchangeTransactionFormValues;
   isPending: boolean;
   mode: 'create' | 'update';
-  onSubmit: (values: TransferTransactionFormValues) => Promise<void> | void;
+  onSubmit: (values: ExchangeTransactionFormValues) => Promise<void> | void;
   onCancel: () => void;
 };
 
-export const TransferTransactionForm = ({
+export const ExchangeTransactionForm = ({
   defaultValues,
   isPending,
   mode,
   onSubmit,
   onCancel,
-}: TransferTransactionFormProps) => {
+}: ExchangeTransactionFormProps) => {
   const { t } = useTranslation('transactions');
-  const form = useForm<TransferTransactionFormValues>({
-    resolver: zodResolver(transferTransactionFormSchema),
+  const form = useForm<ExchangeTransactionFormValues>({
+    resolver: zodResolver(exchangeTransactionFormSchema),
     defaultValues,
   });
 
-  const handleSubmit: SubmitHandler<TransferTransactionFormValues> = async (values) => {
+  const handleSubmit: SubmitHandler<ExchangeTransactionFormValues> = async (values) => {
     await onSubmit(values);
   };
 
@@ -89,11 +92,37 @@ export const TransferTransactionForm = ({
           />
         </FieldSection>
 
-        <FieldSection>
-          <span>{t('amount')}</span>
+        <FieldSection className="sm:col-span-2">
+          <span>{t('account')}</span>
           <Controller
             control={form.control}
-            name="amount"
+            name="accountId"
+            render={({ field }) => (
+              <NamedResourceSelectField
+                kind="accounts"
+                value={field.value}
+                onChange={field.onChange}
+                placeholder={t('accountPlaceholder')}
+                searchPlaceholder={t('searchAccountPlaceholder')}
+                emptyMessage={t('noAccountsFound')}
+                showMoreLabel={t('showMoreAccounts')}
+                showLessLabel={t('showLessAccounts')}
+              />
+            )}
+          />
+          <FieldError
+            message={
+              form.formState.errors.accountId?.message &&
+              t(form.formState.errors.accountId.message)
+            }
+          />
+        </FieldSection>
+
+        <FieldSection>
+          <span>{t('amountExpense')}</span>
+          <Controller
+            control={form.control}
+            name="amountExpense"
             render={({ field }) => (
               <NumberInput
                 value={field.value}
@@ -107,17 +136,17 @@ export const TransferTransactionForm = ({
           />
           <FieldError
             message={
-              form.formState.errors.amount?.message &&
-              t(form.formState.errors.amount.message)
+              form.formState.errors.amountExpense?.message &&
+              t(form.formState.errors.amountExpense.message)
             }
           />
         </FieldSection>
 
         <FieldSection>
-          <span>{t('currency')}</span>
+          <span>{t('expenseCurrency')}</span>
           <Controller
             control={form.control}
-            name="currency"
+            name="currencyExpense"
             render={({ field }) => (
               <CurrencySelectField
                 value={field.value}
@@ -130,60 +159,55 @@ export const TransferTransactionForm = ({
           />
           <FieldError
             message={
-              form.formState.errors.currency?.message &&
-              t(form.formState.errors.currency.message)
+              form.formState.errors.currencyExpense?.message &&
+              t(form.formState.errors.currencyExpense.message)
             }
           />
         </FieldSection>
 
         <FieldSection>
-          <span>{t('fromAccount')}</span>
+          <span>{t('amountIncome')}</span>
           <Controller
             control={form.control}
-            name="accountExpenseId"
+            name="amountIncome"
             render={({ field }) => (
-              <NamedResourceSelectField
-                kind="accounts"
+              <NumberInput
                 value={field.value}
-                onChange={field.onChange}
-                placeholder={t('fromAccountPlaceholder')}
-                searchPlaceholder={t('searchAccountPlaceholder')}
-                emptyMessage={t('noAccountsFound')}
-                showMoreLabel={t('showMoreAccounts')}
-                showLessLabel={t('showLessAccounts')}
+                onValueChange={field.onChange}
+                decimalPlaces={2}
+                step="0.01"
+                min="0"
+                className={FIELD_CONTROL_CLASS_NAME}
               />
             )}
           />
           <FieldError
             message={
-              form.formState.errors.accountExpenseId?.message &&
-              t(form.formState.errors.accountExpenseId.message)
+              form.formState.errors.amountIncome?.message &&
+              t(form.formState.errors.amountIncome.message)
             }
           />
         </FieldSection>
 
         <FieldSection>
-          <span>{t('toAccount')}</span>
+          <span>{t('incomeCurrency')}</span>
           <Controller
             control={form.control}
-            name="accountIncomeId"
+            name="currencyIncome"
             render={({ field }) => (
-              <NamedResourceSelectField
-                kind="accounts"
+              <CurrencySelectField
                 value={field.value}
                 onChange={field.onChange}
-                placeholder={t('toAccountPlaceholder')}
-                searchPlaceholder={t('searchAccountPlaceholder')}
-                emptyMessage={t('noAccountsFound')}
-                showMoreLabel={t('showMoreAccounts')}
-                showLessLabel={t('showLessAccounts')}
+                placeholder={t('currencyPlaceholder')}
+                searchPlaceholder={t('searchCurrencyPlaceholder')}
+                emptyMessage={t('noCurrenciesFound')}
               />
             )}
           />
           <FieldError
             message={
-              form.formState.errors.accountIncomeId?.message &&
-              t(form.formState.errors.accountIncomeId.message)
+              form.formState.errors.currencyIncome?.message &&
+              t(form.formState.errors.currencyIncome.message)
             }
           />
         </FieldSection>
