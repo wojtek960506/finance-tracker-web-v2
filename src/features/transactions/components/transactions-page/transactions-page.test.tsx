@@ -8,7 +8,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { makeTransaction } from '@test-utils/factories/transaction';
 import type { TransactionsResponse } from '@transactions/api';
 
-import { TransactionsList } from './transactions-list';
+import { TransactionsPage } from './transactions-page';
 
 const mocks = vi.hoisted(() => ({
   getTransactions: vi.fn(),
@@ -50,17 +50,17 @@ vi.mock('@shared/ui', () => ({
   Drawer: ({ children }: { children: ReactNode }) => <div>{children}</div>,
 }));
 
-vi.mock('./transaction-preview', () => ({
+vi.mock('@transactions/components/transactions-list/transaction-preview', () => ({
   TransactionPreview: ({ transaction }: { transaction: { description: string } }) => (
     <li>{transaction.description}</li>
   ),
 }));
 
-vi.mock('./transactions-filters-panel', () => ({
+vi.mock('@transactions/components/transactions-filters', () => ({
   TransactionsFiltersPanel: () => <div>filters-panel</div>,
 }));
 
-vi.mock('./transactions-totals-panel', () => ({
+vi.mock('@transactions/components/transactions-totals', () => ({
   TransactionsTotalsPanel: () => <div>totals-panel</div>,
 }));
 
@@ -72,7 +72,7 @@ const emptyResponse: TransactionsResponse = {
   items: [],
 };
 
-describe('TransactionsList', () => {
+describe('TransactionsPage', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     mocks.mediaQueries['(min-width: 640px)'] = true;
@@ -89,7 +89,7 @@ describe('TransactionsList', () => {
     render(
       <QueryClientProvider client={client}>
         <MemoryRouter>
-          <TransactionsList />
+          <TransactionsPage />
         </MemoryRouter>
       </QueryClientProvider>,
     );
@@ -106,7 +106,7 @@ describe('TransactionsList', () => {
     render(
       <QueryClientProvider client={client}>
         <MemoryRouter>
-          <TransactionsList />
+          <TransactionsPage />
         </MemoryRouter>
       </QueryClientProvider>,
     );
@@ -123,7 +123,7 @@ describe('TransactionsList', () => {
     render(
       <QueryClientProvider client={client}>
         <MemoryRouter>
-          <TransactionsList />
+          <TransactionsPage />
         </MemoryRouter>
       </QueryClientProvider>,
     );
@@ -172,7 +172,7 @@ describe('TransactionsList', () => {
     render(
       <QueryClientProvider client={client}>
         <MemoryRouter>
-          <TransactionsList />
+          <TransactionsPage />
         </MemoryRouter>
       </QueryClientProvider>,
     );
@@ -198,7 +198,7 @@ describe('TransactionsList', () => {
     render(
       <QueryClientProvider client={client}>
         <MemoryRouter>
-          <TransactionsList />
+          <TransactionsPage />
         </MemoryRouter>
       </QueryClientProvider>,
     );
@@ -241,7 +241,7 @@ describe('TransactionsList', () => {
     render(
       <QueryClientProvider client={client}>
         <MemoryRouter>
-          <TransactionsList />
+          <TransactionsPage />
         </MemoryRouter>
       </QueryClientProvider>,
     );
@@ -270,7 +270,7 @@ describe('TransactionsList', () => {
     render(
       <QueryClientProvider client={client}>
         <MemoryRouter>
-          <TransactionsList />
+          <TransactionsPage />
         </MemoryRouter>
       </QueryClientProvider>,
     );
@@ -307,7 +307,7 @@ describe('TransactionsList', () => {
     render(
       <QueryClientProvider client={client}>
         <MemoryRouter>
-          <TransactionsList />
+          <TransactionsPage />
         </MemoryRouter>
       </QueryClientProvider>,
     );
@@ -339,7 +339,7 @@ describe('TransactionsList', () => {
     render(
       <QueryClientProvider client={client}>
         <MemoryRouter>
-          <TransactionsList />
+          <TransactionsPage />
         </MemoryRouter>
       </QueryClientProvider>,
     );

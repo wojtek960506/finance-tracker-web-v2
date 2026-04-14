@@ -27,6 +27,7 @@ vi.mock('@transactions/components', () => ({
   TrashedTransactionDetails: () => <div>trash-details</div>,
   TrashedTransactionsList: () => <div>trash-list</div>,
   TransactionDetails: () => <div>details</div>,
+  TransactionsPage: () => <div>page</div>,
   TransactionsList: () => <div>list</div>,
   UpdateTransaction: () => <div>update</div>,
 }));

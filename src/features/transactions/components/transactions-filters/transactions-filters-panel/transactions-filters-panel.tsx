@@ -19,13 +19,13 @@ import type { TransactionFilters } from '@transactions/api';
 import { CurrencySelectField } from '@transactions/components/shared';
 import { getTransactionNamedResourceLabel } from '@transactions/utils/get-transaction-named-resource-label';
 
-import { NamedResourceFilterSelectField } from './named-resource-filter-select-field';
+import { NamedResourceFilterSelectField } from '../named-resource-filter-select-field';
 import {
   getTransactionFiltersFormDefaults,
   normalizeTransactionFiltersFormValues,
   transactionFiltersFormSchema,
   type TransactionFiltersFormValues,
-} from './transactions-filters-form';
+} from '../transactions-filters-form';
 
 type TransactionsFiltersPanelProps = {
   appliedFilters: TransactionFilters;

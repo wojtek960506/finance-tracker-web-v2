@@ -9,7 +9,7 @@ import {
   CreateTransaction,
   CreateTransferTransaction,
   TransactionDetails,
-  TransactionsList,
+  TransactionsPage,
   TrashedTransactionDetails,
   TrashedTransactionsList,
   UpdateTransaction,
@@ -46,7 +46,7 @@ export const PUBLIC_APP_ROUTES: AppRouteConfig[] = [
 export const PROTECTED_APP_ROUTES: AppRouteConfig[] = [
   {
     path: '/transactions',
-    element: <TransactionsList />,
+    element: <TransactionsPage />,
     title: { namespace: 'navigation', key: 'transactions' },
   },
   {
