@@ -7,13 +7,19 @@ import { Controller, useForm, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import { getNamedResources, type INamedResource } from '@named-resources/api';
-import { Button, Card, DateInput, Label, NumberInput } from '@shared/ui';
+import {
+  Button,
+  Card,
+  DateInput,
+  Label,
+  NumberInput,
+  SearchableMultiSelect,
+} from '@shared/ui';
 import type { TransactionFilters } from '@transactions/api';
 import { CurrencySelectField } from '@transactions/components/shared';
 import { getTransactionNamedResourceLabel } from '@transactions/utils/get-transaction-named-resource-label';
 
 import { NamedResourceFilterSelectField } from './named-resource-filter-select-field';
-import { SearchableMultiSelect } from './searchable-multi-select';
 import {
   getTransactionFiltersFormDefaults,
   normalizeTransactionFiltersFormValues,

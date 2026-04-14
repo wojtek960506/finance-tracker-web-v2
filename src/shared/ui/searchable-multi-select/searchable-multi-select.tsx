@@ -11,7 +11,9 @@ import {
   useState,
 } from 'react';
 
-import { Button, Card, type SearchableSelectGroup } from '@shared/ui';
+import { Button } from '@shared/ui/button';
+import { Card } from '@shared/ui/card';
+import type { SearchableSelectGroup } from '@shared/ui/searchable-select';
 
 type SearchableMultiSelectProps = {
   values: string[];
