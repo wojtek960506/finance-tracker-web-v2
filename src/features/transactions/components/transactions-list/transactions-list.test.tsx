@@ -13,6 +13,11 @@ import { TransactionsList } from './transactions-list';
 const mocks = vi.hoisted(() => ({
   getTransactions: vi.fn(),
   navigate: vi.fn(),
+  mediaQueries: {
+    '(min-width: 640px)': true,
+    '(min-width: 1024px)': false,
+    '(min-width: 1280px)': false,
+  } as Record<string, boolean>,
 }));
 
 vi.mock('react-i18next', () => ({
@@ -20,7 +25,7 @@ vi.mock('react-i18next', () => ({
 }));
 
 vi.mock('@shared/hooks', () => ({
-  useMediaQuery: () => true,
+  useMediaQuery: (query: string) => Boolean(mocks.mediaQueries[query]),
 }));
 
 vi.mock('@transactions/api', () => ({
@@ -42,12 +47,21 @@ vi.mock('@shared/ui', () => ({
       {children}
     </button>
   ),
+  Drawer: ({ children }: { children: ReactNode }) => <div>{children}</div>,
 }));
 
 vi.mock('./transaction-preview', () => ({
   TransactionPreview: ({ transaction }: { transaction: { description: string } }) => (
     <li>{transaction.description}</li>
   ),
+}));
+
+vi.mock('./transactions-filters-panel', () => ({
+  TransactionsFiltersPanel: () => <div>filters-panel</div>,
+}));
+
+vi.mock('./transactions-totals-panel', () => ({
+  TransactionsTotalsPanel: () => <div>totals-panel</div>,
 }));
 
 const emptyResponse: TransactionsResponse = {
@@ -61,6 +75,9 @@ const emptyResponse: TransactionsResponse = {
 describe('TransactionsList', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    mocks.mediaQueries['(min-width: 640px)'] = true;
+    mocks.mediaQueries['(min-width: 1024px)'] = false;
+    mocks.mediaQueries['(min-width: 1280px)'] = false;
   });
 
   it('renders loading state', () => {
@@ -193,24 +210,29 @@ describe('TransactionsList', () => {
 
   it('switches to a different transactions page', async () => {
     const user = userEvent.setup();
-    mocks.getTransactions.mockImplementation((page?: number) =>
-      Promise.resolve(
-        page === 2
-          ? {
-              ...emptyResponse,
-              page: 2,
-              total: 40,
-              totalPages: 2,
-              items: [makeTransaction({ id: 'tx-2', description: 'Page 2 transaction' })],
-            }
-          : {
-              ...emptyResponse,
-              page: 1,
-              total: 40,
-              totalPages: 2,
-              items: [makeTransaction({ id: 'tx-1', description: 'Page 1 transaction' })],
-            },
-      ),
+    mocks.getTransactions.mockImplementation(
+      ({ page }: { page?: number; filters?: Record<string, unknown> }) =>
+        Promise.resolve(
+          page === 2
+            ? {
+                ...emptyResponse,
+                page: 2,
+                total: 40,
+                totalPages: 2,
+                items: [
+                  makeTransaction({ id: 'tx-2', description: 'Page 2 transaction' }),
+                ],
+              }
+            : {
+                ...emptyResponse,
+                page: 1,
+                total: 40,
+                totalPages: 2,
+                items: [
+                  makeTransaction({ id: 'tx-1', description: 'Page 1 transaction' }),
+                ],
+              },
+        ),
     );
     const client = new QueryClient({
       defaultOptions: { queries: { retry: false } },
@@ -229,8 +251,8 @@ describe('TransactionsList', () => {
     await user.click(screen.getByRole('button', { name: '2' }));
 
     expect(await screen.findByText('Page 2 transaction')).toBeInTheDocument();
-    expect(mocks.getTransactions).toHaveBeenCalledWith(1);
-    expect(mocks.getTransactions).toHaveBeenCalledWith(2);
+    expect(mocks.getTransactions).toHaveBeenCalledWith({ page: 1, filters: {} });
+    expect(mocks.getTransactions).toHaveBeenCalledWith({ page: 2, filters: {} });
   });
 
   it('renders compact pagination with ellipses around current page', async () => {
@@ -267,5 +289,67 @@ describe('TransactionsList', () => {
     expect(screen.getAllByText('...')).toHaveLength(2);
     expect(screen.getByRole('button', { name: 'previousPage' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'nextPage' })).toBeInTheDocument();
+  });
+
+  it('uses a shared side area for totals and filters on lg screens', async () => {
+    const user = userEvent.setup();
+    mocks.mediaQueries['(min-width: 1024px)'] = true;
+    mocks.getTransactions.mockResolvedValueOnce({
+      ...emptyResponse,
+      total: 1,
+      totalPages: 1,
+      items: [makeTransaction({ id: 'tx-1', description: 'Groceries' })],
+    });
+    const client = new QueryClient({
+      defaultOptions: { queries: { retry: false } },
+    });
+
+    render(
+      <QueryClientProvider client={client}>
+        <MemoryRouter>
+          <TransactionsList />
+        </MemoryRouter>
+      </QueryClientProvider>,
+    );
+
+    expect(await screen.findByText('Groceries')).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: /showFilters/i }));
+    expect(screen.getByText('filters-panel')).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: /showTotals/i }));
+    expect(screen.getByText('totals-panel')).toBeInTheDocument();
+    expect(screen.queryByText('filters-panel')).not.toBeInTheDocument();
+  });
+
+  it('shows totals on the left and filters on the right on xl screens', async () => {
+    const user = userEvent.setup();
+    mocks.mediaQueries['(min-width: 1024px)'] = true;
+    mocks.mediaQueries['(min-width: 1280px)'] = true;
+    mocks.getTransactions.mockResolvedValueOnce({
+      ...emptyResponse,
+      total: 1,
+      totalPages: 1,
+      items: [makeTransaction({ id: 'tx-1', description: 'Groceries' })],
+    });
+    const client = new QueryClient({
+      defaultOptions: { queries: { retry: false } },
+    });
+
+    render(
+      <QueryClientProvider client={client}>
+        <MemoryRouter>
+          <TransactionsList />
+        </MemoryRouter>
+      </QueryClientProvider>,
+    );
+
+    expect(await screen.findByText('Groceries')).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: /showTotals/i }));
+    await user.click(screen.getByRole('button', { name: /showFilters/i }));
+
+    expect(screen.getByText('totals-panel')).toBeInTheDocument();
+    expect(screen.getByText('filters-panel')).toBeInTheDocument();
   });
 });

@@ -116,7 +116,7 @@ describe('SearchableSelect', () => {
 
     await user.click(screen.getByRole('button', { name: /banana/i }));
     expect(screen.getByDisplayValue('')).toBeInTheDocument();
-    const overlay = container.querySelector('button.fixed.inset-0');
+    const overlay = container.querySelector('div.fixed.inset-0');
     expect(overlay).toBeInTheDocument();
     await user.click(overlay as HTMLElement);
     expect(screen.queryByPlaceholderText('Search')).not.toBeInTheDocument();

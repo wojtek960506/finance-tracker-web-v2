@@ -83,12 +83,53 @@ export type TransactionsResponse = {
   items: Transaction[];
 };
 
+export type TransactionFilters = {
+  startDate?: string;
+  endDate?: string;
+  minAmount?: number;
+  maxAmount?: number;
+  transactionType?: TransactionType;
+  currency?: string;
+  categoryId?: string;
+  excludeCategoryIds?: string[];
+  paymentMethodId?: string;
+  accountId?: string;
+};
+
+export type GetTransactionsQuery = {
+  page?: number;
+  filters?: TransactionFilters;
+};
+
 export type TrashedTransactionsResponse = {
   page: number;
   limit: number;
   total: number;
   totalPages: number;
   items: TrashedTransaction[];
+};
+
+export type TransactionTotalsDetails = {
+  totalAmount: number;
+  totalItems: number;
+  averageAmount: number;
+  maxAmount: number;
+  minAmount: number;
+};
+
+export type TransactionTotalsByCurrency = {
+  totalItems: number;
+  expense: TransactionTotalsDetails;
+  income: TransactionTotalsDetails;
+};
+
+export type TransactionTotalsResponse = {
+  byCurrency: Record<string, TransactionTotalsByCurrency>;
+  overall: {
+    totalItems: number;
+    expense: { totalItems: number };
+    income: { totalItems: number };
+  };
 };
 
 export type UpdateManyReply = {

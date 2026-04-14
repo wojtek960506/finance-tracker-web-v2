@@ -13,6 +13,7 @@ type DrawerProps = {
   children: ReactNode;
   restoreFocusRef?: RefObject<HTMLElement | null>;
   ariaLabel?: string;
+  panelClassName?: string;
 };
 
 export const Drawer = ({
@@ -22,6 +23,7 @@ export const Drawer = ({
   children,
   restoreFocusRef,
   ariaLabel = 'Drawer',
+  panelClassName,
 }: DrawerProps) => {
   const navRef = useRef<HTMLElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
@@ -91,7 +93,7 @@ export const Drawer = ({
       {/* Overlay */}
       <div
         className={clsx(
-          'z-100 fixed inset-0 bg-fg/50 transition-opacity duration-300',
+          'z-300 fixed inset-0 bg-fg/50 transition-opacity duration-300',
           `${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`,
         )}
         onClick={onClose}
@@ -107,7 +109,7 @@ export const Drawer = ({
         aria-label={ariaLabel}
         tabIndex={-1}
         className={clsx(
-          'z-100 fixed flex flex-col top-0 h-full w-72 bg-bg shadow-lg transform ',
+          'z-400 fixed flex flex-col top-0 h-full w-72 bg-bg shadow-lg transform ',
           'transition-transform duration-300',
           fromLeft ? 'left-0' : 'right-0',
           `${
@@ -119,6 +121,7 @@ export const Drawer = ({
                 ? 'translate-x-0'
                 : 'translate-x-full'
           }`,
+          panelClassName,
         )}
       >
         <div

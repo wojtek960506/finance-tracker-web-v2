@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { Check, ChevronDown, Search } from 'lucide-react';
+import { Check, ChevronDown, Search, X } from 'lucide-react';
 import {
   type KeyboardEvent as ReactKeyboardEvent,
   type ReactNode,
@@ -11,41 +11,23 @@ import {
   useState,
 } from 'react';
 
-import { Button, Card } from '@ui';
+import { Button, Card, type SearchableSelectGroup } from '@shared/ui';
 
-export type SearchableSelectOption = {
-  value: string;
-  label: string;
-  searchText?: string;
-  hint?: string;
-  disabled?: boolean;
-  icon?: ReactNode;
-};
-
-export type SearchableSelectGroup = {
-  key: string;
-  label?: string;
-  options: SearchableSelectOption[];
-};
-
-type SearchableSelectProps = {
-  value: string;
+type SearchableMultiSelectProps = {
+  values: string[];
   groups: SearchableSelectGroup[];
-  onChange: (value: string) => void;
+  onChange: (values: string[]) => void;
   placeholder: string;
   searchPlaceholder: string;
   emptyMessage: string;
   disabled?: boolean;
   footer?: ReactNode;
-  selectedOption?: SearchableSelectOption;
-  isOpen?: boolean;
-  onOpenChange?: (isOpen: boolean) => void;
 };
 
 const normalizeSearchValue = (value: string) => value.trim().toLocaleLowerCase();
 
-export const SearchableSelect = ({
-  value,
+export const SearchableMultiSelect = ({
+  values,
   groups,
   onChange,
   placeholder,
@@ -53,30 +35,19 @@ export const SearchableSelect = ({
   emptyMessage,
   disabled = false,
   footer,
-  selectedOption: providedSelectedOption,
-  isOpen: controlledIsOpen,
-  onOpenChange,
-}: SearchableSelectProps) => {
-  const [uncontrolledIsOpen, setUncontrolledIsOpen] = useState(false);
+}: SearchableMultiSelectProps) => {
+  const [isOpen, setIsOpen] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
   const ignoreNextTriggerClickRef = useRef(false);
   const listboxId = useId();
-  const isOpen = controlledIsOpen ?? uncontrolledIsOpen;
 
-  const setOpen = useCallback(
-    (nextIsOpen: boolean) => {
-      if (controlledIsOpen === undefined) setUncontrolledIsOpen(nextIsOpen);
-      onOpenChange?.(nextIsOpen);
-    },
-    [controlledIsOpen, onOpenChange],
-  );
-
-  const selectedOption = useMemo(
+  const selectedOptions = useMemo(
     () =>
-      providedSelectedOption ??
-      groups.flatMap((group) => group.options).find((option) => option.value === value),
-    [groups, providedSelectedOption, value],
+      groups
+        .flatMap((group) => group.options)
+        .filter((option) => values.includes(option.value)),
+    [groups, values],
   );
 
   const filteredGroups = useMemo(() => {
@@ -102,32 +73,11 @@ export const SearchableSelect = ({
     inputRef.current?.focus();
   }, [isOpen]);
 
-  const handleTriggerClick = () => {
-    if (ignoreNextTriggerClickRef.current) {
-      ignoreNextTriggerClickRef.current = false;
-      return;
-    }
-
-    const nextIsOpen = !isOpen;
-    setOpen(nextIsOpen);
-    if (!nextIsOpen) setSearchValue('');
-  };
-
-  const handleTriggerKeyDown = (event: ReactKeyboardEvent<HTMLButtonElement>) => {
-    if (event.key !== 'ArrowDown' && event.key !== 'Enter' && event.key !== ' ') return;
-
-    event.preventDefault();
-    setOpen(true);
-  };
-
-  const closeDropdown = useCallback(
-    (ignoreNextTriggerClick = false) => {
-      ignoreNextTriggerClickRef.current = ignoreNextTriggerClick;
-      setOpen(false);
-      setSearchValue('');
-    },
-    [setOpen],
-  );
+  const closeDropdown = useCallback((ignoreNextTriggerClick = false) => {
+    ignoreNextTriggerClickRef.current = ignoreNextTriggerClick;
+    setIsOpen(false);
+    setSearchValue('');
+  }, []);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -143,7 +93,32 @@ export const SearchableSelect = ({
     return () => {
       document.removeEventListener('keydown', handleEscape);
     };
-  }, [isOpen, closeDropdown]);
+  }, [closeDropdown, isOpen]);
+
+  const handleTriggerClick = () => {
+    if (ignoreNextTriggerClickRef.current) {
+      ignoreNextTriggerClickRef.current = false;
+      return;
+    }
+
+    setIsOpen((prev) => !prev);
+    if (isOpen) setSearchValue('');
+  };
+
+  const handleTriggerKeyDown = (event: ReactKeyboardEvent<HTMLButtonElement>) => {
+    if (event.key !== 'ArrowDown' && event.key !== 'Enter' && event.key !== ' ') return;
+
+    event.preventDefault();
+    setIsOpen(true);
+  };
+
+  const toggleValue = (nextValue: string) => {
+    const nextValues = values.includes(nextValue)
+      ? values.filter((value) => value !== nextValue)
+      : [...values, nextValue];
+
+    onChange(nextValues);
+  };
 
   return (
     <div className="relative min-w-0">
@@ -156,21 +131,36 @@ export const SearchableSelect = ({
         aria-controls={listboxId}
         className={clsx(
           'w-full justify-between gap-3 rounded-xl border border-fg bg-bg px-3 py-2 text-left',
-          !selectedOption && 'text-text-muted',
+          selectedOptions.length === 0 && 'text-text-muted',
         )}
         onClick={handleTriggerClick}
         onKeyDown={handleTriggerKeyDown}
       >
-        <span className="flex min-w-0 items-center gap-2">
-          {selectedOption?.icon && (
-            <span className="shrink-0 text-text-muted">{selectedOption.icon}</span>
-          )}
-          <span className="truncate">{selectedOption?.label ?? placeholder}</span>
+        <span className="min-w-0 truncate">
+          {selectedOptions.length > 0
+            ? selectedOptions.map((option) => option.label).join(', ')
+            : placeholder}
         </span>
         <ChevronDown
           className={clsx('size-4 shrink-0 transition-transform', isOpen && 'rotate-180')}
         />
       </Button>
+
+      {selectedOptions.length > 0 ? (
+        <div className="mt-2 flex flex-wrap gap-2">
+          {selectedOptions.map((option) => (
+            <button
+              key={option.value}
+              type="button"
+              className="inline-flex max-w-full items-center gap-1 rounded-full border border-fg/20 bg-bg px-2 py-1 text-xs font-medium text-fg transition hover:border-fg/40"
+              onClick={() => toggleValue(option.value)}
+            >
+              <span className="truncate">{option.label}</span>
+              <X className="size-3" aria-hidden="true" />
+            </button>
+          ))}
+        </div>
+      ) : null}
 
       {isOpen && (
         <>
@@ -215,31 +205,32 @@ export const SearchableSelect = ({
             <div
               id={listboxId}
               role="listbox"
+              aria-multiselectable="true"
               className="flex max-h-80 flex-col gap-3 overflow-y-auto"
             >
-              {filteredGroups.length === 0 && (
+              {filteredGroups.length === 0 ? (
                 <p className="px-1 py-2 text-sm text-text-muted">{emptyMessage}</p>
-              )}
+              ) : null}
 
               {filteredGroups.map((group) => (
                 <div key={group.key} className="flex flex-col gap-0">
-                  {group.label && (
+                  {group.label ? (
                     <p className="px-1 py-1 text-xs font-semibold uppercase tracking-wide text-text-muted">
                       {group.label}
                     </p>
-                  )}
+                  ) : null}
 
                   {group.options.map((option) => {
-                    const isSelected = option.value === value;
+                    const isSelected = values.includes(option.value);
 
                     return (
                       <Button
                         key={option.value}
                         type="button"
                         role="option"
-                        variant="ghost"
                         aria-selected={isSelected}
                         disabled={option.disabled}
+                        variant="ghost"
                         className={clsx(
                           'justify-between rounded-xl px-3 py-2 text-left',
                           isSelected && 'bg-bt-primary text-white hover:bg-bt-primary',
@@ -248,12 +239,11 @@ export const SearchableSelect = ({
                         onClick={(event) => {
                           event.preventDefault();
                           event.stopPropagation();
-                          onChange(option.value);
-                          closeDropdown(true);
+                          toggleValue(option.value);
                         }}
                       >
                         <span className="flex min-w-0 items-center gap-2">
-                          {option.icon && (
+                          {option.icon ? (
                             <span
                               className={clsx(
                                 'shrink-0',
@@ -262,26 +252,10 @@ export const SearchableSelect = ({
                             >
                               {option.icon}
                             </span>
-                          )}
-
-                          <span className="flex min-w-0 flex-col">
-                            <span className="truncate">{option.label}</span>
-                            {option.hint && (
-                              <span
-                                className={clsx(
-                                  'truncate text-xs',
-                                  isSelected ? 'text-white/80' : 'text-text-muted',
-                                )}
-                              >
-                                {option.hint}
-                              </span>
-                            )}
-                          </span>
+                          ) : null}
+                          <span className="truncate">{option.label}</span>
                         </span>
-
-                        {isSelected && (
-                          <Check className="size-4 shrink-0" aria-hidden="true" />
-                        )}
+                        {isSelected ? <Check className="size-4 shrink-0" /> : null}
                       </Button>
                     );
                   })}
