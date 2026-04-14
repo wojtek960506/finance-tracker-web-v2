@@ -11,7 +11,7 @@ import { getTransactionNamedResourceLabel } from '@transactions/utils/get-transa
 import { getTransactionAmountPresentation } from '@transactions/utils/transaction-amount';
 import { ButtonLink } from '@ui';
 
-import { Detail } from './detail';
+import { Detail } from '../detail';
 
 type TransactionWithReference = TransactionDetails | TrashedTransactionDetails;
 type ReferenceDetail = {

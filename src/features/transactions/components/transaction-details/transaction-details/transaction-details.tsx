@@ -15,7 +15,7 @@ import {
 } from '@transactions/components/shared';
 import { Button } from '@ui';
 
-import { TransactionDetailsCard } from './transaction-details-card';
+import { TransactionDetailsCard } from '../transaction-details-card';
 
 export const TransactionDetails = () => {
   const { t } = useTranslation('transactions');

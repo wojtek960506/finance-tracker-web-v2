@@ -8,8 +8,8 @@ import { getTransactionNamedResourceLabel } from '@transactions/utils/get-transa
 import { getTransactionAmountPresentation } from '@transactions/utils/transaction-amount';
 import { Card, HoverLink } from '@ui';
 
-import { AdditionalDetails } from './additional-details';
-import { Detail } from './detail';
+import { AdditionalDetails } from '../additional-details';
+import { Detail } from '../detail';
 
 type TransactionDetailsCardProps = {
   transaction: TransactionDetails | TrashedTransactionDetails;

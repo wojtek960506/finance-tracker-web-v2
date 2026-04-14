@@ -89,7 +89,7 @@ vi.mock('@transactions/components/shared', async () => {
   };
 });
 
-vi.mock('./transaction-preview', () => ({
+vi.mock('../transaction-preview', () => ({
   TransactionPreview: ({ transaction }: { transaction: { description: string } }) => (
     <li>{transaction.description}</li>
   ),

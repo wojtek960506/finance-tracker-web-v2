@@ -2,8 +2,8 @@ import { useTranslation } from 'react-i18next';
 
 import type { Transaction } from '@transactions/api';
 
-import { TransactionPreview } from './transaction-preview';
-import { TransactionsPagination } from './transactions-pagination';
+import { TransactionPreview } from '../transaction-preview';
+import { TransactionsPagination } from '../transactions-pagination';
 
 type TransactionsListProps = {
   transactions: Transaction[];

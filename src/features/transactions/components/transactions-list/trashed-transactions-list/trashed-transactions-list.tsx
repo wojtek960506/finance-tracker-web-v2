@@ -14,8 +14,8 @@ import {
 } from '@transactions/components/shared';
 import { Button, Input, Label } from '@ui';
 
-import { TransactionPreview } from './transaction-preview';
-import { TransactionsPagination } from './transactions-pagination';
+import { TransactionPreview } from '../transaction-preview';
+import { TransactionsPagination } from '../transactions-pagination';
 
 const EMPTY_TRASH_CONFIRMATION_VALUE = 'DELETE';
 

@@ -97,7 +97,7 @@ vi.mock('@transactions/components/shared', async () => {
   };
 });
 
-vi.mock('./transaction-details-card', () => ({
+vi.mock('../transaction-details-card', () => ({
   TransactionDetailsCard: ({ transaction }: { transaction: { description: string } }) => (
     <div data-testid="transaction-details-card">{transaction.description}</div>
   ),
