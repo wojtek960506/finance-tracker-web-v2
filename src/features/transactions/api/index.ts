@@ -4,6 +4,7 @@ export * from './create-transfer-transaction';
 export * from './delete-trashed-transaction';
 export * from './empty-trash';
 export * from './get-transaction';
+export * from './get-transaction-totals';
 export * from './get-transactions';
 export * from './get-trashed-transaction';
 export * from './get-trashed-transactions';

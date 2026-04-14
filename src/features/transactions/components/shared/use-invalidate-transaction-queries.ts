@@ -2,6 +2,7 @@ import { useQueryClient } from '@tanstack/react-query';
 
 type InvalidateTransactionQueriesOptions = {
   includeTransactions?: boolean;
+  includeTransactionTotals?: boolean;
   includeTransactionDetails?: boolean;
   includeTrashedTransactions?: boolean;
   includeTrashedTransactionDetails?: boolean;
@@ -18,6 +19,7 @@ export const useInvalidateTransactionQueries = () => {
   return async (options: InvalidateTransactionQueriesOptions = {}) => {
     const {
       includeTransactions = true,
+      includeTransactionTotals = true,
       includeTransactionDetails = true,
       includeTrashedTransactions = true,
       includeTrashedTransactionDetails = true,
@@ -51,6 +53,9 @@ export const useInvalidateTransactionQueries = () => {
     await Promise.all([
       ...(includeTransactions
         ? [queryClient.invalidateQueries({ queryKey: ['transactions'] })]
+        : []),
+      ...(includeTransactionTotals
+        ? [queryClient.invalidateQueries({ queryKey: ['transaction-totals'] })]
         : []),
       ...(includeTransactionDetails
         ? [queryClient.invalidateQueries({ queryKey: ['transaction'] })]

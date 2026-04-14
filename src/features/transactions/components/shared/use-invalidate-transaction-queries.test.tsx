@@ -23,6 +23,9 @@ describe('useInvalidateTransactionQueries', () => {
     await result.current();
 
     expect(invalidateQueriesSpy).toHaveBeenCalledWith({ queryKey: ['transactions'] });
+    expect(invalidateQueriesSpy).toHaveBeenCalledWith({
+      queryKey: ['transaction-totals'],
+    });
     expect(invalidateQueriesSpy).toHaveBeenCalledWith({ queryKey: ['transaction'] });
     expect(invalidateQueriesSpy).toHaveBeenCalledWith({
       queryKey: ['trashed-transactions'],
@@ -47,6 +50,7 @@ describe('useInvalidateTransactionQueries', () => {
 
     await result.current({
       includeTransactions: false,
+      includeTransactionTotals: false,
       includeTransactionDetails: false,
       includeTrashedTransactions: false,
       includeTrashedTransactionDetails: false,

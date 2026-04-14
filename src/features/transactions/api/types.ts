@@ -109,6 +109,29 @@ export type TrashedTransactionsResponse = {
   items: TrashedTransaction[];
 };
 
+export type TransactionTotalsDetails = {
+  totalAmount: number;
+  totalItems: number;
+  averageAmount: number;
+  maxAmount: number;
+  minAmount: number;
+};
+
+export type TransactionTotalsByCurrency = {
+  totalItems: number;
+  expense: TransactionTotalsDetails;
+  income: TransactionTotalsDetails;
+};
+
+export type TransactionTotalsResponse = {
+  byCurrency: Record<string, TransactionTotalsByCurrency>;
+  overall: {
+    totalItems: number;
+    expense: { totalItems: number };
+    income: { totalItems: number };
+  };
+};
+
 export type UpdateManyReply = {
   acknowledged: boolean;
   matchedCount: number;

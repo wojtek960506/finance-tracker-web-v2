@@ -47,6 +47,14 @@ const appendFilterParams = (params: URLSearchParams, filters: TransactionFilters
   if (filters.accountId) params.set('accountId', filters.accountId);
 };
 
+export const buildTransactionFiltersSearchParams = (filters: TransactionFilters = {}) => {
+  const params = new URLSearchParams();
+
+  appendFilterParams(params, filters);
+
+  return params;
+};
+
 export const buildTransactionsApiSearchParams = ({
   page = DEFAULT_TRANSACTIONS_PAGE,
   filters = {},
