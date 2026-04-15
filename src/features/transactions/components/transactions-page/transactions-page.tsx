@@ -156,7 +156,7 @@ export const TransactionsPage = () => {
 
         <div
           className={clsx(
-            'flex min-w-0 flex-col gap-2 sm:gap-3',
+            'transactions-page-main-column flex min-w-0 flex-col gap-2 sm:gap-3',
             isSharedSidebarVisible
               ? 'w-full lg:mx-0 lg:max-w-[35rem]'
               : 'mx-auto w-full max-w-[35rem]',
@@ -173,7 +173,7 @@ export const TransactionsPage = () => {
               {t('newTransaction')}
             </Button>
 
-            <div className="grid grid-cols-2 items-center gap-2 sm:gap-3">
+            <div className="transactions-page-panel-toggle-grid grid items-center gap-2 sm:gap-3">
               <Button
                 ref={totalsButtonRef}
                 type="button"
