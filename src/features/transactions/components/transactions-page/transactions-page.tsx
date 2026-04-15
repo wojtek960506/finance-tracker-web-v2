@@ -147,7 +147,7 @@ export const TransactionsPage = () => {
               id="transactions-totals-panel"
               className="hidden min-h-0 min-w-0 xl:block xl:col-start-1 xl:w-full"
             >
-              <div className="h-full overflow-y-auto pr-1">{totalsPanel}</div>
+              <div className="h-full">{totalsPanel}</div>
             </aside>
           ) : isFiltersOpen ? (
             <div className="hidden xl:block" aria-hidden="true" />
@@ -250,10 +250,8 @@ export const TransactionsPage = () => {
             )}
           >
             <div
-              id={
-                isTotalsOpen ? 'transactions-totals-panel' : 'transactions-filters-panel'
-              }
-              className="h-full overflow-y-auto pr-1"
+              id={isTotalsOpen ? 'transactions-totals-panel' : 'transactions-filters-panel'}
+              className="h-full"
             >
               {isTotalsOpen ? totalsPanel : filtersPanel}
             </div>

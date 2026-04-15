@@ -39,7 +39,7 @@ export const TransactionsTotalsPanel = ({ filters }: TransactionsTotalsPanelProp
       {data ? (
         <div className="flex min-h-0 min-w-0 flex-1 flex-col gap-4 overflow-hidden">
           <OverallTotals overall={data.overall} />
-          <div className="min-h-0 overflow-y-auto pr-1">
+          <div className="min-h-0 overflow-y-auto">
             <CurrenciesTotals byCurrency={data.byCurrency} />
           </div>
         </div>
