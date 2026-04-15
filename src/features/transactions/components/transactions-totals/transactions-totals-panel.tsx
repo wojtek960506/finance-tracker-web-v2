@@ -24,7 +24,7 @@ export const TransactionsTotalsPanel = ({ filters }: TransactionsTotalsPanelProp
   return (
     <Card
       className={clsx(
-        'w-full min-w-0 max-w-full gap-4 overflow-visible',
+        'h-full w-full min-w-0 max-w-full gap-4 overflow-hidden',
         'rounded-3xl border-fg/20 bg-modal-bg/95',
       )}
     >
@@ -37,9 +37,11 @@ export const TransactionsTotalsPanel = ({ filters }: TransactionsTotalsPanelProp
       {error ? <p className="text-destructive">{error.message}</p> : null}
 
       {data ? (
-        <div className="flex min-w-0 flex-col gap-4">
+        <div className="flex min-h-0 min-w-0 flex-1 flex-col gap-4 overflow-hidden">
           <OverallTotals overall={data.overall} />
-          <CurrenciesTotals byCurrency={data.byCurrency} />
+          <div className="min-h-0 overflow-y-auto pr-1">
+            <CurrenciesTotals byCurrency={data.byCurrency} />
+          </div>
         </div>
       ) : null}
     </Card>

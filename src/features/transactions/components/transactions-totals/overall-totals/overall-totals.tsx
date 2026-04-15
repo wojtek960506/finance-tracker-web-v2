@@ -10,7 +10,11 @@ export const OverallTotals = ({ overall }: { overall: TransactionTotalsOverall }
   return (
     <div className="overall-totals-container">
       <div className="overall-totals-grid">
-        <OverallTotalsCard label={t('totalItems')} value={overall.totalItems} />
+        <OverallTotalsCard
+          label={t('totalItems')}
+          value={overall.totalItems}
+          className="overall-totals-card-total"
+        />
         <OverallTotalsCard
           label={t('expenseItems')}
           value={overall.expense.totalItems}

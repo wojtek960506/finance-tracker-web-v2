@@ -29,12 +29,14 @@ type OverallTotalsCardProps = {
   label: string;
   value: number;
   variant?: OverallTotalsCardVariant;
+  className?: string;
 };
 
 export const OverallTotalsCard = ({
   label,
   value,
   variant = 'total',
+  className,
 }: OverallTotalsCardProps) => {
   const classes = overallTotalsCardVariantClasses[variant];
 
@@ -43,6 +45,7 @@ export const OverallTotalsCard = ({
       className={clsx(
         'gap-1 rounded-2xl shadow-none flex flex-row justify-between items-center',
         classes.card,
+        className,
       )}
     >
       <span className={clsx('text-sm', classes.label)}>{label}</span>
