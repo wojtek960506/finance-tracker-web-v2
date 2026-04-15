@@ -109,7 +109,7 @@ export const Drawer = ({
         aria-label={ariaLabel}
         tabIndex={-1}
         className={clsx(
-          'z-400 fixed flex flex-col top-0 h-full w-72 bg-bg shadow-lg transform ',
+          'z-400 fixed top-0 flex h-full w-[min(18rem,100vw)] max-w-full flex-col bg-bg shadow-lg transform',
           'transition-transform duration-300',
           fromLeft ? 'left-0' : 'right-0',
           `${

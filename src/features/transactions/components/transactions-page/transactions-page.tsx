@@ -136,9 +136,9 @@ export const TransactionsPage = () => {
         className={clsx(
           'w-full',
           isLargeSidebarLayout &&
-            'xl:grid xl:grid-cols-[minmax(20rem,1fr)_37.5rem_minmax(20rem,1fr)] xl:justify-center xl:items-start xl:gap-6',
+            'xl:grid xl:grid-cols-[minmax(10rem,1fr)_35rem_minmax(10rem,1fr)] xl:justify-center xl:items-start xl:gap-6',
           isSharedSidebarVisible &&
-            'lg:grid lg:grid-cols-[37.5rem_minmax(20rem,1fr)] lg:justify-center lg:items-start lg:gap-4',
+            'lg:grid lg:grid-cols-[35rem_minmax(10rem,1fr)] lg:justify-center lg:items-start lg:gap-4',
         )}
       >
         {isLargeSidebarLayout ? (
@@ -158,9 +158,10 @@ export const TransactionsPage = () => {
           className={clsx(
             'flex min-w-0 flex-col gap-2 sm:gap-3',
             isSharedSidebarVisible
-              ? 'w-full lg:mx-0 lg:max-w-150'
-              : 'mx-auto w-full max-w-150',
-            isLargeSidebarLayout && 'xl:col-start-2 xl:mx-auto xl:w-full xl:max-w-150',
+              ? 'w-full lg:mx-0 lg:max-w-[35rem]'
+              : 'mx-auto w-full max-w-[35rem]',
+            isLargeSidebarLayout &&
+              'xl:col-start-2 xl:mx-auto xl:w-full xl:max-w-[35rem]',
           )}
         >
           <div className="flex flex-col gap-2 sm:gap-3">
