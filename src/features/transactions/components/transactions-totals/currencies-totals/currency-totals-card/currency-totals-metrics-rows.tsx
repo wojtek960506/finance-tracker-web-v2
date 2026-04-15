@@ -32,7 +32,7 @@ export const CurrencyTotalsMetricsRows = ({
 
   return (
     <>
-      {totalsMetricKeys.map((metricKey, index) => {
+      {totalsMetricKeys.map((metricKey) => {
         const expenseValue =
           metricKey === 'totalItems'
             ? totals.expense.totalItems
@@ -44,12 +44,7 @@ export const CurrencyTotalsMetricsRows = ({
 
         return (
           <div className="contents" key={metricKey}>
-            <span
-              className={clsx(
-                'currency-totals-metric-label font-medium text-text',
-                index > 0 && 'currency-totals-metric-label-with-divider',
-              )}
-            >
+            <span className="currency-totals-metric-label font-medium text-text">
               {t(metricKey)}
             </span>
             <span className={clsx('text-center font-semibold', 'text-destructive')}>

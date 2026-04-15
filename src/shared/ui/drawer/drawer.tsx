@@ -14,6 +14,7 @@ type DrawerProps = {
   restoreFocusRef?: RefObject<HTMLElement | null>;
   ariaLabel?: string;
   panelClassName?: string;
+  contentClassName?: string;
 };
 
 export const Drawer = ({
@@ -24,6 +25,7 @@ export const Drawer = ({
   restoreFocusRef,
   ariaLabel = 'Drawer',
   panelClassName,
+  contentClassName,
 }: DrawerProps) => {
   const navRef = useRef<HTMLElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
@@ -109,7 +111,8 @@ export const Drawer = ({
         aria-label={ariaLabel}
         tabIndex={-1}
         className={clsx(
-          'z-400 fixed top-0 flex h-full w-[min(18rem,100vw)] max-w-full flex-col bg-bg shadow-lg transform',
+          // Default drawers fit within the viewport; specific callers can override this via `panelClassName`.
+          'z-400 fixed top-0 flex h-full w-[min(20rem,100vh)] max-w-full flex-col bg-bg shadow-lg transform',
           'transition-transform duration-300',
           fromLeft ? 'left-0' : 'right-0',
           `${
@@ -124,25 +127,27 @@ export const Drawer = ({
           panelClassName,
         )}
       >
-        <div
-          className={clsx(
-            'flex p-2 h-[var(--topbar-h)] sm:h-[var(--topbar-h-sm)] border-b border-foreground',
-            'min-h-[var(--topbar-h)] sm:min-h-[var(--topbar-h-sm)]',
-            fromLeft ? 'justify-end' : 'justify-start',
-          )}
-        >
-          <Button
-            onClick={onClose}
-            variant="ghost"
-            aria-label="Close drawer"
-            className={fromLeft ? 'mx-2' : 'mx-1'}
+        <div className={clsx('flex h-full flex-col', contentClassName)}>
+          <div
+            className={clsx(
+              'flex p-2 h-[var(--topbar-h)] sm:h-[var(--topbar-h-sm)] border-b border-foreground',
+              'min-h-[var(--topbar-h)] sm:min-h-[var(--topbar-h-sm)]',
+              fromLeft ? 'justify-end' : 'justify-start',
+            )}
           >
-            <X className="w-6 h-6" />
-          </Button>
+            <Button
+              onClick={onClose}
+              variant="ghost"
+              aria-label="Close drawer"
+              className={fromLeft ? 'mx-2' : 'mx-1'}
+            >
+              <X className="w-6 h-6" />
+            </Button>
+          </div>
+          <nav ref={navRef} className="px-4 py-2 overflow-y-auto h-full">
+            {children}
+          </nav>
         </div>
-        <nav ref={navRef} className="px-4 py-2 overflow-y-auto h-full">
-          {children}
-        </nav>
       </div>
     </>
   );

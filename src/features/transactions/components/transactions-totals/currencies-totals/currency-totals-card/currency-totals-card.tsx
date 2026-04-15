@@ -20,7 +20,7 @@ export const CurrencyTotalsCard = ({
       <div className="flex flex-wrap items-center justify-between gap-2">
         <div className="flex items-baseline gap-2">
           <h3 className="text-lg font-semibold sm:text-xl">{currency}</h3>
-          <span className="text-sm text-text-muted">{t('currency')}</span>
+          {/* <span className="text-sm text-text-muted">{t('currency')}</span> */}
         </div>
         <div className="rounded-full bg-bg px-3 py-1 text-sm font-semibold text-text">
           {t('totalItems')}: {totals.totalItems}

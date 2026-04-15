@@ -198,7 +198,7 @@
 
 .currency-totals-metrics-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(1, minmax(0, 1fr));
   gap: 0.5rem;
 }
 
@@ -209,23 +209,26 @@
 .currency-totals-metric-label {
   grid-column: 1 / -1;
   text-align: center;
-}
-
-.currency-totals-metric-label-with-divider {
   margin-top: 0.25rem;
   padding-top: 0.75rem;
   border-top: 1px solid color-mix(in oklch, var(--border) 80%, transparent);
 }
 
-@container (min-width: 38rem) {
-  .overall-totals-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
 
-@container (min-width: 33rem) {
-  .transactions-page-panel-toggle-grid {
+
+@container (min-width: 18rem) {
+  .currency-totals-metrics-grid {
+    display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.5rem;
+  }
+
+  .currency-totals-metric-label {
+    grid-column: 1 / -1;
+    text-align: center;
+    margin-top: 0.25rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid color-mix(in oklch, var(--border) 80%, transparent);
   }
 }
 
@@ -241,11 +244,20 @@
   .currency-totals-metric-label {
     grid-column: auto;
     text-align: left;
-  }
-
-  .currency-totals-metric-label-with-divider {
     margin-top: 0;
     padding-top: 0;
     border-top: 0;
+  }
+}
+
+@container (min-width: 33rem) {
+  .transactions-page-panel-toggle-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@container (min-width: 38rem) {
+  .overall-totals-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }

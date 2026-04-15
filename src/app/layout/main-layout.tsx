@@ -14,7 +14,7 @@ export const MainLayout = ({ children }: { children: ReactNode }) => {
 
   return (
     <div className="h-screen overflow-x-auto overflow-y-hidden">
-      <div className="flex h-full min-w-85 flex-col">
+      <div className="flex h-full min-w-[340px] flex-col">
         <Topbar navButtonRef={navButtonRef} />
 
         <main className="p-4 h-full w-full overflow-y-auto">
@@ -28,6 +28,10 @@ export const MainLayout = ({ children }: { children: ReactNode }) => {
           onClose={() => setIsNavOpen(false)}
           restoreFocusRef={navButtonRef}
           ariaLabel="Navigation menu"
+          // Keep the nav drawer horizontally scrollable below its intended content width
+          panelClassName="overflow-x-auto sm:w-[min(22rem,100vh)]"
+          // Navigation becomes hard to use below some width
+          contentClassName="min-w-[20rem] sm:min-w-[22rem]"
         >
           <NavigationProvider fromLeft={isDrawerFromLeft}>
             <Navigation />
