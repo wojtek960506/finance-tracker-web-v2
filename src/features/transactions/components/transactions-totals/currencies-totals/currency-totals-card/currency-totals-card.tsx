@@ -1,11 +1,14 @@
 import clsx from "clsx";
 import { ArrowDownLeft, ArrowUpRight } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
+import { useLanguage } from "@shared/hooks";
 import type { TransactionTotalsByCurrency } from "@transactions/api";
+import { formatCurrencyAmount } from "@transactions/utils/currency-amount";
 
 import { Card } from "@/shared/ui";
 
-type TotalsMetricKey =
+type TotalsMetricKey = 
   | 'totalItems'
   | 'totalAmount'
   | 'averageAmount'
@@ -20,26 +23,16 @@ const totalsMetricKeys: TotalsMetricKey[] = [
   'minAmount',
 ];
 
-const formatDecimal = (value: number, language: string) =>
-  new Intl.NumberFormat(language, {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  }).format(value);
-
-const formatCurrencyAmount = (value: number, currency: string, language: string) =>
-  `${formatDecimal(value, language)} ${currency}`;
-
 export const CurrencyTotalsCard = ({
   currency,
   totals,
-  language,
-  t,
 }: {
   currency: string;
   totals: TransactionTotalsByCurrency;
-  language: string;
-  t: (key: string) => string;
 }) => {
+  const { t } = useTranslation('transactions');
+  const { language } = useLanguage();
+
   return (
     <Card className="gap-3 rounded-2xl border-fg/15 bg-bg/55 shadow-none">
       <div className="flex flex-wrap items-center justify-between gap-2">

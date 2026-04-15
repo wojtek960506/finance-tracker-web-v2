@@ -2,12 +2,11 @@ import { useQuery } from '@tanstack/react-query';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 
-import { useLanguage } from '@shared/hooks';
 import type { TransactionFilters } from '@transactions/api';
 import { getTransactionTotals } from '@transactions/api';
 import { Card } from '@ui';
 
-import { CurrencyTotalsCard } from './currency-totals-card';
+import { CurrenciesTotals } from './currencies-totals';
 import { OverallTotals } from './overall-totals';
 
 type TransactionsTotalsPanelProps = {
@@ -16,16 +15,11 @@ type TransactionsTotalsPanelProps = {
 
 export const TransactionsTotalsPanel = ({ filters }: TransactionsTotalsPanelProps) => {
   const { t } = useTranslation('transactions');
-  const { language } = useLanguage();
 
   const { data, isLoading, error } = useQuery({
     queryKey: ['transaction-totals', filters],
     queryFn: async () => await getTransactionTotals(filters),
   });
-
-  const sortedCurrencyTotals = Object.entries(data?.byCurrency ?? {}).sort(
-    (left, right) => right[1].totalItems - left[1].totalItems,
-  );
 
   return (
     <Card
@@ -45,22 +39,7 @@ export const TransactionsTotalsPanel = ({ filters }: TransactionsTotalsPanelProp
       {data ? (
         <div className="flex min-w-0 flex-col gap-4">
           <OverallTotals overall={data.overall} />
-
-          {sortedCurrencyTotals.length > 0 ? (
-            <div className="flex flex-col gap-3">
-              {sortedCurrencyTotals.map(([currency, totals]) => (
-                <CurrencyTotalsCard
-                  key={currency}
-                  currency={currency}
-                  totals={totals}
-                  language={language}
-                  t={t}
-                />
-              ))}
-            </div>
-          ) : (
-            <p className="text-sm text-text-muted">{t('noCurrencyTotals')}</p>
-          )}
+          <CurrenciesTotals byCurrency={data.byCurrency} />
         </div>
       ) : null}
     </Card>
