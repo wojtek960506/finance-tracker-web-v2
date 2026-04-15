@@ -134,20 +134,20 @@ export const TransactionsPage = () => {
     <>
       <div
         className={clsx(
-          'w-full',
+          'h-full min-h-0 w-full overflow-hidden',
           isLargeSidebarLayout &&
-            'xl:grid xl:grid-cols-[minmax(10rem,1fr)_35rem_minmax(10rem,1fr)] xl:justify-center xl:items-start xl:gap-6',
+            'xl:grid xl:grid-cols-[minmax(10rem,1fr)_35rem_minmax(10rem,1fr)] xl:justify-center xl:items-stretch xl:gap-6',
           isSharedSidebarVisible &&
-            'lg:grid lg:grid-cols-[35rem_minmax(10rem,1fr)] lg:justify-center lg:items-start lg:gap-4',
+            'lg:grid lg:grid-cols-[35rem_minmax(10rem,1fr)] lg:justify-center lg:items-stretch lg:gap-4',
         )}
       >
         {isLargeSidebarLayout ? (
           isTotalsOpen ? (
             <aside
               id="transactions-totals-panel"
-              className="hidden min-w-0 xl:block xl:col-start-1 xl:w-full"
+              className="hidden min-h-0 min-w-0 xl:block xl:col-start-1 xl:w-full"
             >
-              {totalsPanel}
+              <div className="h-full overflow-y-auto pr-1">{totalsPanel}</div>
             </aside>
           ) : isFiltersOpen ? (
             <div className="hidden xl:block" aria-hidden="true" />
@@ -156,7 +156,7 @@ export const TransactionsPage = () => {
 
         <div
           className={clsx(
-            'transactions-page-main-column flex min-w-0 flex-col gap-2 sm:gap-3',
+            'transactions-page-main-column flex h-full min-h-0 min-w-0 flex-col gap-2 sm:gap-3',
             isSharedSidebarVisible
               ? 'w-full lg:mx-0 lg:max-w-[35rem]'
               : 'mx-auto w-full max-w-[35rem]',
@@ -220,32 +220,40 @@ export const TransactionsPage = () => {
             </div>
           </div>
 
-          <TransactionsList
-            transactions={data?.items ?? []}
-            currentPage={data?.page ?? page}
-            totalPages={data?.totalPages ?? 0}
-            activeFiltersCount={activeFiltersCount}
-            onPageChange={handlePageChange}
-          />
+          <div className="min-h-0 overflow-y-auto ">
+            <TransactionsList
+              transactions={data?.items ?? []}
+              currentPage={data?.page ?? page}
+              totalPages={data?.totalPages ?? 0}
+              activeFiltersCount={activeFiltersCount}
+              onPageChange={handlePageChange}
+            />
+          </div>
         </div>
 
         {isLargeSidebarLayout ? (
           isFiltersOpen ? (
             <aside
               id="transactions-filters-panel"
-              className="hidden min-w-0 xl:col-start-3 xl:block xl:w-full"
+              className="hidden min-h-0 min-w-0 xl:col-start-3 xl:block xl:w-full"
             >
-              {filtersPanel}
+              <div className="h-full overflow-y-auto pr-1">{filtersPanel}</div>
             </aside>
           ) : isTotalsOpen ? (
             <div className="hidden xl:block" aria-hidden="true" />
           ) : null
         ) : isSharedSidebarVisible ? (
-          <aside className={clsx('hidden min-w-0 lg:block lg:w-full', 'lg:col-start-2')}>
+          <aside
+            className={clsx(
+              'hidden min-h-0 min-w-0 lg:block lg:w-full',
+              'lg:col-start-2',
+            )}
+          >
             <div
               id={
                 isTotalsOpen ? 'transactions-totals-panel' : 'transactions-filters-panel'
               }
+              className="h-full overflow-y-auto pr-1"
             >
               {isTotalsOpen ? totalsPanel : filtersPanel}
             </div>
