@@ -45,16 +45,20 @@ export const TransactionsPage = () => {
   const filtersButtonRef = useRef<HTMLButtonElement | null>(null);
   const isLgScreen = useMediaQuery(IS_LG_MEDIA_QUERY);
   const isXlScreen = useMediaQuery(IS_XL_MEDIA_QUERY);
-  const [activeCompactPanel, setActiveCompactPanel] = useState<
-    'filters' | 'totals' | null
-  >(null);
-  const [isFiltersOpenOnXl, setIsFiltersOpenOnXl] = useState(false);
-  const [isTotalsOpenOnXl, setIsTotalsOpenOnXl] = useState(false);
+  const [openPanels, setOpenPanels] = useState({
+    filters: false,
+    totals: false,
+  });
 
   const { page, filters } = parseTransactionsRouteSearchParams(searchParams);
   const activeFiltersCount = countActiveTransactionFilters(filters);
-  const isFiltersOpen = isXlScreen ? isFiltersOpenOnXl : activeCompactPanel === 'filters';
-  const isTotalsOpen = isXlScreen ? isTotalsOpenOnXl : activeCompactPanel === 'totals';
+  const visibleCompactPanel = openPanels.filters
+    ? 'filters'
+    : openPanels.totals
+      ? 'totals'
+      : null;
+  const isFiltersOpen = isXlScreen ? openPanels.filters : visibleCompactPanel === 'filters';
+  const isTotalsOpen = isXlScreen ? openPanels.totals : visibleCompactPanel === 'totals';
 
   const { data, isLoading, error } = useQuery({
     queryKey: ['transactions', page, filters],
@@ -80,20 +84,28 @@ export const TransactionsPage = () => {
 
   const handleToggleFilters = () => {
     if (isXlScreen) {
-      setIsFiltersOpenOnXl((prev) => !prev);
+      setOpenPanels((prev) => ({ ...prev, filters: !prev.filters }));
       return;
     }
 
-    setActiveCompactPanel((prev) => (prev === 'filters' ? null : 'filters'));
+    setOpenPanels(
+      visibleCompactPanel === 'filters'
+        ? { filters: false, totals: false }
+        : { filters: true, totals: false },
+    );
   };
 
   const handleToggleTotals = () => {
     if (isXlScreen) {
-      setIsTotalsOpenOnXl((prev) => !prev);
+      setOpenPanels((prev) => ({ ...prev, totals: !prev.totals }));
       return;
     }
 
-    setActiveCompactPanel((prev) => (prev === 'totals' ? null : 'totals'));
+    setOpenPanels(
+      visibleCompactPanel === 'totals'
+        ? { filters: false, totals: false }
+        : { filters: false, totals: true },
+    );
   };
 
   const handleApplyFilters = (nextFilters: TransactionFilters) => {
@@ -102,11 +114,11 @@ export const TransactionsPage = () => {
     );
 
     if (isXlScreen) {
-      setIsFiltersOpenOnXl(false);
+      setOpenPanels((prev) => ({ ...prev, filters: false }));
       return;
     }
 
-    setActiveCompactPanel((prev) => (prev === 'filters' ? null : prev));
+    setOpenPanels({ filters: false, totals: false });
   };
 
   const handlePageChange = (nextPage: number) => {
@@ -244,7 +256,7 @@ export const TransactionsPage = () => {
         <Drawer
           isOpen={isTotalsOpen}
           fromLeft={false}
-          onClose={() => setActiveCompactPanel(null)}
+          onClose={() => setOpenPanels({ filters: false, totals: false })}
           restoreFocusRef={totalsButtonRef}
           ariaLabel={t('totals')}
           panelClassName="w-full"
@@ -259,7 +271,7 @@ export const TransactionsPage = () => {
         <Drawer
           isOpen={isFiltersOpen}
           fromLeft={false}
-          onClose={() => setActiveCompactPanel(null)}
+          onClose={() => setOpenPanels({ filters: false, totals: false })}
           restoreFocusRef={filtersButtonRef}
           ariaLabel={t('filters')}
           panelClassName="w-full"
