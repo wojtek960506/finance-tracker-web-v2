@@ -127,7 +127,7 @@ export type TransactionTotalsOverall = {
   totalItems: number;
   expense: { totalItems: number };
   income: { totalItems: number };
-}
+};
 
 export type TransactionTotalsResponse = {
   byCurrency: Record<string, TransactionTotalsByCurrency>;

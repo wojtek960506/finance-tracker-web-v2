@@ -1,27 +1,11 @@
-import clsx from "clsx";
-import { ArrowDownLeft, ArrowUpRight } from "lucide-react";
-import { useTranslation } from "react-i18next";
+import { ArrowDownLeft, ArrowUpRight } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
-import { useLanguage } from "@shared/hooks";
-import type { TransactionTotalsByCurrency } from "@transactions/api";
-import { formatCurrencyAmount } from "@transactions/utils/currency-amount";
+import type { TransactionTotalsByCurrency } from '@transactions/api';
 
-import { Card } from "@/shared/ui";
+import { CurrencyTotalsMetrics } from './currency-totals-metrics';
 
-type TotalsMetricKey = 
-  | 'totalItems'
-  | 'totalAmount'
-  | 'averageAmount'
-  | 'maxAmount'
-  | 'minAmount';
-
-const totalsMetricKeys: TotalsMetricKey[] = [
-  'totalItems',
-  'totalAmount',
-  'averageAmount',
-  'maxAmount',
-  'minAmount',
-];
+import { Card } from '@/shared/ui';
 
 export const CurrencyTotalsCard = ({
   currency,
@@ -31,7 +15,6 @@ export const CurrencyTotalsCard = ({
   totals: TransactionTotalsByCurrency;
 }) => {
   const { t } = useTranslation('transactions');
-  const { language } = useLanguage();
 
   return (
     <Card className="gap-3 rounded-2xl border-fg/15 bg-bg/55 shadow-none">
@@ -55,39 +38,7 @@ export const CurrencyTotalsCard = ({
           <ArrowUpRight className="size-4" aria-hidden="true" />
           {t('income')}
         </span>
-
-        {totalsMetricKeys.map((metricKey) => {
-          const expenseValue =
-            metricKey === 'totalItems'
-              ? totals.expense.totalItems
-              : formatCurrencyAmount(totals.expense[metricKey], currency, language);
-          const incomeValue =
-            metricKey === 'totalItems'
-              ? totals.income.totalItems
-              : formatCurrencyAmount(totals.income[metricKey], currency, language);
-
-          return (
-            <div className="contents" key={metricKey}>
-              <span className="font-medium text-text">{t(metricKey)}</span>
-              <span
-                className={clsx(
-                  'text-center font-semibold',
-                  metricKey === 'totalItems' ? 'text-text' : 'text-destructive',
-                )}
-              >
-                {expenseValue}
-              </span>
-              <span
-                className={clsx(
-                  'text-center font-semibold',
-                  metricKey === 'totalItems' ? 'text-text' : 'text-bt-primary',
-                )}
-              >
-                {incomeValue}
-              </span>
-            </div>
-          );
-        })}
+        <CurrencyTotalsMetrics currency={currency} totals={totals} />
       </div>
     </Card>
   );

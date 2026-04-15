@@ -39,10 +39,12 @@ export const OverallTotalsCard = ({
   const classes = overallTotalsCardVariantClasses[variant];
 
   return (
-    <Card className={clsx(
-      'gap-1 rounded-2xl shadow-none flex flex-row justify-between items-center',
-      classes.card
-    )}>
+    <Card
+      className={clsx(
+        'gap-1 rounded-2xl shadow-none flex flex-row justify-between items-center',
+        classes.card,
+      )}
+    >
       <span className={clsx('text-sm', classes.label)}>{label}</span>
       <strong className={clsx('text-2xl font-semibold', classes.value)}>{value}</strong>
     </Card>

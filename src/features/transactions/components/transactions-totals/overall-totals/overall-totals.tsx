@@ -1,8 +1,8 @@
-import { useTranslation } from "react-i18next";
+import { useTranslation } from 'react-i18next';
 
-import type { TransactionTotalsOverall } from "@transactions/api";
+import type { TransactionTotalsOverall } from '@transactions/api';
 
-import { OverallTotalsCard } from "../overall-totals-card";
+import { OverallTotalsCard } from '../overall-totals-card';
 
 export const OverallTotals = ({ overall }: { overall: TransactionTotalsOverall }) => {
   const { t } = useTranslation('transactions');
@@ -22,4 +22,4 @@ export const OverallTotals = ({ overall }: { overall: TransactionTotalsOverall }
       />
     </div>
   );
-}
+};

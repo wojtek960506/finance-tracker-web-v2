@@ -1,1 +1,1 @@
-export * from "./currency-totals-card";
+export * from './currency-totals-card';
