@@ -1,4 +1,3 @@
-import { ArrowDownLeft, ArrowUpRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 import type { TransactionTotalsByCurrency } from '@transactions/api';
@@ -27,19 +26,7 @@ export const CurrencyTotalsCard = ({
           {t('totalItems')}: {totals.totalItems}
         </div>
       </div>
-
-      <div className="grid grid-cols-3 gap-2 rounded-2xl border border-fg/10 bg-bg/65 p-3 text-sm">
-        <span className="text-text-muted" />
-        <span className="flex items-center justify-center gap-1 font-semibold text-destructive">
-          <ArrowDownLeft className="size-4" aria-hidden="true" />
-          {t('expense')}
-        </span>
-        <span className="flex items-center justify-center gap-1 font-semibold text-bt-primary">
-          <ArrowUpRight className="size-4" aria-hidden="true" />
-          {t('income')}
-        </span>
-        <CurrencyTotalsMetrics currency={currency} totals={totals} />
-      </div>
+      <CurrencyTotalsMetrics currency={currency} totals={totals} />
     </Card>
   );
 };

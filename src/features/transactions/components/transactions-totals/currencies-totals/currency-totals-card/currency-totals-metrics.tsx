@@ -1,24 +1,9 @@
-import clsx from 'clsx';
+import { ArrowDownLeft, ArrowUpRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
-import { useLanguage } from '@shared/hooks';
 import type { TransactionTotalsByCurrency } from '@transactions/api';
-import { formatCurrencyAmount } from '@transactions/utils/currency-amount';
 
-type TotalsMetricKey =
-  | 'totalItems'
-  | 'totalAmount'
-  | 'averageAmount'
-  | 'maxAmount'
-  | 'minAmount';
-
-const totalsMetricKeys: TotalsMetricKey[] = [
-  'totalItems',
-  'totalAmount',
-  'averageAmount',
-  'maxAmount',
-  'minAmount',
-];
+import { CurrencyTotalsMetricsRows } from './currency-totals-metrics-rows';
 
 export const CurrencyTotalsMetrics = ({
   currency,
@@ -28,32 +13,19 @@ export const CurrencyTotalsMetrics = ({
   totals: TransactionTotalsByCurrency;
 }) => {
   const { t } = useTranslation('transactions');
-  const { language } = useLanguage();
 
   return (
-    <>
-      {totalsMetricKeys.map((metricKey) => {
-        const expenseValue =
-          metricKey === 'totalItems'
-            ? totals.expense.totalItems
-            : formatCurrencyAmount(totals.expense[metricKey], currency, language);
-        const incomeValue =
-          metricKey === 'totalItems'
-            ? totals.income.totalItems
-            : formatCurrencyAmount(totals.income[metricKey], currency, language);
-
-        return (
-          <div className="contents" key={metricKey}>
-            <span className="font-medium text-text">{t(metricKey)}</span>
-            <span className={clsx('text-center font-semibold', 'text-destructive')}>
-              {expenseValue}
-            </span>
-            <span className={clsx('text-center font-semibold', 'text-bt-primary')}>
-              {incomeValue}
-            </span>
-          </div>
-        );
-      })}
-    </>
+    <div className="grid grid-cols-3 gap-2 rounded-2xl border border-fg/10 bg-bg/65 p-3 text-sm">
+      <span className="text-text-muted" />
+      <span className="flex items-center justify-center gap-1 font-semibold text-destructive">
+        <ArrowDownLeft className="size-4" aria-hidden="true" />
+        {t('expense')}
+      </span>
+      <span className="flex items-center justify-center gap-1 font-semibold text-bt-primary">
+        <ArrowUpRight className="size-4" aria-hidden="true" />
+        {t('income')}
+      </span>
+      <CurrencyTotalsMetricsRows currency={currency} totals={totals} />
+    </div>
   );
 };
