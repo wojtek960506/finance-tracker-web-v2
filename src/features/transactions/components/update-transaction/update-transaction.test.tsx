@@ -30,10 +30,10 @@ vi.mock('@transactions/api', () => ({
   getTransaction: mocks.getTransaction as (id: string) => Promise<Transaction | null>,
 }));
 
-vi.mock('../create-transaction', async () => {
-  const actual = await vi.importActual<typeof import('../create-transaction')>(
-    '../create-transaction',
-  );
+vi.mock('@transactions/components/transaction-forms', async () => {
+  const actual = await vi.importActual<
+    typeof import('@transactions/components/transaction-forms')
+  >('@transactions/components/transaction-forms');
 
   return {
     ...actual,

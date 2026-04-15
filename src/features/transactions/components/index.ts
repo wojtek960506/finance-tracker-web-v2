@@ -6,4 +6,5 @@ export { TrashedTransactionDetails } from './transaction-details';
 export { TransactionDetails } from './transaction-details';
 export { TrashedTransactionsList } from './transactions-list';
 export { TransactionsList } from './transactions-list';
+export { TransactionsPage } from './transactions-page';
 export { UpdateTransaction } from './update-transaction';

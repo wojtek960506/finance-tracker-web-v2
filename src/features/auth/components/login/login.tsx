@@ -4,12 +4,11 @@ import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router-dom';
 
 import { login } from '@auth/api';
+import { AuthFormShell } from '@auth/components/auth-form-shell';
 import { normalizeApiError } from '@shared/api/api-error';
 import { MAIN_BUTTON_TEXT } from '@shared/consts';
 import { useAuthToken } from '@shared/hooks';
 import { Button, ButtonLink, Input, Label } from '@ui';
-
-import { AuthFormShell } from '../auth-form-shell';
 
 export const Login = () => {
   const { t } = useTranslation('auth');
