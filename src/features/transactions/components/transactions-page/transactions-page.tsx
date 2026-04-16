@@ -57,7 +57,9 @@ export const TransactionsPage = () => {
     : openPanels.totals
       ? 'totals'
       : null;
-  const isFiltersOpen = isXlScreen ? openPanels.filters : visibleCompactPanel === 'filters';
+  const isFiltersOpen = isXlScreen
+    ? openPanels.filters
+    : visibleCompactPanel === 'filters';
   const isTotalsOpen = isXlScreen ? openPanels.totals : visibleCompactPanel === 'totals';
 
   const { data, isLoading, error } = useQuery({
@@ -250,7 +252,9 @@ export const TransactionsPage = () => {
             )}
           >
             <div
-              id={isTotalsOpen ? 'transactions-totals-panel' : 'transactions-filters-panel'}
+              id={
+                isTotalsOpen ? 'transactions-totals-panel' : 'transactions-filters-panel'
+              }
               className="h-full"
             >
               {isTotalsOpen ? totalsPanel : filtersPanel}
@@ -267,7 +271,7 @@ export const TransactionsPage = () => {
           restoreFocusRef={totalsButtonRef}
           ariaLabel={t('totals')}
           panelClassName="w-full overflow-x-auto w-[min(340px,100vh)"
-          contentClassName='min-w-[340px]'
+          contentClassName="min-w-[340px]"
         >
           <div id="transactions-totals-panel" className="pb-6">
             {totalsPanel}
@@ -283,7 +287,7 @@ export const TransactionsPage = () => {
           restoreFocusRef={filtersButtonRef}
           ariaLabel={t('filters')}
           panelClassName="w-full overflow-x-auto w-[min(340px,100vh)"
-          contentClassName='min-w-[340px]'
+          contentClassName="min-w-[340px]"
         >
           <div id="transactions-filters-panel" className="pb-6">
             {filtersPanel}

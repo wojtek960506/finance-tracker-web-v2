@@ -160,7 +160,10 @@ export const TransactionsFiltersPanel = ({
         <p className="text-sm text-text-muted">{t('filtersDescription')}</p>
       </div>
 
-      <form className="flex min-h-0 min-w-0 flex-1 flex-col gap-4 overflow-hidden" onSubmit={handleApply}>
+      <form
+        className="flex min-h-0 min-w-0 flex-1 flex-col gap-4 overflow-hidden"
+        onSubmit={handleApply}
+      >
         <div className="grid min-h-0 min-w-0 gap-4 overflow-y-auto pr-[1px]">
           <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-1 2xl:grid-cols-2">
             <Label>

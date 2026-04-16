@@ -219,8 +219,6 @@
   border-top: 1px solid color-mix(in oklch, var(--border) 80%, transparent);
 }
 
-
-
 @container (min-width: 18rem) {
   .currency-totals-metrics-grid {
     display: grid;
