@@ -123,13 +123,15 @@ export type TransactionTotalsByCurrency = {
   income: TransactionTotalsDetails;
 };
 
+export type TransactionTotalsOverall = {
+  totalItems: number;
+  expense: { totalItems: number };
+  income: { totalItems: number };
+};
+
 export type TransactionTotalsResponse = {
   byCurrency: Record<string, TransactionTotalsByCurrency>;
-  overall: {
-    totalItems: number;
-    expense: { totalItems: number };
-    income: { totalItems: number };
-  };
+  overall: TransactionTotalsOverall;
 };
 
 export type UpdateManyReply = {

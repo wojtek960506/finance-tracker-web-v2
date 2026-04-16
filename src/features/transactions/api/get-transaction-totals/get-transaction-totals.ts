@@ -1,6 +1,6 @@
 import { buildTransactionFiltersSearchParams } from '@transactions/utils/transactions-query';
 
-import type { TransactionFilters, TransactionTotalsResponse } from './types';
+import type { TransactionFilters, TransactionTotalsResponse } from '../types';
 
 import { api } from '@/shared/api';
 

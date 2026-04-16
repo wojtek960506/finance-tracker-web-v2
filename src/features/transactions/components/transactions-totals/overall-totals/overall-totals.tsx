@@ -1,0 +1,31 @@
+import { useTranslation } from 'react-i18next';
+
+import type { TransactionTotalsOverall } from '@transactions/api';
+
+import { OverallTotalsCard } from '../overall-totals-card';
+
+export const OverallTotals = ({ overall }: { overall: TransactionTotalsOverall }) => {
+  const { t } = useTranslation('transactions');
+
+  return (
+    <div className="overall-totals-container">
+      <div className="overall-totals-grid">
+        <OverallTotalsCard
+          label={t('totalItems')}
+          value={overall.totalItems}
+          className="overall-totals-card-total"
+        />
+        <OverallTotalsCard
+          label={t('expenseItems')}
+          value={overall.expense.totalItems}
+          variant="expense"
+        />
+        <OverallTotalsCard
+          label={t('incomeItems')}
+          value={overall.income.totalItems}
+          variant="income"
+        />
+      </div>
+    </div>
+  );
+};

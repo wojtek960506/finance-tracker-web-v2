@@ -76,7 +76,7 @@ export const TrashedTransactionsList = () => {
   if (!data || data.items.length === 0) return <p>{t('trashIsEmpty')}</p>;
 
   return (
-    <div className="m-auto flex max-w-150 flex-col gap-2 sm:gap-3">
+    <div className="m-auto flex max-w-[35rem] flex-col gap-2 sm:gap-3">
       <TransactionActionModal
         isOpen={isEmptyTrashModalOpen}
         onClose={() => setIsEmptyTrashModalOpen(false)}

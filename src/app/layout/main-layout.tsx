@@ -13,26 +13,32 @@ export const MainLayout = ({ children }: { children: ReactNode }) => {
   const navButtonRef = useRef<HTMLButtonElement>(null);
 
   return (
-    <div className="flex h-screen flex-col overflow-hidden">
-      <Topbar navButtonRef={navButtonRef} />
+    <div className="h-screen overflow-x-auto overflow-y-hidden">
+      <div className="flex h-full min-w-[340px] flex-col">
+        <Topbar navButtonRef={navButtonRef} />
 
-      <main className="p-4 h-full w-full overflow-y-auto">
-        {/* p-1 == p-[0.25rem] == p-[4px] */}
-        {children}
-      </main>
+        <main className="p-4 h-full w-full overflow-y-auto">
+          {/* p-1 == p-[0.25rem] == p-[4px] */}
+          {children}
+        </main>
 
-      <Drawer
-        isOpen={isNavOpen}
-        fromLeft={isDrawerFromLeft}
-        onClose={() => setIsNavOpen(false)}
-        restoreFocusRef={navButtonRef}
-        ariaLabel="Navigation menu"
-      >
-        <NavigationProvider fromLeft={isDrawerFromLeft}>
-          <Navigation />
-        </NavigationProvider>
-      </Drawer>
-      <Toaster />
+        <Drawer
+          isOpen={isNavOpen}
+          fromLeft={isDrawerFromLeft}
+          onClose={() => setIsNavOpen(false)}
+          restoreFocusRef={navButtonRef}
+          ariaLabel="Navigation menu"
+          // Keep the nav drawer horizontally scrollable below its intended content width
+          panelClassName="overflow-x-auto sm:w-[min(22rem,100vh)]"
+          // Navigation becomes hard to use below some width
+          contentClassName="min-w-[20rem] sm:min-w-[22rem]"
+        >
+          <NavigationProvider fromLeft={isDrawerFromLeft}>
+            <Navigation />
+          </NavigationProvider>
+        </Drawer>
+        <Toaster />
+      </div>
     </div>
   );
 };

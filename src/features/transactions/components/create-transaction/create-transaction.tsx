@@ -24,7 +24,7 @@ export const CreateTransaction = () => {
   const { t } = useTranslation('transactions');
 
   return (
-    <div className="mx-auto flex max-w-150 max-w-4xl flex-col gap-2 sm:gap-3">
+    <div className="mx-auto flex max-w-[35rem] flex-col gap-2 sm:gap-3">
       <TransactionBackButton label={t('backToTransactions')} to="/transactions" />
       <Card className="gap-4">
         <div className="flex flex-col gap-1">

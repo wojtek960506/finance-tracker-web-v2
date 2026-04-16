@@ -45,16 +45,22 @@ export const TransactionsPage = () => {
   const filtersButtonRef = useRef<HTMLButtonElement | null>(null);
   const isLgScreen = useMediaQuery(IS_LG_MEDIA_QUERY);
   const isXlScreen = useMediaQuery(IS_XL_MEDIA_QUERY);
-  const [activeCompactPanel, setActiveCompactPanel] = useState<
-    'filters' | 'totals' | null
-  >(null);
-  const [isFiltersOpenOnXl, setIsFiltersOpenOnXl] = useState(false);
-  const [isTotalsOpenOnXl, setIsTotalsOpenOnXl] = useState(false);
+  const [openPanels, setOpenPanels] = useState({
+    filters: false,
+    totals: false,
+  });
 
   const { page, filters } = parseTransactionsRouteSearchParams(searchParams);
   const activeFiltersCount = countActiveTransactionFilters(filters);
-  const isFiltersOpen = isXlScreen ? isFiltersOpenOnXl : activeCompactPanel === 'filters';
-  const isTotalsOpen = isXlScreen ? isTotalsOpenOnXl : activeCompactPanel === 'totals';
+  const visibleCompactPanel = openPanels.filters
+    ? 'filters'
+    : openPanels.totals
+      ? 'totals'
+      : null;
+  const isFiltersOpen = isXlScreen
+    ? openPanels.filters
+    : visibleCompactPanel === 'filters';
+  const isTotalsOpen = isXlScreen ? openPanels.totals : visibleCompactPanel === 'totals';
 
   const { data, isLoading, error } = useQuery({
     queryKey: ['transactions', page, filters],
@@ -80,20 +86,28 @@ export const TransactionsPage = () => {
 
   const handleToggleFilters = () => {
     if (isXlScreen) {
-      setIsFiltersOpenOnXl((prev) => !prev);
+      setOpenPanels((prev) => ({ ...prev, filters: !prev.filters }));
       return;
     }
 
-    setActiveCompactPanel((prev) => (prev === 'filters' ? null : 'filters'));
+    setOpenPanels(
+      visibleCompactPanel === 'filters'
+        ? { filters: false, totals: false }
+        : { filters: true, totals: false },
+    );
   };
 
   const handleToggleTotals = () => {
     if (isXlScreen) {
-      setIsTotalsOpenOnXl((prev) => !prev);
+      setOpenPanels((prev) => ({ ...prev, totals: !prev.totals }));
       return;
     }
 
-    setActiveCompactPanel((prev) => (prev === 'totals' ? null : 'totals'));
+    setOpenPanels(
+      visibleCompactPanel === 'totals'
+        ? { filters: false, totals: false }
+        : { filters: false, totals: true },
+    );
   };
 
   const handleApplyFilters = (nextFilters: TransactionFilters) => {
@@ -102,11 +116,11 @@ export const TransactionsPage = () => {
     );
 
     if (isXlScreen) {
-      setIsFiltersOpenOnXl(false);
+      setOpenPanels((prev) => ({ ...prev, filters: false }));
       return;
     }
 
-    setActiveCompactPanel((prev) => (prev === 'filters' ? null : prev));
+    setOpenPanels({ filters: false, totals: false });
   };
 
   const handlePageChange = (nextPage: number) => {
@@ -122,20 +136,20 @@ export const TransactionsPage = () => {
     <>
       <div
         className={clsx(
-          'w-full',
+          'h-full min-h-0 w-full overflow-hidden',
           isLargeSidebarLayout &&
-            'xl:grid xl:grid-cols-[minmax(20rem,1fr)_37.5rem_minmax(20rem,1fr)] xl:justify-center xl:items-start xl:gap-6',
+            'xl:grid xl:grid-cols-[minmax(10rem,1fr)_35rem_minmax(10rem,1fr)] xl:justify-center xl:items-stretch xl:gap-6',
           isSharedSidebarVisible &&
-            'lg:grid lg:grid-cols-[37.5rem_minmax(20rem,1fr)] lg:justify-center lg:items-start lg:gap-4',
+            'lg:grid lg:grid-cols-[35rem_minmax(10rem,1fr)] lg:justify-center lg:items-stretch lg:gap-4',
         )}
       >
         {isLargeSidebarLayout ? (
           isTotalsOpen ? (
             <aside
               id="transactions-totals-panel"
-              className="hidden min-w-0 xl:block xl:col-start-1 xl:w-full"
+              className="hidden min-h-0 min-w-0 xl:block xl:col-start-1 xl:w-full"
             >
-              {totalsPanel}
+              <div className="h-full">{totalsPanel}</div>
             </aside>
           ) : isFiltersOpen ? (
             <div className="hidden xl:block" aria-hidden="true" />
@@ -144,11 +158,12 @@ export const TransactionsPage = () => {
 
         <div
           className={clsx(
-            'flex min-w-0 flex-col gap-2 sm:gap-3',
+            'transactions-page-main-column flex h-full min-h-0 min-w-0 flex-col gap-2 sm:gap-3',
             isSharedSidebarVisible
-              ? 'w-full lg:mx-0 lg:max-w-150'
-              : 'mx-auto w-full max-w-150',
-            isLargeSidebarLayout && 'xl:col-start-2 xl:mx-auto xl:w-full xl:max-w-150',
+              ? 'w-full lg:mx-0 lg:max-w-[35rem]'
+              : 'mx-auto w-full max-w-[35rem]',
+            isLargeSidebarLayout &&
+              'xl:col-start-2 xl:mx-auto xl:w-full xl:max-w-[35rem]',
           )}
         >
           <div className="flex flex-col gap-2 sm:gap-3">
@@ -160,7 +175,7 @@ export const TransactionsPage = () => {
               {t('newTransaction')}
             </Button>
 
-            <div className="grid grid-cols-2 items-center gap-2 sm:gap-3">
+            <div className="transactions-page-panel-toggle-grid grid items-center gap-2 sm:gap-3">
               <Button
                 ref={totalsButtonRef}
                 type="button"
@@ -207,32 +222,40 @@ export const TransactionsPage = () => {
             </div>
           </div>
 
-          <TransactionsList
-            transactions={data?.items ?? []}
-            currentPage={data?.page ?? page}
-            totalPages={data?.totalPages ?? 0}
-            activeFiltersCount={activeFiltersCount}
-            onPageChange={handlePageChange}
-          />
+          <div className="min-h-0 overflow-y-auto ">
+            <TransactionsList
+              transactions={data?.items ?? []}
+              currentPage={data?.page ?? page}
+              totalPages={data?.totalPages ?? 0}
+              activeFiltersCount={activeFiltersCount}
+              onPageChange={handlePageChange}
+            />
+          </div>
         </div>
 
         {isLargeSidebarLayout ? (
           isFiltersOpen ? (
             <aside
               id="transactions-filters-panel"
-              className="hidden min-w-0 xl:col-start-3 xl:block xl:w-full"
+              className="hidden min-h-0 min-w-0 xl:col-start-3 xl:block xl:w-full"
             >
-              {filtersPanel}
+              <div className="h-full overflow-y-auto pr-1">{filtersPanel}</div>
             </aside>
           ) : isTotalsOpen ? (
             <div className="hidden xl:block" aria-hidden="true" />
           ) : null
         ) : isSharedSidebarVisible ? (
-          <aside className={clsx('hidden min-w-0 lg:block lg:w-full', 'lg:col-start-2')}>
+          <aside
+            className={clsx(
+              'hidden min-h-0 min-w-0 lg:block lg:w-full',
+              'lg:col-start-2',
+            )}
+          >
             <div
               id={
                 isTotalsOpen ? 'transactions-totals-panel' : 'transactions-filters-panel'
               }
+              className="h-full"
             >
               {isTotalsOpen ? totalsPanel : filtersPanel}
             </div>
@@ -244,10 +267,11 @@ export const TransactionsPage = () => {
         <Drawer
           isOpen={isTotalsOpen}
           fromLeft={false}
-          onClose={() => setActiveCompactPanel(null)}
+          onClose={() => setOpenPanels({ filters: false, totals: false })}
           restoreFocusRef={totalsButtonRef}
           ariaLabel={t('totals')}
-          panelClassName="w-full"
+          panelClassName="w-full overflow-x-auto w-[min(340px,100vh)"
+          contentClassName="min-w-[340px]"
         >
           <div id="transactions-totals-panel" className="pb-6">
             {totalsPanel}
@@ -259,10 +283,11 @@ export const TransactionsPage = () => {
         <Drawer
           isOpen={isFiltersOpen}
           fromLeft={false}
-          onClose={() => setActiveCompactPanel(null)}
+          onClose={() => setOpenPanels({ filters: false, totals: false })}
           restoreFocusRef={filtersButtonRef}
           ariaLabel={t('filters')}
-          panelClassName="w-full"
+          panelClassName="w-full overflow-x-auto w-[min(340px,100vh)"
+          contentClassName="min-w-[340px]"
         >
           <div id="transactions-filters-panel" className="pb-6">
             {filtersPanel}
