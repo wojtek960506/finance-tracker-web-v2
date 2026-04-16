@@ -22,9 +22,28 @@ export const usePopupPosition = ({ isOpen }: UsePopupPositionOptions) => {
 
     const triggerRect = triggerRef.current.getBoundingClientRect();
     const popupRect = popupRef.current.getBoundingClientRect();
+    const popupWidth = popupRect.width;
 
-    const maxLeft = window.innerWidth - VIEWPORT_MARGIN - popupRect.width;
-    const left = Math.max(VIEWPORT_MARGIN, Math.min(triggerRect.left, maxLeft));
+    const fitsHorizontally = (left: number) =>
+      left >= VIEWPORT_MARGIN &&
+      left + popupWidth <= window.innerWidth - VIEWPORT_MARGIN;
+
+    const leftAligned = triggerRect.left;
+    const rightAligned = triggerRect.right - popupWidth;
+    const centered = (window.innerWidth - popupWidth) / 2;
+    const maxLeft = window.innerWidth - VIEWPORT_MARGIN - popupWidth;
+
+    let left = leftAligned;
+
+    if (!fitsHorizontally(leftAligned)) {
+      if (fitsHorizontally(rightAligned)) {
+        left = rightAligned;
+      } else {
+        left = centered;
+      }
+    }
+
+    left = Math.max(VIEWPORT_MARGIN, Math.min(left, maxLeft));
     const top = Math.max(VIEWPORT_MARGIN, triggerRect.bottom + OFFSET_FROM_TRIGGER);
 
     setPopupPosition({ top, left });
