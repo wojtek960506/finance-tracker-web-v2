@@ -121,7 +121,7 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
                     visibility: popupPosition ? 'visible' : 'hidden',
                     width: 'fit-content',
                   }}
-                  className="fixed z-[420] max-w-[calc(100vw-2rem)]"
+                  className="fixed z-[420] max-w-screen sm:max-w-[calc(100vw-2rem)]"
                 >
                   <Card className="w-max min-w-max max-w-full select-none gap-3 overflow-x-auto rounded-2xl border border-fg bg-modal-bg p-3">
                     <DayPicker

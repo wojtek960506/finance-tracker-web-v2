@@ -16,7 +16,7 @@ export const DayPickerDropdown = ({
         {...props}
         disabled={disabled}
         value={value}
-        className="h-9 w-full appearance-none rounded-lg border border-fg bg-bg pl-3 pr-6 text-sm font-medium text-fg outline-none transition focus-visible:ring-2 focus-visible:ring-bt-secondary-ring"
+        className="h-9 sm:h-10 w-full appearance-none rounded-lg border border-fg bg-bg pl-3 pr-6 text-sm sm:text-base font-medium text-fg outline-none transition focus-visible:ring-2 focus-visible:ring-bt-secondary-ring"
       >
         {options?.map((option) => (
           <option key={option.value} value={option.value} disabled={option.disabled}>

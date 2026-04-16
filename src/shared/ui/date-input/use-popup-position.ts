@@ -11,6 +11,7 @@ type UsePopupPositionOptions = {
 
 const VIEWPORT_MARGIN = 16;
 const OFFSET_FROM_TRIGGER = 8;
+const CENTERED_SMALL_SCREEN_MAX_WIDTH = 399;
 
 export const usePopupPosition = ({ isOpen }: UsePopupPositionOptions) => {
   const [popupPosition, setPopupPosition] = useState<PopupPosition | null>(null);
@@ -23,19 +24,22 @@ export const usePopupPosition = ({ isOpen }: UsePopupPositionOptions) => {
     const triggerRect = triggerRef.current.getBoundingClientRect();
     const popupRect = popupRef.current.getBoundingClientRect();
     const popupWidth = popupRect.width;
+    const isCenteredSmallScreen =
+      window.innerWidth <= CENTERED_SMALL_SCREEN_MAX_WIDTH;
+    const viewportMargin = isCenteredSmallScreen ? 0 : VIEWPORT_MARGIN;
 
     const fitsHorizontally = (left: number) =>
-      left >= VIEWPORT_MARGIN &&
-      left + popupWidth <= window.innerWidth - VIEWPORT_MARGIN;
+      left >= viewportMargin &&
+      left + popupWidth <= window.innerWidth - viewportMargin;
 
     const leftAligned = triggerRect.left;
     const rightAligned = triggerRect.right - popupWidth;
     const centered = (window.innerWidth - popupWidth) / 2;
-    const maxLeft = window.innerWidth - VIEWPORT_MARGIN - popupWidth;
+    const maxLeft = window.innerWidth - viewportMargin - popupWidth;
 
-    let left = leftAligned;
+    let left = isCenteredSmallScreen ? centered : leftAligned;
 
-    if (!fitsHorizontally(leftAligned)) {
+    if (!isCenteredSmallScreen && !fitsHorizontally(leftAligned)) {
       if (fitsHorizontally(rightAligned)) {
         left = rightAligned;
       } else {
@@ -43,8 +47,8 @@ export const usePopupPosition = ({ isOpen }: UsePopupPositionOptions) => {
       }
     }
 
-    left = Math.max(VIEWPORT_MARGIN, Math.min(left, maxLeft));
-    const top = Math.max(VIEWPORT_MARGIN, triggerRect.bottom + OFFSET_FROM_TRIGGER);
+    left = Math.max(viewportMargin, Math.min(left, maxLeft));
+    const top = Math.max(viewportMargin, triggerRect.bottom + OFFSET_FROM_TRIGGER);
 
     setPopupPosition({ top, left });
   }, []);
