@@ -7,10 +7,7 @@ import {
   forwardRef,
   type KeyboardEvent as ReactKeyboardEvent,
   useCallback,
-  useEffect,
-  useLayoutEffect,
   useMemo,
-  useRef,
   useState,
 } from 'react';
 import { DayPicker } from 'react-day-picker';
@@ -19,8 +16,15 @@ import { createPortal } from 'react-dom';
 import { useLanguage } from '@shared/hooks';
 import { Card, getButtonClassName } from '@ui';
 
-import { DAY_PICKER_CLASS_NAMES, END_MONTH, LANGUAGE_TO_DAY_PICKER_LOCALE, LANGUAGE_TO_LOCALE, START_MONTH } from './consts';
+import {
+  DAY_PICKER_CLASS_NAMES,
+  END_MONTH,
+  LANGUAGE_TO_DAY_PICKER_LOCALE,
+  LANGUAGE_TO_LOCALE,
+  START_MONTH,
+} from './consts';
 import { DayPickerDropdown } from './date-picker-dropdown';
+import { useDateInputPopup } from './use-date-input-popup';
 import { formatDateValue, parseDateValue, toInputDateValue } from './utils';
 
 type DateInputProps = Omit<
@@ -37,94 +41,17 @@ type DateInputProps = Omit<
 export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
   ({ className, value, onChange, onBlur, disabled, ...props }, ref) => {
     const { language } = useLanguage();
-    const [isOpen, setIsOpen] = useState(false);
     const selectedDate = useMemo(() => parseDateValue(value), [value]);
     const [month, setMonth] = useState<Date>(selectedDate ?? new Date());
-    const triggerRef = useRef<HTMLDivElement>(null);
-    const popupRef = useRef<HTMLDivElement>(null);
-    const [popupPosition, setPopupPosition] = useState<{
-      top: number;
-      left: number;
-    } | null>(null);
+    const resetMonthOnOpen = useCallback(() => {
+      if (selectedDate) setMonth(selectedDate);
+    }, [selectedDate]);
+    const { closePicker, isOpen, popupPosition, popupRef, togglePicker, triggerRef } =
+      useDateInputPopup({ disabled, onOpen: resetMonthOnOpen });
 
     const locale = LANGUAGE_TO_LOCALE[language];
     const dayPickerLocale = LANGUAGE_TO_DAY_PICKER_LOCALE[language];
     const formattedValue = formatDateValue(selectedDate, locale);
-    const viewportMargin = 16;
-    const offsetFromTrigger = 8;
-
-    const closePicker = useCallback(() => {
-      setIsOpen(false);
-    }, []);
-
-    const updatePopupPosition = useCallback(() => {
-      if (!triggerRef.current || !popupRef.current) return;
-
-      const triggerRect = triggerRef.current.getBoundingClientRect();
-      const popupRect = popupRef.current.getBoundingClientRect();
-
-      const maxLeft = window.innerWidth - viewportMargin - popupRect.width;
-      const left = Math.max(viewportMargin, Math.min(triggerRect.left, maxLeft));
-      const top = Math.max(
-        viewportMargin,
-        triggerRect.bottom + offsetFromTrigger,
-      );
-
-      setPopupPosition({ top, left });
-    }, []);
-
-    useEffect(() => {
-      if (!isOpen) return;
-
-      const handleEscape = (event: globalThis.KeyboardEvent) => {
-        if (event.key !== 'Escape') return;
-
-        closePicker();
-      };
-
-      document.addEventListener('keydown', handleEscape);
-
-      return () => {
-        document.removeEventListener('keydown', handleEscape);
-      };
-    }, [closePicker, isOpen]);
-
-    useLayoutEffect(() => {
-      if (!isOpen) return;
-
-      updatePopupPosition();
-
-      const handleViewportChange = () => {
-        updatePopupPosition();
-      };
-
-      window.addEventListener('resize', handleViewportChange);
-      window.addEventListener('scroll', handleViewportChange, { capture: true });
-
-      return () => {
-        window.removeEventListener('resize', handleViewportChange);
-        window.removeEventListener('scroll', handleViewportChange, { capture: true });
-      };
-    }, [isOpen, updatePopupPosition]);
-
-    const openPicker = useCallback(() => {
-      if (disabled) return;
-
-      setPopupPosition(null);
-      if (selectedDate) setMonth(selectedDate);
-      setIsOpen(true);
-    }, [disabled, selectedDate]);
-
-    const togglePicker = useCallback(() => {
-      if (disabled) return;
-
-      if (isOpen) {
-        closePicker();
-        return;
-      }
-
-      openPicker();
-    }, [closePicker, disabled, isOpen, openPicker]);
 
     const handleTriggerKeyDown = (event: ReactKeyboardEvent<HTMLDivElement>) => {
       if (disabled) return;
