@@ -1,3 +1,5 @@
+import './transactions-filters-panel.css';
+
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQuery } from '@tanstack/react-query';
 import clsx from 'clsx';
@@ -7,24 +9,19 @@ import { Controller, FormProvider, useForm, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import { getNamedResources, type INamedResource } from '@named-resources/api';
-import {
-  Button,
-  Card,
-  Label,
-  SearchableMultiSelect,
-} from '@shared/ui';
+import { Button, Card, Label, SearchableMultiSelect } from '@shared/ui';
 import type { TransactionFilters } from '@transactions/api';
 import { CurrencySelectField } from '@transactions/components/shared';
 import { getTransactionNamedResourceLabel } from '@transactions/utils';
 
-import { NamedResourceFilterSelectField } from '../named-resource-filter-select-field';
-import { AmountRangeFields, DateRangeFields } from '../transactions-filters-form';
 import {
   getTransactionFiltersFormDefaults,
   normalizeTransactionFiltersFormValues,
   transactionFiltersFormSchema,
   type TransactionFiltersFormValues,
-} from '../transactions-filters-form/utils';
+} from './transactions-filters-form/utils';
+import { NamedResourceFilterSelectField } from './named-resource-filter-select-field';
+import { AmountRangeFields, DateRangeFields } from './transactions-filters-form';
 
 type TransactionsFiltersPanelProps = {
   appliedFilters: TransactionFilters;
@@ -147,10 +144,13 @@ export const TransactionsFiltersPanel = ({
           className="flex min-h-0 min-w-0 flex-1 flex-col gap-4 overflow-hidden"
           onSubmit={handleApply}
         >
-          <div className="grid min-h-0 min-w-0 gap-4 overflow-y-auto pr-[1px]">
-            
+          <div
+            className={clsx(
+              'grid min-h-0 min-w-0 gap-4 overflow-y-auto pr-[1px]',
+              'transactions-filters-form-container',
+            )}
+          >
             <DateRangeFields />
-
 
             <AmountRangeFields />
 
@@ -179,7 +179,9 @@ export const TransactionsFiltersPanel = ({
                           variant={isActive ? 'primary' : 'outline'}
                           onClick={() => field.onChange(transactionType)}
                         >
-                          {transactionType ? t(transactionType) : t('allTransactionTypes')}
+                          {transactionType
+                            ? t(transactionType)
+                            : t('allTransactionTypes')}
                         </Button>
                       );
                     })}
