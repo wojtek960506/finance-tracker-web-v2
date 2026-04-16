@@ -1,2 +1,6 @@
 export * from './amount-range-fields';
+export * from './category-fields';
+export * from './currency-field';
 export * from './date-range-fields';
+export * from './named-resource-field';
+export * from './transaction-type-field';
