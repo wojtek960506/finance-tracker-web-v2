@@ -12,6 +12,7 @@ import {
 } from '@named-resources/api';
 import { normalizeApiError } from '@shared/api/api-error';
 import { Button, Input, SearchableSelect, type SearchableSelectOption } from '@shared/ui';
+import { capitalize } from '@shared/utils';
 import { useToastStore } from '@store/toast-store';
 
 type NamedResourceSelectFieldProps = {
@@ -25,7 +26,6 @@ type NamedResourceSelectFieldProps = {
   showLessLabel: string;
 };
 
-const capitalize = (value: string) => value.charAt(0).toUpperCase() + value.slice(1);
 const getFavoriteIcon = () => <Star className="size-4 fill-current" aria-hidden="true" />;
 const ALL_RESOURCES_LABEL_KEY: Record<NamedResourceKind, string> = {
   categories: 'allCategories',

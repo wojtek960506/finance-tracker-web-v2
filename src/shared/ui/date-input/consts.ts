@@ -1,9 +1,9 @@
-import type { ClassNames } from "react-day-picker";
+import type { ClassNames } from 'react-day-picker';
 import { de, enUS, pl, ru } from 'react-day-picker/locale';
 
-import { getButtonClassName } from "../button";
+import { getButtonClassName } from '../button';
 
-import type { Language } from "@/shared/types";
+import type { Language } from '@/shared/types';
 
 export const START_MONTH = new Date(2000, 0);
 export const END_MONTH = new Date(new Date().getFullYear() + 5, 11);

@@ -1,6 +1,6 @@
-import clsx from "clsx";
-import { ChevronDown } from "lucide-react";
-import type { DropdownProps } from "react-day-picker";
+import clsx from 'clsx';
+import { ChevronDown } from 'lucide-react';
+import type { DropdownProps } from 'react-day-picker';
 
 export const DayPickerDropdown = ({
   className,

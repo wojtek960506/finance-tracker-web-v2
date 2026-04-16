@@ -8,16 +8,14 @@ type UseDateInputPopupOptions = {
   onOpen?: () => void;
 };
 
-export const useDateInputPopup = ({
-  disabled,
-  onOpen,
-}: UseDateInputPopupOptions) => {
+export const useDateInputPopup = ({ disabled, onOpen }: UseDateInputPopupOptions) => {
   const { closePicker, isOpen, togglePicker } = usePicker({
     disabled,
     onOpen,
   });
-  const { popupPosition, popupRef, resetPopupPosition, triggerRef } =
-    usePopupPosition({ isOpen });
+  const { popupPosition, popupRef, resetPopupPosition, triggerRef } = usePopupPosition({
+    isOpen,
+  });
 
   const togglePopup = useCallback(() => {
     if (!isOpen) {

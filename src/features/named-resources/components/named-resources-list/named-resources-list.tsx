@@ -12,14 +12,13 @@ import {
 import { normalizeApiError } from '@shared/api/api-error';
 import { MAIN_BUTTON_TEXT } from '@shared/consts';
 import { Button } from '@shared/ui';
+import { capitalize } from '@shared/utils';
 import { useToastStore } from '@store/toast-store';
 
 import { NamedResourceInput } from '../named-resource-input';
 
 import { getNamedResourceErrorToast } from './get-named-resource-error-toast';
 import { NamedResourcePreview } from './named-resource-preview';
-
-const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
 
 export const NamedResourcesList = ({ kind }: { kind: NamedResourceKind }) => {
   const { t: tNamedResource } = useTranslation('namedResources');

@@ -1,39 +1,28 @@
 import { Controller, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
+import { NAMED_RESOURCE, type NamedResourceKind } from '@named-resources/api';
 import { Label } from '@shared/ui';
-import type { NamedResourceKind } from '@named-resources/api';
+import { capitalize } from '@shared/utils';
 
 import { NamedResourceFilterSelectField } from '../../named-resource-filter-select-field';
 import type { TransactionFiltersFormValues } from '../utils';
 
-type NamedResourceFieldCopy = {
-  label: string;
-  placeholder: string;
-  searchPlaceholder: string;
-  emptyMessage: string;
-  showMoreLabel: string;
-  showLessLabel: string;
-  clearLabel: string;
-};
-
 type NamedResourceFieldProps = {
   name: 'paymentMethodId' | 'accountId';
-  kind: NamedResourceKind;
-  copy: NamedResourceFieldCopy;
+  kind: Exclude<NamedResourceKind, 'categories'>;
 };
 
-export const NamedResourceField = ({
-  name,
-  kind,
-  copy,
-}: NamedResourceFieldProps) => {
+export const NamedResourceField = ({ name, kind }: NamedResourceFieldProps) => {
   const { control } = useFormContext<TransactionFiltersFormValues>();
   const { t } = useTranslation('transactions');
+  const resourceKeyBase = NAMED_RESOURCE[kind];
+  const resourceKeyBaseSuffix = capitalize(resourceKeyBase);
+  const resourceKindSuffix = capitalize(kind);
 
   return (
     <Label>
-      <span className="text-sm font-semibold">{t(copy.label)}</span>
+      <span className="text-sm font-semibold">{t(resourceKeyBase)}</span>
       <Controller
         control={control}
         name={name}
@@ -42,12 +31,12 @@ export const NamedResourceField = ({
             kind={kind}
             value={field.value}
             onChange={field.onChange}
-            placeholder={t(copy.placeholder)}
-            searchPlaceholder={t(copy.searchPlaceholder)}
-            emptyMessage={t(copy.emptyMessage)}
-            showMoreLabel={t(copy.showMoreLabel)}
-            showLessLabel={t(copy.showLessLabel)}
-            clearLabel={t(copy.clearLabel)}
+            placeholder={t(`${resourceKeyBase}Placeholder`)}
+            searchPlaceholder={t(`search${resourceKeyBaseSuffix}Placeholder`)}
+            emptyMessage={t(`no${resourceKindSuffix}Found`)}
+            showMoreLabel={t(`showMore${resourceKindSuffix}`)}
+            showLessLabel={t(`showLess${resourceKindSuffix}`)}
+            clearLabel={t(`clear${resourceKeyBaseSuffix}Filter`)}
           />
         )}
       />

@@ -76,33 +76,9 @@ export const TransactionsFiltersPanel = ({
             <TransactionTypeField />
             <CurrencyField />
             <CategoryFields />
-            <NamedResourceField
-              name="paymentMethodId"
-              kind="paymentMethods"
-              copy={{
-                label: 'paymentMethod',
-                placeholder: 'paymentMethodPlaceholder',
-                searchPlaceholder: 'searchPaymentMethodPlaceholder',
-                emptyMessage: 'noPaymentMethodsFound',
-                showMoreLabel: 'showMorePaymentMethods',
-                showLessLabel: 'showLessPaymentMethods',
-                clearLabel: 'clearPaymentMethodFilter',
-              }}
-            />
+            <NamedResourceField name="paymentMethodId" kind="paymentMethods" />
 
-            <NamedResourceField
-              name="accountId"
-              kind="accounts"
-              copy={{
-                label: 'account',
-                placeholder: 'accountPlaceholder',
-                searchPlaceholder: 'searchAccountPlaceholder',
-                emptyMessage: 'noAccountsFound',
-                showMoreLabel: 'showMoreAccounts',
-                showLessLabel: 'showLessAccounts',
-                clearLabel: 'clearAccountFilter',
-              }}
-            />
+            <NamedResourceField name="accountId" kind="accounts" />
           </div>
 
           <div className="flex flex-col gap-2 border-t border-fg/10 pt-4">

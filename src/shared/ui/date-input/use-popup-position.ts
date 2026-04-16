@@ -24,13 +24,11 @@ export const usePopupPosition = ({ isOpen }: UsePopupPositionOptions) => {
     const triggerRect = triggerRef.current.getBoundingClientRect();
     const popupRect = popupRef.current.getBoundingClientRect();
     const popupWidth = popupRect.width;
-    const isCenteredSmallScreen =
-      window.innerWidth <= CENTERED_SMALL_SCREEN_MAX_WIDTH;
+    const isCenteredSmallScreen = window.innerWidth <= CENTERED_SMALL_SCREEN_MAX_WIDTH;
     const viewportMargin = isCenteredSmallScreen ? 0 : VIEWPORT_MARGIN;
 
     const fitsHorizontally = (left: number) =>
-      left >= viewportMargin &&
-      left + popupWidth <= window.innerWidth - viewportMargin;
+      left >= viewportMargin && left + popupWidth <= window.innerWidth - viewportMargin;
 
     const leftAligned = triggerRect.left;
     const rightAligned = triggerRect.right - popupWidth;
