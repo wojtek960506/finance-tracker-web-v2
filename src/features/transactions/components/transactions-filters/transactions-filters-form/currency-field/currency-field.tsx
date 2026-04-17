@@ -6,6 +6,9 @@ import { CurrencySelectField } from '@transactions/components/shared';
 
 import type { TransactionFiltersFormValues } from '../utils';
 
+// TODO in general in selectors think about some cancel button because adding big button
+// in case of more selectors in form would not be elegant and cancel on right side of the
+// trigger might be intuitive
 export const CurrencyField = () => {
   const { t } = useTranslation('transactions');
   const form = useFormContext<TransactionFiltersFormValues>();

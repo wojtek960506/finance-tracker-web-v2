@@ -49,6 +49,7 @@ export const createToastId = () => {
   return `toast-${Date.now()}-${Math.random().toString(16).slice(2)}`;
 };
 
+// maybe split it to multiple files as we have 2 main exports
 export const useToastStore = create<ToastState>()((set) => ({
   toasts: [],
   pushToast: (toast) =>

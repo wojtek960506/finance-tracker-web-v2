@@ -27,6 +27,7 @@ const mapCategoryToOption = (
   icon: resource.isFavorite ? getFavoriteIcon() : undefined,
 });
 
+// TODO split this file to smaller ones
 export const CategoryFields = () => {
   const { t } = useTranslation('transactions');
   const { t: tNamedResources } = useTranslation('namedResources');

@@ -20,6 +20,7 @@ import { NamedResourceInput } from '../named-resource-input';
 import { getNamedResourceErrorToast } from './get-named-resource-error-toast';
 import { NamedResourcePreview } from './named-resource-preview';
 
+// TODO maybe split this component
 export const NamedResourcesList = ({ kind }: { kind: NamedResourceKind }) => {
   const { t: tNamedResource } = useTranslation('namedResources');
   const { t: tError } = useTranslation(NAMED_RESOURCE_ERROR_NAMESPACE[kind]);

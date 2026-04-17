@@ -50,6 +50,7 @@ const mapResourceToOption = (
   icon: resource.isFavorite ? getFavoriteIcon() : undefined,
 });
 
+// TODO split this file to smaller ones
 export const NamedResourceFilterSelectField = ({
   kind,
   value,

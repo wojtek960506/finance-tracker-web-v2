@@ -10,6 +10,7 @@ import { MAIN_BUTTON_TEXT } from '@shared/consts';
 import { useAuthToken } from '@shared/hooks';
 import { Button, ButtonLink, Input, Label } from '@ui';
 
+// TODO maybe split this into smaller components
 export const Login = () => {
   const { t } = useTranslation('auth');
   const { t: tAuthErrors } = useTranslation('auth-errors');

@@ -27,6 +27,7 @@ type TransferTransactionFormProps = {
   onCancel: () => void;
 };
 
+// TODO think about splitting it to more components
 export const TransferTransactionForm = ({
   defaultValues,
   isPending,

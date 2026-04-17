@@ -17,6 +17,7 @@ type DrawerProps = {
   contentClassName?: string;
 };
 
+// TODO maybe split it to some smaller components
 export const Drawer = ({
   isOpen,
   fromLeft,

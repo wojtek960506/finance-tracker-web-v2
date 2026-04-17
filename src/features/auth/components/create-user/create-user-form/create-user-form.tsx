@@ -21,6 +21,7 @@ type CreateUserFormProps = {
 
 type FieldName = keyof CreateUserFormValues;
 
+// TODO split this component
 export const CreateUserForm = ({ isPending, onSubmit }: CreateUserFormProps) => {
   const { t } = useTranslation('auth');
   const form = useForm<CreateUserFormValues>({

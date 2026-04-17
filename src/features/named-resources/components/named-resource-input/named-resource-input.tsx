@@ -16,6 +16,7 @@ type NamedResourceInputProps = {
   autoCloseOnSubmit?: boolean;
 };
 
+// TODO probably split this component
 export const NamedResourceInput = ({
   inputRef,
   initialValue = '',

@@ -27,6 +27,7 @@ type ExchangeTransactionFormProps = {
   onCancel: () => void;
 };
 
+// TODO think about splitting it (maybe it will have common fields with standard and transfer)
 export const ExchangeTransactionForm = ({
   defaultValues,
   isPending,

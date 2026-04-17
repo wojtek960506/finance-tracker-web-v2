@@ -23,6 +23,7 @@ import { NavigationItem } from './navigation-item';
 const IS_TRANSACTIONS_COLLAPSIBLE_INITIALLY_OPEN_KEY =
   'is-transactions-collapsible-initially-open-key';
 
+// TODO maybe split this component and revisit the logic with `setIsCollapsibleInitiallyOpen`
 export const Navigation = () => {
   const { t } = useTranslation('navigation');
 

@@ -33,6 +33,7 @@ const ALL_RESOURCES_LABEL_KEY: Record<NamedResourceKind, string> = {
   accounts: 'allAccounts',
 };
 
+// TODO split this component
 export const NamedResourceSelectField = ({
   kind,
   value,

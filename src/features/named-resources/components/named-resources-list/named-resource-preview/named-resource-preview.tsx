@@ -31,6 +31,7 @@ const setNamedResourceFavoriteState = (
     resource.id === id ? { ...resource, isFavorite } : resource,
   );
 
+// TODO for sure split this component
 export const NamedResourcePreview = ({
   kind,
   namedResource,

@@ -17,6 +17,7 @@ import { Button } from '@ui';
 
 import { TransactionDetailsCard } from '../transaction-details-card';
 
+// TODO maybe split this file
 export const TransactionDetails = () => {
   const { t } = useTranslation('transactions');
   const navigate = useNavigate();
