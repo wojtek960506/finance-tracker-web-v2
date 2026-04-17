@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { Button, Card } from '@shared/ui';
+import { Card } from '@shared/ui';
 import type { TransactionFilters } from '@transactions/api';
 
 import {
@@ -14,14 +14,8 @@ import {
   normalizeTransactionFiltersFormValues,
   transactionFiltersFormSchema,
   type TransactionFiltersFormValues,
-} from './transactions-filters-form/utils';
-import {
-  AmountRangeFields,
-  CategoryFields,
-  CurrencyField,
-  DateRangeFields,
-  NamedResourceField,
-  TransactionTypeField,
+  TransactionsFiltersActions,
+  TransactionsFiltersFields,
 } from './transactions-filters-form';
 
 type TransactionsFiltersPanelProps = {
@@ -48,6 +42,10 @@ export const TransactionsFiltersPanel = ({
     onApply(normalizeTransactionFiltersFormValues(values));
   });
 
+  const handleClear = () => {
+    form.reset(getTransactionFiltersFormDefaults({}));
+  };
+
   return (
     <Card
       className={clsx(
@@ -65,34 +63,8 @@ export const TransactionsFiltersPanel = ({
           className="flex min-h-0 min-w-0 flex-1 flex-col gap-4 overflow-hidden"
           onSubmit={handleApply}
         >
-          <div
-            className={clsx(
-              'grid min-h-0 min-w-0 gap-4 overflow-y-auto pr-[1px]',
-              'transactions-filters-form-container',
-            )}
-          >
-            <DateRangeFields />
-            <AmountRangeFields />
-            <TransactionTypeField />
-            <CurrencyField />
-            <CategoryFields />
-            <NamedResourceField name="paymentMethodId" kind="paymentMethods" />
-
-            <NamedResourceField name="accountId" kind="accounts" />
-          </div>
-
-          <div className="flex flex-col gap-2 border-t border-fg/10 pt-4">
-            <Button type="button" variant="primary" onClick={handleApply}>
-              {t('applyFilters')}
-            </Button>
-            <Button
-              type="button"
-              variant="secondary"
-              onClick={() => form.reset(getTransactionFiltersFormDefaults({}))}
-            >
-              {t('clearFilters')}
-            </Button>
-          </div>
+          <TransactionsFiltersFields />
+          <TransactionsFiltersActions onApply={handleApply} onClear={handleClear} />
         </form>
       </FormProvider>
     </Card>
