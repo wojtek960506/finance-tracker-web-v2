@@ -14,6 +14,7 @@ type TransactionsPaginationProps = {
   onPageChange: (page: number) => void;
 };
 
+// TODO maybe split this component
 export const TransactionsPagination = ({
   currentPage,
   totalPages,

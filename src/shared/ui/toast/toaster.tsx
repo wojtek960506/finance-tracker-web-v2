@@ -67,6 +67,7 @@ const ToastItem = ({
   );
 };
 
+// TODO maybe split it to more files as we have more than one component
 export const Toaster = () => {
   const toasts = useToastStore((state) => state.toasts);
 

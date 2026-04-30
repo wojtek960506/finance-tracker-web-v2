@@ -20,6 +20,7 @@ const isTrashedTransaction = (
   transaction: TransactionDetails | TrashedTransactionDetails,
 ): transaction is TrashedTransactionDetails => 'deletion' in transaction;
 
+// TODO maybe split this file
 export const TransactionDetailsCard = ({
   transaction,
   mode = 'active',

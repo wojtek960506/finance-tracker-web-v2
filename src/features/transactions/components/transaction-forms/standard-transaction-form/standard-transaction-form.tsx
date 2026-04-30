@@ -28,6 +28,7 @@ type StandardTransactionFormProps = {
   onCancel: () => void;
 };
 
+// TODO think about splitting it
 export const StandardTransactionForm = ({
   defaultValues,
   isPending,

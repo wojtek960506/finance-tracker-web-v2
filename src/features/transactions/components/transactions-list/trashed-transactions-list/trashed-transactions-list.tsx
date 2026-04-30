@@ -19,6 +19,7 @@ import { TransactionsPagination } from '../transactions-pagination';
 
 const EMPTY_TRASH_CONFIRMATION_VALUE = 'DELETE';
 
+// TODO for sure split this file and maybe it will have some common things with TransactionsList
 export const TrashedTransactionsList = () => {
   const { t } = useTranslation('transactions');
   const { language } = useLanguage();

@@ -44,6 +44,7 @@ type SearchableSelectProps = {
 
 const normalizeSearchValue = (value: string) => value.trim().toLocaleLowerCase();
 
+// TODO split this file to some smaller ones
 export const SearchableSelect = ({
   value,
   groups,

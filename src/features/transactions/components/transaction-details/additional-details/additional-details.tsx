@@ -89,6 +89,7 @@ const getReferenceDetails = (
   return details;
 };
 
+// TODO split this file
 export const AdditionalDetails = ({
   transaction,
   referencePathPrefix = '/transactions',

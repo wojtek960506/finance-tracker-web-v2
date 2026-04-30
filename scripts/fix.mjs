@@ -19,13 +19,30 @@ const getTrackedFiles = () => {
     .filter((file) => !file.startsWith('node_modules/'));
 };
 
-const getFileHashes = (files) =>
-  new Map(
-    files.map((file) => [
-      file,
-      createHash('sha1').update(readFileSync(file)).digest('hex'),
-    ]),
+const getFileHashes = (files) => {
+  const missingFiles = [];
+  const hashes = new Map(
+    files.map((file) => {
+      try {
+        return [file, createHash('sha1').update(readFileSync(file)).digest('hex')];
+      } catch (error) {
+        if (error.code === 'ENOENT') {
+          // A file can disappear between git listing it and us hashing it,
+          // for example when a tracked file was moved or deleted before staging.
+          missingFiles.push(file);
+          return [file, null];
+        }
+
+        throw error;
+      }
+    }),
   );
+
+  return {
+    hashes,
+    missingFiles,
+  };
+};
 
 const run = (command, args) => {
   const result = spawnSync(command, args, {
@@ -41,13 +58,21 @@ const run = (command, args) => {
 };
 
 const filesBefore = getTrackedFiles();
-const hashesBefore = getFileHashes(filesBefore);
+const { hashes: hashesBefore, missingFiles: missingFilesBefore } =
+  getFileHashes(filesBefore);
 
 run('pnpm', ['exec', 'eslint', '.', '--fix']);
 run('pnpm', ['exec', 'prettier', '.', '--write']);
 
 const filesAfter = getTrackedFiles();
-const hashesAfter = getFileHashes(filesAfter);
+const { hashes: hashesAfter, missingFiles: missingFilesAfter } =
+  getFileHashes(filesAfter);
+const missingFiles = [...new Set([...missingFilesBefore, ...missingFilesAfter])];
+
+if (missingFiles.length > 0) {
+  console.warn('Skipped missing files during hashing:');
+  missingFiles.forEach((file) => console.warn(file));
+}
 
 const changedFiles = filesAfter.filter(
   (file) => hashesBefore.get(file) !== hashesAfter.get(file),

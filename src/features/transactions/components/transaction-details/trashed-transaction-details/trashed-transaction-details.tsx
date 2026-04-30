@@ -21,6 +21,7 @@ import { Button } from '@ui';
 
 import { TransactionDetailsCard } from '../transaction-details-card';
 
+// TODO for sure split this file (maybe it will have some common parts with TransactionDetails)
 export const TrashedTransactionDetails = () => {
   const { t } = useTranslation('transactions');
   const navigate = useNavigate();

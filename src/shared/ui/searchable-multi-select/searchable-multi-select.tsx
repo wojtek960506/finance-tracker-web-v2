@@ -28,6 +28,7 @@ type SearchableMultiSelectProps = {
 
 const normalizeSearchValue = (value: string) => value.trim().toLocaleLowerCase();
 
+// split this file to smaller one and maybe there will be some common parts with SearchableSelect
 export const SearchableMultiSelect = ({
   values,
   groups,

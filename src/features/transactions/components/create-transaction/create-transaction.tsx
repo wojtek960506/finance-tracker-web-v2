@@ -36,6 +36,7 @@ export const CreateTransaction = () => {
           </p>
         </div>
 
+        {/* TODO maybe extract this part to single component */}
         <div className="flex flex-col gap-3">
           {transactionTypeCards.map(({ key }) => (
             <Button

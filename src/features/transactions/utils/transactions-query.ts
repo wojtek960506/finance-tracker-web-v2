@@ -32,6 +32,7 @@ const parseTransactionType = (value: string | null) =>
     ? (value as TransactionType)
     : undefined;
 
+// TODO maybe extract some bigger functions from this file but keep imports as before
 const appendFilterParams = (params: URLSearchParams, filters: TransactionFilters) => {
   if (filters.startDate) params.set('startDate', filters.startDate);
   if (filters.endDate) params.set('endDate', filters.endDate);
