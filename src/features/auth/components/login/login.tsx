@@ -18,8 +18,8 @@ export const Login = () => {
   const [searchParams] = useSearchParams();
   const redirectedEmail = searchParams.get('email') ?? '';
 
-  const [email, setEmail] = useState(redirectedEmail || 'w@z.pl');
-  const [password, setPassword] = useState(redirectedEmail ? '' : '123');
+  const [email, setEmail] = useState(redirectedEmail || '');
+  const [password, setPassword] = useState('');
 
   const [isEmailInputTouched, setIsEmailInputTouched] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
