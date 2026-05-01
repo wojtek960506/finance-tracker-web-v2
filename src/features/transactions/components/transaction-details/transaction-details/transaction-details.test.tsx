@@ -246,6 +246,9 @@ describe('TransactionDetails', () => {
         title: 'transactionMovedToTrash',
       });
     });
+    expect(removeQueriesSpy).toHaveBeenCalledWith({
+      queryKey: ['trashed-transactions'],
+    });
     expect(removeQueriesSpy).toHaveBeenCalledWith({ queryKey: ['transactions'] });
     expect(removeQueriesSpy).toHaveBeenCalledWith({
       queryKey: ['transaction-totals'],

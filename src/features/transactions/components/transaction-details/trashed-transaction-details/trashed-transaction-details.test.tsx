@@ -184,6 +184,7 @@ describe('TrashedTransactionDetails', () => {
     const client = new QueryClient({
       defaultOptions: { queries: { retry: false } },
     });
+    const removeQueriesSpy = vi.spyOn(client, 'removeQueries');
     const user = userEvent.setup();
 
     render(
@@ -207,6 +208,17 @@ describe('TrashedTransactionDetails', () => {
         variant: 'success',
         title: 'transactionRestored',
       });
+    });
+    expect(removeQueriesSpy).toHaveBeenCalledWith({
+      queryKey: ['trashed-transactions'],
+    });
+    expect(removeQueriesSpy).toHaveBeenCalledWith({ queryKey: ['transactions'] });
+    expect(removeQueriesSpy).toHaveBeenCalledWith({
+      queryKey: ['transaction-totals'],
+    });
+    expect(removeQueriesSpy).toHaveBeenCalledWith({
+      queryKey: ['transaction', 'tx-1'],
+      exact: true,
     });
   });
 
@@ -321,6 +333,9 @@ describe('TrashedTransactionDetails', () => {
       }),
     );
     expect(mocks.navigate).toHaveBeenCalledWith('/transactions/trash');
+    expect(removeQueriesSpy).toHaveBeenCalledWith({
+      queryKey: ['trashed-transactions'],
+    });
 
     unmount();
 

@@ -97,6 +97,16 @@ export const TrashedTransactionDetails = () => {
       queriesToRemoveRef.current = [transaction.id, transaction.refId].filter(
         (queryId) => queryId !== undefined,
       );
+      queryClient.removeQueries({ queryKey: ['trashed-transactions'] });
+      queryClient.removeQueries({ queryKey: ['transactions'] });
+      queryClient.removeQueries({ queryKey: ['transaction-totals'] });
+      queryClient.removeQueries({ queryKey: ['transaction', transaction.id], exact: true });
+      if (transaction.refId) {
+        queryClient.removeQueries({
+          queryKey: ['transaction', transaction.refId],
+          exact: true,
+        });
+      }
       setIsRestoreModalOpen(false);
       pushToast({
         variant: 'success',
@@ -121,6 +131,7 @@ export const TrashedTransactionDetails = () => {
       queriesToRemoveRef.current = [transaction.id, transaction.refId].filter(
         (queryId) => queryId !== undefined,
       );
+      queryClient.removeQueries({ queryKey: ['trashed-transactions'] });
       setIsPermanentDeleteModalOpen(false);
       pushToast({
         variant: 'success',
