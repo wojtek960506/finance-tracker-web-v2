@@ -149,7 +149,7 @@ export const TransactionsPage = () => {
 
       <Button
         variant="primary"
-        className={clsx(MAIN_BUTTON_TEXT, "px-2 sm:px-3")}
+        className={clsx(MAIN_BUTTON_TEXT, 'mt-2 sm:mt-3 w-full ')}
         onClick={() => navigate('/transactions/new')}
       >
         {t('createFirstTransaction')}

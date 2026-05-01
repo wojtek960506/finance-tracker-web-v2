@@ -1,6 +1,6 @@
 import { buildTransactionsApiSearchParams } from '@transactions/utils/transactions-query';
 
-import type { GetTransactionsQuery, TransactionsResponse } from './types';
+import type { GetTransactionsQuery, TransactionsResponse } from '../types';
 
 import { api } from '@/shared/api';
 
@@ -12,6 +12,6 @@ export const getTransactions = async (
       ? buildTransactionsApiSearchParams({ page: pageOrQuery })
       : buildTransactionsApiSearchParams(pageOrQuery);
 
-  const res = await api.get(`/transactions?${params}`);
+  const res = await api.get<TransactionsResponse>(`/transactions?${params}`);
   return res.data;
 };

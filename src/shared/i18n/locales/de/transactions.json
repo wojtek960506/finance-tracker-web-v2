@@ -32,6 +32,8 @@
   "deletedAt": "Gelöscht am",
   "purgeAt": "Dauerhafte Löschung am",
   "trashIsEmpty": "Der Papierkorb ist leer.",
+  "emptyTrashTitle": "Der Papierkorb ist leer",
+  "emptyTrashDescription": "Gelöschte Transaktionen erscheinen hier, bis Sie sie wiederherstellen oder dauerhaft entfernen.",
   "emptyTrash": "Papierkorb leeren",
   "emptyTrashFailed": "Papierkorb konnte nicht geleert werden.",
   "trashEmptied": "Papierkorb wurde geleert.",

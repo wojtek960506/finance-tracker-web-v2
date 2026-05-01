@@ -15,11 +15,21 @@ const mocks = vi.hoisted(() => ({
   emptyTrash: vi.fn(),
   pushToast: vi.fn(),
   language: 'en-US',
+  navigate: vi.fn(),
 }));
 
 vi.mock('react-i18next', () => ({
   useTranslation: () => ({ t: (key: string) => key }),
 }));
+
+vi.mock('react-router-dom', async () => {
+  const actual =
+    await vi.importActual<typeof import('react-router-dom')>('react-router-dom');
+  return {
+    ...actual,
+    useNavigate: () => mocks.navigate,
+  };
+});
 
 vi.mock('@shared/hooks', () => ({
   useLanguage: () => ({ language: mocks.language }),
@@ -45,6 +55,7 @@ vi.mock('@ui', () => ({
       {children}
     </button>
   ),
+  Card: ({ children }: { children: ReactNode }) => <div>{children}</div>,
   Input: (props: React.InputHTMLAttributes<HTMLInputElement>) => <input {...props} />,
   Label: ({ children }: { children: ReactNode }) => <label>{children}</label>,
 }));
@@ -122,7 +133,11 @@ describe('TrashedTransactionsList', () => {
       </QueryClientProvider>,
     );
 
-    expect(await screen.findByText('trashIsEmpty')).toBeInTheDocument();
+    expect(await screen.findByText('emptyTrashTitle')).toBeInTheDocument();
+    expect(screen.getByText('emptyTrashDescription')).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: 'backToTransactions' }),
+    ).toBeInTheDocument();
   });
 
   it('renders error state when trash query fails', async () => {
@@ -156,7 +171,27 @@ describe('TrashedTransactionsList', () => {
       </QueryClientProvider>,
     );
 
-    expect(await screen.findByText('trashIsEmpty')).toBeInTheDocument();
+    expect(await screen.findByText('emptyTrashTitle')).toBeInTheDocument();
+  });
+
+  it('navigates back to active transactions from the empty trash state', async () => {
+    const user = userEvent.setup();
+    mocks.getTrashedTransactions.mockResolvedValueOnce(emptyResponse);
+    const client = new QueryClient({
+      defaultOptions: { queries: { retry: false } },
+    });
+
+    render(
+      <QueryClientProvider client={client}>
+        <MemoryRouter>
+          <TrashedTransactionsList />
+        </MemoryRouter>
+      </QueryClientProvider>,
+    );
+
+    await user.click(await screen.findByRole('button', { name: 'backToTransactions' }));
+
+    expect(mocks.navigate).toHaveBeenCalledWith('/transactions');
   });
 
   it('empties trash after typed confirmation', async () => {

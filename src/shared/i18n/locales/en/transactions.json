@@ -32,6 +32,8 @@
   "deletedAt": "Deleted at",
   "purgeAt": "Permanent deletion on",
   "trashIsEmpty": "Trash is empty.",
+  "emptyTrashTitle": "Trash is empty",
+  "emptyTrashDescription": "Deleted transactions will appear here until you restore them or remove them permanently.",
   "emptyTrash": "Empty trash",
   "emptyTrashFailed": "Could not empty trash.",
   "trashEmptied": "Trash emptied.",

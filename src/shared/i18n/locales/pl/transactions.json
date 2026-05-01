@@ -32,6 +32,8 @@
   "deletedAt": "Usunięto",
   "purgeAt": "Trwałe usunięcie",
   "trashIsEmpty": "Kosz jest pusty.",
+  "emptyTrashTitle": "Kosz jest pusty",
+  "emptyTrashDescription": "Usunięte transakcje pojawią się tutaj, dopóki ich nie przywrócisz albo nie usuniesz trwale.",
   "emptyTrash": "Opróżnij kosz",
   "emptyTrashFailed": "Nie udało się opróżnić kosza.",
   "trashEmptied": "Kosz został opróżniony.",

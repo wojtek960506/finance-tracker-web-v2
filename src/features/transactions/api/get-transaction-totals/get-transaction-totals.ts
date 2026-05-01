@@ -10,7 +10,7 @@ export const getTransactionTotals = async (
   const params = buildTransactionFiltersSearchParams(filters);
   const query = params.toString();
   const url = query ? `/transactions/totals?${query}` : '/transactions/totals';
-  const res = await api.get(url);
+  const res = await api.get<TransactionTotalsResponse>(url);
 
   return res.data;
 };
