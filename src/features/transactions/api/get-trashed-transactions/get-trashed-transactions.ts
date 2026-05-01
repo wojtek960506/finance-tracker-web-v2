@@ -1,4 +1,6 @@
-import type { TrashedTransactionsResponse } from './types';
+
+
+import type { TrashedTransactionsResponse } from '../types';
 
 import { api } from '@/shared/api';
 
@@ -12,6 +14,8 @@ export const getTrashedTransactions = async (
     sortOrder: 'desc',
   });
 
-  const res = await api.get(`/transactions/trash?${params}`);
+  const res = await api.get<TrashedTransactionsResponse>(
+    `/transactions/trash?${params}`,
+  );
   return res.data;
 };

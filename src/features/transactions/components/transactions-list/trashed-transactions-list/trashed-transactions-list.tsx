@@ -1,7 +1,9 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { AlertTriangle } from 'lucide-react';
+import clsx from 'clsx';
+import { AlertTriangle, Trash2 } from 'lucide-react';
 import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 import { normalizeApiError } from '@shared/api/api-error';
 import { MAIN_BUTTON_TEXT } from '@shared/consts';
@@ -12,7 +14,7 @@ import {
   TransactionActionModal,
   useInvalidateTransactionQueries,
 } from '@transactions/components/shared';
-import { Button, Input, Label } from '@ui';
+import { Button, Card, Input, Label, LoadingState } from '@ui';
 
 import { TransactionPreview } from '../transaction-preview';
 import { TransactionsPagination } from '../transactions-pagination';
@@ -22,6 +24,7 @@ const EMPTY_TRASH_CONFIRMATION_VALUE = 'DELETE';
 // TODO for sure split this file and maybe it will have some common things with TransactionsList
 export const TrashedTransactionsList = () => {
   const { t } = useTranslation('transactions');
+  const navigate = useNavigate();
   const { language } = useLanguage();
   const pushToast = useToastStore((state) => state.pushToast);
   const invalidateQueries = useInvalidateTransactionQueries();
@@ -47,7 +50,19 @@ export const TrashedTransactionsList = () => {
       }),
   });
 
-  if (isLoading) return <p>Loading</p>;
+  if (isLoading) {
+    return (
+      <div className="mx-auto w-full max-w-[35rem]">
+        <Card className="mt-2 gap-4 rounded-3xl border-fg/20 bg-modal-bg/95 p-6 sm:mt-3 sm:p-8">
+          <LoadingState
+            title={t('loadingTrash')}
+            description={t('loadingTrashDescription')}
+            className="py-4"
+          />
+        </Card>
+      </div>
+    );
+  }
   if (error) return <p>{error.message}</p>;
 
   const handleOpenEmptyTrashModal = () => {
@@ -74,7 +89,41 @@ export const TrashedTransactionsList = () => {
     }
   };
 
-  if (!data || data.items.length === 0) return <p>{t('trashIsEmpty')}</p>;
+  if (!data || data.items.length === 0) {
+    return (
+      <Card className={clsx(
+        "mx-auto mt-2 w-full max-w-[35rem] gap-5 rounded-3xl border-fg/20",
+        "bg-modal-bg/95 p-6 sm:mt-3 sm:p-8"
+      )}>
+        <div className="flex items-start justify-between gap-4">
+          <div className="flex min-w-0 flex-1 flex-col gap-2">
+            <h2 className="text-xl font-semibold sm:text-2xl">
+              {t('emptyTrashTitle')}
+            </h2>
+            <p className="text-sm text-text-muted sm:text-base">
+              {t('emptyTrashDescription')}
+            </p>
+          </div>
+          <div className={clsx(
+            "flex size-14 shrink-0 items-center justify-center rounded-2xl",
+            "border border-fg/10 bg-bg/70 text-text-muted sm:size-16"
+          )}>
+            <Trash2 className="size-7 sm:size-8" aria-hidden="true" />
+          </div>
+        </div>
+
+        <div className="mt-2 flex w-full justify-center sm:mt-3">
+          <Button
+            variant="primary"
+            className={`${MAIN_BUTTON_TEXT} w-full`}
+            onClick={() => navigate('/transactions')}
+          >
+            {t('backToTransactions')}
+          </Button>
+        </div>
+      </Card>
+    );
+  }
 
   return (
     <div className="m-auto flex max-w-[35rem] flex-col gap-2 sm:gap-3">
@@ -91,7 +140,10 @@ export const TrashedTransactionsList = () => {
         confirmDisabled={emptyTrashConfirmation !== EMPTY_TRASH_CONFIRMATION_VALUE}
         tone="destructive"
       >
-        <div className="flex items-start gap-3 rounded-2xl border border-destructive-border bg-destructive text-destructive-foreground p-3 sm:p-4">
+        <div className={clsx(
+          "flex items-start gap-3 rounded-2xl border border-destructive-border bg-destructive",
+          "text-destructive-foreground p-3 sm:p-4"
+        )}>
           <AlertTriangle className="mt-0.5 size-5 shrink-0 sm:size-6" />
           <div className="flex flex-col gap-2">
             <p className="font-semibold">{t('emptyTrashWarningTitle')}</p>

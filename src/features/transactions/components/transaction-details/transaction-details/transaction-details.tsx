@@ -13,7 +13,7 @@ import {
   TransactionBackButton,
   useInvalidateTransactionQueries,
 } from '@transactions/components/shared';
-import { Button } from '@ui';
+import { Button, Card, LoadingState } from '@ui';
 
 import { TransactionDetailsCard } from '../transaction-details-card';
 
@@ -62,7 +62,19 @@ export const TransactionDetails = () => {
     [queryClient],
   );
 
-  if (isLoading) return <p>Loading</p>;
+  if (isLoading) {
+    return (
+      <div className="m-auto flex max-w-100 flex-col gap-2 sm:gap-3">
+        <Card className="gap-4 rounded-3xl border-fg/20 bg-modal-bg/95 p-6 sm:p-8">
+          <LoadingState
+            title={t('loadingTransactionDetails')}
+            description={t('loadingTransactionDetailsDescription')}
+            className="py-4"
+          />
+        </Card>
+      </div>
+    );
+  }
   if (error) return <p>{error.message}</p>;
   if (!transaction) return <p>No transaction</p>;
 
@@ -79,6 +91,9 @@ export const TransactionDetails = () => {
       queriesToRemoveRef.current = [transaction!.id, transaction!.refId].filter(
         (queryId) => queryId !== undefined,
       );
+      queryClient.removeQueries({ queryKey: ['trashed-transactions'] });
+      queryClient.removeQueries({ queryKey: ['transactions'] });
+      queryClient.removeQueries({ queryKey: ['transaction-totals'] });
       setIsMoveToTrashModalOpen(false);
       pushToast({
         variant: 'success',

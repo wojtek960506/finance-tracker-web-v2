@@ -47,7 +47,25 @@ vi.mock('@shared/ui', () => ({
       {children}
     </button>
   ),
+  Card: ({
+    children,
+    ...props
+  }: React.HTMLAttributes<HTMLDivElement> & { children: ReactNode }) => (
+    <div {...props}>{children}</div>
+  ),
   Drawer: ({ children }: { children: ReactNode }) => <div>{children}</div>,
+  LoadingState: ({
+    title,
+    description,
+  }: {
+    title: string;
+    description?: string;
+  }) => (
+    <div>
+      <p>{title}</p>
+      {description ? <p>{description}</p> : null}
+    </div>
+  ),
 }));
 
 vi.mock('@transactions/components/transactions-list/transaction-preview', () => ({
@@ -94,7 +112,8 @@ describe('TransactionsPage', () => {
       </QueryClientProvider>,
     );
 
-    expect(screen.getByText('Loading')).toBeInTheDocument();
+    expect(screen.getByText('loadingTransactions')).toBeInTheDocument();
+    expect(screen.getByText('loadingTransactionsDescription')).toBeInTheDocument();
   });
 
   it('renders error state', async () => {
@@ -128,11 +147,13 @@ describe('TransactionsPage', () => {
       </QueryClientProvider>,
     );
 
+    expect(await screen.findByText('emptyTransactionsTitle')).toBeInTheDocument();
+    expect(screen.getByText('emptyTransactionsDescription')).toBeInTheDocument();
     expect(
-      await screen.findByText(
-        'There are no transactions - TODO add button to create one',
-      ),
+      screen.getByRole('button', { name: 'createFirstTransaction' }),
     ).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'showTotals' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'showFilters' })).not.toBeInTheDocument();
   });
 
   it('renders a list of transactions', async () => {

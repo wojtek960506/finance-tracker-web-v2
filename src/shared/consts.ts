@@ -1,7 +1,7 @@
+import { resolveApiBaseUrl } from './config/resolve-api-base-url';
 import type { Language, LanguageProps } from './types';
 
-export const BASE_URL = 'http://localhost:5000';
-// export const BASE_URL = 'http://192.168.0.244:5000';
+export const BASE_URL = resolveApiBaseUrl(import.meta.env.VITE_API_BASE_URL);
 
 export const LANGUAGE_STORE_KEY = 'language';
 export const AUTH_TOKEN_STORE_KEY = 'auth-token';

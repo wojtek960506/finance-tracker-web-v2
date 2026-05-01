@@ -1,73 +1,101 @@
-# React + TypeScript + Vite
+# Finance Tracker Web V2
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Frontend for a personal finance tracker built with React, TypeScript, Vite, React Router, React Query, Tailwind CSS, and Vitest.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Authentication flow with login and registration screens
+- Transactions list, filters, details, create, update, and trash views
+- Named resource management for categories, payment methods, and accounts
+- Internationalization support
+- Unit and component tests with Vitest and Testing Library
 
-## React Compiler
+## Requirements
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Node.js 20+
+- pnpm
+- A running backend API
 
-## Expanding the ESLint configuration
+## Getting started
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+1. Install dependencies:
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
+```bash
+pnpm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+2. Create your local env file from the example:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x';
-import reactDom from 'eslint-plugin-react-dom';
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
+```bash
+cp .env.example .env
 ```
+
+3. Update `VITE_API_BASE_URL` in `.env` to point to your backend.
+
+4. Start the development server:
+
+```bash
+pnpm dev
+```
+
+## Environment variables
+
+This app uses Vite env variables, so every client-side variable must start with `VITE_`.
+
+### `VITE_API_BASE_URL`
+
+Base URL of the backend server, without the `/api` suffix. The frontend appends `/api` automatically.
+
+Examples:
+
+- Local backend:
+
+```env
+VITE_API_BASE_URL=http://localhost:5000
+```
+
+- Hosted backend on a separate domain:
+
+```env
+VITE_API_BASE_URL=https://api.example.com
+```
+
+- Backend available on the same domain behind a reverse proxy:
+
+```env
+VITE_API_BASE_URL=/
+```
+
+Notes:
+
+- Trailing slashes are removed automatically.
+- If `VITE_API_BASE_URL` is missing or blank, the app falls back to `http://localhost:5000`.
+
+## Available scripts
+
+- `pnpm dev` starts the Vite dev server
+- `pnpm build` runs TypeScript compilation and creates a production build
+- `pnpm preview` serves the production build locally
+- `pnpm lint` runs ESLint
+- `pnpm lint:fix` runs ESLint with automatic fixes
+- `pnpm format` checks Prettier formatting
+- `pnpm format:fix` writes Prettier formatting changes
+- `pnpm test` runs the test suite once
+- `pnpm test:watch` runs tests in watch mode
+- `pnpm test:coverage` runs tests with coverage
+
+## Production deployment
+
+This project is a client-side React SPA built with Vite, so it works well on static hosts such as Vercel, Netlify, or Cloudflare Pages.
+
+For deployment:
+
+1. Set `VITE_API_BASE_URL` in your hosting provider's environment settings.
+2. Ensure your host serves `index.html` for client-side routes like `/transactions`.
+3. Build with:
+
+```bash
+pnpm build
+```
+
+The production assets are generated in `dist/`.

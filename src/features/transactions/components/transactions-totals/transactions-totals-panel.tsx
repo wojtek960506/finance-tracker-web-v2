@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import type { TransactionFilters } from '@transactions/api';
 import { getTransactionTotals } from '@transactions/api';
-import { Card } from '@ui';
+import { Card, LoadingState } from '@ui';
 
 import { CurrenciesTotals } from './currencies-totals';
 import { OverallTotals } from './overall-totals';
@@ -33,7 +33,13 @@ export const TransactionsTotalsPanel = ({ filters }: TransactionsTotalsPanelProp
         <p className="text-sm text-text-muted">{t('totalsDescription')}</p>
       </div>
 
-      {isLoading ? <p>{t('loadingTotals')}</p> : null}
+      {isLoading ? (
+        <LoadingState
+          title={t('loadingTotals')}
+          description={t('loadingTotalsDescription')}
+          className="flex-1 py-6"
+        />
+      ) : null}
       {error ? <p className="text-destructive">{error.message}</p> : null}
 
       {data ? (

@@ -55,6 +55,22 @@ vi.mock('@ui', () => ({
       {children}
     </button>
   ),
+  Card: ({
+    children,
+    ...props
+  }: ComponentProps<'div'> & { children: ReactNode }) => <div {...props}>{children}</div>,
+  LoadingState: ({
+    title,
+    description,
+  }: {
+    title: string;
+    description?: string;
+  }) => (
+    <div>
+      <p>{title}</p>
+      {description ? <p>{description}</p> : null}
+    </div>
+  ),
 }));
 
 vi.mock('@transactions/components/shared', async () => {
@@ -122,7 +138,10 @@ describe('TransactionDetails', () => {
       </QueryClientProvider>,
     );
 
-    expect(screen.getByText('Loading')).toBeInTheDocument();
+    expect(screen.getByText('loadingTransactionDetails')).toBeInTheDocument();
+    expect(
+      screen.getByText('loadingTransactionDetailsDescription'),
+    ).toBeInTheDocument();
   });
 
   it('renders error state', async () => {
@@ -221,6 +240,7 @@ describe('TransactionDetails', () => {
     const client = new QueryClient({
       defaultOptions: { queries: { retry: false } },
     });
+    const removeQueriesSpy = vi.spyOn(client, 'removeQueries');
     const user = userEvent.setup();
 
     render(
@@ -244,6 +264,13 @@ describe('TransactionDetails', () => {
         variant: 'success',
         title: 'transactionMovedToTrash',
       });
+    });
+    expect(removeQueriesSpy).toHaveBeenCalledWith({
+      queryKey: ['trashed-transactions'],
+    });
+    expect(removeQueriesSpy).toHaveBeenCalledWith({ queryKey: ['transactions'] });
+    expect(removeQueriesSpy).toHaveBeenCalledWith({
+      queryKey: ['transaction-totals'],
     });
   });
 
