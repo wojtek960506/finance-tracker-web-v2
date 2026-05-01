@@ -1,5 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 
+import { ApiError } from '@shared/api/api-error';
+
 import { getNamedResourceErrorToast } from './get-named-resource-error-toast';
 
 describe('getNamedResourceErrorToast', () => {
@@ -8,9 +10,9 @@ describe('getNamedResourceErrorToast', () => {
 
     expect(
       getNamedResourceErrorToast({
-        apiError: {
+        apiError: new ApiError({
           message: 'Plain api error message',
-        },
+        }),
         fallbackTitle: 'Fallback title',
         resourceName: 'Groceries',
         tError,
@@ -27,10 +29,10 @@ describe('getNamedResourceErrorToast', () => {
 
     expect(
       getNamedResourceErrorToast({
-        apiError: {
+        apiError: new ApiError({
           code: 'CATEGORY_ALREADY_EXISTS',
           message: 'Already exists',
-        },
+        }),
         fallbackTitle: 'Fallback title',
         resourceName: 'Groceries',
         tError,
@@ -48,10 +50,10 @@ describe('getNamedResourceErrorToast', () => {
 
     expect(
       getNamedResourceErrorToast({
-        apiError: {
+        apiError: new ApiError({
           code: 'CATEGORY_DEPENDENCY_ERROR',
           message: 'Dependency error',
-        },
+        }),
         fallbackTitle: 'Fallback title',
         resourceName: 'Groceries',
         tError,

@@ -1,6 +1,6 @@
 import { api } from '@shared/api';
 
-import type { TrashedTransactionDetails } from './types';
+import type { TrashedTransactionDetails } from '../types';
 
 export const getTrashedTransaction = async (
   id: string,
