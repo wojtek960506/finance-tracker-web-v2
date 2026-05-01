@@ -58,6 +58,18 @@ vi.mock('@ui', () => ({
   Card: ({ children }: { children: ReactNode }) => <div>{children}</div>,
   Input: (props: React.InputHTMLAttributes<HTMLInputElement>) => <input {...props} />,
   Label: ({ children }: { children: ReactNode }) => <label>{children}</label>,
+  LoadingState: ({
+    title,
+    description,
+  }: {
+    title: string;
+    description?: string;
+  }) => (
+    <div>
+      <p>{title}</p>
+      {description ? <p>{description}</p> : null}
+    </div>
+  ),
 }));
 
 vi.mock('@transactions/components/shared', async () => {
@@ -117,6 +129,24 @@ const emptyResponse: TrashedTransactionsResponse = {
 describe('TrashedTransactionsList', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+  });
+
+  it('renders loading state', () => {
+    mocks.getTrashedTransactions.mockReturnValueOnce(new Promise(() => {}));
+    const client = new QueryClient({
+      defaultOptions: { queries: { retry: false } },
+    });
+
+    render(
+      <QueryClientProvider client={client}>
+        <MemoryRouter>
+          <TrashedTransactionsList />
+        </MemoryRouter>
+      </QueryClientProvider>,
+    );
+
+    expect(screen.getByText('loadingTrash')).toBeInTheDocument();
+    expect(screen.getByText('loadingTrashDescription')).toBeInTheDocument();
   });
 
   it('renders empty state when trash is empty', async () => {

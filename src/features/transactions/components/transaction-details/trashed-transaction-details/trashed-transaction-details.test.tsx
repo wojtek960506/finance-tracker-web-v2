@@ -53,6 +53,22 @@ vi.mock('@ui', () => ({
       {children}
     </button>
   ),
+  Card: ({
+    children,
+    ...props
+  }: ComponentProps<'div'> & { children: ReactNode }) => <div {...props}>{children}</div>,
+  LoadingState: ({
+    title,
+    description,
+  }: {
+    title: string;
+    description?: string;
+  }) => (
+    <div>
+      <p>{title}</p>
+      {description ? <p>{description}</p> : null}
+    </div>
+  ),
 }));
 
 vi.mock('@transactions/components/shared', async () => {
@@ -120,7 +136,10 @@ describe('TrashedTransactionDetails', () => {
       </QueryClientProvider>,
     );
 
-    expect(screen.getByText('Loading')).toBeInTheDocument();
+    expect(screen.getByText('loadingTrashTransactionDetails')).toBeInTheDocument();
+    expect(
+      screen.getByText('loadingTrashTransactionDetailsDescription'),
+    ).toBeInTheDocument();
   });
 
   it('renders error state', async () => {

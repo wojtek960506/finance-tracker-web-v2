@@ -54,6 +54,18 @@ vi.mock('@shared/ui', () => ({
     <div {...props}>{children}</div>
   ),
   Drawer: ({ children }: { children: ReactNode }) => <div>{children}</div>,
+  LoadingState: ({
+    title,
+    description,
+  }: {
+    title: string;
+    description?: string;
+  }) => (
+    <div>
+      <p>{title}</p>
+      {description ? <p>{description}</p> : null}
+    </div>
+  ),
 }));
 
 vi.mock('@transactions/components/transactions-list/transaction-preview', () => ({
@@ -100,7 +112,8 @@ describe('TransactionsPage', () => {
       </QueryClientProvider>,
     );
 
-    expect(screen.getByText('Loading')).toBeInTheDocument();
+    expect(screen.getByText('loadingTransactions')).toBeInTheDocument();
+    expect(screen.getByText('loadingTransactionsDescription')).toBeInTheDocument();
   });
 
   it('renders error state', async () => {

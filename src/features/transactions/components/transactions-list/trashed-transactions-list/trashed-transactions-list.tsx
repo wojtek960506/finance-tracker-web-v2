@@ -14,7 +14,7 @@ import {
   TransactionActionModal,
   useInvalidateTransactionQueries,
 } from '@transactions/components/shared';
-import { Button, Card, Input, Label } from '@ui';
+import { Button, Card, Input, Label, LoadingState } from '@ui';
 
 import { TransactionPreview } from '../transaction-preview';
 import { TransactionsPagination } from '../transactions-pagination';
@@ -50,7 +50,19 @@ export const TrashedTransactionsList = () => {
       }),
   });
 
-  if (isLoading) return <p>Loading</p>;
+  if (isLoading) {
+    return (
+      <div className="mx-auto w-full max-w-[35rem]">
+        <Card className="mt-2 gap-4 rounded-3xl border-fg/20 bg-modal-bg/95 p-6 sm:mt-3 sm:p-8">
+          <LoadingState
+            title={t('loadingTrash')}
+            description={t('loadingTrashDescription')}
+            className="py-4"
+          />
+        </Card>
+      </div>
+    );
+  }
   if (error) return <p>{error.message}</p>;
 
   const handleOpenEmptyTrashModal = () => {

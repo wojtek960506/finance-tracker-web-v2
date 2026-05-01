@@ -12,7 +12,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { IS_LG_MEDIA_QUERY, IS_XL_MEDIA_QUERY, MAIN_BUTTON_TEXT } from '@shared/consts';
 import { useMediaQuery } from '@shared/hooks';
-import { Button, Card, Drawer } from '@shared/ui';
+import { Button, Card, Drawer, LoadingState } from '@shared/ui';
 import { getTransactions, type TransactionFilters } from '@transactions/api';
 import { TransactionsFiltersPanel } from '@transactions/components/transactions-filters';
 import { TransactionsList } from '@transactions/components/transactions-list';
@@ -38,6 +38,7 @@ import {
 //    scrolling is also strange (maybe can be open above when there is enough space and then
 //    can be moved under when there is enough space)
 // 9. replace full transactions/totals refetch after create/delete with optimistic query updates
+// 10. consider replacing generic loading states with screen-specific skeleton UIs
 export const TransactionsPage = () => {
   const { t } = useTranslation('transactions');
   const navigate = useNavigate();
@@ -78,7 +79,19 @@ export const TransactionsPage = () => {
     }
   }, [data, filters, setSearchParams]);
 
-  if (isLoading) return <p>Loading</p>;
+  if (isLoading) {
+    return (
+      <div className="mx-auto w-full max-w-[35rem]">
+        <Card className="mt-2 gap-4 rounded-3xl border-fg/20 bg-modal-bg/95 p-6 sm:mt-3 sm:p-8">
+          <LoadingState
+            title={t('loadingTransactions')}
+            description={t('loadingTransactionsDescription')}
+            className="py-4"
+          />
+        </Card>
+      </div>
+    );
+  }
   if (error) return <p>{error.message}</p>;
 
   const isDrawerPanels = !isLgScreen;
