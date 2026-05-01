@@ -39,6 +39,7 @@ import {
 //    can be moved under when there is enough space)
 // 9. replace full transactions/totals refetch after create/delete with optimistic query updates
 // 10. consider replacing generic loading states with screen-specific skeleton UIs
+// 11. revisit bundle size warnings and introduce route-level code splitting where it helps PR #13
 export const TransactionsPage = () => {
   const { t } = useTranslation('transactions');
   const navigate = useNavigate();

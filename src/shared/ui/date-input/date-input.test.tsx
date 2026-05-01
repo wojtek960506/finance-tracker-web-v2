@@ -1,6 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import type { DropdownProps } from 'react-day-picker';
 import { describe, expect, it, vi } from 'vitest';
 
 import { DateInput } from './date-input';
@@ -23,17 +22,11 @@ vi.mock('@ui', () => ({
 vi.mock('react-day-picker', async () => {
   const actual =
     await vi.importActual<typeof import('react-day-picker')>('react-day-picker');
-  type MockDayPickerProps = Pick<
-    React.ComponentProps<typeof actual.DayPicker>,
-    'month' | 'onMonthChange' | 'onSelect' | 'components'
-  >;
 
   return {
     ...actual,
-    DayPicker: (props: MockDayPickerProps) => {
-      const Dropdown = props.components?.Dropdown as
-        | React.ComponentType<DropdownProps>
-        | undefined;
+    DayPicker: (props: any) => {
+      const Dropdown = props.components?.Dropdown as React.ComponentType<any> | undefined;
 
       return (
         <div>
@@ -42,7 +35,7 @@ vi.mock('react-day-picker', async () => {
             <Dropdown
               className="dropdown"
               disabled={false}
-              value="1"
+              value={1}
               options={[{ value: '1', label: 'January', disabled: false }]}
               onChange={() => {}}
             />
