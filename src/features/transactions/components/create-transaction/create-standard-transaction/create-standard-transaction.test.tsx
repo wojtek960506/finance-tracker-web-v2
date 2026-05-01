@@ -84,6 +84,7 @@ describe('CreateStandardTransaction', () => {
     const user = userEvent.setup();
     const client = createTestQueryClient();
     const invalidateQueriesSpy = vi.spyOn(client, 'invalidateQueries');
+    const removeQueriesSpy = vi.spyOn(client, 'removeQueries');
     mocks.createStandardTransaction.mockResolvedValueOnce({ id: 'tx-1' });
 
     render(
@@ -110,6 +111,10 @@ describe('CreateStandardTransaction', () => {
     expect(mocks.pushToast).toHaveBeenCalledWith({
       variant: 'success',
       title: 'transactionCreated',
+    });
+    expect(removeQueriesSpy).toHaveBeenCalledWith({ queryKey: ['transactions'] });
+    expect(removeQueriesSpy).toHaveBeenCalledWith({
+      queryKey: ['transaction-totals'],
     });
     expect(mocks.navigate).toHaveBeenCalledWith('/transactions');
   });

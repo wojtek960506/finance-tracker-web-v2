@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import type { Transaction } from '@transactions/api';
@@ -7,28 +8,30 @@ import { TransactionsPagination } from '../transactions-pagination';
 
 type TransactionsListProps = {
   transactions: Transaction[];
+  hasAnyTransactions: boolean;
   currentPage: number;
   totalPages: number;
   activeFiltersCount: number;
   onPageChange: (page: number) => void;
+  emptyState?: ReactNode;
 };
 
 export const TransactionsList = ({
   transactions,
+  hasAnyTransactions,
   currentPage,
   totalPages,
   activeFiltersCount,
   onPageChange,
+  emptyState = null,
 }: TransactionsListProps) => {
   const { t } = useTranslation('transactions');
 
   if (transactions.length === 0) {
-    return (
-      <p>
-        {activeFiltersCount > 0
-          ? t('noTransactionsMatchingFilters')
-          : 'There are no transactions - TODO add button to create one'}
-      </p>
+    return hasAnyTransactions || activeFiltersCount > 0 ? (
+      <p>{t('noTransactionsMatchingFilters')}</p>
+    ) : (
+      emptyState
     );
   }
 

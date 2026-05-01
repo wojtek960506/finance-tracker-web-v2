@@ -21,4 +21,3 @@ describe('resolveApiBaseUrl', () => {
     expect(resolveApiBaseUrl('   ')).toBe('http://localhost:5000');
   });
 });
-

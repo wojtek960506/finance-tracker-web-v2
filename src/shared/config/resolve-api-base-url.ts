@@ -10,4 +10,3 @@ export const resolveApiBaseUrl = (value?: string) => {
 
   return trimmedValue.replace(/\/+$/, '');
 };
-

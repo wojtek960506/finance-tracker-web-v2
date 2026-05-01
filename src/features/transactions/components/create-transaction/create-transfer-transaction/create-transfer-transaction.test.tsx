@@ -83,6 +83,7 @@ describe('CreateTransferTransaction', () => {
     const user = userEvent.setup();
     const client = createTestQueryClient();
     const invalidateQueriesSpy = vi.spyOn(client, 'invalidateQueries');
+    const removeQueriesSpy = vi.spyOn(client, 'removeQueries');
     mocks.createTransferTransaction.mockResolvedValueOnce([
       { id: 'tx-1' },
       { id: 'tx-2' },
@@ -111,6 +112,10 @@ describe('CreateTransferTransaction', () => {
     expect(mocks.pushToast).toHaveBeenCalledWith({
       variant: 'success',
       title: 'transactionCreated',
+    });
+    expect(removeQueriesSpy).toHaveBeenCalledWith({ queryKey: ['transactions'] });
+    expect(removeQueriesSpy).toHaveBeenCalledWith({
+      queryKey: ['transaction-totals'],
     });
     expect(mocks.navigate).toHaveBeenCalledWith('/transactions');
   });

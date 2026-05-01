@@ -41,6 +41,8 @@ export const CreateTransferTransaction = () => {
         variant: 'success',
         title: t('transactionCreated'),
       });
+      queryClient.removeQueries({ queryKey: ['transactions'] });
+      queryClient.removeQueries({ queryKey: ['transaction-totals'] });
       navigate('/transactions');
     } catch (error) {
       const apiError = normalizeApiError(error);

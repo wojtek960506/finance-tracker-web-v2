@@ -12,7 +12,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { IS_LG_MEDIA_QUERY, IS_XL_MEDIA_QUERY, MAIN_BUTTON_TEXT } from '@shared/consts';
 import { useMediaQuery } from '@shared/hooks';
-import { Button, Drawer } from '@shared/ui';
+import { Button, Card, Drawer } from '@shared/ui';
 import { getTransactions, type TransactionFilters } from '@transactions/api';
 import { TransactionsFiltersPanel } from '@transactions/components/transactions-filters';
 import { TransactionsList } from '@transactions/components/transactions-list';
@@ -37,6 +37,7 @@ import {
 // 8. selector sometimes exceeds size of the parent component when it is open and then
 //    scrolling is also strange (maybe can be open above when there is enough space and then
 //    can be moved under when there is enough space)
+// 9. replace full transactions/totals refetch after create/delete with optimistic query updates
 export const TransactionsPage = () => {
   const { t } = useTranslation('transactions');
   const navigate = useNavigate();
@@ -66,6 +67,7 @@ export const TransactionsPage = () => {
     queryKey: ['transactions', page, filters],
     queryFn: async () => await getTransactions({ page, filters }),
   });
+  const hasNoTransactions = (data?.total ?? 0) === 0 && activeFiltersCount === 0;
 
   // when page is too big then we show the last available page
   useEffect(() => {
@@ -131,6 +133,29 @@ export const TransactionsPage = () => {
     <TransactionsFiltersPanel appliedFilters={filters} onApply={handleApplyFilters} />
   );
   const totalsPanel = <TransactionsTotalsPanel filters={filters} />;
+  const emptyTransactionsState = (
+    <Card className={clsx(
+      "mx-auto mt-2 w-full max-w-[35rem] items-center gap-4 rounded-3xl border-fg/20",
+      "bg-modal-bg/95 p-6 text-center sm:mt-3 sm:p-8"
+    )}>
+      <div className="flex flex-col gap-2">
+        <h2 className="text-xl font-semibold sm:text-2xl">
+          {t('emptyTransactionsTitle')}
+        </h2>
+        <p className="text-sm text-text-muted sm:text-base">
+          {t('emptyTransactionsDescription')}
+        </p>
+      </div>
+
+      <Button
+        variant="primary"
+        className={clsx(MAIN_BUTTON_TEXT, "px-2 sm:px-3")}
+        onClick={() => navigate('/transactions/new')}
+      >
+        {t('createFirstTransaction')}
+      </Button>
+    </Card>
+  );
 
   return (
     <>
@@ -143,7 +168,7 @@ export const TransactionsPage = () => {
             'lg:grid lg:grid-cols-[35rem_minmax(10rem,1fr)] lg:justify-center lg:items-stretch lg:gap-4',
         )}
       >
-        {isLargeSidebarLayout ? (
+        {!hasNoTransactions && isLargeSidebarLayout ? (
           isTotalsOpen ? (
             <aside
               id="transactions-totals-panel"
@@ -166,74 +191,78 @@ export const TransactionsPage = () => {
               'xl:col-start-2 xl:mx-auto xl:w-full xl:max-w-[35rem]',
           )}
         >
-          <div className="flex flex-col gap-2 sm:gap-3">
-            <Button
-              variant="primary"
-              className={MAIN_BUTTON_TEXT}
-              onClick={() => navigate('/transactions/new')}
-            >
-              {t('newTransaction')}
-            </Button>
-
-            <div className="transactions-page-panel-toggle-grid grid items-center gap-2 sm:gap-3">
+          {!hasNoTransactions ? (
+            <div className="flex flex-col gap-2 sm:gap-3">
               <Button
-                ref={totalsButtonRef}
-                type="button"
-                variant={isTotalsOpen ? 'secondary' : 'outline'}
-                className="gap-2"
-                aria-expanded={isTotalsOpen}
-                aria-controls="transactions-totals-panel"
-                onClick={handleToggleTotals}
+                variant="primary"
+                className={MAIN_BUTTON_TEXT}
+                onClick={() => navigate('/transactions/new')}
               >
-                <span>{isTotalsOpen ? t('hideTotals') : t('showTotals')}</span>
-                {isTotalsOpen ? (
-                  <PanelLeftClose className="size-4 sm:size-5" aria-hidden="true" />
-                ) : (
-                  <PanelLeftOpen className="size-4 sm:size-5" aria-hidden="true" />
-                )}
+                {t('newTransaction')}
               </Button>
 
-              <Button
-                ref={filtersButtonRef}
-                type="button"
-                variant={isFiltersOpen ? 'secondary' : 'outline'}
-                className="gap-2"
-                aria-expanded={isFiltersOpen}
-                aria-controls="transactions-filters-panel"
-                onClick={handleToggleFilters}
-              >
-                {isFiltersOpen ? (
-                  <PanelRightClose className="size-4 sm:size-5" aria-hidden="true" />
-                ) : (
-                  <PanelRightOpen className="size-4 sm:size-5" aria-hidden="true" />
-                )}
-                <span>{isFiltersOpen ? t('hideFilters') : t('showFilters')}</span>
-                <span
-                  className={clsx(
-                    'inline-flex size-6 items-center justify-center rounded-full text-xs font-semibold border border-1',
-                    activeFiltersCount > 0
-                      ? 'bg-bt-primary text-white'
-                      : 'bg-bg text-text-muted',
-                  )}
+              <div className="transactions-page-panel-toggle-grid grid items-center gap-2 sm:gap-3">
+                <Button
+                  ref={totalsButtonRef}
+                  type="button"
+                  variant={isTotalsOpen ? 'secondary' : 'outline'}
+                  className="gap-2"
+                  aria-expanded={isTotalsOpen}
+                  aria-controls="transactions-totals-panel"
+                  onClick={handleToggleTotals}
                 >
-                  {activeFiltersCount}
-                </span>
-              </Button>
+                  <span>{isTotalsOpen ? t('hideTotals') : t('showTotals')}</span>
+                  {isTotalsOpen ? (
+                    <PanelLeftClose className="size-4 sm:size-5" aria-hidden="true" />
+                  ) : (
+                    <PanelLeftOpen className="size-4 sm:size-5" aria-hidden="true" />
+                  )}
+                </Button>
+
+                <Button
+                  ref={filtersButtonRef}
+                  type="button"
+                  variant={isFiltersOpen ? 'secondary' : 'outline'}
+                  className="gap-2"
+                  aria-expanded={isFiltersOpen}
+                  aria-controls="transactions-filters-panel"
+                  onClick={handleToggleFilters}
+                >
+                  {isFiltersOpen ? (
+                    <PanelRightClose className="size-4 sm:size-5" aria-hidden="true" />
+                  ) : (
+                    <PanelRightOpen className="size-4 sm:size-5" aria-hidden="true" />
+                  )}
+                  <span>{isFiltersOpen ? t('hideFilters') : t('showFilters')}</span>
+                  <span
+                    className={clsx(
+                      'inline-flex size-6 items-center justify-center rounded-full text-xs font-semibold border border-1',
+                      activeFiltersCount > 0
+                        ? 'bg-bt-primary text-white'
+                        : 'bg-bg text-text-muted',
+                    )}
+                  >
+                    {activeFiltersCount}
+                  </span>
+                </Button>
+              </div>
             </div>
-          </div>
+          ) : null}
 
           <div className="min-h-0 overflow-y-auto ">
             <TransactionsList
               transactions={data?.items ?? []}
+              hasAnyTransactions={(data?.total ?? 0) > 0}
               currentPage={data?.page ?? page}
               totalPages={data?.totalPages ?? 0}
               activeFiltersCount={activeFiltersCount}
               onPageChange={handlePageChange}
+              emptyState={emptyTransactionsState}
             />
           </div>
         </div>
 
-        {isLargeSidebarLayout ? (
+        {!hasNoTransactions && isLargeSidebarLayout ? (
           isFiltersOpen ? (
             <aside
               id="transactions-filters-panel"
@@ -244,7 +273,7 @@ export const TransactionsPage = () => {
           ) : isTotalsOpen ? (
             <div className="hidden xl:block" aria-hidden="true" />
           ) : null
-        ) : isSharedSidebarVisible ? (
+        ) : !hasNoTransactions && isSharedSidebarVisible ? (
           <aside
             className={clsx(
               'hidden min-h-0 min-w-0 lg:block lg:w-full',
@@ -263,7 +292,7 @@ export const TransactionsPage = () => {
         ) : null}
       </div>
 
-      {isDrawerPanels && isTotalsOpen ? (
+      {!hasNoTransactions && isDrawerPanels && isTotalsOpen ? (
         <Drawer
           isOpen={isTotalsOpen}
           fromLeft={false}
@@ -279,7 +308,7 @@ export const TransactionsPage = () => {
         </Drawer>
       ) : null}
 
-      {isDrawerPanels && isFiltersOpen ? (
+      {!hasNoTransactions && isDrawerPanels && isFiltersOpen ? (
         <Drawer
           isOpen={isFiltersOpen}
           fromLeft={false}

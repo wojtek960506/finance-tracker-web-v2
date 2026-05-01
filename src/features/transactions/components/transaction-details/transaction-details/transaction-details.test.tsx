@@ -221,6 +221,7 @@ describe('TransactionDetails', () => {
     const client = new QueryClient({
       defaultOptions: { queries: { retry: false } },
     });
+    const removeQueriesSpy = vi.spyOn(client, 'removeQueries');
     const user = userEvent.setup();
 
     render(
@@ -244,6 +245,10 @@ describe('TransactionDetails', () => {
         variant: 'success',
         title: 'transactionMovedToTrash',
       });
+    });
+    expect(removeQueriesSpy).toHaveBeenCalledWith({ queryKey: ['transactions'] });
+    expect(removeQueriesSpy).toHaveBeenCalledWith({
+      queryKey: ['transaction-totals'],
     });
   });
 
