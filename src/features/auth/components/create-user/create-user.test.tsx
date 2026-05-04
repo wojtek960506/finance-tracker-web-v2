@@ -1,7 +1,7 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { MemoryRouter, Route, Routes, useLocation } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { CreateUser } from './create-user';
@@ -29,14 +29,7 @@ vi.mock('react-i18next', () => ({
   useTranslation: () => ({
     t: (key: string) => key,
   }),
-  Trans: ({ values }: { values?: { fullName?: string } }) =>
-    `User ${values?.fullName ?? ''} was successfully created`,
 }));
-
-const LocationDisplay = () => {
-  const location = useLocation();
-  return <div>{`${location.pathname}${location.search}`}</div>;
-};
 
 describe('CreateUser', () => {
   const renderCreateUser = () =>
@@ -52,10 +45,7 @@ describe('CreateUser', () => {
         }
       >
         <MemoryRouter initialEntries={['/register']}>
-          <Routes>
-            <Route path="/register" element={<CreateUser />} />
-            <Route path="/login" element={<LocationDisplay />} />
-          </Routes>
+          <CreateUser />
         </MemoryRouter>
       </QueryClientProvider>,
     );
@@ -100,7 +90,7 @@ describe('CreateUser', () => {
     expect(submitButton).toBeDisabled();
   });
 
-  it('creates a user and redirects back to login with email prefilled', async () => {
+  it('creates a user and shows verification instructions instead of redirecting', async () => {
     const user = userEvent.setup();
 
     renderCreateUser();
@@ -121,18 +111,15 @@ describe('CreateUser', () => {
       });
     });
 
-    await waitFor(() => {
-      expect(mocks.pushToast).toHaveBeenCalled();
-    });
+    expect(mocks.pushToast).not.toHaveBeenCalled();
 
-    const successToast = mocks.pushToast.mock.calls.find(
-      ([toast]) => toast?.variant === 'success',
-    )?.[0];
-
-    expect(successToast?.variant).toBe('success');
-    const { container } = render(<>{successToast?.message}</>);
-    expect(container).toHaveTextContent('User John Doe was successfully created');
-    expect(screen.getByText('/login?email=john%40example.com')).toBeInTheDocument();
+    expect(screen.getByText('registrationSuccessTitle')).toBeInTheDocument();
+    expect(screen.getByText('registrationSuccessDescription')).toBeInTheDocument();
+    expect(screen.getByText('john@example.com')).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'backToLogin' })).toHaveAttribute(
+      'href',
+      '/login',
+    );
   });
 
   it('shows translated user creation errors in a toast and stays on the page', async () => {
@@ -162,7 +149,7 @@ describe('CreateUser', () => {
     });
 
     expect(screen.getByRole('button', { name: 'createAccount' })).toBeInTheDocument();
-    expect(screen.queryByText('/login?email=john%40example.com')).not.toBeInTheDocument();
+    expect(screen.queryByText('registrationSuccessTitle')).not.toBeInTheDocument();
   });
 
   it('shows raw api error message in a toast when there is no error code', async () => {

@@ -54,13 +54,7 @@ vi.mock('@shared/ui', () => ({
     <div {...props}>{children}</div>
   ),
   Drawer: ({ children }: { children: ReactNode }) => <div>{children}</div>,
-  LoadingState: ({
-    title,
-    description,
-  }: {
-    title: string;
-    description?: string;
-  }) => (
+  LoadingState: ({ title, description }: { title: string; description?: string }) => (
     <div>
       <p>{title}</p>
       {description ? <p>{description}</p> : null}

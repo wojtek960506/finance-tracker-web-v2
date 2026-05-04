@@ -37,7 +37,7 @@ export const VerifyEmail = () => {
         const apiError = normalizeApiError(error);
 
         if (isMounted) {
-          const nextStatus = getVerificationStatus(apiError.code);  
+          const nextStatus = getVerificationStatus(apiError.code);
           setStatus(nextStatus);
         }
       }

@@ -7,5 +7,5 @@
   "UNAUTHORIZED_INVALID_TOKEN_ERROR": "Недействительный токен доступа.",
   "UNAUTHORIZED_MISSING_REFRESH_TOKEN_ERROR": "Отсутствует refresh token.",
   "UNAUTHORIZED_MISSING_TOKEN_ERROR": "Отсутствует токен доступа.",
-  "UNAUTHORIZED_USER_NOT_FOUND_ERROR": "Пользователь не найден."
+  "UNAUTHORIZED_USER_NOT_FOUND_ERROR": "Пользователь с адресом электронной почты <strong>{{email}}</strong> не найден."
 }

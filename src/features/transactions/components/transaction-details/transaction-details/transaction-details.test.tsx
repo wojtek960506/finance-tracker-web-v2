@@ -55,17 +55,10 @@ vi.mock('@ui', () => ({
       {children}
     </button>
   ),
-  Card: ({
-    children,
-    ...props
-  }: ComponentProps<'div'> & { children: ReactNode }) => <div {...props}>{children}</div>,
-  LoadingState: ({
-    title,
-    description,
-  }: {
-    title: string;
-    description?: string;
-  }) => (
+  Card: ({ children, ...props }: ComponentProps<'div'> & { children: ReactNode }) => (
+    <div {...props}>{children}</div>
+  ),
+  LoadingState: ({ title, description }: { title: string; description?: string }) => (
     <div>
       <p>{title}</p>
       {description ? <p>{description}</p> : null}
@@ -139,9 +132,7 @@ describe('TransactionDetails', () => {
     );
 
     expect(screen.getByText('loadingTransactionDetails')).toBeInTheDocument();
-    expect(
-      screen.getByText('loadingTransactionDetailsDescription'),
-    ).toBeInTheDocument();
+    expect(screen.getByText('loadingTransactionDetailsDescription')).toBeInTheDocument();
   });
 
   it('renders error state', async () => {

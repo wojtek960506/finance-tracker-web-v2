@@ -148,10 +148,12 @@ export const TransactionsPage = () => {
   );
   const totalsPanel = <TransactionsTotalsPanel filters={filters} />;
   const emptyTransactionsState = (
-    <Card className={clsx(
-      "mx-auto mt-2 w-full max-w-[35rem] items-center gap-4 rounded-3xl border-fg/20",
-      "bg-modal-bg/95 p-6 text-center sm:mt-3 sm:p-8"
-    )}>
+    <Card
+      className={clsx(
+        'mx-auto mt-2 w-full max-w-[35rem] items-center gap-4 rounded-3xl border-fg/20',
+        'bg-modal-bg/95 p-6 text-center sm:mt-3 sm:p-8',
+      )}
+    >
       <div className="flex flex-col gap-2">
         <h2 className="text-xl font-semibold sm:text-2xl">
           {t('emptyTransactionsTitle')}

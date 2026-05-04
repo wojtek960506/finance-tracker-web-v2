@@ -9,6 +9,7 @@ const mocks = vi.hoisted(() => ({
   login: vi.fn(),
   normalizeApiError: vi.fn(),
   setAuthToken: vi.fn(),
+  pushToast: vi.fn(),
 }));
 
 vi.mock('@auth/api', () => ({
@@ -23,10 +24,17 @@ vi.mock('@shared/hooks', () => ({
   useAuthToken: () => ({ setAuthToken: mocks.setAuthToken }),
 }));
 
+vi.mock('@store/toast-store', () => ({
+  useToastStore: (selector: (state: { pushToast: typeof mocks.pushToast }) => unknown) =>
+    selector({ pushToast: mocks.pushToast }),
+}));
+
 vi.mock('react-i18next', () => ({
   useTranslation: () => ({
     t: (key: string) => key,
   }),
+  Trans: ({ i18nKey, values }: { i18nKey: string; values?: { email?: string } }) =>
+    `${i18nKey}:${values?.email ?? ''}`,
 }));
 
 describe('Login', () => {
@@ -120,9 +128,8 @@ describe('Login', () => {
     expect(submitButton).toBeDisabled();
   });
 
-  it('alerts when login fails', async () => {
+  it('shows a translated toast when login fails', async () => {
     const user = userEvent.setup();
-    const alertSpy = vi.spyOn(window, 'alert').mockImplementation(() => {});
     const error = new Error('boom');
 
     mocks.login.mockRejectedValueOnce(error);
@@ -141,16 +148,46 @@ describe('Login', () => {
     await user.click(submitButton);
 
     await waitFor(() => {
-      expect(alertSpy).toHaveBeenCalledWith('UNAUTHORIZED_INVALID_CREDENTIALS_ERROR');
+      expect(mocks.pushToast).toHaveBeenCalledWith({
+        variant: 'error',
+        message: 'UNAUTHORIZED_INVALID_CREDENTIALS_ERROR',
+      });
     });
 
     expect(mocks.setAuthToken).not.toHaveBeenCalled();
-    alertSpy.mockRestore();
   });
 
-  it('alerts raw api error message when there is no error code', async () => {
+  it('includes the entered email in the user-not-found toast message', async () => {
     const user = userEvent.setup();
-    const alertSpy = vi.spyOn(window, 'alert').mockImplementation(() => {});
+
+    mocks.login.mockRejectedValueOnce(new Error('boom'));
+    mocks.normalizeApiError.mockReturnValueOnce({
+      code: 'UNAUTHORIZED_USER_NOT_FOUND_ERROR',
+      message: 'boom',
+    });
+
+    renderLogin();
+
+    await user.type(screen.getByLabelText('email'), 'missing@example.com');
+    await user.type(screen.getByLabelText('password'), 'secret');
+    await user.click(screen.getByRole('button', { name: 'logIn' }));
+
+    await waitFor(() => {
+      const toast = mocks.pushToast.mock.calls.at(-1)?.[0];
+
+      expect(toast?.variant).toBe('error');
+      expect(toast?.message).toBeTruthy();
+    });
+
+    const toast = mocks.pushToast.mock.calls.at(-1)?.[0];
+    const { container } = render(<>{toast?.message}</>);
+    expect(container).toHaveTextContent(
+      'UNAUTHORIZED_USER_NOT_FOUND_ERROR:missing@example.com',
+    );
+  });
+
+  it('shows a raw api error message in toast when there is no error code', async () => {
+    const user = userEvent.setup();
 
     mocks.login.mockRejectedValueOnce(new Error('boom'));
     mocks.normalizeApiError.mockReturnValueOnce({
@@ -165,10 +202,11 @@ describe('Login', () => {
     await user.click(screen.getByRole('button', { name: 'logIn' }));
 
     await waitFor(() => {
-      expect(alertSpy).toHaveBeenCalledWith('Temporary auth outage');
+      expect(mocks.pushToast).toHaveBeenCalledWith({
+        variant: 'error',
+        message: 'Temporary auth outage',
+      });
     });
-
-    alertSpy.mockRestore();
   });
 
   it('prefills email from query params after registration redirect', () => {

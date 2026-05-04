@@ -66,9 +66,7 @@ describe('VerifyEmail', () => {
       expect(screen.getByText('verifyEmailErrorTitle')).toBeInTheDocument();
     });
 
-    expect(
-      screen.getByText('AUTH_EXPIRED_EMAIL_VERIFICATION_TOKEN'),
-    ).toBeInTheDocument();
+    expect(screen.getByText('AUTH_EXPIRED_EMAIL_VERIFICATION_TOKEN')).toBeInTheDocument();
   });
 
   it('shows invalid state for invalid verification token errors', async () => {
@@ -83,9 +81,7 @@ describe('VerifyEmail', () => {
       expect(screen.getByText('verifyEmailErrorTitle')).toBeInTheDocument();
     });
 
-    expect(
-      screen.getByText('AUTH_INVALID_EMAIL_VERIFICATION_TOKEN'),
-    ).toBeInTheDocument();
+    expect(screen.getByText('AUTH_INVALID_EMAIL_VERIFICATION_TOKEN')).toBeInTheDocument();
   });
 
   it('treats missing tokens as invalid without calling the API', async () => {
@@ -96,9 +92,7 @@ describe('VerifyEmail', () => {
     });
 
     expect(mocks.verifyEmail).not.toHaveBeenCalled();
-    expect(
-      screen.getByText('AUTH_INVALID_EMAIL_VERIFICATION_TOKEN'),
-    ).toBeInTheDocument();
+    expect(screen.getByText('AUTH_INVALID_EMAIL_VERIFICATION_TOKEN')).toBeInTheDocument();
   });
 
   it('renders a link back to login', async () => {

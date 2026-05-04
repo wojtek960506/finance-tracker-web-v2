@@ -1,10 +1,14 @@
 import { useMutation } from '@tanstack/react-query';
-import { Trans, useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import clsx from 'clsx';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { createUser } from '@auth/api';
+import { AuthFormShell } from '@auth/components/auth-form-shell';
 import { normalizeApiError } from '@shared/api/api-error';
+import { MAIN_BUTTON_TEXT } from '@shared/consts';
 import { useToastStore } from '@store/toast-store';
+import { ButtonLink } from '@ui';
 
 import { CreateUserForm } from './create-user-form';
 import type { CreateUserFormValues } from './utils';
@@ -12,8 +16,8 @@ import type { CreateUserFormValues } from './utils';
 export const CreateUser = () => {
   const { t } = useTranslation('auth');
   const { t: tUserErrors } = useTranslation('user-errors');
-  const navigate = useNavigate();
   const pushToast = useToastStore((state) => state.pushToast);
+  const [createdEmail, setCreatedEmail] = useState<string | null>(null);
   const createUserMutation = useMutation({
     mutationFn: async ({
       firstName,
@@ -25,10 +29,10 @@ export const CreateUser = () => {
   });
 
   const handleSubmit = async ({
-    firstName,
-    lastName,
     email,
     password,
+    firstName,
+    lastName,
   }: CreateUserFormValues) => {
     try {
       await createUserMutation.mutateAsync({
@@ -37,19 +41,7 @@ export const CreateUser = () => {
         email,
         password,
       });
-
-      pushToast({
-        variant: 'success',
-        message: (
-          <Trans
-            ns="auth"
-            i18nKey="userCreatedSuccessfully"
-            values={{ fullName: `${firstName} ${lastName}` }}
-            components={{ strong: <strong className="font-semibold" /> }}
-          />
-        ),
-      });
-      navigate(`/login?email=${encodeURIComponent(email)}`, { replace: true });
+      setCreatedEmail(email);
     } catch (error) {
       const apiError = normalizeApiError(error);
       pushToast({
@@ -61,6 +53,30 @@ export const CreateUser = () => {
       });
     }
   };
+
+  if (createdEmail) {
+    return (
+      <AuthFormShell className="flex flex-col gap-4">
+        <div className="flex flex-col gap-2 text-center">
+          <h1 className="text-2xl font-bold sm:text-3xl">
+            {t('registrationSuccessTitle')}
+          </h1>
+          <p className="text-sm text-text-muted sm:text-base">
+            {t('registrationSuccessDescription')}
+          </p>
+          <p className="text-sm font-medium sm:text-base">{createdEmail}</p>
+        </div>
+
+        <ButtonLink
+          to="/login"
+          variant="primary"
+          className={clsx('py-1 sm:py-2', MAIN_BUTTON_TEXT)}
+        >
+          {t('backToLogin')}
+        </ButtonLink>
+      </AuthFormShell>
+    );
+  }
 
   return (
     <CreateUserForm isPending={createUserMutation.isPending} onSubmit={handleSubmit} />

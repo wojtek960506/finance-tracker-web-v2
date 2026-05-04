@@ -112,7 +112,10 @@ export const TrashedTransactionDetails = () => {
       queryClient.removeQueries({ queryKey: ['trashed-transactions'] });
       queryClient.removeQueries({ queryKey: ['transactions'] });
       queryClient.removeQueries({ queryKey: ['transaction-totals'] });
-      queryClient.removeQueries({ queryKey: ['transaction', transaction.id], exact: true });
+      queryClient.removeQueries({
+        queryKey: ['transaction', transaction.id],
+        exact: true,
+      });
       if (transaction.refId) {
         queryClient.removeQueries({
           queryKey: ['transaction', transaction.refId],

@@ -7,5 +7,5 @@
   "UNAUTHORIZED_INVALID_TOKEN_ERROR": "Nieprawidłowy token dostępu.",
   "UNAUTHORIZED_MISSING_REFRESH_TOKEN_ERROR": "Brakuje refresh tokenu.",
   "UNAUTHORIZED_MISSING_TOKEN_ERROR": "Brakuje tokenu dostępu.",
-  "UNAUTHORIZED_USER_NOT_FOUND_ERROR": "Nie znaleziono użytkownika."
+  "UNAUTHORIZED_USER_NOT_FOUND_ERROR": "Nie znaleziono użytkownika o adresie email <strong>{{email}}</strong>."
 }

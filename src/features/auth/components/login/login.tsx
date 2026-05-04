@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import { useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router-dom';
 
 import { login } from '@auth/api';
@@ -8,6 +8,7 @@ import { AuthFormShell } from '@auth/components/auth-form-shell';
 import { normalizeApiError } from '@shared/api/api-error';
 import { MAIN_BUTTON_TEXT } from '@shared/consts';
 import { useAuthToken } from '@shared/hooks';
+import { useToastStore } from '@store/toast-store';
 import { Button, ButtonLink, Input, Label } from '@ui';
 
 // TODO maybe split this into smaller components
@@ -31,6 +32,7 @@ export const Login = () => {
   const showEmailError = isInvalidEmail && (isEmailInputTouched || isSubmitted);
 
   const { setAuthToken } = useAuthToken();
+  const pushToast = useToastStore((state) => state.pushToast);
 
   useEffect(() => {
     emailInputRef.current?.focus();
@@ -53,11 +55,24 @@ export const Login = () => {
       setPassword('');
     } catch (error) {
       const apiError = normalizeApiError(error);
-      alert(
-        apiError.code
-          ? tAuthErrors(apiError.code, { defaultValue: apiError.message })
-          : apiError.message,
-      );
+
+      pushToast({
+        variant: 'error',
+        message:
+          apiError.code === 'UNAUTHORIZED_USER_NOT_FOUND_ERROR' ? (
+            <Trans
+              ns="auth-errors"
+              i18nKey={apiError.code}
+              values={{ email: normalizedEmail }}
+              defaults={apiError.message}
+              components={{ strong: <strong className="font-semibold" /> }}
+            />
+          ) : apiError.code ? (
+            tAuthErrors(apiError.code, { defaultValue: apiError.message })
+          ) : (
+            apiError.message
+          ),
+      });
     }
   };
 
