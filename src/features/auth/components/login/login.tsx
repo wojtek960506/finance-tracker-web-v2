@@ -103,7 +103,7 @@ export const Login = () => {
       <ButtonLink
         to="/register"
         variant="outline"
-        className={clsx('mt-3', MAIN_BUTTON_TEXT)}
+        className={clsx('mt-4 py-1 sm:py-2', MAIN_BUTTON_TEXT)}
       >
         {t('goToCreateAccount')}
       </ButtonLink>

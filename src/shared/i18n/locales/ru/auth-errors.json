@@ -1,4 +1,7 @@
 {
+  "AUTH_EMAIL_NOT_VERIFIED": "Ваш адрес электронной почты еще не подтвержден.",
+  "AUTH_INVALID_EMAIL_VERIFICATION_TOKEN": "Эта ссылка подтверждения недействительна.",
+  "AUTH_EXPIRED_EMAIL_VERIFICATION_TOKEN": "Срок действия этой ссылки подтверждения истек.",
   "UNAUTHORIZED_INVALID_CREDENTIALS_ERROR": "Неверная электронная почта или пароль.",
   "UNAUTHORIZED_INVALID_REFRESH_TOKEN_ERROR": "Недействительный refresh token.",
   "UNAUTHORIZED_INVALID_TOKEN_ERROR": "Недействительный токен доступа.",

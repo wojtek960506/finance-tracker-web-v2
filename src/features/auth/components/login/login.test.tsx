@@ -44,16 +44,16 @@ describe('Login', () => {
     mocks.normalizeApiError.mockImplementation((error) => error);
   });
 
-  it('renders initial values and enabled submit button', () => {
+  it('renders empty initial values and disabled submit button', () => {
     renderLogin();
 
     const emailInput = screen.getByLabelText('email') as HTMLInputElement;
     const passwordInput = screen.getByLabelText('password') as HTMLInputElement;
     const submitButton = screen.getByRole('button', { name: 'logIn' });
 
-    expect(emailInput.value).toBe('w@z.pl');
-    expect(passwordInput.value).toBe('123');
-    expect(submitButton).toBeEnabled();
+    expect(emailInput.value).toBe('');
+    expect(passwordInput.value).toBe('');
+    expect(submitButton).toBeDisabled();
   });
 
   it('focuses email input on initial render', () => {
@@ -133,6 +133,9 @@ describe('Login', () => {
 
     renderLogin();
 
+    await user.type(screen.getByLabelText('email'), 'user@example.com');
+    await user.type(screen.getByLabelText('password'), 'secret');
+
     const submitButton = screen.getByRole('button', { name: 'logIn' });
 
     await user.click(submitButton);
@@ -155,6 +158,9 @@ describe('Login', () => {
     });
 
     renderLogin();
+
+    await user.type(screen.getByLabelText('email'), 'user@example.com');
+    await user.type(screen.getByLabelText('password'), 'secret');
 
     await user.click(screen.getByRole('button', { name: 'logIn' }));
 

@@ -1,4 +1,7 @@
 {
+  "AUTH_EMAIL_NOT_VERIFIED": "Your email address is not verified yet.",
+  "AUTH_INVALID_EMAIL_VERIFICATION_TOKEN": "This verification link is invalid.",
+  "AUTH_EXPIRED_EMAIL_VERIFICATION_TOKEN": "This verification link has expired.",
   "UNAUTHORIZED_INVALID_CREDENTIALS_ERROR": "Invalid email or password.",
   "UNAUTHORIZED_INVALID_REFRESH_TOKEN_ERROR": "Invalid refresh token.",
   "UNAUTHORIZED_INVALID_TOKEN_ERROR": "Invalid access token.",
