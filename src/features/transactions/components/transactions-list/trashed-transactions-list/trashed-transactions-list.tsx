@@ -91,23 +91,25 @@ export const TrashedTransactionsList = () => {
 
   if (!data || data.items.length === 0) {
     return (
-      <Card className={clsx(
-        "mx-auto mt-2 w-full max-w-[35rem] gap-5 rounded-3xl border-fg/20",
-        "bg-modal-bg/95 p-6 sm:mt-3 sm:p-8"
-      )}>
+      <Card
+        className={clsx(
+          'mx-auto mt-2 w-full max-w-[35rem] gap-5 rounded-3xl border-fg/20',
+          'bg-modal-bg/95 p-6 sm:mt-3 sm:p-8',
+        )}
+      >
         <div className="flex items-start justify-between gap-4">
           <div className="flex min-w-0 flex-1 flex-col gap-2">
-            <h2 className="text-xl font-semibold sm:text-2xl">
-              {t('emptyTrashTitle')}
-            </h2>
+            <h2 className="text-xl font-semibold sm:text-2xl">{t('emptyTrashTitle')}</h2>
             <p className="text-sm text-text-muted sm:text-base">
               {t('emptyTrashDescription')}
             </p>
           </div>
-          <div className={clsx(
-            "flex size-14 shrink-0 items-center justify-center rounded-2xl",
-            "border border-fg/10 bg-bg/70 text-text-muted sm:size-16"
-          )}>
+          <div
+            className={clsx(
+              'flex size-14 shrink-0 items-center justify-center rounded-2xl',
+              'border border-fg/10 bg-bg/70 text-text-muted sm:size-16',
+            )}
+          >
             <Trash2 className="size-7 sm:size-8" aria-hidden="true" />
           </div>
         </div>
@@ -140,10 +142,12 @@ export const TrashedTransactionsList = () => {
         confirmDisabled={emptyTrashConfirmation !== EMPTY_TRASH_CONFIRMATION_VALUE}
         tone="destructive"
       >
-        <div className={clsx(
-          "flex items-start gap-3 rounded-2xl border border-destructive-border bg-destructive",
-          "text-destructive-foreground p-3 sm:p-4"
-        )}>
+        <div
+          className={clsx(
+            'flex items-start gap-3 rounded-2xl border border-destructive-border bg-destructive',
+            'text-destructive-foreground p-3 sm:p-4',
+          )}
+        >
           <AlertTriangle className="mt-0.5 size-5 shrink-0 sm:size-6" />
           <div className="flex flex-col gap-2">
             <p className="font-semibold">{t('emptyTrashWarningTitle')}</p>

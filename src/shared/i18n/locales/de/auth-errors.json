@@ -1,8 +1,11 @@
 {
+  "AUTH_EMAIL_NOT_VERIFIED": "Deine E-Mail-Adresse ist noch nicht verifiziert.",
+  "AUTH_INVALID_EMAIL_VERIFICATION_TOKEN": "Dieser Bestätigungslink ist ungültig.",
+  "AUTH_EXPIRED_EMAIL_VERIFICATION_TOKEN": "Dieser Bestätigungslink ist abgelaufen.",
   "UNAUTHORIZED_INVALID_CREDENTIALS_ERROR": "Ungültige E-Mail oder ungültiges Passwort.",
   "UNAUTHORIZED_INVALID_REFRESH_TOKEN_ERROR": "Ungültiger Refresh-Token.",
   "UNAUTHORIZED_INVALID_TOKEN_ERROR": "Ungültiger Zugriffstoken.",
   "UNAUTHORIZED_MISSING_REFRESH_TOKEN_ERROR": "Refresh-Token fehlt.",
   "UNAUTHORIZED_MISSING_TOKEN_ERROR": "Zugriffstoken fehlt.",
-  "UNAUTHORIZED_USER_NOT_FOUND_ERROR": "Benutzer nicht gefunden."
+  "UNAUTHORIZED_USER_NOT_FOUND_ERROR": "Kein Benutzer mit der E-Mail-Adresse <strong>{{email}}</strong> gefunden."
 }

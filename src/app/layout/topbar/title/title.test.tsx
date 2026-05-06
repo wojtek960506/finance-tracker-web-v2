@@ -13,6 +13,7 @@ vi.mock('react-i18next', () => ({
 vi.mock('@auth/components', () => ({
   CreateUser: () => <div>register</div>,
   Login: () => <div>login</div>,
+  VerifyEmail: () => <div>verify-email</div>,
 }));
 
 vi.mock('@named-resources/components', () => ({

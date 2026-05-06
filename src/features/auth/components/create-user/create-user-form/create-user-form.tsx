@@ -127,7 +127,7 @@ export const CreateUserForm = ({ isPending, onSubmit }: CreateUserFormProps) => 
       <ButtonLink
         to="/login"
         variant="outline"
-        className={clsx('mt-3', MAIN_BUTTON_TEXT)}
+        className={clsx('mt-3 py-1 sm:py-2', MAIN_BUTTON_TEXT)}
       >
         {t('backToLogin')}
       </ButtonLink>

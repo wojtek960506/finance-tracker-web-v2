@@ -1,8 +1,11 @@
 {
+  "AUTH_EMAIL_NOT_VERIFIED": "Ваш адрес электронной почты еще не подтвержден.",
+  "AUTH_INVALID_EMAIL_VERIFICATION_TOKEN": "Эта ссылка подтверждения недействительна.",
+  "AUTH_EXPIRED_EMAIL_VERIFICATION_TOKEN": "Срок действия этой ссылки подтверждения истек.",
   "UNAUTHORIZED_INVALID_CREDENTIALS_ERROR": "Неверная электронная почта или пароль.",
   "UNAUTHORIZED_INVALID_REFRESH_TOKEN_ERROR": "Недействительный refresh token.",
   "UNAUTHORIZED_INVALID_TOKEN_ERROR": "Недействительный токен доступа.",
   "UNAUTHORIZED_MISSING_REFRESH_TOKEN_ERROR": "Отсутствует refresh token.",
   "UNAUTHORIZED_MISSING_TOKEN_ERROR": "Отсутствует токен доступа.",
-  "UNAUTHORIZED_USER_NOT_FOUND_ERROR": "Пользователь не найден."
+  "UNAUTHORIZED_USER_NOT_FOUND_ERROR": "Пользователь с адресом электронной почты <strong>{{email}}</strong> не найден."
 }

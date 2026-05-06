@@ -1,7 +1,7 @@
 import { type ReactNode } from 'react';
 import { matchPath, Navigate } from 'react-router-dom';
 
-import { CreateUser, Login } from '@auth/components';
+import { CreateUser, Login, VerifyEmail } from '@auth/components';
 import { NamedResourcesList } from '@named-resources/components';
 import {
   CreateExchangeTransaction,
@@ -39,6 +39,11 @@ export const PUBLIC_APP_ROUTES: AppRouteConfig[] = [
   {
     path: '/register',
     element: <CreateUser />,
+    title: { namespace: 'common', key: 'title' },
+  },
+  {
+    path: '/verify-email',
+    element: <VerifyEmail />,
     title: { namespace: 'common', key: 'title' },
   },
 ];
