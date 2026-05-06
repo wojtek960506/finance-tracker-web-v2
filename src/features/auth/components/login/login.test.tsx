@@ -7,6 +7,7 @@ import { Login } from './login';
 
 const mocks = vi.hoisted(() => ({
   login: vi.fn(),
+  resendVerification: vi.fn(),
   normalizeApiError: vi.fn(),
   setAuthToken: vi.fn(),
   pushToast: vi.fn(),
@@ -14,6 +15,7 @@ const mocks = vi.hoisted(() => ({
 
 vi.mock('@auth/api', () => ({
   login: (...args: unknown[]) => mocks.login(...args),
+  resendVerification: (...args: unknown[]) => mocks.resendVerification(...args),
 }));
 
 vi.mock('@shared/api/api-error', () => ({
@@ -207,6 +209,91 @@ describe('Login', () => {
         message: 'Temporary auth outage',
       });
     });
+  });
+
+  it('shows resend verification action for unverified email login errors', async () => {
+    const user = userEvent.setup();
+
+    mocks.login.mockRejectedValueOnce(new Error('boom'));
+    mocks.normalizeApiError.mockReturnValueOnce({
+      code: 'AUTH_EMAIL_NOT_VERIFIED',
+      message: 'boom',
+    });
+
+    renderLogin();
+
+    await user.type(screen.getByLabelText('email'), 'pending@example.com');
+    await user.type(screen.getByLabelText('password'), 'secret');
+    await user.click(screen.getByRole('button', { name: 'logIn' }));
+
+    await waitFor(() => {
+      expect(screen.getByText('loginVerificationRequiredTitle')).toBeInTheDocument();
+    });
+
+    expect(screen.getByText('AUTH_EMAIL_NOT_VERIFIED')).toBeInTheDocument();
+    expect(screen.getByText('pending@example.com')).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: 'resendVerificationEmail' }),
+    ).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'logIn' })).not.toBeInTheDocument();
+    expect(mocks.pushToast).not.toHaveBeenCalled();
+  });
+
+  it('resends verification email from unverified login state', async () => {
+    const user = userEvent.setup();
+
+    mocks.login.mockRejectedValueOnce(new Error('boom'));
+    mocks.normalizeApiError.mockReturnValueOnce({
+      code: 'AUTH_EMAIL_NOT_VERIFIED',
+      message: 'boom',
+    });
+    mocks.resendVerification.mockResolvedValueOnce(undefined);
+
+    renderLogin();
+
+    await user.type(screen.getByLabelText('email'), 'pending@example.com');
+    await user.type(screen.getByLabelText('password'), 'secret');
+    await user.click(screen.getByRole('button', { name: 'logIn' }));
+
+    const resendButton = await screen.findByRole('button', {
+      name: 'resendVerificationEmail',
+    });
+    await user.click(resendButton);
+
+    await waitFor(() => {
+      expect(mocks.resendVerification).toHaveBeenCalledWith({
+        email: 'pending@example.com',
+      });
+    });
+
+    expect(screen.getByText('resendVerificationSuccessTitle')).toBeInTheDocument();
+    expect(screen.getByText('resendVerificationSuccess')).toBeInTheDocument();
+    expect(screen.queryByText('pending@example.com')).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole('button', { name: 'resendVerificationEmail' }),
+    ).not.toBeInTheDocument();
+  });
+
+  it('lets the user return to the login form from unverified email state', async () => {
+    const user = userEvent.setup();
+
+    mocks.login.mockRejectedValueOnce(new Error('boom'));
+    mocks.normalizeApiError.mockReturnValueOnce({
+      code: 'AUTH_EMAIL_NOT_VERIFIED',
+      message: 'boom',
+    });
+
+    renderLogin();
+
+    await user.type(screen.getByLabelText('email'), 'pending@example.com');
+    await user.type(screen.getByLabelText('password'), 'secret');
+    await user.click(screen.getByRole('button', { name: 'logIn' }));
+
+    await screen.findByText('loginVerificationRequiredTitle');
+    await user.click(screen.getByRole('button', { name: 'backToSignIn' }));
+
+    expect(screen.getByRole('button', { name: 'logIn' })).toBeInTheDocument();
+    expect(screen.getByLabelText('email')).toHaveValue('pending@example.com');
   });
 
   it('prefills email from query params after registration redirect', () => {
