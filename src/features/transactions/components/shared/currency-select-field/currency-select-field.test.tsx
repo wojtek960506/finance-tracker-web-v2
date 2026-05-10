@@ -19,14 +19,17 @@ vi.mock('@shared/ui', () => ({
     placeholder,
     disabled,
     groups,
+    popupMaxHeight,
   }: {
     placeholder: string;
     disabled?: boolean;
     groups: Array<{ key: string; options: Array<{ label: string; hint?: string }> }>;
+    popupMaxHeight?: number;
   }) => (
     <div>
       <span>{placeholder}</span>
       <span>{disabled ? 'disabled' : 'enabled'}</span>
+      <span>popup-max-height:{popupMaxHeight ?? 'unset'}</span>
       {groups.map((group) => (
         <div key={group.key}>
           {group.options.map((option) => (
@@ -73,6 +76,7 @@ describe('CurrencySelectField', () => {
 
     await waitFor(() => expect(screen.getByText('Pick currency')).toBeInTheDocument());
     expect(screen.getByText('enabled')).toBeInTheDocument();
+    expect(screen.getByText('popup-max-height:224')).toBeInTheDocument();
     expect(screen.getByText('USD:US Dollar')).toBeInTheDocument();
   });
 });

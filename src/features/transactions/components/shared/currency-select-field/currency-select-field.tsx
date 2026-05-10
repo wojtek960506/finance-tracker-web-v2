@@ -4,6 +4,8 @@ import { useMemo } from 'react';
 import { getCurrencies } from '@features/currencies/api';
 import { SearchableSelect } from '@shared/ui';
 
+const CURRENCY_POPUP_MAX_HEIGHT = 224;
+
 type CurrencySelectFieldProps = {
   value: string;
   onChange: (value: string) => void;
@@ -48,6 +50,7 @@ export const CurrencySelectField = ({
       searchPlaceholder={searchPlaceholder}
       emptyMessage={emptyMessage}
       disabled={isLoading}
+      popupMaxHeight={CURRENCY_POPUP_MAX_HEIGHT}
     />
   );
 };
