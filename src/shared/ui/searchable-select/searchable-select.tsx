@@ -13,6 +13,7 @@ import {
 } from 'react';
 import { createPortal } from 'react-dom';
 
+import { useScrollFocusedInputIntoView } from '@shared/hooks';
 import { Button, Card } from '@ui';
 
 export type SearchableSelectOption = {
@@ -77,6 +78,7 @@ export const SearchableSelect = ({
   const [uncontrolledIsOpen, setUncontrolledIsOpen] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   const [popupPosition, setPopupPosition] = useState<PopupPosition | null>(null);
+  const scrollFocusedInputIntoView = useScrollFocusedInputIntoView();
   const inputRef = useRef<HTMLInputElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const popupRef = useRef<HTMLDivElement>(null);
@@ -277,6 +279,9 @@ export const SearchableSelect = ({
                     ref={inputRef}
                     value={searchValue}
                     onChange={(event) => setSearchValue(event.target.value)}
+                    onFocus={(event) => {
+                      scrollFocusedInputIntoView(event.currentTarget);
+                    }}
                     placeholder={searchPlaceholder}
                     className={clsx(
                       'text-fg w-full min-w-0 appearance-none border-0 bg-transparent px-0',
