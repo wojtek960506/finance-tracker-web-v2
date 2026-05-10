@@ -49,7 +49,8 @@ type SearchableSelectProps = {
 
 const normalizeSearchValue = (value: string) => value.trim().toLocaleLowerCase();
 const VIEWPORT_MARGIN = 16;
-const POPUP_OFFSET = 8;
+const POPUP_OFFSET_BELOW = 8;
+const POPUP_OFFSET_ABOVE = 4;
 const MIN_LISTBOX_HEIGHT = 160;
 
 type PopupPosition = {
@@ -134,8 +135,9 @@ export const SearchableSelect = ({
       VIEWPORT_MARGIN,
       Math.min(triggerRect.left, window.innerWidth - VIEWPORT_MARGIN - width),
     );
-    const availableBelow = window.innerHeight - triggerRect.bottom - POPUP_OFFSET - VIEWPORT_MARGIN;
-    const availableAbove = triggerRect.top - POPUP_OFFSET - VIEWPORT_MARGIN;
+    const availableBelow =
+      window.innerHeight - triggerRect.bottom - POPUP_OFFSET_BELOW - VIEWPORT_MARGIN;
+    const availableAbove = triggerRect.top - POPUP_OFFSET_ABOVE - VIEWPORT_MARGIN;
     // Open upward when there is not enough useful space below the trigger.
     const shouldOpenAbove =
       availableBelow < Math.min(popupRect.height, MIN_LISTBOX_HEIGHT) &&
@@ -151,9 +153,9 @@ export const SearchableSelect = ({
     const top = shouldOpenAbove
       ? Math.max(
           VIEWPORT_MARGIN,
-          triggerRect.top - POPUP_OFFSET - Math.min(popupRect.height, maxHeight),
+          triggerRect.top - POPUP_OFFSET_ABOVE - Math.min(popupRect.height, maxHeight),
         )
-      : Math.max(VIEWPORT_MARGIN, triggerRect.bottom + POPUP_OFFSET);
+      : Math.max(VIEWPORT_MARGIN, triggerRect.bottom + POPUP_OFFSET_BELOW);
 
     setPopupPosition({ top, left, width, maxHeight });
   }, [popupMaxHeight]);
