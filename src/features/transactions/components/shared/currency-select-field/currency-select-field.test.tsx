@@ -14,31 +14,44 @@ vi.mock('@features/currencies/api', () => ({
   getCurrencies: (...args: unknown[]) => mocks.getCurrencies(...args),
 }));
 
-vi.mock('@shared/ui', () => ({
-  SearchableSelect: ({
-    placeholder,
+vi.mock('@/components/ui/combobox', () => ({
+  Combobox: ({
+    value,
     disabled,
-    groups,
-    popupMaxHeight,
+    children,
   }: {
-    placeholder: string;
+    value?: { code: string; name: string } | null;
     disabled?: boolean;
-    groups: Array<{ key: string; options: Array<{ label: string; hint?: string }> }>;
-    popupMaxHeight?: number;
+    children: React.ReactNode;
   }) => (
     <div>
-      <span>{placeholder}</span>
+      <span>value:{value?.code ?? 'unset'}</span>
       <span>{disabled ? 'disabled' : 'enabled'}</span>
-      <span>popup-max-height:{popupMaxHeight ?? 'unset'}</span>
-      {groups.map((group) => (
-        <div key={group.key}>
-          {group.options.map((option) => (
-            <div key={option.label}>
-              {option.label}:{option.hint}
-            </div>
-          ))}
-        </div>
-      ))}
+      {children}
+    </div>
+  ),
+  ComboboxInput: ({ placeholder }: { placeholder?: string }) => <span>{placeholder}</span>,
+  ComboboxContent: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
+  ComboboxEmpty: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
+  ComboboxList: ({
+    children,
+  }: {
+    children: ((item: { code: string; name: string }) => React.ReactNode) | React.ReactNode;
+  }) =>
+    typeof children === 'function' ? <div>{children({ code: 'USD', name: 'US Dollar' })}</div> : <div>{children}</div>,
+  ComboboxItem: ({
+    children,
+    value,
+    disabled,
+  }: {
+    children: React.ReactNode;
+    value: { code: string; name: string };
+    disabled?: boolean;
+  }) => (
+    <div>
+      <span>item-value:{value.code}</span>
+      <span>{disabled ? 'item-disabled' : 'item-enabled'}</span>
+      {children}
     </div>
   ),
 }));
@@ -69,14 +82,16 @@ describe('CurrencySelectField', () => {
     expect(screen.getByText('disabled')).toBeInTheDocument();
   });
 
-  it('maps currencies to searchable select groups', async () => {
+  it('maps currencies to combobox items', async () => {
     mocks.getCurrencies.mockResolvedValueOnce([{ code: 'USD', name: 'US Dollar' }]);
 
     renderField();
 
-    await waitFor(() => expect(screen.getByText('Pick currency')).toBeInTheDocument());
+    await waitFor(() => expect(screen.getByText('Search')).toBeInTheDocument());
     expect(screen.getByText('enabled')).toBeInTheDocument();
-    expect(screen.getByText('popup-max-height:224')).toBeInTheDocument();
-    expect(screen.getByText('USD:US Dollar')).toBeInTheDocument();
+    expect(screen.getByText('item-value:USD')).toBeInTheDocument();
+    expect(screen.getByText('item-enabled')).toBeInTheDocument();
+    expect(screen.getByText('USD')).toBeInTheDocument();
+    expect(screen.getByText('US Dollar')).toBeInTheDocument();
   });
 });

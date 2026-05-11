@@ -14,6 +14,17 @@ import { normalizeApiError } from '@shared/api/api-error';
 import { Button, Input, SearchableSelect, type SearchableSelectOption } from '@shared/ui';
 import { capitalize } from '@shared/utils';
 import { useToastStore } from '@store/toast-store';
+import { getTransactionNamedResourceLabel } from '@transactions/utils/get-transaction-named-resource-label';
+
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
 type NamedResourceSelectFieldProps = {
   kind: NamedResourceKind;
@@ -139,6 +150,41 @@ export const NamedResourceSelectField = ({
     shouldShowAllResources,
     tNamedResources,
   ]);
+
+  if (kind === 'accounts') {
+    return (
+      <Select value={value || undefined} onValueChange={onChange} disabled={isLoading}>
+        <SelectTrigger className="w-full">
+          <SelectValue placeholder={isLoading ? tNamedResources('loadingResources') : placeholder} />
+        </SelectTrigger>
+        <SelectContent position="popper" className="max-h-56">
+          {favoriteResources.length > 0 ? (
+            <SelectGroup>
+              <SelectLabel>{tNamedResources('favorites')}</SelectLabel>
+              {favoriteResources.map((resource) => (
+                <SelectItem key={resource.id} value={resource.id}>
+                  {getTransactionNamedResourceLabel(resource, tNamedResources)}
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          ) : null}
+
+          {otherResources.length > 0 ? (
+            <SelectGroup>
+              {favoriteResources.length > 0 ? (
+                <SelectLabel>{tNamedResources(ALL_RESOURCES_LABEL_KEY[kind])}</SelectLabel>
+              ) : null}
+              {otherResources.map((resource) => (
+                <SelectItem key={resource.id} value={resource.id}>
+                  {getTransactionNamedResourceLabel(resource, tNamedResources)}
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          ) : null}
+        </SelectContent>
+      </Select>
+    );
+  }
 
   return (
     <SearchableSelect

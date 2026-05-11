@@ -16,6 +16,16 @@ import {
 } from '@shared/ui';
 import { getTransactionNamedResourceLabel } from '@transactions/utils/get-transaction-named-resource-label';
 
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+
 type NamedResourceFilterSelectFieldProps = {
   kind: NamedResourceKind;
   value: string;
@@ -125,6 +135,51 @@ export const NamedResourceFilterSelectField = ({
       ? mapResourceToOption(selectedResource, tNamedResources)
       : undefined;
   }, [availableResources, tNamedResources, value]);
+
+  if (kind === 'accounts') {
+    const ALL_ACCOUNTS_VALUE = '__all_accounts__';
+
+    return (
+      <Select
+        value={value || ALL_ACCOUNTS_VALUE}
+        onValueChange={(nextValue) => {
+          onChange(nextValue === ALL_ACCOUNTS_VALUE ? '' : nextValue);
+        }}
+        disabled={isLoading}
+      >
+        <SelectTrigger className="w-full">
+          <SelectValue placeholder={isLoading ? tNamedResources('loadingResources') : placeholder} />
+        </SelectTrigger>
+        <SelectContent position="popper" className="max-h-56">
+          <SelectItem value={ALL_ACCOUNTS_VALUE}>{placeholder}</SelectItem>
+
+          {favoriteResources.length > 0 ? (
+            <SelectGroup>
+              <SelectLabel>{tNamedResources('favorites')}</SelectLabel>
+              {favoriteResources.map((resource) => (
+                <SelectItem key={resource.id} value={resource.id}>
+                  {mapResourceToOption(resource, tNamedResources).label}
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          ) : null}
+
+          {otherResources.length > 0 ? (
+            <SelectGroup>
+              {favoriteResources.length > 0 ? (
+                <SelectLabel>{tNamedResources(ALL_RESOURCES_LABEL_KEY[kind])}</SelectLabel>
+              ) : null}
+              {otherResources.map((resource) => (
+                <SelectItem key={resource.id} value={resource.id}>
+                  {mapResourceToOption(resource, tNamedResources).label}
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          ) : null}
+        </SelectContent>
+      </Select>
+    );
+  }
 
   return (
     <SearchableSelect
