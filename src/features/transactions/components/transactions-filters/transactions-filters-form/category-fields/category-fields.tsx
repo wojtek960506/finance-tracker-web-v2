@@ -7,9 +7,9 @@ import { useTranslation } from 'react-i18next';
 
 import { getNamedResources, type INamedResource } from '@named-resources/api';
 import { Button, SearchableMultiSelect } from '@shared/ui';
+import { NamedResourceSelectField } from '@transactions/components/shared';
 import { getTransactionNamedResourceLabel } from '@transactions/utils';
 
-import { NamedResourceFilterSelectField } from '../../named-resource-filter-select-field';
 import type { TransactionFiltersFormValues } from '../utils';
 
 const getFavoriteIcon = () => <Star className="size-4 fill-current" aria-hidden="true" />;
@@ -139,16 +139,14 @@ export const CategoryFields = () => {
           control={form.control}
           name="categoryId"
           render={({ field }) => (
-            <NamedResourceFilterSelectField
+            <NamedResourceSelectField
               kind="categories"
               value={field.value}
               onChange={field.onChange}
               placeholder={t('categoryPlaceholder')}
-              searchPlaceholder={t('searchCategoryPlaceholder')}
-              emptyMessage={t('noCategoriesFound')}
-              showMoreLabel={t('showMoreCategories')}
-              showLessLabel={t('showLessCategories')}
+              clearable
               clearLabel={t('clearCategoryFilter')}
+              includeSystem={true}
             />
           )}
         />

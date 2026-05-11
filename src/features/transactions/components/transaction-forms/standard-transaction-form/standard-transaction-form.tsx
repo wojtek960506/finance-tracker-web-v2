@@ -161,10 +161,6 @@ export const StandardTransactionForm = ({
                 value={field.value}
                 onChange={field.onChange}
                 placeholder={t('categoryPlaceholder')}
-                searchPlaceholder={t('searchCategoryPlaceholder')}
-                emptyMessage={t('noCategoriesFound')}
-                showMoreLabel={t('showMoreCategories')}
-                showLessLabel={t('showLessCategories')}
               />
             )}
           />
@@ -187,10 +183,6 @@ export const StandardTransactionForm = ({
                 value={field.value}
                 onChange={field.onChange}
                 placeholder={t('paymentMethodPlaceholder')}
-                searchPlaceholder={t('searchPaymentMethodPlaceholder')}
-                emptyMessage={t('noPaymentMethodsFound')}
-                showMoreLabel={t('showMorePaymentMethods')}
-                showLessLabel={t('showLessPaymentMethods')}
               />
             )}
           />
@@ -213,10 +205,6 @@ export const StandardTransactionForm = ({
                 value={field.value}
                 onChange={field.onChange}
                 placeholder={t('accountPlaceholder')}
-                searchPlaceholder={t('searchAccountPlaceholder')}
-                emptyMessage={t('noAccountsFound')}
-                showMoreLabel={t('showMoreAccounts')}
-                showLessLabel={t('showLessAccounts')}
               />
             )}
           />

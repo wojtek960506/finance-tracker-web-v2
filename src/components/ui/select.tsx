@@ -100,10 +100,13 @@ function SelectTrigger({
 function SelectContent({
   className,
   children,
+  footer,
   position = "item-aligned",
   align = "center",
   ...props
-}: React.ComponentProps<typeof SelectPrimitive.Content>) {
+}: React.ComponentProps<typeof SelectPrimitive.Content> & {
+  footer?: React.ReactNode
+}) {
   return (
     <SelectPrimitive.Portal>
       <SelectPrimitive.Content
@@ -124,6 +127,7 @@ function SelectContent({
         >
           {children}
         </SelectPrimitive.Viewport>
+        {footer ? <div className="border-t border-fg/20 p-2">{footer}</div> : null}
         <SelectScrollDownButton />
       </SelectPrimitive.Content>
     </SelectPrimitive.Portal>
