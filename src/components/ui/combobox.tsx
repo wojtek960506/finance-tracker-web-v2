@@ -63,12 +63,12 @@ function ComboboxInput({
   return (
     <InputGroup
       className={cn(
-        "h-10 w-auto min-w-0 rounded-xl border-fg bg-bg [&_[data-slot=input-group-addon][data-align=inline-end]]:pr-2 [&_[data-slot=input-group-control]]:min-w-0 [&_[data-slot=input-group-control]]:text-base [&_[data-slot=input-group-control]]:leading-none [&_[data-slot=input-group-control]]:text-fg [&_[data-slot=input-group-control]]:placeholder:text-text-muted",
+        "h-10 w-full min-w-0 max-w-full overflow-hidden rounded-xl border-fg bg-bg hover:bg-fg/10 focus-within:rounded-xl focus-within:border-ring focus-within:ring-3 focus-within:ring-blue-300 [&_[data-slot=input-group-addon][data-align=inline-end]]:shrink-0 [&_[data-slot=input-group-addon][data-align=inline-end]]:pr-2 [&_[data-slot=input-group-control]]:min-w-0 [&_[data-slot=input-group-control]]:w-full [&_[data-slot=input-group-control]]:text-base [&_[data-slot=input-group-control]]:leading-none [&_[data-slot=input-group-control]]:text-fg [&_[data-slot=input-group-control]]:placeholder:text-text-muted",
         className
       )}
     >
       <ComboboxPrimitive.Input
-        render={<InputGroupInput className="h-full px-3" disabled={disabled} />}
+        render={<InputGroupInput className="h-full min-w-0 w-full px-3" disabled={disabled} />}
         {...props}
       />
       <InputGroupAddon align="inline-end">
@@ -117,7 +117,7 @@ function ComboboxContent({
         <ComboboxPrimitive.Popup
           data-slot="combobox-content"
           data-chips={!!anchor}
-          className={cn("group/combobox-content relative max-h-(--available-height) w-(--anchor-width) max-w-(--available-width) min-w-[calc(var(--anchor-width)+--spacing(7))] origin-(--transform-origin) overflow-hidden rounded-2xl border border-fg bg-modal-bg text-fg shadow-md data-[chips=true]:min-w-(--anchor-width) *:data-[slot=input-group]:m-2 *:data-[slot=input-group]:mb-0 *:data-[slot=input-group]:h-10 *:data-[slot=input-group]:rounded-xl *:data-[slot=input-group]:border-fg *:data-[slot=input-group]:bg-bg *:data-[slot=input-group]:shadow-none", className )}
+          className={cn("group/combobox-content relative max-h-(--available-height) w-[calc(var(--anchor-width)+2px)] min-w-[calc(var(--anchor-width)+2px)] max-w-(--available-width) origin-(--transform-origin) overflow-hidden rounded-2xl border border-fg bg-modal-bg text-fg shadow-md data-[chips=true]:min-w-(--anchor-width) *:data-[slot=input-group]:m-2 *:data-[slot=input-group]:mb-0 *:data-[slot=input-group]:h-10 *:data-[slot=input-group]:rounded-xl *:data-[slot=input-group]:border-fg *:data-[slot=input-group]:bg-bg *:data-[slot=input-group]:shadow-none", className )}
           {...props}
         />
       </ComboboxPrimitive.Positioner>

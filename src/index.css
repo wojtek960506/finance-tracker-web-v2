@@ -275,7 +275,7 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-bg text-fg;
   }
   * {
     @apply border-border outline-ring/50;

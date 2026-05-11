@@ -14,8 +14,8 @@ export const Topbar = ({
   return (
     <header
       className={clsx(
-        'sticky top-0 z-200 border-b border-foreground px-3',
-        'grid grid-cols-[1fr_auto_1fr] items-center text-foreground bg-background',
+        'sticky top-0 z-200 border-b border-fg px-3',
+        'grid grid-cols-[1fr_auto_1fr] items-center',
         'min-h-[var(--topbar-h)] sm:min-h-[var(--topbar-h-sm)]',
       )}
     >
