@@ -2,7 +2,9 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 
-import { FieldError, FieldSection, TransactionFormActions } from './shared-components';
+import { FieldError, TransactionFormActions } from './shared-components';
+
+import { Label } from '@/shared/ui';
 
 vi.mock('react-i18next', () => ({
   useTranslation: () => ({ t: (key: string) => key }),
@@ -11,9 +13,9 @@ vi.mock('react-i18next', () => ({
 describe('transaction shared components', () => {
   it('renders a field section with the provided class name', () => {
     render(
-      <FieldSection className="custom-class">
+      <Label className="custom-class">
         <span>Field</span>
-      </FieldSection>,
+      </Label>,
     );
 
     expect(screen.getByText('Field').parentElement).toHaveClass('custom-class');

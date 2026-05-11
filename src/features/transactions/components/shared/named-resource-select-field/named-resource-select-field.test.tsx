@@ -105,10 +105,6 @@ const renderField = (
         value=""
         onChange={onChange}
         placeholder="Pick resource"
-        searchPlaceholder="Search"
-        emptyMessage="Empty"
-        showMoreLabel="showMore"
-        showLessLabel="showLess"
         {...props}
       />
     </QueryClientProvider>,
