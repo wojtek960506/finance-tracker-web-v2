@@ -7,7 +7,7 @@ import { Button } from '@shared/ui';
 type FieldSectionProps = ComponentProps<'div'>;
 
 export const FieldSection = ({ className, ...props }: FieldSectionProps) => (
-  <div {...props} className={clsx('flex flex-col gap-2', className)} />
+  <div {...props} className={clsx('flex flex-col gap-1 sm:gap-2', className)} />
 );
 
 type FieldErrorProps = {
@@ -34,7 +34,7 @@ export const TransactionFormActions = ({
     mode === 'create' ? t('creatingTransaction') : t('updatingTransaction');
 
   return (
-    <div className="flex flex-col gap-2 sm:col-span-2 sm:flex-row sm:justify-end">
+    <div className="flex flex-col gap-2 sm:gap-3 sm:col-span-2 sm:flex-row sm:justify-end">
       <Button type="button" variant="ghost" onClick={onCancel}>
         {t('cancel')}
       </Button>

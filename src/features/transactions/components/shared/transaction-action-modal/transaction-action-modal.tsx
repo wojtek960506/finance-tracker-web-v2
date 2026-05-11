@@ -42,7 +42,7 @@ export const TransactionActionModal = ({
   >
     <div
       className={clsx(
-        'flex flex-col gap-4',
+        'flex flex-col gap-3 sm:gap-4',
         tone === 'destructive' &&
           '-m-3 rounded-2xl bg-destructive/10 p-3 sm:-m-4 sm:rounded-3xl sm:p-4',
       )}

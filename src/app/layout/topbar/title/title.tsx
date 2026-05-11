@@ -14,5 +14,5 @@ export const Title = () => {
       : tNavigation(matchedTitle.key)
     : tCommon('title');
 
-  return <h1 className="px-2 text-xl sm:text-3xl font-bold">{title}</h1>;
+  return <h1 className="px-2 text-xl sm:text-[1.75rem] font-bold">{title}</h1>;
 };

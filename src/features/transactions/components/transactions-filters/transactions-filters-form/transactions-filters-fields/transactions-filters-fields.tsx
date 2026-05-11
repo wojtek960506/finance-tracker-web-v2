@@ -10,7 +10,7 @@ import { TransactionTypeField } from '../transaction-type-field';
 export const TransactionsFiltersFields = () => (
   <div
     className={clsx(
-      'grid min-h-0 min-w-0 gap-4 overflow-y-auto pr-[1px]',
+      'grid min-h-0 min-w-0 gap-3 sm:gap-4 overflow-y-auto px-[2px]',
       'transactions-filters-form-container',
     )}
   >

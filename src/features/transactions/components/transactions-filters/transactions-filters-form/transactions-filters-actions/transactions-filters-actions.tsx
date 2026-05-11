@@ -14,7 +14,7 @@ export const TransactionsFiltersActions = ({
   const { t } = useTranslation('transactions');
 
   return (
-    <div className="flex flex-col gap-2 border-t border-fg/10 pt-4">
+    <div className="flex flex-col gap-1 sm:gap-2 border-t border-fg/10 pt-3 sm:pt-4">
       <Button type="button" variant="primary" onClick={onApply}>
         {t('applyFilters')}
       </Button>

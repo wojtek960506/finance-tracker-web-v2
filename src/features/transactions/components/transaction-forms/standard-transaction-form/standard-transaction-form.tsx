@@ -56,7 +56,7 @@ export const StandardTransactionForm = ({
   return (
     <Card className="mx-auto w-full max-w-3xl gap-4">
       <form
-        className="grid gap-4 sm:grid-cols-2"
+        className="grid gap-3 sm:gap-4 sm:grid-cols-2"
         onSubmit={form.handleSubmit(handleSubmit)}
       >
         <FieldSection>
