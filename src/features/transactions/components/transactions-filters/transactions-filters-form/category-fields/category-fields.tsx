@@ -12,6 +12,7 @@ import { getTransactionNamedResourceLabel } from '@transactions/utils';
 import type { TransactionFiltersFormValues } from '../utils';
 
 import { MultiSelect } from '@/components/ui/multi-select';
+import { FORM_BUTTON_CLASS_NAME } from '@/features/transactions/components/transaction-forms';
 
 const mapCategoryToOption = (
   resource: INamedResource,
@@ -116,7 +117,7 @@ export const CategoryFields = () => {
             <Button
               type="button"
               variant={field.value === 'include' ? 'primary' : 'outline'}
-              className="w-full min-w-0"
+              className={clsx('w-full min-w-0', FORM_BUTTON_CLASS_NAME)}
               onClick={() => field.onChange('include')}
             >
               {t('includeCategory')}
@@ -124,7 +125,7 @@ export const CategoryFields = () => {
             <Button
               type="button"
               variant={field.value === 'exclude' ? 'primary' : 'outline'}
-              className="w-full min-w-0"
+              className={clsx('w-full min-w-0', FORM_BUTTON_CLASS_NAME)}
               onClick={() => field.onChange('exclude')}
             >
               {t('excludeCategories')}

@@ -3,6 +3,7 @@ import { Controller, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import { Button, Label } from '@shared/ui';
+import { FORM_BUTTON_CLASS_NAME } from '@transactions/components/transaction-forms';
 
 import type { TransactionFiltersFormValues } from '../utils';
 
@@ -36,6 +37,7 @@ export const TransactionTypeField = () => {
                   key={transactionType || 'all'}
                   type="button"
                   variant={isActive ? 'primary' : 'outline'}
+                  className={FORM_BUTTON_CLASS_NAME}
                   onClick={() => field.onChange(transactionType)}
                 >
                   {transactionType ? t(transactionType) : t('allTransactionTypes')}

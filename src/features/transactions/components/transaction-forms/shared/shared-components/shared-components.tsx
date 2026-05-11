@@ -4,6 +4,8 @@ import { useTranslation } from 'react-i18next';
 
 import { Button } from '@shared/ui';
 
+export const FORM_BUTTON_CLASS_NAME = 'h-10 sm:h-11 rounded-xl px-3 sm:px-4 text-base sm:text-lg';
+
 type FieldSectionProps = ComponentProps<'div'>;
 
 export const FieldSection = ({ className, ...props }: FieldSectionProps) => (
@@ -35,10 +37,20 @@ export const TransactionFormActions = ({
 
   return (
     <div className="flex flex-col gap-2 sm:gap-3 sm:col-span-2 sm:flex-row sm:justify-end">
-      <Button type="button" variant="ghost" onClick={onCancel}>
+      <Button
+        type="button"
+        variant="ghost"
+        className={FORM_BUTTON_CLASS_NAME}
+        onClick={onCancel}
+      >
         {t('cancel')}
       </Button>
-      <Button type="submit" variant="primary" disabled={isPending}>
+      <Button
+        type="submit"
+        variant="primary"
+        className={FORM_BUTTON_CLASS_NAME}
+        disabled={isPending}
+      >
         {isPending ? pendingLabel : submitLabel}
       </Button>
     </div>

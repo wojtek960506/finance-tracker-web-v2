@@ -11,6 +11,7 @@ import {
   FIELD_CONTROL_CLASS_NAME,
   FieldError,
   FieldSection,
+  FORM_BUTTON_CLASS_NAME,
   TransactionFormActions,
 } from '@transactions/components/transaction-forms';
 
@@ -86,6 +87,7 @@ export const StandardTransactionForm = ({
                   key={transactionType}
                   type="button"
                   variant={isActive ? 'primary' : 'outline'}
+                  className={FORM_BUTTON_CLASS_NAME}
                   onClick={() => form.setValue('transactionType', transactionType)}
                 >
                   {t(transactionType)}
