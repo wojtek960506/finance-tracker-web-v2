@@ -15,6 +15,7 @@ type DrawerProps = {
   ariaLabel?: string;
   panelClassName?: string;
   contentClassName?: string;
+  showOverlay?: boolean;
 };
 
 // TODO maybe split it to some smaller components
@@ -27,6 +28,7 @@ export const Drawer = ({
   ariaLabel = 'Drawer',
   panelClassName,
   contentClassName,
+  showOverlay = true,
 }: DrawerProps) => {
   const navRef = useRef<HTMLElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
@@ -94,13 +96,15 @@ export const Drawer = ({
   return (
     <>
       {/* Overlay */}
-      <div
-        className={clsx(
-          'z-300 fixed inset-0 bg-fg/50 transition-opacity duration-300',
-          `${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`,
-        )}
-        onClick={onClose}
-      />
+      {showOverlay ? (
+        <div
+          className={clsx(
+            'z-300 fixed inset-0 bg-fg/50 transition-opacity duration-300',
+            `${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`,
+          )}
+          onClick={onClose}
+        />
+      ) : null}
 
       {/* Drawer panel */}
       <div
