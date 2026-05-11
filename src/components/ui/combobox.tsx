@@ -63,7 +63,7 @@ function ComboboxInput({
   return (
     <InputGroup
       className={cn(
-        "h-10 w-full min-w-0 max-w-full overflow-hidden rounded-xl border-fg bg-bg hover:bg-fg/10 focus-within:rounded-xl focus-within:border-ring focus-within:ring-3 focus-within:ring-blue-300 [&_[data-slot=input-group-addon][data-align=inline-end]]:shrink-0 [&_[data-slot=input-group-addon][data-align=inline-end]]:pr-2 [&_[data-slot=input-group-control]]:min-w-0 [&_[data-slot=input-group-control]]:w-full [&_[data-slot=input-group-control]]:text-base [&_[data-slot=input-group-control]]:leading-none [&_[data-slot=input-group-control]]:text-fg [&_[data-slot=input-group-control]]:placeholder:text-text-muted",
+        "h-10 w-full min-w-0 max-w-full overflow-hidden rounded-xl border-fg bg-bg hover:bg-fg/5 focus-within:rounded-xl focus-within:border-ring focus-within:ring-3 focus-within:ring-blue-300 [&_[data-slot=input-group-addon][data-align=inline-end]]:shrink-0 [&_[data-slot=input-group-addon][data-align=inline-end]]:pr-2 [&_[data-slot=input-group-control]]:min-w-0 [&_[data-slot=input-group-control]]:w-full [&_[data-slot=input-group-control]]:text-base [&_[data-slot=input-group-control]]:leading-none [&_[data-slot=input-group-control]]:text-fg [&_[data-slot=input-group-control]]:placeholder:text-text-muted",
         className
       )}
     >

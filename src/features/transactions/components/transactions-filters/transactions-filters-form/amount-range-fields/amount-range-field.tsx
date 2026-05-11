@@ -5,7 +5,8 @@ import { FieldError } from '@transactions/components/transaction-forms';
 
 import type { TransactionFiltersFormValues } from '../utils';
 
-import { Label, NumberInput } from '@/shared/ui';
+import { NumberInput } from '@/components/ui/number-input';
+import { Label } from '@/shared/ui';
 
 export const AmountRangeField = ({ name }: { name: 'minAmount' | 'maxAmount' }) => {
   const { t } = useTranslation('transactions');
@@ -17,7 +18,7 @@ export const AmountRangeField = ({ name }: { name: 'minAmount' | 'maxAmount' }) 
       <Controller
         control={form.control}
         name={name}
-        render={({ field }) => (
+        render={({ field }) =>
           <NumberInput
             value={field.value}
             onValueChange={field.onChange}
@@ -25,7 +26,7 @@ export const AmountRangeField = ({ name }: { name: 'minAmount' | 'maxAmount' }) 
             step="0.01"
             min="0"
           />
-        )}
+        }
       />
       <FieldError
         message={

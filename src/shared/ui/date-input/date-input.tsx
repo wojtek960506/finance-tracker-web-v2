@@ -83,7 +83,7 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
           aria-haspopup="dialog"
           aria-expanded={isOpen}
           className={clsx(
-            'flex h-10 w-full items-center justify-between gap-3 rounded-xl border border-fg bg-bg px-3 text-left text-base text-fg outline-none transition-colors hover:bg-fg/10',
+            'flex h-10 w-full items-center justify-between gap-3 rounded-xl border border-fg bg-bg px-3 text-left text-base text-fg outline-none transition-colors hover:bg-fg/5',
             'focus-visible:border-fg focus-visible:ring-2 focus-visible:ring-blue-300',
             'disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:bg-bg',
             !formattedValue && 'text-text-muted',
