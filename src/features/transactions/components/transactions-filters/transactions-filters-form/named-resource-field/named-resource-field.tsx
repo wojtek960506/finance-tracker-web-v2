@@ -21,7 +21,7 @@ export const NamedResourceField = ({ name, kind }: NamedResourceFieldProps) => {
 
   return (
     <Label>
-      <span className="text-sm font-semibold">{t(resourceKeyBase)}</span>
+      <span>{t(resourceKeyBase)}</span>
       <Controller
         control={control}
         name={name}

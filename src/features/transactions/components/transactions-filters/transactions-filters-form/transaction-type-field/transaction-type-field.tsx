@@ -15,7 +15,7 @@ export const TransactionTypeField = () => {
 
   return (
     <Label>
-      <span className="text-sm font-semibold">{t('transactionType')}</span>
+      <span>{t('transactionType')}</span>
       <Controller
         control={control}
         name="transactionType"

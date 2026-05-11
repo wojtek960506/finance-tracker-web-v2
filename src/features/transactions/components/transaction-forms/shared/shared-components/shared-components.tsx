@@ -1,17 +1,9 @@
-import clsx from 'clsx';
-import { type ComponentProps } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { FORM_BUTTON_SIZE_CLASS } from '@shared/consts';
 import { Button } from '@shared/ui';
 
 export const FORM_BUTTON_CLASS_NAME = FORM_BUTTON_SIZE_CLASS;
-
-type FieldSectionProps = ComponentProps<'div'>;
-
-export const FieldSection = ({ className, ...props }: FieldSectionProps) => (
-  <div {...props} className={clsx('flex flex-col gap-1 sm:gap-2', className)} />
-);
 
 type FieldErrorProps = {
   message?: string;

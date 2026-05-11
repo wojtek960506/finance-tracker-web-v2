@@ -13,7 +13,7 @@ export const DateRangeField = ({ name }: { name: 'startDate' | 'endDate' }) => {
 
   return (
     <Label>
-      <span className="text-sm font-semibold">{t(name)}</span>
+      <span>{t(name)}</span>
       <Controller
         control={form.control}
         name={name}

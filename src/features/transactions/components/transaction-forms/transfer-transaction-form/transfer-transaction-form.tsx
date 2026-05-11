@@ -2,7 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, type SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { Card, DateInput } from '@shared/ui';
+import { Card, DateInput, Label } from '@shared/ui';
 import {
   CurrencySelectField,
   NamedResourceSelectField,
@@ -10,7 +10,6 @@ import {
 import {
   FIELD_CONTROL_CLASS_NAME,
   FieldError,
-  FieldSection,
   TransactionFormActions,
 } from '@transactions/components/transaction-forms';
 
@@ -54,7 +53,7 @@ export const TransferTransactionForm = ({
         className="grid gap-3 sm:gap-4 sm:grid-cols-2"
         onSubmit={form.handleSubmit(handleSubmit)}
       >
-        <FieldSection>
+        <Label>
           <span>{t('date')}</span>
           <Controller
             control={form.control}
@@ -68,9 +67,9 @@ export const TransferTransactionForm = ({
               form.formState.errors.date?.message && t(form.formState.errors.date.message)
             }
           />
-        </FieldSection>
+        </Label>
 
-        <FieldSection>
+        <Label>
           <span>{t('paymentMethod')}</span>
           <Controller
             control={form.control}
@@ -90,9 +89,9 @@ export const TransferTransactionForm = ({
               t(form.formState.errors.paymentMethodId.message)
             }
           />
-        </FieldSection>
+        </Label>
 
-        <FieldSection>
+        <Label>
           <span>{t('amount')}</span>
           <Controller
             control={form.control}
@@ -114,9 +113,9 @@ export const TransferTransactionForm = ({
               t(form.formState.errors.amount.message)
             }
           />
-        </FieldSection>
+        </Label>
 
-        <FieldSection>
+        <Label>
           <span>{t('currency')}</span>
           <Controller
             control={form.control}
@@ -137,9 +136,9 @@ export const TransferTransactionForm = ({
               t(form.formState.errors.currency.message)
             }
           />
-        </FieldSection>
+        </Label>
 
-        <FieldSection>
+        <Label>
           <span>{t('fromAccount')}</span>
           <Controller
             control={form.control}
@@ -159,9 +158,9 @@ export const TransferTransactionForm = ({
               t(form.formState.errors.accountExpenseId.message)
             }
           />
-        </FieldSection>
+        </Label>
 
-        <FieldSection>
+        <Label>
           <span>{t('toAccount')}</span>
           <Controller
             control={form.control}
@@ -181,16 +180,16 @@ export const TransferTransactionForm = ({
               t(form.formState.errors.accountIncomeId.message)
             }
           />
-        </FieldSection>
+        </Label>
 
-        <FieldSection className="sm:col-span-2">
+        <Label className="sm:col-span-2">
           <span>{t('additionalDescription')}</span>
           <Input
             {...form.register('additionalDescription')}
             className={FIELD_CONTROL_CLASS_NAME}
             placeholder={t('additionalDescriptionPlaceholder')}
           />
-        </FieldSection>
+        </Label>
 
         <TransactionFormActions isPending={isPending} mode={mode} onCancel={onCancel} />
       </form>

@@ -157,10 +157,10 @@ export const TrashedTransactionsList = () => {
         <p>{t('emptyTrashModalDescription', { count: data.total })}</p>
         <p>{t('emptyTrashLinkedHint')}</p>
         <Label>
-          <span className="text-sm font-semibold">
+          <span className="text-sm sm:text-base font-semibold">
             {t('emptyTrashConfirmationLabel')}
           </span>
-          <span className="text-sm text-text-muted">
+          <span className="text-sm sm:text-base text-text-muted font-normal">
             {t('emptyTrashConfirmationHint', {
               confirmationValue: EMPTY_TRASH_CONFIRMATION_VALUE,
             })}

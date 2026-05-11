@@ -12,7 +12,7 @@ export const CurrencyField = () => {
 
   return (
     <Label>
-      <span className="text-sm font-semibold">{t('currency')}</span>
+      <span>{t('currency')}</span>
       <Controller
         control={form.control}
         name="currency"

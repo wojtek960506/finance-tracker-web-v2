@@ -14,7 +14,7 @@ export const AmountRangeField = ({ name }: { name: 'minAmount' | 'maxAmount' }) 
 
   return (
     <Label>
-      <span className="text-sm font-semibold">{t(name)}</span>
+      <span>{t(name)}</span>
       <Controller
         control={form.control}
         name={name}
