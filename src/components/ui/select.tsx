@@ -86,7 +86,7 @@ function SelectTrigger({
       data-slot="select-trigger"
       data-size={size}
       className={cn(
-        "relative flex w-fit items-center text-center gap-3 text-left whitespace-nowrap outline-none select-none aria-invalid:border-destructive aria-invalid:ring-2 aria-invalid:ring-destructive-ring/50 data-[placeholder]:text-text-muted *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-1.5 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        "relative flex w-fit cursor-pointer items-center text-center gap-3 text-left whitespace-nowrap outline-none select-none aria-invalid:border-destructive aria-invalid:ring-2 aria-invalid:ring-destructive-ring/50 data-[placeholder]:text-text-muted *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-1.5 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         isDefaultSize ? `${FORM_CONTROL_SIZE_CLASS} pr-8 sm:pr-9` : "h-8 rounded-lg px-3 text-sm",
         FORM_CONTROL_SURFACE_CLASS,
         className
