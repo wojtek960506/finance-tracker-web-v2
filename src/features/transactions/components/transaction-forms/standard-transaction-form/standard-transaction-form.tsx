@@ -2,7 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, type SubmitHandler, useForm, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { Button, Card, DateInput, Label } from '@shared/ui';
+import { Button, Card, Collapsible, DateInput, Label } from '@shared/ui';
 import {
   CurrencySelectField,
   NamedResourceSelectField,
@@ -48,6 +48,11 @@ export const StandardTransactionForm = ({
     control: form.control,
     name: 'transactionType',
   });
+  const [categoryId, paymentMethodId, accountId] = useWatch({
+    control: form.control,
+    name: ['categoryId', 'paymentMethodId', 'accountId'],
+  });
+  const shouldOpenAdvancedFields = Boolean(categoryId || paymentMethodId || accountId);
 
   const handleSubmit: SubmitHandler<StandardTransactionFormValues> = async (values) => {
     await onSubmit(values);
@@ -154,71 +159,83 @@ export const StandardTransactionForm = ({
           />
         </Label>
 
-        <Label className="sm:col-span-2">
-          <span>{t('category')}</span>
-          <Controller
-            control={form.control}
-            name="categoryId"
-            render={({ field }) => (
-              <NamedResourceSelectField
-                kind="categories"
-                value={field.value}
-                onChange={field.onChange}
-                placeholder={t('categoryPlaceholder')}
-              />
-            )}
-          />
-          <FieldError
-            message={
-              form.formState.errors.categoryId?.message &&
-              t(form.formState.errors.categoryId.message)
-            }
-          />
-        </Label>
+        <div className="sm:col-span-2">
+          <Collapsible
+            header={<span className="text-sm font-medium sm:text-base">{t('advancedFields')}</span>}
+            indicatorPosition="left"
+            isInitiallyOpen={shouldOpenAdvancedFields}
+            triggerMode="full-row"
+            contentInset="none"
+          >
+            <div className="grid gap-3 sm:gap-4 sm:grid-cols-2">
+              <Label className="sm:col-span-2">
+                <span>{t('category')}</span>
+                <Controller
+                  control={form.control}
+                  name="categoryId"
+                  render={({ field }) => (
+                    <NamedResourceSelectField
+                      kind="categories"
+                      value={field.value}
+                      onChange={field.onChange}
+                      placeholder={t('categoryPlaceholder')}
+                    />
+                  )}
+                />
+                <FieldError
+                  message={
+                    form.formState.errors.categoryId?.message &&
+                    t(form.formState.errors.categoryId.message)
+                  }
+                />
+              </Label>
 
-        <Label>
-          <span>{t('paymentMethod')}</span>
-          <Controller
-            control={form.control}
-            name="paymentMethodId"
-            render={({ field }) => (
-              <NamedResourceSelectField
-                kind="paymentMethods"
-                value={field.value}
-                onChange={field.onChange}
-                placeholder={t('paymentMethodPlaceholder')}
-              />
-            )}
-          />
-          <FieldError
-            message={
-              form.formState.errors.paymentMethodId?.message &&
-              t(form.formState.errors.paymentMethodId.message)
-            }
-          />
-        </Label>
+              <Label>
+                <span>{t('paymentMethod')}</span>
+                <Controller
+                  control={form.control}
+                  name="paymentMethodId"
+                  render={({ field }) => (
+                    <NamedResourceSelectField
+                      kind="paymentMethods"
+                      value={field.value}
+                      onChange={field.onChange}
+                      placeholder={t('paymentMethodPlaceholder')}
+                    />
+                  )}
+                />
+                <FieldError
+                  message={
+                    form.formState.errors.paymentMethodId?.message &&
+                    t(form.formState.errors.paymentMethodId.message)
+                  }
+                />
+              </Label>
 
-        <Label>
-          <span>{t('account')}</span>
-          <Controller
-            control={form.control}
-            name="accountId"
-            render={({ field }) => (
-              <NamedResourceSelectField
-                kind="accounts"
-                value={field.value}
-                onChange={field.onChange}
-                placeholder={t('accountPlaceholder')}
-              />
-            )}
-          />
-          <FieldError
-            message={
-              form.formState.errors.accountId?.message &&
-              t(form.formState.errors.accountId.message)
-            }
-          />
-        </Label>
+              <Label>
+                <span>{t('account')}</span>
+                <Controller
+                  control={form.control}
+                  name="accountId"
+                  render={({ field }) => (
+                    <NamedResourceSelectField
+                      kind="accounts"
+                      value={field.value}
+                      onChange={field.onChange}
+                      placeholder={t('accountPlaceholder')}
+                    />
+                  )}
+                />
+                <FieldError
+                  message={
+                    form.formState.errors.accountId?.message &&
+                    t(form.formState.errors.accountId.message)
+                  }
+                />
+              </Label>
+            </div>
+          </Collapsible>
+        </div>
 
         <TransactionFormActions isPending={isPending} mode={mode} onCancel={onCancel} />
       </form>

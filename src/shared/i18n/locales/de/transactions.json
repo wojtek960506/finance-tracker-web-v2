@@ -69,6 +69,7 @@
   "paymentMethod": "Zahlungsmethode",
   "currency": "Währung",
   "account": "Konto",
+  "advancedFields": "Erweiterte Felder",
   "fromAccount": "Von Konto",
   "toAccount": "Auf Konto",
   "amountExpense": "Ausgegebener Betrag",

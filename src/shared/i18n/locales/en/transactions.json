@@ -69,6 +69,7 @@
   "paymentMethod": "Payment method",
   "currency": "Currency",
   "account": "Account",
+  "advancedFields": "Advanced fields",
   "fromAccount": "From account",
   "toAccount": "To account",
   "amountExpense": "Amount spent",

@@ -69,6 +69,7 @@
   "paymentMethod": "Metoda płatności",
   "currency": "Waluta",
   "account": "Konto",
+  "advancedFields": "Pola zaawansowane",
   "fromAccount": "Z konta",
   "toAccount": "Na konto",
   "amountExpense": "Kwota wydana",

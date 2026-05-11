@@ -30,6 +30,8 @@ type TransferTransactionFormProps = {
 };
 
 // TODO think about splitting it to more components
+// TODO change additional description to description here and on backend
+// TODO decide which fields has to be added to collapsible advanced fields
 export const TransferTransactionForm = ({
   defaultValues,
   isPending,
