@@ -1,12 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
-import { Star } from 'lucide-react';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import {
   getNamedResources,
+  type INamedResource,
   type NamedResourceKind,
 } from '@named-resources/api';
+import { getFavoriteIcon } from '@transactions/components/shared';
 import { getTransactionNamedResourceLabel } from '@transactions/utils/get-transaction-named-resource-label';
 
 import {
@@ -15,7 +16,7 @@ import {
   SelectControl,
   SelectGroup,
   SelectItem,
-  SelectLabel,
+  SelectSeparator,
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
@@ -30,12 +31,19 @@ type NamedResourceSelectFieldProps = {
   includeSystem?: boolean;
 };
 
-const getFavoriteIcon = () => <Star className="size-4 fill-current" aria-hidden="true" />;
-const ALL_RESOURCES_LABEL_KEY: Record<NamedResourceKind, string> = {
-  categories: 'allCategories',
-  paymentMethods: 'allPaymentMethods',
-  accounts: 'allAccounts',
-};
+const renderResourceOption = (
+  resource: INamedResource,
+  tNamedResources: (key: string) => string,
+) => (
+  <span className="flex min-w-0 items-center gap-2">
+    {resource.isFavorite ? (
+      <span className="shrink-0 text-text-muted">{getFavoriteIcon()}</span>
+    ) : null}
+    <span className="truncate">
+      {getTransactionNamedResourceLabel(resource, tNamedResources)}
+    </span>
+  </span>
+);
 
 // TODO split this component
 export const NamedResourceSelectField = ({
@@ -84,26 +92,25 @@ export const NamedResourceSelectField = ({
         <SelectContent position="popper" className="max-h-56">
           {favoriteResources.length > 0 ? (
             <SelectGroup>
-              <SelectLabel>{tNamedResources('favorites')}</SelectLabel>
               {favoriteResources.map((resource) => (
                 <SelectItem key={resource.id} value={resource.id}>
-                  {getTransactionNamedResourceLabel(resource, tNamedResources)}
+                  {renderResourceOption(resource, tNamedResources)}
                 </SelectItem>
               ))}
             </SelectGroup>
           ) : null}
 
           {otherResources.length > 0 ? (
-            <SelectGroup>
-              {favoriteResources.length > 0 ? (
-                <SelectLabel>{tNamedResources(ALL_RESOURCES_LABEL_KEY[kind])}</SelectLabel>
-              ) : null}
-              {otherResources.map((resource) => (
-                <SelectItem key={resource.id} value={resource.id}>
-                  {getTransactionNamedResourceLabel(resource, tNamedResources)}
-                </SelectItem>
-              ))}
-            </SelectGroup>
+            <>
+              {favoriteResources.length > 0 ? <SelectSeparator /> : null}
+              <SelectGroup>
+                {otherResources.map((resource) => (
+                  <SelectItem key={resource.id} value={resource.id}>
+                    {renderResourceOption(resource, tNamedResources)}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            </>
           ) : null}
         </SelectContent>
       </Select>

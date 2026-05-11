@@ -1,18 +1,17 @@
 import { useQuery } from '@tanstack/react-query';
 import clsx from 'clsx';
-import { Star } from 'lucide-react';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import { getNamedResources, type INamedResource } from '@named-resources/api';
-import { Button, SearchableMultiSelect } from '@shared/ui';
-import { NamedResourceSelectField } from '@transactions/components/shared';
+import { Button } from '@shared/ui';
+import { getFavoriteIcon, NamedResourceSelectField } from '@transactions/components/shared';
 import { getTransactionNamedResourceLabel } from '@transactions/utils';
 
 import type { TransactionFiltersFormValues } from '../utils';
 
-const getFavoriteIcon = () => <Star className="size-4 fill-current" aria-hidden="true" />;
+import { MultiSelect } from '@/components/ui/multi-select';
 
 const mapCategoryToOption = (
   resource: INamedResource,
@@ -32,7 +31,6 @@ export const CategoryFields = () => {
   const { t } = useTranslation('transactions');
   const { t: tNamedResources } = useTranslation('namedResources');
   const form = useFormContext<TransactionFiltersFormValues>();
-  const [showMoreExcludedCategories, setShowMoreExcludedCategories] = useState(false);
   const categoryMode = useWatch({
     control: form.control,
     name: 'categoryMode',
@@ -77,7 +75,6 @@ export const CategoryFields = () => {
         : [];
 
     const othersGroup =
-      (favoriteCategories.length === 0 || showMoreExcludedCategories) &&
       otherCategories.length > 0
         ? [
             {
@@ -94,10 +91,10 @@ export const CategoryFields = () => {
         : [];
 
     return [...favoritesGroup, ...othersGroup];
-  }, [favoriteCategories, otherCategories, showMoreExcludedCategories, tNamedResources]);
+  }, [favoriteCategories, otherCategories, tNamedResources]);
 
   return (
-    <div className="flex flex-col gap-3 rounded-2xl border border-fg/15 bg-bg/60 p-3">
+    <div className="flex min-w-0 flex-col gap-3 rounded-2xl border border-fg/15 bg-bg/60 p-3">
       <div className="flex flex-col gap-1">
         <span className="text-sm font-semibold">{t('category')}</span>
         <p className="text-xs text-text-muted">{t('categoryFilterModeDescription')}</p>
@@ -109,7 +106,7 @@ export const CategoryFields = () => {
         render={({ field }) => (
           <div
             className={clsx(
-              'gap-2',
+              'min-w-0 gap-2',
               '2xl:grid 2xl:grid-cols-2',
               'lg:flex lg:flex-col',
               'sm:grid sm:grid-cols-2',
@@ -119,6 +116,7 @@ export const CategoryFields = () => {
             <Button
               type="button"
               variant={field.value === 'include' ? 'primary' : 'outline'}
+              className="w-full min-w-0"
               onClick={() => field.onChange('include')}
             >
               {t('includeCategory')}
@@ -126,6 +124,7 @@ export const CategoryFields = () => {
             <Button
               type="button"
               variant={field.value === 'exclude' ? 'primary' : 'outline'}
+              className="w-full min-w-0"
               onClick={() => field.onChange('exclude')}
             >
               {t('excludeCategories')}
@@ -155,35 +154,16 @@ export const CategoryFields = () => {
           control={form.control}
           name="excludeCategoryIds"
           render={({ field }) => (
-            <SearchableMultiSelect
+            <MultiSelect
               values={field.value}
               onChange={field.onChange}
               groups={excludeCategoryGroups}
               placeholder={t('excludeCategoriesPlaceholder')}
-              searchPlaceholder={t('searchCategoryPlaceholder')}
               emptyMessage={t('noCategoriesFound')}
               disabled={areCategoriesLoading}
               footer={
-                <div className="flex flex-col gap-2 border-t border-fg/20 pt-3">
-                  {favoriteCategories.length > 0 && otherCategories.length > 0 ? (
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      className="justify-start"
-                      onMouseDown={(event) => event.preventDefault()}
-                      onClick={(event) => {
-                        event.preventDefault();
-                        event.stopPropagation();
-                        setShowMoreExcludedCategories((prev) => !prev);
-                      }}
-                    >
-                      {showMoreExcludedCategories
-                        ? t('showLessCategories')
-                        : t('showMoreCategories')}
-                    </Button>
-                  ) : null}
-
-                  {field.value.length > 0 ? (
+                field.value.length > 0 ? (
+                  <div className="flex flex-col gap-2 pt-1">
                     <Button
                       type="button"
                       variant="ghost"
@@ -197,8 +177,8 @@ export const CategoryFields = () => {
                     >
                       {t('clearExcludedCategories')}
                     </Button>
-                  ) : null}
-                </div>
+                  </div>
+                ) : null
               }
             />
           )}
