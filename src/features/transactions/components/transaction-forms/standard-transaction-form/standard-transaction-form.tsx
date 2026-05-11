@@ -2,7 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, type SubmitHandler, useForm, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { Button, Card, DateInput, Input, NumberInput } from '@shared/ui';
+import { Button, Card, DateInput } from '@shared/ui';
 import {
   CurrencySelectField,
   NamedResourceSelectField,
@@ -19,6 +19,9 @@ import {
   type StandardTransactionFormValues,
   standardTransactionTypeOptions,
 } from './utils';
+
+import { Input } from '@/components/ui/input';
+import { NumberInput } from '@/components/ui/number-input';
 
 type StandardTransactionFormProps = {
   defaultValues: StandardTransactionFormValues;

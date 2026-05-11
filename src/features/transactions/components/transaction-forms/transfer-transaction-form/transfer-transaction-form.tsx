@@ -2,7 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, type SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { Card, DateInput, Input, NumberInput } from '@shared/ui';
+import { Card, DateInput } from '@shared/ui';
 import {
   CurrencySelectField,
   NamedResourceSelectField,
@@ -18,6 +18,9 @@ import {
   transferTransactionFormSchema,
   type TransferTransactionFormValues,
 } from './utils';
+
+import { Input } from '@/components/ui/input';
+import { NumberInput } from '@/components/ui/number-input';
 
 type TransferTransactionFormProps = {
   defaultValues: TransferTransactionFormValues;
@@ -78,10 +81,6 @@ export const TransferTransactionForm = ({
                 value={field.value}
                 onChange={field.onChange}
                 placeholder={t('paymentMethodPlaceholder')}
-                searchPlaceholder={t('searchPaymentMethodPlaceholder')}
-                emptyMessage={t('noPaymentMethodsFound')}
-                showMoreLabel={t('showMorePaymentMethods')}
-                showLessLabel={t('showLessPaymentMethods')}
               />
             )}
           />
@@ -151,10 +150,6 @@ export const TransferTransactionForm = ({
                 value={field.value}
                 onChange={field.onChange}
                 placeholder={t('fromAccountPlaceholder')}
-                searchPlaceholder={t('searchAccountPlaceholder')}
-                emptyMessage={t('noAccountsFound')}
-                showMoreLabel={t('showMoreAccounts')}
-                showLessLabel={t('showLessAccounts')}
               />
             )}
           />
@@ -177,10 +172,6 @@ export const TransferTransactionForm = ({
                 value={field.value}
                 onChange={field.onChange}
                 placeholder={t('toAccountPlaceholder')}
-                searchPlaceholder={t('searchAccountPlaceholder')}
-                emptyMessage={t('noAccountsFound')}
-                showMoreLabel={t('showMoreAccounts')}
-                showLessLabel={t('showLessAccounts')}
               />
             )}
           />
