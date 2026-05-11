@@ -153,7 +153,7 @@ export const NamedResourceSelectField = ({
 
   if (kind === 'accounts') {
     return (
-      <Select value={value || undefined} onValueChange={onChange} disabled={isLoading}>
+      <Select value={value} onValueChange={onChange} disabled={isLoading}>
         <SelectTrigger className="w-full">
           <SelectValue placeholder={isLoading ? tNamedResources('loadingResources') : placeholder} />
         </SelectTrigger>

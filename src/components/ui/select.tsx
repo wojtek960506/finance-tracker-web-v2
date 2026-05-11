@@ -1,4 +1,4 @@
-import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from "lucide-react"
+import { CheckIcon, ChevronDownIcon, ChevronUpIcon, XIcon } from "lucide-react"
 import { Select as SelectPrimitive } from "radix-ui"
 import * as React from "react"
 
@@ -29,28 +29,70 @@ function SelectValue({
   return <SelectPrimitive.Value data-slot="select-value" {...props} />
 }
 
+function SelectControl({
+  className,
+  children,
+  clearable = false,
+  hasValue = false,
+  clearLabel = "Clear",
+  onClear,
+}: React.ComponentProps<"div"> & {
+  clearable?: boolean
+  hasValue?: boolean
+  clearLabel?: string
+  onClear?: () => void
+}) {
+  return (
+    <div className={cn("relative", className)}>
+      {children}
+      <div className="pointer-events-none absolute top-1/2 right-2 z-20 flex -translate-y-1/2 items-center gap-1">
+        {clearable && hasValue ? (
+          <button
+            type="button"
+            aria-label={clearLabel}
+            className="pointer-events-auto flex size-6 items-center justify-center rounded-md text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
+            onPointerDown={(event) => {
+              event.preventDefault()
+              event.stopPropagation()
+              onClear?.()
+            }}
+          >
+            <XIcon className="size-4" />
+          </button>
+        ) : null}
+
+        <ChevronDownIcon className="size-4 text-muted-foreground" />
+      </div>
+    </div>
+  )
+}
+
 function SelectTrigger({
   className,
   size = "default",
+  showChevron = true,
   children,
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Trigger> & {
   size?: "sm" | "default"
+  showChevron?: boolean
 }) {
   return (
     <SelectPrimitive.Trigger
       data-slot="select-trigger"
       data-size={size}
       className={cn(
-        "flex w-fit items-center justify-between gap-1.5 rounded-lg border border-input bg-transparent py-2 pr-2 pl-2.5 text-sm whitespace-nowrap transition-colors outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 data-placeholder:text-muted-foreground data-[size=default]:h-8 data-[size=sm]:h-7 data-[size=sm]:rounded-[min(var(--radius-md),10px)] *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-1.5 dark:bg-input/30 dark:hover:bg-input/50 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        "relative flex w-fit items-center gap-1.5 rounded-lg border border-input bg-transparent py-2 pr-8 pl-2.5 text-sm whitespace-nowrap transition-colors outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 data-[placeholder]:text-muted-foreground data-[size=default]:h-8 data-[size=sm]:h-7 data-[size=sm]:rounded-[min(var(--radius-md),10px)] *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-1.5 dark:bg-input/30 dark:hover:bg-input/50 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       {...props}
     >
       {children}
-      <SelectPrimitive.Icon asChild>
-        <ChevronDownIcon className="pointer-events-none size-4 text-muted-foreground" />
-      </SelectPrimitive.Icon>
+      {showChevron ? (
+        <SelectPrimitive.Icon asChild>
+          <ChevronDownIcon className="pointer-events-none absolute top-1/2 right-2 size-4 -translate-y-1/2 text-muted-foreground" />
+        </SelectPrimitive.Icon>
+      ) : null}
     </SelectPrimitive.Trigger>
   )
 }
@@ -179,6 +221,7 @@ function SelectScrollDownButton({
 export {
   Select,
   SelectContent,
+  SelectControl,
   SelectGroup,
   SelectItem,
   SelectLabel,

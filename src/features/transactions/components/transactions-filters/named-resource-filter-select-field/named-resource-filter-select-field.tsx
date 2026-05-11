@@ -19,6 +19,7 @@ import { getTransactionNamedResourceLabel } from '@transactions/utils/get-transa
 import {
   Select,
   SelectContent,
+  SelectControl,
   SelectGroup,
   SelectItem,
   SelectLabel,
@@ -137,47 +138,50 @@ export const NamedResourceFilterSelectField = ({
   }, [availableResources, tNamedResources, value]);
 
   if (kind === 'accounts') {
-    const ALL_ACCOUNTS_VALUE = '__all_accounts__';
-
     return (
-      <Select
-        value={value || ALL_ACCOUNTS_VALUE}
-        onValueChange={(nextValue) => {
-          onChange(nextValue === ALL_ACCOUNTS_VALUE ? '' : nextValue);
-        }}
-        disabled={isLoading}
+      <SelectControl
+        clearable
+        hasValue={Boolean(value)}
+        clearLabel={clearLabel}
+        onClear={() => onChange('')}
       >
-        <SelectTrigger className="w-full">
-          <SelectValue placeholder={isLoading ? tNamedResources('loadingResources') : placeholder} />
-        </SelectTrigger>
-        <SelectContent position="popper" className="max-h-56">
-          <SelectItem value={ALL_ACCOUNTS_VALUE}>{placeholder}</SelectItem>
+        <Select
+          value={value}
+          onValueChange={onChange}
+          disabled={isLoading}
+        >
+          <SelectTrigger showChevron={false} className="w-full pr-20">
+            <SelectValue
+              placeholder={isLoading ? tNamedResources('loadingResources') : placeholder}
+            />
+          </SelectTrigger>
+          <SelectContent position="popper" className="max-h-56">
+            {favoriteResources.length > 0 ? (
+              <SelectGroup>
+                <SelectLabel>{tNamedResources('favorites')}</SelectLabel>
+                {favoriteResources.map((resource) => (
+                  <SelectItem key={resource.id} value={resource.id}>
+                    {mapResourceToOption(resource, tNamedResources).label}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            ) : null}
 
-          {favoriteResources.length > 0 ? (
-            <SelectGroup>
-              <SelectLabel>{tNamedResources('favorites')}</SelectLabel>
-              {favoriteResources.map((resource) => (
-                <SelectItem key={resource.id} value={resource.id}>
-                  {mapResourceToOption(resource, tNamedResources).label}
-                </SelectItem>
-              ))}
-            </SelectGroup>
-          ) : null}
-
-          {otherResources.length > 0 ? (
-            <SelectGroup>
-              {favoriteResources.length > 0 ? (
-                <SelectLabel>{tNamedResources(ALL_RESOURCES_LABEL_KEY[kind])}</SelectLabel>
-              ) : null}
-              {otherResources.map((resource) => (
-                <SelectItem key={resource.id} value={resource.id}>
-                  {mapResourceToOption(resource, tNamedResources).label}
-                </SelectItem>
-              ))}
-            </SelectGroup>
-          ) : null}
-        </SelectContent>
-      </Select>
+            {otherResources.length > 0 ? (
+              <SelectGroup>
+                {favoriteResources.length > 0 ? (
+                  <SelectLabel>{tNamedResources(ALL_RESOURCES_LABEL_KEY[kind])}</SelectLabel>
+                ) : null}
+                {otherResources.map((resource) => (
+                  <SelectItem key={resource.id} value={resource.id}>
+                    {mapResourceToOption(resource, tNamedResources).label}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            ) : null}
+          </SelectContent>
+        </Select>
+      </SelectControl>
     );
   }
 
