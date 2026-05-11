@@ -37,7 +37,7 @@ export const TransactionsFiltersFields = () => {
       <TransactionTypeField />
       <CurrencyField />
       <Collapsible
-        header={<span className="text-sm font-medium sm:text-base">{t('advancedFields')}</span>}
+        header={<span className="text-base font-medium sm:text-lg">{t('advancedFields')}</span>}
         indicatorPosition="left"
         isInitiallyOpen={shouldOpenAdvancedFields}
         triggerMode="full-row"

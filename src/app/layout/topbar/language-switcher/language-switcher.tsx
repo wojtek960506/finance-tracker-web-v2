@@ -17,11 +17,16 @@ const RoundedFlag = ({ isoCode }: { isoCode: string }) => (
   </span>
 );
 
-export const LanguageSwitcher = () => {
+export const LanguageSwitcher = ({
+  dropdownAlign = 'right',
+}: {
+  dropdownAlign?: 'left' | 'right';
+}) => {
   const { language, setLanguage } = useLanguage();
 
   return (
     <Dropdown
+      align={dropdownAlign}
       trigger={
         <Button variant="ghost">
           <RoundedFlag isoCode={SUPPORTED_LANGUAGES[language].isoCode} />

@@ -12,9 +12,10 @@ type DropdownItem = {
 type DropdownProps = {
   trigger: ReactNode;
   items: DropdownItem[];
+  align?: 'left' | 'right';
 };
 
-export const Dropdown = ({ trigger, items }: DropdownProps) => {
+export const Dropdown = ({ trigger, items, align = 'right' }: DropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -45,7 +46,8 @@ export const Dropdown = ({ trigger, items }: DropdownProps) => {
       {isOpen && (
         <div
           className={clsx(
-            'absolute right-0 top-full mt-1 bg-modal-bg text-fg shadow-lg',
+            'absolute top-full mt-1 bg-modal-bg text-fg shadow-lg',
+            align === 'left' ? 'left-0' : 'right-0',
             'rounded-md z-150  p-2',
           )}
         >

@@ -1,6 +1,8 @@
 import clsx from 'clsx';
 import type { RefObject } from 'react';
 
+import { useAuthToken } from '@shared/hooks';
+
 import { LanguageSwitcher } from './language-switcher';
 import { NavButton } from './nav-button';
 import { ThemeButton } from './theme-button';
@@ -11,6 +13,8 @@ export const Topbar = ({
 }: {
   navButtonRef?: RefObject<HTMLButtonElement | null>;
 }) => {
+  const { isAuthenticated } = useAuthToken();
+
   return (
     <header
       className={clsx(
@@ -23,7 +27,12 @@ export const Topbar = ({
         <NavButton ref={navButtonRef} />
       </div>
       <Title />
-      <div className="flex justify-self-end">
+      <div
+        className={clsx(
+          'justify-self-end',
+          isAuthenticated ? 'hidden md:flex' : 'flex',
+        )}
+      >
         <LanguageSwitcher />
         <ThemeButton />
       </div>

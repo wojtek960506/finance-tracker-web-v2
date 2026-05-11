@@ -11,6 +11,7 @@ type DrawerProps = {
   fromLeft: boolean;
   onClose: () => void;
   children: ReactNode;
+  headerLeft?: ReactNode;
   restoreFocusRef?: RefObject<HTMLElement | null>;
   ariaLabel?: string;
   panelClassName?: string;
@@ -24,6 +25,7 @@ export const Drawer = ({
   fromLeft,
   onClose,
   children,
+  headerLeft,
   restoreFocusRef,
   ariaLabel = 'Drawer',
   panelClassName,
@@ -137,10 +139,12 @@ export const Drawer = ({
             className={clsx(
               'flex p-2 h-[var(--topbar-h)] sm:h-[var(--topbar-h-sm)] border-b border-foreground',
               'min-h-[var(--topbar-h)] sm:min-h-[var(--topbar-h-sm)]',
-              fromLeft ? 'justify-end' : 'justify-start',
+              headerLeft ? 'items-center justify-between gap-2' : fromLeft ? 'justify-end' : 'justify-start',
             )}
           >
+            {headerLeft ? <div className="flex items-center gap-1">{headerLeft}</div> : null}
             <Button
+              type="button"
               onClick={onClose}
               variant="ghost"
               aria-label="Close drawer"
