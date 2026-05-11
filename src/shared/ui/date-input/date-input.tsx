@@ -13,6 +13,7 @@ import {
 import { DayPicker } from 'react-day-picker';
 import { createPortal } from 'react-dom';
 
+import { FORM_CONTROL_SIZE_CLASS, FORM_CONTROL_SURFACE_CLASS } from '@shared/consts';
 import { useLanguage } from '@shared/hooks';
 import { Card } from '@ui';
 
@@ -83,9 +84,9 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
           aria-haspopup="dialog"
           aria-expanded={isOpen}
           className={clsx(
-            'flex h-10 w-full items-center justify-between gap-3 rounded-xl border border-fg bg-bg px-3 text-left text-base text-fg outline-none transition-colors hover:bg-fg/5',
-            'focus-visible:border-fg focus-visible:ring-2 focus-visible:ring-blue-300',
-            'disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:bg-bg',
+            'flex w-full items-center justify-between gap-3 text-left outline-none',
+            FORM_CONTROL_SIZE_CLASS,
+            FORM_CONTROL_SURFACE_CLASS,
             !formattedValue && 'text-text-muted',
             disabled && 'pointer-events-none',
             className,

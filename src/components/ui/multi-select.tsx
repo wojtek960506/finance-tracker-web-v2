@@ -1,7 +1,8 @@
 import { XIcon } from "lucide-react"
 import * as React from "react"
 
-import { Button } from "@/components/ui/button"
+import { FORM_CONTROL_SIZE_CLASS, FORM_CONTROL_SURFACE_CLASS } from "@shared/consts"
+
 import {
   Combobox,
   ComboboxContent,
@@ -81,7 +82,9 @@ export function MultiSelect({
       <div className="relative w-full min-w-0 max-w-full">
         <ComboboxTrigger
           className={cn(
-            "flex h-10 w-full min-w-0 max-w-full items-center justify-between gap-3 overflow-hidden whitespace-nowrap rounded-xl border border-fg bg-bg px-3 text-left text-base text-fg transition-colors hover:bg-fg/5 focus-visible:border-fg focus-visible:ring-2 focus-visible:ring-blue-300 disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:bg-bg",
+            "flex w-full min-w-0 max-w-full items-center justify-between gap-3 overflow-hidden whitespace-nowrap text-left",
+            FORM_CONTROL_SIZE_CLASS,
+            FORM_CONTROL_SURFACE_CLASS,
             selectedOptions.length === 0 && "text-text-muted"
           )}
         >

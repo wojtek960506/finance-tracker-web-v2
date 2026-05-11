@@ -2,6 +2,8 @@ import { CheckIcon, ChevronDownIcon, ChevronUpIcon, XIcon } from "lucide-react"
 import { Select as SelectPrimitive } from "radix-ui"
 import * as React from "react"
 
+import { FORM_CONTROL_SIZE_CLASS, FORM_CONTROL_SURFACE_CLASS } from "@shared/consts"
+
 import { cn } from "@/lib/utils"
 
 function Select({
@@ -82,7 +84,9 @@ function SelectTrigger({
       data-slot="select-trigger"
       data-size={size}
       className={cn(
-        "relative flex w-fit items-center text-center gap-3 rounded-xl border border-fg bg-bg pr-8 pl-3 text-left whitespace-nowrap transition-colors outline-none select-none hover:bg-fg/5 focus-visible:border-fg focus-visible:ring-2 focus-visible:ring-blue-300 disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:bg-bg aria-invalid:border-destructive aria-invalid:ring-2 aria-invalid:ring-destructive-ring/50 data-[placeholder]:text-text-muted data-[size=default]:h-10 data-[size=default]:text-base data-[size=sm]:h-8 data-[size=sm]:rounded-lg data-[size=sm]:text-sm *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-1.5 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        "relative flex w-fit items-center text-center gap-3 text-left whitespace-nowrap outline-none select-none aria-invalid:border-destructive aria-invalid:ring-2 aria-invalid:ring-destructive-ring/50 data-[placeholder]:text-text-muted data-[size=default]:pr-8 data-[size=default]:pl-3 sm:data-[size=default]:pl-4 sm:data-[size=default]:pr-9 data-[size=sm]:h-8 data-[size=sm]:rounded-lg data-[size=sm]:px-3 data-[size=sm]:text-sm *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-1.5 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        "data-[size=default]:" + FORM_CONTROL_SIZE_CLASS,
+        FORM_CONTROL_SURFACE_CLASS,
         className
       )}
       {...props}

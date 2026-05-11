@@ -2,9 +2,10 @@ import clsx from 'clsx';
 import { type ComponentProps } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { FORM_BUTTON_SIZE_CLASS } from '@shared/consts';
 import { Button } from '@shared/ui';
 
-export const FORM_BUTTON_CLASS_NAME = 'h-10 sm:h-11 rounded-xl px-3 sm:px-4 text-base sm:text-lg';
+export const FORM_BUTTON_CLASS_NAME = FORM_BUTTON_SIZE_CLASS;
 
 type FieldSectionProps = ComponentProps<'div'>;
 

@@ -97,8 +97,8 @@ export const CategoryFields = () => {
   return (
     <div className="flex min-w-0 flex-col gap-3 rounded-2xl border border-fg/15 bg-bg/60 p-3">
       <div className="flex flex-col gap-1">
-        <span className="text-sm font-semibold">{t('category')}</span>
-        <p className="text-xs text-text-muted">{t('categoryFilterModeDescription')}</p>
+        <span className="text-sm sm:text-base font-semibold">{t('category')}</span>
+        <p className="text-xs sm:text-sm text-text-muted">{t('categoryFilterModeDescription')}</p>
       </div>
 
       <Controller
