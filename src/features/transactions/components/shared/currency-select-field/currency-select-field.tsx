@@ -36,13 +36,15 @@ export const CurrencySelectField = ({
     queryFn: async () => await getCurrencies(),
   });
   const selectedCurrency = data.find((currency) => currency.code === value) ?? null;
+  const formatCurrencyLabel = (currency: CurrencyOption) => `${currency.code} ${currency.name}`;
 
   return (
     <Combobox<CurrencyOption>
       items={data}
       value={selectedCurrency}
       disabled={isLoading}
-      itemToStringValue={(currency) => `${currency.code} ${currency.name}`}
+      itemToStringLabel={formatCurrencyLabel}
+      itemToStringValue={formatCurrencyLabel}
       onValueChange={(currency) => onChange(currency?.code ?? '')}
     >
       <ComboboxInput

@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { Star } from 'lucide-react';
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import {
@@ -9,9 +9,6 @@ import {
   type NamedResourceKind,
 } from '@named-resources/api';
 import {
-  Button,
-  SearchableSelect,
-  type SearchableSelectGroup,
   type SearchableSelectOption,
 } from '@shared/ui';
 import { getTransactionNamedResourceLabel } from '@transactions/utils/get-transaction-named-resource-label';
@@ -67,14 +64,9 @@ export const NamedResourceFilterSelectField = ({
   value,
   onChange,
   placeholder,
-  searchPlaceholder,
-  emptyMessage,
-  showMoreLabel,
-  showLessLabel,
   clearLabel,
   includeSystem = true,
 }: NamedResourceFilterSelectFieldProps) => {
-  const [showMore, setShowMore] = useState(false);
   const { t: tNamedResources } = useTranslation('namedResources');
 
   const { data = [], isLoading } = useQuery({
@@ -96,140 +88,49 @@ export const NamedResourceFilterSelectField = ({
     [availableResources],
   );
 
-  const groups = useMemo<SearchableSelectGroup[]>(() => {
-    const favoritesGroup =
-      favoriteResources.length > 0
-        ? [
-            {
-              key: 'favorites',
-              label: tNamedResources('favorites'),
-              options: favoriteResources.map((resource) =>
-                mapResourceToOption(resource, tNamedResources),
-              ),
-            },
-          ]
-        : [];
-
-    const othersGroup =
-      (favoriteResources.length === 0 || showMore) && otherResources.length > 0
-        ? [
-            {
-              key: 'others',
-              label:
-                favoriteResources.length > 0
-                  ? tNamedResources(ALL_RESOURCES_LABEL_KEY[kind])
-                  : undefined,
-              options: otherResources.map((resource) =>
-                mapResourceToOption(resource, tNamedResources),
-              ),
-            },
-          ]
-        : [];
-
-    return [...favoritesGroup, ...othersGroup];
-  }, [favoriteResources, kind, otherResources, showMore, tNamedResources]);
-
-  const selectedOption = useMemo(() => {
-    const selectedResource = availableResources.find((resource) => resource.id === value);
-
-    return selectedResource
-      ? mapResourceToOption(selectedResource, tNamedResources)
-      : undefined;
-  }, [availableResources, tNamedResources, value]);
-
-  if (kind === 'accounts') {
-    return (
-      <SelectControl
-        clearable
-        hasValue={Boolean(value)}
-        clearLabel={clearLabel}
-        onClear={() => onChange('')}
-      >
-        <Select
-          value={value}
-          onValueChange={onChange}
-          disabled={isLoading}
-        >
-          <SelectTrigger showChevron={false} className="w-full pr-20">
-            <SelectValue
-              placeholder={isLoading ? tNamedResources('loadingResources') : placeholder}
-            />
-          </SelectTrigger>
-          <SelectContent position="popper" className="max-h-56">
-            {favoriteResources.length > 0 ? (
-              <SelectGroup>
-                <SelectLabel>{tNamedResources('favorites')}</SelectLabel>
-                {favoriteResources.map((resource) => (
-                  <SelectItem key={resource.id} value={resource.id}>
-                    {mapResourceToOption(resource, tNamedResources).label}
-                  </SelectItem>
-                ))}
-              </SelectGroup>
-            ) : null}
-
-            {otherResources.length > 0 ? (
-              <SelectGroup>
-                {favoriteResources.length > 0 ? (
-                  <SelectLabel>{tNamedResources(ALL_RESOURCES_LABEL_KEY[kind])}</SelectLabel>
-                ) : null}
-                {otherResources.map((resource) => (
-                  <SelectItem key={resource.id} value={resource.id}>
-                    {mapResourceToOption(resource, tNamedResources).label}
-                  </SelectItem>
-                ))}
-              </SelectGroup>
-            ) : null}
-          </SelectContent>
-        </Select>
-      </SelectControl>
-    );
-  }
-
   return (
-    <SearchableSelect
-      value={value}
-      onChange={onChange}
-      groups={groups}
-      selectedOption={selectedOption}
-      placeholder={isLoading ? tNamedResources('loadingResources') : placeholder}
-      searchPlaceholder={searchPlaceholder}
-      emptyMessage={emptyMessage}
-      disabled={isLoading}
-      footer={
-        <div className="flex flex-col gap-2 border-t border-fg/20 pt-3">
-          {favoriteResources.length > 0 && otherResources.length > 0 && (
-            <Button
-              type="button"
-              variant="ghost"
-              className="justify-start"
-              onMouseDown={(event) => event.preventDefault()}
-              onClick={(event) => {
-                event.preventDefault();
-                event.stopPropagation();
-                setShowMore((prev) => !prev);
-              }}
-            >
-              {showMore ? showLessLabel : showMoreLabel}
-            </Button>
-          )}
-
-          {value ? (
-            <Button
-              type="button"
-              variant="ghost"
-              className="justify-start"
-              onMouseDown={(event) => event.preventDefault()}
-              onClick={(event) => {
-                event.preventDefault();
-                event.stopPropagation();
-                onChange('');
-              }}
-            >
-              {clearLabel}
-            </Button>
+    <SelectControl
+      clearable
+      hasValue={Boolean(value)}
+      clearLabel={clearLabel}
+      onClear={() => onChange('')}
+    >
+      <Select
+        value={value}
+        onValueChange={onChange}
+        disabled={isLoading}
+      >
+        <SelectTrigger showChevron={false} className="w-full pr-20">
+          <SelectValue
+            placeholder={isLoading ? tNamedResources('loadingResources') : placeholder}
+          />
+        </SelectTrigger>
+        <SelectContent position="popper" className="max-h-56">
+          {favoriteResources.length > 0 ? (
+            <SelectGroup>
+              <SelectLabel>{tNamedResources('favorites')}</SelectLabel>
+              {favoriteResources.map((resource) => (
+                <SelectItem key={resource.id} value={resource.id}>
+                  {mapResourceToOption(resource, tNamedResources).label}
+                </SelectItem>
+              ))}
+            </SelectGroup>
           ) : null}
-        </div>
-      }
-    />
+
+          {otherResources.length > 0 ? (
+            <SelectGroup>
+              {favoriteResources.length > 0 ? (
+                <SelectLabel>{tNamedResources(ALL_RESOURCES_LABEL_KEY[kind])}</SelectLabel>
+              ) : null}
+              {otherResources.map((resource) => (
+                <SelectItem key={resource.id} value={resource.id}>
+                  {mapResourceToOption(resource, tNamedResources).label}
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          ) : null}
+        </SelectContent>
+      </Select>
+    </SelectControl>
   );
 };
