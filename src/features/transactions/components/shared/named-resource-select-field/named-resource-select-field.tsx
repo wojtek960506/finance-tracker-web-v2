@@ -8,7 +8,7 @@ import {
   type NamedResourceKind,
 } from '@named-resources/api';
 import { getFavoriteIcon } from '@transactions/components/shared';
-import { getTransactionNamedResourceLabel } from '@transactions/utils/get-transaction-named-resource-label';
+import { getTransactionNamedResourceLabel } from '@transactions/utils';
 
 import {
   Select,

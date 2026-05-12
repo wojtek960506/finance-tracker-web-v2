@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import { useLanguage } from '@shared/hooks';
 import type { TransactionDetails, TrashedTransactionDetails } from '@transactions/api';
-import { getTransactionNamedResourceLabel } from '@transactions/utils/get-transaction-named-resource-label';
+import { getTransactionNamedResourceLabel } from '@transactions/utils';
 import { getTransactionAmountPresentation } from '@transactions/utils/transaction-amount';
 import { Card, HoverLink } from '@ui';
 
