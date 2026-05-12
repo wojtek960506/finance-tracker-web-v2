@@ -22,7 +22,12 @@ export const CurrenciesTotals = ({ byCurrency }: CurrenciesTotalsProps) => {
   return (
     <div className="flex flex-col gap-3">
       {sortedCurrencyTotals.map(([currency, totals]) => (
-        <CurrencyTotalsCard key={currency} currency={currency} totals={totals} />
+        <CurrencyTotalsCard
+          key={currency}
+          currency={currency}
+          totals={totals}
+          isInitiallyOpen={sortedCurrencyTotals.length === 1}
+        />
       ))}
     </div>
   );

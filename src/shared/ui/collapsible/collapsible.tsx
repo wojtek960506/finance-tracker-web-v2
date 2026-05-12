@@ -26,12 +26,23 @@ export const Collapsible = ({
   contentClassName,
 }: CollapsibleProps) => {
   const [isOpen, setIsOpen] = useState(isInitiallyOpen ?? false);
+  // Keep content layout classes during the close transition to avoid flicker,
+  // then remove them after the collapse animation finishes.
+  const [shouldApplyContentClassName, setShouldApplyContentClassName] = useState(
+    isInitiallyOpen ?? false,
+  );
   const contentId = useId();
 
   const isIndicatorLeft = indicatorPosition === 'left';
   const isFullRowTrigger = triggerMode === 'full-row';
   const SplitTriggerIcon = isIndicatorLeft ? ChevronRight : ChevronLeft;
   const FullRowTriggerIcon = ChevronDown;
+
+  const handleToggle = () => {
+    if (!isOpen) setShouldApplyContentClassName(true);
+
+    setIsOpen((prev) => !prev);
+  };
 
   // TODO maybe simplify conditions with some common elements
   return (
@@ -48,11 +59,11 @@ export const Collapsible = ({
             isIndicatorLeft ? '' : 'flex-row-reverse',
             triggerClassName,
           )}
-          onClick={() => setIsOpen((prev) => !prev)}
+          onClick={handleToggle}
         >
           <div
             className={clsx(
-              'flex min-w-0 items-center gap-2',
+              'flex min-w-0 items-center gap-2 w-full',
               isIndicatorLeft ? '' : 'flex-row-reverse',
             )}
           >
@@ -79,7 +90,7 @@ export const Collapsible = ({
             aria-label={isOpen ? 'Collapse menu' : 'Expand menu'}
             aria-expanded={isOpen}
             aria-controls={contentId}
-            onClick={() => setIsOpen((prev) => !prev)}
+            onClick={handleToggle}
           >
             <SplitTriggerIcon
               className={clsx(
@@ -101,12 +112,15 @@ export const Collapsible = ({
           contentInset === 'default' &&
             (isIndicatorLeft ? 'pl-10' : 'pr-10'),
         )}
+        onTransitionEnd={() => {
+          if (!isOpen) setShouldApplyContentClassName(false);
+        }}
       >
         <div
           className={clsx(
             'min-w-0 overflow-hidden',
             contentInset === 'default' && '-m-2 p-2',
-            isOpen && contentClassName,
+            shouldApplyContentClassName && contentClassName,
           )}
         >
           {children}
