@@ -1,8 +1,8 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Controller, type SubmitHandler, useForm } from 'react-hook-form';
+import { Controller, type SubmitHandler, useForm, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { Card, DateInput, Label } from '@shared/ui';
+import { Card, Collapsible, DateInput, Label } from '@shared/ui';
 import {
   CurrencySelectField,
   NamedResourceSelectField,
@@ -10,6 +10,7 @@ import {
 import {
   FIELD_CONTROL_CLASS_NAME,
   FieldError,
+  REQUIRED_LABEL_CLASS_NAME,
   TransactionFormActions,
 } from '@transactions/components/transaction-forms';
 
@@ -29,9 +30,6 @@ type ExchangeTransactionFormProps = {
   onCancel: () => void;
 };
 
-// TODO think about splitting it (maybe it will have common fields with standard and transfer)
-// TODO change additional description to description here and on backend
-// TODO decide which fields has to be added to collapsible advanced fields
 export const ExchangeTransactionForm = ({
   defaultValues,
   isPending,
@@ -44,6 +42,13 @@ export const ExchangeTransactionForm = ({
     resolver: zodResolver(exchangeTransactionFormSchema),
     defaultValues,
   });
+  const [paymentMethodId, accountExpenseId, accountIncomeId] = useWatch({
+    control: form.control,
+    name: ['paymentMethodId', 'accountExpenseId', 'accountIncomeId'],
+  });
+  const shouldOpenAdvancedFields = Boolean(
+    paymentMethodId || accountExpenseId || accountIncomeId,
+  );
 
   const handleSubmit: SubmitHandler<ExchangeTransactionFormValues> = async (values) => {
     await onSubmit(values);
@@ -56,7 +61,7 @@ export const ExchangeTransactionForm = ({
         onSubmit={form.handleSubmit(handleSubmit)}
       >
         <Label>
-          <span>{t('date')}</span>
+          <span className={REQUIRED_LABEL_CLASS_NAME}>{t('date')}</span>
           <Controller
             control={form.control}
             name="date"
@@ -71,52 +76,23 @@ export const ExchangeTransactionForm = ({
           />
         </Label>
 
-        <div className='flex flex-col gap-1 sm:gap-2'>
-          <span>{t('paymentMethod')}</span>
-          <Controller
-            control={form.control}
-            name="paymentMethodId"
-            render={({ field }) => (
-              <NamedResourceSelectField
-                kind="paymentMethods"
-                value={field.value}
-                onChange={field.onChange}
-                placeholder={t('paymentMethodPlaceholder')}
-              />
-            )}
-          />
-          <FieldError
-            message={
-              form.formState.errors.paymentMethodId?.message &&
-              t(form.formState.errors.paymentMethodId.message)
-            }
-          />
-        </div>
-
         <Label className="sm:col-span-2">
-          <span>{t('account')}</span>
-          <Controller
-            control={form.control}
-            name="accountId"
-            render={({ field }) => (
-              <NamedResourceSelectField
-                kind="accounts"
-                value={field.value}
-                onChange={field.onChange}
-                placeholder={t('accountPlaceholder')}
-              />
-            )}
+          <span className={REQUIRED_LABEL_CLASS_NAME}>{t('description')}</span>
+          <Input
+            {...form.register('description')}
+            className={FIELD_CONTROL_CLASS_NAME}
+            placeholder={t('description')}
           />
           <FieldError
             message={
-              form.formState.errors.accountId?.message &&
-              t(form.formState.errors.accountId.message)
+              form.formState.errors.description?.message &&
+              t(form.formState.errors.description.message)
             }
           />
         </Label>
 
         <Label>
-          <span>{t('amountExpense')}</span>
+          <span className={REQUIRED_LABEL_CLASS_NAME}>{t('amountExpense')}</span>
           <Controller
             control={form.control}
             name="amountExpense"
@@ -140,7 +116,7 @@ export const ExchangeTransactionForm = ({
         </Label>
 
         <Label>
-          <span>{t('expenseCurrency')}</span>
+          <span className={REQUIRED_LABEL_CLASS_NAME}>{t('expenseCurrency')}</span>
           <Controller
             control={form.control}
             name="currencyExpense"
@@ -163,7 +139,7 @@ export const ExchangeTransactionForm = ({
         </Label>
 
         <Label>
-          <span>{t('amountIncome')}</span>
+          <span className={REQUIRED_LABEL_CLASS_NAME}>{t('amountIncome')}</span>
           <Controller
             control={form.control}
             name="amountIncome"
@@ -187,7 +163,7 @@ export const ExchangeTransactionForm = ({
         </Label>
 
         <Label>
-          <span>{t('incomeCurrency')}</span>
+          <span className={REQUIRED_LABEL_CLASS_NAME}>{t('incomeCurrency')}</span>
           <Controller
             control={form.control}
             name="currencyIncome"
@@ -209,14 +185,84 @@ export const ExchangeTransactionForm = ({
           />
         </Label>
 
-        <Label className="sm:col-span-2">
-          <span>{t('additionalDescription')}</span>
-          <Input
-            {...form.register('additionalDescription')}
-            className={FIELD_CONTROL_CLASS_NAME}
-            placeholder={t('additionalDescriptionPlaceholder')}
-          />
-        </Label>
+        <div className="sm:col-span-2">
+          <Collapsible
+            header={<span className="text-base font-medium sm:text-lg">{t('advancedFields')}</span>}
+            indicatorPosition="left"
+            isInitiallyOpen={shouldOpenAdvancedFields}
+            triggerMode="full-row"
+            contentInset="none"
+            contentClassName='px-[2px] pb-[2px]'
+          >
+            <div className="grid gap-3 sm:gap-4 sm:grid-cols-2">
+              <Label className="sm:col-span-2">
+                <span>{t('paymentMethod')}</span>
+                <Controller
+                  control={form.control}
+                  name="paymentMethodId"
+                  render={({ field }) => (
+                    <NamedResourceSelectField
+                      kind="paymentMethods"
+                      value={field.value}
+                      onChange={field.onChange}
+                      placeholder={t('paymentMethodPlaceholder')}
+                    />
+                  )}
+                />
+                <FieldError
+                  message={
+                    form.formState.errors.paymentMethodId?.message &&
+                    t(form.formState.errors.paymentMethodId.message)
+                  }
+                />
+              </Label>
+
+              <Label>
+                <span>{t('fromAccount')}</span>
+                <Controller
+                  control={form.control}
+                  name="accountExpenseId"
+                  render={({ field }) => (
+                    <NamedResourceSelectField
+                      kind="accounts"
+                      value={field.value}
+                      onChange={field.onChange}
+                      placeholder={t('fromAccountPlaceholder')}
+                    />
+                  )}
+                />
+                <FieldError
+                  message={
+                    form.formState.errors.accountExpenseId?.message &&
+                    t(form.formState.errors.accountExpenseId.message)
+                  }
+                />
+              </Label>
+
+              <Label>
+                <span>{t('toAccount')}</span>
+                <Controller
+                  control={form.control}
+                  name="accountIncomeId"
+                  render={({ field }) => (
+                    <NamedResourceSelectField
+                      kind="accounts"
+                      value={field.value}
+                      onChange={field.onChange}
+                      placeholder={t('toAccountPlaceholder')}
+                    />
+                  )}
+                />
+                <FieldError
+                  message={
+                    form.formState.errors.accountIncomeId?.message &&
+                    t(form.formState.errors.accountIncomeId.message)
+                  }
+                />
+              </Label>
+            </div>
+          </Collapsible>
+        </div>
 
         <TransactionFormActions isPending={isPending} mode={mode} onCancel={onCancel} />
       </form>

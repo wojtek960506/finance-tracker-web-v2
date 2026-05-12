@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import {
@@ -20,9 +20,14 @@ import { NamedResourceInput } from '../named-resource-input';
 import { getNamedResourceErrorToast } from './get-named-resource-error-toast';
 import { NamedResourcePreview } from './named-resource-preview';
 
+const getNamedResourceDisplayLabel = (
+  resource: { name: string; type: 'system' | 'user' },
+  tNamedResource: (key: string) => string,
+) => (resource.type === 'system' ? tNamedResource(resource.name) : resource.name);
+
 // TODO maybe split this component
 export const NamedResourcesList = ({ kind }: { kind: NamedResourceKind }) => {
-  const { t: tNamedResource } = useTranslation('namedResources');
+  const { t: tNamedResource, i18n } = useTranslation('namedResources');
   const { t: tError } = useTranslation(NAMED_RESOURCE_ERROR_NAMESPACE[kind]);
   const resourceKindKeySuffix = capitalize(NAMED_RESOURCE[kind]);
 
@@ -45,6 +50,25 @@ export const NamedResourcesList = ({ kind }: { kind: NamedResourceKind }) => {
     queryKey: [kind],
     queryFn: async () => await getNamedResources(kind),
   });
+  const sortedResources = useMemo(() => {
+    if (!data) return [];
+
+    const collator = new Intl.Collator(i18n.language, {
+      sensitivity: 'base',
+      numeric: true,
+    });
+
+    return [...data].sort((left, right) => {
+      if (left.type !== right.type) {
+        return left.type === 'system' ? -1 : 1;
+      }
+
+      return collator.compare(
+        getNamedResourceDisplayLabel(left, tNamedResource),
+        getNamedResourceDisplayLabel(right, tNamedResource),
+      );
+    });
+  }, [data, i18n.language, tNamedResource]);
 
   if (isLoading) return <p>Loading</p>;
   if (error) return <p>{error.message}</p>;
@@ -94,7 +118,7 @@ export const NamedResourcesList = ({ kind }: { kind: NamedResourceKind }) => {
       )}
 
       <ul className="flex flex-col gap-2 sm:gap-3">
-        {data?.map((namedResource) => (
+        {sortedResources.map((namedResource) => (
           <NamedResourcePreview
             key={namedResource.id}
             kind={kind}

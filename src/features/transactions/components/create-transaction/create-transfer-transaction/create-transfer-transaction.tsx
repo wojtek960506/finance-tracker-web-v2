@@ -10,7 +10,7 @@ import {
 } from '@transactions/api';
 import {
   getDefaultTransferTransactionFormValues,
-  toOptionalTrimmedString,
+  normalizeTransferTransactionFormValues,
   TransferTransactionForm,
   type TransferTransactionFormValues,
 } from '@transactions/components/transaction-forms';
@@ -32,9 +32,8 @@ export const CreateTransferTransaction = () => {
   const onSubmit = async (values: TransferTransactionFormValues) => {
     try {
       await createTransactionMutation.mutateAsync({
-        ...values,
+        ...normalizeTransferTransactionFormValues(values),
         amount: Number(values.amount),
-        additionalDescription: toOptionalTrimmedString(values.additionalDescription),
       });
 
       pushToast({

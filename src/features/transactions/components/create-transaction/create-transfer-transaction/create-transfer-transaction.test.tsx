@@ -39,14 +39,20 @@ vi.mock('@store/toast-store', () => ({
 vi.mock('@transactions/components/transaction-forms', () => ({
   getDefaultTransferTransactionFormValues: () => ({
     date: '2024-01-03',
-    additionalDescription: '',
+    description: '',
     amount: '',
     currency: '',
     paymentMethodId: '',
     accountExpenseId: '',
     accountIncomeId: '',
   }),
-  toOptionalTrimmedString: (value: string) => value.trim() || undefined,
+  normalizeTransferTransactionFormValues: (values: any) => ({
+    ...values,
+    description: values.description.trim(),
+    paymentMethodId: values.paymentMethodId || undefined,
+    accountExpenseId: values.accountExpenseId || undefined,
+    accountIncomeId: values.accountIncomeId || undefined,
+  }),
   TransferTransactionForm: ({
     onSubmit,
     onCancel,
@@ -60,7 +66,7 @@ vi.mock('@transactions/components/transaction-forms', () => ({
         onClick={() =>
           void onSubmit({
             date: '2024-01-03',
-            additionalDescription: 'Move funds',
+            description: 'Move funds',
             amount: '10',
             currency: 'USD',
             paymentMethodId: 'pm-1',
@@ -100,7 +106,7 @@ describe('CreateTransferTransaction', () => {
     await waitFor(() =>
       expect(mocks.createTransferTransaction).toHaveBeenCalledWith({
         date: '2024-01-03',
-        additionalDescription: 'Move funds',
+        description: 'Move funds',
         amount: 10,
         currency: 'USD',
         paymentMethodId: 'pm-1',

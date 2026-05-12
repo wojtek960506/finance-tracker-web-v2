@@ -10,7 +10,7 @@ import { getTransactionKind } from '@transactions/consts';
 import { getTransactionAmountPresentation } from '@transactions/utils/transaction-amount';
 import { Card } from '@ui';
 
-// import { getTransactionNamedResourceLabel } from '@transactions/utils/get-transaction-named-resource-label';
+// import { getTransactionNamedResourceLabel } from '@transactions/utils';
 // import { ButtonLink } from '@ui';
 
 export const TransactionPreview = ({

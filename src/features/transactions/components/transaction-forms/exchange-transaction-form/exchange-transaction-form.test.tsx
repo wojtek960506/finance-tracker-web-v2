@@ -28,6 +28,18 @@ vi.mock('@shared/ui', () => ({
     <button {...props}>{children}</button>
   ),
   Card: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
+  Collapsible: ({
+    children,
+    header,
+  }: {
+    children: React.ReactNode;
+    header: React.ReactNode;
+  }) => (
+    <div>
+      {header}
+      {children}
+    </div>
+  ),
   DateInput: ({
     value,
     onChange,
@@ -42,6 +54,10 @@ vi.mock('@shared/ui', () => ({
     />
   ),
   Input: (props: React.InputHTMLAttributes<HTMLInputElement>) => <input {...props} />,
+  Label: ({
+    children,
+    ...props
+  }: React.LabelHTMLAttributes<HTMLLabelElement>) => <label {...props}>{children}</label>,
   NumberInput: ({
     value,
     onValueChange,
@@ -66,13 +82,14 @@ describe('ExchangeTransactionForm', () => {
       <ExchangeTransactionForm
         defaultValues={{
           date: '2024-01-03',
-          additionalDescription: 'Exchange',
+          description: 'Exchange',
           amountExpense: '10',
           amountIncome: '8',
           currencyExpense: 'USD',
           currencyIncome: 'EUR',
           paymentMethodId: 'pm-1',
-          accountId: 'acc-1',
+          accountExpenseId: 'acc-1',
+          accountIncomeId: 'acc-2',
         }}
         isPending={false}
         mode="create"
@@ -85,13 +102,14 @@ describe('ExchangeTransactionForm', () => {
 
     expect(onSubmit).toHaveBeenCalledWith({
       date: '2024-01-03',
-      additionalDescription: 'Exchange',
+      description: 'Exchange',
       amountExpense: '10',
       amountIncome: '8',
       currencyExpense: 'USD',
       currencyIncome: 'EUR',
       paymentMethodId: 'pm-1',
-      accountId: 'acc-1',
+      accountExpenseId: 'acc-1',
+      accountIncomeId: 'acc-2',
     });
   });
 
@@ -102,13 +120,14 @@ describe('ExchangeTransactionForm', () => {
       <ExchangeTransactionForm
         defaultValues={{
           date: '',
-          additionalDescription: '',
+          description: '',
           amountExpense: '',
           amountIncome: '',
           currencyExpense: '',
           currencyIncome: '',
           paymentMethodId: '',
-          accountId: '',
+          accountExpenseId: '',
+          accountIncomeId: '',
         }}
         isPending={false}
         mode="create"
@@ -120,11 +139,10 @@ describe('ExchangeTransactionForm', () => {
     await user.click(screen.getByRole('button', { name: 'saveTransaction' }));
 
     expect(screen.getByText('dateRequired')).toBeInTheDocument();
+    expect(screen.getByText('descriptionRequired')).toBeInTheDocument();
     expect(screen.getByText('amountExpenseRequired')).toBeInTheDocument();
     expect(screen.getByText('amountIncomeRequired')).toBeInTheDocument();
     expect(screen.getByText('expenseCurrencyRequired')).toBeInTheDocument();
     expect(screen.getByText('incomeCurrencyRequired')).toBeInTheDocument();
-    expect(screen.getByText('paymentMethodRequired')).toBeInTheDocument();
-    expect(screen.getByText('accountRequired')).toBeInTheDocument();
   });
 });

@@ -4,6 +4,7 @@ import { makeTransaction } from '@test-utils/factories/transaction';
 
 import {
   getDefaultStandardTransactionFormValues,
+  normalizeStandardTransactionFormValues,
   getStandardTransactionFormValues,
   standardTransactionFormSchema,
   standardTransactionTypeOptions,
@@ -56,6 +57,30 @@ describe('standard transaction form utils', () => {
       categoryId: 'cat-1',
       paymentMethodId: 'pm-1',
       accountId: 'acc-1',
+      transactionType: 'expense',
+    });
+  });
+
+  it('normalizes optional ids', () => {
+    expect(
+      normalizeStandardTransactionFormValues({
+        date: '2024-01-03',
+        description: 'Groceries',
+        amount: '10',
+        currency: 'USD',
+        categoryId: '',
+        paymentMethodId: 'pm-1',
+        accountId: '  ',
+        transactionType: 'expense',
+      }),
+    ).toEqual({
+      date: '2024-01-03',
+      description: 'Groceries',
+      amount: '10',
+      currency: 'USD',
+      categoryId: undefined,
+      paymentMethodId: 'pm-1',
+      accountId: undefined,
       transactionType: 'expense',
     });
   });

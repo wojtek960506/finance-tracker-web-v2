@@ -8,7 +8,7 @@ import {
   type NamedResourceKind,
 } from '@named-resources/api';
 import { getFavoriteIcon } from '@transactions/components/shared';
-import { getTransactionNamedResourceLabel } from '@transactions/utils/get-transaction-named-resource-label';
+import { getTransactionNamedResourceLabel } from '@transactions/utils';
 
 import {
   Select,
@@ -29,6 +29,7 @@ type NamedResourceSelectFieldProps = {
   clearable?: boolean;
   clearLabel?: string;
   includeSystem?: boolean;
+  excludedSystemNames?: string[];
 };
 
 const renderResourceOption = (
@@ -54,26 +55,57 @@ export const NamedResourceSelectField = ({
   clearable = false,
   clearLabel,
   includeSystem = kind !== 'categories',
+  excludedSystemNames = [],
 }: NamedResourceSelectFieldProps) => {
-  const { t: tNamedResources } = useTranslation('namedResources');
+  const { t: tNamedResources, i18n } = useTranslation('namedResources');
 
   const { data = [], isLoading } = useQuery({
     queryKey: [kind],
     queryFn: async () => await getNamedResources(kind),
   });
+  const collator = useMemo(
+    () =>
+      new Intl.Collator(i18n.language, {
+        sensitivity: 'base',
+        numeric: true,
+      }),
+    [i18n.language],
+  );
 
   const availableResources = useMemo(
-    () => data.filter((resource) => (includeSystem ? true : resource.type !== 'system')),
-    [data, includeSystem],
+    () =>
+      data.filter((resource) => {
+        if (resource.type !== 'system') {
+          return true;
+        }
+
+        if (!includeSystem) {
+          return false;
+        }
+
+        return !excludedSystemNames.includes(resource.name);
+      }),
+    [data, excludedSystemNames, includeSystem],
+  );
+  const sortResourcesByDisplayLabel = useMemo(
+    () => (resources: INamedResource[]) =>
+      [...resources].sort((left, right) =>
+        collator.compare(
+          getTransactionNamedResourceLabel(left, tNamedResources),
+          getTransactionNamedResourceLabel(right, tNamedResources),
+        ),
+      ),
+    [collator, tNamedResources],
   );
 
   const favoriteResources = useMemo(
-    () => availableResources.filter((resource) => resource.isFavorite),
-    [availableResources],
+    () => sortResourcesByDisplayLabel(availableResources.filter((resource) => resource.isFavorite)),
+    [availableResources, sortResourcesByDisplayLabel],
   );
   const otherResources = useMemo(
-    () => availableResources.filter((resource) => !resource.isFavorite),
-    [availableResources],
+    () =>
+      sortResourcesByDisplayLabel(availableResources.filter((resource) => !resource.isFavorite)),
+    [availableResources, sortResourcesByDisplayLabel],
   );
 
   return (

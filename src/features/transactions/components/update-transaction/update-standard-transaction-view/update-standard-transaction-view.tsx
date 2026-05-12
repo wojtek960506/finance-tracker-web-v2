@@ -12,6 +12,7 @@ import {
 import { useInvalidateTransactionQueries } from '@transactions/components/shared';
 import {
   getStandardTransactionFormValues,
+  normalizeStandardTransactionFormValues,
   StandardTransactionForm,
   type StandardTransactionFormValues,
 } from '@transactions/components/transaction-forms';
@@ -43,8 +44,7 @@ export const UpdateStandardTransactionView = ({
   const handleSubmit = async (values: StandardTransactionFormValues) => {
     try {
       await updateTransactionMutation.mutateAsync({
-        ...values,
-        description: values.description.trim(),
+        ...normalizeStandardTransactionFormValues(values),
         amount: Number(values.amount),
       });
 

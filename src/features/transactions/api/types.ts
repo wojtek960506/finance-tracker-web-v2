@@ -11,31 +11,32 @@ export type TransactionStandardDTO = {
   description: string;
   amount: number;
   currency: string;
-  categoryId: string;
-  paymentMethodId: string;
-  accountId: string;
+  categoryId?: string | null;
+  paymentMethodId?: string | null;
+  accountId?: string | null;
   transactionType: TransactionType;
 };
 
 export type TransactionTransferDTO = {
   date: string;
-  additionalDescription?: string;
+  description: string;
   amount: number;
   currency: string;
-  accountExpenseId: string;
-  accountIncomeId: string;
-  paymentMethodId: string;
+  accountExpenseId?: string | null;
+  accountIncomeId?: string | null;
+  paymentMethodId?: string | null;
 };
 
 export type TransactionExchangeDTO = {
   date: string;
-  additionalDescription?: string;
+  description: string;
   amountExpense: number;
   amountIncome: number;
   currencyExpense: string;
   currencyIncome: string;
-  accountId: string;
-  paymentMethodId: string;
+  accountExpenseId?: string | null;
+  accountIncomeId?: string | null;
+  paymentMethodId?: string | null;
 };
 
 export type Transaction = {

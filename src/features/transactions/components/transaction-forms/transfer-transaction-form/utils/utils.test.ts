@@ -5,6 +5,7 @@ import { makeTransaction } from '@test-utils/factories/transaction';
 import {
   getDefaultTransferTransactionFormValues,
   getTransferTransactionFormValues,
+  normalizeTransferTransactionFormValues,
   transferTransactionFormSchema,
 } from './utils';
 
@@ -17,7 +18,7 @@ describe('transfer transaction form utils', () => {
     expect(
       transferTransactionFormSchema.parse({
         date: '2024-01-03',
-        additionalDescription: 'Move funds',
+        description: 'Move funds',
         amount: '10',
         currency: 'USD',
         paymentMethodId: 'pm-1',
@@ -33,7 +34,7 @@ describe('transfer transaction form utils', () => {
 
     expect(getDefaultTransferTransactionFormValues()).toEqual({
       date: '2026-04-08',
-      additionalDescription: '',
+      description: '',
       amount: '',
       currency: '',
       paymentMethodId: '',
@@ -62,12 +63,34 @@ describe('transfer transaction form utils', () => {
       getTransferTransactionFormValues(incomeTransaction, expenseTransaction),
     ).toEqual({
       date: '2024-01-03',
-      additionalDescription: 'Monthly move',
+      description: 'Checking --> Savings (Monthly move)',
       amount: '10',
       currency: 'USD',
       paymentMethodId: 'pm-transfer',
       accountExpenseId: 'acc-expense',
       accountIncomeId: 'acc-income',
+    });
+  });
+
+  it('normalizes optional ids and trims description', () => {
+    expect(
+      normalizeTransferTransactionFormValues({
+        date: '2024-01-03',
+        description: '  Move funds  ',
+        amount: '10',
+        currency: 'USD',
+        paymentMethodId: '',
+        accountExpenseId: '  ',
+        accountIncomeId: 'acc-2',
+      }),
+    ).toEqual({
+      date: '2024-01-03',
+      description: 'Move funds',
+      amount: '10',
+      currency: 'USD',
+      paymentMethodId: undefined,
+      accountExpenseId: undefined,
+      accountIncomeId: 'acc-2',
     });
   });
 });

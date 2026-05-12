@@ -3,7 +3,6 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import { makeTransaction } from '@test-utils/factories/transaction';
 
 import {
-  extractAdditionalDescription,
   FIELD_CONTROL_CLASS_NAME,
   getDefaultTransactionDate,
   getTransactionAmountValue,
@@ -36,15 +35,6 @@ describe('transaction shared utils', () => {
   it('formats transaction date and amount values for forms', () => {
     expect(getTransactionDateValue('2024-01-03T10:20:30.000Z')).toBe('2024-01-03');
     expect(getTransactionAmountValue(10.5)).toBe('10.5');
-  });
-
-  it('extracts the additional description only when the prefix and wrapper match', () => {
-    expect(extractAdditionalDescription('USD -> EUR (Vacation cash)', 'USD -> EUR')).toBe(
-      'Vacation cash',
-    );
-    expect(extractAdditionalDescription('Other text', 'USD -> EUR')).toBe('');
-    expect(extractAdditionalDescription('USD -> EUR', 'USD -> EUR')).toBe('');
-    expect(extractAdditionalDescription('USD -> EUR - note', 'USD -> EUR')).toBe('');
   });
 
   it('returns the pair in expense/income order', () => {

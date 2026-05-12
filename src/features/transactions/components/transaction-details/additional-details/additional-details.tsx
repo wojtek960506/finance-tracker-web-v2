@@ -7,7 +7,7 @@ import type {
   TrashedTransaction,
   TrashedTransactionDetails,
 } from '@transactions/api';
-import { getTransactionNamedResourceLabel } from '@transactions/utils/get-transaction-named-resource-label';
+import { getTransactionNamedResourceLabel } from '@transactions/utils';
 import { getTransactionAmountPresentation } from '@transactions/utils/transaction-amount';
 import { ButtonLink } from '@ui';
 

@@ -10,6 +10,7 @@ import {
 } from '@transactions/api';
 import {
   getDefaultStandardTransactionFormValues,
+  normalizeStandardTransactionFormValues,
   StandardTransactionForm,
   type StandardTransactionFormValues,
 } from '@transactions/components/transaction-forms';
@@ -31,8 +32,7 @@ export const CreateStandardTransaction = () => {
   const onSubmit = async (values: StandardTransactionFormValues) => {
     try {
       await createTransactionMutation.mutateAsync({
-        ...values,
-        description: values.description.trim(),
+        ...normalizeStandardTransactionFormValues(values),
         amount: Number(values.amount),
       });
 

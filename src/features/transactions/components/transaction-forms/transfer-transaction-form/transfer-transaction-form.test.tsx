@@ -28,6 +28,18 @@ vi.mock('@shared/ui', () => ({
     <button {...props}>{children}</button>
   ),
   Card: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
+  Collapsible: ({
+    children,
+    header,
+  }: {
+    children: React.ReactNode;
+    header: React.ReactNode;
+  }) => (
+    <div>
+      {header}
+      {children}
+    </div>
+  ),
   DateInput: ({
     value,
     onChange,
@@ -42,6 +54,10 @@ vi.mock('@shared/ui', () => ({
     />
   ),
   Input: (props: React.InputHTMLAttributes<HTMLInputElement>) => <input {...props} />,
+  Label: ({
+    children,
+    ...props
+  }: React.LabelHTMLAttributes<HTMLLabelElement>) => <label {...props}>{children}</label>,
   NumberInput: ({
     value,
     onValueChange,
@@ -66,7 +82,7 @@ describe('TransferTransactionForm', () => {
       <TransferTransactionForm
         defaultValues={{
           date: '2024-01-03',
-          additionalDescription: 'Move funds',
+          description: 'Move funds',
           amount: '10',
           currency: 'USD',
           paymentMethodId: 'pm-1',
@@ -84,7 +100,7 @@ describe('TransferTransactionForm', () => {
 
     expect(onSubmit).toHaveBeenCalledWith({
       date: '2024-01-03',
-      additionalDescription: 'Move funds',
+      description: 'Move funds',
       amount: '10',
       currency: 'USD',
       paymentMethodId: 'pm-1',
@@ -100,7 +116,7 @@ describe('TransferTransactionForm', () => {
       <TransferTransactionForm
         defaultValues={{
           date: '',
-          additionalDescription: '',
+          description: '',
           amount: '',
           currency: '',
           paymentMethodId: '',
@@ -117,10 +133,8 @@ describe('TransferTransactionForm', () => {
     await user.click(screen.getByRole('button', { name: 'saveTransaction' }));
 
     expect(screen.getByText('dateRequired')).toBeInTheDocument();
+    expect(screen.getByText('descriptionRequired')).toBeInTheDocument();
     expect(screen.getByText('amountRequired')).toBeInTheDocument();
     expect(screen.getByText('currencyRequired')).toBeInTheDocument();
-    expect(screen.getByText('paymentMethodRequired')).toBeInTheDocument();
-    expect(screen.getByText('fromAccountRequired')).toBeInTheDocument();
-    expect(screen.getByText('toAccountRequired')).toBeInTheDocument();
   });
 });

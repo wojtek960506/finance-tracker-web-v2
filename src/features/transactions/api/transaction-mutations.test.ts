@@ -41,7 +41,7 @@ describe('transaction mutations api', () => {
   it('creates a transfer transaction pair', async () => {
     const payload = {
       date: '2024-01-03',
-      additionalDescription: 'Move funds',
+      description: 'Move funds',
       amount: 10,
       currency: 'USD',
       accountExpenseId: 'acc-1',
@@ -60,12 +60,13 @@ describe('transaction mutations api', () => {
   it('creates an exchange transaction pair', async () => {
     const payload = {
       date: '2024-01-03',
-      additionalDescription: 'Exchange',
+      description: 'Exchange',
       amountExpense: 10,
       amountIncome: 8,
       currencyExpense: 'USD',
       currencyIncome: 'EUR',
-      accountId: 'acc-1',
+      accountExpenseId: 'acc-1',
+      accountIncomeId: 'acc-2',
       paymentMethodId: 'pm-1',
     };
     const response = [{ id: 'tx-1' }, { id: 'tx-2' }];
@@ -100,7 +101,7 @@ describe('transaction mutations api', () => {
   it('updates a transfer transaction pair', async () => {
     const payload = {
       date: '2024-01-03',
-      additionalDescription: 'Move funds',
+      description: 'Move funds',
       amount: 10,
       currency: 'USD',
       accountExpenseId: 'acc-1',
@@ -119,12 +120,13 @@ describe('transaction mutations api', () => {
   it('updates an exchange transaction pair', async () => {
     const payload = {
       date: '2024-01-03',
-      additionalDescription: 'Exchange',
+      description: 'Exchange',
       amountExpense: 10,
       amountIncome: 8,
       currencyExpense: 'USD',
       currencyIncome: 'EUR',
-      accountId: 'acc-1',
+      accountExpenseId: 'acc-1',
+      accountIncomeId: 'acc-2',
       paymentMethodId: 'pm-1',
     };
     const response = [{ id: 'tx-1' }, { id: 'tx-2' }];
