@@ -14,25 +14,28 @@ import { useTranslation } from 'react-i18next';
 
 import { logout } from '@auth/api';
 import { useNavigation } from '@context/navigation-context';
-import { useAuthToken, useLocalStorage } from '@shared/hooks';
+import { useAuthToken } from '@shared/hooks';
+import { useUIStore } from '@store/ui-store';
 import { Collapsible } from '@ui';
 
 import { NavigationItem } from './navigation-item';
 
-// when more collapsibles in navigation think about some more dynamic solution
-const IS_TRANSACTIONS_COLLAPSIBLE_INITIALLY_OPEN_KEY =
-  'is-transactions-collapsible-initially-open-key';
+const TRANSACTIONS_NAVIGATION_ITEM_ID = 'transactions';
 
-// TODO maybe split this component and revisit the logic with `setIsCollapsibleInitiallyOpen`
 export const Navigation = () => {
   const { t } = useTranslation('navigation');
 
   const queryClient = useQueryClient();
   const { authToken, removeAuthToken } = useAuthToken();
   const { fromLeft } = useNavigation();
-
-  const { item: isCollapsibleInitiallyOpen, setItem: setIsCollapsibleInitiallyOpen } =
-    useLocalStorage<boolean>(IS_TRANSACTIONS_COLLAPSIBLE_INITIALLY_OPEN_KEY, false);
+  const {
+    expandedNavigationItems,
+    setNavigationItemExpanded,
+    resetPersistedUIState,
+  } = useUIStore();
+  const isTransactionsNavigationItemOpen = expandedNavigationItems.includes(
+    TRANSACTIONS_NAVIGATION_ITEM_ID,
+  );
 
   if (!authToken) return;
 
@@ -46,11 +49,16 @@ export const Navigation = () => {
               title={t('transactions')}
               Icon={Banknote}
               end
-              additionalAction={() => setIsCollapsibleInitiallyOpen(false)}
+              additionalAction={() =>
+                setNavigationItemExpanded(TRANSACTIONS_NAVIGATION_ITEM_ID, false)
+              }
             />
           }
           indicatorPosition={fromLeft ? 'left' : 'right'}
-          isInitiallyOpen={isCollapsibleInitiallyOpen!}
+          isOpen={isTransactionsNavigationItemOpen}
+          onOpenChange={(isOpen) =>
+            setNavigationItemExpanded(TRANSACTIONS_NAVIGATION_ITEM_ID, isOpen)
+          }
         >
           <ul>
             <li>
@@ -58,7 +66,9 @@ export const Navigation = () => {
                 to="/categories"
                 title={t('categories')}
                 Icon={Tags}
-                additionalAction={() => setIsCollapsibleInitiallyOpen(true)}
+                additionalAction={() =>
+                  setNavigationItemExpanded(TRANSACTIONS_NAVIGATION_ITEM_ID, true)
+                }
               />
             </li>
             <li>
@@ -66,7 +76,9 @@ export const Navigation = () => {
                 to="/paymentMethods"
                 title={t('paymentMethods')}
                 Icon={WalletCards}
-                additionalAction={() => setIsCollapsibleInitiallyOpen(true)}
+                additionalAction={() =>
+                  setNavigationItemExpanded(TRANSACTIONS_NAVIGATION_ITEM_ID, true)
+                }
               />
             </li>
             <li>
@@ -74,7 +86,9 @@ export const Navigation = () => {
                 to="/accounts"
                 title={t('bankAccounts')}
                 Icon={Landmark}
-                additionalAction={() => setIsCollapsibleInitiallyOpen(true)}
+                additionalAction={() =>
+                  setNavigationItemExpanded(TRANSACTIONS_NAVIGATION_ITEM_ID, true)
+                }
               />
             </li>
             <li>
@@ -82,7 +96,9 @@ export const Navigation = () => {
                 to="/transactions/trash"
                 title={t('transactionsTrash')}
                 Icon={Trash2}
-                additionalAction={() => setIsCollapsibleInitiallyOpen(true)}
+                additionalAction={() =>
+                  setNavigationItemExpanded(TRANSACTIONS_NAVIGATION_ITEM_ID, true)
+                }
               />
             </li>
           </ul>
@@ -94,7 +110,9 @@ export const Navigation = () => {
           to="/vehicles"
           title={t('vehicles')}
           Icon={Car}
-          additionalAction={() => setIsCollapsibleInitiallyOpen(false)}
+          additionalAction={() =>
+            setNavigationItemExpanded(TRANSACTIONS_NAVIGATION_ITEM_ID, false)
+          }
         />
       </li>
       <li>
@@ -102,7 +120,9 @@ export const Navigation = () => {
           to="/sports"
           title={t('sports')}
           Icon={Bike}
-          additionalAction={() => setIsCollapsibleInitiallyOpen(false)}
+          additionalAction={() =>
+            setNavigationItemExpanded(TRANSACTIONS_NAVIGATION_ITEM_ID, false)
+          }
         />
       </li>
       <li>
@@ -110,7 +130,9 @@ export const Navigation = () => {
           to="/settings"
           title={t('settings')}
           Icon={Settings}
-          additionalAction={() => setIsCollapsibleInitiallyOpen(false)}
+          additionalAction={() =>
+            setNavigationItemExpanded(TRANSACTIONS_NAVIGATION_ITEM_ID, false)
+          }
         />
       </li>
       <li>
@@ -120,7 +142,7 @@ export const Navigation = () => {
             await logout();
             removeAuthToken();
             queryClient.clear();
-            setIsCollapsibleInitiallyOpen(false);
+            resetPersistedUIState();
           }}
           title={t('logout')}
           Icon={LogOut}

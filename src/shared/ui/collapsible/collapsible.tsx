@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import { ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
-import { type ReactNode, useId, useState } from 'react';
+import { type ReactNode, useEffect, useId, useState } from 'react';
 
 import { Button } from '@ui';
 
@@ -9,6 +9,8 @@ type CollapsibleProps = {
   indicatorPosition: 'left' | 'right';
   children: ReactNode;
   isInitiallyOpen?: boolean;
+  isOpen?: boolean;
+  onOpenChange?: (isOpen: boolean) => void;
   triggerMode?: 'split' | 'full-row';
   contentInset?: 'default' | 'none';
   triggerClassName?: string;
@@ -20,46 +22,67 @@ export const Collapsible = ({
   indicatorPosition,
   children,
   isInitiallyOpen,
+  isOpen,
+  onOpenChange,
   triggerMode = 'split',
   contentInset = 'default',
   triggerClassName,
   contentClassName,
 }: CollapsibleProps) => {
-  const [isOpen, setIsOpen] = useState(isInitiallyOpen ?? false);
+  const [uncontrolledIsOpen, setUncontrolledIsOpen] = useState(isInitiallyOpen ?? false);
+  // Keep content layout classes during the close transition to avoid flicker,
+  // then remove them after the collapse animation finishes.
+  const [shouldApplyContentClassName, setShouldApplyContentClassName] = useState(
+    isInitiallyOpen ?? false,
+  );
   const contentId = useId();
+  const actualIsOpen = isOpen ?? uncontrolledIsOpen;
 
   const isIndicatorLeft = indicatorPosition === 'left';
   const isFullRowTrigger = triggerMode === 'full-row';
   const SplitTriggerIcon = isIndicatorLeft ? ChevronRight : ChevronLeft;
   const FullRowTriggerIcon = ChevronDown;
 
+  useEffect(() => {
+    if (actualIsOpen) setShouldApplyContentClassName(true);
+  }, [actualIsOpen]);
+
+  const handleToggle = () => {
+    if (!actualIsOpen) setShouldApplyContentClassName(true);
+
+    const nextIsOpen = !actualIsOpen;
+
+    if (isOpen === undefined) setUncontrolledIsOpen(nextIsOpen);
+    onOpenChange?.(nextIsOpen);
+  };
+
   // TODO maybe simplify conditions with some common elements
   return (
-    <div>
+    <div className="min-w-0">
       {isFullRowTrigger ? (
         <Button
           type="button"
           variant="ghost"
-          aria-label={isOpen ? 'Collapse menu' : 'Expand menu'}
-          aria-expanded={isOpen}
+          aria-label={actualIsOpen ? 'Collapse menu' : 'Expand menu'}
+          aria-expanded={actualIsOpen}
           aria-controls={contentId}
           className={clsx(
-            'w-full',
+            'w-full min-w-0',
             isIndicatorLeft ? '' : 'flex-row-reverse',
             triggerClassName,
           )}
-          onClick={() => setIsOpen((prev) => !prev)}
+          onClick={handleToggle}
         >
           <div
             className={clsx(
-              'flex min-w-0 items-center gap-2',
+              'flex min-w-0 items-center gap-2 w-full',
               isIndicatorLeft ? '' : 'flex-row-reverse',
             )}
           >
             <FullRowTriggerIcon
               className={clsx(
                 'h-4 w-4 shrink-0 transition-transform duration-300 ease-out',
-                isOpen && 'rotate-180',
+                actualIsOpen && 'rotate-180',
               )}
             />
             {header}
@@ -68,7 +91,7 @@ export const Collapsible = ({
       ) : (
         <div
           className={clsx(
-            'flex w-full items-center',
+            'flex w-full min-w-0 items-center',
             isIndicatorLeft ? '' : 'flex-row-reverse',
             triggerClassName,
           )}
@@ -76,15 +99,15 @@ export const Collapsible = ({
           <Button
             type="button"
             variant="ghost"
-            aria-label={isOpen ? 'Collapse menu' : 'Expand menu'}
-            aria-expanded={isOpen}
+            aria-label={actualIsOpen ? 'Collapse menu' : 'Expand menu'}
+            aria-expanded={actualIsOpen}
             aria-controls={contentId}
-            onClick={() => setIsOpen((prev) => !prev)}
+            onClick={handleToggle}
           >
             <SplitTriggerIcon
               className={clsx(
                 'h-4 w-4 shrink-0 transition-transform duration-300 ease-out',
-                isOpen && (isIndicatorLeft ? 'rotate-90' : '-rotate-90'),
+                actualIsOpen && (isIndicatorLeft ? 'rotate-90' : '-rotate-90'),
               )}
             />
           </Button>
@@ -93,20 +116,23 @@ export const Collapsible = ({
       )}
       <div
         id={contentId}
-        aria-hidden={!isOpen}
-        inert={!isOpen}
+        aria-hidden={!actualIsOpen}
+        inert={!actualIsOpen}
         className={clsx(
-          'grid overflow-hidden transition-[grid-template-rows,opacity] duration-300 ease-out',
-          isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0',
+          'grid min-w-0 overflow-hidden transition-[grid-template-rows,opacity] duration-300 ease-out',
+          actualIsOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0',
           contentInset === 'default' &&
             (isIndicatorLeft ? 'pl-10' : 'pr-10'),
         )}
+        onTransitionEnd={() => {
+          if (!actualIsOpen) setShouldApplyContentClassName(false);
+        }}
       >
         <div
           className={clsx(
-            'overflow-hidden',
+            'min-w-0 overflow-hidden',
             contentInset === 'default' && '-m-2 p-2',
-            isOpen && contentClassName,
+            shouldApplyContentClassName && contentClassName,
           )}
         >
           {children}

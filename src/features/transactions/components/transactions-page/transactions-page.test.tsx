@@ -5,6 +5,7 @@ import type { ReactNode } from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
+import { useUIStore } from '@store/ui-store';
 import { makeTransaction } from '@test-utils/factories/transaction';
 import type { TransactionsResponse } from '@transactions/api';
 
@@ -16,7 +17,7 @@ const mocks = vi.hoisted(() => ({
   mediaQueries: {
     '(min-width: 640px)': true,
     '(min-width: 1024px)': false,
-    '(min-width: 1280px)': false,
+    '(min-width: 1400px)': false,
   } as Record<string, boolean>,
 }));
 
@@ -87,9 +88,17 @@ const emptyResponse: TransactionsResponse = {
 describe('TransactionsPage', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    window.localStorage.clear();
+    useUIStore.setState({
+      isNavOpen: false,
+      expandedNavigationItems: [],
+      isTransactionsTotalsOpen: false,
+      isTransactionsFiltersOpen: false,
+      expandedTransactionTotalCurrencies: null,
+    });
     mocks.mediaQueries['(min-width: 640px)'] = true;
     mocks.mediaQueries['(min-width: 1024px)'] = false;
-    mocks.mediaQueries['(min-width: 1280px)'] = false;
+    mocks.mediaQueries['(min-width: 1400px)'] = false;
   });
 
   it('renders loading state', () => {
@@ -340,7 +349,7 @@ describe('TransactionsPage', () => {
   it('shows totals on the left and filters on the right on xl screens', async () => {
     const user = userEvent.setup();
     mocks.mediaQueries['(min-width: 1024px)'] = true;
-    mocks.mediaQueries['(min-width: 1280px)'] = true;
+    mocks.mediaQueries['(min-width: 1400px)'] = true;
     mocks.getTransactions.mockResolvedValueOnce({
       ...emptyResponse,
       total: 1,

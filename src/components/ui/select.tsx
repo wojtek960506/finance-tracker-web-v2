@@ -26,9 +26,16 @@ function SelectGroup({
 }
 
 function SelectValue({
+  className,
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Value>) {
-  return <SelectPrimitive.Value data-slot="select-value" {...props} />
+  return (
+    <SelectPrimitive.Value
+      data-slot="select-value"
+      className={cn("block min-w-0 max-w-full flex-1 truncate", className)}
+      {...props}
+    />
+  )
 }
 
 function SelectControl({
@@ -45,7 +52,7 @@ function SelectControl({
   onClear?: () => void
 }) {
   return (
-    <div className={cn("relative", className)}>
+    <div className={cn("relative w-full min-w-0 max-w-full", className)}>
       {children}
       <div className="pointer-events-none absolute top-1/2 right-2 z-[430] flex -translate-y-1/2 items-center gap-1">
         {clearable && hasValue ? (
@@ -86,7 +93,7 @@ function SelectTrigger({
       data-slot="select-trigger"
       data-size={size}
       className={cn(
-        "relative flex w-fit cursor-pointer items-center text-center gap-3 text-left whitespace-nowrap outline-none select-none aria-invalid:border-destructive aria-invalid:ring-2 aria-invalid:ring-destructive-ring/50 data-[placeholder]:text-text-muted *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-1.5 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        "relative flex w-full min-w-0 max-w-full cursor-pointer items-center gap-3 overflow-hidden text-left whitespace-nowrap outline-none select-none aria-invalid:border-destructive aria-invalid:ring-2 aria-invalid:ring-destructive-ring/50 data-[placeholder]:text-text-muted [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         isDefaultSize ? `${FORM_CONTROL_SIZE_CLASS} pr-8 sm:pr-9` : "h-8 rounded-lg px-3 text-sm",
         FORM_CONTROL_SURFACE_CLASS,
         className

@@ -3,13 +3,13 @@ import userEvent from '@testing-library/user-event';
 import type { ReactNode } from 'react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
+import { useUIStore } from '@store/ui-store';
+
 import { Navigation } from './navigation';
 
 const mocks = vi.hoisted(() => ({
   authToken: { value: 'token' as string | null },
   removeAuthToken: vi.fn(),
-  isCollapsibleInitiallyOpen: { value: false },
-  setIsCollapsibleInitiallyOpen: vi.fn(),
   clear: vi.fn(),
   logout: vi.fn().mockResolvedValue(undefined),
   fromLeft: { value: true },
@@ -19,10 +19,6 @@ vi.mock('@shared/hooks', () => ({
   useAuthToken: () => ({
     authToken: mocks.authToken.value,
     removeAuthToken: mocks.removeAuthToken,
-  }),
-  useLocalStorage: () => ({
-    item: mocks.isCollapsibleInitiallyOpen.value,
-    setItem: mocks.setIsCollapsibleInitiallyOpen,
   }),
 }));
 
@@ -47,17 +43,17 @@ vi.mock('@ui', () => ({
     header,
     children,
     indicatorPosition,
-    isInitiallyOpen,
+    isOpen,
   }: {
     header: ReactNode;
     children: ReactNode;
     indicatorPosition: 'left' | 'right';
-    isInitiallyOpen?: boolean;
+    isOpen?: boolean;
   }) => (
     <div
       data-testid="collapsible"
       data-indicator-position={indicatorPosition}
-      data-initially-open={String(isInitiallyOpen)}
+      data-open={String(isOpen)}
     >
       <div data-testid="collapsible-header">{header}</div>
       <div data-testid="collapsible-body">{children}</div>
@@ -90,9 +86,16 @@ vi.mock('./navigation-item', () => ({
 describe('Navigation', () => {
   beforeEach(() => {
     mocks.authToken.value = 'token';
-    mocks.isCollapsibleInitiallyOpen.value = false;
     mocks.fromLeft.value = true;
     vi.clearAllMocks();
+    window.localStorage.clear();
+    useUIStore.setState({
+      isNavOpen: false,
+      expandedNavigationItems: [],
+      isTransactionsTotalsOpen: false,
+      isTransactionsFiltersOpen: false,
+      expandedTransactionTotalCurrencies: null,
+    });
   });
 
   it('renders nothing when the user is not authenticated', () => {
@@ -110,21 +113,15 @@ describe('Navigation', () => {
       'data-indicator-position',
       'left',
     );
-    expect(screen.getByTestId('collapsible')).toHaveAttribute(
-      'data-initially-open',
-      'false',
-    );
+    expect(screen.getByTestId('collapsible')).toHaveAttribute('data-open', 'false');
   });
 
   it('passes through initial open state when provided', () => {
-    mocks.isCollapsibleInitiallyOpen.value = true;
+    useUIStore.getState().setNavigationItemExpanded('transactions', true);
 
     render(<Navigation />);
 
-    expect(screen.getByTestId('collapsible')).toHaveAttribute(
-      'data-initially-open',
-      'true',
-    );
+    expect(screen.getByTestId('collapsible')).toHaveAttribute('data-open', 'true');
   });
 
   it('uses right indicator position when navigation is from the right', () => {
@@ -152,9 +149,7 @@ describe('Navigation', () => {
     await user.click(screen.getByRole('button', { name: 'settings' }));
     await user.click(screen.getByRole('button', { name: 'transactions' }));
 
-    expect(mocks.setIsCollapsibleInitiallyOpen).toHaveBeenCalledTimes(8);
-    expect(mocks.setIsCollapsibleInitiallyOpen).toHaveBeenCalledWith(true);
-    expect(mocks.setIsCollapsibleInitiallyOpen).toHaveBeenCalledWith(false);
+    expect(useUIStore.getState().expandedNavigationItems).toEqual([]);
   });
 
   it('logs out and clears cached data when the logout item is clicked', async () => {
@@ -170,6 +165,7 @@ describe('Navigation', () => {
 
     expect(mocks.removeAuthToken).toHaveBeenCalled();
     expect(mocks.clear).toHaveBeenCalled();
-    expect(mocks.setIsCollapsibleInitiallyOpen).toHaveBeenCalledWith(false);
+    expect(useUIStore.getState().expandedNavigationItems).toEqual([]);
+    expect(useUIStore.getState().isNavOpen).toBe(false);
   });
 });
