@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 
+import { useUIStore } from '@store/ui-store';
 import type { TransactionTotalsResponse } from '@transactions/api';
 
 import { CurrencyTotalsCard } from './currency-totals-card';
@@ -10,6 +11,10 @@ type CurrenciesTotalsProps = {
 
 export const CurrenciesTotals = ({ byCurrency }: CurrenciesTotalsProps) => {
   const { t } = useTranslation('transactions');
+  const {
+    expandedTransactionTotalCurrencies,
+    setTransactionTotalCurrencyExpanded,
+  } = useUIStore();
 
   const sortedCurrencyTotals = Object.entries(byCurrency).sort(
     (left, right) => right[1].totalItems - left[1].totalItems,
@@ -19,6 +24,8 @@ export const CurrenciesTotals = ({ byCurrency }: CurrenciesTotalsProps) => {
     return <p className="text-sm text-text-muted">{t('noCurrencyTotals')}</p>;
   }
 
+  const isSingleCurrency = sortedCurrencyTotals.length === 1;
+
   return (
     <div className="flex flex-col gap-3">
       {sortedCurrencyTotals.map(([currency, totals]) => (
@@ -26,7 +33,14 @@ export const CurrenciesTotals = ({ byCurrency }: CurrenciesTotalsProps) => {
           key={currency}
           currency={currency}
           totals={totals}
-          isInitiallyOpen={sortedCurrencyTotals.length === 1}
+          isOpen={
+            expandedTransactionTotalCurrencies === null
+              ? isSingleCurrency
+              : expandedTransactionTotalCurrencies.includes(currency)
+          }
+          onOpenChange={(isOpen) =>
+            setTransactionTotalCurrencyExpanded(currency, isOpen)
+          }
         />
       ))}
     </div>

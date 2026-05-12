@@ -6,12 +6,13 @@ import {
   PanelRightClose,
   PanelRightOpen,
 } from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { IS_LG_MEDIA_QUERY, IS_XL_MEDIA_QUERY, MAIN_BUTTON_TEXT } from '@shared/consts';
 import { useMediaQuery } from '@shared/hooks';
+import { useUIStore } from '@store/ui-store';
 import { Button, Card, Drawer, LoadingState } from '@shared/ui';
 import { getTransactions, type TransactionFilters } from '@transactions/api';
 import { TransactionsFiltersPanel } from '@transactions/components/transactions-filters';
@@ -48,22 +49,26 @@ export const TransactionsPage = () => {
   const filtersButtonRef = useRef<HTMLButtonElement | null>(null);
   const isLgScreen = useMediaQuery(IS_LG_MEDIA_QUERY);
   const isXlScreen = useMediaQuery(IS_XL_MEDIA_QUERY);
-  const [openPanels, setOpenPanels] = useState({
-    filters: false,
-    totals: false,
-  });
+  const {
+    isTransactionsFiltersOpen,
+    isTransactionsTotalsOpen,
+    setIsTransactionsFiltersOpen,
+    setIsTransactionsTotalsOpen,
+  } = useUIStore();
 
   const { page, filters } = parseTransactionsRouteSearchParams(searchParams);
   const activeFiltersCount = countActiveTransactionFilters(filters);
-  const visibleCompactPanel = openPanels.filters
+  const visibleCompactPanel = isTransactionsFiltersOpen
     ? 'filters'
-    : openPanels.totals
+    : isTransactionsTotalsOpen
       ? 'totals'
       : null;
   const isFiltersOpen = isXlScreen
-    ? openPanels.filters
+    ? isTransactionsFiltersOpen
     : visibleCompactPanel === 'filters';
-  const isTotalsOpen = isXlScreen ? openPanels.totals : visibleCompactPanel === 'totals';
+  const isTotalsOpen = isXlScreen
+    ? isTransactionsTotalsOpen
+    : visibleCompactPanel === 'totals';
 
   const { data, isLoading, error } = useQuery({
     queryKey: ['transactions', page, filters],
@@ -102,28 +107,24 @@ export const TransactionsPage = () => {
 
   const handleToggleFilters = () => {
     if (isXlScreen) {
-      setOpenPanels((prev) => ({ ...prev, filters: !prev.filters }));
+      setIsTransactionsFiltersOpen(!isTransactionsFiltersOpen);
       return;
     }
 
-    setOpenPanels(
-      visibleCompactPanel === 'filters'
-        ? { filters: false, totals: false }
-        : { filters: true, totals: false },
-    );
+    const shouldOpenFilters = visibleCompactPanel !== 'filters';
+    setIsTransactionsFiltersOpen(shouldOpenFilters);
+    setIsTransactionsTotalsOpen(false);
   };
 
   const handleToggleTotals = () => {
     if (isXlScreen) {
-      setOpenPanels((prev) => ({ ...prev, totals: !prev.totals }));
+      setIsTransactionsTotalsOpen(!isTransactionsTotalsOpen);
       return;
     }
 
-    setOpenPanels(
-      visibleCompactPanel === 'totals'
-        ? { filters: false, totals: false }
-        : { filters: false, totals: true },
-    );
+    const shouldOpenTotals = visibleCompactPanel !== 'totals';
+    setIsTransactionsTotalsOpen(shouldOpenTotals);
+    setIsTransactionsFiltersOpen(false);
   };
 
   const handleApplyFilters = (nextFilters: TransactionFilters) => {
@@ -132,11 +133,12 @@ export const TransactionsPage = () => {
     );
 
     if (isXlScreen) {
-      setOpenPanels((prev) => ({ ...prev, filters: false }));
+      setIsTransactionsFiltersOpen(false);
       return;
     }
 
-    setOpenPanels({ filters: false, totals: false });
+    setIsTransactionsFiltersOpen(false);
+    setIsTransactionsTotalsOpen(false);
   };
 
   const handlePageChange = (nextPage: number) => {
@@ -312,7 +314,10 @@ export const TransactionsPage = () => {
         <Drawer
           isOpen={isTotalsOpen}
           fromLeft={false}
-          onClose={() => setOpenPanels({ filters: false, totals: false })}
+          onClose={() => {
+            setIsTransactionsFiltersOpen(false);
+            setIsTransactionsTotalsOpen(false);
+          }}
           restoreFocusRef={totalsButtonRef}
           ariaLabel={t('totals')}
           showOverlay={false}
@@ -329,7 +334,10 @@ export const TransactionsPage = () => {
         <Drawer
           isOpen={isFiltersOpen}
           fromLeft={false}
-          onClose={() => setOpenPanels({ filters: false, totals: false })}
+          onClose={() => {
+            setIsTransactionsFiltersOpen(false);
+            setIsTransactionsTotalsOpen(false);
+          }}
           restoreFocusRef={filtersButtonRef}
           ariaLabel={t('filters')}
           showOverlay={false}

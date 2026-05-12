@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import { ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
-import { type ReactNode, useId, useState } from 'react';
+import { type ReactNode, useEffect, useId, useState } from 'react';
 
 import { Button } from '@ui';
 
@@ -9,6 +9,8 @@ type CollapsibleProps = {
   indicatorPosition: 'left' | 'right';
   children: ReactNode;
   isInitiallyOpen?: boolean;
+  isOpen?: boolean;
+  onOpenChange?: (isOpen: boolean) => void;
   triggerMode?: 'split' | 'full-row';
   contentInset?: 'default' | 'none';
   triggerClassName?: string;
@@ -20,28 +22,38 @@ export const Collapsible = ({
   indicatorPosition,
   children,
   isInitiallyOpen,
+  isOpen,
+  onOpenChange,
   triggerMode = 'split',
   contentInset = 'default',
   triggerClassName,
   contentClassName,
 }: CollapsibleProps) => {
-  const [isOpen, setIsOpen] = useState(isInitiallyOpen ?? false);
+  const [uncontrolledIsOpen, setUncontrolledIsOpen] = useState(isInitiallyOpen ?? false);
   // Keep content layout classes during the close transition to avoid flicker,
   // then remove them after the collapse animation finishes.
   const [shouldApplyContentClassName, setShouldApplyContentClassName] = useState(
     isInitiallyOpen ?? false,
   );
   const contentId = useId();
+  const actualIsOpen = isOpen ?? uncontrolledIsOpen;
 
   const isIndicatorLeft = indicatorPosition === 'left';
   const isFullRowTrigger = triggerMode === 'full-row';
   const SplitTriggerIcon = isIndicatorLeft ? ChevronRight : ChevronLeft;
   const FullRowTriggerIcon = ChevronDown;
 
-  const handleToggle = () => {
-    if (!isOpen) setShouldApplyContentClassName(true);
+  useEffect(() => {
+    if (actualIsOpen) setShouldApplyContentClassName(true);
+  }, [actualIsOpen]);
 
-    setIsOpen((prev) => !prev);
+  const handleToggle = () => {
+    if (!actualIsOpen) setShouldApplyContentClassName(true);
+
+    const nextIsOpen = !actualIsOpen;
+
+    if (isOpen === undefined) setUncontrolledIsOpen(nextIsOpen);
+    onOpenChange?.(nextIsOpen);
   };
 
   // TODO maybe simplify conditions with some common elements
@@ -51,8 +63,8 @@ export const Collapsible = ({
         <Button
           type="button"
           variant="ghost"
-          aria-label={isOpen ? 'Collapse menu' : 'Expand menu'}
-          aria-expanded={isOpen}
+          aria-label={actualIsOpen ? 'Collapse menu' : 'Expand menu'}
+          aria-expanded={actualIsOpen}
           aria-controls={contentId}
           className={clsx(
             'w-full min-w-0',
@@ -70,7 +82,7 @@ export const Collapsible = ({
             <FullRowTriggerIcon
               className={clsx(
                 'h-4 w-4 shrink-0 transition-transform duration-300 ease-out',
-                isOpen && 'rotate-180',
+                actualIsOpen && 'rotate-180',
               )}
             />
             {header}
@@ -87,15 +99,15 @@ export const Collapsible = ({
           <Button
             type="button"
             variant="ghost"
-            aria-label={isOpen ? 'Collapse menu' : 'Expand menu'}
-            aria-expanded={isOpen}
+            aria-label={actualIsOpen ? 'Collapse menu' : 'Expand menu'}
+            aria-expanded={actualIsOpen}
             aria-controls={contentId}
             onClick={handleToggle}
           >
             <SplitTriggerIcon
               className={clsx(
                 'h-4 w-4 shrink-0 transition-transform duration-300 ease-out',
-                isOpen && (isIndicatorLeft ? 'rotate-90' : '-rotate-90'),
+                actualIsOpen && (isIndicatorLeft ? 'rotate-90' : '-rotate-90'),
               )}
             />
           </Button>
@@ -104,16 +116,16 @@ export const Collapsible = ({
       )}
       <div
         id={contentId}
-        aria-hidden={!isOpen}
-        inert={!isOpen}
+        aria-hidden={!actualIsOpen}
+        inert={!actualIsOpen}
         className={clsx(
           'grid min-w-0 overflow-hidden transition-[grid-template-rows,opacity] duration-300 ease-out',
-          isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0',
+          actualIsOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0',
           contentInset === 'default' &&
             (isIndicatorLeft ? 'pl-10' : 'pr-10'),
         )}
         onTransitionEnd={() => {
-          if (!isOpen) setShouldApplyContentClassName(false);
+          if (!actualIsOpen) setShouldApplyContentClassName(false);
         }}
       >
         <div

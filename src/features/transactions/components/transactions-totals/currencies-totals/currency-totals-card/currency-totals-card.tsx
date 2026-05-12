@@ -8,11 +8,13 @@ import { CurrencyTotalsMetrics } from './currency-totals-metrics';
 export const CurrencyTotalsCard = ({
   currency,
   totals,
-  isInitiallyOpen = false,
+  isOpen,
+  onOpenChange,
 }: {
   currency: string;
   totals: TransactionTotalsByCurrency;
-  isInitiallyOpen?: boolean;
+  isOpen?: boolean;
+  onOpenChange?: (isOpen: boolean) => void;
 }) => {
   const { t } = useTranslation('transactions');
 
@@ -30,7 +32,8 @@ export const CurrencyTotalsCard = ({
           </div>
         }
         indicatorPosition="left"
-        isInitiallyOpen={isInitiallyOpen}
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
         triggerMode="full-row"
         contentInset="none"
         triggerClassName="justify-between rounded-2xl sm:rounded-3xl border-0 p-3 sm:p-4"

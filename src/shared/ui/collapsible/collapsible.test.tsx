@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { useState } from 'react';
 import { describe, expect, it } from 'vitest';
 
 import { Collapsible } from './collapsible';
@@ -51,5 +52,34 @@ describe('Collapsible', () => {
 
     expect(content).toHaveAttribute('aria-hidden', 'true');
     expect(content).toHaveAttribute('inert');
+  });
+
+  it('supports controlled open state', async () => {
+    const user = userEvent.setup();
+
+    const ControlledExample = () => {
+      const [isOpen, setIsOpen] = useState(false);
+
+      return (
+        <Collapsible
+          header={<span>Header</span>}
+          indicatorPosition="left"
+          isOpen={isOpen}
+          onOpenChange={setIsOpen}
+        >
+          <div>Content</div>
+        </Collapsible>
+      );
+    };
+
+    render(<ControlledExample />);
+
+    const toggle = screen.getByRole('button', { name: 'Expand menu' });
+    await user.click(toggle);
+
+    expect(screen.getByRole('button', { name: 'Collapse menu' })).toHaveAttribute(
+      'aria-expanded',
+      'true',
+    );
   });
 });
