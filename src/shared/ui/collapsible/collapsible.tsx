@@ -35,7 +35,7 @@ export const Collapsible = ({
 
   // TODO maybe simplify conditions with some common elements
   return (
-    <div>
+    <div className="min-w-0">
       {isFullRowTrigger ? (
         <Button
           type="button"
@@ -44,7 +44,7 @@ export const Collapsible = ({
           aria-expanded={isOpen}
           aria-controls={contentId}
           className={clsx(
-            'w-full',
+            'w-full min-w-0',
             isIndicatorLeft ? '' : 'flex-row-reverse',
             triggerClassName,
           )}
@@ -68,7 +68,7 @@ export const Collapsible = ({
       ) : (
         <div
           className={clsx(
-            'flex w-full items-center',
+            'flex w-full min-w-0 items-center',
             isIndicatorLeft ? '' : 'flex-row-reverse',
             triggerClassName,
           )}
@@ -96,7 +96,7 @@ export const Collapsible = ({
         aria-hidden={!isOpen}
         inert={!isOpen}
         className={clsx(
-          'grid overflow-hidden transition-[grid-template-rows,opacity] duration-300 ease-out',
+          'grid min-w-0 overflow-hidden transition-[grid-template-rows,opacity] duration-300 ease-out',
           isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0',
           contentInset === 'default' &&
             (isIndicatorLeft ? 'pl-10' : 'pr-10'),
@@ -104,7 +104,7 @@ export const Collapsible = ({
       >
         <div
           className={clsx(
-            'overflow-hidden',
+            'min-w-0 overflow-hidden',
             contentInset === 'default' && '-m-2 p-2',
             isOpen && contentClassName,
           )}

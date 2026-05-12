@@ -44,7 +44,7 @@ export const TransactionsFiltersFields = () => {
         contentInset="none"
         contentClassName="pt-3 sm:pt-4"
       >
-        <div className="grid gap-3 sm:gap-4">
+        <div className="grid min-w-0 gap-3 sm:gap-4">
           <CategoryFields />
           <NamedResourceField name="paymentMethodId" kind="paymentMethods" />
           <NamedResourceField name="accountId" kind="accounts" />
