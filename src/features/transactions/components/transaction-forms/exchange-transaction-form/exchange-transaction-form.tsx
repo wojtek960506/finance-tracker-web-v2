@@ -2,7 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, type SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { Card, DateInput, Input, NumberInput } from '@shared/ui';
+import { Card, DateInput, Label } from '@shared/ui';
 import {
   CurrencySelectField,
   NamedResourceSelectField,
@@ -10,7 +10,6 @@ import {
 import {
   FIELD_CONTROL_CLASS_NAME,
   FieldError,
-  FieldSection,
   TransactionFormActions,
 } from '@transactions/components/transaction-forms';
 
@@ -18,6 +17,9 @@ import {
   exchangeTransactionFormSchema,
   type ExchangeTransactionFormValues,
 } from './utils';
+
+import { Input } from '@/components/ui/input';
+import { NumberInput } from '@/components/ui/number-input';
 
 type ExchangeTransactionFormProps = {
   defaultValues: ExchangeTransactionFormValues;
@@ -28,6 +30,8 @@ type ExchangeTransactionFormProps = {
 };
 
 // TODO think about splitting it (maybe it will have common fields with standard and transfer)
+// TODO change additional description to description here and on backend
+// TODO decide which fields has to be added to collapsible advanced fields
 export const ExchangeTransactionForm = ({
   defaultValues,
   isPending,
@@ -48,10 +52,10 @@ export const ExchangeTransactionForm = ({
   return (
     <Card className="mx-auto w-full max-w-3xl gap-4">
       <form
-        className="grid gap-4 sm:grid-cols-2"
+        className="grid gap-3 sm:gap-4 sm:grid-cols-2"
         onSubmit={form.handleSubmit(handleSubmit)}
       >
-        <FieldSection>
+        <Label>
           <span>{t('date')}</span>
           <Controller
             control={form.control}
@@ -65,9 +69,9 @@ export const ExchangeTransactionForm = ({
               form.formState.errors.date?.message && t(form.formState.errors.date.message)
             }
           />
-        </FieldSection>
+        </Label>
 
-        <FieldSection>
+        <div className='flex flex-col gap-1 sm:gap-2'>
           <span>{t('paymentMethod')}</span>
           <Controller
             control={form.control}
@@ -78,10 +82,6 @@ export const ExchangeTransactionForm = ({
                 value={field.value}
                 onChange={field.onChange}
                 placeholder={t('paymentMethodPlaceholder')}
-                searchPlaceholder={t('searchPaymentMethodPlaceholder')}
-                emptyMessage={t('noPaymentMethodsFound')}
-                showMoreLabel={t('showMorePaymentMethods')}
-                showLessLabel={t('showLessPaymentMethods')}
               />
             )}
           />
@@ -91,9 +91,9 @@ export const ExchangeTransactionForm = ({
               t(form.formState.errors.paymentMethodId.message)
             }
           />
-        </FieldSection>
+        </div>
 
-        <FieldSection className="sm:col-span-2">
+        <Label className="sm:col-span-2">
           <span>{t('account')}</span>
           <Controller
             control={form.control}
@@ -104,10 +104,6 @@ export const ExchangeTransactionForm = ({
                 value={field.value}
                 onChange={field.onChange}
                 placeholder={t('accountPlaceholder')}
-                searchPlaceholder={t('searchAccountPlaceholder')}
-                emptyMessage={t('noAccountsFound')}
-                showMoreLabel={t('showMoreAccounts')}
-                showLessLabel={t('showLessAccounts')}
               />
             )}
           />
@@ -117,9 +113,9 @@ export const ExchangeTransactionForm = ({
               t(form.formState.errors.accountId.message)
             }
           />
-        </FieldSection>
+        </Label>
 
-        <FieldSection>
+        <Label>
           <span>{t('amountExpense')}</span>
           <Controller
             control={form.control}
@@ -141,9 +137,9 @@ export const ExchangeTransactionForm = ({
               t(form.formState.errors.amountExpense.message)
             }
           />
-        </FieldSection>
+        </Label>
 
-        <FieldSection>
+        <Label>
           <span>{t('expenseCurrency')}</span>
           <Controller
             control={form.control}
@@ -164,9 +160,9 @@ export const ExchangeTransactionForm = ({
               t(form.formState.errors.currencyExpense.message)
             }
           />
-        </FieldSection>
+        </Label>
 
-        <FieldSection>
+        <Label>
           <span>{t('amountIncome')}</span>
           <Controller
             control={form.control}
@@ -188,9 +184,9 @@ export const ExchangeTransactionForm = ({
               t(form.formState.errors.amountIncome.message)
             }
           />
-        </FieldSection>
+        </Label>
 
-        <FieldSection>
+        <Label>
           <span>{t('incomeCurrency')}</span>
           <Controller
             control={form.control}
@@ -211,16 +207,16 @@ export const ExchangeTransactionForm = ({
               t(form.formState.errors.currencyIncome.message)
             }
           />
-        </FieldSection>
+        </Label>
 
-        <FieldSection className="sm:col-span-2">
+        <Label className="sm:col-span-2">
           <span>{t('additionalDescription')}</span>
           <Input
             {...form.register('additionalDescription')}
             className={FIELD_CONTROL_CLASS_NAME}
             placeholder={t('additionalDescriptionPlaceholder')}
           />
-        </FieldSection>
+        </Label>
 
         <TransactionFormActions isPending={isPending} mode={mode} onCancel={onCancel} />
       </form>

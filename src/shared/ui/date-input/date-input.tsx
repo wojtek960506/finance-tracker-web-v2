@@ -13,8 +13,9 @@ import {
 import { DayPicker } from 'react-day-picker';
 import { createPortal } from 'react-dom';
 
+import { FORM_CONTROL_SIZE_CLASS, FORM_CONTROL_SURFACE_CLASS } from '@shared/consts';
 import { useLanguage } from '@shared/hooks';
-import { Card, getButtonClassName } from '@ui';
+import { Card } from '@ui';
 
 import {
   DAY_PICKER_CLASS_NAMES,
@@ -83,11 +84,9 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
           aria-haspopup="dialog"
           aria-expanded={isOpen}
           className={clsx(
-            getButtonClassName({
-              variant: 'outline',
-              className:
-                'w-full justify-between gap-3 border border-fg bg-bg text-left text-fg',
-            }),
+            'flex w-full cursor-pointer items-center justify-between gap-3 text-left outline-none',
+            FORM_CONTROL_SIZE_CLASS,
+            FORM_CONTROL_SURFACE_CLASS,
             !formattedValue && 'text-text-muted',
             disabled && 'pointer-events-none',
             className,

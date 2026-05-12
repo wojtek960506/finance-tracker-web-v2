@@ -315,6 +315,7 @@ export const TransactionsPage = () => {
           onClose={() => setOpenPanels({ filters: false, totals: false })}
           restoreFocusRef={totalsButtonRef}
           ariaLabel={t('totals')}
+          showOverlay={false}
           panelClassName="w-full overflow-x-auto w-[min(340px,100vh)"
           contentClassName="min-w-[340px]"
         >
@@ -331,6 +332,7 @@ export const TransactionsPage = () => {
           onClose={() => setOpenPanels({ filters: false, totals: false })}
           restoreFocusRef={filtersButtonRef}
           ariaLabel={t('filters')}
+          showOverlay={false}
           panelClassName="w-full overflow-x-auto w-[min(340px,100vh)"
           contentClassName="min-w-[340px]"
         >

@@ -47,7 +47,7 @@ export const getButtonClassName = ({
       break;
     case 'inverse':
       variantClassName = clsx(
-        'bg-bg text-fg border-fg hover:bg-fg/10',
+        'bg-bg text-fg border-fg hover:bg-fg/5',
         'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg',
       );
       break;

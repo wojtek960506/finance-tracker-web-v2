@@ -26,7 +26,7 @@ export const CreateTransaction = () => {
   return (
     <div className="mx-auto flex max-w-[35rem] flex-col gap-2 sm:gap-3">
       <TransactionBackButton label={t('backToTransactions')} to="/transactions" />
-      <Card className="gap-4">
+      <Card className="gap-3 sm:gap-4">
         <div className="flex flex-col gap-1">
           <h2 className="text-lg font-semibold sm:text-xl">
             {t('chooseTransactionKind')}

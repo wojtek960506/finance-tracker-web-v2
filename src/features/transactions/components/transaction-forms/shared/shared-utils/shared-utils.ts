@@ -1,6 +1,7 @@
+import { FORM_CONTROL_SIZE_CLASS } from '@shared/consts';
 import type { Transaction } from '@transactions/api';
 
-export const FIELD_CONTROL_CLASS_NAME = 'rounded-xl px-3 py-2 text-base sm:text-lg';
+export const FIELD_CONTROL_CLASS_NAME = FORM_CONTROL_SIZE_CLASS;
 
 export const getDefaultTransactionDate = () => new Date().toISOString().slice(0, 10);
 

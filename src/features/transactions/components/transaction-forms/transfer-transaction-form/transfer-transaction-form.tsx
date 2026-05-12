@@ -2,7 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, type SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { Card, DateInput, Input, NumberInput } from '@shared/ui';
+import { Card, DateInput, Label } from '@shared/ui';
 import {
   CurrencySelectField,
   NamedResourceSelectField,
@@ -10,7 +10,6 @@ import {
 import {
   FIELD_CONTROL_CLASS_NAME,
   FieldError,
-  FieldSection,
   TransactionFormActions,
 } from '@transactions/components/transaction-forms';
 
@@ -18,6 +17,9 @@ import {
   transferTransactionFormSchema,
   type TransferTransactionFormValues,
 } from './utils';
+
+import { Input } from '@/components/ui/input';
+import { NumberInput } from '@/components/ui/number-input';
 
 type TransferTransactionFormProps = {
   defaultValues: TransferTransactionFormValues;
@@ -28,6 +30,8 @@ type TransferTransactionFormProps = {
 };
 
 // TODO think about splitting it to more components
+// TODO change additional description to description here and on backend
+// TODO decide which fields has to be added to collapsible advanced fields
 export const TransferTransactionForm = ({
   defaultValues,
   isPending,
@@ -48,10 +52,10 @@ export const TransferTransactionForm = ({
   return (
     <Card className="mx-auto w-full max-w-3xl gap-4">
       <form
-        className="grid gap-4 sm:grid-cols-2"
+        className="grid gap-3 sm:gap-4 sm:grid-cols-2"
         onSubmit={form.handleSubmit(handleSubmit)}
       >
-        <FieldSection>
+        <Label>
           <span>{t('date')}</span>
           <Controller
             control={form.control}
@@ -65,9 +69,9 @@ export const TransferTransactionForm = ({
               form.formState.errors.date?.message && t(form.formState.errors.date.message)
             }
           />
-        </FieldSection>
+        </Label>
 
-        <FieldSection>
+        <Label>
           <span>{t('paymentMethod')}</span>
           <Controller
             control={form.control}
@@ -78,10 +82,6 @@ export const TransferTransactionForm = ({
                 value={field.value}
                 onChange={field.onChange}
                 placeholder={t('paymentMethodPlaceholder')}
-                searchPlaceholder={t('searchPaymentMethodPlaceholder')}
-                emptyMessage={t('noPaymentMethodsFound')}
-                showMoreLabel={t('showMorePaymentMethods')}
-                showLessLabel={t('showLessPaymentMethods')}
               />
             )}
           />
@@ -91,9 +91,9 @@ export const TransferTransactionForm = ({
               t(form.formState.errors.paymentMethodId.message)
             }
           />
-        </FieldSection>
+        </Label>
 
-        <FieldSection>
+        <Label>
           <span>{t('amount')}</span>
           <Controller
             control={form.control}
@@ -115,9 +115,9 @@ export const TransferTransactionForm = ({
               t(form.formState.errors.amount.message)
             }
           />
-        </FieldSection>
+        </Label>
 
-        <FieldSection>
+        <Label>
           <span>{t('currency')}</span>
           <Controller
             control={form.control}
@@ -138,9 +138,9 @@ export const TransferTransactionForm = ({
               t(form.formState.errors.currency.message)
             }
           />
-        </FieldSection>
+        </Label>
 
-        <FieldSection>
+        <Label>
           <span>{t('fromAccount')}</span>
           <Controller
             control={form.control}
@@ -151,10 +151,6 @@ export const TransferTransactionForm = ({
                 value={field.value}
                 onChange={field.onChange}
                 placeholder={t('fromAccountPlaceholder')}
-                searchPlaceholder={t('searchAccountPlaceholder')}
-                emptyMessage={t('noAccountsFound')}
-                showMoreLabel={t('showMoreAccounts')}
-                showLessLabel={t('showLessAccounts')}
               />
             )}
           />
@@ -164,9 +160,9 @@ export const TransferTransactionForm = ({
               t(form.formState.errors.accountExpenseId.message)
             }
           />
-        </FieldSection>
+        </Label>
 
-        <FieldSection>
+        <Label>
           <span>{t('toAccount')}</span>
           <Controller
             control={form.control}
@@ -177,10 +173,6 @@ export const TransferTransactionForm = ({
                 value={field.value}
                 onChange={field.onChange}
                 placeholder={t('toAccountPlaceholder')}
-                searchPlaceholder={t('searchAccountPlaceholder')}
-                emptyMessage={t('noAccountsFound')}
-                showMoreLabel={t('showMoreAccounts')}
-                showLessLabel={t('showLessAccounts')}
               />
             )}
           />
@@ -190,16 +182,16 @@ export const TransferTransactionForm = ({
               t(form.formState.errors.accountIncomeId.message)
             }
           />
-        </FieldSection>
+        </Label>
 
-        <FieldSection className="sm:col-span-2">
+        <Label className="sm:col-span-2">
           <span>{t('additionalDescription')}</span>
           <Input
             {...form.register('additionalDescription')}
             className={FIELD_CONTROL_CLASS_NAME}
             placeholder={t('additionalDescriptionPlaceholder')}
           />
-        </FieldSection>
+        </Label>
 
         <TransactionFormActions isPending={isPending} mode={mode} onCancel={onCancel} />
       </form>

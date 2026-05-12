@@ -1,14 +1,9 @@
-import clsx from 'clsx';
-import { type ComponentProps } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { FORM_BUTTON_SIZE_CLASS } from '@shared/consts';
 import { Button } from '@shared/ui';
 
-type FieldSectionProps = ComponentProps<'div'>;
-
-export const FieldSection = ({ className, ...props }: FieldSectionProps) => (
-  <div {...props} className={clsx('flex flex-col gap-2', className)} />
-);
+export const FORM_BUTTON_CLASS_NAME = FORM_BUTTON_SIZE_CLASS;
 
 type FieldErrorProps = {
   message?: string;
@@ -34,11 +29,21 @@ export const TransactionFormActions = ({
     mode === 'create' ? t('creatingTransaction') : t('updatingTransaction');
 
   return (
-    <div className="flex flex-col gap-2 sm:col-span-2 sm:flex-row sm:justify-end">
-      <Button type="button" variant="ghost" onClick={onCancel}>
+    <div className="flex flex-col gap-2 sm:gap-3 sm:col-span-2 sm:flex-row sm:justify-end">
+      <Button
+        type="button"
+        variant="ghost"
+        className={FORM_BUTTON_CLASS_NAME}
+        onClick={onCancel}
+      >
         {t('cancel')}
       </Button>
-      <Button type="submit" variant="primary" disabled={isPending}>
+      <Button
+        type="submit"
+        variant="primary"
+        className={FORM_BUTTON_CLASS_NAME}
+        disabled={isPending}
+      >
         {isPending ? pendingLabel : submitLabel}
       </Button>
     </div>

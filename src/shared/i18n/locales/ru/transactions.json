@@ -69,6 +69,7 @@
   "paymentMethod": "Способ оплаты",
   "currency": "Валюта",
   "account": "Счёт",
+  "advancedFields": "Дополнительные поля",
   "fromAccount": "Со счёта",
   "toAccount": "На счёт",
   "amountExpense": "Списанная сумма",

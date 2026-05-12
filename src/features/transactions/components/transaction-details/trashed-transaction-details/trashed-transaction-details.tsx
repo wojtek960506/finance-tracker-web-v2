@@ -80,7 +80,7 @@ export const TrashedTransactionDetails = () => {
   if (isLoading) {
     return (
       <div className="m-auto flex max-w-100 flex-col gap-2 sm:gap-3">
-        <Card className="gap-4 rounded-3xl border-fg/20 bg-modal-bg/95 p-6 sm:p-8">
+        <Card className="gap-3 sm:gap-4 rounded-3xl border-fg/20 bg-modal-bg/95 p-6 sm:p-8">
           <LoadingState
             title={t('loadingTrashTransactionDetails')}
             description={t('loadingTrashTransactionDetailsDescription')}
