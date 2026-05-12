@@ -14,7 +14,7 @@ import {
   ExchangeTransactionForm,
   type ExchangeTransactionFormValues,
   getExchangeTransactionFormValues,
-  toOptionalTrimmedString,
+  normalizeExchangeTransactionFormValues,
 } from '@transactions/components/transaction-forms';
 
 type UpdateExchangeTransactionViewProps = {
@@ -46,10 +46,9 @@ export const UpdateExchangeTransactionView = ({
   const handleSubmit = async (values: ExchangeTransactionFormValues) => {
     try {
       await updateTransactionMutation.mutateAsync({
-        ...values,
+        ...normalizeExchangeTransactionFormValues(values),
         amountExpense: Number(values.amountExpense),
         amountIncome: Number(values.amountIncome),
-        additionalDescription: toOptionalTrimmedString(values.additionalDescription),
       });
 
       pushToast({

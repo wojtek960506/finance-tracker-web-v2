@@ -5,6 +5,7 @@ import {
   getDefaultTransactionDate,
   getTransactionAmountValue,
   getTransactionDateValue,
+  toOptionalId,
 } from '@transactions/components/transaction-forms';
 
 export const standardTransactionFormSchema = z.object({
@@ -16,9 +17,9 @@ export const standardTransactionFormSchema = z.object({
     .refine((value) => !Number.isNaN(Number(value)), 'amountValidNumber')
     .refine((value) => Number(value) > 0, 'amountPositive'),
   currency: z.string().min(1, 'currencyRequired'),
-  categoryId: z.string().min(1, 'categoryRequired'),
-  paymentMethodId: z.string().min(1, 'paymentMethodRequired'),
-  accountId: z.string().min(1, 'accountRequired'),
+  categoryId: z.string(),
+  paymentMethodId: z.string(),
+  accountId: z.string(),
   transactionType: z.enum(['expense', 'income']),
 });
 
@@ -49,4 +50,13 @@ export const getStandardTransactionFormValues = (
   paymentMethodId: transaction.paymentMethod.id,
   accountId: transaction.account.id,
   transactionType: transaction.transactionType,
+});
+
+export const normalizeStandardTransactionFormValues = (
+  values: StandardTransactionFormValues,
+) => ({
+  ...values,
+  categoryId: toOptionalId(values.categoryId),
+  paymentMethodId: toOptionalId(values.paymentMethodId),
+  accountId: toOptionalId(values.accountId),
 });

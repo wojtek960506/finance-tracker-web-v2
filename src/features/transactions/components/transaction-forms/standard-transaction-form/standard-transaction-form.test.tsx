@@ -28,6 +28,18 @@ vi.mock('@shared/ui', () => ({
     <button {...props}>{children}</button>
   ),
   Card: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
+  Collapsible: ({
+    children,
+    header,
+  }: {
+    children: React.ReactNode;
+    header: React.ReactNode;
+  }) => (
+    <div>
+      {header}
+      {children}
+    </div>
+  ),
   DateInput: ({
     value,
     onChange,
@@ -42,6 +54,10 @@ vi.mock('@shared/ui', () => ({
     />
   ),
   Input: (props: React.InputHTMLAttributes<HTMLInputElement>) => <input {...props} />,
+  Label: ({
+    children,
+    ...props
+  }: React.LabelHTMLAttributes<HTMLLabelElement>) => <label {...props}>{children}</label>,
   NumberInput: ({
     value,
     onValueChange,
@@ -124,8 +140,5 @@ describe('StandardTransactionForm', () => {
     expect(screen.getByText('descriptionRequired')).toBeInTheDocument();
     expect(screen.getByText('amountRequired')).toBeInTheDocument();
     expect(screen.getByText('currencyRequired')).toBeInTheDocument();
-    expect(screen.getByText('categoryRequired')).toBeInTheDocument();
-    expect(screen.getByText('paymentMethodRequired')).toBeInTheDocument();
-    expect(screen.getByText('accountRequired')).toBeInTheDocument();
   });
 });

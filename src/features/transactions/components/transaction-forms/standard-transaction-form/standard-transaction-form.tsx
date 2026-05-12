@@ -11,8 +11,10 @@ import {
   FIELD_CONTROL_CLASS_NAME,
   FieldError,
   FORM_BUTTON_CLASS_NAME,
+  REQUIRED_LABEL_CLASS_NAME,
   TransactionFormActions,
 } from '@transactions/components/transaction-forms';
+import { EXCHANGE_CATEGORY, TRANSFER_CATEGORY } from '@transactions/consts';
 
 import {
   standardTransactionFormSchema,
@@ -65,7 +67,7 @@ export const StandardTransactionForm = ({
         onSubmit={form.handleSubmit(handleSubmit)}
       >
         <Label>
-          <span>{t('date')}</span>
+          <span className={REQUIRED_LABEL_CLASS_NAME}>{t('date')}</span>
           <Controller
             control={form.control}
             name="date"
@@ -81,7 +83,7 @@ export const StandardTransactionForm = ({
         </Label>
 
         <Label>
-          <span>{t('transactionType')}</span>
+          <span className={REQUIRED_LABEL_CLASS_NAME}>{t('transactionType')}</span>
           <div className="grid grid-cols-2 gap-2">
             {standardTransactionTypeOptions.map((transactionType) => {
               const isActive = selectedTransactionType === transactionType;
@@ -102,7 +104,7 @@ export const StandardTransactionForm = ({
         </Label>
 
         <Label className="sm:col-span-2">
-          <span>{t('description')}</span>
+          <span className={REQUIRED_LABEL_CLASS_NAME}>{t('description')}</span>
           <Input {...form.register('description')} className={FIELD_CONTROL_CLASS_NAME} />
           <FieldError
             message={
@@ -113,7 +115,7 @@ export const StandardTransactionForm = ({
         </Label>
 
         <Label>
-          <span>{t('amount')}</span>
+          <span className={REQUIRED_LABEL_CLASS_NAME}>{t('amount')}</span>
           <Controller
             control={form.control}
             name="amount"
@@ -137,7 +139,7 @@ export const StandardTransactionForm = ({
         </Label>
 
         <Label>
-          <span>{t('currency')}</span>
+          <span className={REQUIRED_LABEL_CLASS_NAME}>{t('currency')}</span>
           <Controller
             control={form.control}
             name="currency"
@@ -166,6 +168,7 @@ export const StandardTransactionForm = ({
             isInitiallyOpen={shouldOpenAdvancedFields}
             triggerMode="full-row"
             contentInset="none"
+            contentClassName='px-[2px] pb-[2px]'
           >
             <div className="grid gap-3 sm:gap-4 sm:grid-cols-2">
               <Label className="sm:col-span-2">
@@ -179,6 +182,8 @@ export const StandardTransactionForm = ({
                       value={field.value}
                       onChange={field.onChange}
                       placeholder={t('categoryPlaceholder')}
+                      includeSystem
+                      excludedSystemNames={[TRANSFER_CATEGORY, EXCHANGE_CATEGORY]}
                     />
                   )}
                 />

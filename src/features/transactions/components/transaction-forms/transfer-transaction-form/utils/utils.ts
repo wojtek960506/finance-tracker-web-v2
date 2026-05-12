@@ -2,38 +2,44 @@ import { z } from 'zod';
 
 import type { Transaction } from '@transactions/api';
 import {
-  extractAdditionalDescription,
   getDefaultTransactionDate,
   getTransactionAmountValue,
   getTransactionDateValue,
   getTransactionPairByType,
+  toOptionalId,
 } from '@transactions/components/transaction-forms';
 
 export const transferTransactionFormSchema = z
   .object({
     date: z.string().min(1, 'dateRequired'),
-    additionalDescription: z.string(),
+    description: z.string().trim().min(1, 'descriptionRequired'),
     amount: z
       .string()
       .min(1, 'amountRequired')
       .refine((value) => !Number.isNaN(Number(value)), 'amountValidNumber')
       .refine((value) => Number(value) > 0, 'amountPositive'),
     currency: z.string().min(1, 'currencyRequired'),
-    paymentMethodId: z.string().min(1, 'paymentMethodRequired'),
-    accountExpenseId: z.string().min(1, 'fromAccountRequired'),
-    accountIncomeId: z.string().min(1, 'toAccountRequired'),
+    paymentMethodId: z.string(),
+    accountExpenseId: z.string(),
+    accountIncomeId: z.string(),
   })
-  .refine((values) => values.accountExpenseId !== values.accountIncomeId, {
+  .refine(
+    (values) =>
+      values.accountExpenseId.trim() === '' ||
+      values.accountIncomeId.trim() === '' ||
+      values.accountExpenseId !== values.accountIncomeId,
+    {
     path: ['accountIncomeId'],
     message: 'transferAccountsMustDiffer',
-  });
+    },
+  );
 
 export type TransferTransactionFormValues = z.infer<typeof transferTransactionFormSchema>;
 
 export const getDefaultTransferTransactionFormValues =
   (): TransferTransactionFormValues => ({
     date: getDefaultTransactionDate(),
-    additionalDescription: '',
+    description: '',
     amount: '',
     currency: '',
     paymentMethodId: '',
@@ -49,14 +55,10 @@ export const getTransferTransactionFormValues = (
     transaction,
     transactionRef,
   );
-  const descriptionPrefix = `${expenseTransaction.account.name} --> ${incomeTransaction.account.name}`;
 
   return {
     date: getTransactionDateValue(expenseTransaction.date),
-    additionalDescription: extractAdditionalDescription(
-      expenseTransaction.description,
-      descriptionPrefix,
-    ),
+    description: expenseTransaction.description,
     amount: getTransactionAmountValue(expenseTransaction.amount),
     currency: expenseTransaction.currency,
     paymentMethodId: expenseTransaction.paymentMethod.id,
@@ -64,3 +66,13 @@ export const getTransferTransactionFormValues = (
     accountIncomeId: incomeTransaction.account.id,
   };
 };
+
+export const normalizeTransferTransactionFormValues = (
+  values: TransferTransactionFormValues,
+) => ({
+  ...values,
+  description: values.description.trim(),
+  paymentMethodId: toOptionalId(values.paymentMethodId),
+  accountExpenseId: toOptionalId(values.accountExpenseId),
+  accountIncomeId: toOptionalId(values.accountIncomeId),
+});

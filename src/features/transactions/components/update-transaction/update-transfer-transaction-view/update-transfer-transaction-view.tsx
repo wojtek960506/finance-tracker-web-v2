@@ -12,7 +12,7 @@ import {
 import { useInvalidateTransactionQueries } from '@transactions/components/shared';
 import {
   getTransferTransactionFormValues,
-  toOptionalTrimmedString,
+  normalizeTransferTransactionFormValues,
   TransferTransactionForm,
   type TransferTransactionFormValues,
 } from '@transactions/components/transaction-forms';
@@ -46,9 +46,8 @@ export const UpdateTransferTransactionView = ({
   const handleSubmit = async (values: TransferTransactionFormValues) => {
     try {
       await updateTransactionMutation.mutateAsync({
-        ...values,
+        ...normalizeTransferTransactionFormValues(values),
         amount: Number(values.amount),
-        additionalDescription: toOptionalTrimmedString(values.additionalDescription),
       });
 
       pushToast({

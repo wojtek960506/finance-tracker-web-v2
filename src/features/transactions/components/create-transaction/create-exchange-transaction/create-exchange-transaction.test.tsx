@@ -39,15 +39,22 @@ vi.mock('@store/toast-store', () => ({
 vi.mock('@transactions/components/transaction-forms', () => ({
   getDefaultExchangeTransactionFormValues: () => ({
     date: '2024-01-03',
-    additionalDescription: '',
+    description: '',
     amountExpense: '',
     amountIncome: '',
     currencyExpense: '',
     currencyIncome: '',
     paymentMethodId: '',
-    accountId: '',
+    accountExpenseId: '',
+    accountIncomeId: '',
   }),
-  toOptionalTrimmedString: (value: string) => value.trim() || undefined,
+  normalizeExchangeTransactionFormValues: (values: any) => ({
+    ...values,
+    description: values.description.trim(),
+    paymentMethodId: values.paymentMethodId || undefined,
+    accountExpenseId: values.accountExpenseId || undefined,
+    accountIncomeId: values.accountIncomeId || undefined,
+  }),
   ExchangeTransactionForm: ({
     onSubmit,
     onCancel,
@@ -61,13 +68,14 @@ vi.mock('@transactions/components/transaction-forms', () => ({
         onClick={() =>
           void onSubmit({
             date: '2024-01-03',
-            additionalDescription: 'Exchange',
+            description: 'Exchange',
             amountExpense: '10',
             amountIncome: '8',
             currencyExpense: 'USD',
             currencyIncome: 'EUR',
             paymentMethodId: 'pm-1',
-            accountId: 'acc-1',
+            accountExpenseId: 'acc-1',
+            accountIncomeId: 'acc-2',
           })
         }
       >
@@ -102,13 +110,14 @@ describe('CreateExchangeTransaction', () => {
     await waitFor(() =>
       expect(mocks.createExchangeTransaction).toHaveBeenCalledWith({
         date: '2024-01-03',
-        additionalDescription: 'Exchange',
+        description: 'Exchange',
         amountExpense: 10,
         amountIncome: 8,
         currencyExpense: 'USD',
         currencyIncome: 'EUR',
         paymentMethodId: 'pm-1',
-        accountId: 'acc-1',
+        accountExpenseId: 'acc-1',
+        accountIncomeId: 'acc-2',
       }),
     );
     expect(invalidateQueriesSpy).toHaveBeenCalledWith({ queryKey: ['transactions'] });

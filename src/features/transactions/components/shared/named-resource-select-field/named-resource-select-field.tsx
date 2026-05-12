@@ -29,6 +29,7 @@ type NamedResourceSelectFieldProps = {
   clearable?: boolean;
   clearLabel?: string;
   includeSystem?: boolean;
+  excludedSystemNames?: string[];
 };
 
 const renderResourceOption = (
@@ -54,6 +55,7 @@ export const NamedResourceSelectField = ({
   clearable = false,
   clearLabel,
   includeSystem = kind !== 'categories',
+  excludedSystemNames = [],
 }: NamedResourceSelectFieldProps) => {
   const { t: tNamedResources } = useTranslation('namedResources');
 
@@ -63,8 +65,19 @@ export const NamedResourceSelectField = ({
   });
 
   const availableResources = useMemo(
-    () => data.filter((resource) => (includeSystem ? true : resource.type !== 'system')),
-    [data, includeSystem],
+    () =>
+      data.filter((resource) => {
+        if (resource.type !== 'system') {
+          return true;
+        }
+
+        if (!includeSystem) {
+          return false;
+        }
+
+        return !excludedSystemNames.includes(resource.name);
+      }),
+    [data, excludedSystemNames, includeSystem],
   );
 
   const favoriteResources = useMemo(

@@ -12,7 +12,7 @@ import {
   ExchangeTransactionForm,
   type ExchangeTransactionFormValues,
   getDefaultExchangeTransactionFormValues,
-  toOptionalTrimmedString,
+  normalizeExchangeTransactionFormValues,
 } from '@transactions/components/transaction-forms';
 
 export const CreateExchangeTransaction = () => {
@@ -32,10 +32,9 @@ export const CreateExchangeTransaction = () => {
   const onSubmit = async (values: ExchangeTransactionFormValues) => {
     try {
       await createTransactionMutation.mutateAsync({
-        ...values,
+        ...normalizeExchangeTransactionFormValues(values),
         amountExpense: Number(values.amountExpense),
         amountIncome: Number(values.amountIncome),
-        additionalDescription: toOptionalTrimmedString(values.additionalDescription),
       });
 
       pushToast({

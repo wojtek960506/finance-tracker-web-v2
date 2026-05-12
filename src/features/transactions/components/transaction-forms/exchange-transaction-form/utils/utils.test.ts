@@ -6,6 +6,7 @@ import {
   exchangeTransactionFormSchema,
   getDefaultExchangeTransactionFormValues,
   getExchangeTransactionFormValues,
+  normalizeExchangeTransactionFormValues,
 } from './utils';
 
 describe('exchange transaction form utils', () => {
@@ -17,13 +18,14 @@ describe('exchange transaction form utils', () => {
     expect(
       exchangeTransactionFormSchema.parse({
         date: '2024-01-03',
-        additionalDescription: 'Exchange',
+        description: 'Exchange',
         amountExpense: '10',
         amountIncome: '8',
         currencyExpense: 'USD',
         currencyIncome: 'EUR',
         paymentMethodId: 'pm-1',
-        accountId: 'acc-1',
+        accountExpenseId: 'acc-1',
+        accountIncomeId: 'acc-2',
       }),
     ).toBeTruthy();
   });
@@ -34,13 +36,14 @@ describe('exchange transaction form utils', () => {
 
     expect(getDefaultExchangeTransactionFormValues()).toEqual({
       date: '2026-04-08',
-      additionalDescription: '',
+      description: '',
       amountExpense: '',
       amountIncome: '',
       currencyExpense: '',
       currencyIncome: '',
       paymentMethodId: '',
-      accountId: '',
+      accountExpenseId: '',
+      accountIncomeId: '',
     });
   });
 
@@ -68,13 +71,40 @@ describe('exchange transaction form utils', () => {
       getExchangeTransactionFormValues(incomeTransaction, expenseTransaction),
     ).toEqual({
       date: '2024-01-03',
-      additionalDescription: 'Vacation cash',
+      description: 'USD -> EUR (Vacation cash)',
       amountExpense: '10',
       amountIncome: '8',
       currencyExpense: 'USD',
       currencyIncome: 'EUR',
       paymentMethodId: 'pm-exchange',
-      accountId: 'acc-exchange',
+      accountExpenseId: 'acc-exchange',
+      accountIncomeId: 'acc-exchange',
+    });
+  });
+
+  it('normalizes optional ids and trims description', () => {
+    expect(
+      normalizeExchangeTransactionFormValues({
+        date: '2024-01-03',
+        description: '  Exchange  ',
+        amountExpense: '10',
+        amountIncome: '8',
+        currencyExpense: 'USD',
+        currencyIncome: 'EUR',
+        paymentMethodId: '',
+        accountExpenseId: 'acc-1',
+        accountIncomeId: '  ',
+      }),
+    ).toEqual({
+      date: '2024-01-03',
+      description: 'Exchange',
+      amountExpense: '10',
+      amountIncome: '8',
+      currencyExpense: 'USD',
+      currencyIncome: 'EUR',
+      paymentMethodId: undefined,
+      accountExpenseId: 'acc-1',
+      accountIncomeId: undefined,
     });
   });
 });

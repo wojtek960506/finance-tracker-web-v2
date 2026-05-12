@@ -2,16 +2,16 @@ import { z } from 'zod';
 
 import type { Transaction } from '@transactions/api';
 import {
-  extractAdditionalDescription,
   getDefaultTransactionDate,
   getTransactionAmountValue,
   getTransactionDateValue,
   getTransactionPairByType,
+  toOptionalId,
 } from '@transactions/components/transaction-forms';
 
 export const exchangeTransactionFormSchema = z.object({
   date: z.string().min(1, 'dateRequired'),
-  additionalDescription: z.string(),
+  description: z.string().trim().min(1, 'descriptionRequired'),
   amountExpense: z
     .string()
     .min(1, 'amountExpenseRequired')
@@ -24,8 +24,9 @@ export const exchangeTransactionFormSchema = z.object({
     .refine((value) => Number(value) > 0, 'amountPositive'),
   currencyExpense: z.string().min(1, 'expenseCurrencyRequired'),
   currencyIncome: z.string().min(1, 'incomeCurrencyRequired'),
-  paymentMethodId: z.string().min(1, 'paymentMethodRequired'),
-  accountId: z.string().min(1, 'accountRequired'),
+  paymentMethodId: z.string(),
+  accountExpenseId: z.string(),
+  accountIncomeId: z.string(),
 });
 
 export type ExchangeTransactionFormValues = z.infer<typeof exchangeTransactionFormSchema>;
@@ -33,13 +34,14 @@ export type ExchangeTransactionFormValues = z.infer<typeof exchangeTransactionFo
 export const getDefaultExchangeTransactionFormValues =
   (): ExchangeTransactionFormValues => ({
     date: getDefaultTransactionDate(),
-    additionalDescription: '',
+    description: '',
     amountExpense: '',
     amountIncome: '',
     currencyExpense: '',
     currencyIncome: '',
     paymentMethodId: '',
-    accountId: '',
+    accountExpenseId: '',
+    accountIncomeId: '',
   });
 
 export const getExchangeTransactionFormValues = (
@@ -50,19 +52,26 @@ export const getExchangeTransactionFormValues = (
     transaction,
     transactionRef,
   );
-  const descriptionPrefix = `${expenseTransaction.currency} -> ${incomeTransaction.currency}`;
 
   return {
     date: getTransactionDateValue(expenseTransaction.date),
-    additionalDescription: extractAdditionalDescription(
-      expenseTransaction.description,
-      descriptionPrefix,
-    ),
+    description: expenseTransaction.description,
     amountExpense: getTransactionAmountValue(expenseTransaction.amount),
     amountIncome: getTransactionAmountValue(incomeTransaction.amount),
     currencyExpense: expenseTransaction.currency,
     currencyIncome: incomeTransaction.currency,
     paymentMethodId: expenseTransaction.paymentMethod.id,
-    accountId: expenseTransaction.account.id,
+    accountExpenseId: expenseTransaction.account.id,
+    accountIncomeId: incomeTransaction.account.id,
   };
 };
+
+export const normalizeExchangeTransactionFormValues = (
+  values: ExchangeTransactionFormValues,
+) => ({
+  ...values,
+  description: values.description.trim(),
+  paymentMethodId: toOptionalId(values.paymentMethodId),
+  accountExpenseId: toOptionalId(values.accountExpenseId),
+  accountIncomeId: toOptionalId(values.accountIncomeId),
+});

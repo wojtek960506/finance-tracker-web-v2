@@ -62,7 +62,7 @@ vi.mock('@transactions/components/transaction-forms', async () => {
           onClick={() =>
             void onSubmit({
               date: '2024-01-03',
-              additionalDescription: 'Move funds',
+              description: 'Move funds',
               amount: '10',
               currency: 'USD',
               paymentMethodId: 'pm-1',
@@ -118,7 +118,7 @@ describe('UpdateTransferTransactionView', () => {
     await waitFor(() =>
       expect(mocks.updateTransferTransaction).toHaveBeenCalledWith('tx-1', {
         date: '2024-01-03',
-        additionalDescription: 'Move funds',
+        description: 'Move funds',
         amount: 10,
         currency: 'USD',
         paymentMethodId: 'pm-1',

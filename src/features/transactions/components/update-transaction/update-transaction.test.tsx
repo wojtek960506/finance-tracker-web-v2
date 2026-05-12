@@ -135,7 +135,7 @@ describe('UpdateTransaction', () => {
     expect(mode).toBe('update');
     expect(defaultValues).toEqual({
       date: '2024-01-03',
-      additionalDescription: 'Monthly move',
+      description: 'Checking --> Savings (Monthly move)',
       amount: '10',
       currency: 'USD',
       paymentMethodId: 'pm-transfer',
@@ -183,13 +183,14 @@ describe('UpdateTransaction', () => {
     expect(mode).toBe('update');
     expect(defaultValues).toEqual({
       date: '2024-01-03',
-      additionalDescription: 'Vacation cash',
+      description: 'USD -> EUR (Vacation cash)',
       amountExpense: '10',
       amountIncome: '8',
       currencyExpense: 'USD',
       currencyIncome: 'EUR',
       paymentMethodId: 'pm-exchange',
-      accountId: 'acc-exchange',
+      accountExpenseId: 'acc-exchange',
+      accountIncomeId: 'acc-exchange',
     });
   });
 

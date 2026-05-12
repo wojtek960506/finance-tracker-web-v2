@@ -130,7 +130,7 @@ describe('NamedResourceSelectField', () => {
     expect(screen.getByText('disabled')).toBeInTheDocument();
   });
 
-  it('renders favorites, filters out system categories, and toggles the show more group', async () => {
+  it('keeps allowed system categories while excluding transfer and exchange helper categories', async () => {
     const user = userEvent.setup();
     mocks.getNamedResources.mockResolvedValueOnce([
       {
@@ -157,13 +157,28 @@ describe('NamedResourceSelectField', () => {
         nameNormalized: 'exchange',
         isFavorite: false,
       },
+      {
+        id: 'cat-system-other',
+        name: 'otherCategory',
+        ownerId: '',
+        type: 'system',
+        nameNormalized: 'othercategory',
+        isFavorite: false,
+      },
     ]);
 
-    renderField({ value: 'cat-fav' });
+    renderField({
+      value: 'cat-fav',
+      includeSystem: true,
+      excludedSystemNames: ['myAccount', 'exchange'],
+    });
 
     await waitFor(() => expect(screen.getByText('Food')).toBeInTheDocument());
     expect(screen.getByText('Food')).toBeInTheDocument();
     expect(screen.queryByText('exchange:exchange exchange')).not.toBeInTheDocument();
+    expect(
+      screen.getByText('otherCategory:otherCategory othercategory'),
+    ).toBeInTheDocument();
 
     await user.click(screen.getByRole('button', { name: 'open' }));
     expect(screen.getByText('favorites')).toBeInTheDocument();
