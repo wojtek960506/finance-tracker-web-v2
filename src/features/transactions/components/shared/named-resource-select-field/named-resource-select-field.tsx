@@ -57,12 +57,20 @@ export const NamedResourceSelectField = ({
   includeSystem = kind !== 'categories',
   excludedSystemNames = [],
 }: NamedResourceSelectFieldProps) => {
-  const { t: tNamedResources } = useTranslation('namedResources');
+  const { t: tNamedResources, i18n } = useTranslation('namedResources');
 
   const { data = [], isLoading } = useQuery({
     queryKey: [kind],
     queryFn: async () => await getNamedResources(kind),
   });
+  const collator = useMemo(
+    () =>
+      new Intl.Collator(i18n.language, {
+        sensitivity: 'base',
+        numeric: true,
+      }),
+    [i18n.language],
+  );
 
   const availableResources = useMemo(
     () =>
@@ -79,14 +87,25 @@ export const NamedResourceSelectField = ({
       }),
     [data, excludedSystemNames, includeSystem],
   );
+  const sortResourcesByDisplayLabel = useMemo(
+    () => (resources: INamedResource[]) =>
+      [...resources].sort((left, right) =>
+        collator.compare(
+          getTransactionNamedResourceLabel(left, tNamedResources),
+          getTransactionNamedResourceLabel(right, tNamedResources),
+        ),
+      ),
+    [collator, tNamedResources],
+  );
 
   const favoriteResources = useMemo(
-    () => availableResources.filter((resource) => resource.isFavorite),
-    [availableResources],
+    () => sortResourcesByDisplayLabel(availableResources.filter((resource) => resource.isFavorite)),
+    [availableResources, sortResourcesByDisplayLabel],
   );
   const otherResources = useMemo(
-    () => availableResources.filter((resource) => !resource.isFavorite),
-    [availableResources],
+    () =>
+      sortResourcesByDisplayLabel(availableResources.filter((resource) => !resource.isFavorite)),
+    [availableResources, sortResourcesByDisplayLabel],
   );
 
   return (
