@@ -10,7 +10,7 @@ import { CreateStandardTransaction } from './create-standard-transaction';
 
 const mocks = vi.hoisted(() => ({
   createStandardTransaction: vi.fn(),
-  location: { state: undefined },
+  location: { state: undefined as { returnTo: string } | undefined },
   normalizeApiError: vi.fn(),
   navigate: vi.fn(),
   pushToast: vi.fn(),
