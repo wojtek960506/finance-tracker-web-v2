@@ -12,6 +12,7 @@
   "creatingTransaction": "Transaktion wird erstellt...",
   "transactionCreated": "Transaktion wurde erstellt.",
   "transactionCreateFailed": "Transaktion konnte nicht erstellt werden.",
+  "transactionMayBeHiddenByCurrentFilters": "Sie ist aufgrund der aktuellen Filter möglicherweise nicht sichtbar.",
   "updatingTransaction": "Transaktion wird aktualisiert...",
   "transactionUpdated": "Transaktion wurde aktualisiert.",
   "transactionUpdateFailed": "Transaktion konnte nicht aktualisiert werden.",

@@ -9,6 +9,7 @@ import { CreateExchangeTransaction } from './create-exchange-transaction';
 
 const mocks = vi.hoisted(() => ({
   createExchangeTransaction: vi.fn(),
+  location: { state: undefined },
   normalizeApiError: vi.fn(),
   navigate: vi.fn(),
   pushToast: vi.fn(),
@@ -20,6 +21,7 @@ vi.mock('react-i18next', () => ({
 
 vi.mock('react-router-dom', () => ({
   useNavigate: () => mocks.navigate,
+  useLocation: () => mocks.location,
 }));
 
 vi.mock('@transactions/api', () => ({
@@ -156,6 +158,8 @@ describe('CreateExchangeTransaction', () => {
     );
 
     await user.click(screen.getByRole('button', { name: 'cancel' }));
-    expect(mocks.navigate).toHaveBeenCalledWith('/transactions/new');
+    expect(mocks.navigate).toHaveBeenCalledWith('/transactions/new', {
+      state: { returnTo: '/transactions' },
+    });
   });
 });

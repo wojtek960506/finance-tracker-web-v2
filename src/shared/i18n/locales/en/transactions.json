@@ -12,6 +12,7 @@
   "creatingTransaction": "Creating transaction...",
   "transactionCreated": "Transaction created.",
   "transactionCreateFailed": "Could not create transaction.",
+  "transactionMayBeHiddenByCurrentFilters": "It may not be visible because of the current filters.",
   "updatingTransaction": "Updating transaction...",
   "transactionUpdated": "Transaction updated.",
   "transactionUpdateFailed": "Could not update transaction.",

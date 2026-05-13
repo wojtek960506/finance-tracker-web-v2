@@ -12,12 +12,13 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { IS_LG_MEDIA_QUERY, IS_XL_MEDIA_QUERY, MAIN_BUTTON_TEXT } from '@shared/consts';
 import { useMediaQuery } from '@shared/hooks';
-import { useUIStore } from '@store/ui-store';
 import { Button, Card, Drawer, LoadingState } from '@shared/ui';
+import { useUIStore } from '@store/ui-store';
 import { getTransactions, type TransactionFilters } from '@transactions/api';
 import { TransactionsFiltersPanel } from '@transactions/components/transactions-filters';
 import { TransactionsList } from '@transactions/components/transactions-list';
 import { TransactionsTotalsPanel } from '@transactions/components/transactions-totals';
+import { getTransactionsRouteState } from '@transactions/utils/transactions-navigation';
 import {
   buildTransactionsRouteSearchParams,
   countActiveTransactionFilters,
@@ -57,6 +58,9 @@ export const TransactionsPage = () => {
   } = useUIStore();
 
   const { page, filters } = parseTransactionsRouteSearchParams(searchParams);
+  const currentTransactionsRoute = `/transactions${
+    searchParams.size > 0 ? `?${searchParams.toString()}` : ''
+  }`;
   const activeFiltersCount = countActiveTransactionFilters(filters);
   const visibleCompactPanel = isTransactionsFiltersOpen
     ? 'filters'
@@ -168,7 +172,11 @@ export const TransactionsPage = () => {
       <Button
         variant="primary"
         className={clsx(MAIN_BUTTON_TEXT, 'mt-2 sm:mt-3 w-full ')}
-        onClick={() => navigate('/transactions/new')}
+        onClick={() =>
+          navigate('/transactions/new', {
+            state: getTransactionsRouteState(currentTransactionsRoute),
+          })
+        }
       >
         {t('createFirstTransaction')}
       </Button>
@@ -214,7 +222,11 @@ export const TransactionsPage = () => {
               <Button
                 variant="primary"
                 className={MAIN_BUTTON_TEXT}
-                onClick={() => navigate('/transactions/new')}
+                onClick={() =>
+                  navigate('/transactions/new', {
+                    state: getTransactionsRouteState(currentTransactionsRoute),
+                  })
+                }
               >
                 {t('newTransaction')}
               </Button>

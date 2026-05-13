@@ -11,6 +11,7 @@ import { TransactionDetails } from './transaction-details';
 
 const mocks = vi.hoisted(() => ({
   getTransaction: vi.fn(),
+  location: { state: { returnTo: '/transactions?page=2&categoryIds=cat-1' } },
   moveTransactionToTrash: vi.fn(),
   language: 'en-US',
   navigate: vi.fn(),
@@ -41,6 +42,7 @@ vi.mock('react-router-dom', async () => {
     await vi.importActual<typeof import('react-router-dom')>('react-router-dom');
   return {
     ...actual,
+    useLocation: () => mocks.location,
     useNavigate: () => mocks.navigate,
     useParams: () => mocks.params,
   };
@@ -200,7 +202,9 @@ describe('TransactionDetails', () => {
 
     await user.click(await screen.findByRole('button', { name: 'updateTransaction' }));
 
-    expect(mocks.navigate).toHaveBeenCalledWith('/transactions/tx-1/edit');
+    expect(mocks.navigate).toHaveBeenCalledWith('/transactions/tx-1/edit', {
+      state: { returnTo: '/transactions?page=2&categoryIds=cat-1' },
+    });
   });
 
   it('navigates back to transactions list after clicking back button', async () => {
@@ -218,7 +222,7 @@ describe('TransactionDetails', () => {
 
     await user.click(await screen.findByRole('button', { name: 'backToTransactions' }));
 
-    expect(mocks.navigate).toHaveBeenCalledWith('/transactions');
+    expect(mocks.navigate).toHaveBeenCalledWith('/transactions?page=2&categoryIds=cat-1');
   });
 
   it('moves transaction to trash after confirmation', async () => {
@@ -248,7 +252,9 @@ describe('TransactionDetails', () => {
       expect(mocks.moveTransactionToTrash).toHaveBeenCalledWith('tx-1');
     });
     await waitFor(() => {
-      expect(mocks.navigate).toHaveBeenCalledWith('/transactions');
+      expect(mocks.navigate).toHaveBeenCalledWith(
+        '/transactions?page=2&categoryIds=cat-1',
+      );
     });
     await waitFor(() => {
       expect(mocks.pushToast).toHaveBeenCalledWith({
@@ -348,7 +354,11 @@ describe('TransactionDetails', () => {
     await user.click(await screen.findByRole('button', { name: 'moveToTrash' }));
     await user.click(screen.getByTestId('transaction-action-modal-confirm'));
 
-    await waitFor(() => expect(mocks.navigate).toHaveBeenCalledWith('/transactions'));
+    await waitFor(() =>
+      expect(mocks.navigate).toHaveBeenCalledWith(
+        '/transactions?page=2&categoryIds=cat-1',
+      ),
+    );
 
     unmount();
 

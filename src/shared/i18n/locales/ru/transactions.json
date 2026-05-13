@@ -12,6 +12,7 @@
   "creatingTransaction": "Создание транзакции...",
   "transactionCreated": "Транзакция создана.",
   "transactionCreateFailed": "Не удалось создать транзакцию.",
+  "transactionMayBeHiddenByCurrentFilters": "Она может быть не видна из-за текущих фильтров.",
   "updatingTransaction": "Обновление транзакции...",
   "transactionUpdated": "Транзакция обновлена.",
   "transactionUpdateFailed": "Не удалось обновить транзакцию.",

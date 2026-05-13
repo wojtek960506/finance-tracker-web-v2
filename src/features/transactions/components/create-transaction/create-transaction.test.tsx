@@ -5,6 +5,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { CreateTransaction } from './create-transaction';
 
 const navigate = vi.fn();
+const location = { state: undefined };
 
 vi.mock('react-i18next', () => ({
   useTranslation: () => ({ t: (key: string) => key }),
@@ -12,6 +13,7 @@ vi.mock('react-i18next', () => ({
 
 vi.mock('react-router-dom', () => ({
   useNavigate: () => navigate,
+  useLocation: () => location,
 }));
 
 describe('CreateTransaction', () => {
@@ -27,8 +29,14 @@ describe('CreateTransaction', () => {
     await user.click(screen.getByRole('button', { name: /transferTransaction/i }));
     await user.click(screen.getByRole('button', { name: /exchangeTransaction/i }));
 
-    expect(navigate).toHaveBeenNthCalledWith(1, '/transactions/new/standard');
-    expect(navigate).toHaveBeenNthCalledWith(2, '/transactions/new/transfer');
-    expect(navigate).toHaveBeenNthCalledWith(3, '/transactions/new/exchange');
+    expect(navigate).toHaveBeenNthCalledWith(1, '/transactions/new/standard', {
+      state: { returnTo: '/transactions' },
+    });
+    expect(navigate).toHaveBeenNthCalledWith(2, '/transactions/new/transfer', {
+      state: { returnTo: '/transactions' },
+    });
+    expect(navigate).toHaveBeenNthCalledWith(3, '/transactions/new/exchange', {
+      state: { returnTo: '/transactions' },
+    });
   });
 });

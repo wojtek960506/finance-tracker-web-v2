@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import { normalizeApiError } from '@shared/api/api-error';
 import { MAIN_BUTTON_TEXT } from '@shared/consts';
@@ -13,6 +13,7 @@ import {
   TransactionBackButton,
   useInvalidateTransactionQueries,
 } from '@transactions/components/shared';
+import { getTransactionsReturnTo, getTransactionsRouteState } from '@transactions/utils';
 import { Button, Card, LoadingState } from '@ui';
 
 import { TransactionDetailsCard } from '../transaction-details-card';
@@ -20,12 +21,14 @@ import { TransactionDetailsCard } from '../transaction-details-card';
 // TODO maybe split this file
 export const TransactionDetails = () => {
   const { t } = useTranslation('transactions');
+  const location = useLocation();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const pushToast = useToastStore((state) => state.pushToast);
   const invalidateQueries = useInvalidateTransactionQueries();
 
   const { transactionId } = useParams<{ transactionId: string }>();
+  const returnTo = getTransactionsReturnTo(location.state);
   const [isMoveToTrashModalOpen, setIsMoveToTrashModalOpen] = useState(false);
   const [isTransactionQueryEnabled, setIsTransactionQueryEnabled] = useState(true);
   const moveToTrashButtonRef = useRef<HTMLButtonElement | null>(null);
@@ -99,7 +102,7 @@ export const TransactionDetails = () => {
         variant: 'success',
         title: t('transactionMovedToTrash'),
       });
-      navigate('/transactions');
+      navigate(returnTo);
     } catch (moveError) {
       setIsTransactionQueryEnabled(true);
       const apiError = normalizeApiError(moveError);
@@ -135,13 +138,17 @@ export const TransactionDetails = () => {
       </TransactionActionModal>
       <TransactionBackButton
         label={t('backToTransactions')}
-        to="/transactions"
+        to={returnTo}
         disabled={moveToTrashMutation.isPending}
       />
       <Button
         variant="secondary"
         className={MAIN_BUTTON_TEXT}
-        onClick={() => navigate(`/transactions/${transaction.id}/edit`)}
+        onClick={() =>
+          navigate(`/transactions/${transaction.id}/edit`, {
+            state: getTransactionsRouteState(returnTo),
+          })
+        }
         disabled={moveToTrashMutation.isPending}
       >
         {t('updateTransaction')}

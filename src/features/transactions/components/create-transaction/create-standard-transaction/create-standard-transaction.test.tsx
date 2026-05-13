@@ -1,14 +1,16 @@
 import { QueryClientProvider } from '@tanstack/react-query';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { createTestQueryClient } from '@test-utils/create-test-query-client';
+import { makeTransaction } from '@test-utils/factories/transaction';
 
 import { CreateStandardTransaction } from './create-standard-transaction';
 
 const mocks = vi.hoisted(() => ({
   createStandardTransaction: vi.fn(),
+  location: { state: undefined },
   normalizeApiError: vi.fn(),
   navigate: vi.fn(),
   pushToast: vi.fn(),
@@ -20,6 +22,7 @@ vi.mock('react-i18next', () => ({
 
 vi.mock('react-router-dom', () => ({
   useNavigate: () => mocks.navigate,
+  useLocation: () => mocks.location,
 }));
 
 vi.mock('@transactions/api', () => ({
@@ -46,6 +49,13 @@ vi.mock('@transactions/components/transaction-forms', () => ({
     paymentMethodId: '',
     accountId: '',
     transactionType: 'expense',
+  }),
+  normalizeStandardTransactionFormValues: (values: any) => ({
+    ...values,
+    description: values.description.trim(),
+    categoryId: values.categoryId || undefined,
+    paymentMethodId: values.paymentMethodId || undefined,
+    accountId: values.accountId || undefined,
   }),
   StandardTransactionForm: ({
     onSubmit,
@@ -80,6 +90,11 @@ vi.mock('@transactions/components/transaction-forms', () => ({
 }));
 
 describe('CreateStandardTransaction', () => {
+  beforeEach(() => {
+    mocks.location.state = undefined;
+    vi.clearAllMocks();
+  });
+
   it('creates a standard transaction and navigates back to the list', async () => {
     const user = userEvent.setup();
     const client = createTestQueryClient();
@@ -119,6 +134,32 @@ describe('CreateStandardTransaction', () => {
     expect(mocks.navigate).toHaveBeenCalledWith('/transactions');
   });
 
+  it('adds an info message when the created transaction is hidden by current filters', async () => {
+    const user = userEvent.setup();
+    const client = createTestQueryClient();
+    mocks.location.state = { returnTo: '/transactions?categoryIds=cat-2' };
+    mocks.createStandardTransaction.mockResolvedValueOnce(
+      makeTransaction({ category: { id: 'cat-1', type: 'category', name: 'Food' } }),
+    );
+
+    render(
+      <QueryClientProvider client={client}>
+        <CreateStandardTransaction />
+      </QueryClientProvider>,
+    );
+
+    await user.click(screen.getByRole('button', { name: 'submit' }));
+
+    await waitFor(() =>
+      expect(mocks.pushToast).toHaveBeenCalledWith({
+        variant: 'success',
+        title: 'transactionCreated',
+        message: 'transactionMayBeHiddenByCurrentFilters',
+      }),
+    );
+    expect(mocks.navigate).toHaveBeenCalledWith('/transactions?categoryIds=cat-2');
+  });
+
   it('shows an error toast when creating fails and handles cancel', async () => {
     const user = userEvent.setup();
     const client = createTestQueryClient();
@@ -143,6 +184,8 @@ describe('CreateStandardTransaction', () => {
     );
 
     await user.click(screen.getByRole('button', { name: 'cancel' }));
-    expect(mocks.navigate).toHaveBeenCalledWith('/transactions/new');
+    expect(mocks.navigate).toHaveBeenCalledWith('/transactions/new', {
+      state: { returnTo: '/transactions' },
+    });
   });
 });

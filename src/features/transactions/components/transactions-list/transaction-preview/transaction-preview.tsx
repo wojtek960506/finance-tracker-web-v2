@@ -1,12 +1,17 @@
 import clsx from 'clsx';
 import type { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import { useLanguage } from '@shared/hooks';
 import type { Transaction, TrashedTransaction } from '@transactions/api';
 import { TransactionKindIcon } from '@transactions/components/shared';
 import { getTransactionKind } from '@transactions/consts';
+import {
+  getPathWithSearch,
+  getTransactionsReturnTo,
+  getTransactionsRouteState,
+} from '@transactions/utils';
 import { getTransactionAmountPresentation } from '@transactions/utils/transaction-amount';
 import { Card } from '@ui';
 
@@ -24,8 +29,13 @@ export const TransactionPreview = ({
 }) => {
   const { t } = useTranslation('transactions');
   const { language } = useLanguage();
+  const location = useLocation();
   const amountPresentation = getTransactionAmountPresentation(transaction);
   const transactionKind = getTransactionKind(transaction);
+  const returnTo = getTransactionsReturnTo(
+    location.state,
+    getPathWithSearch(location),
+  );
 
   // TODO uncomment it when code for footer will be uncommented.
   // Visibility of footer will be later adjustable in settings.
@@ -54,6 +64,7 @@ export const TransactionPreview = ({
             'focus-visible:outline-fg focus-visible:outline-offset-2',
           )}
           to={`${detailsPathPrefix}/${transaction.id}`}
+          state={getTransactionsRouteState(returnTo)}
           data-testid="transaction-preview-link"
         >
           <header className="flex justify-between text-text-muted text-sm sm:text-base items-center">
