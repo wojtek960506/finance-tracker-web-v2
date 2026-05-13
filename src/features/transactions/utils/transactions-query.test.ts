@@ -10,7 +10,7 @@ import {
 describe('transactions-query helpers', () => {
   it('parses page and supported filters from route search params', () => {
     const searchParams = new URLSearchParams(
-      'page=3&startDate=2024-01-01&endDate=2024-01-31&minAmount=10&maxAmount=20&transactionType=expense&currency=USD&excludeCategoryIds=cat-1,cat-2&paymentMethodId=pm-1&accountId=acc-1',
+      'page=3&startDate=2024-01-01&endDate=2024-01-31&minAmount=10&maxAmount=20&transactionType=expense&currency=USD&categoryIds=cat-3,cat-4&excludeCategoryIds=cat-1,cat-2&paymentMethodIds=pm-1&excludePaymentMethodIds=pm-2,pm-3&accountIds=acc-1&excludeAccountIds=acc-2,acc-3',
     );
 
     expect(parseTransactionsRouteSearchParams(searchParams)).toEqual({
@@ -22,9 +22,12 @@ describe('transactions-query helpers', () => {
         maxAmount: 20,
         transactionType: 'expense',
         currency: 'USD',
+        categoryIds: ['cat-3', 'cat-4'],
         excludeCategoryIds: ['cat-1', 'cat-2'],
-        paymentMethodId: 'pm-1',
-        accountId: 'acc-1',
+        paymentMethodIds: ['pm-1'],
+        excludePaymentMethodIds: ['pm-2', 'pm-3'],
+        accountIds: ['acc-1'],
+        excludeAccountIds: ['acc-2', 'acc-3'],
       },
     });
   });
@@ -33,24 +36,29 @@ describe('transactions-query helpers', () => {
     const searchParams = buildTransactionsRouteSearchParams({
       page: 1,
       filters: {
-        categoryId: 'cat-1',
+        categoryIds: ['cat-1', 'cat-2'],
         currency: 'EUR',
       },
     });
 
-    expect(searchParams.toString()).toBe('currency=EUR&categoryId=cat-1');
+    expect(searchParams.toString()).toBe('currency=EUR&categoryIds=cat-1%2Ccat-2');
   });
 
-  it('builds api params with defaults and excludes categories', () => {
+  it('builds api params with defaults and multi-value resource filters', () => {
     const searchParams = buildTransactionsApiSearchParams({
       page: 2,
       filters: {
+        categoryIds: ['cat-5'],
         excludeCategoryIds: ['cat-1', 'cat-2'],
+        paymentMethodIds: ['pm-1'],
+        excludePaymentMethodIds: ['pm-2'],
+        accountIds: ['acc-1'],
+        excludeAccountIds: ['acc-2'],
       },
     });
 
     expect(searchParams.toString()).toBe(
-      'page=2&limit=30&sortBy=date&sortOrder=desc&excludeCategoryIds=cat-1%2Ccat-2',
+      'page=2&limit=30&sortBy=date&sortOrder=desc&categoryIds=cat-5&excludeCategoryIds=cat-1%2Ccat-2&paymentMethodIds=pm-1&excludePaymentMethodIds=pm-2&accountIds=acc-1&excludeAccountIds=acc-2',
     );
   });
 
@@ -59,8 +67,9 @@ describe('transactions-query helpers', () => {
       countActiveTransactionFilters({
         startDate: '2024-01-01',
         excludeCategoryIds: ['cat-1', 'cat-2'],
+        paymentMethodIds: ['pm-1'],
         transactionType: 'expense',
       }),
-    ).toBe(3);
+    ).toBe(4);
   });
 });

@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router-dom';
 
 import { useLanguage } from '@shared/hooks';
 import type {
@@ -7,7 +8,11 @@ import type {
   TrashedTransaction,
   TrashedTransactionDetails,
 } from '@transactions/api';
-import { getTransactionNamedResourceLabel } from '@transactions/utils';
+import {
+  getTransactionNamedResourceLabel,
+  getTransactionsReturnTo,
+  getTransactionsRouteState,
+} from '@transactions/utils';
 import { getTransactionAmountPresentation } from '@transactions/utils/transaction-amount';
 import { ButtonLink } from '@ui';
 
@@ -100,7 +105,9 @@ export const AdditionalDetails = ({
   const { t } = useTranslation('transactions');
   const { t: tNamedResources } = useTranslation('namedResources');
   const { language } = useLanguage();
+  const location = useLocation();
   const { refId, currencies, exchangeRate } = transaction;
+  const returnTo = getTransactionsReturnTo(location.state);
   const hasExchangeRate = Boolean(currencies && exchangeRate);
   const referenceDetails = getReferenceDetails(transaction, t, tNamedResources, language);
   const hasReferenceSummary = referenceDetails.length > 0;
@@ -142,6 +149,7 @@ export const AdditionalDetails = ({
       {hasReferenceLink ? (
         <ButtonLink
           to={`${referencePathPrefix}/${refId}`}
+          state={getTransactionsRouteState(returnTo)}
           className="justify-self-center w-full"
         >
           {t('goToReferencedTransaction')}

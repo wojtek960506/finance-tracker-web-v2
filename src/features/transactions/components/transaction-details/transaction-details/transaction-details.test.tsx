@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event';
 import type { ComponentProps, ReactNode } from 'react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
+import { ApiError } from '@shared/api/api-error';
 import { makeTransaction } from '@test-utils/factories/transaction';
 import type { TransactionDetails as ApiTransactionDetails } from '@transactions/api';
 
@@ -11,6 +12,7 @@ import { TransactionDetails } from './transaction-details';
 
 const mocks = vi.hoisted(() => ({
   getTransaction: vi.fn(),
+  location: { state: { returnTo: '/transactions?page=2&categoryIds=cat-1' } },
   moveTransactionToTrash: vi.fn(),
   language: 'en-US',
   navigate: vi.fn(),
@@ -41,6 +43,7 @@ vi.mock('react-router-dom', async () => {
     await vi.importActual<typeof import('react-router-dom')>('react-router-dom');
   return {
     ...actual,
+    useLocation: () => mocks.location,
     useNavigate: () => mocks.navigate,
     useParams: () => mocks.params,
   };
@@ -147,11 +150,14 @@ describe('TransactionDetails', () => {
       </QueryClientProvider>,
     );
 
+    expect(
+      await screen.findByText('transactionLoadFailedTitle'),
+    ).toBeInTheDocument();
     expect(await screen.findByText('Oops')).toBeInTheDocument();
   });
 
-  it('renders info that no transaction was returned', async () => {
-    mocks.getTransaction.mockRejectedValueOnce(undefined);
+  it('renders a styled not-found state when transaction is missing', async () => {
+    mocks.getTransaction.mockResolvedValueOnce(null);
     const client = new QueryClient({
       defaultOptions: { queries: { retry: false } },
     });
@@ -162,7 +168,31 @@ describe('TransactionDetails', () => {
       </QueryClientProvider>,
     );
 
-    expect(await screen.findByText('No transaction')).toBeInTheDocument();
+    expect(await screen.findByText('transactionNotFoundTitle')).toBeInTheDocument();
+    expect(screen.getByText('transactionNotFoundDescription')).toBeInTheDocument();
+  });
+
+  it('renders a styled not-found state for 404 errors', async () => {
+    mocks.getTransaction.mockRejectedValueOnce(
+      new ApiError({
+        message: 'Transaction not found',
+        statusCode: 404,
+      }),
+    );
+    const client = new QueryClient({
+      defaultOptions: { queries: { retry: false } },
+    });
+    const user = userEvent.setup();
+
+    render(
+      <QueryClientProvider client={client}>
+        <TransactionDetails />
+      </QueryClientProvider>,
+    );
+
+    expect(await screen.findByText('transactionNotFoundTitle')).toBeInTheDocument();
+    await user.click(screen.getByRole('button', { name: 'backToTransactions' }));
+    expect(mocks.navigate).toHaveBeenCalledWith('/transactions?page=2&categoryIds=cat-1');
   });
 
   it('renders transaction details', async () => {
@@ -200,7 +230,9 @@ describe('TransactionDetails', () => {
 
     await user.click(await screen.findByRole('button', { name: 'updateTransaction' }));
 
-    expect(mocks.navigate).toHaveBeenCalledWith('/transactions/tx-1/edit');
+    expect(mocks.navigate).toHaveBeenCalledWith('/transactions/tx-1/edit', {
+      state: { returnTo: '/transactions?page=2&categoryIds=cat-1' },
+    });
   });
 
   it('navigates back to transactions list after clicking back button', async () => {
@@ -218,7 +250,7 @@ describe('TransactionDetails', () => {
 
     await user.click(await screen.findByRole('button', { name: 'backToTransactions' }));
 
-    expect(mocks.navigate).toHaveBeenCalledWith('/transactions');
+    expect(mocks.navigate).toHaveBeenCalledWith('/transactions?page=2&categoryIds=cat-1');
   });
 
   it('moves transaction to trash after confirmation', async () => {
@@ -248,7 +280,9 @@ describe('TransactionDetails', () => {
       expect(mocks.moveTransactionToTrash).toHaveBeenCalledWith('tx-1');
     });
     await waitFor(() => {
-      expect(mocks.navigate).toHaveBeenCalledWith('/transactions');
+      expect(mocks.navigate).toHaveBeenCalledWith(
+        '/transactions?page=2&categoryIds=cat-1',
+      );
     });
     await waitFor(() => {
       expect(mocks.pushToast).toHaveBeenCalledWith({
@@ -348,7 +382,11 @@ describe('TransactionDetails', () => {
     await user.click(await screen.findByRole('button', { name: 'moveToTrash' }));
     await user.click(screen.getByTestId('transaction-action-modal-confirm'));
 
-    await waitFor(() => expect(mocks.navigate).toHaveBeenCalledWith('/transactions'));
+    await waitFor(() =>
+      expect(mocks.navigate).toHaveBeenCalledWith(
+        '/transactions?page=2&categoryIds=cat-1',
+      ),
+    );
 
     unmount();
 

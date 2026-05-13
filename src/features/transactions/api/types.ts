@@ -91,10 +91,12 @@ export type TransactionFilters = {
   maxAmount?: number;
   transactionType?: TransactionType;
   currency?: string;
-  categoryId?: string;
+  categoryIds?: string[];
   excludeCategoryIds?: string[];
-  paymentMethodId?: string;
-  accountId?: string;
+  paymentMethodIds?: string[];
+  excludePaymentMethodIds?: string[];
+  accountIds?: string[];
+  excludeAccountIds?: string[];
 };
 
 export type GetTransactionsQuery = {

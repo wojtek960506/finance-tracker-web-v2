@@ -1,11 +1,12 @@
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { Button, Card } from '@shared/ui';
 import {
   TransactionBackButton,
   TransactionKindIcon,
 } from '@transactions/components/shared';
+import { getTransactionsReturnTo, getTransactionsRouteState } from '@transactions/utils';
 
 const transactionTypeCards = [
   {
@@ -20,12 +21,14 @@ const transactionTypeCards = [
 ] as const;
 
 export const CreateTransaction = () => {
+  const location = useLocation();
   const navigate = useNavigate();
   const { t } = useTranslation('transactions');
+  const returnTo = getTransactionsReturnTo(location.state);
 
   return (
     <div className="mx-auto flex max-w-[35rem] flex-col gap-2 sm:gap-3">
-      <TransactionBackButton label={t('backToTransactions')} to="/transactions" />
+      <TransactionBackButton label={t('backToTransactions')} to={returnTo} />
       <Card className="gap-3 sm:gap-4">
         <div className="flex flex-col gap-1">
           <h2 className="text-lg font-semibold sm:text-xl">
@@ -44,7 +47,11 @@ export const CreateTransaction = () => {
               type="button"
               variant="outline"
               className=" items-start rounded-2xl border border-fg bg-bg p-3 sm:p-4 text-left"
-              onClick={() => navigate(`/transactions/new/${key}`)}
+              onClick={() =>
+                navigate(`/transactions/new/${key}`, {
+                  state: getTransactionsRouteState(returnTo),
+                })
+              }
             >
               <span className="flex w-full flex-col gap-3">
                 <span className="flex items-center gap-3">

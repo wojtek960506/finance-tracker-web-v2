@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { normalizeApiError } from '@shared/api/api-error';
 import { useToastStore } from '@store/toast-store';
@@ -14,12 +14,19 @@ import {
   getDefaultExchangeTransactionFormValues,
   normalizeExchangeTransactionFormValues,
 } from '@transactions/components/transaction-forms';
+import {
+  getTransactionsReturnTo,
+  getTransactionsRouteState,
+  shouldWarnAboutHiddenTransactions,
+} from '@transactions/utils';
 
 export const CreateExchangeTransaction = () => {
+  const location = useLocation();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const pushToast = useToastStore((state) => state.pushToast);
   const { t } = useTranslation('transactions');
+  const returnTo = getTransactionsReturnTo(location.state);
 
   const createTransactionMutation = useMutation({
     mutationFn: async (payload: TransactionExchangeDTO) =>
@@ -31,7 +38,7 @@ export const CreateExchangeTransaction = () => {
 
   const onSubmit = async (values: ExchangeTransactionFormValues) => {
     try {
-      await createTransactionMutation.mutateAsync({
+      const transactions = await createTransactionMutation.mutateAsync({
         ...normalizeExchangeTransactionFormValues(values),
         amountExpense: Number(values.amountExpense),
         amountIncome: Number(values.amountIncome),
@@ -40,10 +47,13 @@ export const CreateExchangeTransaction = () => {
       pushToast({
         variant: 'success',
         title: t('transactionCreated'),
+        message: shouldWarnAboutHiddenTransactions(transactions, returnTo)
+          ? t('transactionMayBeHiddenByCurrentFilters')
+          : undefined,
       });
       queryClient.removeQueries({ queryKey: ['transactions'] });
       queryClient.removeQueries({ queryKey: ['transaction-totals'] });
-      navigate('/transactions');
+      navigate(returnTo);
     } catch (error) {
       const apiError = normalizeApiError(error);
       pushToast({
@@ -60,7 +70,11 @@ export const CreateExchangeTransaction = () => {
       isPending={createTransactionMutation.isPending}
       mode="create"
       onSubmit={onSubmit}
-      onCancel={() => navigate('/transactions/new')}
+      onCancel={() =>
+        navigate('/transactions/new', {
+          state: getTransactionsRouteState(returnTo),
+        })
+      }
     />
   );
 };

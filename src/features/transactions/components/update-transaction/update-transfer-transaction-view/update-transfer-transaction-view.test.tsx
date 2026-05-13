@@ -9,6 +9,7 @@ import { makeTransaction } from '@test-utils/factories/transaction';
 import { UpdateTransferTransactionView } from './update-transfer-transaction-view';
 
 const mocks = vi.hoisted(() => ({
+  location: { state: undefined },
   updateTransferTransaction: vi.fn(),
   normalizeApiError: vi.fn(),
   navigate: vi.fn(),
@@ -21,6 +22,7 @@ vi.mock('react-i18next', () => ({
 
 vi.mock('react-router-dom', () => ({
   useNavigate: () => mocks.navigate,
+  useLocation: () => mocks.location,
 }));
 
 vi.mock('@transactions/api', async () => {
@@ -139,7 +141,9 @@ describe('UpdateTransferTransactionView', () => {
       variant: 'success',
       title: 'transactionUpdated',
     });
-    expect(mocks.navigate).toHaveBeenCalledWith('/transactions/tx-1');
+    expect(mocks.navigate).toHaveBeenCalledWith('/transactions/tx-1', {
+      state: { returnTo: '/transactions' },
+    });
   });
 
   it('shows an error toast and handles cancel', async () => {
@@ -169,6 +173,8 @@ describe('UpdateTransferTransactionView', () => {
     );
 
     await user.click(screen.getByRole('button', { name: 'cancel' }));
-    expect(mocks.navigate).toHaveBeenCalledWith('/transactions/tx-1');
+    expect(mocks.navigate).toHaveBeenCalledWith('/transactions/tx-1', {
+      state: { returnTo: '/transactions' },
+    });
   });
 });
