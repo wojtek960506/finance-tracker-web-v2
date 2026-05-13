@@ -32,6 +32,12 @@ const parseTransactionType = (value: string | null) =>
     ? (value as TransactionType)
     : undefined;
 
+const parseMultiValueFilter = (value: string | null) =>
+  value
+    ?.split(',')
+    .map((item) => item.trim())
+    .filter(Boolean);
+
 // TODO maybe extract some bigger functions from this file but keep imports as before
 const appendFilterParams = (params: URLSearchParams, filters: TransactionFilters) => {
   if (filters.startDate) params.set('startDate', filters.startDate);
@@ -40,12 +46,20 @@ const appendFilterParams = (params: URLSearchParams, filters: TransactionFilters
   if (filters.maxAmount !== undefined) params.set('maxAmount', String(filters.maxAmount));
   if (filters.transactionType) params.set('transactionType', filters.transactionType);
   if (filters.currency) params.set('currency', filters.currency);
-  if (filters.categoryId) params.set('categoryId', filters.categoryId);
+  if (filters.categoryIds?.length) params.set('categoryIds', filters.categoryIds.join(','));
   if (filters.excludeCategoryIds?.length) {
     params.set('excludeCategoryIds', filters.excludeCategoryIds.join(','));
   }
-  if (filters.paymentMethodId) params.set('paymentMethodId', filters.paymentMethodId);
-  if (filters.accountId) params.set('accountId', filters.accountId);
+  if (filters.paymentMethodIds?.length) {
+    params.set('paymentMethodIds', filters.paymentMethodIds.join(','));
+  }
+  if (filters.excludePaymentMethodIds?.length) {
+    params.set('excludePaymentMethodIds', filters.excludePaymentMethodIds.join(','));
+  }
+  if (filters.accountIds?.length) params.set('accountIds', filters.accountIds.join(','));
+  if (filters.excludeAccountIds?.length) {
+    params.set('excludeAccountIds', filters.excludeAccountIds.join(','));
+  }
 };
 
 export const buildTransactionFiltersSearchParams = (filters: TransactionFilters = {}) => {
@@ -90,12 +104,6 @@ export const buildTransactionsRouteSearchParams = ({
 export const parseTransactionsRouteSearchParams = (
   searchParams: URLSearchParams,
 ): Required<GetTransactionsQuery> => {
-  const excludeCategoryIds = searchParams
-    .get('excludeCategoryIds')
-    ?.split(',')
-    .map((value) => value.trim())
-    .filter(Boolean);
-
   const filters: TransactionFilters = {};
   const startDate = searchParams.get('startDate');
   const endDate = searchParams.get('endDate');
@@ -103,9 +111,14 @@ export const parseTransactionsRouteSearchParams = (
   const maxAmount = parsePositiveNumber(searchParams.get('maxAmount'));
   const transactionType = parseTransactionType(searchParams.get('transactionType'));
   const currency = searchParams.get('currency');
-  const categoryId = searchParams.get('categoryId');
-  const paymentMethodId = searchParams.get('paymentMethodId');
-  const accountId = searchParams.get('accountId');
+  const categoryIds = parseMultiValueFilter(searchParams.get('categoryIds'));
+  const excludeCategoryIds = parseMultiValueFilter(searchParams.get('excludeCategoryIds'));
+  const paymentMethodIds = parseMultiValueFilter(searchParams.get('paymentMethodIds'));
+  const excludePaymentMethodIds = parseMultiValueFilter(
+    searchParams.get('excludePaymentMethodIds'),
+  );
+  const accountIds = parseMultiValueFilter(searchParams.get('accountIds'));
+  const excludeAccountIds = parseMultiValueFilter(searchParams.get('excludeAccountIds'));
 
   if (startDate) filters.startDate = startDate;
   if (endDate) filters.endDate = endDate;
@@ -113,12 +126,20 @@ export const parseTransactionsRouteSearchParams = (
   if (maxAmount !== undefined) filters.maxAmount = maxAmount;
   if (transactionType) filters.transactionType = transactionType;
   if (currency) filters.currency = currency;
-  if (categoryId) filters.categoryId = categoryId;
+  if (categoryIds && categoryIds.length > 0) filters.categoryIds = categoryIds;
   if (excludeCategoryIds && excludeCategoryIds.length > 0) {
     filters.excludeCategoryIds = excludeCategoryIds;
   }
-  if (paymentMethodId) filters.paymentMethodId = paymentMethodId;
-  if (accountId) filters.accountId = accountId;
+  if (paymentMethodIds && paymentMethodIds.length > 0) {
+    filters.paymentMethodIds = paymentMethodIds;
+  }
+  if (excludePaymentMethodIds && excludePaymentMethodIds.length > 0) {
+    filters.excludePaymentMethodIds = excludePaymentMethodIds;
+  }
+  if (accountIds && accountIds.length > 0) filters.accountIds = accountIds;
+  if (excludeAccountIds && excludeAccountIds.length > 0) {
+    filters.excludeAccountIds = excludeAccountIds;
+  }
 
   return {
     page: parsePage(searchParams.get('page')),
@@ -134,8 +155,12 @@ export const countActiveTransactionFilters = (filters: TransactionFilters) =>
     filters.maxAmount,
     filters.transactionType,
     filters.currency,
-    filters.categoryId,
+    filters.categoryIds?.length ? filters.categoryIds.join(',') : undefined,
     filters.excludeCategoryIds?.length ? filters.excludeCategoryIds.join(',') : undefined,
-    filters.paymentMethodId,
-    filters.accountId,
+    filters.paymentMethodIds?.length ? filters.paymentMethodIds.join(',') : undefined,
+    filters.excludePaymentMethodIds?.length
+      ? filters.excludePaymentMethodIds.join(',')
+      : undefined,
+    filters.accountIds?.length ? filters.accountIds.join(',') : undefined,
+    filters.excludeAccountIds?.length ? filters.excludeAccountIds.join(',') : undefined,
   ].filter((value) => value !== undefined && value !== '').length;

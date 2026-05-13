@@ -1,8 +1,9 @@
 import { z } from 'zod';
 
+import type { NamedResourceKind } from '@named-resources/api';
 import type { TransactionFilters, TransactionType } from '@transactions/api';
 
-export type CategoryFilterMode = 'include' | 'exclude';
+export type NamedResourceFilterMode = 'include' | 'exclude';
 
 export type TransactionFiltersFormValues = {
   startDate: string;
@@ -11,12 +12,41 @@ export type TransactionFiltersFormValues = {
   maxAmount: string;
   transactionType: '' | TransactionType;
   currency: string;
-  categoryMode: CategoryFilterMode;
-  categoryId: string;
+  categoryMode: NamedResourceFilterMode;
+  categoryIds: string[];
   excludeCategoryIds: string[];
-  paymentMethodId: string;
-  accountId: string;
+  paymentMethodMode: NamedResourceFilterMode;
+  paymentMethodIds: string[];
+  excludePaymentMethodIds: string[];
+  accountMode: NamedResourceFilterMode;
+  accountIds: string[];
+  excludeAccountIds: string[];
 };
+
+export const TRANSACTION_FILTER_RESOURCE_FIELD_NAMES = {
+  categories: {
+    mode: 'categoryMode',
+    include: 'categoryIds',
+    exclude: 'excludeCategoryIds',
+  },
+  paymentMethods: {
+    mode: 'paymentMethodMode',
+    include: 'paymentMethodIds',
+    exclude: 'excludePaymentMethodIds',
+  },
+  accounts: {
+    mode: 'accountMode',
+    include: 'accountIds',
+    exclude: 'excludeAccountIds',
+  },
+} as const satisfies Record<
+  NamedResourceKind,
+  {
+    mode: keyof TransactionFiltersFormValues;
+    include: keyof TransactionFiltersFormValues;
+    exclude: keyof TransactionFiltersFormValues;
+  }
+>;
 
 const optionalNonNegativeNumber = z
   .string()
@@ -32,10 +62,14 @@ export const transactionFiltersFormSchema = z
     transactionType: z.enum(['', 'expense', 'income']),
     currency: z.string(),
     categoryMode: z.enum(['include', 'exclude']),
-    categoryId: z.string(),
+    categoryIds: z.array(z.string()),
     excludeCategoryIds: z.array(z.string()),
-    paymentMethodId: z.string(),
-    accountId: z.string(),
+    paymentMethodMode: z.enum(['include', 'exclude']),
+    paymentMethodIds: z.array(z.string()),
+    excludePaymentMethodIds: z.array(z.string()),
+    accountMode: z.enum(['include', 'exclude']),
+    accountIds: z.array(z.string()),
+    excludeAccountIds: z.array(z.string()),
   })
   .superRefine((values, ctx) => {
     if (values.startDate && values.endDate && values.startDate > values.endDate) {
@@ -69,13 +103,19 @@ export const getTransactionFiltersFormDefaults = (
   transactionType: filters.transactionType ?? '',
   currency: filters.currency ?? '',
   categoryMode:
-    filters.excludeCategoryIds && filters.excludeCategoryIds.length > 0
+    filters.excludeCategoryIds && filters.excludeCategoryIds.length > 0 ? 'exclude' : 'include',
+  categoryIds: filters.categoryIds ?? [],
+  excludeCategoryIds: filters.excludeCategoryIds ?? [],
+  paymentMethodMode:
+    filters.excludePaymentMethodIds && filters.excludePaymentMethodIds.length > 0
       ? 'exclude'
       : 'include',
-  categoryId: filters.categoryId ?? '',
-  excludeCategoryIds: filters.excludeCategoryIds ?? [],
-  paymentMethodId: filters.paymentMethodId ?? '',
-  accountId: filters.accountId ?? '',
+  paymentMethodIds: filters.paymentMethodIds ?? [],
+  excludePaymentMethodIds: filters.excludePaymentMethodIds ?? [],
+  accountMode:
+    filters.excludeAccountIds && filters.excludeAccountIds.length > 0 ? 'exclude' : 'include',
+  accountIds: filters.accountIds ?? [],
+  excludeAccountIds: filters.excludeAccountIds ?? [],
 });
 
 export const normalizeTransactionFiltersFormValues = (
@@ -87,14 +127,28 @@ export const normalizeTransactionFiltersFormValues = (
   maxAmount: values.maxAmount === '' ? undefined : Number(values.maxAmount),
   transactionType: values.transactionType || undefined,
   currency: values.currency || undefined,
-  categoryId:
-    values.categoryMode === 'include' && values.categoryId
-      ? values.categoryId
+  categoryIds:
+    values.categoryMode === 'include' && values.categoryIds.length > 0
+      ? values.categoryIds
       : undefined,
   excludeCategoryIds:
     values.categoryMode === 'exclude' && values.excludeCategoryIds.length > 0
       ? values.excludeCategoryIds
       : undefined,
-  paymentMethodId: values.paymentMethodId || undefined,
-  accountId: values.accountId || undefined,
+  paymentMethodIds:
+    values.paymentMethodMode === 'include' && values.paymentMethodIds.length > 0
+      ? values.paymentMethodIds
+      : undefined,
+  excludePaymentMethodIds:
+    values.paymentMethodMode === 'exclude' && values.excludePaymentMethodIds.length > 0
+      ? values.excludePaymentMethodIds
+      : undefined,
+  accountIds:
+    values.accountMode === 'include' && values.accountIds.length > 0
+      ? values.accountIds
+      : undefined,
+  excludeAccountIds:
+    values.accountMode === 'exclude' && values.excludeAccountIds.length > 0
+      ? values.excludeAccountIds
+      : undefined,
 });

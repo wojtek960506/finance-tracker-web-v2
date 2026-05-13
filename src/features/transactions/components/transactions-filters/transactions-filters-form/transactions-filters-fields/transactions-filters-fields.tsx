@@ -5,24 +5,45 @@ import { useTranslation } from 'react-i18next';
 import { Collapsible } from '@shared/ui';
 
 import { AmountRangeFields } from '../amount-range-fields';
-import { CategoryFields } from '../category-fields';
 import { CurrencyField } from '../currency-field';
 import { DateRangeFields } from '../date-range-fields';
-import { NamedResourceField } from '../named-resource-field';
+import { NamedResourceFilterField } from '../named-resource-field';
 import { TransactionTypeField } from '../transaction-type-field';
 import type { TransactionFiltersFormValues } from '../utils';
 
 export const TransactionsFiltersFields = () => {
   const { t } = useTranslation('transactions');
   const { control } = useFormContext<TransactionFiltersFormValues>();
-  const [categoryMode, categoryId, excludeCategoryIds, paymentMethodId, accountId] = useWatch({
+  const [
+    categoryMode,
+    categoryIds,
+    excludeCategoryIds,
+    paymentMethodMode,
+    paymentMethodIds,
+    excludePaymentMethodIds,
+    accountMode,
+    accountIds,
+    excludeAccountIds,
+  ] = useWatch({
     control,
-    name: ['categoryMode', 'categoryId', 'excludeCategoryIds', 'paymentMethodId', 'accountId'],
+    name: [
+      'categoryMode',
+      'categoryIds',
+      'excludeCategoryIds',
+      'paymentMethodMode',
+      'paymentMethodIds',
+      'excludePaymentMethodIds',
+      'accountMode',
+      'accountIds',
+      'excludeAccountIds',
+    ],
   });
   const shouldOpenAdvancedFields = Boolean(
-    paymentMethodId ||
-      accountId ||
-      (categoryMode === 'include' ? categoryId : excludeCategoryIds.length > 0),
+    (categoryMode === 'include' ? categoryIds.length > 0 : excludeCategoryIds.length > 0) ||
+    (paymentMethodMode === 'include' 
+      ? paymentMethodIds.length > 0
+      : excludePaymentMethodIds.length > 0) ||
+    (accountMode === 'include' ? accountIds.length > 0 : excludeAccountIds.length > 0),
   );
 
   return (
@@ -45,9 +66,9 @@ export const TransactionsFiltersFields = () => {
         contentClassName="pt-3 sm:pt-4"
       >
         <div className="grid min-w-0 gap-3 sm:gap-4">
-          <CategoryFields />
-          <NamedResourceField name="paymentMethodId" kind="paymentMethods" />
-          <NamedResourceField name="accountId" kind="accounts" />
+          <NamedResourceFilterField kind="categories" includeSystem />
+          <NamedResourceFilterField kind="paymentMethods" />
+          <NamedResourceFilterField kind="accounts" />
         </div>
       </Collapsible>
     </div>
