@@ -11,9 +11,14 @@ import {
   getReferenceActionMessage,
   TransactionActionModal,
   TransactionBackButton,
+  TransactionFallbackState,
   useInvalidateTransactionQueries,
 } from '@transactions/components/shared';
-import { getTransactionsReturnTo, getTransactionsRouteState } from '@transactions/utils';
+import {
+  getTransactionsReturnTo,
+  getTransactionsRouteState,
+  isNotFoundTransactionQueryError,
+} from '@transactions/utils';
 import { Button, Card, LoadingState } from '@ui';
 
 import { TransactionDetailsCard } from '../transaction-details-card';
@@ -42,6 +47,7 @@ export const TransactionDetails = () => {
     queryKey: ['transaction', transactionId],
     queryFn: async () => await getTransaction(transactionId!),
     enabled: Boolean(transactionId) && isTransactionQueryEnabled,
+    retry: false,
   });
 
   const moveToTrashMutation = useMutation({
@@ -78,8 +84,28 @@ export const TransactionDetails = () => {
       </div>
     );
   }
-  if (error) return <p>{error.message}</p>;
-  if (!transaction) return <p>No transaction</p>;
+
+  const transactionNotFoundState = (
+    <TransactionFallbackState
+      title={t('transactionNotFoundTitle')}
+      description={t('transactionNotFoundDescription')}
+      actionLabel={t('backToTransactions')}
+      to={returnTo}
+    />
+  );
+
+  const transactionErrorState = error ? (
+    <TransactionFallbackState
+      title={t('transactionLoadFailedTitle')}
+      description={error.message}
+      actionLabel={t('backToTransactions')}
+      to={returnTo}
+    />
+  ) : null;
+
+  if (error && isNotFoundTransactionQueryError(error)) return transactionNotFoundState;
+  if (error) return transactionErrorState;
+  if (!transaction) return transactionNotFoundState;
 
   const linkedMoveToTrashMessage = getReferenceActionMessage(
     transaction,

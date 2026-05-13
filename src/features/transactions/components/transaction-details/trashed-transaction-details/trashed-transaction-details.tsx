@@ -15,8 +15,12 @@ import {
   getReferenceActionMessage,
   TransactionActionModal,
   TransactionBackButton,
+  TransactionFallbackState,
   useInvalidateTransactionQueries,
 } from '@transactions/components/shared';
+import {
+  isNotFoundTransactionQueryError,
+} from '@transactions/utils';
 import { Button, Card, LoadingState } from '@ui';
 
 import { TransactionDetailsCard } from '../transaction-details-card';
@@ -45,6 +49,7 @@ export const TrashedTransactionDetails = () => {
     queryKey: ['trashed-transaction', transactionId],
     queryFn: async () => await getTrashedTransaction(transactionId!),
     enabled: Boolean(transactionId) && isTransactionQueryEnabled,
+    retry: false,
   });
 
   const restoreMutation = useMutation({
@@ -90,8 +95,30 @@ export const TrashedTransactionDetails = () => {
       </div>
     );
   }
-  if (error) return <p>{error.message}</p>;
-  if (!transaction) return <p>No transaction</p>;
+
+  const trashedTransactionNotFoundState = (
+    <TransactionFallbackState
+      title={t('trashedTransactionNotFoundTitle')}
+      description={t('trashedTransactionNotFoundDescription')}
+      actionLabel={t('backToTrash')}
+      to="/transactions/trash"
+    />
+  );
+
+  const trashedTransactionErrorState = error ? (
+    <TransactionFallbackState
+      title={t('trashedTransactionLoadFailedTitle')}
+      description={error.message}
+      actionLabel={t('backToTrash')}
+      to="/transactions/trash"
+    />
+  ) : null;
+
+  if (error && isNotFoundTransactionQueryError(error)) {
+    return trashedTransactionNotFoundState;
+  }
+  if (error) return trashedTransactionErrorState;
+  if (!transaction) return trashedTransactionNotFoundState;
 
   const linkedRestoreMessage = getReferenceActionMessage(transaction, 'restore', t);
   const linkedPermanentDeleteMessage = getReferenceActionMessage(

@@ -1,5 +1,6 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { render, screen } from '@testing-library/react';
+import type { ComponentProps, ReactNode } from 'react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
@@ -42,6 +43,24 @@ vi.mock('@transactions/components/transaction-forms', async () => {
     ExchangeTransactionForm: mocks.exchangeForm,
   };
 });
+
+vi.mock('@ui', () => ({
+  Button: ({
+    children,
+    ...props
+  }: ComponentProps<'button'> & { children: ReactNode }) => (
+    <button type="button" {...props}>
+      {children}
+    </button>
+  ),
+  Card: ({ children }: { children: ReactNode }) => <div>{children}</div>,
+  LoadingState: ({ title, description }: { title: string; description?: string }) => (
+    <div>
+      <p>{title}</p>
+      {description ? <p>{description}</p> : null}
+    </div>
+  ),
+}));
 
 const renderUpdateTransaction = (transactionId = 'tx-1') => {
   const client = new QueryClient({
@@ -199,6 +218,9 @@ describe('UpdateTransaction', () => {
 
     renderUpdateTransaction();
 
+    expect(
+      await screen.findByText('transactionLoadFailedTitle'),
+    ).toBeInTheDocument();
     expect(await screen.findByText('Transaction failed')).toBeInTheDocument();
   });
 
@@ -217,18 +239,22 @@ describe('UpdateTransaction', () => {
 
     renderUpdateTransaction();
 
+    expect(
+      await screen.findByText('transactionLoadFailedTitle'),
+    ).toBeInTheDocument();
     expect(await screen.findByText('Reference failed')).toBeInTheDocument();
   });
 
-  it('renders a fallback when the transaction is missing', async () => {
+  it('renders a styled not-found state when the transaction is missing', async () => {
     mocks.getTransaction.mockResolvedValueOnce(null);
 
     renderUpdateTransaction();
 
-    expect(await screen.findByText('No transaction')).toBeInTheDocument();
+    expect(await screen.findByText('transactionNotFoundTitle')).toBeInTheDocument();
+    expect(screen.getByText('transactionNotFoundDescription')).toBeInTheDocument();
   });
 
-  it('renders a fallback when a paired transaction reference is missing', async () => {
+  it('renders a styled not-found state when a paired transaction reference is missing', async () => {
     mocks.getTransaction
       .mockResolvedValueOnce(
         makeTransaction({
@@ -243,6 +269,7 @@ describe('UpdateTransaction', () => {
 
     renderUpdateTransaction();
 
-    expect(await screen.findByText('No transaction')).toBeInTheDocument();
+    expect(await screen.findByText('transactionNotFoundTitle')).toBeInTheDocument();
+    expect(screen.getByText('transactionNotFoundDescription')).toBeInTheDocument();
   });
 });

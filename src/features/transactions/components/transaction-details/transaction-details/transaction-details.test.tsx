@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event';
 import type { ComponentProps, ReactNode } from 'react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
+import { ApiError } from '@shared/api/api-error';
 import { makeTransaction } from '@test-utils/factories/transaction';
 import type { TransactionDetails as ApiTransactionDetails } from '@transactions/api';
 
@@ -149,11 +150,14 @@ describe('TransactionDetails', () => {
       </QueryClientProvider>,
     );
 
+    expect(
+      await screen.findByText('transactionLoadFailedTitle'),
+    ).toBeInTheDocument();
     expect(await screen.findByText('Oops')).toBeInTheDocument();
   });
 
-  it('renders info that no transaction was returned', async () => {
-    mocks.getTransaction.mockRejectedValueOnce(undefined);
+  it('renders a styled not-found state when transaction is missing', async () => {
+    mocks.getTransaction.mockResolvedValueOnce(null);
     const client = new QueryClient({
       defaultOptions: { queries: { retry: false } },
     });
@@ -164,7 +168,31 @@ describe('TransactionDetails', () => {
       </QueryClientProvider>,
     );
 
-    expect(await screen.findByText('No transaction')).toBeInTheDocument();
+    expect(await screen.findByText('transactionNotFoundTitle')).toBeInTheDocument();
+    expect(screen.getByText('transactionNotFoundDescription')).toBeInTheDocument();
+  });
+
+  it('renders a styled not-found state for 404 errors', async () => {
+    mocks.getTransaction.mockRejectedValueOnce(
+      new ApiError({
+        message: 'Transaction not found',
+        statusCode: 404,
+      }),
+    );
+    const client = new QueryClient({
+      defaultOptions: { queries: { retry: false } },
+    });
+    const user = userEvent.setup();
+
+    render(
+      <QueryClientProvider client={client}>
+        <TransactionDetails />
+      </QueryClientProvider>,
+    );
+
+    expect(await screen.findByText('transactionNotFoundTitle')).toBeInTheDocument();
+    await user.click(screen.getByRole('button', { name: 'backToTransactions' }));
+    expect(mocks.navigate).toHaveBeenCalledWith('/transactions?page=2&categoryIds=cat-1');
   });
 
   it('renders transaction details', async () => {

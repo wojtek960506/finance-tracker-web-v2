@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event';
 import type { ComponentProps, ReactNode } from 'react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
+import { ApiError } from '@shared/api/api-error';
 import { makeTrashedTransaction } from '@test-utils/factories/transaction';
 import type { TrashedTransactionDetails as ApiTrashedTransactionDetails } from '@transactions/api';
 
@@ -147,10 +148,13 @@ describe('TrashedTransactionDetails', () => {
       </QueryClientProvider>,
     );
 
+    expect(
+      await screen.findByText('trashedTransactionLoadFailedTitle'),
+    ).toBeInTheDocument();
     expect(await screen.findByText('Oops')).toBeInTheDocument();
   });
 
-  it('renders info that no trashed transaction was returned', async () => {
+  it('renders a styled not-found state when trashed transaction is missing', async () => {
     mocks.getTrashedTransaction.mockResolvedValueOnce(null);
     const client = new QueryClient({
       defaultOptions: { queries: { retry: false } },
@@ -162,7 +166,33 @@ describe('TrashedTransactionDetails', () => {
       </QueryClientProvider>,
     );
 
-    expect(await screen.findByText('No transaction')).toBeInTheDocument();
+    expect(await screen.findByText('trashedTransactionNotFoundTitle')).toBeInTheDocument();
+    expect(
+      screen.getByText('trashedTransactionNotFoundDescription'),
+    ).toBeInTheDocument();
+  });
+
+  it('renders a styled not-found state for trashed transaction 404 errors', async () => {
+    mocks.getTrashedTransaction.mockRejectedValueOnce(
+      new ApiError({
+        message: 'Transaction not found',
+        statusCode: 404,
+      }),
+    );
+    const client = new QueryClient({
+      defaultOptions: { queries: { retry: false } },
+    });
+    const user = userEvent.setup();
+
+    render(
+      <QueryClientProvider client={client}>
+        <TrashedTransactionDetailsView />
+      </QueryClientProvider>,
+    );
+
+    expect(await screen.findByText('trashedTransactionNotFoundTitle')).toBeInTheDocument();
+    await user.click(screen.getByRole('button', { name: 'backToTrash' }));
+    expect(mocks.navigate).toHaveBeenCalledWith('/transactions/trash');
   });
 
   it('renders trashed transaction details actions', async () => {
