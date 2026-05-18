@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import { normalizeApiError } from '@shared/api/api-error';
-import { MAIN_BUTTON_TEXT } from '@shared/consts';
+import { FORM_BUTTON_SIZE_CLASS } from '@shared/consts';
 import { useToastStore } from '@store/toast-store';
 import { getTransaction, moveTransactionToTrash } from '@transactions/api';
 import {
@@ -169,7 +169,7 @@ export const TransactionDetails = () => {
       />
       <Button
         variant="secondary"
-        className={MAIN_BUTTON_TEXT}
+        className={`${FORM_BUTTON_SIZE_CLASS} font-semibold sm:font-bold`}
         onClick={() =>
           navigate(`/transactions/${transaction.id}/edit`, {
             state: getTransactionsRouteState(returnTo),
@@ -183,7 +183,7 @@ export const TransactionDetails = () => {
       <Button
         ref={moveToTrashButtonRef}
         variant="destructive"
-        className={MAIN_BUTTON_TEXT}
+        className={`${FORM_BUTTON_SIZE_CLASS} font-semibold sm:font-bold`}
         onClick={() => setIsMoveToTrashModalOpen(true)}
         disabled={moveToTrashMutation.isPending}
       >
