@@ -4,13 +4,11 @@ import { useEffect } from 'react';
 import { type SubmitHandler, useForm, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
+import { AuthFormField } from '@auth/components/auth-form-field';
 import { AuthFormShell } from '@auth/components/auth-form-shell';
 import { FORM_BUTTON_SIZE_CLASS } from '@shared/consts';
-import {
-  FIELD_CONTROL_CLASS_NAME,
-  REQUIRED_LABEL_CLASS_NAME,
-} from '@transactions/components/transaction-forms';
-import { Button, ButtonLink, Input, Label } from '@ui';
+import { FIELD_CONTROL_CLASS_NAME } from '@transactions/components/transaction-forms';
+import { Button, ButtonLink, Input } from '@ui';
 
 import {
   createUserFormSchema,
@@ -59,13 +57,14 @@ export const CreateUserForm = ({ isPending, onSubmit }: CreateUserFormProps) => 
   const isSubmitDisabled =
     !createUserFormSchema.safeParse(values ?? getDefaultCreateUserFormValues()).success ||
     isPending;
-  const labelCn = 'text-lg sm:text-xl font-bold';
-  const errorCn = 'text-destructive text-xs sm:text-sm h-4 sm:h-5 my-1';
 
   return (
     <AuthFormShell onSubmit={form.handleSubmit(handleSubmit)}>
-      <Label>
-        <span className={clsx(labelCn, REQUIRED_LABEL_CLASS_NAME)}>{t('firstName')}</span>
+      <AuthFormField
+        label={t('firstName')}
+        required
+        error={getFieldErrorMessage('firstName')}
+      >
         <Input
           {...form.register('firstName')}
           id="firstName"
@@ -73,11 +72,13 @@ export const CreateUserForm = ({ isPending, onSubmit }: CreateUserFormProps) => 
           autoComplete="off"
           className={FIELD_CONTROL_CLASS_NAME}
         />
-      </Label>
-      <p className={errorCn}>{getFieldErrorMessage('firstName') ?? ''}</p>
+      </AuthFormField>
 
-      <Label>
-        <span className={clsx(labelCn, REQUIRED_LABEL_CLASS_NAME)}>{t('lastName')}</span>
+      <AuthFormField
+        label={t('lastName')}
+        required
+        error={getFieldErrorMessage('lastName')}
+      >
         <Input
           {...form.register('lastName')}
           id="lastName"
@@ -85,11 +86,9 @@ export const CreateUserForm = ({ isPending, onSubmit }: CreateUserFormProps) => 
           autoComplete="off"
           className={FIELD_CONTROL_CLASS_NAME}
         />
-      </Label>
-      <p className={errorCn}>{getFieldErrorMessage('lastName') ?? ''}</p>
+      </AuthFormField>
 
-      <Label>
-        <span className={clsx(labelCn, REQUIRED_LABEL_CLASS_NAME)}>{t('email')}</span>
+      <AuthFormField label={t('email')} required error={getFieldErrorMessage('email')}>
         <Input
           {...form.register('email')}
           id="email"
@@ -97,11 +96,13 @@ export const CreateUserForm = ({ isPending, onSubmit }: CreateUserFormProps) => 
           autoComplete="off"
           className={FIELD_CONTROL_CLASS_NAME}
         />
-      </Label>
-      <p className={errorCn}>{getFieldErrorMessage('email') ?? ''}</p>
+      </AuthFormField>
 
-      <Label>
-        <span className={clsx(labelCn, REQUIRED_LABEL_CLASS_NAME)}>{t('password')}</span>
+      <AuthFormField
+        label={t('password')}
+        required
+        error={getFieldErrorMessage('password')}
+      >
         <Input
           {...form.register('password')}
           id="password"
@@ -110,13 +111,13 @@ export const CreateUserForm = ({ isPending, onSubmit }: CreateUserFormProps) => 
           autoComplete="off"
           className={FIELD_CONTROL_CLASS_NAME}
         />
-      </Label>
-      <p className={errorCn}>{getFieldErrorMessage('password') ?? ''}</p>
+      </AuthFormField>
 
-      <Label>
-        <span className={clsx(labelCn, REQUIRED_LABEL_CLASS_NAME)}>
-          {t('confirmPassword')}
-        </span>
+      <AuthFormField
+        label={t('confirmPassword')}
+        required
+        error={getFieldErrorMessage('confirmPassword')}
+      >
         <Input
           {...form.register('confirmPassword')}
           id="confirmPassword"
@@ -125,23 +126,24 @@ export const CreateUserForm = ({ isPending, onSubmit }: CreateUserFormProps) => 
           autoComplete="off"
           className={FIELD_CONTROL_CLASS_NAME}
         />
-      </Label>
-      <p className={errorCn}>{getFieldErrorMessage('confirmPassword') ?? ''}</p>
+      </AuthFormField>
 
-      <Button
-        disabled={isSubmitDisabled}
-        type="submit"
-        className={clsx('mt-10', FORM_BUTTON_SIZE_CLASS, 'font-semibold sm:font-bold')}
-      >
-        {t('createAccount')}
-      </Button>
-      <ButtonLink
-        to="/login"
-        variant="outline"
-        className={clsx('mt-2', FORM_BUTTON_SIZE_CLASS, 'font-semibold sm:font-bold')}
-      >
-        {t('backToLogin')}
-      </ButtonLink>
+      <div className="mt-6 flex flex-col gap-2">
+        <Button
+          disabled={isSubmitDisabled}
+          type="submit"
+          className={clsx(FORM_BUTTON_SIZE_CLASS, 'font-semibold sm:font-bold')}
+        >
+          {t('createAccount')}
+        </Button>
+        <ButtonLink
+          to="/login"
+          variant="outline"
+          className={clsx(FORM_BUTTON_SIZE_CLASS, 'font-semibold sm:font-bold')}
+        >
+          {t('backToLogin')}
+        </ButtonLink>
+      </div>
     </AuthFormShell>
   );
 };

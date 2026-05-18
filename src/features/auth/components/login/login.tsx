@@ -4,16 +4,14 @@ import { Trans, useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router-dom';
 
 import { login, resendVerification } from '@auth/api';
+import { AuthFormField } from '@auth/components/auth-form-field';
 import { AuthFormShell } from '@auth/components/auth-form-shell';
 import { normalizeApiError } from '@shared/api/api-error';
 import { FORM_BUTTON_SIZE_CLASS } from '@shared/consts';
 import { useAuthToken } from '@shared/hooks';
 import { useToastStore } from '@store/toast-store';
-import {
-  FIELD_CONTROL_CLASS_NAME,
-  REQUIRED_LABEL_CLASS_NAME,
-} from '@transactions/components/transaction-forms';
-import { Button, ButtonLink, Input, Label } from '@ui';
+import { FIELD_CONTROL_CLASS_NAME } from '@transactions/components/transaction-forms';
+import { Button, ButtonLink, Input } from '@ui';
 
 // TODO revisit this screen:
 // - split the sign-in form and the unverified-email recovery flow into smaller components
@@ -116,9 +114,6 @@ export const Login = () => {
       setIsResendPending(false);
     }
   };
-
-  const labelCn = 'text-lg sm:text-xl font-bold';
-
   if (unverifiedEmail) {
     return (
       <AuthFormShell className="flex flex-col gap-4">
@@ -164,8 +159,7 @@ export const Login = () => {
 
   return (
     <AuthFormShell onSubmit={handleSubmit}>
-      <Label>
-        <span className={clsx(labelCn, REQUIRED_LABEL_CLASS_NAME)}>{t('email')}</span>
+      <AuthFormField label={t('email')} required error={showEmailError ? t('invalidEmailFormat') : undefined}>
         <Input
           ref={emailInputRef}
           id="email"
@@ -184,13 +178,9 @@ export const Login = () => {
           autoComplete="off"
           className={FIELD_CONTROL_CLASS_NAME}
         />
-      </Label>
-      <p className="text-destructive text-xs sm:text-sm h-4 sm:h-5 my-1">
-        {showEmailError ? t('invalidEmailFormat') : ''}
-      </p>
+      </AuthFormField>
 
-      <Label>
-        <span className={clsx(labelCn, REQUIRED_LABEL_CLASS_NAME)}>{t('password')}</span>
+      <AuthFormField label={t('password')} required>
         <Input
           id="password"
           value={password}
@@ -200,22 +190,24 @@ export const Login = () => {
           autoComplete="off"
           className={FIELD_CONTROL_CLASS_NAME}
         />
-      </Label>
+      </AuthFormField>
 
-      <Button
-        disabled={email === '' || password === '' || showEmailError}
-        type="submit"
-        className={clsx('mt-10', FORM_BUTTON_SIZE_CLASS, 'font-semibold sm:font-bold')}
-      >
-        {t('logIn')}
-      </Button>
-      <ButtonLink
-        to="/register"
-        variant="outline"
-        className={clsx('mt-2', FORM_BUTTON_SIZE_CLASS, 'font-semibold sm:font-bold')}
-      >
-        {t('goToCreateAccount')}
-      </ButtonLink>
+      <div className="mt-6 flex flex-col gap-2">
+        <Button
+          disabled={email === '' || password === '' || showEmailError}
+          type="submit"
+          className={clsx(FORM_BUTTON_SIZE_CLASS, 'font-semibold sm:font-bold')}
+        >
+          {t('logIn')}
+        </Button>
+        <ButtonLink
+          to="/register"
+          variant="outline"
+          className={clsx(FORM_BUTTON_SIZE_CLASS, 'font-semibold sm:font-bold')}
+        >
+          {t('goToCreateAccount')}
+        </ButtonLink>
+      </div>
     </AuthFormShell>
   );
 };
