@@ -6,6 +6,10 @@ import { useTranslation } from 'react-i18next';
 
 import { AuthFormShell } from '@auth/components/auth-form-shell';
 import { FORM_BUTTON_SIZE_CLASS } from '@shared/consts';
+import {
+  FIELD_CONTROL_CLASS_NAME,
+  REQUIRED_LABEL_CLASS_NAME,
+} from '@transactions/components/transaction-forms';
 import { Button, ButtonLink, Input, Label } from '@ui';
 
 import {
@@ -61,58 +65,65 @@ export const CreateUserForm = ({ isPending, onSubmit }: CreateUserFormProps) => 
   return (
     <AuthFormShell onSubmit={form.handleSubmit(handleSubmit)}>
       <Label>
-        <span className={labelCn}>{t('firstName')}</span>
+        <span className={clsx(labelCn, REQUIRED_LABEL_CLASS_NAME)}>{t('firstName')}</span>
         <Input
           {...form.register('firstName')}
           id="firstName"
           placeholder={t('firstNamePlaceholder')}
           autoComplete="off"
+          className={FIELD_CONTROL_CLASS_NAME}
         />
       </Label>
       <p className={errorCn}>{getFieldErrorMessage('firstName') ?? ''}</p>
 
       <Label>
-        <span className={labelCn}>{t('lastName')}</span>
+        <span className={clsx(labelCn, REQUIRED_LABEL_CLASS_NAME)}>{t('lastName')}</span>
         <Input
           {...form.register('lastName')}
           id="lastName"
           placeholder={t('lastNamePlaceholder')}
           autoComplete="off"
+          className={FIELD_CONTROL_CLASS_NAME}
         />
       </Label>
       <p className={errorCn}>{getFieldErrorMessage('lastName') ?? ''}</p>
 
       <Label>
-        <span className={labelCn}>{t('email')}</span>
+        <span className={clsx(labelCn, REQUIRED_LABEL_CLASS_NAME)}>{t('email')}</span>
         <Input
           {...form.register('email')}
           id="email"
           placeholder={t('emailPlaceholder')}
           autoComplete="off"
+          className={FIELD_CONTROL_CLASS_NAME}
         />
       </Label>
       <p className={errorCn}>{getFieldErrorMessage('email') ?? ''}</p>
 
       <Label>
-        <span className={labelCn}>{t('password')}</span>
+        <span className={clsx(labelCn, REQUIRED_LABEL_CLASS_NAME)}>{t('password')}</span>
         <Input
           {...form.register('password')}
           id="password"
           type="password"
           placeholder={t('passwordPlaceholder')}
           autoComplete="off"
+          className={FIELD_CONTROL_CLASS_NAME}
         />
       </Label>
       <p className={errorCn}>{getFieldErrorMessage('password') ?? ''}</p>
 
       <Label>
-        <span className={labelCn}>{t('confirmPassword')}</span>
+        <span className={clsx(labelCn, REQUIRED_LABEL_CLASS_NAME)}>
+          {t('confirmPassword')}
+        </span>
         <Input
           {...form.register('confirmPassword')}
           id="confirmPassword"
           type="password"
           placeholder={t('confirmPasswordPlaceholder')}
           autoComplete="off"
+          className={FIELD_CONTROL_CLASS_NAME}
         />
       </Label>
       <p className={errorCn}>{getFieldErrorMessage('confirmPassword') ?? ''}</p>

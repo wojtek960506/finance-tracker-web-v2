@@ -9,6 +9,10 @@ import { normalizeApiError } from '@shared/api/api-error';
 import { FORM_BUTTON_SIZE_CLASS } from '@shared/consts';
 import { useAuthToken } from '@shared/hooks';
 import { useToastStore } from '@store/toast-store';
+import {
+  FIELD_CONTROL_CLASS_NAME,
+  REQUIRED_LABEL_CLASS_NAME,
+} from '@transactions/components/transaction-forms';
 import { Button, ButtonLink, Input, Label } from '@ui';
 
 // TODO revisit this screen:
@@ -161,7 +165,7 @@ export const Login = () => {
   return (
     <AuthFormShell onSubmit={handleSubmit}>
       <Label>
-        <span className={labelCn}>{t('email')}</span>
+        <span className={clsx(labelCn, REQUIRED_LABEL_CLASS_NAME)}>{t('email')}</span>
         <Input
           ref={emailInputRef}
           id="email"
@@ -178,6 +182,7 @@ export const Login = () => {
           placeholder={t('emailPlaceholder')}
           onBlur={() => setIsEmailInputTouched(true)}
           autoComplete="off"
+          className={FIELD_CONTROL_CLASS_NAME}
         />
       </Label>
       <p className="text-destructive text-xs sm:text-sm h-4 sm:h-5 my-1">
@@ -185,7 +190,7 @@ export const Login = () => {
       </p>
 
       <Label>
-        <span className={labelCn}>{t('password')}</span>
+        <span className={clsx(labelCn, REQUIRED_LABEL_CLASS_NAME)}>{t('password')}</span>
         <Input
           id="password"
           value={password}
@@ -193,6 +198,7 @@ export const Login = () => {
           onChange={(e) => setPassword(e.target.value)}
           placeholder={t('passwordPlaceholder')}
           autoComplete="off"
+          className={FIELD_CONTROL_CLASS_NAME}
         />
       </Label>
 
