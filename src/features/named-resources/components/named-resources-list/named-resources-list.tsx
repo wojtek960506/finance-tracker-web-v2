@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import clsx from 'clsx';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -10,7 +11,7 @@ import {
   type NamedResourceKind,
 } from '@named-resources/api';
 import { normalizeApiError } from '@shared/api/api-error';
-import { MAIN_BUTTON_TEXT } from '@shared/consts';
+import { FORM_BUTTON_SIZE_CLASS } from '@shared/consts';
 import { Button } from '@shared/ui';
 import { capitalize } from '@shared/utils';
 import { useToastStore } from '@store/toast-store';
@@ -79,7 +80,7 @@ export const NamedResourcesList = ({ kind }: { kind: NamedResourceKind }) => {
     <div className="flex flex-col gap-2 sm:gap-3 max-w-100 m-auto">
       <Button
         variant="primary"
-        className={MAIN_BUTTON_TEXT}
+        className={clsx(FORM_BUTTON_SIZE_CLASS, 'font-semibold sm:font-bold')}
         disabled={isCreating}
         onClick={() => setIsCreating(true)}
       >
