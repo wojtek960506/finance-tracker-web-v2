@@ -139,6 +139,7 @@ export const CreateUserForm = ({ isPending, onSubmit }: CreateUserFormProps) => 
         <ButtonLink
           to="/login"
           variant="outline"
+          preventFocusOnPress
           className={clsx(FORM_BUTTON_SIZE_CLASS, 'font-semibold sm:font-bold')}
         >
           {t('backToLogin')}

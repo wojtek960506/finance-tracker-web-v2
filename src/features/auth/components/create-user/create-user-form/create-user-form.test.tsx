@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { CreateUserForm } from './create-user-form';
@@ -110,5 +110,27 @@ describe('CreateUserForm', () => {
       'href',
       '/login',
     );
+  });
+
+  it('does not flash validation errors when navigating back to login', async () => {
+    const user = userEvent.setup();
+
+    render(
+      <MemoryRouter initialEntries={['/register']}>
+        <Routes>
+          <Route
+            path="/register"
+            element={<CreateUserForm isPending={false} onSubmit={vi.fn()} />}
+          />
+          <Route path="/login" element={<div>login-page</div>} />
+        </Routes>
+      </MemoryRouter>,
+    );
+
+    await user.type(screen.getByLabelText('email'), 'invalid');
+    await user.click(screen.getByRole('link', { name: 'backToLogin' }));
+
+    expect(screen.getByText('login-page')).toBeInTheDocument();
+    expect(screen.queryByText('invalidEmailFormat')).not.toBeInTheDocument();
   });
 });

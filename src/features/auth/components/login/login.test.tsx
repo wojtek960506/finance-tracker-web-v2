@@ -88,6 +88,25 @@ describe('Login', () => {
     expect(submitButton).toBeDisabled();
   });
 
+  it('does not flash email validation when navigating to create account', async () => {
+    const user = userEvent.setup();
+
+    render(
+      <MemoryRouter initialEntries={['/login']}>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<div>register-page</div>} />
+        </Routes>
+      </MemoryRouter>,
+    );
+
+    await user.type(screen.getByLabelText('email'), 'invalid');
+    await user.click(screen.getByRole('link', { name: 'goToCreateAccount' }));
+
+    expect(screen.getByText('register-page')).toBeInTheDocument();
+    expect(screen.queryByText('invalidEmailFormat')).not.toBeInTheDocument();
+  });
+
   it('prevents submit and shows error for invalid email', async () => {
     const user = userEvent.setup();
 

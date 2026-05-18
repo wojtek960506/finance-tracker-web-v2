@@ -203,6 +203,7 @@ export const Login = () => {
         <ButtonLink
           to="/register"
           variant="outline"
+          preventFocusOnPress
           className={clsx(FORM_BUTTON_SIZE_CLASS, 'font-semibold sm:font-bold')}
         >
           {t('goToCreateAccount')}
