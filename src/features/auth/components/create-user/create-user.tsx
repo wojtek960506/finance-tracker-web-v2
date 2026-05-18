@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { createUser } from '@auth/api';
 import { AuthFormShell } from '@auth/components/auth-form-shell';
 import { normalizeApiError } from '@shared/api/api-error';
-import { MAIN_BUTTON_TEXT } from '@shared/consts';
+import { FORM_BUTTON_SIZE_CLASS } from '@shared/consts';
 import { useToastStore } from '@store/toast-store';
 import { ButtonLink } from '@ui';
 
@@ -70,7 +70,7 @@ export const CreateUser = () => {
         <ButtonLink
           to="/login"
           variant="primary"
-          className={clsx('py-1 sm:py-2', MAIN_BUTTON_TEXT)}
+          className={clsx(FORM_BUTTON_SIZE_CLASS, 'font-semibold sm:font-bold')}
         >
           {t('backToLogin')}
         </ButtonLink>

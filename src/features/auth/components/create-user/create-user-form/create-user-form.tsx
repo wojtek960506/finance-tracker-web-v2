@@ -5,7 +5,7 @@ import { type SubmitHandler, useForm, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import { AuthFormShell } from '@auth/components/auth-form-shell';
-import { MAIN_BUTTON_TEXT } from '@shared/consts';
+import { FORM_BUTTON_SIZE_CLASS } from '@shared/consts';
 import { Button, ButtonLink, Input, Label } from '@ui';
 
 import {
@@ -120,14 +120,14 @@ export const CreateUserForm = ({ isPending, onSubmit }: CreateUserFormProps) => 
       <Button
         disabled={isSubmitDisabled}
         type="submit"
-        className={clsx('mt-10', MAIN_BUTTON_TEXT)}
+        className={clsx('mt-10', FORM_BUTTON_SIZE_CLASS, 'font-semibold sm:font-bold')}
       >
         {t('createAccount')}
       </Button>
       <ButtonLink
         to="/login"
         variant="outline"
-        className={clsx('mt-3 py-1 sm:py-2', MAIN_BUTTON_TEXT)}
+        className={clsx('mt-2', FORM_BUTTON_SIZE_CLASS, 'font-semibold sm:font-bold')}
       >
         {t('backToLogin')}
       </ButtonLink>

@@ -6,7 +6,7 @@ import { useSearchParams } from 'react-router-dom';
 import { login, resendVerification } from '@auth/api';
 import { AuthFormShell } from '@auth/components/auth-form-shell';
 import { normalizeApiError } from '@shared/api/api-error';
-import { MAIN_BUTTON_TEXT } from '@shared/consts';
+import { FORM_BUTTON_SIZE_CLASS } from '@shared/consts';
 import { useAuthToken } from '@shared/hooks';
 import { useToastStore } from '@store/toast-store';
 import { Button, ButtonLink, Input, Label } from '@ui';
@@ -15,6 +15,10 @@ import { Button, ButtonLink, Input, Label } from '@ui';
 // - split the sign-in form and the unverified-email recovery flow into smaller components
 // - reduce the number of local UI states by extracting the flow into a smaller state model or hook
 // - centralize auth error-to-UI mapping so the component does less branching inline
+
+// unify sizes of buttons and inputs to have similar flow as in transactions
+// refactor auth token storing approach - it should be stored just in memory of application
+// and not in localStorage - refresh should work well for this approach
 export const Login = () => {
   const { t } = useTranslation('auth');
   const { t: tAuthErrors } = useTranslation('auth-errors');
@@ -136,7 +140,7 @@ export const Login = () => {
             variant="primary"
             onClick={() => void handleResendVerification()}
             disabled={isResendPending}
-            className={MAIN_BUTTON_TEXT}
+            className={clsx(FORM_BUTTON_SIZE_CLASS, 'font-semibold sm:font-bold')}
           >
             {t('resendVerificationEmail')}
           </Button>
@@ -146,7 +150,7 @@ export const Login = () => {
           type="button"
           variant={didResendVerification ? 'primary' : 'outline'}
           onClick={resetUnverifiedState}
-          className={MAIN_BUTTON_TEXT}
+          className={clsx(FORM_BUTTON_SIZE_CLASS, 'font-semibold sm:font-bold')}
         >
           {t('backToSignIn')}
         </Button>
@@ -195,14 +199,14 @@ export const Login = () => {
       <Button
         disabled={email === '' || password === '' || showEmailError}
         type="submit"
-        className={clsx('mt-10', MAIN_BUTTON_TEXT)}
+        className={clsx('mt-10', FORM_BUTTON_SIZE_CLASS, 'font-semibold sm:font-bold')}
       >
         {t('logIn')}
       </Button>
       <ButtonLink
         to="/register"
         variant="outline"
-        className={clsx('mt-4 py-1 sm:py-2', MAIN_BUTTON_TEXT)}
+        className={clsx('mt-2', FORM_BUTTON_SIZE_CLASS, 'font-semibold sm:font-bold')}
       >
         {t('goToCreateAccount')}
       </ButtonLink>
