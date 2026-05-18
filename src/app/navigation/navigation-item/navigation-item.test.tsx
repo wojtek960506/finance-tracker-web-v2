@@ -105,4 +105,16 @@ describe('NavigationItem', () => {
 
     expect(screen.getByRole('link', { name: 'Right' })).toBeInTheDocument();
   });
+
+  it('renders a button when no route is provided', async () => {
+    const user = userEvent.setup();
+    const additionalAction = vi.fn();
+
+    renderNavigationItem(<NavigationItem title="Logout" additionalAction={additionalAction} />);
+
+    await user.click(screen.getByRole('button', { name: 'Logout' }));
+
+    expect(mocks.setIsNavOpen).toHaveBeenCalledWith(false);
+    expect(additionalAction).toHaveBeenCalled();
+  });
 });
