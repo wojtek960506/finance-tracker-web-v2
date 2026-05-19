@@ -125,7 +125,10 @@ describe('NamedResourcesList', () => {
 
     renderList();
 
-    expect(screen.getByText('Loading')).toBeInTheDocument();
+    expect(screen.getByText('namedResources:loadingCategory')).toBeInTheDocument();
+    expect(
+      screen.getByText('namedResources:loadingCategoryDescription'),
+    ).toBeInTheDocument();
   });
 
   it('renders query errors', async () => {
@@ -133,7 +136,13 @@ describe('NamedResourcesList', () => {
 
     renderList();
 
+    expect(
+      await screen.findByText('namedResources:resourcesLoadFailedTitleCategory'),
+    ).toBeInTheDocument();
     expect(await screen.findByText('Fetch failed')).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: 'namedResources:retryLoadingResources' }),
+    ).toBeInTheDocument();
   });
 
   it('renders empty state when no resources are returned', async () => {
@@ -141,9 +150,9 @@ describe('NamedResourcesList', () => {
 
     renderList();
 
-    expect(
-      await screen.findByText('There are no categories - TODO add button to create one'),
-    ).toBeInTheDocument();
+    expect(await screen.findByText('namedResources:emptyResourcesTitleCategory')).toBeInTheDocument();
+    expect(screen.getByText('namedResources:emptyResourcesDescriptionCategory')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'namedResources:newCategory' })).toBeInTheDocument();
   });
 
   it('renders loaded resources', async () => {
@@ -202,12 +211,14 @@ describe('NamedResourcesList', () => {
 
     renderList();
 
-    const items = await screen.findAllByRole('listitem');
+    await waitFor(() => {
+      const items = screen.getAllByRole('listitem');
 
-    expect(items[0]).toHaveTextContent('exchange:favorite');
-    expect(items[1]).toHaveTextContent('myAccount:regular');
-    expect(items[2]).toHaveTextContent('Alpha:favorite');
-    expect(items[3]).toHaveTextContent('Zoo:regular');
+      expect(items[0]).toHaveTextContent('exchange:favorite');
+      expect(items[1]).toHaveTextContent('myAccount:regular');
+      expect(items[2]).toHaveTextContent('Alpha:favorite');
+      expect(items[3]).toHaveTextContent('Zoo:regular');
+    });
   });
 
   it('opens the create input and focuses it', async () => {

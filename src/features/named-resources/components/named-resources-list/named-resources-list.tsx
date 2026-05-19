@@ -12,7 +12,7 @@ import {
 } from '@named-resources/api';
 import { normalizeApiError } from '@shared/api/api-error';
 import { FORM_BUTTON_SIZE_CLASS } from '@shared/consts';
-import { Button } from '@shared/ui';
+import { Button, Card, LoadingState } from '@shared/ui';
 import { capitalize } from '@shared/utils';
 import { useToastStore } from '@store/toast-store';
 
@@ -47,7 +47,7 @@ export const NamedResourcesList = ({ kind }: { kind: NamedResourceKind }) => {
     if (isCreating) inputRef.current!.focus();
   }, [isCreating]);
 
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, error, refetch } = useQuery({
     queryKey: [kind],
     queryFn: async () => await getNamedResources(kind),
   });
@@ -71,13 +71,44 @@ export const NamedResourcesList = ({ kind }: { kind: NamedResourceKind }) => {
     });
   }, [data, i18n.language, tNamedResource]);
 
-  if (isLoading) return <p>Loading</p>;
-  if (error) return <p>{error.message}</p>;
-  if (!data || data.length === 0)
-    return <p>There are no {kind} - TODO add button to create one</p>;
+  if (isLoading) {
+    return (
+      <div className="m-auto flex w-full max-w-100 flex-col gap-2 sm:gap-3">
+        <Card className="gap-4 rounded-3xl border-fg/20 bg-modal-bg/95 p-6 sm:p-8">
+          <LoadingState
+            title={tNamedResource(`loading${resourceKindKeySuffix}`)}
+            description={tNamedResource(`loading${resourceKindKeySuffix}Description`)}
+            className="py-4"
+          />
+        </Card>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="m-auto flex w-full max-w-100 flex-col gap-2 sm:gap-3">
+        <Card className="gap-4 rounded-3xl border-fg/20 bg-modal-bg/95 p-6 sm:p-8">
+          <div className="flex flex-col gap-2 text-center">
+            <h2 className="text-xl font-semibold sm:text-2xl">
+              {tNamedResource(`resourcesLoadFailedTitle${resourceKindKeySuffix}`)}
+            </h2>
+            <p className="text-sm text-text-muted sm:text-base">{error.message}</p>
+          </div>
+          <Button
+            variant="primary"
+            className={clsx(FORM_BUTTON_SIZE_CLASS, 'font-semibold sm:font-bold')}
+            onClick={() => void refetch()}
+          >
+            {tNamedResource('retryLoadingResources')}
+          </Button>
+        </Card>
+      </div>
+    );
+  }
 
   return (
-    <div className="flex flex-col gap-2 sm:gap-3 max-w-100 m-auto">
+    <div className="m-auto flex max-w-100 flex-col gap-2 sm:gap-3">
       <Button
         variant="primary"
         className={clsx(FORM_BUTTON_SIZE_CLASS, 'font-semibold sm:font-bold')}
@@ -118,15 +149,26 @@ export const NamedResourcesList = ({ kind }: { kind: NamedResourceKind }) => {
         />
       )}
 
-      <ul className="flex flex-col gap-2 sm:gap-3">
-        {sortedResources.map((namedResource) => (
-          <NamedResourcePreview
-            key={namedResource.id}
-            kind={kind}
-            namedResource={namedResource}
-          />
-        ))}
-      </ul>
+      {sortedResources.length === 0 ? (
+        <Card className="gap-3 rounded-3xl border-fg/20 bg-modal-bg/95 p-6 text-center sm:gap-4 sm:p-8">
+          <h2 className="text-xl font-semibold sm:text-2xl">
+            {tNamedResource(`emptyResourcesTitle${resourceKindKeySuffix}`)}
+          </h2>
+          <p className="text-sm text-text-muted sm:text-base">
+            {tNamedResource(`emptyResourcesDescription${resourceKindKeySuffix}`)}
+          </p>
+        </Card>
+      ) : (
+        <ul className="flex flex-col gap-2 sm:gap-3">
+          {sortedResources.map((namedResource) => (
+            <NamedResourcePreview
+              key={namedResource.id}
+              kind={kind}
+              namedResource={namedResource}
+            />
+          ))}
+        </ul>
+      )}
     </div>
   );
 };
