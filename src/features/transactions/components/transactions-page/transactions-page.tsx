@@ -10,7 +10,11 @@ import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
-import { IS_LG_MEDIA_QUERY, IS_XL_MEDIA_QUERY, MAIN_BUTTON_TEXT } from '@shared/consts';
+import {
+  FORM_BUTTON_SIZE_CLASS,
+  IS_LG_MEDIA_QUERY,
+  IS_XL_MEDIA_QUERY,
+} from '@shared/consts';
 import { useMediaQuery } from '@shared/hooks';
 import { Button, Card, Drawer, LoadingState } from '@shared/ui';
 import { useUIStore } from '@store/ui-store';
@@ -171,7 +175,7 @@ export const TransactionsPage = () => {
 
       <Button
         variant="primary"
-        className={clsx(MAIN_BUTTON_TEXT, 'mt-2 sm:mt-3 w-full ')}
+        className={clsx(FORM_BUTTON_SIZE_CLASS, 'mt-2 sm:mt-3 w-full')}
         onClick={() =>
           navigate('/transactions/new', {
             state: getTransactionsRouteState(currentTransactionsRoute),
@@ -221,7 +225,7 @@ export const TransactionsPage = () => {
             <div className="flex flex-col gap-2 sm:gap-3">
               <Button
                 variant="primary"
-                className={MAIN_BUTTON_TEXT}
+                className={clsx(FORM_BUTTON_SIZE_CLASS, 'font-semibold sm:font-bold')}
                 onClick={() =>
                   navigate('/transactions/new', {
                     state: getTransactionsRouteState(currentTransactionsRoute),
@@ -236,7 +240,7 @@ export const TransactionsPage = () => {
                   ref={totalsButtonRef}
                   type="button"
                   variant={isTotalsOpen ? 'secondary' : 'outline'}
-                  className="gap-2"
+                  className={clsx(FORM_BUTTON_SIZE_CLASS, 'gap-2')}
                   aria-expanded={isTotalsOpen}
                   aria-controls="transactions-totals-panel"
                   onClick={handleToggleTotals}
@@ -253,7 +257,7 @@ export const TransactionsPage = () => {
                   ref={filtersButtonRef}
                   type="button"
                   variant={isFiltersOpen ? 'secondary' : 'outline'}
-                  className="gap-2"
+                  className={clsx(FORM_BUTTON_SIZE_CLASS, 'gap-2')}
                   aria-expanded={isFiltersOpen}
                   aria-controls="transactions-filters-panel"
                   onClick={handleToggleFilters}

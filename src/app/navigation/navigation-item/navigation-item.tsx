@@ -8,10 +8,10 @@ import { useUIStore } from '@store/ui-store';
 import { getButtonClassName } from '@ui';
 
 type NavigationItemProps = {
-  to: string;
+  to?: string;
   title: string;
   Icon?: ComponentType<{ className?: string }>;
-  additionalAction?: () => void;
+  additionalAction?: () => void | Promise<void>;
   end?: boolean;
 };
 
@@ -24,6 +24,34 @@ export const NavigationItem = ({
 }: NavigationItemProps) => {
   const { setIsNavOpen } = useUIStore();
   const { fromLeft } = useNavigation();
+  const className = clsx('w-full justify-between gap-3 sm:gap-4', {
+    'text-left': fromLeft,
+    'flex-row-reverse text-right': !fromLeft,
+  });
+  const content = (
+    <>
+      {title}
+      {Icon ? <Icon className={ICON_CLASS_NAME} /> : <div className={ICON_CLASS_NAME} />}
+    </>
+  );
+
+  if (!to) {
+    return (
+      <button
+        type="button"
+        className={getButtonClassName({
+          variant: 'ghost',
+          className,
+        })}
+        onClick={() => {
+          setIsNavOpen(false);
+          void additionalAction?.();
+        }}
+      >
+        {content}
+      </button>
+    );
+  }
 
   return (
     <NavLink
@@ -33,9 +61,8 @@ export const NavigationItem = ({
         getButtonClassName({
           variant: 'ghost',
           className: clsx(
-            'w-full justify-between gap-3 sm:gap-4',
+            className,
             isActive && 'text-active-nav',
-            fromLeft ? 'text-left' : 'flex-row-reverse text-right',
           ),
         })
       }
@@ -44,8 +71,7 @@ export const NavigationItem = ({
         void additionalAction?.();
       }}
     >
-      {title}
-      {Icon ? <Icon className={ICON_CLASS_NAME} /> : <div className={ICON_CLASS_NAME} />}
+      {content}
     </NavLink>
   );
 };

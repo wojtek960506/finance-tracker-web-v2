@@ -1,13 +1,26 @@
-import { AUTH_TOKEN_STORE_KEY } from '@shared/consts';
+import { useEffect } from 'react';
 
-import { useLocalStorage } from '../use-local-storage';
+import {
+  clearAuthToken,
+  ensureAuthResolved,
+  setAuthToken,
+  useAuthStore,
+} from '@shared/store/auth-store';
 
 export const useAuthToken = () => {
-  const {
-    item: authToken,
-    setItem: setAuthToken,
-    removeItem: removeAuthToken,
-  } = useLocalStorage<string>(AUTH_TOKEN_STORE_KEY);
+  const { authToken, isAuthResolved } = useAuthStore();
 
-  return { authToken, setAuthToken, removeAuthToken, isAuthenticated: !!authToken };
+  useEffect(() => {
+    if (isAuthResolved) return;
+
+    void ensureAuthResolved();
+  }, [isAuthResolved]);
+
+  return {
+    authToken,
+    isAuthResolved,
+    setAuthToken,
+    removeAuthToken: clearAuthToken,
+    isAuthenticated: !!authToken,
+  };
 };

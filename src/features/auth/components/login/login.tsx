@@ -1,20 +1,27 @@
 import clsx from 'clsx';
+import { LoaderCircle } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router-dom';
 
 import { login, resendVerification } from '@auth/api';
+import { AuthFormField } from '@auth/components/auth-form-field';
 import { AuthFormShell } from '@auth/components/auth-form-shell';
 import { normalizeApiError } from '@shared/api/api-error';
-import { MAIN_BUTTON_TEXT } from '@shared/consts';
+import { FORM_BUTTON_SIZE_CLASS } from '@shared/consts';
 import { useAuthToken } from '@shared/hooks';
 import { useToastStore } from '@store/toast-store';
-import { Button, ButtonLink, Input, Label } from '@ui';
+import { FIELD_CONTROL_CLASS_NAME } from '@transactions/components/transaction-forms';
+import { Button, ButtonLink, Input } from '@ui';
 
 // TODO revisit this screen:
 // - split the sign-in form and the unverified-email recovery flow into smaller components
 // - reduce the number of local UI states by extracting the flow into a smaller state model or hook
 // - centralize auth error-to-UI mapping so the component does less branching inline
+
+// unify sizes of buttons and inputs to have similar flow as in transactions
+// refactor auth token storing approach - it should be stored just in memory of application
+// and not in localStorage - refresh should work well for this approach
 export const Login = () => {
   const { t } = useTranslation('auth');
   const { t: tAuthErrors } = useTranslation('auth-errors');
@@ -27,6 +34,7 @@ export const Login = () => {
 
   const [isEmailInputTouched, setIsEmailInputTouched] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoginPending, setIsLoginPending] = useState(false);
   const [unverifiedEmail, setUnverifiedEmail] = useState<string | null>(null);
   const [isResendPending, setIsResendPending] = useState(false);
   const [didResendVerification, setDidResendVerification] = useState(false);
@@ -58,8 +66,9 @@ export const Login = () => {
     if (isInvalidEmail || normalizedEmail === '' || password === '') return;
 
     try {
+      setIsLoginPending(true);
       const res = await login(normalizedEmail, password);
-      setAuthToken(res);
+      setAuthToken(res, { broadcast: true });
 
       // those probably not needed as it will reset during next render
       setIsSubmitted(false);
@@ -94,6 +103,8 @@ export const Login = () => {
             apiError.message
           ),
       });
+    } finally {
+      setIsLoginPending(false);
     }
   };
 
@@ -108,9 +119,6 @@ export const Login = () => {
       setIsResendPending(false);
     }
   };
-
-  const labelCn = 'text-lg sm:text-xl font-bold';
-
   if (unverifiedEmail) {
     return (
       <AuthFormShell className="flex flex-col gap-4">
@@ -136,7 +144,7 @@ export const Login = () => {
             variant="primary"
             onClick={() => void handleResendVerification()}
             disabled={isResendPending}
-            className={MAIN_BUTTON_TEXT}
+            className={clsx(FORM_BUTTON_SIZE_CLASS, 'font-semibold sm:font-bold')}
           >
             {t('resendVerificationEmail')}
           </Button>
@@ -146,7 +154,7 @@ export const Login = () => {
           type="button"
           variant={didResendVerification ? 'primary' : 'outline'}
           onClick={resetUnverifiedState}
-          className={MAIN_BUTTON_TEXT}
+          className={clsx(FORM_BUTTON_SIZE_CLASS, 'font-semibold sm:font-bold')}
         >
           {t('backToSignIn')}
         </Button>
@@ -156,8 +164,7 @@ export const Login = () => {
 
   return (
     <AuthFormShell onSubmit={handleSubmit}>
-      <Label>
-        <span className={labelCn}>{t('email')}</span>
+      <AuthFormField label={t('email')} required error={showEmailError ? t('invalidEmailFormat') : undefined}>
         <Input
           ref={emailInputRef}
           id="email"
@@ -174,14 +181,11 @@ export const Login = () => {
           placeholder={t('emailPlaceholder')}
           onBlur={() => setIsEmailInputTouched(true)}
           autoComplete="off"
+          className={FIELD_CONTROL_CLASS_NAME}
         />
-      </Label>
-      <p className="text-destructive text-xs sm:text-sm h-4 sm:h-5 my-1">
-        {showEmailError ? t('invalidEmailFormat') : ''}
-      </p>
+      </AuthFormField>
 
-      <Label>
-        <span className={labelCn}>{t('password')}</span>
+      <AuthFormField label={t('password')} required>
         <Input
           id="password"
           value={password}
@@ -189,23 +193,35 @@ export const Login = () => {
           onChange={(e) => setPassword(e.target.value)}
           placeholder={t('passwordPlaceholder')}
           autoComplete="off"
+          className={FIELD_CONTROL_CLASS_NAME}
         />
-      </Label>
+      </AuthFormField>
 
-      <Button
-        disabled={email === '' || password === '' || showEmailError}
-        type="submit"
-        className={clsx('mt-10', MAIN_BUTTON_TEXT)}
-      >
-        {t('logIn')}
-      </Button>
-      <ButtonLink
-        to="/register"
-        variant="outline"
-        className={clsx('mt-4 py-1 sm:py-2', MAIN_BUTTON_TEXT)}
-      >
-        {t('goToCreateAccount')}
-      </ButtonLink>
+      <div className="mt-6 flex flex-col gap-2">
+        <Button
+          disabled={email === '' || password === '' || showEmailError || isLoginPending}
+          type="submit"
+          className={clsx(FORM_BUTTON_SIZE_CLASS, 'gap-2 font-semibold sm:font-bold')}
+        >
+          {isLoginPending ? (
+            <>
+              <LoaderCircle className="size-4 animate-spin sm:size-5" aria-hidden="true" />
+              {t('loggingIn')}
+            </>
+          ) : (
+            t('logIn')
+          )}
+        </Button>
+        <ButtonLink
+          to="/register"
+          variant="outline"
+          preventFocusOnPress
+          disabled={isLoginPending}
+          className={clsx(FORM_BUTTON_SIZE_CLASS, 'font-semibold sm:font-bold')}
+        >
+          {t('goToCreateAccount')}
+        </ButtonLink>
+      </div>
     </AuthFormShell>
   );
 };

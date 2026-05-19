@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { normalizeApiError } from '@shared/api/api-error';
-import { MAIN_BUTTON_TEXT } from '@shared/consts';
+import { FORM_BUTTON_SIZE_CLASS } from '@shared/consts';
 import { useToastStore } from '@store/toast-store';
 import {
   deleteTrashedTransaction,
@@ -240,7 +240,7 @@ export const TrashedTransactionDetails = () => {
       <Button
         ref={restoreButtonRef}
         variant="secondary"
-        className={MAIN_BUTTON_TEXT}
+        className={`${FORM_BUTTON_SIZE_CLASS} font-semibold sm:font-bold`}
         onClick={() => setIsRestoreModalOpen(true)}
         disabled={isAnyMutationPending}
       >
@@ -250,7 +250,7 @@ export const TrashedTransactionDetails = () => {
       <Button
         ref={deleteButtonRef}
         variant="destructive"
-        className={MAIN_BUTTON_TEXT}
+        className={`${FORM_BUTTON_SIZE_CLASS} font-semibold sm:font-bold`}
         onClick={() => setIsPermanentDeleteModalOpen(true)}
         disabled={isAnyMutationPending}
       >

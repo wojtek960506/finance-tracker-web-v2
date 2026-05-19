@@ -88,6 +88,25 @@ describe('Login', () => {
     expect(submitButton).toBeDisabled();
   });
 
+  it('does not flash email validation when navigating to create account', async () => {
+    const user = userEvent.setup();
+
+    render(
+      <MemoryRouter initialEntries={['/login']}>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<div>register-page</div>} />
+        </Routes>
+      </MemoryRouter>,
+    );
+
+    await user.type(screen.getByLabelText('email'), 'invalid');
+    await user.click(screen.getByRole('link', { name: 'goToCreateAccount' }));
+
+    expect(screen.getByText('register-page')).toBeInTheDocument();
+    expect(screen.queryByText('invalidEmailFormat')).not.toBeInTheDocument();
+  });
+
   it('prevents submit and shows error for invalid email', async () => {
     const user = userEvent.setup();
 
@@ -122,12 +141,53 @@ describe('Login', () => {
 
     await waitFor(() => {
       expect(mocks.login).toHaveBeenCalledWith('test@example.com', 'secret');
-      expect(mocks.setAuthToken).toHaveBeenCalledWith('token-123');
+      expect(mocks.setAuthToken).toHaveBeenCalledWith('token-123', {
+        broadcast: true,
+      });
     });
 
     expect(emailInput.value).toBe('');
     expect(passwordInput.value).toBe('');
     expect(submitButton).toBeDisabled();
+  });
+
+  it('shows pending login state and disables navigation while request is in flight', async () => {
+    const user = userEvent.setup();
+    let resolveLogin: ((token: string) => void) | undefined;
+
+    mocks.login.mockImplementationOnce(
+      () =>
+        new Promise((resolve) => {
+          resolveLogin = resolve;
+        }),
+    );
+
+    render(
+      <MemoryRouter initialEntries={['/login']}>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<div>register-page</div>} />
+        </Routes>
+      </MemoryRouter>,
+    );
+
+    await user.type(screen.getByLabelText('email'), 'user@example.com');
+    await user.type(screen.getByLabelText('password'), 'secret');
+    await user.click(screen.getByRole('button', { name: 'logIn' }));
+
+    expect(screen.getByRole('button', { name: 'loggingIn' })).toBeDisabled();
+    expect(screen.getByRole('link', { name: 'goToCreateAccount' })).toHaveAttribute(
+      'aria-disabled',
+      'true',
+    );
+
+    resolveLogin?.('token-123');
+
+    await waitFor(() => {
+      expect(mocks.setAuthToken).toHaveBeenCalledWith('token-123', {
+        broadcast: true,
+      });
+    });
   });
 
   it('shows a translated toast when login fails', async () => {

@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import { normalizeApiError } from '@shared/api/api-error';
-import { MAIN_BUTTON_TEXT } from '@shared/consts';
+import { FORM_BUTTON_SIZE_CLASS } from '@shared/consts';
 import { useLanguage } from '@shared/hooks';
 import { useToastStore } from '@store/toast-store';
 import { emptyTrash, getTrashedTransactions } from '@transactions/api';
@@ -117,7 +117,7 @@ export const TrashedTransactionsList = () => {
         <div className="mt-2 flex w-full justify-center sm:mt-3">
           <Button
             variant="primary"
-            className={`${MAIN_BUTTON_TEXT} w-full`}
+            className={clsx(FORM_BUTTON_SIZE_CLASS, 'w-full font-semibold sm:font-bold')}
             onClick={() => navigate('/transactions')}
           >
             {t('backToTransactions')}
@@ -178,7 +178,7 @@ export const TrashedTransactionsList = () => {
       <Button
         ref={emptyTrashButtonRef}
         variant="destructive"
-        className={MAIN_BUTTON_TEXT}
+        className={clsx(FORM_BUTTON_SIZE_CLASS, 'font-semibold sm:font-bold')}
         onClick={handleOpenEmptyTrashModal}
         disabled={emptyTrashMutation.isPending}
       >

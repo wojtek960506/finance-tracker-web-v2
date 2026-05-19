@@ -11,6 +11,7 @@ import {
   WalletCards,
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 import { logout } from '@auth/api';
 import { useNavigation } from '@context/navigation-context';
@@ -25,6 +26,7 @@ const TRANSACTIONS_NAVIGATION_ITEM_ID = 'transactions';
 export const Navigation = () => {
   const { t } = useTranslation('navigation');
 
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { authToken, removeAuthToken } = useAuthToken();
   const { fromLeft } = useNavigation();
@@ -38,6 +40,15 @@ export const Navigation = () => {
   );
 
   if (!authToken) return;
+
+  const handleLogout = async () => {
+    await queryClient.cancelQueries();
+    removeAuthToken();
+    queryClient.clear();
+    resetPersistedUIState();
+    navigate('/login', { replace: true });
+    void logout().catch(() => undefined);
+  };
 
   return (
     <ul className="text-base sm:text-lg">
@@ -137,13 +148,7 @@ export const Navigation = () => {
       </li>
       <li>
         <NavigationItem
-          to="/login"
-          additionalAction={async () => {
-            await logout();
-            removeAuthToken();
-            queryClient.clear();
-            resetPersistedUIState();
-          }}
+          additionalAction={handleLogout}
           title={t('logout')}
           Icon={LogOut}
         />

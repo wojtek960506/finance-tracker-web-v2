@@ -1,12 +1,7 @@
 import axios from 'axios';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import {
-  AUTH_TOKEN_STORE_KEY,
-  BASE_URL,
-  LOCAL_STORAGE_CHANGE_EVENT,
-} from '@shared/consts';
-import { readLocalStorage } from '@shared/utils';
+import { BASE_URL } from '@shared/consts';
 
 const mocks = vi.hoisted(() => {
   let requestHandler: ((config: any) => any) | undefined;
@@ -36,6 +31,9 @@ const mocks = vi.hoisted(() => {
     axiosIsAxiosError: vi.fn((error: unknown) =>
       Boolean((error as { isAxiosError?: boolean })?.isAxiosError),
     ),
+    getAuthToken: vi.fn(),
+    refreshAuthToken: vi.fn(),
+    clearAuthToken: vi.fn(),
     getRequestHandler: () => requestHandler,
     getResponseSuccessHandler: () => responseSuccessHandler,
     getResponseErrorHandler: () => responseErrorHandler,
@@ -50,8 +48,10 @@ vi.mock('axios', () => ({
   },
 }));
 
-vi.mock('@shared/utils', () => ({
-  readLocalStorage: vi.fn(),
+vi.mock('@shared/store/auth-store', () => ({
+  getAuthToken: () => mocks.getAuthToken(),
+  refreshAuthToken: () => mocks.refreshAuthToken(),
+  clearAuthToken: () => mocks.clearAuthToken(),
 }));
 
 import { api } from './api';
@@ -88,7 +88,7 @@ describe('api', () => {
     const requestHandler = mocks.getRequestHandler();
     expect(requestHandler).toBeTypeOf('function');
 
-    vi.mocked(readLocalStorage).mockReturnValue('token-123');
+    mocks.getAuthToken.mockReturnValue('token-123');
 
     const config = { headers: {} };
     const result = requestHandler!(config);
@@ -100,7 +100,7 @@ describe('api', () => {
     const requestHandler = mocks.getRequestHandler();
     expect(requestHandler).toBeTypeOf('function');
 
-    vi.mocked(readLocalStorage).mockReturnValue(null);
+    mocks.getAuthToken.mockReturnValue(null);
 
     const config = { headers: {} };
     const result = requestHandler!(config);
@@ -112,11 +112,7 @@ describe('api', () => {
     const responseErrorHandler = mocks.getResponseErrorHandler();
     expect(responseErrorHandler).toBeTypeOf('function');
 
-    const dispatchSpy = vi.spyOn(window, 'dispatchEvent');
-
-    vi.mocked(mocks.axiosGet).mockResolvedValue({
-      data: { accessToken: 'new-token' },
-    });
+    mocks.refreshAuthToken.mockResolvedValue('new-token');
     mocks.apiInstance.mockResolvedValueOnce('retried');
 
     const error = {
@@ -127,18 +123,7 @@ describe('api', () => {
 
     const result = await responseErrorHandler!(error);
 
-    expect(mocks.axiosGet).toHaveBeenCalledWith(`${BASE_URL}/api/auth/refresh`, {
-      withCredentials: true,
-    });
-    expect(window.localStorage.getItem(AUTH_TOKEN_STORE_KEY)).toBe(
-      JSON.stringify('new-token'),
-    );
-    expect(dispatchSpy).toHaveBeenCalledWith(
-      expect.objectContaining({
-        type: LOCAL_STORAGE_CHANGE_EVENT,
-        detail: { key: AUTH_TOKEN_STORE_KEY },
-      }),
-    );
+    expect(mocks.refreshAuthToken).toHaveBeenCalled();
     expect((error.config.headers as { Authorization: string }).Authorization).toBe(
       'Bearer new-token',
     );
@@ -150,10 +135,7 @@ describe('api', () => {
     const responseErrorHandler = mocks.getResponseErrorHandler();
     expect(responseErrorHandler).toBeTypeOf('function');
 
-    const dispatchSpy = vi.spyOn(window, 'dispatchEvent');
-
-    vi.mocked(mocks.axiosGet).mockRejectedValue(new Error('refresh failed'));
-    window.localStorage.setItem(AUTH_TOKEN_STORE_KEY, JSON.stringify('old-token'));
+    mocks.refreshAuthToken.mockResolvedValue(null);
 
     const error = {
       isAxiosError: true,
@@ -166,14 +148,8 @@ describe('api', () => {
       statusCode: 401,
     });
 
-    expect(mocks.axiosGet).toHaveBeenCalled();
-    expect(window.localStorage.getItem(AUTH_TOKEN_STORE_KEY)).toBeNull();
-    expect(dispatchSpy).toHaveBeenCalledWith(
-      expect.objectContaining({
-        type: LOCAL_STORAGE_CHANGE_EVENT,
-        detail: { key: AUTH_TOKEN_STORE_KEY },
-      }),
-    );
+    expect(mocks.refreshAuthToken).toHaveBeenCalled();
+    expect(mocks.clearAuthToken).toHaveBeenCalled();
   });
 
   it('rejects normalized errors for non-401 errors or already retried requests', async () => {
@@ -206,6 +182,6 @@ describe('api', () => {
       statusCode: 401,
     });
 
-    expect(mocks.axiosGet).not.toHaveBeenCalled();
+    expect(mocks.refreshAuthToken).not.toHaveBeenCalled();
   });
 });

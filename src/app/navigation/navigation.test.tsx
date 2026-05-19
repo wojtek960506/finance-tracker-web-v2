@@ -10,9 +10,11 @@ import { Navigation } from './navigation';
 const mocks = vi.hoisted(() => ({
   authToken: { value: 'token' as string | null },
   removeAuthToken: vi.fn(),
+  cancelQueries: vi.fn().mockResolvedValue(undefined),
   clear: vi.fn(),
   logout: vi.fn().mockResolvedValue(undefined),
   fromLeft: { value: true },
+  navigate: vi.fn(),
 }));
 
 vi.mock('@shared/hooks', () => ({
@@ -22,12 +24,21 @@ vi.mock('@shared/hooks', () => ({
   }),
 }));
 
+vi.mock('react-router-dom', async () => {
+  const actual =
+    await vi.importActual<typeof import('react-router-dom')>('react-router-dom');
+  return { ...actual, useNavigate: () => mocks.navigate };
+});
+
 vi.mock('@context/navigation-context', () => ({
   useNavigation: () => ({ fromLeft: mocks.fromLeft.value }),
 }));
 
 vi.mock('@tanstack/react-query', () => ({
-  useQueryClient: () => ({ clear: mocks.clear }),
+  useQueryClient: () => ({
+    cancelQueries: mocks.cancelQueries,
+    clear: mocks.clear,
+  }),
 }));
 
 vi.mock('react-i18next', () => ({
@@ -84,6 +95,15 @@ vi.mock('./navigation-item', () => ({
 }));
 
 describe('Navigation', () => {
+  const createDeferred = () => {
+    let resolve!: () => void;
+    const promise = new Promise<void>((res) => {
+      resolve = res;
+    });
+
+    return { promise, resolve };
+  };
+
   beforeEach(() => {
     mocks.authToken.value = 'token';
     mocks.fromLeft.value = true;
@@ -154,18 +174,24 @@ describe('Navigation', () => {
 
   it('logs out and clears cached data when the logout item is clicked', async () => {
     const user = userEvent.setup();
+    const deferredLogout = createDeferred();
+    mocks.logout.mockReturnValueOnce(deferredLogout.promise);
 
     render(<Navigation />);
 
     await user.click(screen.getByRole('button', { name: 'logout' }));
 
+    expect(mocks.cancelQueries).toHaveBeenCalled();
+    expect(mocks.removeAuthToken).toHaveBeenCalled();
+    expect(mocks.clear).toHaveBeenCalled();
+    expect(mocks.navigate).toHaveBeenCalledWith('/login', { replace: true });
+    expect(useUIStore.getState().expandedNavigationItems).toEqual([]);
+    expect(useUIStore.getState().isNavOpen).toBe(false);
+
+    deferredLogout.resolve();
+
     await waitFor(() => {
       expect(mocks.logout).toHaveBeenCalled();
     });
-
-    expect(mocks.removeAuthToken).toHaveBeenCalled();
-    expect(mocks.clear).toHaveBeenCalled();
-    expect(useUIStore.getState().expandedNavigationItems).toEqual([]);
-    expect(useUIStore.getState().isNavOpen).toBe(false);
   });
 });

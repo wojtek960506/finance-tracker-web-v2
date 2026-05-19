@@ -6,6 +6,7 @@ export const BASE_URL = resolveApiBaseUrl(import.meta.env.VITE_API_BASE_URL);
 export const LANGUAGE_STORE_KEY = 'language';
 export const AUTH_TOKEN_STORE_KEY = 'auth-token';
 export const LOCAL_STORAGE_CHANGE_EVENT = 'local-storage-change';
+export const AUTH_SESSION_EVENT_KEY = 'auth-session-event';
 
 export const SUPPORTED_LANGUAGES: Record<Language, LanguageProps> = {
   en: { label: 'English', isoCode: 'GB' },

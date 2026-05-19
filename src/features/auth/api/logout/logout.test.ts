@@ -1,21 +1,24 @@
+import axios from 'axios';
 import { describe, expect, it, vi } from 'vitest';
 
-import { api } from '@shared/api';
+import { BASE_URL } from '@shared/consts';
 
 import { logout } from './logout';
 
-vi.mock('@shared/api', () => ({
-  api: { post: vi.fn() },
+vi.mock('axios', () => ({
+  default: { post: vi.fn() },
 }));
 
 describe('logout', () => {
   it('posts to the logout endpoint', async () => {
-    const postMock = vi.mocked(api.post);
+    const postMock = vi.mocked(axios.post);
     postMock.mockResolvedValueOnce(undefined);
 
     const result = await logout();
 
-    expect(postMock).toHaveBeenCalledWith('/auth/logout', {});
+    expect(postMock).toHaveBeenCalledWith(`${BASE_URL}/api/auth/logout`, {}, {
+      withCredentials: true,
+    });
     expect(result).toBeUndefined();
   });
 });
