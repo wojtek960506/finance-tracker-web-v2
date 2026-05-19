@@ -13,6 +13,7 @@ import {
 class MockBroadcastChannel {
   static instances: MockBroadcastChannel[] = [];
 
+  readonly name: string;
   listeners = new Map<string, Set<(event: MessageEvent) => void>>();
   postMessage = vi.fn((data: unknown) => {
     for (const instance of MockBroadcastChannel.instances) {
@@ -25,7 +26,8 @@ class MockBroadcastChannel {
     }
   });
 
-  constructor(public readonly name: string) {
+  constructor(name: string) {
+    this.name = name;
     MockBroadcastChannel.instances.push(this);
   }
 
