@@ -100,7 +100,11 @@ describe('CreateUserForm', () => {
     await user.type(screen.getByLabelText('password'), 'secret');
     await user.type(screen.getByLabelText('confirmPassword'), 'secret');
 
-    expect(screen.getByRole('button', { name: 'createAccount' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: 'creatingAccount' })).toBeDisabled();
+    expect(screen.getByRole('link', { name: 'backToLogin' })).toHaveAttribute(
+      'aria-disabled',
+      'true',
+    );
   });
 
   it('renders link back to login', () => {

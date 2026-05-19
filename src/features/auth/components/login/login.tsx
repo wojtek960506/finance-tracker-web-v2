@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import { LoaderCircle } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router-dom';
@@ -33,6 +34,7 @@ export const Login = () => {
 
   const [isEmailInputTouched, setIsEmailInputTouched] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoginPending, setIsLoginPending] = useState(false);
   const [unverifiedEmail, setUnverifiedEmail] = useState<string | null>(null);
   const [isResendPending, setIsResendPending] = useState(false);
   const [didResendVerification, setDidResendVerification] = useState(false);
@@ -64,6 +66,7 @@ export const Login = () => {
     if (isInvalidEmail || normalizedEmail === '' || password === '') return;
 
     try {
+      setIsLoginPending(true);
       const res = await login(normalizedEmail, password);
       setAuthToken(res, { broadcast: true });
 
@@ -100,6 +103,8 @@ export const Login = () => {
             apiError.message
           ),
       });
+    } finally {
+      setIsLoginPending(false);
     }
   };
 
@@ -194,16 +199,24 @@ export const Login = () => {
 
       <div className="mt-6 flex flex-col gap-2">
         <Button
-          disabled={email === '' || password === '' || showEmailError}
+          disabled={email === '' || password === '' || showEmailError || isLoginPending}
           type="submit"
-          className={clsx(FORM_BUTTON_SIZE_CLASS, 'font-semibold sm:font-bold')}
+          className={clsx(FORM_BUTTON_SIZE_CLASS, 'gap-2 font-semibold sm:font-bold')}
         >
-          {t('logIn')}
+          {isLoginPending ? (
+            <>
+              <LoaderCircle className="size-4 animate-spin sm:size-5" aria-hidden="true" />
+              {t('loggingIn')}
+            </>
+          ) : (
+            t('logIn')
+          )}
         </Button>
         <ButtonLink
           to="/register"
           variant="outline"
           preventFocusOnPress
+          disabled={isLoginPending}
           className={clsx(FORM_BUTTON_SIZE_CLASS, 'font-semibold sm:font-bold')}
         >
           {t('goToCreateAccount')}

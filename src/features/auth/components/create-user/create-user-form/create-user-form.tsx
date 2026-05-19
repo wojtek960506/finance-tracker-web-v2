@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import clsx from 'clsx';
+import { LoaderCircle } from 'lucide-react';
 import { useEffect } from 'react';
 import { type SubmitHandler, useForm, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -132,14 +133,22 @@ export const CreateUserForm = ({ isPending, onSubmit }: CreateUserFormProps) => 
         <Button
           disabled={isSubmitDisabled}
           type="submit"
-          className={clsx(FORM_BUTTON_SIZE_CLASS, 'font-semibold sm:font-bold')}
+          className={clsx(FORM_BUTTON_SIZE_CLASS, 'gap-2 font-semibold sm:font-bold')}
         >
-          {t('createAccount')}
+          {isPending ? (
+            <>
+              <LoaderCircle className="size-4 animate-spin sm:size-5" aria-hidden="true" />
+              {t('creatingAccount')}
+            </>
+          ) : (
+            t('createAccount')
+          )}
         </Button>
         <ButtonLink
           to="/login"
           variant="outline"
           preventFocusOnPress
+          disabled={isPending}
           className={clsx(FORM_BUTTON_SIZE_CLASS, 'font-semibold sm:font-bold')}
         >
           {t('backToLogin')}
