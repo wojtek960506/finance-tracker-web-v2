@@ -1,13 +1,14 @@
 import { useEffect } from 'react';
 
 import {
+  clearAuthToken,
   ensureAuthResolved,
   setAuthToken,
   useAuthStore,
 } from '@shared/store/auth-store';
 
 export const useAuthToken = () => {
-  const { authToken, isAuthResolved, clearAuthToken } = useAuthStore();
+  const { authToken, isAuthResolved } = useAuthStore();
 
   useEffect(() => {
     if (isAuthResolved) return;

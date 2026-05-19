@@ -141,7 +141,9 @@ describe('Login', () => {
 
     await waitFor(() => {
       expect(mocks.login).toHaveBeenCalledWith('test@example.com', 'secret');
-      expect(mocks.setAuthToken).toHaveBeenCalledWith('token-123');
+      expect(mocks.setAuthToken).toHaveBeenCalledWith('token-123', {
+        broadcast: true,
+      });
     });
 
     expect(emailInput.value).toBe('');

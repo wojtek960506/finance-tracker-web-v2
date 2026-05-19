@@ -65,7 +65,7 @@ export const Login = () => {
 
     try {
       const res = await login(normalizedEmail, password);
-      setAuthToken(res);
+      setAuthToken(res, { broadcast: true });
 
       // those probably not needed as it will reset during next render
       setIsSubmitted(false);
