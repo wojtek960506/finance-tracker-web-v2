@@ -1,4 +1,5 @@
 {
+  "hi": "Hello",
   "transactions": "Transactions",
   "transactionsTrash": "Transaction Trash",
   "newTransaction": "New Transaction",
