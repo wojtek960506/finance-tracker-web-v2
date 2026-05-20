@@ -4,6 +4,7 @@ import { matchPath, Navigate } from 'react-router-dom';
 import { CreateUser, Login, VerifyEmail } from '@auth/components';
 import { NamedResourcesList } from '@named-resources/components';
 import {
+  CreateBulkTransaction,
   CreateExchangeTransaction,
   CreateStandardTransaction,
   CreateTransaction,
@@ -83,6 +84,11 @@ export const PROTECTED_APP_ROUTES: AppRouteConfig[] = [
     path: '/transactions/new/exchange',
     element: <CreateExchangeTransaction />,
     title: { namespace: 'navigation', key: 'newExchangeTransaction' },
+  },
+  {
+    path: '/transactions/new/bulk',
+    element: <CreateBulkTransaction />,
+    title: { namespace: 'navigation', key: 'newBulkTransaction' },
   },
   {
     path: '/transactions/:transactionId',

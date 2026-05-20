@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 
@@ -94,9 +94,17 @@ describe('DateInput', () => {
     const trigger = screen.getByRole('button', { name: formattedDate });
     expect(trigger).toHaveClass('custom');
 
+    trigger.focus();
     fireEvent.keyDown(trigger, { key: 'Enter' });
     expect(screen.getByText(/^2024-01-/)).toBeInTheDocument();
     expect(screen.getByText('January')).toBeInTheDocument();
+    await waitFor(() => expect(document.activeElement?.tagName).toBe('SELECT'));
+
+    await user.tab();
+    expect(screen.getByRole('button', { name: 'pick day' })).toHaveFocus();
+
+    await user.tab({ shift: true });
+    expect(document.activeElement?.tagName).toBe('SELECT');
 
     await user.click(screen.getByRole('button', { name: 'pick day' }));
 
@@ -120,8 +128,11 @@ describe('DateInput', () => {
     expect(screen.queryByRole('button', { name: 'pick day' })).not.toBeInTheDocument();
 
     await user.click(trigger);
+    await waitFor(() => expect(document.activeElement?.tagName).toBe('SELECT'));
+
     await user.keyboard('{Escape}');
     expect(screen.queryByRole('button', { name: 'pick day' })).not.toBeInTheDocument();
+    await waitFor(() => expect(trigger).toHaveFocus());
   });
 
   it('does not open when disabled and supports space key opening otherwise', async () => {
@@ -142,7 +153,7 @@ describe('DateInput', () => {
     expect(screen.getByRole('button', { name: 'pick day' })).toBeInTheDocument();
   });
 
-  it('resets the visible month from the selected date on click and ignores non-toggle keys', async () => {
+  it('resets the visible month from the selected date on click and keeps popup tab order near the trigger', async () => {
     const user = userEvent.setup();
 
     render(<DateInput value="2024-01-03" />);
@@ -153,15 +164,30 @@ describe('DateInput', () => {
       ),
     });
 
+    trigger.focus();
     await user.click(trigger);
     await user.click(screen.getByRole('button', { name: 'change month' }));
     expect(screen.getByText(/^2026-0[56]-/)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'change month' })).toHaveFocus();
 
-    fireEvent.keyDown(document, { key: 'Tab' });
-    expect(screen.getByRole('button', { name: 'pick day' })).toBeInTheDocument();
+    await user.tab();
+    expect(document.activeElement?.tagName).toBe('SELECT');
 
-    await user.click(trigger);
+    await user.tab();
+    expect(screen.getByRole('button', { name: 'pick day' })).toHaveFocus();
+
+    await user.tab();
+    expect(screen.getByRole('button', { name: 'clear day' })).toHaveFocus();
+
+    await user.tab();
+    expect(screen.getByRole('button', { name: 'change month' })).toHaveFocus();
+
+    await user.tab({ shift: true });
+    expect(screen.getByRole('button', { name: 'clear day' })).toHaveFocus();
+
+    await user.keyboard('{Escape}');
     expect(screen.queryByRole('button', { name: 'pick day' })).not.toBeInTheDocument();
+    await waitFor(() => expect(trigger).toHaveFocus());
 
     await user.click(trigger);
     expect(screen.getByText(/^2024-01-/)).toBeInTheDocument();

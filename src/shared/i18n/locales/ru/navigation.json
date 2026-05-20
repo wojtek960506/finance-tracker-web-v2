@@ -1,10 +1,12 @@
 {
+  "hi": "Привет",
   "transactions": "Транзакции",
   "transactionsTrash": "Корзина транзакций",
   "newTransaction": "Новая транзакция",
   "newStandardTransaction": "Новая стандартная транзакция",
   "newTransferTransaction": "Новый перевод",
   "newExchangeTransaction": "Новая валютная операция",
+  "newBulkTransaction": "Новый пакетный режим",
   "transactionDetails": "Детали транзакции",
   "trashedTransactionDetails": "Детали транзакции в корзине",
   "editTransaction": "Редактировать транзакцию",

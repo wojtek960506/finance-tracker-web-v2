@@ -2,6 +2,7 @@ import { describe, expect, it, vi } from 'vitest';
 
 import { api } from '@shared/api';
 
+import { createBulkTransactions } from './create-bulk-transactions';
 import { createExchangeTransaction } from './create-exchange-transaction';
 import { createStandardTransaction } from './create-standard-transaction';
 import { createTransferTransaction } from './create-transfer-transaction';
@@ -18,6 +19,41 @@ vi.mock('@shared/api', () => ({
 }));
 
 describe('transaction mutations api', () => {
+  it('creates transactions in bulk', async () => {
+    const payload = {
+      transactions: [
+        {
+          kind: 'standard' as const,
+          date: '2024-01-03',
+          description: 'Groceries',
+          amount: 10,
+          currency: 'USD',
+          categoryId: 'cat-1',
+          paymentMethodId: 'pm-1',
+          accountId: 'acc-1',
+          transactionType: 'expense' as const,
+        },
+        {
+          kind: 'transfer' as const,
+          date: '2024-01-03',
+          description: 'Move funds',
+          amount: 10,
+          currency: 'USD',
+          accountExpenseId: 'acc-1',
+          accountIncomeId: 'acc-2',
+          paymentMethodId: 'pm-1',
+        },
+      ],
+    };
+    const response = [{ id: 'tx-1' }, { id: 'tx-2' }, { id: 'tx-3' }];
+    vi.mocked(api.post).mockResolvedValueOnce({ data: response });
+
+    const result = await createBulkTransactions(payload);
+
+    expect(api.post).toHaveBeenCalledWith('/transactions/bulk', payload);
+    expect(result).toEqual(response);
+  });
+
   it('creates a standard transaction', async () => {
     const payload = {
       date: '2024-01-03',

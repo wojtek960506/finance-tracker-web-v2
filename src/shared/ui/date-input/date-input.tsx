@@ -7,6 +7,7 @@ import {
   forwardRef,
   type KeyboardEvent as ReactKeyboardEvent,
   useCallback,
+  useEffect,
   useMemo,
   useState,
 } from 'react';
@@ -39,6 +40,28 @@ type DateInputProps = Omit<
   name?: string;
 };
 
+const FOCUSABLE_SELECTOR = [
+  'button:not([disabled])',
+  'select:not([disabled])',
+  'input:not([disabled])',
+  'textarea:not([disabled])',
+  '[href]',
+  '[tabindex]:not([tabindex="-1"])',
+].join(',');
+
+const getFocusableElements = (container: ParentNode) =>
+  Array.from(container.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR)).filter(
+    (element) => !element.hasAttribute('disabled'),
+  );
+
+const focusAfterClose = (element: HTMLElement | null | undefined) => {
+  if (!element) return;
+
+  requestAnimationFrame(() => {
+    element.focus();
+  });
+};
+
 export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
   ({ className, value, onChange, onBlur, disabled, ...props }, ref) => {
     const { language } = useLanguage();
@@ -54,12 +77,59 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
     const dayPickerLocale = LANGUAGE_TO_DAY_PICKER_LOCALE[language];
     const formattedValue = formatDateValue(selectedDate, locale);
 
+    const closePickerAndFocus = (element: HTMLElement | null | undefined) => {
+      closePicker();
+      focusAfterClose(element);
+    };
+
+    useEffect(() => {
+      if (!isOpen || !popupRef.current) return;
+
+      const frameId = requestAnimationFrame(() => {
+        const firstFocusableElement = getFocusableElements(popupRef.current!)[0];
+        firstFocusableElement?.focus();
+      });
+
+      return () => cancelAnimationFrame(frameId);
+    }, [isOpen, popupRef]);
+
     const handleTriggerKeyDown = (event: ReactKeyboardEvent<HTMLDivElement>) => {
       if (disabled) return;
+
       if (event.key !== 'Enter' && event.key !== ' ') return;
 
       event.preventDefault();
       togglePicker();
+    };
+
+    const handlePopupKeyDown = (event: ReactKeyboardEvent<HTMLDivElement>) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        event.stopPropagation();
+        closePickerAndFocus(triggerRef.current);
+        return;
+      }
+
+      if (event.key !== 'Tab' || !popupRef.current) return;
+
+      const focusableElements = getFocusableElements(popupRef.current);
+      if (focusableElements.length === 0) return;
+
+      const firstFocusableElement = focusableElements[0];
+      const lastFocusableElement = focusableElements[focusableElements.length - 1];
+      const target = event.target;
+      if (!(target instanceof HTMLElement)) return;
+
+      if (event.shiftKey && target === firstFocusableElement) {
+        event.preventDefault();
+        lastFocusableElement.focus();
+        return;
+      }
+
+      if (!event.shiftKey && target === lastFocusableElement) {
+        event.preventDefault();
+        firstFocusableElement.focus();
+      }
     };
 
     return (
@@ -108,12 +178,15 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
                   onMouseDown={(event) => {
                     event.preventDefault();
                     event.stopPropagation();
-                    closePicker();
+                    closePickerAndFocus(triggerRef.current);
                   }}
                 />
 
                 <div
                   ref={popupRef}
+                  role="dialog"
+                  aria-modal="false"
+                  onKeyDown={handlePopupKeyDown}
                   style={{
                     top: popupPosition?.top ?? 0,
                     left: popupPosition?.left ?? 0,
@@ -140,7 +213,7 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
                       onSelect={(date) => {
                         const nextValue = toInputDateValue(date);
                         onChange?.(nextValue);
-                        closePicker();
+                        closePickerAndFocus(triggerRef.current);
                       }}
                     />
                   </Card>

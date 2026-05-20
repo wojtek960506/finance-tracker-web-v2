@@ -1,10 +1,12 @@
 {
+  "hi": "Hallo",
   "transactions": "Transaktionen",
   "transactionsTrash": "Transaktionspapierkorb",
   "newTransaction": "Neue Transaktion",
   "newStandardTransaction": "Neue Standardtransaktion",
   "newTransferTransaction": "Neue Transfertransaktion",
   "newExchangeTransaction": "Neue Wechseltransaktion",
+  "newBulkTransaction": "Neue Sammeltransaktionen",
   "transactionDetails": "Transaktionsdetails",
   "trashedTransactionDetails": "Details der gelöschten Transaktion",
   "editTransaction": "Transaktion bearbeiten",

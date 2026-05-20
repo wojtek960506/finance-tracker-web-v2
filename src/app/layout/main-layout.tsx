@@ -1,4 +1,6 @@
+import { useQuery } from '@tanstack/react-query';
 import { type ReactNode, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { Navigation } from '@app/navigation';
 import { NavigationProvider } from '@context/navigation-context';
@@ -9,10 +11,25 @@ import { LanguageSwitcher } from './topbar/language-switcher';
 import { ThemeButton } from './topbar/theme-button';
 import { Topbar } from './topbar';
 
+import { getMe } from '@/features/auth/api';
+import { useAuthToken } from '@/shared/hooks';
+
 export const MainLayout = ({ children }: { children: ReactNode }) => {
+  const { t } = useTranslation('navigation');
   const { isNavOpen, setIsNavOpen } = useUIStore();
   const isDrawerFromLeft = true;
   const navButtonRef = useRef<HTMLButtonElement>(null);
+
+  const { isAuthenticated, isAuthResolved } = useAuthToken();
+  const { data } = useQuery({
+    queryKey: ['me'],
+    queryFn: getMe,
+    enabled: isAuthResolved && isAuthenticated,
+    staleTime: 5 * 60 * 1000,
+    retry: false,
+  });
+
+
 
   return (
     <div className="h-screen overflow-x-auto overflow-y-hidden">
@@ -41,6 +58,11 @@ export const MainLayout = ({ children }: { children: ReactNode }) => {
           // Navigation becomes hard to use below some width
           contentClassName="min-w-[20rem] sm:min-w-[22rem]"
         >
+          {data && (
+            <p className="font-semibold sm:font-bold text-lgbase sm:text-xl p-1 sm:p-2 break-words">
+              {t('hi')}, {data.firstName} {data.lastName}
+            </p>
+          )}
           <NavigationProvider fromLeft={isDrawerFromLeft}>
             <Navigation />
           </NavigationProvider>
