@@ -11,12 +11,19 @@ import { getTransactionsReturnTo, getTransactionsRouteState } from '@transaction
 const transactionTypeCards = [
   {
     key: 'standard',
+    iconKey: 'standard',
   },
   {
     key: 'transfer',
+    iconKey: 'transfer',
   },
   {
     key: 'exchange',
+    iconKey: 'exchange',
+  },
+  {
+    key: 'bulk',
+    iconKey: 'standard',
   },
 ] as const;
 
@@ -41,7 +48,7 @@ export const CreateTransaction = () => {
 
         {/* TODO maybe extract this part to single component */}
         <div className="flex flex-col gap-3">
-          {transactionTypeCards.map(({ key }) => (
+          {transactionTypeCards.map(({ key, iconKey }) => (
             <Button
               key={key}
               type="button"
@@ -56,7 +63,7 @@ export const CreateTransaction = () => {
               <span className="flex w-full flex-col gap-3">
                 <span className="flex items-center gap-3">
                   <span className="rounded-xl border border-fg/50 bg-card-bg p-2 text-text-muted">
-                    <TransactionKindIcon kind={key} className="size-8" aria-hidden />
+                    <TransactionKindIcon kind={iconKey} className="size-8" aria-hidden />
                   </span>
                   <span className="text-base font-semibold text-fg sm:text-lg">
                     {t(`${key}Transaction`)}

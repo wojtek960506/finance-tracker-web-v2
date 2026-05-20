@@ -28,6 +28,7 @@ describe('CreateTransaction', () => {
     await user.click(screen.getByRole('button', { name: /standardTransaction/i }));
     await user.click(screen.getByRole('button', { name: /transferTransaction/i }));
     await user.click(screen.getByRole('button', { name: /exchangeTransaction/i }));
+    await user.click(screen.getByRole('button', { name: /bulkTransaction/i }));
 
     expect(navigate).toHaveBeenNthCalledWith(1, '/transactions/new/standard', {
       state: { returnTo: '/transactions' },
@@ -36,6 +37,9 @@ describe('CreateTransaction', () => {
       state: { returnTo: '/transactions' },
     });
     expect(navigate).toHaveBeenNthCalledWith(3, '/transactions/new/exchange', {
+      state: { returnTo: '/transactions' },
+    });
+    expect(navigate).toHaveBeenNthCalledWith(4, '/transactions/new/bulk', {
       state: { returnTo: '/transactions' },
     });
   });

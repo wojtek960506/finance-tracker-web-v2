@@ -1,3 +1,4 @@
+export * from './create-bulk-transaction';
 export * from './create-exchange-transaction';
 export * from './create-standard-transaction';
 export * from './create-transaction';

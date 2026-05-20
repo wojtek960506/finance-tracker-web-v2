@@ -54,7 +54,7 @@ export const getButtonClassName = ({
     case 'outline':
       variantClassName = clsx(
         'bg-transparent hover:bg-bt-ghost-hover border-fg',
-        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border',
+        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bt-secondary-ring',
       );
       break;
     case 'default':

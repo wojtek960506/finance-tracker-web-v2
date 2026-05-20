@@ -5,6 +5,7 @@
   "newStandardTransaction": "Nowa transakcja standardowa",
   "newTransferTransaction": "Nowy transfer",
   "newExchangeTransaction": "Nowa wymiana walut",
+  "newBulkTransaction": "Nowy tryb wsadowy",
   "transactionDetails": "Szczegóły transakcji",
   "trashedTransactionDetails": "Szczegóły transakcji w koszu",
   "editTransaction": "Edytuj transakcję",

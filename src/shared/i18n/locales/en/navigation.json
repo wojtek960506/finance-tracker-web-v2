@@ -5,6 +5,7 @@
   "newStandardTransaction": "New Standard Transaction",
   "newTransferTransaction": "New Transfer Transaction",
   "newExchangeTransaction": "New Exchange Transaction",
+  "newBulkTransaction": "New Bulk Transaction",
   "transactionDetails": "Transaction Details",
   "trashedTransactionDetails": "Trashed Transaction Details",
   "editTransaction": "Edit Transaction",
