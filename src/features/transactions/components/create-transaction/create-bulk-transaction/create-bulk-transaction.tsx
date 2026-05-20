@@ -38,6 +38,7 @@ import {
 import { EXCHANGE_CATEGORY, TRANSFER_CATEGORY } from '@transactions/consts';
 import {
   getTransactionsReturnTo,
+  getTransactionsRouteState,
   shouldWarnAboutHiddenTransactions,
 } from '@transactions/utils';
 
@@ -844,7 +845,7 @@ export const CreateBulkTransaction = () => {
                     className="my-auto rounded-lg px-2 text-text-muted"
                     onClick={() => deleteRow(index)}
                     aria-label={getDeleteActionLabel(index)}
-                    disabled={fields.length === 1}
+                    disabled={fields.length === 1 && row.kind === ''}
                   >
                     <Trash2 aria-hidden="true" />
                   </Button>
@@ -886,7 +887,11 @@ export const CreateBulkTransaction = () => {
             type="button"
             variant="ghost"
             className={FORM_BUTTON_CLASS_NAME}
-            onClick={() => navigate(returnTo)}
+            onClick={() =>
+              navigate('/transactions/new', {
+                state: getTransactionsRouteState(returnTo),
+              })
+            }
           >
             {t('cancel')}
           </Button>

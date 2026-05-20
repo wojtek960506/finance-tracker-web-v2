@@ -222,6 +222,49 @@ describe('CreateBulkTransaction', () => {
     expect(screen.getAllByRole('button', { name: /delete-row-/ })).toHaveLength(1);
   });
 
+  it('navigates back to transaction kind selection on cancel', async () => {
+    const user = userEvent.setup();
+    const client = createTestQueryClient();
+    mocks.location.state = { returnTo: '/transactions?page=2' };
+
+    render(
+      <QueryClientProvider client={client}>
+        <CreateBulkTransaction />
+      </QueryClientProvider>,
+    );
+
+    await user.click(screen.getByRole('button', { name: 'cancel' }));
+
+    expect(mocks.navigate).toHaveBeenCalledWith('/transactions/new', {
+      state: { returnTo: '/transactions?page=2' },
+    });
+  });
+
+  it('disables the row trash button only for an untouched single row', async () => {
+    const user = userEvent.setup();
+    const client = createTestQueryClient();
+
+    render(
+      <QueryClientProvider client={client}>
+        <CreateBulkTransaction />
+      </QueryClientProvider>,
+    );
+
+    expect(screen.getByRole('button', { name: 'delete-row-1' })).toBeDisabled();
+
+    await user.tab();
+
+    expect(screen.getByRole('button', { name: 'delete-row-1' })).not.toHaveFocus();
+
+    await user.selectOptions(screen.getByLabelText('transactionKind'), 'standard');
+
+    expect(screen.getByRole('button', { name: 'delete-row-1' })).toBeEnabled();
+
+    await user.tab({ shift: true });
+
+    expect(screen.getByRole('button', { name: 'delete-row-1' })).toHaveFocus();
+  });
+
   it('creates bulk transactions with one request and navigates back', async () => {
     const user = userEvent.setup();
     const client = createTestQueryClient();
