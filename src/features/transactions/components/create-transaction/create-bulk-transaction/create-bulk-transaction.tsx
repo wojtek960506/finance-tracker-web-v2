@@ -10,12 +10,7 @@ import { z } from 'zod';
 import { normalizeApiError } from '@shared/api/api-error';
 import { Button, Card, DateInput, Label } from '@shared/ui';
 import { useToastStore } from '@store/toast-store';
-import {
-  createExchangeTransaction,
-  createStandardTransaction,
-  createTransferTransaction,
-  type Transaction,
-} from '@transactions/api';
+import { createBulkTransactions } from '@transactions/api';
 import {
   CurrencySelectField,
   NamedResourceSelectField,
@@ -32,6 +27,7 @@ import {
   normalizeExchangeTransactionFormValues,
   normalizeStandardTransactionFormValues,
   normalizeTransferTransactionFormValues,
+  preventImplicitFormSubmit,
   REQUIRED_LABEL_CLASS_NAME,
   standardTransactionFormSchema,
   type StandardTransactionFormValues,
@@ -56,7 +52,6 @@ import {
 } from '@/components/ui/select';
 
 // TODO split this file into smaller components
-// TODO on backend we need to add insterting many transactions in bulk
 // TODO better memoization for list as now when adding or removing row it rerenders whole list
 
 type BulkTransactionKind = 'standard' | 'transfer' | 'exchange';
@@ -766,81 +761,57 @@ export const CreateBulkTransaction = () => {
 
   const onSubmit = form.handleSubmit(async (values) => {
     setIsPending(true);
+    try {
+      const createdTransactions = await createBulkTransactions({
+        transactions: values.rows.map((row) => {
+          if (row.kind === 'standard') {
+            return {
+              kind: 'standard' as const,
+              ...normalizeStandardTransactionFormValues(row.standardValues),
+              amount: Number(row.standardValues.amount),
+            };
+          }
 
-    const createdTransactions: Transaction[] = [];
-    const failedRows: BulkTransactionRowValues[] = [];
-    let firstError: unknown;
+          if (row.kind === 'transfer') {
+            return {
+              kind: 'transfer' as const,
+              ...normalizeTransferTransactionFormValues(row.transferValues),
+              amount: Number(row.transferValues.amount),
+            };
+          }
 
-    for (const row of values.rows) {
-      try {
-        if (row.kind === 'standard') {
-          const transaction = await createStandardTransaction({
-            ...normalizeStandardTransactionFormValues(row.standardValues),
-            amount: Number(row.standardValues.amount),
-          });
-          createdTransactions.push(transaction);
-          continue;
-        }
-
-        if (row.kind === 'transfer') {
-          const transactions = await createTransferTransaction({
-            ...normalizeTransferTransactionFormValues(row.transferValues),
-            amount: Number(row.transferValues.amount),
-          });
-          createdTransactions.push(...transactions);
-          continue;
-        }
-
-        if (row.kind === 'exchange') {
-          const transactions = await createExchangeTransaction({
+          return {
+            kind: 'exchange' as const,
             ...normalizeExchangeTransactionFormValues(row.exchangeValues),
             amountExpense: Number(row.exchangeValues.amountExpense),
             amountIncome: Number(row.exchangeValues.amountIncome),
-          });
-          createdTransactions.push(...transactions);
-          continue;
-        }
+          };
+        }),
+      });
 
-        failedRows.push(row);
-      } catch (error) {
-        failedRows.push(row);
-        firstError ??= error;
-      }
-    }
-
-    setIsPending(false);
-
-    if (failedRows.length > 0) {
-      replace(failedRows);
-
-      const apiError = normalizeApiError(firstError);
+      await queryClient.invalidateQueries({ queryKey: ['transactions'] });
+      pushToast({
+        variant: 'success',
+        title: t('transactionsCreated'),
+        message: shouldWarnAboutHiddenTransactions(createdTransactions, returnTo)
+          ? t('transactionMayBeHiddenByCurrentFilters')
+          : undefined,
+      });
+      queryClient.removeQueries({ queryKey: ['transactions'] });
+      queryClient.removeQueries({ queryKey: ['transaction-totals'] });
+      navigate(returnTo);
+    } catch (error) {
+      const apiError = normalizeApiError(error);
       pushToast({
         variant: 'error',
-        title: t(
-          failedRows.length === values.rows.length
-            ? 'bulkTransactionCreateFailed'
-            : 'bulkTransactionCreatePartiallyFailed',
-        ),
-        message:
-          apiError.message ||
-          t('bulkTransactionCreatePartiallyFailedMessage', {
-            count: failedRows.length,
-          }),
+        title: t('bulkTransactionCreateFailed'),
+        message: apiError.message || t('bulkTransactionCreatePartiallyFailedMessage', {
+          count: values.rows.length,
+        }),
       });
-      return;
+    } finally {
+      setIsPending(false);
     }
-
-    await queryClient.invalidateQueries({ queryKey: ['transactions'] });
-    pushToast({
-      variant: 'success',
-      title: t('transactionsCreated'),
-      message: shouldWarnAboutHiddenTransactions(createdTransactions, returnTo)
-        ? t('transactionMayBeHiddenByCurrentFilters')
-        : undefined,
-    });
-    queryClient.removeQueries({ queryKey: ['transactions'] });
-    queryClient.removeQueries({ queryKey: ['transaction-totals'] });
-    navigate(returnTo);
   });
 
   return (
@@ -849,7 +820,11 @@ export const CreateBulkTransaction = () => {
         <h2 className="text-base font-semibold sm:text-lg">{t('bulkTransaction')}</h2>
       </div>
 
-      <form className="flex flex-col gap-2" onSubmit={onSubmit}>
+      <form
+        className="flex flex-col gap-2"
+        onKeyDown={preventImplicitFormSubmit}
+        onSubmit={onSubmit}
+      >
         {fields.map((field, index) => {
           const row = rows?.[index] ?? getDefaultBulkTransactionRowValues();
           const kindError = form.formState.errors.rows?.[index]?.kind?.message;

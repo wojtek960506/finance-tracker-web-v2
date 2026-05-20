@@ -39,6 +39,15 @@ export type TransactionExchangeDTO = {
   paymentMethodId?: string | null;
 };
 
+export type BulkTransactionDTO =
+  | ({ kind: 'standard' } & TransactionStandardDTO)
+  | ({ kind: 'transfer' } & TransactionTransferDTO)
+  | ({ kind: 'exchange' } & TransactionExchangeDTO);
+
+export type CreateBulkTransactionsDTO = {
+  transactions: BulkTransactionDTO[];
+};
+
 export type Transaction = {
   date: string;
   description: string;

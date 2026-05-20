@@ -8,9 +8,7 @@ import { createTestQueryClient } from '@test-utils/create-test-query-client';
 import { CreateBulkTransaction } from './create-bulk-transaction';
 
 const mocks = vi.hoisted(() => ({
-  createExchangeTransaction: vi.fn(),
-  createStandardTransaction: vi.fn(),
-  createTransferTransaction: vi.fn(),
+  createBulkTransactions: vi.fn(),
   location: { state: undefined as { returnTo: string } | undefined },
   navigate: vi.fn(),
   normalizeApiError: vi.fn(),
@@ -27,12 +25,7 @@ vi.mock('react-router-dom', () => ({
 }));
 
 vi.mock('@transactions/api', () => ({
-  createExchangeTransaction: (...args: unknown[]) =>
-    mocks.createExchangeTransaction(...args),
-  createStandardTransaction: (...args: unknown[]) =>
-    mocks.createStandardTransaction(...args),
-  createTransferTransaction: (...args: unknown[]) =>
-    mocks.createTransferTransaction(...args),
+  createBulkTransactions: (...args: unknown[]) => mocks.createBulkTransactions(...args),
 }));
 
 vi.mock('@shared/api/api-error', () => ({
@@ -78,7 +71,7 @@ vi.mock('@transactions/components/shared', () => ({
     placeholder: string;
   }) => (
     <input
-      aria-label={placeholder}
+      aria-label={placeholder || undefined}
       value={value}
       onChange={(event) => onChange(event.target.value)}
     />
@@ -93,7 +86,7 @@ vi.mock('@transactions/components/shared', () => ({
     placeholder: string;
   }) => (
     <input
-      aria-label={placeholder}
+      aria-label={placeholder || undefined}
       value={value}
       onChange={(event) => onChange(event.target.value)}
     />
@@ -179,7 +172,7 @@ vi.mock('@/components/ui/select', () => ({
     }: {
       children: any;
       'aria-label'?: string;
-    }) => <mock-select-trigger aria-label={ariaLabel}>{children}</mock-select-trigger>,
+    }) => <span aria-label={ariaLabel}>{children}</span>,
     { displayName: 'MockSelectTrigger' },
   ),
   SelectValue: Object.assign(
@@ -189,7 +182,7 @@ vi.mock('@/components/ui/select', () => ({
     { displayName: 'MockSelectValue' },
   ),
   SelectContent: Object.assign(
-    ({ children }: { children: any }) => <mock-select-content>{children}</mock-select-content>,
+    ({ children }: { children: any }) => <div>{children}</div>,
     { displayName: 'MockSelectContent' },
   ),
   SelectItem: ({
@@ -229,12 +222,12 @@ describe('CreateBulkTransaction', () => {
     expect(screen.getAllByRole('button', { name: /delete-row-/ })).toHaveLength(1);
   });
 
-  it('creates a standard transaction from a bulk row and navigates back', async () => {
+  it('creates bulk transactions with one request and navigates back', async () => {
     const user = userEvent.setup();
     const client = createTestQueryClient();
     const invalidateQueriesSpy = vi.spyOn(client, 'invalidateQueries');
     const removeQueriesSpy = vi.spyOn(client, 'removeQueries');
-    mocks.createStandardTransaction.mockResolvedValueOnce({ id: 'tx-1' });
+    mocks.createBulkTransactions.mockResolvedValueOnce([{ id: 'tx-1' }]);
 
     render(
       <QueryClientProvider client={client}>
@@ -243,21 +236,31 @@ describe('CreateBulkTransaction', () => {
     );
 
     await user.selectOptions(screen.getByLabelText('transactionKind'), 'standard');
+    await user.type(
+      screen.getByLabelText('h-10 sm:h-11 rounded-xl px-3 sm:px-4 text-base sm:text-lg h-9 text-sm'),
+      '2024-01-03',
+    );
+    await user.selectOptions(screen.getByLabelText('transactionType'), 'expense');
     await user.type(screen.getByRole('textbox', { name: 'description' }), 'Groceries');
     await user.type(screen.getByLabelText('number-input'), '10');
-    await user.type(screen.getByLabelText('currencyPlaceholder'), 'USD');
+    await user.type(screen.getByLabelText('currency'), 'USD');
     await user.click(screen.getByRole('button', { name: 'createTransactions' }));
 
     await waitFor(() =>
-      expect(mocks.createStandardTransaction).toHaveBeenCalledWith({
-        date: expect.any(String),
-        description: 'Groceries',
-        amount: 10,
-        currency: 'USD',
-        categoryId: undefined,
-        paymentMethodId: undefined,
-        accountId: undefined,
-        transactionType: 'expense',
+      expect(mocks.createBulkTransactions).toHaveBeenCalledWith({
+        transactions: [
+          {
+            kind: 'standard',
+            date: expect.any(String),
+            description: 'Groceries',
+            amount: 10,
+            currency: 'USD',
+            categoryId: undefined,
+            paymentMethodId: undefined,
+            accountId: undefined,
+            transactionType: 'expense',
+          },
+        ],
       }),
     );
     expect(invalidateQueriesSpy).toHaveBeenCalledWith({ queryKey: ['transactions'] });
@@ -270,5 +273,114 @@ describe('CreateBulkTransaction', () => {
       queryKey: ['transaction-totals'],
     });
     expect(mocks.navigate).toHaveBeenCalledWith('/transactions');
+  });
+
+  it('does not submit on Enter from a field, but still submits on the submit button', async () => {
+    const user = userEvent.setup();
+    const client = createTestQueryClient();
+    mocks.createBulkTransactions.mockResolvedValueOnce([{ id: 'tx-1' }]);
+
+    render(
+      <QueryClientProvider client={client}>
+        <CreateBulkTransaction />
+      </QueryClientProvider>,
+    );
+
+    await user.selectOptions(screen.getByLabelText('transactionKind'), 'standard');
+    await user.type(
+      screen.getByLabelText('h-10 sm:h-11 rounded-xl px-3 sm:px-4 text-base sm:text-lg h-9 text-sm'),
+      '2024-01-03',
+    );
+    await user.selectOptions(screen.getByLabelText('transactionType'), 'expense');
+    const descriptionField = screen.getByRole('textbox', { name: 'description' });
+    await user.type(descriptionField, 'Groceries');
+    await user.type(screen.getByLabelText('number-input'), '10');
+    await user.type(screen.getByLabelText('currency'), 'USD');
+
+    await user.click(descriptionField);
+    await user.keyboard('{Enter}');
+
+    expect(mocks.createBulkTransactions).not.toHaveBeenCalled();
+
+    const submitButton = screen.getByRole('button', { name: 'createTransactions' });
+    submitButton.focus();
+    await user.keyboard('{Enter}');
+
+    await waitFor(() => expect(mocks.createBulkTransactions).toHaveBeenCalledTimes(1));
+  });
+
+  it('sends mixed row kinds in a single bulk payload', async () => {
+    const user = userEvent.setup();
+    const client = createTestQueryClient();
+    mocks.createBulkTransactions.mockResolvedValueOnce([
+      { id: 'tx-1' },
+      { id: 'tx-2' },
+      { id: 'tx-3' },
+    ]);
+
+    render(
+      <QueryClientProvider client={client}>
+        <CreateBulkTransaction />
+      </QueryClientProvider>,
+    );
+
+    await user.selectOptions(screen.getByLabelText('transactionKind'), 'standard');
+    await user.type(
+      screen.getByLabelText('h-10 sm:h-11 rounded-xl px-3 sm:px-4 text-base sm:text-lg h-9 text-sm'),
+      '2024-01-03',
+    );
+    await user.selectOptions(screen.getByLabelText('transactionType'), 'expense');
+    await user.type(screen.getByRole('textbox', { name: 'description' }), 'Groceries');
+    await user.type(screen.getByLabelText('number-input'), '10');
+    await user.type(screen.getByLabelText('currency'), 'USD');
+
+    await user.click(screen.getByRole('button', { name: 'addTransactionRow' }));
+
+    const transactionKindSelects = screen.getAllByLabelText('transactionKind');
+    await user.selectOptions(transactionKindSelects[1], 'transfer');
+
+    const dateInputs = screen.getAllByLabelText(
+      'h-10 sm:h-11 rounded-xl px-3 sm:px-4 text-base sm:text-lg h-9 text-sm',
+    );
+    await user.type(dateInputs[1], '2024-01-04');
+
+    const descriptions = screen.getAllByRole('textbox', { name: 'description' });
+    await user.type(descriptions[1], 'Move funds');
+
+    const numberInputs = screen.getAllByLabelText('number-input');
+    await user.type(numberInputs[1], '25');
+
+    const currencies = screen.getAllByLabelText('currency');
+    await user.type(currencies[1], 'EUR');
+
+    await user.click(screen.getByRole('button', { name: 'createTransactions' }));
+
+    await waitFor(() =>
+      expect(mocks.createBulkTransactions).toHaveBeenCalledWith({
+        transactions: [
+          {
+            kind: 'standard',
+            date: expect.any(String),
+            description: 'Groceries',
+            amount: 10,
+            currency: 'USD',
+            categoryId: undefined,
+            paymentMethodId: undefined,
+            accountId: undefined,
+            transactionType: 'expense',
+          },
+          {
+            kind: 'transfer',
+            date: expect.any(String),
+            description: 'Move funds',
+            amount: 25,
+            currency: 'EUR',
+            accountExpenseId: undefined,
+            accountIncomeId: undefined,
+            paymentMethodId: undefined,
+          },
+        ],
+      }),
+    );
   });
 });

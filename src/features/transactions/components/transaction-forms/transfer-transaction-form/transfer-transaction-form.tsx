@@ -10,6 +10,7 @@ import {
 import {
   FIELD_CONTROL_CLASS_NAME,
   FieldError,
+  preventImplicitFormSubmit,
   REQUIRED_LABEL_CLASS_NAME,
   TransactionFormActions,
 } from '@transactions/components/transaction-forms';
@@ -59,6 +60,7 @@ export const TransferTransactionForm = ({
     <Card className="mx-auto w-full max-w-3xl gap-4">
       <form
         className="grid gap-3 sm:gap-4 sm:grid-cols-2"
+        onKeyDown={preventImplicitFormSubmit}
         onSubmit={form.handleSubmit(handleSubmit)}
       >
         <Label>

@@ -74,6 +74,50 @@ vi.mock('@shared/ui', () => ({
 }));
 
 describe('StandardTransactionForm', () => {
+  it('does not submit on Enter from a field, but still submits on the submit button', async () => {
+    const user = userEvent.setup();
+    const onSubmit = vi.fn();
+
+    render(
+      <StandardTransactionForm
+        defaultValues={{
+          date: '2024-01-03',
+          description: 'Groceries',
+          amount: '10',
+          currency: 'USD',
+          categoryId: 'cat-1',
+          paymentMethodId: 'pm-1',
+          accountId: 'acc-1',
+          transactionType: 'expense',
+        }}
+        isPending={false}
+        mode="create"
+        onSubmit={onSubmit}
+        onCancel={() => {}}
+      />,
+    );
+
+    await user.click(screen.getByRole('textbox', { name: 'description' }));
+    await user.keyboard('{Enter}');
+
+    expect(onSubmit).not.toHaveBeenCalled();
+
+    const submitButton = screen.getByRole('button', { name: 'saveTransaction' });
+    submitButton.focus();
+    await user.keyboard('{Enter}');
+
+    expect(onSubmit).toHaveBeenCalledWith({
+      date: '2024-01-03',
+      description: 'Groceries',
+      amount: '10',
+      currency: 'USD',
+      categoryId: 'cat-1',
+      paymentMethodId: 'pm-1',
+      accountId: 'acc-1',
+      transactionType: 'expense',
+    });
+  });
+
   it('submits valid values and lets the transaction type change', async () => {
     const user = userEvent.setup();
     const onSubmit = vi.fn();
