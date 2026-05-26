@@ -18,6 +18,7 @@
   "transactionKind": "Rodzaj transakcji",
   "transactionKindRequired": "Rodzaj transakcji jest wymagany.",
   "addTransactionRow": "Dodaj kolejny wiersz",
+  "duplicateLastRow": "Duplikuj ostatni wiersz",
   "createTransactions": "Utwórz transakcje",
   "creatingTransactions": "Tworzenie transakcji...",
   "transactionsCreated": "Transakcje zostały utworzone.",

@@ -18,6 +18,7 @@
   "transactionKind": "Transaktionsart",
   "transactionKindRequired": "Die Transaktionsart ist erforderlich.",
   "addTransactionRow": "Weitere Zeile hinzufügen",
+  "duplicateLastRow": "Letzte Zeile duplizieren",
   "createTransactions": "Transaktionen erstellen",
   "creatingTransactions": "Transaktionen werden erstellt...",
   "transactionsCreated": "Transaktionen erstellt.",

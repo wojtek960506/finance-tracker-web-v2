@@ -18,6 +18,7 @@
   "transactionKind": "Transaction kind",
   "transactionKindRequired": "Transaction kind is required.",
   "addTransactionRow": "Add next row",
+  "duplicateLastRow": "Duplicate last row",
   "createTransactions": "Create transactions",
   "creatingTransactions": "Creating transactions...",
   "transactionsCreated": "Transactions created.",

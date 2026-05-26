@@ -1,6 +1,7 @@
 import { QueryClientProvider } from '@tanstack/react-query';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { forwardRef } from 'react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { createTestQueryClient } from '@test-utils/create-test-query-client';
@@ -148,31 +149,44 @@ vi.mock('@/components/ui/select', () => ({
     }
 
     return (
-      <select
-        aria-label={trigger?.props?.['aria-label']}
-        value={value}
-        onChange={(event) => onValueChange?.(event.target.value)}
-      >
-        <option value="">
-          {trigger?.props?.children?.props?.['data-placeholder'] ??
-            trigger?.props?.children?.props?.placeholder}
-        </option>
-        {items.map((item) => (
-          <option key={item.value} value={item.value}>
-            {item.label}
+      <div>
+        {trigger}
+        <select
+          aria-label={trigger?.props?.['aria-label']}
+          value={value}
+          onChange={(event) => onValueChange?.(event.target.value)}
+        >
+          <option value="">
+            {trigger?.props?.children?.props?.['data-placeholder'] ??
+              trigger?.props?.children?.props?.placeholder}
           </option>
-        ))}
-      </select>
+          {items.map((item) => (
+            <option key={item.value} value={item.value}>
+              {item.label}
+            </option>
+          ))}
+        </select>
+      </div>
     );
   },
   SelectTrigger: Object.assign(
-    ({
-      children,
-      'aria-label': ariaLabel,
-    }: {
-      children: any;
-      'aria-label'?: string;
-    }) => <span aria-label={ariaLabel}>{children}</span>,
+    forwardRef<
+      HTMLButtonElement,
+      {
+        children: any;
+        'aria-label'?: string;
+      }
+    >(({ children, 'aria-label': ariaLabel }, ref) => (
+      <button
+        ref={ref}
+        type="button"
+        aria-hidden="true"
+        tabIndex={-1}
+        data-testid={`mock-select-trigger-${ariaLabel}`}
+      >
+        {children}
+      </button>
+    )),
     { displayName: 'MockSelectTrigger' },
   ),
   SelectValue: Object.assign(
@@ -222,6 +236,75 @@ describe('CreateBulkTransaction', () => {
     expect(screen.getAllByRole('button', { name: /delete-row-/ })).toHaveLength(1);
   });
 
+  it('focuses the new kind selector after adding or duplicating a row', async () => {
+    const user = userEvent.setup();
+    const client = createTestQueryClient();
+
+    render(
+      <QueryClientProvider client={client}>
+        <CreateBulkTransaction />
+      </QueryClientProvider>,
+    );
+
+    await user.selectOptions(
+      screen.getByRole('combobox', { name: 'transactionKind' }),
+      'standard',
+    );
+    await user.type(
+      screen.getByLabelText('h-10 sm:h-11 rounded-xl px-3 sm:px-4 text-base sm:text-lg h-9 text-sm'),
+      '2024-01-03',
+    );
+    await user.selectOptions(
+      screen.getByRole('combobox', { name: 'transactionType' }),
+      'expense',
+    );
+    await user.type(screen.getByRole('textbox', { name: 'description' }), 'Groceries');
+    await user.type(screen.getByLabelText('number-input'), '10');
+    await user.type(screen.getByLabelText('currency'), 'USD');
+
+    await user.click(screen.getByRole('button', { name: 'addTransactionRow' }));
+
+    await waitFor(() =>
+      expect(
+        screen.getAllByTestId('mock-select-trigger-transactionKind'),
+      ).toHaveLength(2),
+    );
+    expect(screen.getAllByTestId('mock-select-trigger-transactionKind')[1]).toHaveFocus();
+
+    const secondRowTransactionKind = screen.getAllByRole('combobox', {
+      name: 'transactionKind',
+    })[1];
+    await user.selectOptions(secondRowTransactionKind, 'standard');
+
+    const dateInputs = screen.getAllByLabelText(
+      'h-10 sm:h-11 rounded-xl px-3 sm:px-4 text-base sm:text-lg h-9 text-sm',
+    );
+    await user.type(dateInputs[1], '2024-01-04');
+
+    const descriptions = screen.getAllByRole('textbox', { name: 'description' });
+    await user.type(descriptions[1], 'Copied groceries');
+
+    const numberInputs = screen.getAllByLabelText('number-input');
+    await user.type(numberInputs[1], '25');
+
+    await user.type(screen.getAllByLabelText('currency')[1], 'EUR');
+
+    await user.click(screen.getByRole('button', { name: 'duplicateLastRow' }));
+
+    await waitFor(() =>
+      expect(
+        screen.getAllByTestId('mock-select-trigger-transactionKind'),
+      ).toHaveLength(3),
+    );
+    expect(screen.getAllByTestId('mock-select-trigger-transactionKind')[2]).toHaveFocus();
+
+    expect(screen.getAllByRole('textbox', { name: 'description' })[2]).toHaveValue(
+      'Copied groceries',
+    );
+    expect(screen.getAllByLabelText('number-input')[2]).toHaveValue('25');
+    expect(screen.getAllByLabelText('currency')[2]).toHaveValue('EUR');
+  });
+
   it('navigates back to transaction kind selection on cancel', async () => {
     const user = userEvent.setup();
     const client = createTestQueryClient();
@@ -256,7 +339,10 @@ describe('CreateBulkTransaction', () => {
 
     expect(screen.getByRole('button', { name: 'delete-row-1' })).not.toHaveFocus();
 
-    await user.selectOptions(screen.getByLabelText('transactionKind'), 'standard');
+    await user.selectOptions(
+      screen.getByRole('combobox', { name: 'transactionKind' }),
+      'standard',
+    );
 
     expect(screen.getByRole('button', { name: 'delete-row-1' })).toBeEnabled();
 
@@ -278,12 +364,18 @@ describe('CreateBulkTransaction', () => {
       </QueryClientProvider>,
     );
 
-    await user.selectOptions(screen.getByLabelText('transactionKind'), 'standard');
+    await user.selectOptions(
+      screen.getByRole('combobox', { name: 'transactionKind' }),
+      'standard',
+    );
     await user.type(
       screen.getByLabelText('h-10 sm:h-11 rounded-xl px-3 sm:px-4 text-base sm:text-lg h-9 text-sm'),
       '2024-01-03',
     );
-    await user.selectOptions(screen.getByLabelText('transactionType'), 'expense');
+    await user.selectOptions(
+      screen.getByRole('combobox', { name: 'transactionType' }),
+      'expense',
+    );
     await user.type(screen.getByRole('textbox', { name: 'description' }), 'Groceries');
     await user.type(screen.getByLabelText('number-input'), '10');
     await user.type(screen.getByLabelText('currency'), 'USD');
@@ -329,12 +421,18 @@ describe('CreateBulkTransaction', () => {
       </QueryClientProvider>,
     );
 
-    await user.selectOptions(screen.getByLabelText('transactionKind'), 'standard');
+    await user.selectOptions(
+      screen.getByRole('combobox', { name: 'transactionKind' }),
+      'standard',
+    );
     await user.type(
       screen.getByLabelText('h-10 sm:h-11 rounded-xl px-3 sm:px-4 text-base sm:text-lg h-9 text-sm'),
       '2024-01-03',
     );
-    await user.selectOptions(screen.getByLabelText('transactionType'), 'expense');
+    await user.selectOptions(
+      screen.getByRole('combobox', { name: 'transactionType' }),
+      'expense',
+    );
     const descriptionField = screen.getByRole('textbox', { name: 'description' });
     await user.type(descriptionField, 'Groceries');
     await user.type(screen.getByLabelText('number-input'), '10');
@@ -367,19 +465,27 @@ describe('CreateBulkTransaction', () => {
       </QueryClientProvider>,
     );
 
-    await user.selectOptions(screen.getByLabelText('transactionKind'), 'standard');
+    await user.selectOptions(
+      screen.getByRole('combobox', { name: 'transactionKind' }),
+      'standard',
+    );
     await user.type(
       screen.getByLabelText('h-10 sm:h-11 rounded-xl px-3 sm:px-4 text-base sm:text-lg h-9 text-sm'),
       '2024-01-03',
     );
-    await user.selectOptions(screen.getByLabelText('transactionType'), 'expense');
+    await user.selectOptions(
+      screen.getByRole('combobox', { name: 'transactionType' }),
+      'expense',
+    );
     await user.type(screen.getByRole('textbox', { name: 'description' }), 'Groceries');
     await user.type(screen.getByLabelText('number-input'), '10');
     await user.type(screen.getByLabelText('currency'), 'USD');
 
     await user.click(screen.getByRole('button', { name: 'addTransactionRow' }));
 
-    const transactionKindSelects = screen.getAllByLabelText('transactionKind');
+    const transactionKindSelects = screen.getAllByRole('combobox', {
+      name: 'transactionKind',
+    });
     await user.selectOptions(transactionKindSelects[1], 'transfer');
 
     const dateInputs = screen.getAllByLabelText(
@@ -393,8 +499,7 @@ describe('CreateBulkTransaction', () => {
     const numberInputs = screen.getAllByLabelText('number-input');
     await user.type(numberInputs[1], '25');
 
-    const currencies = screen.getAllByLabelText('currency');
-    await user.type(currencies[1], 'EUR');
+    await user.type(screen.getAllByLabelText('currency')[1], 'EUR');
 
     await user.click(screen.getByRole('button', { name: 'createTransactions' }));
 

@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQueryClient } from '@tanstack/react-query';
 import { Trash2 } from 'lucide-react';
-import { useState } from 'react';
+import { type Ref,useEffect, useRef, useState } from 'react';
 import { Controller, useFieldArray, useForm, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -155,15 +155,26 @@ const getDeleteActionLabel = (index: number) => `delete-row-${index + 1}`;
 const getBulkKindTranslationKey = (kind: BulkTransactionKind) =>
   `bulk${kind.charAt(0).toUpperCase()}${kind.slice(1)}Transaction`;
 
+const cloneBulkTransactionRowValues = (
+  row: BulkTransactionRowValues,
+): BulkTransactionRowValues => ({
+  kind: row.kind,
+  standardValues: { ...row.standardValues },
+  transferValues: { ...row.transferValues },
+  exchangeValues: { ...row.exchangeValues },
+});
+
 const BulkTransactionKindField = ({
   index,
   kind,
   showLabel,
+  triggerRef,
   setKind,
 }: {
   index: number;
   kind: BulkTransactionKindValue;
   showLabel: boolean;
+  triggerRef: Ref<HTMLButtonElement>;
   setKind: (kind: BulkTransactionKind) => void;
 }) => {
   const { t } = useTranslation('transactions');
@@ -173,16 +184,17 @@ const BulkTransactionKindField = ({
       <span className={getBulkLabelClassName(showLabel, true)}>
         {t('transactionKind')}
       </span>
-      <Select
-        value={kind}
-        onValueChange={(value) => setKind(value as BulkTransactionKind)}
-      >
-        <SelectTrigger
-          aria-label={t('transactionKind')}
-          className={COMPACT_FIELD_CLASS_NAME}
+        <Select
+          value={kind}
+          onValueChange={(value) => setKind(value as BulkTransactionKind)}
         >
-          <SelectValue />
-        </SelectTrigger>
+          <SelectTrigger
+            aria-label={t('transactionKind')}
+            className={COMPACT_FIELD_CLASS_NAME}
+            ref={triggerRef}
+          >
+            <SelectValue />
+          </SelectTrigger>
         <SelectContent position="popper">
           {bulkTransactionKinds.map((transactionKind) => (
             <SelectItem key={`${index}-${transactionKind}`} value={transactionKind}>
@@ -739,6 +751,51 @@ export const CreateBulkTransaction = () => {
     control: form.control,
     name: 'rows',
   });
+  const kindSelectTriggerRefs = useRef(new Map<number, HTMLButtonElement>());
+  const [pendingKindFocusRowIndex, setPendingKindFocusRowIndex] = useState<number | null>(
+    null,
+  );
+
+  useEffect(() => {
+    if (pendingKindFocusRowIndex === null) return;
+
+    const trigger = kindSelectTriggerRefs.current.get(pendingKindFocusRowIndex);
+    if (!trigger) return;
+
+    trigger.focus();
+    setPendingKindFocusRowIndex(null);
+  }, [fields.length, pendingKindFocusRowIndex]);
+
+  const registerKindSelectTrigger = (index: number) => (node: HTMLButtonElement | null) => {
+    if (node) {
+      kindSelectTriggerRefs.current.set(index, node);
+      return;
+    }
+
+    kindSelectTriggerRefs.current.delete(index);
+  };
+
+  const appendRow = (rowValues = getDefaultBulkTransactionRowValues()) => {
+    const nextRowIndex = fields.length;
+    append(rowValues);
+    setPendingKindFocusRowIndex(nextRowIndex);
+  };
+
+  const duplicateLastRow = () => {
+    const currentRows = form.getValues('rows');
+    const lastRow = currentRows[currentRows.length - 1] ?? getDefaultBulkTransactionRowValues();
+    const nextRows = [...currentRows, cloneBulkTransactionRowValues(lastRow)];
+
+    form.reset(
+      { rows: nextRows },
+      {
+        keepDirty: true,
+        keepErrors: true,
+        keepTouched: true,
+      },
+    );
+    setPendingKindFocusRowIndex(nextRows.length - 1);
+  };
 
   const setRowKind = (index: number, kind: BulkTransactionKind) => {
     form.setValue(
@@ -855,6 +912,7 @@ export const CreateBulkTransaction = () => {
                     index={index}
                     kind={row.kind}
                     showLabel={showLabels && !(row.kind === '' && index > 0)}
+                    triggerRef={registerKindSelectTrigger(index)}
                     setKind={(kind) => setRowKind(index, kind)}
                   />
                   <FieldError message={kindError && t(kindError)} />
@@ -877,9 +935,17 @@ export const CreateBulkTransaction = () => {
           type="button"
           variant="outline"
           className={FORM_BUTTON_CLASS_NAME}
-          onClick={() => append(getDefaultBulkTransactionRowValues())}
+          onClick={() => appendRow()}
         >
           {t('addTransactionRow')}
+        </Button>
+        <Button
+          type="button"
+          variant="outline"
+          className={FORM_BUTTON_CLASS_NAME}
+          onClick={duplicateLastRow}
+        >
+          {t('duplicateLastRow')}
         </Button>
 
         <div className="flex flex-col gap-2 sm:flex-row sm:justify-end">
