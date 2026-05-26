@@ -40,7 +40,7 @@ vi.mock('@store/toast-store', () => ({
 
 vi.mock('@transactions/components/transaction-forms', () => ({
   getDefaultExchangeTransactionFormValues: () => ({
-    date: '2024-01-03',
+    date: '',
     description: '',
     amountExpense: '',
     amountIncome: '',
@@ -67,9 +67,9 @@ vi.mock('@transactions/components/transaction-forms', () => ({
     <div>
       <button
         type="button"
-        onClick={() =>
+            onClick={() =>
           void onSubmit({
-            date: '2024-01-03',
+            date: '',
             description: 'Exchange',
             amountExpense: '10',
             amountIncome: '8',
@@ -111,7 +111,7 @@ describe('CreateExchangeTransaction', () => {
 
     await waitFor(() =>
       expect(mocks.createExchangeTransaction).toHaveBeenCalledWith({
-        date: '2024-01-03',
+        date: '',
         description: 'Exchange',
         amountExpense: 10,
         amountIncome: 8,

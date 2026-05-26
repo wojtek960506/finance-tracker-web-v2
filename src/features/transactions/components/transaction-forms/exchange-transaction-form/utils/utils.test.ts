@@ -57,11 +57,8 @@ describe('exchange transaction form utils', () => {
   });
 
   it('returns default values', () => {
-    vi.useFakeTimers();
-    vi.setSystemTime(new Date('2026-04-08T12:00:00Z'));
-
     expect(getDefaultExchangeTransactionFormValues()).toEqual({
-      date: '2026-04-08',
+      date: '',
       description: '',
       amountExpense: '',
       amountIncome: '',

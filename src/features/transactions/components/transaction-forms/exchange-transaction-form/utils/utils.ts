@@ -2,7 +2,6 @@ import { z } from 'zod';
 
 import type { Transaction } from '@transactions/api';
 import {
-  getDefaultTransactionDate,
   getTransactionAmountValue,
   getTransactionDateValue,
   getTransactionPairByType,
@@ -39,7 +38,7 @@ export type ExchangeTransactionFormValues = z.infer<typeof exchangeTransactionFo
 
 export const getDefaultExchangeTransactionFormValues =
   (): ExchangeTransactionFormValues => ({
-    date: getDefaultTransactionDate(),
+    date: '',
     description: '',
     amountExpense: '',
     amountIncome: '',

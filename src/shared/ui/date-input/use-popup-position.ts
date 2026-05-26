@@ -24,8 +24,11 @@ export const usePopupPosition = ({ isOpen }: UsePopupPositionOptions) => {
     const triggerRect = triggerRef.current.getBoundingClientRect();
     const popupRect = popupRef.current.getBoundingClientRect();
     const popupWidth = popupRect.width;
+    const popupHeight = popupRect.height;
     const isCenteredSmallScreen = window.innerWidth <= CENTERED_SMALL_SCREEN_MAX_WIDTH;
     const viewportMargin = isCenteredSmallScreen ? 0 : VIEWPORT_MARGIN;
+    const belowTop = triggerRect.bottom + OFFSET_FROM_TRIGGER;
+    const aboveTop = triggerRect.top - OFFSET_FROM_TRIGGER - popupHeight;
 
     const fitsHorizontally = (left: number) =>
       left >= viewportMargin && left + popupWidth <= window.innerWidth - viewportMargin;
@@ -46,7 +49,16 @@ export const usePopupPosition = ({ isOpen }: UsePopupPositionOptions) => {
     }
 
     left = Math.max(viewportMargin, Math.min(left, maxLeft));
-    const top = Math.max(viewportMargin, triggerRect.bottom + OFFSET_FROM_TRIGGER);
+    let top = belowTop;
+    if (belowTop + popupHeight > window.innerHeight - viewportMargin) {
+      if (aboveTop >= viewportMargin) {
+        top = aboveTop;
+      } else {
+        top = Math.max(viewportMargin, window.innerHeight - viewportMargin - popupHeight);
+      }
+    }
+
+    top = Math.max(viewportMargin, top);
 
     setPopupPosition({ top, left });
   }, []);

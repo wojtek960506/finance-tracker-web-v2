@@ -4,8 +4,8 @@ import { makeTransaction } from '@test-utils/factories/transaction';
 
 import {
   getDefaultStandardTransactionFormValues,
-  normalizeStandardTransactionFormValues,
   getStandardTransactionFormValues,
+  normalizeStandardTransactionFormValues,
   standardTransactionFormSchema,
   standardTransactionTypeOptions,
 } from './utils';
@@ -33,11 +33,8 @@ describe('standard transaction form utils', () => {
   });
 
   it('returns default values', () => {
-    vi.useFakeTimers();
-    vi.setSystemTime(new Date('2026-04-08T12:00:00Z'));
-
     expect(getDefaultStandardTransactionFormValues()).toEqual({
-      date: '2026-04-08',
+      date: '',
       description: '',
       amount: '',
       currency: '',

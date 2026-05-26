@@ -2,7 +2,6 @@ import { z } from 'zod';
 
 import type { Transaction, TransactionType } from '@transactions/api';
 import {
-  getDefaultTransactionDate,
   getTransactionAmountValue,
   getTransactionDateValue,
   toOptionalId,
@@ -29,7 +28,7 @@ export const standardTransactionTypeOptions: TransactionType[] = ['expense', 'in
 
 export const getDefaultStandardTransactionFormValues =
   (): StandardTransactionFormValues => ({
-    date: getDefaultTransactionDate(),
+    date: '',
     description: '',
     amount: '',
     currency: '',

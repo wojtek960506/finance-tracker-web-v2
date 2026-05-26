@@ -135,6 +135,92 @@ describe('DateInput', () => {
     await waitFor(() => expect(trigger).toHaveFocus());
   });
 
+  it('positions the popup above the trigger when there is not enough room below', async () => {
+    const user = userEvent.setup();
+    const formattedDate = new Intl.DateTimeFormat('en-GB', {
+      dateStyle: 'medium',
+    }).format(new Date(2024, 0, 3));
+    const originalInnerHeight = window.innerHeight;
+    const originalInnerWidth = window.innerWidth;
+    const getBoundingClientRectSpy = vi
+      .spyOn(HTMLElement.prototype, 'getBoundingClientRect')
+      .mockImplementation(function (this: HTMLElement) {
+        const role = this.getAttribute('role');
+
+        if (role === 'button') {
+          return {
+            x: 100,
+            y: 660,
+            width: 160,
+            height: 40,
+            top: 660,
+            left: 100,
+            right: 260,
+            bottom: 700,
+            toJSON: () => {},
+          } as DOMRect;
+        }
+
+        if (role === 'dialog') {
+          return {
+            x: 0,
+            y: 0,
+            width: 320,
+            height: 240,
+            top: 0,
+            left: 0,
+            right: 320,
+            bottom: 240,
+            toJSON: () => {},
+          } as DOMRect;
+        }
+
+        return {
+          x: 0,
+          y: 0,
+          width: 0,
+          height: 0,
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          toJSON: () => {},
+        } as DOMRect;
+      });
+
+    Object.defineProperty(window, 'innerHeight', {
+      configurable: true,
+      value: 768,
+    });
+    Object.defineProperty(window, 'innerWidth', {
+      configurable: true,
+      value: 1024,
+    });
+
+    try {
+      render(<DateInput value="2024-01-03" />);
+
+      await user.click(screen.getByRole('button', { name: formattedDate }));
+
+      await waitFor(() =>
+        expect(screen.getByRole('dialog')).toHaveStyle({
+          top: '412px',
+          left: '100px',
+        }),
+      );
+    } finally {
+      getBoundingClientRectSpy.mockRestore();
+      Object.defineProperty(window, 'innerHeight', {
+        configurable: true,
+        value: originalInnerHeight,
+      });
+      Object.defineProperty(window, 'innerWidth', {
+        configurable: true,
+        value: originalInnerWidth,
+      });
+    }
+  });
+
   it('does not open when disabled and supports space key opening otherwise', async () => {
     const user = userEvent.setup();
     const { rerender } = render(<DateInput value="2024-01-03" disabled />);
