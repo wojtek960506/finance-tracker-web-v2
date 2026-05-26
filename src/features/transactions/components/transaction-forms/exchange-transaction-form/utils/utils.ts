@@ -27,7 +27,13 @@ export const exchangeTransactionFormSchema = z.object({
   paymentMethodId: z.string(),
   accountExpenseId: z.string(),
   accountIncomeId: z.string(),
-});
+}).refine(
+  (values) => values.currencyExpense !== values.currencyIncome,
+  {
+    path: ['currencyIncome'],
+    message: 'exchangeCurrenciesMustDiffer',
+  },
+);
 
 export type ExchangeTransactionFormValues = z.infer<typeof exchangeTransactionFormSchema>;
 

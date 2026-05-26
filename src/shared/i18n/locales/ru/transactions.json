@@ -209,9 +209,9 @@
   "accountRequired": "Счёт обязателен.",
   "fromAccountRequired": "Счёт списания обязателен.",
   "toAccountRequired": "Счёт зачисления обязателен.",
-  "transferAccountsMustDiffer": "Счёт списания и счёт зачисления должны отличаться.",
   "amountExpenseRequired": "Списанная сумма обязательна.",
   "amountIncomeRequired": "Полученная сумма обязательна.",
   "expenseCurrencyRequired": "Списываемая валюта обязательна.",
-  "incomeCurrencyRequired": "Получаемая валюта обязательна."
+  "incomeCurrencyRequired": "Получаемая валюта обязательна.",
+  "exchangeCurrenciesMustDiffer": "Списываемая и получаемая валюты должны отличаться."
 }

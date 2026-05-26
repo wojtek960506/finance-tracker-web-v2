@@ -22,17 +22,7 @@ export const transferTransactionFormSchema = z
     paymentMethodId: z.string(),
     accountExpenseId: z.string(),
     accountIncomeId: z.string(),
-  })
-  .refine(
-    (values) =>
-      values.accountExpenseId.trim() === '' ||
-      values.accountIncomeId.trim() === '' ||
-      values.accountExpenseId !== values.accountIncomeId,
-    {
-    path: ['accountIncomeId'],
-    message: 'transferAccountsMustDiffer',
-    },
-  );
+  });
 
 export type TransferTransactionFormValues = z.infer<typeof transferTransactionFormSchema>;
 

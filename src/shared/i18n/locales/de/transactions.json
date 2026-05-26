@@ -209,9 +209,9 @@
   "accountRequired": "Konto ist erforderlich.",
   "fromAccountRequired": "Quellkonto ist erforderlich.",
   "toAccountRequired": "Zielkonto ist erforderlich.",
-  "transferAccountsMustDiffer": "Quell- und Zielkonto müssen unterschiedlich sein.",
   "amountExpenseRequired": "Ausgegebener Betrag ist erforderlich.",
   "amountIncomeRequired": "Erhaltener Betrag ist erforderlich.",
   "expenseCurrencyRequired": "Ausgabewährung ist erforderlich.",
-  "incomeCurrencyRequired": "Empfangswährung ist erforderlich."
+  "incomeCurrencyRequired": "Empfangswährung ist erforderlich.",
+  "exchangeCurrenciesMustDiffer": "Ausgabe- und Empfangswährung müssen unterschiedlich sein."
 }

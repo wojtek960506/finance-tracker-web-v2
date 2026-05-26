@@ -209,9 +209,9 @@
   "accountRequired": "Account is required.",
   "fromAccountRequired": "Source account is required.",
   "toAccountRequired": "Target account is required.",
-  "transferAccountsMustDiffer": "Source and target accounts must be different.",
   "amountExpenseRequired": "Spent amount is required.",
   "amountIncomeRequired": "Received amount is required.",
   "expenseCurrencyRequired": "Spent currency is required.",
-  "incomeCurrencyRequired": "Received currency is required."
+  "incomeCurrencyRequired": "Received currency is required.",
+  "exchangeCurrenciesMustDiffer": "Spent and received currencies must be different."
 }
