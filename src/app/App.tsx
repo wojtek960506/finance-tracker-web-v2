@@ -22,7 +22,15 @@ import {
 } from './routes';
 
 
-// TODO loading in named resources list is not with the same style as rest pages
+// TODOs
+// - If the Transaction Type is empty, we could still click Create Transaction,
+//   and that empty row would simply not be submitted (but this is only a maybe).
+// - If a given row has an error, its background should probably become reddish
+//   to draw more attention, especially on narrower screens.
+// - On narrower screens, maybe change the layout so that the main presentation
+//   is column-based instead of row-based.
+// - “Add another row” could maybe be changed to “Add another one” or something similar,
+//   because “row” is too tied to how it is currently presented.
 
 function App() {
   const { t } = useTranslation('auth');
