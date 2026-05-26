@@ -1,9 +1,13 @@
 import type { Transaction, TransactionType, TrashedTransaction } from '@transactions/api';
 
+import { formatDecimal } from './currency-amount';
+
 type TransactionAmountSource = Pick<
   Transaction | TrashedTransaction,
   'amount' | 'currency' | 'transactionType'
->;
+> & {
+  language: string;
+};
 
 type TransactionAmountPresentation = {
   formattedAmount: string;
@@ -26,11 +30,12 @@ export const getTransactionAmountPresentation = ({
   amount,
   currency,
   transactionType,
+  language,
 }: TransactionAmountSource): TransactionAmountPresentation => {
   const sign = transactionType === 'expense' ? '-' : '+';
 
   return {
-    formattedAmount: `${sign}${amount.toFixed(2)} ${currency}`,
+    formattedAmount: `${sign}${formatDecimal(amount, language)} ${currency}`,
     ...getTransactionAmountTone(transactionType),
   };
 };

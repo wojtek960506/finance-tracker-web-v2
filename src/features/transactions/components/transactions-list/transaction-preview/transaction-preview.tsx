@@ -30,7 +30,10 @@ export const TransactionPreview = ({
   const { t } = useTranslation('transactions');
   const { language } = useLanguage();
   const location = useLocation();
-  const amountPresentation = getTransactionAmountPresentation(transaction);
+  const amountPresentation = getTransactionAmountPresentation({
+    ...transaction,
+    language,
+  });
   const transactionKind = getTransactionKind(transaction);
   const returnTo = getTransactionsReturnTo(
     location.state,
