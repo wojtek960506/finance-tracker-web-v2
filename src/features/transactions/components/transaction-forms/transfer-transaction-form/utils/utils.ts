@@ -2,7 +2,6 @@ import { z } from 'zod';
 
 import type { Transaction } from '@transactions/api';
 import {
-  getDefaultTransactionDate,
   getTransactionAmountValue,
   getTransactionDateValue,
   getTransactionPairByType,
@@ -22,23 +21,13 @@ export const transferTransactionFormSchema = z
     paymentMethodId: z.string(),
     accountExpenseId: z.string(),
     accountIncomeId: z.string(),
-  })
-  .refine(
-    (values) =>
-      values.accountExpenseId.trim() === '' ||
-      values.accountIncomeId.trim() === '' ||
-      values.accountExpenseId !== values.accountIncomeId,
-    {
-    path: ['accountIncomeId'],
-    message: 'transferAccountsMustDiffer',
-    },
-  );
+  });
 
 export type TransferTransactionFormValues = z.infer<typeof transferTransactionFormSchema>;
 
 export const getDefaultTransferTransactionFormValues =
   (): TransferTransactionFormValues => ({
-    date: getDefaultTransactionDate(),
+    date: '',
     description: '',
     amount: '',
     currency: '',

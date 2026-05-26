@@ -109,6 +109,41 @@ describe('TransferTransactionForm', () => {
     });
   });
 
+  it('allows the same account for both transfer sides', async () => {
+    const user = userEvent.setup();
+    const onSubmit = vi.fn();
+
+    render(
+      <TransferTransactionForm
+        defaultValues={{
+          date: '2024-01-03',
+          description: 'Move funds',
+          amount: '10',
+          currency: 'USD',
+          paymentMethodId: 'pm-1',
+          accountExpenseId: 'acc-1',
+          accountIncomeId: 'acc-1',
+        }}
+        isPending={false}
+        mode="create"
+        onSubmit={onSubmit}
+        onCancel={() => {}}
+      />,
+    );
+
+    await user.click(screen.getByRole('button', { name: 'saveTransaction' }));
+
+    expect(onSubmit).toHaveBeenCalledWith({
+      date: '2024-01-03',
+      description: 'Move funds',
+      amount: '10',
+      currency: 'USD',
+      paymentMethodId: 'pm-1',
+      accountExpenseId: 'acc-1',
+      accountIncomeId: 'acc-1',
+    });
+  });
+
   it('shows validation messages for empty and invalid values', async () => {
     const user = userEvent.setup();
 

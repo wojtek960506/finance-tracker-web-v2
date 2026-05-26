@@ -30,12 +30,35 @@ describe('exchange transaction form utils', () => {
     ).toBeTruthy();
   });
 
-  it('returns default values', () => {
-    vi.useFakeTimers();
-    vi.setSystemTime(new Date('2026-04-08T12:00:00Z'));
+  it('rejects exchanges with the same currency on both sides', () => {
+    expect(
+      exchangeTransactionFormSchema.safeParse({
+        date: '2024-01-03',
+        description: 'Exchange',
+        amountExpense: '10',
+        amountIncome: '8',
+        currencyExpense: 'USD',
+        currencyIncome: 'USD',
+        paymentMethodId: 'pm-1',
+        accountExpenseId: 'acc-1',
+        accountIncomeId: 'acc-2',
+      }),
+    ).toMatchObject({
+      success: false,
+      error: expect.objectContaining({
+        issues: [
+          expect.objectContaining({
+            path: ['currencyIncome'],
+            message: 'exchangeCurrenciesMustDiffer',
+          }),
+        ],
+      }),
+    });
+  });
 
+  it('returns default values', () => {
     expect(getDefaultExchangeTransactionFormValues()).toEqual({
-      date: '2026-04-08',
+      date: '',
       description: '',
       amountExpense: '',
       amountIncome: '',

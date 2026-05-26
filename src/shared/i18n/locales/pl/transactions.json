@@ -18,6 +18,7 @@
   "transactionKind": "Rodzaj transakcji",
   "transactionKindRequired": "Rodzaj transakcji jest wymagany.",
   "addTransactionRow": "Dodaj kolejny wiersz",
+  "duplicateLastRow": "Duplikuj ostatni wiersz",
   "createTransactions": "Utwórz transakcje",
   "creatingTransactions": "Tworzenie transakcji...",
   "transactionsCreated": "Transakcje zostały utworzone.",
@@ -208,9 +209,9 @@
   "accountRequired": "Konto jest wymagane.",
   "fromAccountRequired": "Konto źródłowe jest wymagane.",
   "toAccountRequired": "Konto docelowe jest wymagane.",
-  "transferAccountsMustDiffer": "Konto źródłowe i docelowe muszą być różne.",
   "amountExpenseRequired": "Kwota wydana jest wymagana.",
   "amountIncomeRequired": "Kwota otrzymana jest wymagana.",
   "expenseCurrencyRequired": "Waluta wydana jest wymagana.",
-  "incomeCurrencyRequired": "Waluta otrzymana jest wymagana."
+  "incomeCurrencyRequired": "Waluta otrzymana jest wymagana.",
+  "exchangeCurrenciesMustDiffer": "Waluta wydana i otrzymana muszą być różne."
 }

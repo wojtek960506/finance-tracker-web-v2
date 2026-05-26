@@ -14,7 +14,7 @@ describe('transfer transaction form utils', () => {
     vi.useRealTimers();
   });
 
-  it('validates schema values including different accounts', () => {
+  it('allows the same account on both sides of a transfer', () => {
     expect(
       transferTransactionFormSchema.parse({
         date: '2024-01-03',
@@ -23,17 +23,14 @@ describe('transfer transaction form utils', () => {
         currency: 'USD',
         paymentMethodId: 'pm-1',
         accountExpenseId: 'acc-1',
-        accountIncomeId: 'acc-2',
+        accountIncomeId: 'acc-1',
       }),
     ).toBeTruthy();
   });
 
   it('returns default values', () => {
-    vi.useFakeTimers();
-    vi.setSystemTime(new Date('2026-04-08T12:00:00Z'));
-
     expect(getDefaultTransferTransactionFormValues()).toEqual({
-      date: '2026-04-08',
+      date: '',
       description: '',
       amount: '',
       currency: '',

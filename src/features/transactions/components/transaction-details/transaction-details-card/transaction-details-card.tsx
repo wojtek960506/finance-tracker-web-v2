@@ -29,7 +29,10 @@ export const TransactionDetailsCard = ({
   const { t: tNamedResources } = useTranslation('namedResources');
   const { language } = useLanguage();
   const isTrashMode = mode === 'trash';
-  const amountPresentation = getTransactionAmountPresentation(transaction);
+  const amountPresentation = getTransactionAmountPresentation({
+    ...transaction,
+    language,
+  });
   const categoryLabel = getTransactionNamedResourceLabel(
     transaction.category,
     tNamedResources,

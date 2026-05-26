@@ -18,6 +18,7 @@
   "transactionKind": "Тип транзакции",
   "transactionKindRequired": "Тип транзакции обязателен.",
   "addTransactionRow": "Добавить следующую строку",
+  "duplicateLastRow": "Дублировать последнюю строку",
   "createTransactions": "Создать транзакции",
   "creatingTransactions": "Создание транзакций...",
   "transactionsCreated": "Транзакции созданы.",
@@ -208,9 +209,9 @@
   "accountRequired": "Счёт обязателен.",
   "fromAccountRequired": "Счёт списания обязателен.",
   "toAccountRequired": "Счёт зачисления обязателен.",
-  "transferAccountsMustDiffer": "Счёт списания и счёт зачисления должны отличаться.",
   "amountExpenseRequired": "Списанная сумма обязательна.",
   "amountIncomeRequired": "Полученная сумма обязательна.",
   "expenseCurrencyRequired": "Списываемая валюта обязательна.",
-  "incomeCurrencyRequired": "Получаемая валюта обязательна."
+  "incomeCurrencyRequired": "Получаемая валюта обязательна.",
+  "exchangeCurrenciesMustDiffer": "Списываемая и получаемая валюты должны отличаться."
 }

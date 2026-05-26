@@ -18,6 +18,7 @@
   "transactionKind": "Transaction kind",
   "transactionKindRequired": "Transaction kind is required.",
   "addTransactionRow": "Add next row",
+  "duplicateLastRow": "Duplicate last row",
   "createTransactions": "Create transactions",
   "creatingTransactions": "Creating transactions...",
   "transactionsCreated": "Transactions created.",
@@ -208,9 +209,9 @@
   "accountRequired": "Account is required.",
   "fromAccountRequired": "Source account is required.",
   "toAccountRequired": "Target account is required.",
-  "transferAccountsMustDiffer": "Source and target accounts must be different.",
   "amountExpenseRequired": "Spent amount is required.",
   "amountIncomeRequired": "Received amount is required.",
   "expenseCurrencyRequired": "Spent currency is required.",
-  "incomeCurrencyRequired": "Received currency is required."
+  "incomeCurrencyRequired": "Received currency is required.",
+  "exchangeCurrenciesMustDiffer": "Spent and received currencies must be different."
 }

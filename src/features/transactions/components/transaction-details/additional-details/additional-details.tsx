@@ -54,7 +54,10 @@ const getReferenceDetails = (
     transaction.currency !== reference.currency ||
     transaction.transactionType !== reference.transactionType
   ) {
-    const amountPresentation = getTransactionAmountPresentation(reference);
+    const amountPresentation = getTransactionAmountPresentation({
+      ...reference,
+      language,
+    });
     details.push({
       title: t('amount'),
       value: amountPresentation.formattedAmount,
