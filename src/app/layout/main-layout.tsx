@@ -32,11 +32,11 @@ export const MainLayout = ({ children }: { children: ReactNode }) => {
 
 
   return (
-    <div className="h-screen overflow-x-auto overflow-y-hidden">
-      <div className="flex h-full min-w-[340px] flex-col">
+    <div className="h-[100dvh] overflow-x-auto overflow-hidden">
+      <div className="flex h-full min-w-[340px] min-h-0 flex-col">
         <Topbar navButtonRef={navButtonRef} />
 
-        <main className="p-4 h-full w-full overflow-y-auto">
+        <main className="min-h-0 flex-1 overflow-y-auto p-4">
           {/* p-1 == p-[0.25rem] == p-[4px] */}
           {children}
         </main>

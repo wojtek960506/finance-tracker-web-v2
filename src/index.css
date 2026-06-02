@@ -274,7 +274,15 @@
     color-scheme: dark;
   }
 
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
   body {
+    margin: 0;
+    overflow: hidden;
     @apply bg-bg text-fg;
   }
 

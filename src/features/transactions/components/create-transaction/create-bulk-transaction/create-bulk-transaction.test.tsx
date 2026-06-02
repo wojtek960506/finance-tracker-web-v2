@@ -253,7 +253,7 @@ describe('CreateBulkTransaction', () => {
       </QueryClientProvider>,
     );
 
-    expect(screen.getByText('bulkTransaction')).toBeInTheDocument();
+    expect(screen.getByText('bulkTransactionPageTitle')).toBeInTheDocument();
     expect(screen.getAllByRole('button', { name: /delete-row-/ })).toHaveLength(1);
 
     await user.click(screen.getByRole('button', { name: 'addTransactionRow' }));
