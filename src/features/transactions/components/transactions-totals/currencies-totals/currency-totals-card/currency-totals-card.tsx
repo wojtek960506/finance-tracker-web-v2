@@ -33,7 +33,7 @@ export const CurrencyTotalsCard = ({
           <div className="pl-1 flex min-w-0 flex-1 flex-wrap items-center justify-between gap-2">
             <div className="flex min-w-0 items-center gap-2">
               <h3 className="truncate text-lg font-semibold sm:text-xl min-w-10 sm:min-w-11 text-left">{currency}</h3>
-              <div className={clsx('text-sm font-semibold', balanceClassName)}>
+              <div className={clsx('text-base sm:text-lg font-semibold', balanceClassName)}>
                 {balance >= 0 && '+'}{formatCurrencyAmount(balance, undefined, language)}
               </div>
             </div>
