@@ -129,7 +129,6 @@ export const NamedResourceFilterField = ({
 
   const includeButtonLabel = t('includeMany');
   const excludeButtonLabel = t('excludeMany');
-  const descriptionKey = `${kind}FilterModeDescription`;
   const includePlaceholderKey = `include${resourceKindSuffix}Placeholder`;
   const excludePlaceholderKey = `exclude${resourceKindSuffix}Placeholder`;
   const clearIncludedKey = `clearIncluded${resourceKindSuffix}`;
@@ -137,10 +136,9 @@ export const NamedResourceFilterField = ({
   const noResultsKey = `no${resourceKindSuffix}Found`;
 
   return (
-    <div className="flex min-w-0 flex-col gap-3 rounded-2xl border border-fg/15 bg-bg/60 p-3">
+    <div className="flex min-w-0 flex-col gap-2 rounded-2xl border border-fg/15 bg-bg/60 p-3">
       <div className="flex min-w-0 flex-col gap-1">
         <span>{t(resourceKeyBase)}</span>
-        <p className="text-xs text-text-muted sm:text-sm">{t(descriptionKey)}</p>
       </div>
       <Controller
         control={form.control}

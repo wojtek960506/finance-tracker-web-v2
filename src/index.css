@@ -287,6 +287,10 @@
   }
 }
 
+.scrollbar-track-modal {
+  scrollbar-color: var(--text-muted) var(--modal-bg)
+}
+
 .overall-totals-container {
   container-type: inline-size;
 }
