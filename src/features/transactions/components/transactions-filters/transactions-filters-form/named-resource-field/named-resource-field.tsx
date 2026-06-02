@@ -15,6 +15,7 @@ import { capitalize } from '@shared/utils';
 import { getFavoriteIcon } from '@transactions/components/shared';
 import { getTransactionNamedResourceLabel } from '@transactions/utils';
 
+import { FilterFieldLabel } from '../filter-field-label';
 import type { TransactionFiltersFormValues } from '../utils';
 import { TRANSACTION_FILTER_RESOURCE_FIELD_NAMES } from '../utils';
 
@@ -136,10 +137,10 @@ export const NamedResourceFilterField = ({
   const noResultsKey = `no${resourceKindSuffix}Found`;
 
   return (
-    <div className="flex min-w-0 flex-col gap-2 rounded-2xl border border-fg/15 bg-bg/60 p-3">
-      <div className="flex min-w-0 flex-col gap-1">
-        <span>{t(resourceKeyBase)}</span>
-      </div>
+    <FilterFieldLabel
+      title={t(resourceKeyBase)}
+      className="gap-2 rounded-2xl border border-fg/15 bg-bg/60 p-3"
+    >
       <Controller
         control={form.control}
         name={fieldNames.mode}
@@ -206,6 +207,6 @@ export const NamedResourceFilterField = ({
           />
         )}
       />
-    </div>
+    </FilterFieldLabel>
   );
 };

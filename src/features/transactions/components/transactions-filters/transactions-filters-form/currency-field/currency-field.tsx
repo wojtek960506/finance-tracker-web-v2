@@ -1,9 +1,9 @@
 import { Controller, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { Label } from '@shared/ui';
 import { CurrencySelectField } from '@transactions/components/shared';
 
+import { FilterFieldLabel } from '../filter-field-label';
 import type { TransactionFiltersFormValues } from '../utils';
 
 export const CurrencyField = () => {
@@ -11,8 +11,7 @@ export const CurrencyField = () => {
   const form = useFormContext<TransactionFiltersFormValues>();
 
   return (
-    <Label>
-      <span>{t('currency')}</span>
+    <FilterFieldLabel title={t('currency')}>
       <Controller
         control={form.control}
         name="currency"
@@ -26,6 +25,6 @@ export const CurrencyField = () => {
           />
         )}
       />
-    </Label>
+    </FilterFieldLabel>
   );
 };

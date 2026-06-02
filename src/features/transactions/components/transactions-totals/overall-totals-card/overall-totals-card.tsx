@@ -14,13 +14,13 @@ const overallTotalsCardVariantClasses: Record<
     value: 'text-text',
   },
   expense: {
-    card: 'border-destructive-border bg-destructive/8',
-    label: 'text-destructive/80',
+    card: 'border-destructive/25 bg-destructive/8',
+    label: 'text-destructive',
     value: 'text-destructive',
   },
   income: {
     card: 'border-bt-primary/25 bg-bt-primary/8',
-    label: 'text-bt-primary/80',
+    label: 'text-bt-primary',
     value: 'text-bt-primary',
   },
 };
