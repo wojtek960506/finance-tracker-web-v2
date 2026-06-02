@@ -277,6 +277,11 @@
   body {
     @apply bg-bg text-fg;
   }
+
+  * {
+    scrollbar-color: var(--text-muted) var(--bg)
+  }
+
   * {
     @apply border-border outline-ring/50;
   }
