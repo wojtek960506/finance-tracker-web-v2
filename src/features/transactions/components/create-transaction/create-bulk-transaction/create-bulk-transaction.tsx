@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQueryClient } from '@tanstack/react-query';
+import clsx from 'clsx';
 import { Trash2 } from 'lucide-react';
 import { type Ref,useEffect, useRef, useState } from 'react';
 import { Controller, useFieldArray, useForm, useWatch } from 'react-hook-form';
@@ -39,6 +40,8 @@ import { EXCHANGE_CATEGORY, TRANSFER_CATEGORY } from '@transactions/consts';
 import {
   getTransactionsReturnTo,
   getTransactionsRouteState,
+  getTransactionTypeSelectItemClassName,
+  getTransactionTypeSelectValueClassName,
   shouldWarnAboutHiddenTransactions,
 } from '@transactions/utils';
 
@@ -253,13 +256,20 @@ const StandardRowFields = ({
         >
           <SelectTrigger
             aria-label={t('transactionType')}
-            className={COMPACT_FIELD_CLASS_NAME}
+            className={clsx(
+              COMPACT_FIELD_CLASS_NAME,
+              getTransactionTypeSelectValueClassName(selectedTransactionType)
+            )}
           >
             <SelectValue />
           </SelectTrigger>
           <SelectContent position="popper">
             {standardTransactionTypeOptions.map((transactionType) => (
-              <SelectItem key={`${index}-${transactionType}`} value={transactionType}>
+              <SelectItem
+                key={`${index}-${transactionType}`}
+                value={transactionType}
+                className={getTransactionTypeSelectItemClassName(transactionType)}
+              >
                 {t(transactionType)}
               </SelectItem>
             ))}
