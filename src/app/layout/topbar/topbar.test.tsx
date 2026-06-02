@@ -7,6 +7,10 @@ vi.mock('./nav-button', () => ({
   NavButton: () => <div data-testid="nav-button" />,
 }));
 
+vi.mock('./brand-link', () => ({
+  BrandLink: () => <div data-testid="brand-link" />,
+}));
+
 vi.mock('./language-switcher', () => ({
   LanguageSwitcher: () => <div data-testid="language-switcher" />,
 }));
@@ -24,6 +28,7 @@ describe('Topbar', () => {
     render(<Topbar />);
 
     expect(screen.getByTestId('nav-button')).toBeInTheDocument();
+    expect(screen.getByTestId('brand-link')).toBeInTheDocument();
     expect(screen.getByTestId('title')).toBeInTheDocument();
     expect(screen.getByTestId('language-switcher')).toBeInTheDocument();
     expect(screen.getByTestId('theme-button')).toBeInTheDocument();

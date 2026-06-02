@@ -32,7 +32,7 @@ export const TransactionFormActions = ({
     <div className="flex flex-col gap-2 sm:gap-3 sm:col-span-2 sm:flex-row sm:justify-end">
       <Button
         type="button"
-        variant="ghost"
+        variant="outline"
         className={FORM_BUTTON_CLASS_NAME}
         onClick={onCancel}
       >

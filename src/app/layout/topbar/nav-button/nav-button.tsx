@@ -15,7 +15,7 @@ export const NavButton = forwardRef<HTMLButtonElement>((_, ref) => {
     <Button
       ref={ref}
       onClick={() => setIsNavOpen(true)}
-      className={clsx(`${isAuthenticated ? 'visible' : 'hidden sm:block sm:invisible'}`)}
+      className={clsx(`${isAuthenticated ? 'visible' : 'hidden'}`)}
       variant="ghost"
     >
       <Menu className={ICON_CLASS_NAME} />

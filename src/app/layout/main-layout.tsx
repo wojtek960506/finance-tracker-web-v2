@@ -7,6 +7,7 @@ import { NavigationProvider } from '@context/navigation-context';
 import { useUIStore } from '@store/ui-store';
 import { Drawer, Toaster } from '@ui';
 
+import { BrandLink } from './topbar/brand-link';
 import { LanguageSwitcher } from './topbar/language-switcher';
 import { ThemeButton } from './topbar/theme-button';
 import { Topbar } from './topbar';
@@ -47,6 +48,7 @@ export const MainLayout = ({ children }: { children: ReactNode }) => {
           onClose={() => setIsNavOpen(false)}
           headerLeft={
             <div className="flex items-center md:hidden">
+              <BrandLink logoClassName="h-8" />
               <LanguageSwitcher dropdownAlign="left" />
               <ThemeButton />
             </div>

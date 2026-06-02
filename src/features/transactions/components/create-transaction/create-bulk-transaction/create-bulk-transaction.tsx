@@ -1012,7 +1012,7 @@ export const CreateBulkTransaction = () => {
         <div className="flex shrink-0 flex-col gap-2">
           <Button
             type="button"
-            variant="outline"
+            variant="inverse"
             className={FORM_BUTTON_CLASS_NAME}
             onClick={() => appendRow()}
           >
@@ -1020,7 +1020,7 @@ export const CreateBulkTransaction = () => {
           </Button>
           <Button
             type="button"
-            variant="outline"
+            variant="inverse"
             className={FORM_BUTTON_CLASS_NAME}
             onClick={duplicateLastRow}
           >
@@ -1030,7 +1030,7 @@ export const CreateBulkTransaction = () => {
           <div className="flex flex-col gap-2 sm:flex-row sm:justify-end">
             <Button
               type="button"
-              variant="ghost"
+              variant="outline"
               className={FORM_BUTTON_CLASS_NAME}
               ref={cancelButtonRef}
               onClick={handleCancel}
