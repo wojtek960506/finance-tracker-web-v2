@@ -380,6 +380,36 @@ describe('CreateBulkTransaction', () => {
     });
   });
 
+  it('keeps the date when changing the transaction kind', async () => {
+    const user = userEvent.setup();
+    const client = createTestQueryClient();
+
+    render(
+      <QueryClientProvider client={client}>
+        <CreateBulkTransaction />
+      </QueryClientProvider>,
+    );
+
+    await user.selectOptions(
+      screen.getByRole('combobox', { name: 'transactionKind' }),
+      'standard',
+    );
+
+    const dateInput = screen.getByLabelText(
+      'h-10 sm:h-11 rounded-xl px-3 sm:px-4 text-base sm:text-lg h-9 text-sm',
+    );
+    await user.type(dateInput, '2024-01-03');
+
+    await user.selectOptions(
+      screen.getByRole('combobox', { name: 'transactionKind' }),
+      'transfer',
+    );
+
+    expect(
+      screen.getByLabelText('h-10 sm:h-11 rounded-xl px-3 sm:px-4 text-base sm:text-lg h-9 text-sm'),
+    ).toHaveValue('2024-01-03');
+  });
+
   it('disables the row trash button only for an untouched single row', async () => {
     const user = userEvent.setup();
     const client = createTestQueryClient();

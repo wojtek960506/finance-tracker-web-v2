@@ -155,6 +155,13 @@ const getBulkKindTranslationKey = (kind: BulkTransactionKind) =>
 const getMeaningfulBulkTransactionRows = (rows: BulkTransactionRowValues[]) =>
   rows.filter((row) => row.kind !== '');
 
+const getBulkTransactionRowDate = (row: BulkTransactionRowValues) =>
+  row.kind === 'standard'
+    ? row.standardValues.date
+    : row.kind === 'transfer'
+      ? row.transferValues.date
+      : row.exchangeValues.date;
+
 const cloneBulkTransactionRowValues = (
   row: BulkTransactionRowValues,
 ): BulkTransactionRowValues => ({
@@ -808,11 +815,26 @@ export const CreateBulkTransaction = () => {
   };
 
   const setRowKind = (index: number, kind: BulkTransactionKind) => {
+    const currentRow = form.getValues(`rows.${index}`);
+    const date = getBulkTransactionRowDate(currentRow);
+
     form.setValue(
       `rows.${index}`,
       {
         ...getDefaultBulkTransactionRowValues(),
         kind,
+        standardValues: {
+          ...getBulkStandardTransactionFormValues(),
+          date,
+        },
+        transferValues: {
+          ...getBulkTransferTransactionFormValues(),
+          date,
+        },
+        exchangeValues: {
+          ...getBulkExchangeTransactionFormValues(),
+          date,
+        },
       },
       { shouldDirty: true, shouldValidate: form.formState.isSubmitted },
     );
