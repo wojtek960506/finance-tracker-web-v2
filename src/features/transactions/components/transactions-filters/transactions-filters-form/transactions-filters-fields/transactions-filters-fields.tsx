@@ -49,7 +49,7 @@ export const TransactionsFiltersFields = () => {
   return (
     <div
       className={clsx(
-        'grid min-h-0 min-w-0 gap-3 sm:gap-4 overflow-y-auto px-[2px]',
+        'scrollbar-track-modal grid min-h-0 min-w-0 gap-3 overflow-y-auto px-[2px] sm:gap-4',
         'transactions-filters-form-container',
       )}
     >
@@ -63,9 +63,9 @@ export const TransactionsFiltersFields = () => {
         isInitiallyOpen={shouldOpenAdvancedFields}
         triggerMode="full-row"
         contentInset="none"
-        contentClassName="pt-3 sm:pt-4"
+        contentClassName="pt-1 sm:pt-2"
       >
-        <div className="grid min-w-0 gap-3 sm:gap-4">
+        <div className="grid min-w-0 gap-2 sm:gap-3">
           <NamedResourceFilterField kind="categories" includeSystem />
           <NamedResourceFilterField kind="paymentMethods" />
           <NamedResourceFilterField kind="accounts" />

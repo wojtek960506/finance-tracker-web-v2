@@ -36,17 +36,19 @@ export const TransactionsList = ({
   }
 
   return (
-    <>
-      <ul className="flex flex-col gap-2 sm:gap-3">
-        {transactions.map((transaction) => (
-          <TransactionPreview transaction={transaction} key={transaction.id} />
-        ))}
-      </ul>
+    <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
+      <div className="min-h-0 flex-1 overflow-y-auto">
+        <ul className="flex flex-col gap-2 sm:gap-3">
+          {transactions.map((transaction) => (
+            <TransactionPreview transaction={transaction} key={transaction.id} />
+          ))}
+        </ul>
+      </div>
       <TransactionsPagination
         currentPage={currentPage}
         totalPages={totalPages}
         onPageChange={onPageChange}
       />
-    </>
+    </div>
   );
 };

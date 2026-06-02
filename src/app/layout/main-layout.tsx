@@ -7,6 +7,7 @@ import { NavigationProvider } from '@context/navigation-context';
 import { useUIStore } from '@store/ui-store';
 import { Drawer, Toaster } from '@ui';
 
+import { BrandLink } from './topbar/brand-link';
 import { LanguageSwitcher } from './topbar/language-switcher';
 import { ThemeButton } from './topbar/theme-button';
 import { Topbar } from './topbar';
@@ -32,11 +33,11 @@ export const MainLayout = ({ children }: { children: ReactNode }) => {
 
 
   return (
-    <div className="h-screen overflow-x-auto overflow-y-hidden">
-      <div className="flex h-full min-w-[340px] flex-col">
+    <div className="h-[100dvh] overflow-x-auto overflow-hidden">
+      <div className="flex h-full min-w-[340px] min-h-0 flex-col">
         <Topbar navButtonRef={navButtonRef} />
 
-        <main className="p-4 h-full w-full overflow-y-auto">
+        <main className="min-h-0 flex-1 overflow-y-auto p-4">
           {/* p-1 == p-[0.25rem] == p-[4px] */}
           {children}
         </main>
@@ -47,6 +48,7 @@ export const MainLayout = ({ children }: { children: ReactNode }) => {
           onClose={() => setIsNavOpen(false)}
           headerLeft={
             <div className="flex items-center md:hidden">
+              <BrandLink logoClassName="h-8" />
               <LanguageSwitcher dropdownAlign="left" />
               <ThemeButton />
             </div>

@@ -3,6 +3,7 @@ import type { RefObject } from 'react';
 
 import { useAuthToken } from '@shared/hooks';
 
+import { BrandLink } from './brand-link';
 import { LanguageSwitcher } from './language-switcher';
 import { NavButton } from './nav-button';
 import { ThemeButton } from './theme-button';
@@ -23,8 +24,11 @@ export const Topbar = ({
         'min-h-[var(--topbar-h)] sm:min-h-[var(--topbar-h-sm)]',
       )}
     >
-      <div className="flex justify-self-start">
+      <div className="flex items-center justify-self-start">
         <NavButton ref={navButtonRef} />
+        <div className={clsx(isAuthenticated ? 'hidden md:flex' : 'flex')}>
+          <BrandLink logoClassName="h-7 sm:h-8" />
+        </div>
       </div>
       <Title />
       <div

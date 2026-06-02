@@ -274,16 +274,47 @@
     color-scheme: dark;
   }
 
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
   body {
+    margin: 0;
+    overflow: hidden;
     @apply bg-bg text-fg;
   }
+
+  * {
+    scrollbar-color: var(--text-muted) var(--bg)
+  }
+
   * {
     @apply border-border outline-ring/50;
   }
 }
 
+.scrollbar-track-modal {
+  scrollbar-color: var(--text-muted) var(--modal-bg)
+}
+
 .overall-totals-container {
   container-type: inline-size;
+}
+
+.currency-totals-card-container {
+  container-type: inline-size;
+}
+
+.currency-totals-total-items-label {
+  display: inline;
+}
+
+@container (max-width: 28rem) {
+  .currency-totals-total-items-label {
+    display: none;
+  }
 }
 
 .transactions-page-main-column {

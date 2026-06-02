@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQueryClient } from '@tanstack/react-query';
+import clsx from 'clsx';
 import { Trash2 } from 'lucide-react';
 import { type Ref,useEffect, useRef, useState } from 'react';
 import { Controller, useFieldArray, useForm, useWatch } from 'react-hook-form';
@@ -14,6 +15,7 @@ import { createBulkTransactions } from '@transactions/api';
 import {
   CurrencySelectField,
   NamedResourceSelectField,
+  TransactionActionModal,
 } from '@transactions/components/shared';
 import {
   exchangeTransactionFormSchema,
@@ -39,6 +41,8 @@ import { EXCHANGE_CATEGORY, TRANSFER_CATEGORY } from '@transactions/consts';
 import {
   getTransactionsReturnTo,
   getTransactionsRouteState,
+  getTransactionTypeSelectItemClassName,
+  getTransactionTypeSelectValueClassName,
   shouldWarnAboutHiddenTransactions,
 } from '@transactions/utils';
 
@@ -91,14 +95,7 @@ const bulkTransactionRowSchema = z
     exchangeValues: z.custom<ExchangeTransactionFormValues>(),
   })
   .superRefine((row, ctx) => {
-    if (row.kind === '') {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        path: ['kind'],
-        message: 'transactionKindRequired',
-      });
-      return;
-    }
+    if (row.kind === '') return;
 
     const validationResult =
       row.kind === 'standard'
@@ -154,6 +151,16 @@ const getDefaultBulkTransactionRowValues = (): BulkTransactionRowValues => ({
 const getDeleteActionLabel = (index: number) => `delete-row-${index + 1}`;
 const getBulkKindTranslationKey = (kind: BulkTransactionKind) =>
   `bulk${kind.charAt(0).toUpperCase()}${kind.slice(1)}Transaction`;
+
+const getMeaningfulBulkTransactionRows = (rows: BulkTransactionRowValues[]) =>
+  rows.filter((row) => row.kind !== '');
+
+const getBulkTransactionRowDate = (row: BulkTransactionRowValues) =>
+  row.kind === 'standard'
+    ? row.standardValues.date
+    : row.kind === 'transfer'
+      ? row.transferValues.date
+      : row.exchangeValues.date;
 
 const cloneBulkTransactionRowValues = (
   row: BulkTransactionRowValues,
@@ -253,13 +260,20 @@ const StandardRowFields = ({
         >
           <SelectTrigger
             aria-label={t('transactionType')}
-            className={COMPACT_FIELD_CLASS_NAME}
+            className={clsx(
+              COMPACT_FIELD_CLASS_NAME,
+              getTransactionTypeSelectValueClassName(selectedTransactionType)
+            )}
           >
             <SelectValue />
           </SelectTrigger>
           <SelectContent position="popper">
             {standardTransactionTypeOptions.map((transactionType) => (
-              <SelectItem key={`${index}-${transactionType}`} value={transactionType}>
+              <SelectItem
+                key={`${index}-${transactionType}`}
+                value={transactionType}
+                className={getTransactionTypeSelectItemClassName(transactionType)}
+              >
                 {t(transactionType)}
               </SelectItem>
             ))}
@@ -736,6 +750,7 @@ export const CreateBulkTransaction = () => {
   const { t } = useTranslation('transactions');
   const returnTo = getTransactionsReturnTo(location.state);
   const [isPending, setIsPending] = useState(false);
+  const [isDiscardModalOpen, setIsDiscardModalOpen] = useState(false);
 
   const form = useForm<BulkTransactionFormValues>({
     resolver: zodResolver(bulkTransactionFormSchema),
@@ -751,7 +766,9 @@ export const CreateBulkTransaction = () => {
     control: form.control,
     name: 'rows',
   });
+  const meaningfulRows = getMeaningfulBulkTransactionRows(rows ?? []);
   const kindSelectTriggerRefs = useRef(new Map<number, HTMLButtonElement>());
+  const cancelButtonRef = useRef<HTMLButtonElement | null>(null);
   const [pendingKindFocusRowIndex, setPendingKindFocusRowIndex] = useState<number | null>(
     null,
   );
@@ -798,11 +815,26 @@ export const CreateBulkTransaction = () => {
   };
 
   const setRowKind = (index: number, kind: BulkTransactionKind) => {
+    const currentRow = form.getValues(`rows.${index}`);
+    const date = getBulkTransactionRowDate(currentRow);
+
     form.setValue(
       `rows.${index}`,
       {
         ...getDefaultBulkTransactionRowValues(),
         kind,
+        standardValues: {
+          ...getBulkStandardTransactionFormValues(),
+          date,
+        },
+        transferValues: {
+          ...getBulkTransferTransactionFormValues(),
+          date,
+        },
+        exchangeValues: {
+          ...getBulkExchangeTransactionFormValues(),
+          date,
+        },
       },
       { shouldDirty: true, shouldValidate: form.formState.isSubmitted },
     );
@@ -818,10 +850,16 @@ export const CreateBulkTransaction = () => {
   };
 
   const onSubmit = form.handleSubmit(async (values) => {
+    const transactionsToCreate = getMeaningfulBulkTransactionRows(values.rows);
+
+    if (transactionsToCreate.length === 0) {
+      return;
+    }
+
     setIsPending(true);
     try {
       const createdTransactions = await createBulkTransactions({
-        transactions: values.rows.map((row) => {
+        transactions: transactionsToCreate.map((row) => {
           if (row.kind === 'standard') {
             return {
               kind: 'standard' as const,
@@ -872,103 +910,142 @@ export const CreateBulkTransaction = () => {
     }
   });
 
+  const handleCancel = () => {
+    if (meaningfulRows.length === 0) {
+      navigate('/transactions/new', {
+        state: getTransactionsRouteState(returnTo),
+      });
+      return;
+    }
+
+    setIsDiscardModalOpen(true);
+  };
+
+  const handleConfirmDiscard = () => {
+    setIsDiscardModalOpen(false);
+    navigate('/transactions/new', {
+      state: getTransactionsRouteState(returnTo),
+    });
+  };
+
   return (
-    <Card className="w-full gap-3">
+    <Card className="flex max-h-full min-h-0 w-full flex-col gap-3 overflow-hidden">
+      <TransactionActionModal
+        isOpen={isDiscardModalOpen}
+        onClose={() => setIsDiscardModalOpen(false)}
+        ariaLabel={t('bulkTransactionDiscardModalTitle')}
+        title={t('bulkTransactionDiscardModalTitle')}
+        cancelLabel={t('cancel')}
+        confirmLabel={t('bulkTransactionDiscardConfirmLabel')}
+        onConfirm={handleConfirmDiscard}
+        restoreFocusRef={cancelButtonRef}
+      >
+        <p>
+          {t('bulkTransactionDiscardModalDescription', {
+            count: meaningfulRows.length,
+          })}
+        </p>
+      </TransactionActionModal>
       <div className="flex items-center justify-between gap-3">
-        <h2 className="text-base font-semibold sm:text-lg">{t('bulkTransaction')}</h2>
+        <h2 className="text-base font-semibold sm:text-lg">
+          {t('bulkTransactionPageTitle')}
+        </h2>
       </div>
 
       <form
-        className="flex flex-col gap-2"
+        className="flex min-h-0 flex-1 flex-col gap-2"
         onKeyDown={preventImplicitFormSubmit}
         onSubmit={onSubmit}
       >
-        {fields.map((field, index) => {
-          const row = rows?.[index] ?? getDefaultBulkTransactionRowValues();
-          const kindError = form.formState.errors.rows?.[index]?.kind?.message;
-          const previousRowKind = index > 0 ? (rows?.[index - 1]?.kind ?? '') : null;
-          const showLabels = index === 0 || previousRowKind !== row.kind;
+        <div className="scrollbar-track-modal min-h-0 flex-1 overflow-y-auto pr-1">
+          <div className="flex flex-col gap-2">
+            {fields.map((field, index) => {
+              const row = rows?.[index] ?? getDefaultBulkTransactionRowValues();
+              const kindError = form.formState.errors.rows?.[index]?.kind?.message;
+              const previousRowKind = index > 0 ? (rows?.[index - 1]?.kind ?? '') : null;
+              const showLabels = index === 0 || previousRowKind !== row.kind;
 
-          return (
-            <div
-              key={field.id}
-              className="overflow-x-auto rounded-xl border border-fg/10 bg-bg/30 p-2"
-            >
-              <div className="flex min-w-max items-stretch gap-2">
-                <div className="flex self-stretch flex-col">
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    className="my-auto rounded-lg px-2 text-text-muted"
-                    onClick={() => deleteRow(index)}
-                    aria-label={getDeleteActionLabel(index)}
-                    disabled={fields.length === 1 && row.kind === ''}
-                  >
-                    <Trash2 aria-hidden="true" />
-                  </Button>
+              return (
+                <div
+                  key={field.id}
+                  className="overflow-x-auto rounded-xl border border-fg/10 bg-bg/30 p-2"
+                >
+                  <div className="flex min-w-max items-stretch gap-2">
+                    <div className="flex self-stretch flex-col">
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        className="my-auto rounded-lg px-2 text-text-muted"
+                        onClick={() => deleteRow(index)}
+                        aria-label={getDeleteActionLabel(index)}
+                        disabled={fields.length === 1 && row.kind === ''}
+                      >
+                        <Trash2 aria-hidden="true" />
+                      </Button>
+                    </div>
+                    <div className="space-y-1">
+                      <BulkTransactionKindField
+                        index={index}
+                        kind={row.kind}
+                        showLabel={showLabels && !(row.kind === '' && index > 0)}
+                        triggerRef={registerKindSelectTrigger(index)}
+                        setKind={(kind) => setRowKind(index, kind)}
+                      />
+                      <FieldError message={kindError && t(kindError)} />
+                    </div>
+                    {row.kind === 'standard' ? (
+                      <StandardRowFields form={form} index={index} showLabels={showLabels} />
+                    ) : null}
+                    {row.kind === 'transfer' ? (
+                      <TransferRowFields form={form} index={index} showLabels={showLabels} />
+                    ) : null}
+                    {row.kind === 'exchange' ? (
+                      <ExchangeRowFields form={form} index={index} showLabels={showLabels} />
+                    ) : null}
+                  </div>
                 </div>
-                <div className="space-y-1">
-                  <BulkTransactionKindField
-                    index={index}
-                    kind={row.kind}
-                    showLabel={showLabels && !(row.kind === '' && index > 0)}
-                    triggerRef={registerKindSelectTrigger(index)}
-                    setKind={(kind) => setRowKind(index, kind)}
-                  />
-                  <FieldError message={kindError && t(kindError)} />
-                </div>
-                {row.kind === 'standard' ? (
-                  <StandardRowFields form={form} index={index} showLabels={showLabels} />
-                ) : null}
-                {row.kind === 'transfer' ? (
-                  <TransferRowFields form={form} index={index} showLabels={showLabels} />
-                ) : null}
-                {row.kind === 'exchange' ? (
-                  <ExchangeRowFields form={form} index={index} showLabels={showLabels} />
-                ) : null}
-              </div>
-            </div>
-          );
-        })}
+              );
+            })}
+          </div>
+        </div>
 
-        <Button
-          type="button"
-          variant="outline"
-          className={FORM_BUTTON_CLASS_NAME}
-          onClick={() => appendRow()}
-        >
-          {t('addTransactionRow')}
-        </Button>
-        <Button
-          type="button"
-          variant="outline"
-          className={FORM_BUTTON_CLASS_NAME}
-          onClick={duplicateLastRow}
-        >
-          {t('duplicateLastRow')}
-        </Button>
-
-        <div className="flex flex-col gap-2 sm:flex-row sm:justify-end">
+        <div className="flex shrink-0 flex-col gap-2">
           <Button
             type="button"
-            variant="ghost"
+            variant="inverse"
             className={FORM_BUTTON_CLASS_NAME}
-            onClick={() =>
-              navigate('/transactions/new', {
-                state: getTransactionsRouteState(returnTo),
-              })
-            }
+            onClick={() => appendRow()}
           >
-            {t('cancel')}
+            {t('addTransactionRow')}
           </Button>
           <Button
-            type="submit"
-            variant="primary"
+            type="button"
+            variant="inverse"
             className={FORM_BUTTON_CLASS_NAME}
-            disabled={isPending}
+            onClick={duplicateLastRow}
           >
-            {isPending ? t('creatingTransactions') : t('createTransactions')}
+            {t('duplicateLastRow')}
           </Button>
+
+          <div className="flex flex-col gap-2 sm:flex-row sm:justify-end">
+            <Button
+              type="button"
+              variant="outline"
+              className={FORM_BUTTON_CLASS_NAME}
+              ref={cancelButtonRef}
+              onClick={handleCancel}
+            >
+              {t('cancel')}
+            </Button>
+            <Button
+              type="submit"
+              variant="primary"
+              className={FORM_BUTTON_CLASS_NAME}
+              disabled={isPending || meaningfulRows.length === 0}
+            >
+              {isPending ? t('creatingTransactions') : t('createTransactions')}
+            </Button>
+          </div>
         </div>
       </form>
     </Card>

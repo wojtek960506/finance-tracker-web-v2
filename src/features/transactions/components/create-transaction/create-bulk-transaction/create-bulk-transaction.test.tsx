@@ -92,6 +92,35 @@ vi.mock('@transactions/components/shared', () => ({
       onChange={(event) => onChange(event.target.value)}
     />
   ),
+  TransactionActionModal: ({
+    isOpen,
+    title,
+    cancelLabel,
+    confirmLabel,
+    onClose,
+    onConfirm,
+    children,
+  }: {
+    isOpen: boolean;
+    title: string;
+    cancelLabel: string;
+    confirmLabel: string;
+    onClose: () => void;
+    onConfirm: () => void;
+    children: any;
+  }) =>
+    isOpen ? (
+      <div>
+        <h2>{title}</h2>
+        <div>{children}</div>
+        <button type="button" onClick={onClose}>
+          {cancelLabel}
+        </button>
+        <button type="button" onClick={onConfirm}>
+          {confirmLabel}
+        </button>
+      </div>
+    ) : null,
   TransactionBackButton: ({ label, to }: { label: string; to: string }) => (
     <button type="button" data-to={to}>
       {label}
@@ -224,7 +253,7 @@ describe('CreateBulkTransaction', () => {
       </QueryClientProvider>,
     );
 
-    expect(screen.getByText('bulkTransaction')).toBeInTheDocument();
+    expect(screen.getByText('bulkTransactionPageTitle')).toBeInTheDocument();
     expect(screen.getAllByRole('button', { name: /delete-row-/ })).toHaveLength(1);
 
     await user.click(screen.getByRole('button', { name: 'addTransactionRow' }));
@@ -305,7 +334,7 @@ describe('CreateBulkTransaction', () => {
     expect(screen.getAllByLabelText('currency')[2]).toHaveValue('EUR');
   });
 
-  it('navigates back to transaction kind selection on cancel', async () => {
+  it('navigates back to transaction kind selection on cancel when the draft is empty', async () => {
     const user = userEvent.setup();
     const client = createTestQueryClient();
     mocks.location.state = { returnTo: '/transactions?page=2' };
@@ -321,6 +350,64 @@ describe('CreateBulkTransaction', () => {
     expect(mocks.navigate).toHaveBeenCalledWith('/transactions/new', {
       state: { returnTo: '/transactions?page=2' },
     });
+  });
+
+  it('asks for confirmation before canceling when the draft has selected rows', async () => {
+    const user = userEvent.setup();
+    const client = createTestQueryClient();
+
+    render(
+      <QueryClientProvider client={client}>
+        <CreateBulkTransaction />
+      </QueryClientProvider>,
+    );
+
+    await user.selectOptions(
+      screen.getByRole('combobox', { name: 'transactionKind' }),
+      'standard',
+    );
+
+    await user.click(screen.getByRole('button', { name: 'cancel' }));
+
+    expect(screen.getByText('bulkTransactionDiscardModalTitle')).toBeInTheDocument();
+
+    await user.click(
+      screen.getByRole('button', { name: 'bulkTransactionDiscardConfirmLabel' }),
+    );
+
+    expect(mocks.navigate).toHaveBeenCalledWith('/transactions/new', {
+      state: { returnTo: '/transactions' },
+    });
+  });
+
+  it('keeps the date when changing the transaction kind', async () => {
+    const user = userEvent.setup();
+    const client = createTestQueryClient();
+
+    render(
+      <QueryClientProvider client={client}>
+        <CreateBulkTransaction />
+      </QueryClientProvider>,
+    );
+
+    await user.selectOptions(
+      screen.getByRole('combobox', { name: 'transactionKind' }),
+      'standard',
+    );
+
+    const dateInput = screen.getByLabelText(
+      'h-10 sm:h-11 rounded-xl px-3 sm:px-4 text-base sm:text-lg h-9 text-sm',
+    );
+    await user.type(dateInput, '2024-01-03');
+
+    await user.selectOptions(
+      screen.getByRole('combobox', { name: 'transactionKind' }),
+      'transfer',
+    );
+
+    expect(
+      screen.getByLabelText('h-10 sm:h-11 rounded-xl px-3 sm:px-4 text-base sm:text-lg h-9 text-sm'),
+    ).toHaveValue('2024-01-03');
   });
 
   it('disables the row trash button only for an untouched single row', async () => {
@@ -408,6 +495,55 @@ describe('CreateBulkTransaction', () => {
       queryKey: ['transaction-totals'],
     });
     expect(mocks.navigate).toHaveBeenCalledWith('/transactions');
+  });
+
+  it('ignores empty placeholder rows when creating bulk transactions', async () => {
+    const user = userEvent.setup();
+    const client = createTestQueryClient();
+    mocks.createBulkTransactions.mockResolvedValueOnce([{ id: 'tx-1' }]);
+
+    render(
+      <QueryClientProvider client={client}>
+        <CreateBulkTransaction />
+      </QueryClientProvider>,
+    );
+
+    await user.selectOptions(
+      screen.getByRole('combobox', { name: 'transactionKind' }),
+      'standard',
+    );
+    await user.type(
+      screen.getByLabelText('h-10 sm:h-11 rounded-xl px-3 sm:px-4 text-base sm:text-lg h-9 text-sm'),
+      '2024-01-03',
+    );
+    await user.selectOptions(
+      screen.getByRole('combobox', { name: 'transactionType' }),
+      'expense',
+    );
+    await user.type(screen.getByRole('textbox', { name: 'description' }), 'Groceries');
+    await user.type(screen.getByLabelText('number-input'), '10');
+    await user.type(screen.getByLabelText('currency'), 'USD');
+
+    await user.click(screen.getByRole('button', { name: 'addTransactionRow' }));
+    await user.click(screen.getByRole('button', { name: 'createTransactions' }));
+
+    await waitFor(() =>
+      expect(mocks.createBulkTransactions).toHaveBeenCalledWith({
+        transactions: [
+          {
+            kind: 'standard',
+            date: expect.any(String),
+            description: 'Groceries',
+            amount: 10,
+            currency: 'USD',
+            categoryId: undefined,
+            paymentMethodId: undefined,
+            accountId: undefined,
+            transactionType: 'expense',
+          },
+        ],
+      }),
+    );
   });
 
   it('does not submit on Enter from a field, but still submits on the submit button', async () => {

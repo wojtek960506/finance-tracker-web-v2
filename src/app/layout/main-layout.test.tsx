@@ -9,6 +9,18 @@ const mocks = vi.hoisted(() => ({
   setIsNavOpen: vi.fn(),
 }));
 
+vi.mock('@tanstack/react-query', () => ({
+  useQuery: () => ({ data: undefined }),
+}));
+
+vi.mock('@shared/hooks', () => ({
+  useAuthToken: () => ({ isAuthenticated: false, isAuthResolved: true }),
+}));
+
+vi.mock('react-i18next', () => ({
+  useTranslation: () => ({ t: (key: string) => key }),
+}));
+
 vi.mock('@store/ui-store', () => ({
   useUIStore: () => ({
     isNavOpen: mocks.isNavOpen.value,

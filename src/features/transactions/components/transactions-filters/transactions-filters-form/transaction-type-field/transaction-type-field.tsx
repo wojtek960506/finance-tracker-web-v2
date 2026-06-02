@@ -2,20 +2,23 @@ import clsx from 'clsx';
 import { Controller, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { Button, Label } from '@shared/ui';
-import { FORM_BUTTON_CLASS_NAME } from '@transactions/components/transaction-forms';
+import { Button } from '@shared/ui';
+import {
+  getTransactionTypeButtonClassName,
+  getTransactionTypeButtonVariant,
+} from '@transactions/utils';
 
+import { FilterFieldLabel } from '../filter-field-label';
 import type { TransactionFiltersFormValues } from '../utils';
 
-const FILTER_TYPE_OPTIONS = ['', 'expense', 'income'] as const;
+const FILTER_TYPE_OPTIONS = ['expense', 'income'] as const;
 
 export const TransactionTypeField = () => {
   const { t } = useTranslation('transactions');
   const { control } = useFormContext<TransactionFiltersFormValues>();
 
   return (
-    <Label>
-      <span>{t('transactionType')}</span>
+    <FilterFieldLabel title={t('transactionType')}>
       <Controller
         control={control}
         name="transactionType"
@@ -23,9 +26,9 @@ export const TransactionTypeField = () => {
           <div
             className={clsx(
               'gap-2',
-              '2xl:grid 2xl:grid-cols-3',
+              '2xl:grid 2xl:grid-cols-2',
               'lg:flex lg:flex-col',
-              'sm:grid sm:grid-cols-3',
+              'sm:grid sm:grid-cols-2',
               'flex flex-col',
             )}
           >
@@ -34,19 +37,20 @@ export const TransactionTypeField = () => {
 
               return (
                 <Button
-                  key={transactionType || 'all'}
+                  key={transactionType}
                   type="button"
-                  variant={isActive ? 'primary' : 'outline'}
-                  className={FORM_BUTTON_CLASS_NAME}
-                  onClick={() => field.onChange(transactionType)}
+                  variant={getTransactionTypeButtonVariant(transactionType, isActive)}
+                  aria-pressed={isActive}
+                  className={getTransactionTypeButtonClassName(transactionType, isActive)}
+                  onClick={() => field.onChange(isActive ? '' : transactionType)}
                 >
-                  {transactionType ? t(transactionType) : t('allTransactionTypes')}
+                  {t(transactionType)}
                 </Button>
               );
             })}
           </div>
         )}
       />
-    </Label>
+    </FilterFieldLabel>
   );
 };

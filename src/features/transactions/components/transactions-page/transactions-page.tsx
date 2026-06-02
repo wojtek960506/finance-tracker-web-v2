@@ -283,7 +283,7 @@ export const TransactionsPage = () => {
             </div>
           ) : null}
 
-          <div className="min-h-0 overflow-y-auto ">
+          <div className="min-h-0 flex flex-1 flex-col overflow-hidden">
             <TransactionsList
               transactions={data?.items ?? []}
               hasAnyTransactions={(data?.total ?? 0) > 0}

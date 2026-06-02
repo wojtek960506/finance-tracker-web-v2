@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import clsx from 'clsx';
 import { Controller, type SubmitHandler, useForm, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
@@ -16,6 +17,10 @@ import {
   TransactionFormActions,
 } from '@transactions/components/transaction-forms';
 import { EXCHANGE_CATEGORY, TRANSFER_CATEGORY } from '@transactions/consts';
+import {
+  getTransactionTypeButtonClassName,
+  getTransactionTypeButtonVariant,
+} from '@transactions/utils';
 
 import {
   standardTransactionFormSchema,
@@ -94,8 +99,11 @@ export const StandardTransactionForm = ({
                 <Button
                   key={transactionType}
                   type="button"
-                  variant={isActive ? 'primary' : 'outline'}
-                  className={FORM_BUTTON_CLASS_NAME}
+                  variant={getTransactionTypeButtonVariant(transactionType, isActive)}
+                  className={clsx(
+                    FORM_BUTTON_CLASS_NAME,
+                    getTransactionTypeButtonClassName(transactionType, isActive),
+                  )}
                   onClick={() => form.setValue('transactionType', transactionType)}
                 >
                   {t(transactionType)}
