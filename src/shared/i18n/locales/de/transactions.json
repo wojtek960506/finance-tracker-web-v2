@@ -146,7 +146,7 @@
   "endDate": "Enddatum",
   "minAmount": "Mindestbetrag",
   "maxAmount": "Höchstbetrag",
-  "totalItems": "Gesamtanzahl",
+  "totalItems": "Transaktionen insgesamt",
   "expenseItems": "Ausgaben",
   "incomeItems": "Einnahmen",
   "totalAmount": "Gesamtbetrag",

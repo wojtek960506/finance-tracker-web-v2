@@ -147,6 +147,7 @@
   "minAmount": "Kwota od",
   "maxAmount": "Kwota do",
   "totalItems": "Liczba transakcji",
+  "balance": "Saldo",
   "expenseItems": "Wydatki",
   "incomeItems": "Przychody",
   "totalAmount": "Suma kwot",

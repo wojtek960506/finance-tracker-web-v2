@@ -295,6 +295,20 @@
   container-type: inline-size;
 }
 
+.currency-totals-card-container {
+  container-type: inline-size;
+}
+
+.currency-totals-total-items-label {
+  display: inline;
+}
+
+@container (max-width: 28rem) {
+  .currency-totals-total-items-label {
+    display: none;
+  }
+}
+
 .transactions-page-main-column {
   container-type: inline-size;
 }

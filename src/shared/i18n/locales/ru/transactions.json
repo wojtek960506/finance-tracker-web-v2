@@ -146,7 +146,7 @@
   "endDate": "Дата до",
   "minAmount": "Сумма от",
   "maxAmount": "Сумма до",
-  "totalItems": "Всего операций",
+  "totalItems": "Всего транзакций",
   "expenseItems": "Расходы",
   "incomeItems": "Доходы",
   "totalAmount": "Общая сумма",
