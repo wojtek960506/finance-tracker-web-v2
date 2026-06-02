@@ -15,6 +15,7 @@ import { createBulkTransactions } from '@transactions/api';
 import {
   CurrencySelectField,
   NamedResourceSelectField,
+  TransactionActionModal,
 } from '@transactions/components/shared';
 import {
   exchangeTransactionFormSchema,
@@ -94,14 +95,7 @@ const bulkTransactionRowSchema = z
     exchangeValues: z.custom<ExchangeTransactionFormValues>(),
   })
   .superRefine((row, ctx) => {
-    if (row.kind === '') {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        path: ['kind'],
-        message: 'transactionKindRequired',
-      });
-      return;
-    }
+    if (row.kind === '') return;
 
     const validationResult =
       row.kind === 'standard'
@@ -157,6 +151,9 @@ const getDefaultBulkTransactionRowValues = (): BulkTransactionRowValues => ({
 const getDeleteActionLabel = (index: number) => `delete-row-${index + 1}`;
 const getBulkKindTranslationKey = (kind: BulkTransactionKind) =>
   `bulk${kind.charAt(0).toUpperCase()}${kind.slice(1)}Transaction`;
+
+const getMeaningfulBulkTransactionRows = (rows: BulkTransactionRowValues[]) =>
+  rows.filter((row) => row.kind !== '');
 
 const cloneBulkTransactionRowValues = (
   row: BulkTransactionRowValues,
@@ -746,6 +743,7 @@ export const CreateBulkTransaction = () => {
   const { t } = useTranslation('transactions');
   const returnTo = getTransactionsReturnTo(location.state);
   const [isPending, setIsPending] = useState(false);
+  const [isDiscardModalOpen, setIsDiscardModalOpen] = useState(false);
 
   const form = useForm<BulkTransactionFormValues>({
     resolver: zodResolver(bulkTransactionFormSchema),
@@ -761,7 +759,9 @@ export const CreateBulkTransaction = () => {
     control: form.control,
     name: 'rows',
   });
+  const meaningfulRows = getMeaningfulBulkTransactionRows(rows ?? []);
   const kindSelectTriggerRefs = useRef(new Map<number, HTMLButtonElement>());
+  const cancelButtonRef = useRef<HTMLButtonElement | null>(null);
   const [pendingKindFocusRowIndex, setPendingKindFocusRowIndex] = useState<number | null>(
     null,
   );
@@ -828,10 +828,16 @@ export const CreateBulkTransaction = () => {
   };
 
   const onSubmit = form.handleSubmit(async (values) => {
+    const transactionsToCreate = getMeaningfulBulkTransactionRows(values.rows);
+
+    if (transactionsToCreate.length === 0) {
+      return;
+    }
+
     setIsPending(true);
     try {
       const createdTransactions = await createBulkTransactions({
-        transactions: values.rows.map((row) => {
+        transactions: transactionsToCreate.map((row) => {
           if (row.kind === 'standard') {
             return {
               kind: 'standard' as const,
@@ -882,8 +888,42 @@ export const CreateBulkTransaction = () => {
     }
   });
 
+  const handleCancel = () => {
+    if (meaningfulRows.length === 0) {
+      navigate('/transactions/new', {
+        state: getTransactionsRouteState(returnTo),
+      });
+      return;
+    }
+
+    setIsDiscardModalOpen(true);
+  };
+
+  const handleConfirmDiscard = () => {
+    setIsDiscardModalOpen(false);
+    navigate('/transactions/new', {
+      state: getTransactionsRouteState(returnTo),
+    });
+  };
+
   return (
     <Card className="w-full gap-3">
+      <TransactionActionModal
+        isOpen={isDiscardModalOpen}
+        onClose={() => setIsDiscardModalOpen(false)}
+        ariaLabel={t('bulkTransactionDiscardModalTitle')}
+        title={t('bulkTransactionDiscardModalTitle')}
+        cancelLabel={t('cancel')}
+        confirmLabel={t('bulkTransactionDiscardConfirmLabel')}
+        onConfirm={handleConfirmDiscard}
+        restoreFocusRef={cancelButtonRef}
+      >
+        <p>
+          {t('bulkTransactionDiscardModalDescription', {
+            count: meaningfulRows.length,
+          })}
+        </p>
+      </TransactionActionModal>
       <div className="flex items-center justify-between gap-3">
         <h2 className="text-base font-semibold sm:text-lg">{t('bulkTransaction')}</h2>
       </div>
@@ -963,11 +1003,8 @@ export const CreateBulkTransaction = () => {
             type="button"
             variant="ghost"
             className={FORM_BUTTON_CLASS_NAME}
-            onClick={() =>
-              navigate('/transactions/new', {
-                state: getTransactionsRouteState(returnTo),
-              })
-            }
+            ref={cancelButtonRef}
+            onClick={handleCancel}
           >
             {t('cancel')}
           </Button>
@@ -975,7 +1012,7 @@ export const CreateBulkTransaction = () => {
             type="submit"
             variant="primary"
             className={FORM_BUTTON_CLASS_NAME}
-            disabled={isPending}
+            disabled={isPending || meaningfulRows.length === 0}
           >
             {isPending ? t('creatingTransactions') : t('createTransactions')}
           </Button>

@@ -28,12 +28,12 @@ export const getTransactionTypeSelectValueClassName = (
   clsx(
     transactionType === 'expense'
       ? clsx(
-          'border-destructive/25 bg-destructive/16 text-destructive',
+          'border-destructive/25 bg-destructive/8 text-destructive',
           'hover:bg-destructive/16 focus-visible:ring-destructive-ring',
         )
       : transactionType === 'income'
         ? clsx(
-          '!border-bt-primary/25 !bg-bt-primary/16 !text-bt-primary',
+          '!border-bt-primary/25 !bg-bt-primary/8 !text-bt-primary',
           'hover:!bg-bt-primary/16 focus-visible:!ring-bt-primary-ring',
         )
         : '',
