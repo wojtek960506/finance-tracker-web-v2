@@ -93,7 +93,10 @@ export const NamedResourceInput = ({
         />
         {isSubmitting && (
           <LoaderCircle
-            className="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 animate-spin text-text-muted sm:size-5"
+            className={clsx(
+              'pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2',
+              'animate-spin text-text-muted sm:size-5',
+            )}
             aria-hidden="true"
           />
         )}

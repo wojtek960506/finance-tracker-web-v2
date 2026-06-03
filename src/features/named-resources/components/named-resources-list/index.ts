@@ -1,1 +1,1 @@
-export * from './named-resources-list';
+export { NamedResourcesList } from './named-resources-list';
