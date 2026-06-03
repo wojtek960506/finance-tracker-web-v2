@@ -1,15 +1,12 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import clsx from 'clsx';
-import { LoaderCircle } from 'lucide-react';
 import { useEffect } from 'react';
 import { type SubmitHandler, useForm, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
+import { AuthFormButtons } from '@auth/components/auth-form-buttons';
+import { AuthFormInput } from '@auth/components/auth-form-input';
 import { AuthFormShell } from '@auth/components/auth-form-shell';
-import { FORM_BUTTON_SIZE_CLASS } from '@shared/consts';
-import { Button, ButtonLink } from '@ui';
 
-import { AuthFormInput } from '../../auth-form-input/auth-form-input';
 import {
   createUserFormSchema,
   type CreateUserFormValues,
@@ -45,7 +42,6 @@ export const CreateUserForm = ({ isPending, onSubmit }: CreateUserFormProps) => 
     const wasSubmitted = form.formState.submitCount > 0;
 
     if (!fieldError || (!isTouched && !wasSubmitted)) return undefined;
-
     return t(fieldError);
   };
 
@@ -67,31 +63,16 @@ export const CreateUserForm = ({ isPending, onSubmit }: CreateUserFormProps) => 
         )
       )}
 
-      <div className="mt-6 flex flex-col gap-2">
-        <Button
-          disabled={isSubmitDisabled}
-          type="submit"
-          className={clsx(FORM_BUTTON_SIZE_CLASS, 'gap-2 font-semibold sm:font-bold')}
-        >
-          {isPending ? (
-            <>
-              <LoaderCircle className="size-4 animate-spin sm:size-5" aria-hidden="true" />
-              {t('creatingAccount')}
-            </>
-          ) : (
-            t('createAccount')
-          )}
-        </Button>
-        <ButtonLink
-          to="/login"
-          variant="outline"
-          preventFocusOnPress
-          disabled={isPending}
-          className={clsx(FORM_BUTTON_SIZE_CLASS, 'font-semibold sm:font-bold')}
-        >
-          {t('backToLogin')}
-        </ButtonLink>
-      </div>
+      <AuthFormButtons
+        isPrimaryPending={isPending}
+        isPrimaryDisabled={isSubmitDisabled}
+        primaryText={t('createAccount')}
+        primaryTextPending={t('creatingAccount')}
+        isSecondaryDisabled={isPending}
+        secondaryText={t('backToLogin')}
+        secondaryTo='/login'
+      />
+      
     </AuthFormShell>
   );
 };

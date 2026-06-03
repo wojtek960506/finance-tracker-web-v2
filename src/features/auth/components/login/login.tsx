@@ -1,5 +1,4 @@
 import clsx from 'clsx';
-import { LoaderCircle } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router-dom';
@@ -12,7 +11,9 @@ import { FORM_BUTTON_SIZE_CLASS } from '@shared/consts';
 import { useAuthToken } from '@shared/hooks';
 import { useToastStore } from '@store/toast-store';
 import { FIELD_CONTROL_CLASS_NAME } from '@transactions/components/transaction-forms';
-import { Button, ButtonLink, Input } from '@ui';
+import { Button, Input } from '@ui';
+
+import { AuthFormButtons } from '../auth-form-buttons';
 
 // TODO revisit this screen:
 // - split the sign-in form and the unverified-email recovery flow into smaller components
@@ -197,31 +198,15 @@ export const Login = () => {
         />
       </AuthFormField>
 
-      <div className="mt-6 flex flex-col gap-2">
-        <Button
-          disabled={email === '' || password === '' || showEmailError || isLoginPending}
-          type="submit"
-          className={clsx(FORM_BUTTON_SIZE_CLASS, 'gap-2 font-semibold sm:font-bold')}
-        >
-          {isLoginPending ? (
-            <>
-              <LoaderCircle className="size-4 animate-spin sm:size-5" aria-hidden="true" />
-              {t('loggingIn')}
-            </>
-          ) : (
-            t('logIn')
-          )}
-        </Button>
-        <ButtonLink
-          to="/register"
-          variant="outline"
-          preventFocusOnPress
-          disabled={isLoginPending}
-          className={clsx(FORM_BUTTON_SIZE_CLASS, 'font-semibold sm:font-bold')}
-        >
-          {t('goToCreateAccount')}
-        </ButtonLink>
-      </div>
+      <AuthFormButtons
+        isPrimaryPending={isLoginPending}
+        isPrimaryDisabled={email === '' || password === '' || showEmailError || isLoginPending}
+        primaryText={t('logIn')}
+        primaryTextPending={t('loggingIn')}
+        isSecondaryDisabled={isLoginPending}
+        secondaryText={t('goToCreateAccount')}
+        secondaryTo='/register'
+      />
     </AuthFormShell>
   );
 };
