@@ -11,16 +11,12 @@ import { capitalize } from '@shared/utils';
 
 import { CreateNamedResource } from './create-named-resource';
 import {
+  getNamedResourceDisplayLabel,
   NamedResourcesEmpty,
   NamedResourcesError,
   NamedResourcesList,
   NamedResourcesLoading,
 } from './utils';
-
-const getNamedResourceDisplayLabel = (
-  resource: { name: string; type: 'system' | 'user' },
-  tNamedResource: (key: string) => string,
-) => (resource.type === 'system' ? tNamedResource(resource.name) : resource.name);
 
 export const NamedResourcesPage = ({ kind }: { kind: NamedResourceKind }) => {
   const { t: tNamedResource, i18n } = useTranslation('namedResources');
