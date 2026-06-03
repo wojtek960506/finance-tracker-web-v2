@@ -10,8 +10,12 @@ import {
 import { capitalize } from '@shared/utils';
 
 import { CreateNamedResource } from './create-named-resource';
-import { NamedResourcePreview } from './named-resource-preview';
-import { NamedResourcesEmpty, NamedResourcesError, NamedResourcesLoading } from './utils';
+import {
+  NamedResourcesEmpty,
+  NamedResourcesError,
+  NamedResourcesList,
+  NamedResourcesLoading,
+} from './utils';
 
 const getNamedResourceDisplayLabel = (
   resource: { name: string; type: 'system' | 'user' },
@@ -65,15 +69,7 @@ export const NamedResourcesPage = ({ kind }: { kind: NamedResourceKind }) => {
       {isEmpty ? (
         <NamedResourcesEmpty keySuffix={resourceKindKeySuffix} />
       ) : (
-        <ul className="flex flex-col gap-2 sm:gap-3">
-          {sortedResources.map((namedResource) => (
-            <NamedResourcePreview
-              key={namedResource.id}
-              kind={kind}
-              namedResource={namedResource}
-            />
-          ))}
-        </ul>
+        <NamedResourcesList kind={kind} sortedResources={sortedResources} />
       )}
     </div>
   );
