@@ -207,7 +207,8 @@ export const SearchableSelect = ({
     const handlePointerDownOutside = (event: MouseEvent | TouchEvent) => {
       const target = event.target as Node;
 
-      if (triggerRef.current?.contains(target) || popupRef.current?.contains(target)) return;
+      if (triggerRef.current?.contains(target) || popupRef.current?.contains(target))
+        return;
 
       closeDropdown();
     };
@@ -336,7 +337,8 @@ export const SearchableSelect = ({
                               popupDensity === 'compact'
                                 ? 'px-2.5 py-1.5 text-sm'
                                 : 'px-3 py-2',
-                              isSelected && 'bg-bt-primary text-white hover:bg-bt-primary',
+                              isSelected &&
+                                'bg-bt-primary text-white hover:bg-bt-primary',
                             )}
                             onMouseDown={(event) => event.preventDefault()}
                             onClick={(event) => {

@@ -8,20 +8,19 @@ import {
   toOptionalId,
 } from '@transactions/components/transaction-forms';
 
-export const transferTransactionFormSchema = z
-  .object({
-    date: z.string().min(1, 'dateRequired'),
-    description: z.string().trim().min(1, 'descriptionRequired'),
-    amount: z
-      .string()
-      .min(1, 'amountRequired')
-      .refine((value) => !Number.isNaN(Number(value)), 'amountValidNumber')
-      .refine((value) => Number(value) > 0, 'amountPositive'),
-    currency: z.string().min(1, 'currencyRequired'),
-    paymentMethodId: z.string(),
-    accountExpenseId: z.string(),
-    accountIncomeId: z.string(),
-  });
+export const transferTransactionFormSchema = z.object({
+  date: z.string().min(1, 'dateRequired'),
+  description: z.string().trim().min(1, 'descriptionRequired'),
+  amount: z
+    .string()
+    .min(1, 'amountRequired')
+    .refine((value) => !Number.isNaN(Number(value)), 'amountValidNumber')
+    .refine((value) => Number(value) > 0, 'amountPositive'),
+  currency: z.string().min(1, 'currencyRequired'),
+  paymentMethodId: z.string(),
+  accountExpenseId: z.string(),
+  accountIncomeId: z.string(),
+});
 
 export type TransferTransactionFormValues = z.infer<typeof transferTransactionFormSchema>;
 

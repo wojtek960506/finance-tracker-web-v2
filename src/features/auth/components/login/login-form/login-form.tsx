@@ -1,13 +1,17 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect } from "react";
-import { type SubmitHandler,useForm, useWatch } from "react-hook-form";
-import { useTranslation } from "react-i18next";
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useEffect } from 'react';
+import { type SubmitHandler, useForm, useWatch } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import { AuthFormButtons } from '@auth/components/auth-form-buttons';
 import { AuthFormInput } from '@auth/components/auth-form-input';
 import { AuthFormShell } from '@auth/components/auth-form-shell';
 
-import { getDefaultLoginFormValues, loginFormSchema, type LoginFormValues } from "./utils";
+import {
+  getDefaultLoginFormValues,
+  loginFormSchema,
+  type LoginFormValues,
+} from './utils';
 
 type LoginFormProps = {
   redirectedEmail?: string;
@@ -27,7 +31,9 @@ export const LoginForm = ({ redirectedEmail, isPending, onSubmit }: LoginFormPro
   });
   const values = useWatch({ control: form.control });
 
-  useEffect(() => { form.setFocus('email') }, [form]);
+  useEffect(() => {
+    form.setFocus('email');
+  }, [form]);
 
   const handleSubmit: SubmitHandler<LoginFormValues> = async (submittedValues) => {
     await onSubmit(submittedValues);
@@ -48,17 +54,15 @@ export const LoginForm = ({ redirectedEmail, isPending, onSubmit }: LoginFormPro
 
   return (
     <AuthFormShell onSubmit={form.handleSubmit(handleSubmit)}>
-      {(['email', 'password'] as FieldName[]).map(
-        name => (
-          <AuthFormInput
-            form={form}
-            name={name}
-            placeholder={`${name}Placeholder`}
-            getFieldErrorMessage={getFieldErrorMessage}
-            type={name === 'password' ? 'password' : 'text'}
-          />  
-        )
-      )}
+      {(['email', 'password'] as FieldName[]).map((name) => (
+        <AuthFormInput
+          form={form}
+          name={name}
+          placeholder={`${name}Placeholder`}
+          getFieldErrorMessage={getFieldErrorMessage}
+          type={name === 'password' ? 'password' : 'text'}
+        />
+      ))}
 
       <AuthFormButtons
         isPrimaryPending={isPending}
@@ -67,8 +71,8 @@ export const LoginForm = ({ redirectedEmail, isPending, onSubmit }: LoginFormPro
         primaryTextPending={t('loggingIn')}
         isSecondaryDisabled={isPending}
         secondaryText={t('goToCreateAccount')}
-        secondaryTo='/register'
+        secondaryTo="/register"
       />
     </AuthFormShell>
   );
-}
+};

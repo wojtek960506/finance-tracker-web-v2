@@ -1,17 +1,17 @@
-import clsx from "clsx";
-import { useState } from "react";
-import { useTranslation } from "react-i18next";
+import clsx from 'clsx';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
-import { AuthFormShell } from "@auth/components/auth-form-shell";
-import { Button } from "@ui";
+import { AuthFormShell } from '@auth/components/auth-form-shell';
+import { Button } from '@ui';
 
-import { resendVerification } from "@/features/auth/api";
-import { FORM_BUTTON_SIZE_CLASS } from "@/shared/consts";
+import { resendVerification } from '@/features/auth/api';
+import { FORM_BUTTON_SIZE_CLASS } from '@/shared/consts';
 
 type UnverifiedUserProps = {
   unverifiedEmail: string;
   resetUnverifiedEmail: () => void;
-}
+};
 
 export const UnverifiedUser = ({
   unverifiedEmail,
@@ -81,4 +81,4 @@ export const UnverifiedUser = ({
       </Button>
     </AuthFormShell>
   );
-}
+};

@@ -25,10 +25,7 @@ export const Login = () => {
     emailInputRef.current?.focus();
   }, [unverifiedEmail]);
 
-  const handleSubmit = async ({
-    email,
-    password,
-  }: LoginFormValues) => {
+  const handleSubmit = async ({ email, password }: LoginFormValues) => {
     try {
       setIsLoginPending(true);
       const res = await login(email, password);
@@ -38,21 +35,21 @@ export const Login = () => {
     } finally {
       setIsLoginPending(false);
     }
-  }
-  
+  };
+
   if (unverifiedEmail) {
     return (
-      <UnverifiedUser 
+      <UnverifiedUser
         unverifiedEmail={unverifiedEmail}
         resetUnverifiedEmail={() => setUnverifiedEmail(null)}
       />
-    )
+    );
   }
   return (
     <LoginForm
       redirectedEmail={redirectedEmail}
       isPending={isLoginPending}
-      onSubmit={handleSubmit}  
+      onSubmit={handleSubmit}
     />
   );
 };

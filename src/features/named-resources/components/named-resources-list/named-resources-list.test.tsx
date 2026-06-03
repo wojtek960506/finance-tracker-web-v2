@@ -150,9 +150,15 @@ describe('NamedResourcesList', () => {
 
     renderList();
 
-    expect(await screen.findByText('namedResources:emptyResourcesTitleCategory')).toBeInTheDocument();
-    expect(screen.getByText('namedResources:emptyResourcesDescriptionCategory')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'namedResources:newCategory' })).toBeInTheDocument();
+    expect(
+      await screen.findByText('namedResources:emptyResourcesTitleCategory'),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText('namedResources:emptyResourcesDescriptionCategory'),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: 'namedResources:newCategory' }),
+    ).toBeInTheDocument();
   });
 
   it('renders loaded resources', async () => {

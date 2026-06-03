@@ -1,12 +1,12 @@
-import clsx from "clsx";
-import { useTranslation } from "react-i18next";
+import clsx from 'clsx';
+import { useTranslation } from 'react-i18next';
 
-import { AuthFormShell } from "@auth/components/auth-form-shell";
+import { AuthFormShell } from '@auth/components/auth-form-shell';
 
-import { FORM_BUTTON_SIZE_CLASS } from "@/shared/consts";
-import { ButtonLink } from "@/shared/ui";
+import { FORM_BUTTON_SIZE_CLASS } from '@/shared/consts';
+import { ButtonLink } from '@/shared/ui';
 
-export const RegistrationSuccess = ({ createdEmail }: { createdEmail: string}) => {
+export const RegistrationSuccess = ({ createdEmail }: { createdEmail: string }) => {
   const { t } = useTranslation('auth');
 
   return (
@@ -29,5 +29,5 @@ export const RegistrationSuccess = ({ createdEmail }: { createdEmail: string}) =
         {t('backToLogin')}
       </ButtonLink>
     </AuthFormShell>
-  )
-}
+  );
+};

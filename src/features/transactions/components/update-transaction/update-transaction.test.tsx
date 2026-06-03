@@ -218,9 +218,7 @@ describe('UpdateTransaction', () => {
 
     renderUpdateTransaction();
 
-    expect(
-      await screen.findByText('transactionLoadFailedTitle'),
-    ).toBeInTheDocument();
+    expect(await screen.findByText('transactionLoadFailedTitle')).toBeInTheDocument();
     expect(await screen.findByText('Transaction failed')).toBeInTheDocument();
   });
 
@@ -239,9 +237,7 @@ describe('UpdateTransaction', () => {
 
     renderUpdateTransaction();
 
-    expect(
-      await screen.findByText('transactionLoadFailedTitle'),
-    ).toBeInTheDocument();
+    expect(await screen.findByText('transactionLoadFailedTitle')).toBeInTheDocument();
     expect(await screen.findByText('Reference failed')).toBeInTheDocument();
   });
 

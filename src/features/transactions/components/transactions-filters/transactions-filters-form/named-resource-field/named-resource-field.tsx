@@ -182,7 +182,9 @@ export const NamedResourceFilterField = ({
             values={field.value}
             onChange={field.onChange}
             groups={groups}
-            placeholder={t(filterMode === 'include' ? includePlaceholderKey : excludePlaceholderKey)}
+            placeholder={t(
+              filterMode === 'include' ? includePlaceholderKey : excludePlaceholderKey,
+            )}
             emptyMessage={t(noResultsKey)}
             disabled={areResourcesLoading}
             footer={

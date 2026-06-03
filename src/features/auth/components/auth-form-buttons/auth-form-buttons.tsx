@@ -1,8 +1,8 @@
-import clsx from "clsx";
-import { LoaderCircle } from "lucide-react";
+import clsx from 'clsx';
+import { LoaderCircle } from 'lucide-react';
 
-import { FORM_BUTTON_SIZE_CLASS } from "@/shared/consts";
-import { Button, ButtonLink } from "@/shared/ui";
+import { FORM_BUTTON_SIZE_CLASS } from '@/shared/consts';
+import { Button, ButtonLink } from '@/shared/ui';
 
 type AuthFormButtonsProps = {
   isPrimaryPending: boolean;
@@ -12,7 +12,7 @@ type AuthFormButtonsProps = {
   isSecondaryDisabled: boolean;
   secondaryText: string;
   secondaryTo: string;
-}
+};
 
 export const AuthFormButtons = ({
   isPrimaryPending,
@@ -49,5 +49,5 @@ export const AuthFormButtons = ({
         {secondaryText}
       </ButtonLink>
     </div>
-  )
-}
+  );
+};

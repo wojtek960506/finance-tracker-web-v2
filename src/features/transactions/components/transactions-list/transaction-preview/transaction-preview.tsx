@@ -35,10 +35,7 @@ export const TransactionPreview = ({
     language,
   });
   const transactionKind = getTransactionKind(transaction);
-  const returnTo = getTransactionsReturnTo(
-    location.state,
-    getPathWithSearch(location),
-  );
+  const returnTo = getTransactionsReturnTo(location.state, getPathWithSearch(location));
 
   // TODO uncomment it when code for footer will be uncommented.
   // Visibility of footer will be later adjustable in settings.

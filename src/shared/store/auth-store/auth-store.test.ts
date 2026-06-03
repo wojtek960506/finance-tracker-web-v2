@@ -80,8 +80,8 @@ describe('auth-store', () => {
 
     const didBroadcastLogin = MockBroadcastChannel.instances.some(
       (instance) =>
-        instance.name === AUTH_SESSION_EVENT_KEY
-        && instance.postMessage.mock.calls.some(
+        instance.name === AUTH_SESSION_EVENT_KEY &&
+        instance.postMessage.mock.calls.some(
           ([payload]) => JSON.stringify(payload) === JSON.stringify({ type: 'login' }),
         ),
     );
@@ -94,8 +94,8 @@ describe('auth-store', () => {
 
     const didBroadcastLogout = MockBroadcastChannel.instances.some(
       (instance) =>
-        instance.name === AUTH_SESSION_EVENT_KEY
-        && instance.postMessage.mock.calls.some(
+        instance.name === AUTH_SESSION_EVENT_KEY &&
+        instance.postMessage.mock.calls.some(
           ([payload]) => JSON.stringify(payload) === JSON.stringify({ type: 'logout' }),
         ),
     );

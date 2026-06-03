@@ -1,7 +1,7 @@
-import { XIcon } from "lucide-react"
-import * as React from "react"
+import { XIcon } from 'lucide-react';
+import * as React from 'react';
 
-import { FORM_CONTROL_SIZE_CLASS, FORM_CONTROL_SURFACE_CLASS } from "@shared/consts"
+import { FORM_CONTROL_SIZE_CLASS, FORM_CONTROL_SURFACE_CLASS } from '@shared/consts';
 
 import {
   Combobox,
@@ -12,31 +12,31 @@ import {
   ComboboxList,
   ComboboxSeparator,
   ComboboxTrigger,
-} from "@/components/ui/combobox"
-import { cn } from "@/lib/utils"
+} from '@/components/ui/combobox';
+import { cn } from '@/lib/utils';
 
 export type MultiSelectOption = {
-  value: string
-  label: string
-  disabled?: boolean
-  icon?: React.ReactNode
-}
+  value: string;
+  label: string;
+  disabled?: boolean;
+  icon?: React.ReactNode;
+};
 
 export type MultiSelectGroup = {
-  key: string
-  label?: string
-  options: MultiSelectOption[]
-}
+  key: string;
+  label?: string;
+  options: MultiSelectOption[];
+};
 
 type MultiSelectProps = {
-  values: string[]
-  groups: MultiSelectGroup[]
-  onChange: (values: string[]) => void
-  placeholder: string
-  emptyMessage: string
-  disabled?: boolean
-  footer?: React.ReactNode
-}
+  values: string[];
+  groups: MultiSelectGroup[];
+  onChange: (values: string[]) => void;
+  placeholder: string;
+  emptyMessage: string;
+  disabled?: boolean;
+  footer?: React.ReactNode;
+};
 
 export function MultiSelect({
   values,
@@ -49,25 +49,25 @@ export function MultiSelect({
 }: MultiSelectProps) {
   const allOptions = React.useMemo(
     () => groups.flatMap((group) => group.options),
-    [groups]
-  )
+    [groups],
+  );
 
   const selectedOptions = React.useMemo(
     () => allOptions.filter((option) => values.includes(option.value)),
-    [allOptions, values]
-  )
+    [allOptions, values],
+  );
 
   const handleValueChange = React.useCallback(
     (nextOptions: MultiSelectOption[]) => {
-      onChange(nextOptions.map((option) => option.value))
+      onChange(nextOptions.map((option) => option.value));
     },
-    [onChange]
-  )
+    [onChange],
+  );
 
   const summaryText =
     selectedOptions.length > 0
-      ? selectedOptions.map((option) => option.label).join(", ")
-      : placeholder
+      ? selectedOptions.map((option) => option.label).join(', ')
+      : placeholder;
 
   return (
     <Combobox<MultiSelectOption, true>
@@ -82,10 +82,10 @@ export function MultiSelect({
       <div className="relative w-full min-w-0 max-w-full">
         <ComboboxTrigger
           className={cn(
-            "flex w-full min-w-0 max-w-full items-center justify-between gap-3 overflow-hidden whitespace-nowrap text-left",
+            'flex w-full min-w-0 max-w-full items-center justify-between gap-3 overflow-hidden whitespace-nowrap text-left',
             FORM_CONTROL_SIZE_CLASS,
             FORM_CONTROL_SURFACE_CLASS,
-            selectedOptions.length === 0 && "text-text-muted"
+            selectedOptions.length === 0 && 'text-text-muted',
           )}
         >
           <span className="block min-w-0 flex-1 truncate">{summaryText}</span>
@@ -98,9 +98,7 @@ export function MultiSelect({
                 key={option.value}
                 type="button"
                 className="inline-flex min-w-0 max-w-full items-center gap-1 rounded-full border border-fg/20 bg-bg px-2 py-1 text-xs font-medium text-fg transition hover:border-fg/40"
-                onClick={() =>
-                  onChange(values.filter((value) => value !== option.value))
-                }
+                onClick={() => onChange(values.filter((value) => value !== option.value))}
               >
                 <span className="truncate">{option.label}</span>
                 <XIcon className="size-3" aria-hidden="true" />
@@ -116,31 +114,29 @@ export function MultiSelect({
           {groups
             .filter((group) => group.options.length > 0)
             .map((group, index) => (
-            <React.Fragment key={group.key}>
-              {index > 0 ? <ComboboxSeparator /> : null}
-              <ComboboxGroup>
-                {group.options.map((option) => (
-                  <ComboboxItem
-                    key={option.value}
-                    value={option}
-                    disabled={option.disabled}
-                  >
-                    <span className="flex min-w-0 items-center gap-2">
-                      {option.icon ? (
-                        <span className="shrink-0 text-text-muted">
-                          {option.icon}
-                        </span>
-                      ) : null}
-                      <span className="truncate">{option.label}</span>
-                    </span>
-                  </ComboboxItem>
-                ))}
-              </ComboboxGroup>
-            </React.Fragment>
-          ))}
+              <React.Fragment key={group.key}>
+                {index > 0 ? <ComboboxSeparator /> : null}
+                <ComboboxGroup>
+                  {group.options.map((option) => (
+                    <ComboboxItem
+                      key={option.value}
+                      value={option}
+                      disabled={option.disabled}
+                    >
+                      <span className="flex min-w-0 items-center gap-2">
+                        {option.icon ? (
+                          <span className="shrink-0 text-text-muted">{option.icon}</span>
+                        ) : null}
+                        <span className="truncate">{option.label}</span>
+                      </span>
+                    </ComboboxItem>
+                  ))}
+                </ComboboxGroup>
+              </React.Fragment>
+            ))}
         </ComboboxList>
         {footer ? <div className="border-t border-fg/20 p-2">{footer}</div> : null}
       </ComboboxContent>
     </Combobox>
-  )
+  );
 }

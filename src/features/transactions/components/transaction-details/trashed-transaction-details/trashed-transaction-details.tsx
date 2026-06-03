@@ -18,9 +18,7 @@ import {
   TransactionFallbackState,
   useInvalidateTransactionQueries,
 } from '@transactions/components/shared';
-import {
-  isNotFoundTransactionQueryError,
-} from '@transactions/utils';
+import { isNotFoundTransactionQueryError } from '@transactions/utils';
 import { Button, Card, LoadingState } from '@ui';
 
 import { TransactionDetailsCard } from '../transaction-details-card';

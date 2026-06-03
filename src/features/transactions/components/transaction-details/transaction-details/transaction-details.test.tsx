@@ -150,9 +150,7 @@ describe('TransactionDetails', () => {
       </QueryClientProvider>,
     );
 
-    expect(
-      await screen.findByText('transactionLoadFailedTitle'),
-    ).toBeInTheDocument();
+    expect(await screen.findByText('transactionLoadFailedTitle')).toBeInTheDocument();
     expect(await screen.findByText('Oops')).toBeInTheDocument();
   });
 

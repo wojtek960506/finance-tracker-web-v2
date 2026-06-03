@@ -39,8 +39,10 @@ export const TransactionsFiltersFields = () => {
     ],
   });
   const shouldOpenAdvancedFields = Boolean(
-    (categoryMode === 'include' ? categoryIds.length > 0 : excludeCategoryIds.length > 0) ||
-    (paymentMethodMode === 'include' 
+    (categoryMode === 'include'
+      ? categoryIds.length > 0
+      : excludeCategoryIds.length > 0) ||
+    (paymentMethodMode === 'include'
       ? paymentMethodIds.length > 0
       : excludePaymentMethodIds.length > 0) ||
     (accountMode === 'include' ? accountIds.length > 0 : excludeAccountIds.length > 0),
@@ -58,7 +60,9 @@ export const TransactionsFiltersFields = () => {
       <TransactionTypeField />
       <CurrencyField />
       <Collapsible
-        header={<span className="text-base font-medium sm:text-lg">{t('advancedFields')}</span>}
+        header={
+          <span className="text-base font-medium sm:text-lg">{t('advancedFields')}</span>
+        }
         indicatorPosition="left"
         isInitiallyOpen={shouldOpenAdvancedFields}
         triggerMode="full-row"

@@ -1,1 +1,1 @@
-export { RegistrationSuccess } from "./registration-success";
+export { RegistrationSuccess } from './registration-success';

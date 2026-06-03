@@ -1,10 +1,10 @@
-import { ArrowRightLeft, Euro, Rows3,Wallet } from 'lucide-react';
+import { ArrowRightLeft, Euro, Rows3, Wallet } from 'lucide-react';
 import type { ComponentType } from 'react';
 
 import type { TransactionKind } from '@transactions/consts';
 
 type TransactionKindIconProps = {
-  kind: TransactionKind | "bulk";
+  kind: TransactionKind | 'bulk';
   className?: string;
   'aria-hidden'?: boolean;
 };
@@ -15,7 +15,7 @@ type TransactionKindCardIconProps = {
 };
 
 const transactionKindIcons: Record<
-  TransactionKind | "bulk",
+  TransactionKind | 'bulk',
   ComponentType<TransactionKindCardIconProps>
 > = {
   standard: Wallet,

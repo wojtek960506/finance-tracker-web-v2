@@ -1,17 +1,22 @@
-import clsx from "clsx";
-import { useTranslation } from "react-i18next";
-import { useLocation, useNavigate } from "react-router-dom";
+import clsx from 'clsx';
+import { useTranslation } from 'react-i18next';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-import { TransactionKindIcon } from "@transactions/components/shared";
+import { TransactionKindIcon } from '@transactions/components/shared';
 
-import type { TransactionCardType } from "../create-transaction";
+import type { TransactionCardType } from '../create-transaction';
 
-import { getTransactionsReturnTo, getTransactionsRouteState } from "@/features/transactions/utils";
-import { Button } from "@/shared/ui"
+import {
+  getTransactionsReturnTo,
+  getTransactionsRouteState,
+} from '@/features/transactions/utils';
+import { Button } from '@/shared/ui';
 
-
-export const CreateTransactionCardButton = ({ cardType }: { cardType: TransactionCardType }) => {
-
+export const CreateTransactionCardButton = ({
+  cardType,
+}: {
+  cardType: TransactionCardType;
+}) => {
   const location = useLocation();
   const navigate = useNavigate();
   const { t } = useTranslation('transactions');
@@ -25,7 +30,7 @@ export const CreateTransactionCardButton = ({ cardType }: { cardType: Transactio
       type="button"
       variant="outline"
       className={clsx(
-        "items-start rounded-2xl border border-fg bg-bg p-3 sm:p-4 text-left"
+        'items-start rounded-2xl border border-fg bg-bg p-3 sm:p-4 text-left',
       )}
       onClick={() =>
         navigate(`/transactions/new/${key}`, {
@@ -47,5 +52,5 @@ export const CreateTransactionCardButton = ({ cardType }: { cardType: Transactio
         </span>
       </span>
     </Button>
-  )
-}
+  );
+};

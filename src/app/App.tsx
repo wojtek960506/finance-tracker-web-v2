@@ -21,7 +21,6 @@ import {
   PublicLayout,
 } from './routes';
 
-
 // TODOs
 // - If the Transaction Type is empty, we could still click Create Transaction,
 //   and that empty row would simply not be submitted (but this is only a maybe).

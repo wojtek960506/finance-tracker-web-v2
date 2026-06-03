@@ -47,7 +47,11 @@ export const ButtonLink = ({
     }}
     className={getButtonClassName({
       variant,
-      className: clsx('py-0 sm:py-0', disabled && 'pointer-events-none opacity-70', className),
+      className: clsx(
+        'py-0 sm:py-0',
+        disabled && 'pointer-events-none opacity-70',
+        className,
+      ),
     })}
   >
     {children}

@@ -30,7 +30,9 @@ export const CreateUserForm = ({ isPending, onSubmit }: CreateUserFormProps) => 
   });
   const values = useWatch({ control: form.control });
 
-  useEffect(() => { form.setFocus('firstName') }, [form]);
+  useEffect(() => {
+    form.setFocus('firstName');
+  }, [form]);
 
   const handleSubmit: SubmitHandler<CreateUserFormValues> = async (submittedValues) => {
     await onSubmit(submittedValues);
@@ -51,17 +53,17 @@ export const CreateUserForm = ({ isPending, onSubmit }: CreateUserFormProps) => 
 
   return (
     <AuthFormShell onSubmit={form.handleSubmit(handleSubmit)}>
-      {(['firstName', 'lastName', 'email', 'password', 'confirmPassword'] as FieldName[]).map(
-        name => (
-          <AuthFormInput
-            form={form}
-            name={name}
-            placeholder={`${name}Placeholder`}
-            getFieldErrorMessage={getFieldErrorMessage}
-            type={['password', 'confirmPassword'].includes(name) ? 'password' : 'text'}
-          />  
-        )
-      )}
+      {(
+        ['firstName', 'lastName', 'email', 'password', 'confirmPassword'] as FieldName[]
+      ).map((name) => (
+        <AuthFormInput
+          form={form}
+          name={name}
+          placeholder={`${name}Placeholder`}
+          getFieldErrorMessage={getFieldErrorMessage}
+          type={['password', 'confirmPassword'].includes(name) ? 'password' : 'text'}
+        />
+      ))}
 
       <AuthFormButtons
         isPrimaryPending={isPending}
@@ -70,9 +72,8 @@ export const CreateUserForm = ({ isPending, onSubmit }: CreateUserFormProps) => 
         primaryTextPending={t('creatingAccount')}
         isSecondaryDisabled={isPending}
         secondaryText={t('backToLogin')}
-        secondaryTo='/login'
+        secondaryTo="/login"
       />
-      
     </AuthFormShell>
   );
 };

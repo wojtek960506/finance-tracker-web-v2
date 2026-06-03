@@ -1,11 +1,7 @@
 import axios from 'axios';
 
 import { BASE_URL } from '@shared/consts';
-import {
-  clearAuthToken,
-  getAuthToken,
-  refreshAuthToken,
-} from '@shared/store/auth-store';
+import { clearAuthToken, getAuthToken, refreshAuthToken } from '@shared/store/auth-store';
 
 import { normalizeApiError } from './api-error';
 

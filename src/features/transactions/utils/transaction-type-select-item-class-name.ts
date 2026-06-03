@@ -4,9 +4,7 @@ import type { TransactionType } from '@transactions/api';
 
 // TODO try to unify those 2 styling methods with `getTransactionTypeButtonClassName`
 
-export const getTransactionTypeSelectItemClassName = (
-  transactionType: TransactionType,
-) =>
+export const getTransactionTypeSelectItemClassName = (transactionType: TransactionType) =>
   clsx(
     'transition-colors',
     transactionType === 'expense'
@@ -19,7 +17,7 @@ export const getTransactionTypeSelectItemClassName = (
           'text-bt-primary',
           'data-[highlighted]:bg-bt-primary/10 data-[highlighted]:text-bt-primary',
           'data-[state=checked]:!bg-bt-primary/15 data-[state=checked]:!text-bt-primary',
-      ),
+        ),
   );
 
 export const getTransactionTypeSelectValueClassName = (
@@ -33,8 +31,8 @@ export const getTransactionTypeSelectValueClassName = (
         )
       : transactionType === 'income'
         ? clsx(
-          '!border-bt-primary/25 !bg-bt-primary/8 !text-bt-primary',
-          'hover:!bg-bt-primary/16 focus-visible:!ring-bt-primary-ring',
-        )
+            '!border-bt-primary/25 !bg-bt-primary/8 !text-bt-primary',
+            'hover:!bg-bt-primary/16 focus-visible:!ring-bt-primary-ring',
+          )
         : '',
   );

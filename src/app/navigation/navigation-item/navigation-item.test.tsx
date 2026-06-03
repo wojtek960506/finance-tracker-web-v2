@@ -110,7 +110,9 @@ describe('NavigationItem', () => {
     const user = userEvent.setup();
     const additionalAction = vi.fn();
 
-    renderNavigationItem(<NavigationItem title="Logout" additionalAction={additionalAction} />);
+    renderNavigationItem(
+      <NavigationItem title="Logout" additionalAction={additionalAction} />,
+    );
 
     await user.click(screen.getByRole('button', { name: 'Logout' }));
 

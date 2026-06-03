@@ -189,12 +189,16 @@ export const ExchangeTransactionForm = ({
 
         <div className="sm:col-span-2">
           <Collapsible
-            header={<span className="text-base font-medium sm:text-lg">{t('advancedFields')}</span>}
+            header={
+              <span className="text-base font-medium sm:text-lg">
+                {t('advancedFields')}
+              </span>
+            }
             indicatorPosition="left"
             isInitiallyOpen={shouldOpenAdvancedFields}
             triggerMode="full-row"
             contentInset="none"
-            contentClassName='px-[2px] pb-[2px]'
+            contentClassName="px-[2px] pb-[2px]"
           >
             <div className="grid gap-3 sm:gap-4 sm:grid-cols-2">
               <Label className="sm:col-span-2">

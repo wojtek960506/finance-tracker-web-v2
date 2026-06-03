@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import { ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
-import { type ReactNode, useEffect, useId, useState } from 'react';
+import { type ReactNode, useId, useState } from 'react';
 
 import { Button } from '@ui';
 
@@ -30,27 +30,19 @@ export const Collapsible = ({
   contentClassName,
 }: CollapsibleProps) => {
   const [uncontrolledIsOpen, setUncontrolledIsOpen] = useState(isInitiallyOpen ?? false);
-  // Keep content layout classes during the close transition to avoid flicker,
-  // then remove them after the collapse animation finishes.
-  const [shouldApplyContentClassName, setShouldApplyContentClassName] = useState(
-    isInitiallyOpen ?? false,
-  );
+  const [isClosing, setIsClosing] = useState(false);
   const contentId = useId();
   const actualIsOpen = isOpen ?? uncontrolledIsOpen;
+  const shouldApplyContentClassName = actualIsOpen || isClosing;
 
   const isIndicatorLeft = indicatorPosition === 'left';
   const isFullRowTrigger = triggerMode === 'full-row';
   const SplitTriggerIcon = isIndicatorLeft ? ChevronRight : ChevronLeft;
   const FullRowTriggerIcon = ChevronDown;
 
-  useEffect(() => {
-    if (actualIsOpen) setShouldApplyContentClassName(true);
-  }, [actualIsOpen]);
-
   const handleToggle = () => {
-    if (!actualIsOpen) setShouldApplyContentClassName(true);
-
     const nextIsOpen = !actualIsOpen;
+    setIsClosing(!nextIsOpen);
 
     if (isOpen === undefined) setUncontrolledIsOpen(nextIsOpen);
     onOpenChange?.(nextIsOpen);
@@ -121,11 +113,10 @@ export const Collapsible = ({
         className={clsx(
           'grid min-w-0 overflow-hidden transition-[grid-template-rows,opacity] duration-300 ease-out',
           actualIsOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0',
-          contentInset === 'default' &&
-            (isIndicatorLeft ? 'pl-10' : 'pr-10'),
+          contentInset === 'default' && (isIndicatorLeft ? 'pl-10' : 'pr-10'),
         )}
         onTransitionEnd={() => {
-          if (!actualIsOpen) setShouldApplyContentClassName(false);
+          if (!actualIsOpen) setIsClosing(false);
         }}
       >
         <div

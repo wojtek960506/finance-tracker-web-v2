@@ -8,31 +8,30 @@ import {
   toOptionalId,
 } from '@transactions/components/transaction-forms';
 
-export const exchangeTransactionFormSchema = z.object({
-  date: z.string().min(1, 'dateRequired'),
-  description: z.string().trim().min(1, 'descriptionRequired'),
-  amountExpense: z
-    .string()
-    .min(1, 'amountExpenseRequired')
-    .refine((value) => !Number.isNaN(Number(value)), 'amountValidNumber')
-    .refine((value) => Number(value) > 0, 'amountPositive'),
-  amountIncome: z
-    .string()
-    .min(1, 'amountIncomeRequired')
-    .refine((value) => !Number.isNaN(Number(value)), 'amountValidNumber')
-    .refine((value) => Number(value) > 0, 'amountPositive'),
-  currencyExpense: z.string().min(1, 'expenseCurrencyRequired'),
-  currencyIncome: z.string().min(1, 'incomeCurrencyRequired'),
-  paymentMethodId: z.string(),
-  accountExpenseId: z.string(),
-  accountIncomeId: z.string(),
-}).refine(
-  (values) => values.currencyExpense !== values.currencyIncome,
-  {
+export const exchangeTransactionFormSchema = z
+  .object({
+    date: z.string().min(1, 'dateRequired'),
+    description: z.string().trim().min(1, 'descriptionRequired'),
+    amountExpense: z
+      .string()
+      .min(1, 'amountExpenseRequired')
+      .refine((value) => !Number.isNaN(Number(value)), 'amountValidNumber')
+      .refine((value) => Number(value) > 0, 'amountPositive'),
+    amountIncome: z
+      .string()
+      .min(1, 'amountIncomeRequired')
+      .refine((value) => !Number.isNaN(Number(value)), 'amountValidNumber')
+      .refine((value) => Number(value) > 0, 'amountPositive'),
+    currencyExpense: z.string().min(1, 'expenseCurrencyRequired'),
+    currencyIncome: z.string().min(1, 'incomeCurrencyRequired'),
+    paymentMethodId: z.string(),
+    accountExpenseId: z.string(),
+    accountIncomeId: z.string(),
+  })
+  .refine((values) => values.currencyExpense !== values.currencyIncome, {
     path: ['currencyIncome'],
     message: 'exchangeCurrenciesMustDiffer',
-  },
-);
+  });
 
 export type ExchangeTransactionFormValues = z.infer<typeof exchangeTransactionFormSchema>;
 

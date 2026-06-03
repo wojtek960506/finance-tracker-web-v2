@@ -30,11 +30,8 @@ export const Navigation = () => {
   const queryClient = useQueryClient();
   const { authToken, removeAuthToken } = useAuthToken();
   const { fromLeft } = useNavigation();
-  const {
-    expandedNavigationItems,
-    setNavigationItemExpanded,
-    resetPersistedUIState,
-  } = useUIStore();
+  const { expandedNavigationItems, setNavigationItemExpanded, resetPersistedUIState } =
+    useUIStore();
   const isTransactionsNavigationItemOpen = expandedNavigationItems.includes(
     TRANSACTIONS_NAVIGATION_ITEM_ID,
   );

@@ -7,6 +7,6 @@ export {
 } from './transaction-action-copy';
 export { TransactionActionModal } from './transaction-action-modal';
 export { TransactionBackButton } from './transaction-back-button';
-export { TransactionFallbackState } from './transaction-not-found-state';
 export { TransactionKindIcon } from './transaction-kind-icon';
+export { TransactionFallbackState } from './transaction-not-found-state';
 export { useInvalidateTransactionQueries } from './use-invalidate-transaction-queries';

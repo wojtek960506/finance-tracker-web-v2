@@ -52,5 +52,7 @@ export const CreateUser = () => {
   };
 
   if (createdEmail) return <RegistrationSuccess createdEmail={createdEmail} />;
-  return <CreateUserForm isPending={createUserMutation.isPending} onSubmit={handleSubmit} />;
+  return (
+    <CreateUserForm isPending={createUserMutation.isPending} onSubmit={handleSubmit} />
+  );
 };

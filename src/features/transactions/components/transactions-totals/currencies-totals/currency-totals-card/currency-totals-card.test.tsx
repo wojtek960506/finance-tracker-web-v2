@@ -16,13 +16,7 @@ vi.mock('@shared/hooks', () => ({
 
 vi.mock('@ui', () => ({
   Card: ({ children }: { children: ReactNode }) => <div>{children}</div>,
-  Collapsible: ({
-    header,
-    children,
-  }: {
-    header: ReactNode;
-    children: ReactNode;
-  }) => (
+  Collapsible: ({ header, children }: { header: ReactNode; children: ReactNode }) => (
     <div>
       <div>{header}</div>
       <div>{children}</div>
@@ -57,13 +51,7 @@ const makeTotals = (
 
 describe('CurrencyTotalsCard', () => {
   it('shows balance in the header and colors it green when positive', () => {
-    render(
-      <CurrencyTotalsCard
-        currency="USD"
-        totals={makeTotals(40, 60)}
-        isOpen
-      />,
-    );
+    render(<CurrencyTotalsCard currency="USD" totals={makeTotals(40, 60)} isOpen />);
 
     expect(
       screen.getByText((_, element) => element?.textContent === 'totalItems: 12'),
@@ -74,13 +62,7 @@ describe('CurrencyTotalsCard', () => {
   });
 
   it('colors balance red when negative', () => {
-    render(
-      <CurrencyTotalsCard
-        currency="USD"
-        totals={makeTotals(80, 35)}
-        isOpen
-      />,
-    );
+    render(<CurrencyTotalsCard currency="USD" totals={makeTotals(80, 35)} isOpen />);
 
     expect(
       screen.getByText((_, element) => element?.textContent === 'balance: -45.00 USD'),

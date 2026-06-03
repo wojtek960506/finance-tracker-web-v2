@@ -103,7 +103,9 @@ export const getTransactionFiltersFormDefaults = (
   transactionType: filters.transactionType ?? '',
   currency: filters.currency ?? '',
   categoryMode:
-    filters.excludeCategoryIds && filters.excludeCategoryIds.length > 0 ? 'exclude' : 'include',
+    filters.excludeCategoryIds && filters.excludeCategoryIds.length > 0
+      ? 'exclude'
+      : 'include',
   categoryIds: filters.categoryIds ?? [],
   excludeCategoryIds: filters.excludeCategoryIds ?? [],
   paymentMethodMode:
@@ -113,7 +115,9 @@ export const getTransactionFiltersFormDefaults = (
   paymentMethodIds: filters.paymentMethodIds ?? [],
   excludePaymentMethodIds: filters.excludePaymentMethodIds ?? [],
   accountMode:
-    filters.excludeAccountIds && filters.excludeAccountIds.length > 0 ? 'exclude' : 'include',
+    filters.excludeAccountIds && filters.excludeAccountIds.length > 0
+      ? 'exclude'
+      : 'include',
   accountIds: filters.accountIds ?? [],
   excludeAccountIds: filters.excludeAccountIds ?? [],
 });

@@ -9,12 +9,12 @@ export const useCatchLoginError = (setUnverifiedEmail: (val: string | null) => v
 
   const catchLoginError = (error: unknown, email: string) => {
     const apiError = normalizeApiError(error);
-      
+
     if (apiError.code === 'AUTH_EMAIL_NOT_VERIFIED') {
       setUnverifiedEmail(email);
       return;
     }
-    
+
     setUnverifiedEmail(null);
     pushToast({
       variant: 'error',
@@ -32,7 +32,7 @@ export const useCatchLoginError = (setUnverifiedEmail: (val: string | null) => v
         ) : (
           apiError.message
         ),
-    })
-  }
+    });
+  };
   return catchLoginError;
-}
+};

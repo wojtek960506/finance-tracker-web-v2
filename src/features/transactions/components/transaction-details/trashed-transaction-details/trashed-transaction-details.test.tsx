@@ -166,10 +166,10 @@ describe('TrashedTransactionDetails', () => {
       </QueryClientProvider>,
     );
 
-    expect(await screen.findByText('trashedTransactionNotFoundTitle')).toBeInTheDocument();
     expect(
-      screen.getByText('trashedTransactionNotFoundDescription'),
+      await screen.findByText('trashedTransactionNotFoundTitle'),
     ).toBeInTheDocument();
+    expect(screen.getByText('trashedTransactionNotFoundDescription')).toBeInTheDocument();
   });
 
   it('renders a styled not-found state for trashed transaction 404 errors', async () => {
@@ -190,7 +190,9 @@ describe('TrashedTransactionDetails', () => {
       </QueryClientProvider>,
     );
 
-    expect(await screen.findByText('trashedTransactionNotFoundTitle')).toBeInTheDocument();
+    expect(
+      await screen.findByText('trashedTransactionNotFoundTitle'),
+    ).toBeInTheDocument();
     await user.click(screen.getByRole('button', { name: 'backToTrash' }));
     expect(mocks.navigate).toHaveBeenCalledWith('/transactions/trash');
   });
