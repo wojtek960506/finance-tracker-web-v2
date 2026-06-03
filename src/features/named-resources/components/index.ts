@@ -1,1 +1,1 @@
-export * from './named-resources-list';
+export * from './named-resources-page';

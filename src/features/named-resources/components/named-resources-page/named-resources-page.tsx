@@ -18,7 +18,7 @@ const getNamedResourceDisplayLabel = (
   tNamedResource: (key: string) => string,
 ) => (resource.type === 'system' ? tNamedResource(resource.name) : resource.name);
 
-export const NamedResourcesList = ({ kind }: { kind: NamedResourceKind }) => {
+export const NamedResourcesPage = ({ kind }: { kind: NamedResourceKind }) => {
   const { t: tNamedResource, i18n } = useTranslation('namedResources');
   const resourceKindKeySuffix = capitalize(NAMED_RESOURCE[kind]);
 

@@ -2,7 +2,7 @@ import { type ReactNode } from 'react';
 import { matchPath, Navigate } from 'react-router-dom';
 
 import { CreateUser, Login, VerifyEmail } from '@auth/components';
-import { NamedResourcesList } from '@named-resources/components';
+import { NamedResourcesPage } from '@named-resources/components';
 import {
   CreateBulkTransaction,
   CreateExchangeTransaction,
@@ -102,17 +102,17 @@ export const PROTECTED_APP_ROUTES: AppRouteConfig[] = [
   },
   {
     path: '/categories',
-    element: <NamedResourcesList kind="categories" />,
+    element: <NamedResourcesPage kind="categories" />,
     title: { namespace: 'navigation', key: 'categories' },
   },
   {
     path: '/paymentMethods',
-    element: <NamedResourcesList kind="paymentMethods" />,
+    element: <NamedResourcesPage kind="paymentMethods" />,
     title: { namespace: 'navigation', key: 'paymentMethods' },
   },
   {
     path: '/accounts',
-    element: <NamedResourcesList kind="accounts" />,
+    element: <NamedResourcesPage kind="accounts" />,
     title: { namespace: 'navigation', key: 'bankAccounts' },
   },
   {

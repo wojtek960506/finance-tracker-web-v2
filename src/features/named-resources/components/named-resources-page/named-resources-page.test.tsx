@@ -5,7 +5,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { createTestQueryClient } from '@test-utils/create-test-query-client';
 
-import { NamedResourcesList } from './named-resources-list';
+import { NamedResourcesPage } from './named-resources-page';
 
 const createNamedResource = vi.fn();
 const getNamedResources = vi.fn();
@@ -101,7 +101,7 @@ const renderList = () => {
     client,
     ...render(
       <QueryClientProvider client={client}>
-        <NamedResourcesList kind="categories" />
+        <NamedResourcesPage kind="categories" />
       </QueryClientProvider>,
     ),
   };
