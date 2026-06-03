@@ -5,12 +5,11 @@ import { useEffect } from 'react';
 import { type SubmitHandler, useForm, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { AuthFormField } from '@auth/components/auth-form-field';
 import { AuthFormShell } from '@auth/components/auth-form-shell';
 import { FORM_BUTTON_SIZE_CLASS } from '@shared/consts';
-import { FIELD_CONTROL_CLASS_NAME } from '@transactions/components/transaction-forms';
-import { Button, ButtonLink, Input } from '@ui';
+import { Button, ButtonLink } from '@ui';
 
+import { AuthFormInput } from '../../auth-form-input/auth-form-input';
 import {
   createUserFormSchema,
   type CreateUserFormValues,
@@ -24,7 +23,6 @@ type CreateUserFormProps = {
 
 type FieldName = keyof CreateUserFormValues;
 
-// TODO split this component
 export const CreateUserForm = ({ isPending, onSubmit }: CreateUserFormProps) => {
   const { t } = useTranslation('auth');
   const form = useForm<CreateUserFormValues>({
@@ -33,13 +31,9 @@ export const CreateUserForm = ({ isPending, onSubmit }: CreateUserFormProps) => 
     mode: 'onBlur',
     reValidateMode: 'onBlur',
   });
-  const values = useWatch({
-    control: form.control,
-  });
+  const values = useWatch({ control: form.control });
 
-  useEffect(() => {
-    form.setFocus('firstName');
-  }, [form]);
+  useEffect(() => { form.setFocus('firstName') }, [form]);
 
   const handleSubmit: SubmitHandler<CreateUserFormValues> = async (submittedValues) => {
     await onSubmit(submittedValues);
@@ -61,73 +55,17 @@ export const CreateUserForm = ({ isPending, onSubmit }: CreateUserFormProps) => 
 
   return (
     <AuthFormShell onSubmit={form.handleSubmit(handleSubmit)}>
-      <AuthFormField
-        label={t('firstName')}
-        required
-        error={getFieldErrorMessage('firstName')}
-      >
-        <Input
-          {...form.register('firstName')}
-          id="firstName"
-          placeholder={t('firstNamePlaceholder')}
-          autoComplete="off"
-          className={FIELD_CONTROL_CLASS_NAME}
-        />
-      </AuthFormField>
-
-      <AuthFormField
-        label={t('lastName')}
-        required
-        error={getFieldErrorMessage('lastName')}
-      >
-        <Input
-          {...form.register('lastName')}
-          id="lastName"
-          placeholder={t('lastNamePlaceholder')}
-          autoComplete="off"
-          className={FIELD_CONTROL_CLASS_NAME}
-        />
-      </AuthFormField>
-
-      <AuthFormField label={t('email')} required error={getFieldErrorMessage('email')}>
-        <Input
-          {...form.register('email')}
-          id="email"
-          placeholder={t('emailPlaceholder')}
-          autoComplete="off"
-          className={FIELD_CONTROL_CLASS_NAME}
-        />
-      </AuthFormField>
-
-      <AuthFormField
-        label={t('password')}
-        required
-        error={getFieldErrorMessage('password')}
-      >
-        <Input
-          {...form.register('password')}
-          id="password"
-          type="password"
-          placeholder={t('passwordPlaceholder')}
-          autoComplete="off"
-          className={FIELD_CONTROL_CLASS_NAME}
-        />
-      </AuthFormField>
-
-      <AuthFormField
-        label={t('confirmPassword')}
-        required
-        error={getFieldErrorMessage('confirmPassword')}
-      >
-        <Input
-          {...form.register('confirmPassword')}
-          id="confirmPassword"
-          type="password"
-          placeholder={t('confirmPasswordPlaceholder')}
-          autoComplete="off"
-          className={FIELD_CONTROL_CLASS_NAME}
-        />
-      </AuthFormField>
+      {(['firstName', 'lastName', 'email', 'password', 'confirmPassword'] as FieldName[]).map(
+        name => (
+          <AuthFormInput
+            form={form}
+            name={name}
+            placeholder={`${name}Placeholder`}
+            getFieldErrorMessage={getFieldErrorMessage}
+            type={['password', 'confirmPassword'].includes(name) ? 'password' : 'text'}
+          />  
+        )
+      )}
 
       <div className="mt-6 flex flex-col gap-2">
         <Button
