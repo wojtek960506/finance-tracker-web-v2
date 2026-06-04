@@ -10,6 +10,4 @@ export * from './link';
 export * from './loading-state';
 export * from './modal';
 export * from './number-input';
-export * from './searchable-multi-select';
-export * from './searchable-select';
 export * from './toast';
