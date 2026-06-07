@@ -29,7 +29,7 @@ let authBroadcastChannel: BroadcastChannel | null = null;
 let authSessionSubscriberCount = 0;
 
 // TODO: Add a backend session guard for logout/refresh races.
-// 
+//
 // When refresh tokens become device/session-specific, logout should invalidate the
 // current refresh-token session atomically, and /auth/refresh must verify that the
 // session is still active before rotating tokens or issuing a new access token.
@@ -59,7 +59,10 @@ const setAuthenticatedToken = (token: string) => {
 
 export const getAuthToken = () => useAuthStore.getState().authToken;
 
-export const setAuthToken = (token: string, { broadcast = false }: { broadcast?: boolean } = {}) => {
+export const setAuthToken = (
+  token: string,
+  { broadcast = false }: { broadcast?: boolean } = {},
+) => {
   setAuthenticatedToken(token);
 
   if (broadcast) {

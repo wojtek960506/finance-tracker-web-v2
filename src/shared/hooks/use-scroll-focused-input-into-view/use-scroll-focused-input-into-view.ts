@@ -1,6 +1,5 @@
 import { useCallback } from 'react';
 
-
 // TODO I am not sure whether it works or not on mobile. I have to inspect it later
 const KEYBOARD_OPEN_THRESHOLD = 120;
 const SCROLL_FALLBACK_DELAY_MS = 350;

@@ -60,10 +60,7 @@ export const NavigationItem = ({
       className={({ isActive }) =>
         getButtonClassName({
           variant: 'ghost',
-          className: clsx(
-            className,
-            isActive && 'text-active-nav',
-          ),
+          className: clsx(className, isActive && 'text-active-nav'),
         })
       }
       onClick={() => {

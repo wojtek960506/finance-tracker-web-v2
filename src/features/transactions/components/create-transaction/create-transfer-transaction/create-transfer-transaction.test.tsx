@@ -65,7 +65,7 @@ vi.mock('@transactions/components/transaction-forms', () => ({
     <div>
       <button
         type="button"
-            onClick={() =>
+        onClick={() =>
           void onSubmit({
             date: '',
             description: 'Move funds',

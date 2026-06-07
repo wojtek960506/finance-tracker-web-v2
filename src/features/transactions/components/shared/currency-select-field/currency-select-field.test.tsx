@@ -30,15 +30,23 @@ vi.mock('@/components/ui/combobox', () => ({
       {children}
     </div>
   ),
-  ComboboxInput: ({ placeholder }: { placeholder?: string }) => <span>{placeholder}</span>,
+  ComboboxInput: ({ placeholder }: { placeholder?: string }) => (
+    <span>{placeholder}</span>
+  ),
   ComboboxContent: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
   ComboboxEmpty: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
   ComboboxList: ({
     children,
   }: {
-    children: ((item: { code: string; name: string }) => React.ReactNode) | React.ReactNode;
+    children:
+      | ((item: { code: string; name: string }) => React.ReactNode)
+      | React.ReactNode;
   }) =>
-    typeof children === 'function' ? <div>{children({ code: 'USD', name: 'US Dollar' })}</div> : <div>{children}</div>,
+    typeof children === 'function' ? (
+      <div>{children({ code: 'USD', name: 'US Dollar' })}</div>
+    ) : (
+      <div>{children}</div>
+    ),
   ComboboxItem: ({
     children,
     value,

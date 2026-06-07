@@ -99,12 +99,17 @@ export const NamedResourceSelectField = ({
   );
 
   const favoriteResources = useMemo(
-    () => sortResourcesByDisplayLabel(availableResources.filter((resource) => resource.isFavorite)),
+    () =>
+      sortResourcesByDisplayLabel(
+        availableResources.filter((resource) => resource.isFavorite),
+      ),
     [availableResources, sortResourcesByDisplayLabel],
   );
   const otherResources = useMemo(
     () =>
-      sortResourcesByDisplayLabel(availableResources.filter((resource) => !resource.isFavorite)),
+      sortResourcesByDisplayLabel(
+        availableResources.filter((resource) => !resource.isFavorite),
+      ),
     [availableResources, sortResourcesByDisplayLabel],
   );
 
@@ -116,7 +121,10 @@ export const NamedResourceSelectField = ({
       onClear={() => onChange('')}
     >
       <Select value={value} onValueChange={onChange} disabled={isLoading}>
-        <SelectTrigger showChevron={!clearable} className={clearable ? 'w-full pr-20' : 'w-full'}>
+        <SelectTrigger
+          showChevron={!clearable}
+          className={clearable ? 'w-full pr-20' : 'w-full'}
+        >
           <SelectValue
             placeholder={isLoading ? tNamedResources('loadingResources') : placeholder}
           />

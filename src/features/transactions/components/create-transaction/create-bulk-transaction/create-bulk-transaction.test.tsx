@@ -156,14 +156,10 @@ vi.mock('@/components/ui/select', () => ({
   }) => {
     const items: Array<{ value: string; label: any }> = [];
     const trigger = Array.isArray(children)
-      ? children.find(
-          (child: any) => child?.type?.displayName === 'MockSelectTrigger',
-        )
+      ? children.find((child: any) => child?.type?.displayName === 'MockSelectTrigger')
       : null;
     const content = Array.isArray(children)
-      ? children.find(
-          (child: any) => child?.type?.displayName === 'MockSelectContent',
-        )
+      ? children.find((child: any) => child?.type?.displayName === 'MockSelectContent')
       : null;
 
     if (content?.props?.children) {
@@ -228,13 +224,9 @@ vi.mock('@/components/ui/select', () => ({
     ({ children }: { children: any }) => <div>{children}</div>,
     { displayName: 'MockSelectContent' },
   ),
-  SelectItem: ({
-    value,
-    children,
-  }: {
-    value: string;
-    children: any;
-  }) => <option value={value}>{children}</option>,
+  SelectItem: ({ value, children }: { value: string; children: any }) => (
+    <option value={value}>{children}</option>
+  ),
 }));
 
 describe('CreateBulkTransaction', () => {
@@ -280,7 +272,9 @@ describe('CreateBulkTransaction', () => {
       'standard',
     );
     await user.type(
-      screen.getByLabelText('h-10 sm:h-11 rounded-xl px-3 sm:px-4 text-base sm:text-lg h-9 text-sm'),
+      screen.getByLabelText(
+        'h-10 sm:h-11 rounded-xl px-3 sm:px-4 text-base sm:text-lg h-9 text-sm',
+      ),
       '2024-01-03',
     );
     await user.selectOptions(
@@ -294,9 +288,9 @@ describe('CreateBulkTransaction', () => {
     await user.click(screen.getByRole('button', { name: 'addTransactionRow' }));
 
     await waitFor(() =>
-      expect(
-        screen.getAllByTestId('mock-select-trigger-transactionKind'),
-      ).toHaveLength(2),
+      expect(screen.getAllByTestId('mock-select-trigger-transactionKind')).toHaveLength(
+        2,
+      ),
     );
     expect(screen.getAllByTestId('mock-select-trigger-transactionKind')[1]).toHaveFocus();
 
@@ -321,9 +315,9 @@ describe('CreateBulkTransaction', () => {
     await user.click(screen.getByRole('button', { name: 'duplicateLastRow' }));
 
     await waitFor(() =>
-      expect(
-        screen.getAllByTestId('mock-select-trigger-transactionKind'),
-      ).toHaveLength(3),
+      expect(screen.getAllByTestId('mock-select-trigger-transactionKind')).toHaveLength(
+        3,
+      ),
     );
     expect(screen.getAllByTestId('mock-select-trigger-transactionKind')[2]).toHaveFocus();
 
@@ -406,7 +400,9 @@ describe('CreateBulkTransaction', () => {
     );
 
     expect(
-      screen.getByLabelText('h-10 sm:h-11 rounded-xl px-3 sm:px-4 text-base sm:text-lg h-9 text-sm'),
+      screen.getByLabelText(
+        'h-10 sm:h-11 rounded-xl px-3 sm:px-4 text-base sm:text-lg h-9 text-sm',
+      ),
     ).toHaveValue('2024-01-03');
   });
 
@@ -456,7 +452,9 @@ describe('CreateBulkTransaction', () => {
       'standard',
     );
     await user.type(
-      screen.getByLabelText('h-10 sm:h-11 rounded-xl px-3 sm:px-4 text-base sm:text-lg h-9 text-sm'),
+      screen.getByLabelText(
+        'h-10 sm:h-11 rounded-xl px-3 sm:px-4 text-base sm:text-lg h-9 text-sm',
+      ),
       '2024-01-03',
     );
     await user.selectOptions(
@@ -513,7 +511,9 @@ describe('CreateBulkTransaction', () => {
       'standard',
     );
     await user.type(
-      screen.getByLabelText('h-10 sm:h-11 rounded-xl px-3 sm:px-4 text-base sm:text-lg h-9 text-sm'),
+      screen.getByLabelText(
+        'h-10 sm:h-11 rounded-xl px-3 sm:px-4 text-base sm:text-lg h-9 text-sm',
+      ),
       '2024-01-03',
     );
     await user.selectOptions(
@@ -562,7 +562,9 @@ describe('CreateBulkTransaction', () => {
       'standard',
     );
     await user.type(
-      screen.getByLabelText('h-10 sm:h-11 rounded-xl px-3 sm:px-4 text-base sm:text-lg h-9 text-sm'),
+      screen.getByLabelText(
+        'h-10 sm:h-11 rounded-xl px-3 sm:px-4 text-base sm:text-lg h-9 text-sm',
+      ),
       '2024-01-03',
     );
     await user.selectOptions(
@@ -606,7 +608,9 @@ describe('CreateBulkTransaction', () => {
       'standard',
     );
     await user.type(
-      screen.getByLabelText('h-10 sm:h-11 rounded-xl px-3 sm:px-4 text-base sm:text-lg h-9 text-sm'),
+      screen.getByLabelText(
+        'h-10 sm:h-11 rounded-xl px-3 sm:px-4 text-base sm:text-lg h-9 text-sm',
+      ),
       '2024-01-03',
     );
     await user.selectOptions(

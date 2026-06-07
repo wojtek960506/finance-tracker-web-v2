@@ -36,7 +36,8 @@ export const CurrencySelectField = ({
     queryFn: async () => await getCurrencies(),
   });
   const selectedCurrency = data.find((currency) => currency.code === value) ?? null;
-  const formatCurrencyLabel = (currency: CurrencyOption) => `${currency.code} ${currency.name}`;
+  const formatCurrencyLabel = (currency: CurrencyOption) =>
+    `${currency.code} ${currency.name}`;
 
   return (
     <Combobox<CurrencyOption>

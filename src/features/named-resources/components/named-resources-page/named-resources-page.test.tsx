@@ -5,7 +5,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { createTestQueryClient } from '@test-utils/create-test-query-client';
 
-import { NamedResourcesList } from './named-resources-list';
+import { NamedResourcesPage } from './named-resources-page';
 
 const createNamedResource = vi.fn();
 const getNamedResources = vi.fn();
@@ -101,7 +101,7 @@ const renderList = () => {
     client,
     ...render(
       <QueryClientProvider client={client}>
-        <NamedResourcesList kind="categories" />
+        <NamedResourcesPage kind="categories" />
       </QueryClientProvider>,
     ),
   };
@@ -150,9 +150,15 @@ describe('NamedResourcesList', () => {
 
     renderList();
 
-    expect(await screen.findByText('namedResources:emptyResourcesTitleCategory')).toBeInTheDocument();
-    expect(screen.getByText('namedResources:emptyResourcesDescriptionCategory')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'namedResources:newCategory' })).toBeInTheDocument();
+    expect(
+      await screen.findByText('namedResources:emptyResourcesTitleCategory'),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText('namedResources:emptyResourcesDescriptionCategory'),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: 'namedResources:newCategory' }),
+    ).toBeInTheDocument();
   });
 
   it('renders loaded resources', async () => {

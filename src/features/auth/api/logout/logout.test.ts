@@ -16,9 +16,13 @@ describe('logout', () => {
 
     const result = await logout();
 
-    expect(postMock).toHaveBeenCalledWith(`${BASE_URL}/api/auth/logout`, {}, {
-      withCredentials: true,
-    });
+    expect(postMock).toHaveBeenCalledWith(
+      `${BASE_URL}/api/auth/logout`,
+      {},
+      {
+        withCredentials: true,
+      },
+    );
     expect(result).toBeUndefined();
   });
 });

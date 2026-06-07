@@ -17,7 +17,7 @@ export const AmountRangeField = ({ name }: { name: 'minAmount' | 'maxAmount' }) 
       <Controller
         control={form.control}
         name={name}
-        render={({ field }) =>
+        render={({ field }) => (
           <NumberInput
             value={field.value}
             onValueChange={field.onChange}
@@ -25,7 +25,7 @@ export const AmountRangeField = ({ name }: { name: 'minAmount' | 'maxAmount' }) 
             step="0.01"
             min="0"
           />
-        }
+        )}
       />
       <FieldError
         message={

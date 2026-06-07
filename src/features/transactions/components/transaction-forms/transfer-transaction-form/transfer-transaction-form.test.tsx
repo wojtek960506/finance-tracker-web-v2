@@ -54,10 +54,9 @@ vi.mock('@shared/ui', () => ({
     />
   ),
   Input: (props: React.InputHTMLAttributes<HTMLInputElement>) => <input {...props} />,
-  Label: ({
-    children,
-    ...props
-  }: React.LabelHTMLAttributes<HTMLLabelElement>) => <label {...props}>{children}</label>,
+  Label: ({ children, ...props }: React.LabelHTMLAttributes<HTMLLabelElement>) => (
+    <label {...props}>{children}</label>
+  ),
   NumberInput: ({
     value,
     onValueChange,

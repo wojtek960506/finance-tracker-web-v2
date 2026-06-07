@@ -6,7 +6,10 @@ export const Label = forwardRef<HTMLLabelElement, ComponentProps<'label'>>(
     <label
       ref={ref}
       {...props}
-      className={clsx('flex min-w-0 max-w-full flex-col gap-1 text-sm sm:text-base', className)}
+      className={clsx(
+        'flex min-w-0 max-w-full flex-col gap-1 text-sm sm:text-base',
+        className,
+      )}
     >
       {children}
     </label>

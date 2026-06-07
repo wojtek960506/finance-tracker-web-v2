@@ -2,7 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useQueryClient } from '@tanstack/react-query';
 import clsx from 'clsx';
 import { Trash2 } from 'lucide-react';
-import { type Ref,useEffect, useRef, useState } from 'react';
+import { type Ref, useEffect, useRef, useState } from 'react';
 import { Controller, useFieldArray, useForm, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -81,11 +81,7 @@ const INLINE_KIND_FIELD_CLASS_NAME = 'w-[10rem] min-w-[10rem] shrink-0';
 const INLINE_LABEL_TEXT_CLASS_NAME = 'sr-only';
 
 const getBulkLabelClassName = (showLabel: boolean, required = false) =>
-  showLabel
-    ? required
-      ? REQUIRED_LABEL_CLASS_NAME
-      : ''
-    : INLINE_LABEL_TEXT_CLASS_NAME;
+  showLabel ? (required ? REQUIRED_LABEL_CLASS_NAME : '') : INLINE_LABEL_TEXT_CLASS_NAME;
 
 const bulkTransactionRowSchema = z
   .object({
@@ -191,17 +187,17 @@ const BulkTransactionKindField = ({
       <span className={getBulkLabelClassName(showLabel, true)}>
         {t('transactionKind')}
       </span>
-        <Select
-          value={kind}
-          onValueChange={(value) => setKind(value as BulkTransactionKind)}
+      <Select
+        value={kind}
+        onValueChange={(value) => setKind(value as BulkTransactionKind)}
+      >
+        <SelectTrigger
+          aria-label={t('transactionKind')}
+          className={COMPACT_FIELD_CLASS_NAME}
+          ref={triggerRef}
         >
-          <SelectTrigger
-            aria-label={t('transactionKind')}
-            className={COMPACT_FIELD_CLASS_NAME}
-            ref={triggerRef}
-          >
-            <SelectValue />
-          </SelectTrigger>
+          <SelectValue />
+        </SelectTrigger>
         <SelectContent position="popper">
           {bulkTransactionKinds.map((transactionKind) => (
             <SelectItem key={`${index}-${transactionKind}`} value={transactionKind}>
@@ -233,13 +229,13 @@ const StandardRowFields = ({
   return (
     <div className="flex min-w-max items-start gap-2">
       <Label className={`${COMPACT_LABEL_CLASS_NAME} ${INLINE_FIELD_CLASS_NAME}`}>
-        <span className={getBulkLabelClassName(showLabels, true)}>
-          {t('date')}
-        </span>
+        <span className={getBulkLabelClassName(showLabels, true)}>{t('date')}</span>
         <Controller
           control={form.control}
           name={`rows.${index}.standardValues.date`}
-          render={({ field }) => <DateInput {...field} className={COMPACT_FIELD_CLASS_NAME} />}
+          render={({ field }) => (
+            <DateInput {...field} className={COMPACT_FIELD_CLASS_NAME} />
+          )}
         />
         <FieldError message={errors?.date?.message && t(errors.date.message)} />
       </Label>
@@ -262,7 +258,7 @@ const StandardRowFields = ({
             aria-label={t('transactionType')}
             className={clsx(
               COMPACT_FIELD_CLASS_NAME,
-              getTransactionTypeSelectValueClassName(selectedTransactionType)
+              getTransactionTypeSelectValueClassName(selectedTransactionType),
             )}
           >
             <SelectValue />
@@ -295,9 +291,7 @@ const StandardRowFields = ({
       </Label>
 
       <Label className={`${COMPACT_LABEL_CLASS_NAME} ${INLINE_FIELD_CLASS_NAME}`}>
-        <span className={getBulkLabelClassName(showLabels, true)}>
-          {t('amount')}
-        </span>
+        <span className={getBulkLabelClassName(showLabels, true)}>{t('amount')}</span>
         <Controller
           control={form.control}
           name={`rows.${index}.standardValues.amount`}
@@ -316,9 +310,7 @@ const StandardRowFields = ({
       </Label>
 
       <Label className={`${COMPACT_LABEL_CLASS_NAME} ${INLINE_FIELD_CLASS_NAME}`}>
-        <span className={getBulkLabelClassName(showLabels, true)}>
-          {t('currency')}
-        </span>
+        <span className={getBulkLabelClassName(showLabels, true)}>{t('currency')}</span>
         <Controller
           control={form.control}
           name={`rows.${index}.standardValues.currency`}
@@ -371,9 +363,7 @@ const StandardRowFields = ({
           )}
         />
         <FieldError
-          message={
-            errors?.paymentMethodId?.message && t(errors.paymentMethodId.message)
-          }
+          message={errors?.paymentMethodId?.message && t(errors.paymentMethodId.message)}
         />
       </Label>
 
@@ -412,13 +402,13 @@ const TransferRowFields = ({
   return (
     <div className="flex min-w-max items-start gap-2">
       <Label className={`${COMPACT_LABEL_CLASS_NAME} ${INLINE_FIELD_CLASS_NAME}`}>
-        <span className={getBulkLabelClassName(showLabels, true)}>
-          {t('date')}
-        </span>
+        <span className={getBulkLabelClassName(showLabels, true)}>{t('date')}</span>
         <Controller
           control={form.control}
           name={`rows.${index}.transferValues.date`}
-          render={({ field }) => <DateInput {...field} className={COMPACT_FIELD_CLASS_NAME} />}
+          render={({ field }) => (
+            <DateInput {...field} className={COMPACT_FIELD_CLASS_NAME} />
+          )}
         />
         <FieldError message={errors?.date?.message && t(errors.date.message)} />
       </Label>
@@ -437,9 +427,7 @@ const TransferRowFields = ({
       </Label>
 
       <Label className={`${COMPACT_LABEL_CLASS_NAME} ${INLINE_FIELD_CLASS_NAME}`}>
-        <span className={getBulkLabelClassName(showLabels, true)}>
-          {t('amount')}
-        </span>
+        <span className={getBulkLabelClassName(showLabels, true)}>{t('amount')}</span>
         <Controller
           control={form.control}
           name={`rows.${index}.transferValues.amount`}
@@ -458,9 +446,7 @@ const TransferRowFields = ({
       </Label>
 
       <Label className={`${COMPACT_LABEL_CLASS_NAME} ${INLINE_FIELD_CLASS_NAME}`}>
-        <span className={getBulkLabelClassName(showLabels, true)}>
-          {t('currency')}
-        </span>
+        <span className={getBulkLabelClassName(showLabels, true)}>{t('currency')}</span>
         <Controller
           control={form.control}
           name={`rows.${index}.transferValues.currency`}
@@ -492,9 +478,7 @@ const TransferRowFields = ({
           )}
         />
         <FieldError
-          message={
-            errors?.paymentMethodId?.message && t(errors.paymentMethodId.message)
-          }
+          message={errors?.paymentMethodId?.message && t(errors.paymentMethodId.message)}
         />
       </Label>
 
@@ -534,9 +518,7 @@ const TransferRowFields = ({
           )}
         />
         <FieldError
-          message={
-            errors?.accountIncomeId?.message && t(errors.accountIncomeId.message)
-          }
+          message={errors?.accountIncomeId?.message && t(errors.accountIncomeId.message)}
         />
       </Label>
     </div>
@@ -558,13 +540,13 @@ const ExchangeRowFields = ({
   return (
     <div className="flex min-w-max items-start gap-2">
       <Label className={`${COMPACT_LABEL_CLASS_NAME} ${INLINE_FIELD_CLASS_NAME}`}>
-        <span className={getBulkLabelClassName(showLabels, true)}>
-          {t('date')}
-        </span>
+        <span className={getBulkLabelClassName(showLabels, true)}>{t('date')}</span>
         <Controller
           control={form.control}
           name={`rows.${index}.exchangeValues.date`}
-          render={({ field }) => <DateInput {...field} className={COMPACT_FIELD_CLASS_NAME} />}
+          render={({ field }) => (
+            <DateInput {...field} className={COMPACT_FIELD_CLASS_NAME} />
+          )}
         />
         <FieldError message={errors?.date?.message && t(errors.date.message)} />
       </Label>
@@ -623,9 +605,7 @@ const ExchangeRowFields = ({
           )}
         />
         <FieldError
-          message={
-            errors?.currencyExpense?.message && t(errors.currencyExpense.message)
-          }
+          message={errors?.currencyExpense?.message && t(errors.currencyExpense.message)}
         />
       </Label>
 
@@ -670,9 +650,7 @@ const ExchangeRowFields = ({
           )}
         />
         <FieldError
-          message={
-            errors?.currencyIncome?.message && t(errors.currencyIncome.message)
-          }
+          message={errors?.currencyIncome?.message && t(errors.currencyIncome.message)}
         />
       </Label>
 
@@ -691,9 +669,7 @@ const ExchangeRowFields = ({
           )}
         />
         <FieldError
-          message={
-            errors?.paymentMethodId?.message && t(errors.paymentMethodId.message)
-          }
+          message={errors?.paymentMethodId?.message && t(errors.paymentMethodId.message)}
         />
       </Label>
 
@@ -733,9 +709,7 @@ const ExchangeRowFields = ({
           )}
         />
         <FieldError
-          message={
-            errors?.accountIncomeId?.message && t(errors.accountIncomeId.message)
-          }
+          message={errors?.accountIncomeId?.message && t(errors.accountIncomeId.message)}
         />
       </Label>
     </div>
@@ -783,14 +757,15 @@ export const CreateBulkTransaction = () => {
     setPendingKindFocusRowIndex(null);
   }, [fields.length, pendingKindFocusRowIndex]);
 
-  const registerKindSelectTrigger = (index: number) => (node: HTMLButtonElement | null) => {
-    if (node) {
-      kindSelectTriggerRefs.current.set(index, node);
-      return;
-    }
+  const registerKindSelectTrigger =
+    (index: number) => (node: HTMLButtonElement | null) => {
+      if (node) {
+        kindSelectTriggerRefs.current.set(index, node);
+        return;
+      }
 
-    kindSelectTriggerRefs.current.delete(index);
-  };
+      kindSelectTriggerRefs.current.delete(index);
+    };
 
   const appendRow = (rowValues = getDefaultBulkTransactionRowValues()) => {
     const nextRowIndex = fields.length;
@@ -800,7 +775,8 @@ export const CreateBulkTransaction = () => {
 
   const duplicateLastRow = () => {
     const currentRows = form.getValues('rows');
-    const lastRow = currentRows[currentRows.length - 1] ?? getDefaultBulkTransactionRowValues();
+    const lastRow =
+      currentRows[currentRows.length - 1] ?? getDefaultBulkTransactionRowValues();
     const nextRows = [...currentRows, cloneBulkTransactionRowValues(lastRow)];
 
     form.reset(
@@ -901,9 +877,11 @@ export const CreateBulkTransaction = () => {
       pushToast({
         variant: 'error',
         title: t('bulkTransactionCreateFailed'),
-        message: apiError.message || t('bulkTransactionCreatePartiallyFailedMessage', {
-          count: values.rows.length,
-        }),
+        message:
+          apiError.message ||
+          t('bulkTransactionCreatePartiallyFailedMessage', {
+            count: values.rows.length,
+          }),
       });
     } finally {
       setIsPending(false);
@@ -994,13 +972,25 @@ export const CreateBulkTransaction = () => {
                       <FieldError message={kindError && t(kindError)} />
                     </div>
                     {row.kind === 'standard' ? (
-                      <StandardRowFields form={form} index={index} showLabels={showLabels} />
+                      <StandardRowFields
+                        form={form}
+                        index={index}
+                        showLabels={showLabels}
+                      />
                     ) : null}
                     {row.kind === 'transfer' ? (
-                      <TransferRowFields form={form} index={index} showLabels={showLabels} />
+                      <TransferRowFields
+                        form={form}
+                        index={index}
+                        showLabels={showLabels}
+                      />
                     ) : null}
                     {row.kind === 'exchange' ? (
-                      <ExchangeRowFields form={form} index={index} showLabels={showLabels} />
+                      <ExchangeRowFields
+                        form={form}
+                        index={index}
+                        showLabels={showLabels}
+                      />
                     ) : null}
                   </div>
                 </div>

@@ -11,10 +11,8 @@ type CurrenciesTotalsProps = {
 
 export const CurrenciesTotals = ({ byCurrency }: CurrenciesTotalsProps) => {
   const { t } = useTranslation('transactions');
-  const {
-    expandedTransactionTotalCurrencies,
-    setTransactionTotalCurrencyExpanded,
-  } = useUIStore();
+  const { expandedTransactionTotalCurrencies, setTransactionTotalCurrencyExpanded } =
+    useUIStore();
 
   const sortedCurrencyTotals = Object.entries(byCurrency).sort(
     (left, right) => right[1].totalItems - left[1].totalItems,
@@ -38,9 +36,7 @@ export const CurrenciesTotals = ({ byCurrency }: CurrenciesTotalsProps) => {
               ? isSingleCurrency
               : expandedTransactionTotalCurrencies.includes(currency)
           }
-          onOpenChange={(isOpen) =>
-            setTransactionTotalCurrencyExpanded(currency, isOpen)
-          }
+          onOpenChange={(isOpen) => setTransactionTotalCurrencyExpanded(currency, isOpen)}
         />
       ))}
     </div>

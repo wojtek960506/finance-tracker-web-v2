@@ -46,7 +46,8 @@ const appendFilterParams = (params: URLSearchParams, filters: TransactionFilters
   if (filters.maxAmount !== undefined) params.set('maxAmount', String(filters.maxAmount));
   if (filters.transactionType) params.set('transactionType', filters.transactionType);
   if (filters.currency) params.set('currency', filters.currency);
-  if (filters.categoryIds?.length) params.set('categoryIds', filters.categoryIds.join(','));
+  if (filters.categoryIds?.length)
+    params.set('categoryIds', filters.categoryIds.join(','));
   if (filters.excludeCategoryIds?.length) {
     params.set('excludeCategoryIds', filters.excludeCategoryIds.join(','));
   }
@@ -112,7 +113,9 @@ export const parseTransactionsRouteSearchParams = (
   const transactionType = parseTransactionType(searchParams.get('transactionType'));
   const currency = searchParams.get('currency');
   const categoryIds = parseMultiValueFilter(searchParams.get('categoryIds'));
-  const excludeCategoryIds = parseMultiValueFilter(searchParams.get('excludeCategoryIds'));
+  const excludeCategoryIds = parseMultiValueFilter(
+    searchParams.get('excludeCategoryIds'),
+  );
   const paymentMethodIds = parseMultiValueFilter(searchParams.get('paymentMethodIds'));
   const excludePaymentMethodIds = parseMultiValueFilter(
     searchParams.get('excludePaymentMethodIds'),

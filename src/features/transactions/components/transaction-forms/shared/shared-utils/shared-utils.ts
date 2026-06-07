@@ -23,9 +23,7 @@ export const getTransactionDateValue = (value: string) => value.slice(0, 10);
 
 export const getTransactionAmountValue = (value: number) => value.toString();
 
-export const preventImplicitFormSubmit = (
-  event: ReactKeyboardEvent<HTMLFormElement>,
-) => {
+export const preventImplicitFormSubmit = (event: ReactKeyboardEvent<HTMLFormElement>) => {
   if (
     event.key !== 'Enter' ||
     event.shiftKey ||

@@ -158,14 +158,18 @@ describe('VerifyEmail', () => {
 
     await screen.findByText('AUTH_INVALID_EMAIL_VERIFICATION_TOKEN');
 
-    await user.click(screen.getByRole('button', { name: 'needAnotherVerificationEmail' }));
+    await user.click(
+      screen.getByRole('button', { name: 'needAnotherVerificationEmail' }),
+    );
 
     expect(screen.getByText('resendVerificationTitle')).toBeInTheDocument();
     expect(screen.getByText('resendVerificationDescription')).toBeInTheDocument();
     expect(
       screen.queryByRole('button', { name: 'needAnotherVerificationEmail' }),
     ).not.toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'resendVerificationEmail' })).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: 'resendVerificationEmail' }),
+    ).toBeInTheDocument();
     expect(screen.getByLabelText('email')).toBeInTheDocument();
   });
 
@@ -181,7 +185,9 @@ describe('VerifyEmail', () => {
     renderVerifyEmail();
 
     await screen.findByText('AUTH_INVALID_EMAIL_VERIFICATION_TOKEN');
-    await user.click(screen.getByRole('button', { name: 'needAnotherVerificationEmail' }));
+    await user.click(
+      screen.getByRole('button', { name: 'needAnotherVerificationEmail' }),
+    );
     await user.type(screen.getByLabelText('email'), 'invalid@example.com');
     await user.click(screen.getByRole('button', { name: 'resendVerificationEmail' }));
 

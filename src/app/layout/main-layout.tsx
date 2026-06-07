@@ -30,8 +30,6 @@ export const MainLayout = ({ children }: { children: ReactNode }) => {
     retry: false,
   });
 
-
-
   return (
     <div className="h-[100dvh] overflow-x-auto overflow-hidden">
       <div className="flex h-full min-w-[340px] min-h-0 flex-col">

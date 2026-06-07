@@ -32,10 +32,7 @@ export const Topbar = ({
       </div>
       <Title />
       <div
-        className={clsx(
-          'justify-self-end',
-          isAuthenticated ? 'hidden md:flex' : 'flex',
-        )}
+        className={clsx('justify-self-end', isAuthenticated ? 'hidden md:flex' : 'flex')}
       >
         <LanguageSwitcher />
         <ThemeButton />

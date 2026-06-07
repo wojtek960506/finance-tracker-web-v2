@@ -4,5 +4,8 @@ export const formatDecimal = (value: number, language: string) =>
     maximumFractionDigits: 2,
   }).format(value);
 
-export const formatCurrencyAmount = (value: number, currency: string | undefined, language: string) =>
-  `${formatDecimal(value, language)}${currency ? ` ${currency}` : ''}`;
+export const formatCurrencyAmount = (
+  value: number,
+  currency: string | undefined,
+  language: string,
+) => `${formatDecimal(value, language)}${currency ? ` ${currency}` : ''}`;

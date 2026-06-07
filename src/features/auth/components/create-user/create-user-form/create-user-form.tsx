@@ -1,15 +1,11 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import clsx from 'clsx';
-import { LoaderCircle } from 'lucide-react';
 import { useEffect } from 'react';
 import { type SubmitHandler, useForm, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { AuthFormField } from '@auth/components/auth-form-field';
+import { AuthFormButtons } from '@auth/components/auth-form-buttons';
+import { AuthFormInput } from '@auth/components/auth-form-input';
 import { AuthFormShell } from '@auth/components/auth-form-shell';
-import { FORM_BUTTON_SIZE_CLASS } from '@shared/consts';
-import { FIELD_CONTROL_CLASS_NAME } from '@transactions/components/transaction-forms';
-import { Button, ButtonLink, Input } from '@ui';
 
 import {
   createUserFormSchema,
@@ -24,7 +20,6 @@ type CreateUserFormProps = {
 
 type FieldName = keyof CreateUserFormValues;
 
-// TODO split this component
 export const CreateUserForm = ({ isPending, onSubmit }: CreateUserFormProps) => {
   const { t } = useTranslation('auth');
   const form = useForm<CreateUserFormValues>({
@@ -33,9 +28,7 @@ export const CreateUserForm = ({ isPending, onSubmit }: CreateUserFormProps) => 
     mode: 'onBlur',
     reValidateMode: 'onBlur',
   });
-  const values = useWatch({
-    control: form.control,
-  });
+  const values = useWatch({ control: form.control });
 
   useEffect(() => {
     form.setFocus('firstName');
@@ -51,7 +44,6 @@ export const CreateUserForm = ({ isPending, onSubmit }: CreateUserFormProps) => 
     const wasSubmitted = form.formState.submitCount > 0;
 
     if (!fieldError || (!isTouched && !wasSubmitted)) return undefined;
-
     return t(fieldError);
   };
 
@@ -61,99 +53,27 @@ export const CreateUserForm = ({ isPending, onSubmit }: CreateUserFormProps) => 
 
   return (
     <AuthFormShell onSubmit={form.handleSubmit(handleSubmit)}>
-      <AuthFormField
-        label={t('firstName')}
-        required
-        error={getFieldErrorMessage('firstName')}
-      >
-        <Input
-          {...form.register('firstName')}
-          id="firstName"
-          placeholder={t('firstNamePlaceholder')}
-          autoComplete="off"
-          className={FIELD_CONTROL_CLASS_NAME}
+      {(
+        ['firstName', 'lastName', 'email', 'password', 'confirmPassword'] as FieldName[]
+      ).map((name) => (
+        <AuthFormInput
+          form={form}
+          name={name}
+          placeholder={`${name}Placeholder`}
+          getFieldErrorMessage={getFieldErrorMessage}
+          type={['password', 'confirmPassword'].includes(name) ? 'password' : 'text'}
         />
-      </AuthFormField>
+      ))}
 
-      <AuthFormField
-        label={t('lastName')}
-        required
-        error={getFieldErrorMessage('lastName')}
-      >
-        <Input
-          {...form.register('lastName')}
-          id="lastName"
-          placeholder={t('lastNamePlaceholder')}
-          autoComplete="off"
-          className={FIELD_CONTROL_CLASS_NAME}
-        />
-      </AuthFormField>
-
-      <AuthFormField label={t('email')} required error={getFieldErrorMessage('email')}>
-        <Input
-          {...form.register('email')}
-          id="email"
-          placeholder={t('emailPlaceholder')}
-          autoComplete="off"
-          className={FIELD_CONTROL_CLASS_NAME}
-        />
-      </AuthFormField>
-
-      <AuthFormField
-        label={t('password')}
-        required
-        error={getFieldErrorMessage('password')}
-      >
-        <Input
-          {...form.register('password')}
-          id="password"
-          type="password"
-          placeholder={t('passwordPlaceholder')}
-          autoComplete="off"
-          className={FIELD_CONTROL_CLASS_NAME}
-        />
-      </AuthFormField>
-
-      <AuthFormField
-        label={t('confirmPassword')}
-        required
-        error={getFieldErrorMessage('confirmPassword')}
-      >
-        <Input
-          {...form.register('confirmPassword')}
-          id="confirmPassword"
-          type="password"
-          placeholder={t('confirmPasswordPlaceholder')}
-          autoComplete="off"
-          className={FIELD_CONTROL_CLASS_NAME}
-        />
-      </AuthFormField>
-
-      <div className="mt-6 flex flex-col gap-2">
-        <Button
-          disabled={isSubmitDisabled}
-          type="submit"
-          className={clsx(FORM_BUTTON_SIZE_CLASS, 'gap-2 font-semibold sm:font-bold')}
-        >
-          {isPending ? (
-            <>
-              <LoaderCircle className="size-4 animate-spin sm:size-5" aria-hidden="true" />
-              {t('creatingAccount')}
-            </>
-          ) : (
-            t('createAccount')
-          )}
-        </Button>
-        <ButtonLink
-          to="/login"
-          variant="outline"
-          preventFocusOnPress
-          disabled={isPending}
-          className={clsx(FORM_BUTTON_SIZE_CLASS, 'font-semibold sm:font-bold')}
-        >
-          {t('backToLogin')}
-        </ButtonLink>
-      </div>
+      <AuthFormButtons
+        isPrimaryPending={isPending}
+        isPrimaryDisabled={isSubmitDisabled}
+        primaryText={t('createAccount')}
+        primaryTextPending={t('creatingAccount')}
+        isSecondaryDisabled={isPending}
+        secondaryText={t('backToLogin')}
+        secondaryTo="/login"
+      />
     </AuthFormShell>
   );
 };

@@ -39,11 +39,7 @@ export const getPathWithSearch = ({
   search: string;
 }) => `${pathname}${search}`;
 
-const matchesOptionalDateRange = (
-  date: string,
-  startDate?: string,
-  endDate?: string,
-) => {
+const matchesOptionalDateRange = (date: string, startDate?: string, endDate?: string) => {
   const normalizedDate = date.slice(0, 10);
 
   if (startDate && normalizedDate < startDate) return false;
@@ -56,9 +52,7 @@ export const transactionMatchesFilters = (
   transaction: Transaction,
   filters: TransactionFilters,
 ) => {
-  if (
-    !matchesOptionalDateRange(transaction.date, filters.startDate, filters.endDate)
-  ) {
+  if (!matchesOptionalDateRange(transaction.date, filters.startDate, filters.endDate)) {
     return false;
   }
 
@@ -81,7 +75,10 @@ export const transactionMatchesFilters = (
     return false;
   }
 
-  if (filters.categoryIds?.length && !filters.categoryIds.includes(transaction.category.id)) {
+  if (
+    filters.categoryIds?.length &&
+    !filters.categoryIds.includes(transaction.category.id)
+  ) {
     return false;
   }
 
@@ -106,7 +103,10 @@ export const transactionMatchesFilters = (
     return false;
   }
 
-  if (filters.accountIds?.length && !filters.accountIds.includes(transaction.account.id)) {
+  if (
+    filters.accountIds?.length &&
+    !filters.accountIds.includes(transaction.account.id)
+  ) {
     return false;
   }
 
@@ -136,5 +136,7 @@ export const shouldWarnAboutHiddenTransactions = (
     return false;
   }
 
-  return !transactions.some((transaction) => transactionMatchesFilters(transaction, filters));
+  return !transactions.some((transaction) =>
+    transactionMatchesFilters(transaction, filters),
+  );
 };

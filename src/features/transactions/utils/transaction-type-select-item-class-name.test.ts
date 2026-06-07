@@ -7,7 +7,9 @@ import {
 
 describe('getTransactionTypeSelectItemClassName', () => {
   it('returns transaction-type-colored select item classes', () => {
-    expect(getTransactionTypeSelectItemClassName('expense')).toContain('text-destructive');
+    expect(getTransactionTypeSelectItemClassName('expense')).toContain(
+      'text-destructive',
+    );
     expect(getTransactionTypeSelectItemClassName('expense')).toContain(
       'data-[state=checked]:!bg-destructive/15',
     );

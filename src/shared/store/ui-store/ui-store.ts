@@ -34,7 +34,9 @@ export const useUIStore = create<UIState>()(
         set((state) => ({
           expandedNavigationItems: isExpanded
             ? [...new Set([...state.expandedNavigationItems, itemId])]
-            : state.expandedNavigationItems.filter((currentItemId) => currentItemId !== itemId),
+            : state.expandedNavigationItems.filter(
+                (currentItemId) => currentItemId !== itemId,
+              ),
         })),
       isTransactionsTotalsOpen: false,
       setIsTransactionsTotalsOpen: (isTransactionsTotalsOpen: boolean) =>
@@ -50,7 +52,9 @@ export const useUIStore = create<UIState>()(
           return {
             expandedTransactionTotalCurrencies: isExpanded
               ? [...new Set([...expandedCurrencies, currency])]
-              : expandedCurrencies.filter((currentCurrency) => currentCurrency !== currency),
+              : expandedCurrencies.filter(
+                  (currentCurrency) => currentCurrency !== currency,
+                ),
           };
         }),
       resetPersistedUIState: () => set(getDefaultPersistedUIState()),

@@ -6,10 +6,10 @@ export type MeResponse = {
   email: string;
   id: string;
   emailVerifiedAt: Date | null;
-  emailVerificationMethod: "legacy-backfill" | "self-verified" | null;
+  emailVerificationMethod: 'legacy-backfill' | 'self-verified' | null;
   createdAt: Date;
   updatedAt: Date;
-}
+};
 
 export const getMe = async () => {
   const res = await api.get<MeResponse>('/auth/me');

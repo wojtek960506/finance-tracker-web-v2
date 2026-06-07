@@ -24,20 +24,18 @@ vi.mock('@transactions/components/shared', () => ({
 
 vi.mock('@/components/ui/select', () => ({
   SelectControl: ({ children }: React.PropsWithChildren) => <div>{children}</div>,
-  Select: ({
-    children,
-    disabled,
-  }: React.PropsWithChildren<{ disabled?: boolean }>) => (
+  Select: ({ children, disabled }: React.PropsWithChildren<{ disabled?: boolean }>) => (
     <div data-disabled={disabled ? 'true' : 'false'}>{children}</div>
   ),
-  SelectTrigger: ({ children }: React.PropsWithChildren) => <button type="button">{children}</button>,
+  SelectTrigger: ({ children }: React.PropsWithChildren) => (
+    <button type="button">{children}</button>
+  ),
   SelectValue: ({ placeholder }: { placeholder?: string }) => <span>{placeholder}</span>,
   SelectContent: ({ children }: React.PropsWithChildren) => <div>{children}</div>,
   SelectGroup: ({ children }: React.PropsWithChildren) => <div>{children}</div>,
-  SelectItem: ({
-    children,
-    value,
-  }: React.PropsWithChildren<{ value: string }>) => <div data-value={value}>{children}</div>,
+  SelectItem: ({ children, value }: React.PropsWithChildren<{ value: string }>) => (
+    <div data-value={value}>{children}</div>
+  ),
   SelectSeparator: () => <hr role="separator" />,
 }));
 
@@ -128,7 +126,9 @@ describe('NamedResourceSelectField', () => {
     const otherCategory = screen.getByText('otherCategory');
     const travel = screen.getByText('Travel');
 
-    expect(alpha.compareDocumentPosition(zoo) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(
+      alpha.compareDocumentPosition(zoo) & Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
     expect(
       zoo.compareDocumentPosition(separator) & Node.DOCUMENT_POSITION_FOLLOWING,
     ).toBeTruthy();
