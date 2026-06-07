@@ -9,14 +9,12 @@ import { TransactionKindIcon } from '@transactions/components/shared';
 import { getTransactionKind } from '@transactions/consts';
 import {
   getPathWithSearch,
+  getTransactionNamedResourceLabel,
   getTransactionsReturnTo,
   getTransactionsRouteState,
 } from '@transactions/utils';
 import { getTransactionAmountPresentation } from '@transactions/utils/transaction-amount';
-import { Card } from '@ui';
-
-// import { getTransactionNamedResourceLabel } from '@transactions/utils';
-// import { ButtonLink } from '@ui';
+import { ButtonLink,Card } from '@ui';
 
 export const TransactionPreview = ({
   transaction,
@@ -37,22 +35,21 @@ export const TransactionPreview = ({
   const transactionKind = getTransactionKind(transaction);
   const returnTo = getTransactionsReturnTo(location.state, getPathWithSearch(location));
 
-  // TODO uncomment it when code for footer will be uncommented.
-  // Visibility of footer will be later adjustable in settings.
-  // const { t: tNamedResources } = useTranslation('namedResources');
-  // const accountLabel = getTransactionNamedResourceLabel(
-  //   transaction.account,
-  //   tNamedResources,
-  // );
-  // const paymentMethodLabel = getTransactionNamedResourceLabel(
-  //   transaction.paymentMethod,
-  //   tNamedResources,
-  // );
-  // const categoryLabel = getTransactionNamedResourceLabel(
-  //   transaction.category,
-  //   tNamedResources,
-  // );
-  // const ghostLinkCn = 'text-sm sm:text-base';
+  // TODO Visibility of footer will be later adjustable in settings.
+  const { t: tNamedResources } = useTranslation('namedResources');
+  const accountLabel = getTransactionNamedResourceLabel(
+    transaction.account,
+    tNamedResources,
+  );
+  const paymentMethodLabel = getTransactionNamedResourceLabel(
+    transaction.paymentMethod,
+    tNamedResources,
+  );
+  const categoryLabel = getTransactionNamedResourceLabel(
+    transaction.category,
+    tNamedResources,
+  );
+  const ghostLinkCn = 'text-sm sm:text-base';
 
   return (
     <li>
@@ -92,7 +89,7 @@ export const TransactionPreview = ({
           </main>
         </Link>
 
-        {/* <footer className="flex flex-wrap justify-end items-center justify-between gap-1">
+        <footer className="flex flex-wrap justify-end items-center justify-between gap-1">
             <ButtonLink to="/accounts" className={ghostLinkCn}>
               {accountLabel}
             </ButtonLink>
@@ -102,7 +99,7 @@ export const TransactionPreview = ({
             <ButtonLink to="/categories" className={ghostLinkCn}>
               {categoryLabel}
             </ButtonLink>
-        </footer> */}
+        </footer>
       </Card>
     </li>
   );
