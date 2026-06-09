@@ -14,7 +14,7 @@ export const standardTransactionFormSchema = z.object({
     .string()
     .min(1, 'amountRequired')
     .refine((value) => !Number.isNaN(Number(value)), 'amountValidNumber')
-    .refine((value) => Number(value) > 0, 'amountPositive'),
+    .refine((value) => Number(value) >= 0, 'amountCannotBeNegative'),
   currency: z.string().min(1, 'currencyRequired'),
   categoryId: z.string(),
   paymentMethodId: z.string(),

@@ -28,6 +28,20 @@ describe('transfer transaction form utils', () => {
     ).toBeTruthy();
   });
 
+  it('allows a zero transfer amount', () => {
+    expect(
+      transferTransactionFormSchema.parse({
+        date: '2024-01-03',
+        description: 'Neutral transfer',
+        amount: '0',
+        currency: 'USD',
+        paymentMethodId: 'pm-1',
+        accountExpenseId: 'acc-1',
+        accountIncomeId: 'acc-1',
+      }),
+    ).toBeTruthy();
+  });
+
   it('returns default values', () => {
     expect(getDefaultTransferTransactionFormValues()).toEqual({
       date: '',

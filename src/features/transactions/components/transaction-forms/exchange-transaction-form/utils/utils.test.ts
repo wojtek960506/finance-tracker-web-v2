@@ -28,6 +28,20 @@ describe('exchange transaction form utils', () => {
         accountIncomeId: 'acc-2',
       }),
     ).toBeTruthy();
+
+    expect(
+      exchangeTransactionFormSchema.parse({
+        date: '2024-01-03',
+        description: 'Neutral exchange',
+        amountExpense: '0',
+        amountIncome: '0',
+        currencyExpense: 'USD',
+        currencyIncome: 'EUR',
+        paymentMethodId: 'pm-1',
+        accountExpenseId: 'acc-1',
+        accountIncomeId: 'acc-2',
+      }),
+    ).toBeTruthy();
   });
 
   it('rejects exchanges with the same currency on both sides', () => {

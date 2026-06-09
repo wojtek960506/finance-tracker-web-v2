@@ -201,7 +201,7 @@
   "descriptionRequired": "Beschreibung ist erforderlich.",
   "amountRequired": "Betrag ist erforderlich.",
   "amountValidNumber": "Betrag muss eine gültige Zahl sein.",
-  "amountMustBePositiveOrZero": "Der Betrag muss größer oder gleich null sein.",
+  "amountCannotBeNegative": "Der Betrag darf nicht kleiner als null sein.",
   "endDateMustNotBeEarlierThanStartDate": "Das Enddatum darf nicht vor dem Startdatum liegen.",
   "maxAmountMustNotBeLowerThanMinAmount": "Der Höchstbetrag darf nicht kleiner als der Mindestbetrag sein.",
   "amountPositive": "Betrag muss größer als null sein.",

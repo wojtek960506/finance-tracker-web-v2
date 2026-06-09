@@ -203,7 +203,7 @@
   "descriptionRequired": "Описание обязательно.",
   "amountRequired": "Сумма обязательна.",
   "amountValidNumber": "Сумма должна быть корректным числом.",
-  "amountMustBePositiveOrZero": "Сумма должна быть больше или равна нулю.",
+  "amountCannotBeNegative": "Сумма не может быть меньше нуля.",
   "endDateMustNotBeEarlierThanStartDate": "Конечная дата не может быть раньше начальной.",
   "maxAmountMustNotBeLowerThanMinAmount": "Максимальная сумма не может быть меньше минимальной.",
   "amountPositive": "Сумма должна быть больше нуля.",
