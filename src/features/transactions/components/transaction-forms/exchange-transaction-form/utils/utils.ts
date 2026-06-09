@@ -16,12 +16,12 @@ export const exchangeTransactionFormSchema = z
       .string()
       .min(1, 'amountExpenseRequired')
       .refine((value) => !Number.isNaN(Number(value)), 'amountValidNumber')
-      .refine((value) => Number(value) > 0, 'amountPositive'),
+      .refine((value) => Number(value) >= 0, 'amountCannotBeNegative'),
     amountIncome: z
       .string()
       .min(1, 'amountIncomeRequired')
       .refine((value) => !Number.isNaN(Number(value)), 'amountValidNumber')
-      .refine((value) => Number(value) > 0, 'amountPositive'),
+      .refine((value) => Number(value) >= 0, 'amountCannotBeNegative'),
     currencyExpense: z.string().min(1, 'expenseCurrencyRequired'),
     currencyIncome: z.string().min(1, 'incomeCurrencyRequired'),
     paymentMethodId: z.string(),

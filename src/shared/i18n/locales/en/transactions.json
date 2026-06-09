@@ -202,7 +202,7 @@
   "descriptionRequired": "Description is required.",
   "amountRequired": "Amount is required.",
   "amountValidNumber": "Amount must be a valid number.",
-  "amountMustBePositiveOrZero": "Amount must be greater than or equal to zero.",
+  "amountCannotBeNegative": "Amount cannot be less than zero.",
   "endDateMustNotBeEarlierThanStartDate": "End date must not be earlier than start date.",
   "maxAmountMustNotBeLowerThanMinAmount": "Max amount must not be lower than min amount.",
   "amountPositive": "Amount must be greater than zero.",

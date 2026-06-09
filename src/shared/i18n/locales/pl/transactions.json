@@ -204,7 +204,7 @@
   "descriptionRequired": "Opis jest wymagany.",
   "amountRequired": "Kwota jest wymagana.",
   "amountValidNumber": "Kwota musi być poprawną liczbą.",
-  "amountMustBePositiveOrZero": "Kwota musi być większa lub równa zero.",
+  "amountCannotBeNegative": "Kwota nie może być mniejsza od zera.",
   "endDateMustNotBeEarlierThanStartDate": "Data końcowa nie może być wcześniejsza niż początkowa.",
   "maxAmountMustNotBeLowerThanMinAmount": "Kwota końcowa nie może być mniejsza niż kwota początkowa.",
   "amountPositive": "Kwota musi być większa od zera.",

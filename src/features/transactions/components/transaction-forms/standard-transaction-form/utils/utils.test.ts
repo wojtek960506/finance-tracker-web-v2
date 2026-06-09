@@ -29,6 +29,19 @@ describe('standard transaction form utils', () => {
       }),
     ).toBeTruthy();
 
+    expect(
+      standardTransactionFormSchema.parse({
+        date: '2024-01-03',
+        description: 'Neutral entry',
+        amount: '0',
+        currency: 'USD',
+        categoryId: 'cat-1',
+        paymentMethodId: 'pm-1',
+        accountId: 'acc-1',
+        transactionType: 'expense',
+      }),
+    ).toBeTruthy();
+
     expect(standardTransactionTypeOptions).toEqual(['expense', 'income']);
   });
 
