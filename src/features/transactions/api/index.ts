@@ -2,6 +2,7 @@ export * from './create-bulk-transactions';
 export * from './create-exchange-transaction';
 export * from './create-standard-transaction';
 export * from './create-transfer-transaction';
+export * from './export-transactions';
 export * from './delete-trashed-transaction';
 export * from './empty-trash';
 export * from './get-transaction';

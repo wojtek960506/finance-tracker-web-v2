@@ -19,6 +19,7 @@ import { useMediaQuery } from '@shared/hooks';
 import { Button, Card, Drawer, LoadingState } from '@shared/ui';
 import { useUIStore } from '@store/ui-store';
 import { getTransactions, type TransactionFilters } from '@transactions/api';
+import { ExportTransactionsButton } from '@transactions/components/export-transactions';
 import { TransactionsFiltersPanel } from '@transactions/components/transactions-filters';
 import { TransactionsList } from '@transactions/components/transactions-list';
 import { TransactionsTotalsPanel } from '@transactions/components/transactions-totals';
@@ -280,6 +281,8 @@ export const TransactionsPage = () => {
                   </span>
                 </Button>
               </div>
+
+              <ExportTransactionsButton filters={filters} />
             </div>
           ) : null}
 

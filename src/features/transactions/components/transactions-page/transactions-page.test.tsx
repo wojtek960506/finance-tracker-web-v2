@@ -73,6 +73,10 @@ vi.mock('@transactions/components/transactions-filters', () => ({
   TransactionsFiltersPanel: () => <div>filters-panel</div>,
 }));
 
+vi.mock('@transactions/components/export-transactions', () => ({
+  ExportTransactionsButton: () => <button type="button">exportTransactions</button>,
+}));
+
 vi.mock('@transactions/components/transactions-totals', () => ({
   TransactionsTotalsPanel: () => <div>totals-panel</div>,
 }));
@@ -157,6 +161,7 @@ describe('TransactionsPage', () => {
     ).toBeInTheDocument();
     expect(screen.queryByRole('button', { name: 'showTotals' })).not.toBeInTheDocument();
     expect(screen.queryByRole('button', { name: 'showFilters' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'exportTransactions' })).not.toBeInTheDocument();
   });
 
   it('renders a list of transactions', async () => {
@@ -204,6 +209,7 @@ describe('TransactionsPage', () => {
     expect(await screen.findByText('Groceries')).toBeInTheDocument();
     expect(screen.getByText('Salary')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'newTransaction' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'exportTransactions' })).toBeInTheDocument();
   });
 
   it('navigates to the create transaction page', async () => {
@@ -229,7 +235,9 @@ describe('TransactionsPage', () => {
 
     await user.click(await screen.findByRole('button', { name: 'newTransaction' }));
 
-    expect(mocks.navigate).toHaveBeenCalledWith('/transactions/new');
+    expect(mocks.navigate).toHaveBeenCalledWith('/transactions/new', {
+      state: { returnTo: '/transactions' },
+    });
   });
 
   it('switches to a different transactions page', async () => {
