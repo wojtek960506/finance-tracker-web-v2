@@ -4,8 +4,8 @@ import { useTheme } from '@context/theme-context';
 import { getButtonClassName } from '@ui';
 
 const BRAND_LINK_HREF = 'https://devonion.com';
-const LIGHT_LOGO_SRC = '/brand/DEVONION-LOGO-OLD-LIGHT.svg';
-const DARK_LOGO_SRC = '/brand/DEVONION-LOGO-OLD-DARK.svg';
+const LIGHT_LOGO_SRC = '/brand/DEVONION-LOGO-LIGHT.svg';
+const DARK_LOGO_SRC = '/brand/DEVONION-LOGO-DARK.svg';
 
 type BrandLinkProps = {
   className?: string;
