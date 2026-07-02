@@ -56,6 +56,7 @@ export const LoginForm = ({ redirectedEmail, isPending, onSubmit }: LoginFormPro
     <AuthFormShell onSubmit={form.handleSubmit(handleSubmit)}>
       {(['email', 'password'] as FieldName[]).map((name) => (
         <AuthFormInput
+          key={name}
           form={form}
           name={name}
           placeholder={`${name}Placeholder`}

@@ -19,7 +19,13 @@ export const Topbar = ({
   return (
     <header
       className={clsx(
-        'sticky top-0 z-200 border-b border-fg px-3',
+        'sticky top-0 z-200 border-b px-3',
+        isAuthenticated
+          ? 'border-fg'
+          : [
+              'border-[#d9e5b8]/70 bg-white/55 backdrop-blur-xl shadow-[0_8px_30px_-18px_rgba(111,146,40,0.45)]',
+              'dark:border-[#243118]/70 dark:bg-[#0d1306]/55 dark:shadow-[0_8px_30px_-18px_rgba(0,0,0,0.65)]',
+            ].join(' '),
         'grid grid-cols-[1fr_auto_1fr] items-center',
         'min-h-[var(--topbar-h)] sm:min-h-[var(--topbar-h-sm)]',
       )}
