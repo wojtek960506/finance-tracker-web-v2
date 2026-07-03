@@ -22,7 +22,7 @@ describe('BrandLink', () => {
 
     expect(link).toHaveAttribute('href', 'https://devonion.com');
     expect(link).toHaveAttribute('target', '_blank');
-    expect(image).toHaveAttribute('src', '/brand/DEVONION-LOGO-OLD-LIGHT.svg');
+    expect(image).toHaveAttribute('src', '/brand/DEVONION-LOGO-LIGHT.svg');
   });
 
   it('renders the dark logo in dark theme', () => {
@@ -32,7 +32,7 @@ describe('BrandLink', () => {
 
     expect(screen.getByAltText('Devonion')).toHaveAttribute(
       'src',
-      '/brand/DEVONION-LOGO-OLD-DARK.svg',
+      '/brand/DEVONION-LOGO-DARK.svg',
     );
   });
 });

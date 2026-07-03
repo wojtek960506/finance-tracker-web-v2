@@ -38,10 +38,10 @@ describe('App', () => {
     mocks.subscribeToAuthSessionEvents.mockReturnValue(vi.fn());
   });
 
-  it('renders the Finance Tracker title', () => {
+  it('renders the FinOnion title', () => {
     renderWithProviders(<App />);
 
-    expect(screen.getByText(/finance tracker/i)).toBeInTheDocument();
+    expect(screen.getByText(/finonion/i)).toBeInTheDocument();
   });
 
   it('renders auth bootstrap loading state while resolving auth', () => {
