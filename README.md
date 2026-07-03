@@ -1,6 +1,8 @@
-# Finance Tracker Web V2
+# FinOnion
 
-Frontend for a personal finance tracker built with React, TypeScript, Vite, React Router, React Query, Tailwind CSS, and Vitest.
+Frontend for FinOnion, a personal finance tracker built with React, TypeScript, Vite, React Router, React Query, Tailwind CSS, and Vitest.
+
+My main domain: https://devonion.com
 
 ## Features
 

@@ -5,5 +5,9 @@ type ProtectedLayoutProps = { isAuthenticated: boolean };
 export const ProtectedLayout = ({ isAuthenticated }: ProtectedLayoutProps) => {
   if (!isAuthenticated) return <Navigate to="/login" replace />;
 
-  return <Outlet />;
+  return (
+    <div className="p-4">
+      <Outlet />
+    </div>
+  );
 };

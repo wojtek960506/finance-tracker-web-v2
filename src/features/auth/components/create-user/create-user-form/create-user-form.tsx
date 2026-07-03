@@ -57,6 +57,7 @@ export const CreateUserForm = ({ isPending, onSubmit }: CreateUserFormProps) => 
         ['firstName', 'lastName', 'email', 'password', 'confirmPassword'] as FieldName[]
       ).map((name) => (
         <AuthFormInput
+          key={name}
           form={form}
           name={name}
           placeholder={`${name}Placeholder`}
