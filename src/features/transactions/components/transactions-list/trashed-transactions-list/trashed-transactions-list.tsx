@@ -93,8 +93,8 @@ export const TrashedTransactionsList = () => {
     return (
       <Card
         className={clsx(
-          'mx-auto mt-2 w-full max-w-[35rem] gap-5 rounded-3xl border-fg/20',
-          'bg-modal-bg/95 p-6 sm:mt-3 sm:p-8',
+          'mx-auto w-full max-w-[35rem] gap-5 rounded-3xl border-fg/20',
+          'bg-modal-bg/95 p-6 sm:p-8',
         )}
       >
         <div className="flex items-start justify-between gap-4">
