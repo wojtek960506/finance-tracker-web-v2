@@ -49,7 +49,7 @@ export const TransactionAccountStatisticsCurrencyGroup = ({
         }
         isInitiallyOpen
       >
-        <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3">
+        <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3 3xl:grid-cols-4">
           {currencyGroup.accounts.map((account) => (
             <TransactionAccountStatisticsAccountCard
               key={account.accountId}
