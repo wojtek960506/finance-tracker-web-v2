@@ -42,6 +42,12 @@ vi.mock('@ui', () => ({
   Card: ({ children, className }: { children: ReactNode; className?: string }) => (
     <div className={className}>{children}</div>
   ),
+  Collapsible: ({ header, children }: { header: ReactNode; children: ReactNode }) => (
+    <div>
+      <div>{header}</div>
+      <div>{children}</div>
+    </div>
+  ),
   LoadingState: ({ title }: { title: string }) => <div>{title}</div>,
 }));
 
