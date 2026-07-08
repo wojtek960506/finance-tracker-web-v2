@@ -15,10 +15,13 @@ describe('getAccountStatistics', () => {
       currencies: [
         {
           currency: 'PLN',
+          totalAmount: 120,
+          totalItems: 4,
           accounts: [
             {
               accountId: 'account-1',
               accountName: 'Main',
+              accountType: 'user',
               totalAmount: 120,
               totalItems: 4,
             },

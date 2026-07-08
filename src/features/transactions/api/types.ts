@@ -149,12 +149,15 @@ export type TransactionTotalsResponse = {
 export type TransactionAccountStatisticsAccount = {
   accountId: string;
   accountName: string;
+  accountType: 'user' | 'system';
   totalAmount: number;
   totalItems: number;
 };
 
 export type TransactionAccountStatisticsCurrency = {
   currency: string;
+  totalAmount: number;
+  totalItems: number;
   accounts: TransactionAccountStatisticsAccount[];
 };
 

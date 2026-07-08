@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import { useLanguage } from '@shared/hooks';
 import { getAccountStatistics } from '@transactions/api';
-import { formatCurrencyAmount } from '@transactions/utils';
+import { formatCurrencyAmount, getTransactionNamedResourceLabel } from '@transactions/utils';
 import { Card, LoadingState } from '@ui';
 
 const BALANCE_POSITIVE_CLASS = 'text-bt-primary';
@@ -12,6 +12,7 @@ const BALANCE_NEGATIVE_CLASS = 'text-destructive';
 
 export const TransactionAccountStatistics = () => {
   const { t } = useTranslation('transactions');
+  const { t: tNamedResources } = useTranslation('namedResources');
   const { language } = useLanguage();
 
   const { data, isLoading, error } = useQuery({
@@ -66,11 +67,33 @@ export const TransactionAccountStatistics = () => {
       <div className="flex flex-col gap-6">
         {data.currencies.map((currencyGroup) => (
           <section key={currencyGroup.currency} className="flex flex-col gap-3">
-            <div className="flex items-center justify-between gap-3 pr-4">
+            <div className="flex flex-col gap-0 sm:flex-row sm:items-start sm:justify-between pr-4">
               <h3 className="text-lg font-semibold sm:text-xl">{currencyGroup.currency}</h3>
-              <span className="text-sm text-text-muted">
-                {currencyGroup.accounts.length} {t('accounts')}
-              </span>
+
+              <div className="flex flex-wrap gap-4">
+                <div className="rounded-full bg-bg py-1 text-sm font-semibold text-text">
+                  {currencyGroup.accounts.length} {t('accounts')}
+                </div>
+                <div
+                  className={clsx(
+                    'rounded-full py-1 text-sm font-semibold',
+                    currencyGroup.totalAmount < 0 ? BALANCE_NEGATIVE_CLASS : BALANCE_POSITIVE_CLASS,
+                  )}
+                >
+
+                  <span>
+                    {currencyGroup.totalAmount >= 0 && '+'}
+                    {formatCurrencyAmount(
+                      currencyGroup.totalAmount,
+                      currencyGroup.currency,
+                      language,
+                    )}
+                  </span>
+                </div>
+                <div className="rounded-full bg-bg py-1 text-sm font-semibold text-text">
+                  {t('totalItems')}: {currencyGroup.totalItems}
+                </div>
+              </div>
             </div>
 
             <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3">
@@ -79,6 +102,13 @@ export const TransactionAccountStatistics = () => {
                   account.totalAmount < 0
                     ? BALANCE_NEGATIVE_CLASS
                     : BALANCE_POSITIVE_CLASS;
+                const accountLabel = getTransactionNamedResourceLabel(
+                  {
+                    name: account.accountName,
+                    type: account.accountType,
+                  },
+                  tNamedResources,
+                );
 
                 return (
                   <Card
@@ -87,7 +117,7 @@ export const TransactionAccountStatistics = () => {
                   >
                     <div className="flex min-w-0 flex-col gap-2">
                       <h4 className="truncate text-lg font-semibold sm:text-xl">
-                        {account.accountName}
+                        {accountLabel}
                       </h4>
                       <div
                         className={clsx(
@@ -99,9 +129,6 @@ export const TransactionAccountStatistics = () => {
                           {account.totalAmount >= 0 && '+'}
                           {formatCurrencyAmount(account.totalAmount, currencyGroup.currency, language)}
                         </span>
-                        {/* <span className="text-sm font-medium text-text-muted">
-                          {t('balance')}
-                        </span> */}
                       </div>
                     </div>
 
