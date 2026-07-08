@@ -1,3 +1,5 @@
+export { CurrencyCollapsibleCard } from './currency-collapsible-card';
+export { CurrencyCollapsibleCardHeader } from './currency-collapsible-card/currency-collapsible-card-header';
 export { CurrencySelectField } from './currency-select-field';
 export { getFavoriteIcon } from './get-favorite-icon';
 export { NamedResourceSelectField } from './named-resource-select-field';
