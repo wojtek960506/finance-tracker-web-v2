@@ -72,7 +72,7 @@ export const TransactionAccountStatistics = () => {
 
               <div className="flex flex-wrap gap-4">
                 <div className="rounded-full bg-bg py-1 text-sm font-semibold text-text">
-                  {currencyGroup.accounts.length} {t('accounts')}
+                  {t('accounts', { count: currencyGroup.accounts.length })}
                 </div>
                 <div
                   className={clsx(
@@ -80,7 +80,6 @@ export const TransactionAccountStatistics = () => {
                     currencyGroup.totalAmount < 0 ? BALANCE_NEGATIVE_CLASS : BALANCE_POSITIVE_CLASS,
                   )}
                 >
-
                   <span>
                     {currencyGroup.totalAmount >= 0 && '+'}
                     {formatCurrencyAmount(

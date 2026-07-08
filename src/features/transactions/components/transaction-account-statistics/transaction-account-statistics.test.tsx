@@ -11,8 +11,14 @@ const getAccountStatistics = vi.fn();
 
 vi.mock('react-i18next', () => ({
   useTranslation: (namespace?: string) => ({
-    t: (key: string) =>
-      namespace === 'namedResources' && key === 'cash' ? 'Cash' : key,
+    t: (key: string, options?: { count?: number }) => {
+      if (namespace === 'namedResources' && key === 'cash') return 'Cash';
+      if (namespace === 'transactions' && key === 'accounts') {
+        return `${options?.count ?? 0} accounts`;
+      }
+
+      return key;
+    },
   }),
 }));
 
@@ -86,7 +92,9 @@ describe('TransactionAccountStatistics', () => {
     expect(container.firstChild).toHaveClass('h-full', 'overflow-y-auto');
     expect(screen.getByText('PLN')).toBeInTheDocument();
     expect(screen.getByText('2 accounts')).toBeInTheDocument();
-    expect(screen.getByText('73.45 PLN')).toBeInTheDocument();
+    expect(
+      screen.getByText((_, element) => element?.tagName === 'DIV' && element.textContent === '+73.45 PLN'),
+    ).toBeInTheDocument();
     expect(screen.getByText('totalItems: 6')).toBeInTheDocument();
     expect(screen.getByText('Main')).toBeInTheDocument();
     expect(screen.getByText('Cash')).toBeInTheDocument();
