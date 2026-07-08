@@ -19,7 +19,7 @@ import {
   getTransactionsRouteState,
   isNotFoundTransactionQueryError,
 } from '@transactions/utils';
-import { Button, Card, LoadingState } from '@ui';
+import { Button, LoadingCard } from '@ui';
 
 import { TransactionDetailsCard } from '../transaction-details-card';
 
@@ -73,15 +73,11 @@ export const TransactionDetails = () => {
 
   if (isLoading) {
     return (
-      <div className="m-auto flex max-w-100 flex-col gap-2 sm:gap-3">
-        <Card className="gap-4 rounded-3xl border-fg/20 bg-modal-bg/95 p-6 sm:p-8">
-          <LoadingState
-            title={t('loadingTransactionDetails')}
-            description={t('loadingTransactionDetailsDescription')}
-            className="py-4"
-          />
-        </Card>
-      </div>
+      <LoadingCard
+        title={t('loadingTransactionDetails')}
+        description={t('loadingTransactionDetailsDescription')}
+        widthClassName="max-w-100"
+      />
     );
   }
 

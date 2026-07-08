@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useLanguage } from '@shared/hooks';
 import { getAccountStatistics } from '@transactions/api';
 import { formatCurrencyAmount, getTransactionNamedResourceLabel } from '@transactions/utils';
-import { Card, Collapsible, LoadingState } from '@ui';
+import { Card, Collapsible, LoadingCard } from '@ui';
 
 const BALANCE_POSITIVE_CLASS = 'text-bt-primary';
 const BALANCE_NEGATIVE_CLASS = 'text-destructive';
@@ -22,15 +22,11 @@ export const TransactionAccountStatistics = () => {
 
   if (isLoading) {
     return (
-      <div className="mx-auto flex h-full min-h-0 w-full max-w-[70rem] flex-col overflow-hidden">
-        <Card className="mt-2 gap-4 rounded-3xl border-fg/20 bg-modal-bg/95 p-6 sm:mt-3 sm:p-8">
-          <LoadingState
-            title={t('loadingAccountStatistics')}
-            description={t('loadingAccountStatisticsDescription')}
-            className="py-4"
-          />
-        </Card>
-      </div>
+      <LoadingCard
+        title={t('loadingAccountStatistics')}
+        description={t('loadingAccountStatisticsDescription')}
+        widthClassName="max-w-[70rem]"
+      />
     );
   }
 
@@ -40,7 +36,7 @@ export const TransactionAccountStatistics = () => {
 
   if (!data || data.currencies.length === 0) {
     return (
-      <div className="mx-auto flex h-full min-h-0 w-full max-w-[70rem] flex-col overflow-hidden">
+      <div className="mx-auto flex w-full max-w-[70rem] flex-col">
         <Card className="gap-4 rounded-3xl border-fg/20 bg-modal-bg/95 p-4">
           <div className="flex flex-col gap-2">
             <h2 className="text-xl font-semibold sm:text-2xl">{t('accountStatistics')}</h2>
@@ -54,7 +50,7 @@ export const TransactionAccountStatistics = () => {
   }
 
   return (
-    <div className="mx-auto flex h-full min-h-0 w-full max-w-[70rem] flex-col gap-4 overflow-y-auto sm:gap-6">
+    <div className="mx-auto flex w-full max-w-[70rem] flex-col gap-4 overflow-y-auto sm:gap-6">
       <Card className="gap-2 rounded-3xl border-fg/20 bg-modal-bg/95 p-4">
         <div className="flex flex-col gap-2">
           <h2 className="text-xl font-semibold sm:text-2xl">{t('accountStatistics')}</h2>
