@@ -64,7 +64,9 @@ export const AccountNamePopover = ({ label }: AccountNamePopoverProps) => {
             'border border-fg/15 bg-modal-bg px-3 py-2 shadow-lg',
           )}
         >
-          <p className="break-words text-sm font-medium text-text sm:text-base">{label}</p>
+          <p className="break-words text-sm font-medium text-text sm:text-base">
+            {label}
+          </p>
         </div>
       ) : null}
     </div>

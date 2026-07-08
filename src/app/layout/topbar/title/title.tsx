@@ -21,7 +21,12 @@ export const Title = () => {
     : tCommon('title');
 
   return (
-    <h1 className={clsx(BASE_TITLE_CLASS, isAuthRoute ? AUTH_TITLE_CLASS : DEFAULT_TITLE_CLASS)}>
+    <h1
+      className={clsx(
+        BASE_TITLE_CLASS,
+        isAuthRoute ? AUTH_TITLE_CLASS : DEFAULT_TITLE_CLASS,
+      )}
+    >
       {title}
     </h1>
   );

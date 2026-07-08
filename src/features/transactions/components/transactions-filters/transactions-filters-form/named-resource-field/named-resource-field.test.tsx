@@ -45,7 +45,9 @@ vi.mock('../filter-field-label', () => ({
 }));
 
 vi.mock('@/components/ui/multi-select', () => ({
-  MultiSelect: (props: { groups: Array<{ key: string; label?: string; options: Array<{ label: string }> }> }) => {
+  MultiSelect: (props: {
+    groups: Array<{ key: string; label?: string; options: Array<{ label: string }> }>;
+  }) => {
     mocks.multiSelectProps = props;
     return <div data-testid="multi-select" />;
   },
@@ -92,13 +94,11 @@ describe('NamedResourceFilterField', () => {
 
     expect(screen.getByTestId('multi-select')).toBeInTheDocument();
     expect(mocks.multiSelectProps?.groups).toHaveLength(2);
-    expect(mocks.multiSelectProps?.groups[0].options.map((option) => option.label)).toEqual([
-      'Alpha',
-      'Zoo',
-    ]);
-    expect(mocks.multiSelectProps?.groups[1].options.map((option) => option.label)).toEqual([
-      'Beta',
-      'Travel',
-    ]);
+    expect(
+      mocks.multiSelectProps?.groups[0].options.map((option) => option.label),
+    ).toEqual(['Alpha', 'Zoo']);
+    expect(
+      mocks.multiSelectProps?.groups[1].options.map((option) => option.label),
+    ).toEqual(['Beta', 'Travel']);
   });
 });

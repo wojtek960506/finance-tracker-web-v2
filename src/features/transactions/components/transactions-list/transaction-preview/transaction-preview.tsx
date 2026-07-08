@@ -14,7 +14,7 @@ import {
   getTransactionsRouteState,
 } from '@transactions/utils';
 import { getTransactionAmountPresentation } from '@transactions/utils/transaction-amount';
-import { ButtonLink,Card } from '@ui';
+import { ButtonLink, Card } from '@ui';
 
 export const TransactionPreview = ({
   transaction,
@@ -90,15 +90,15 @@ export const TransactionPreview = ({
         </Link>
 
         <footer className="flex flex-wrap justify-end items-center justify-between gap-1">
-            <ButtonLink to="/accounts" className={ghostLinkCn}>
-              {accountLabel}
-            </ButtonLink>
-            <ButtonLink to="/paymentMethods" className={ghostLinkCn}>
-              {paymentMethodLabel}
-            </ButtonLink>
-            <ButtonLink to="/categories" className={ghostLinkCn}>
-              {categoryLabel}
-            </ButtonLink>
+          <ButtonLink to="/accounts" className={ghostLinkCn}>
+            {accountLabel}
+          </ButtonLink>
+          <ButtonLink to="/paymentMethods" className={ghostLinkCn}>
+            {paymentMethodLabel}
+          </ButtonLink>
+          <ButtonLink to="/categories" className={ghostLinkCn}>
+            {categoryLabel}
+          </ButtonLink>
         </footer>
       </Card>
     </li>

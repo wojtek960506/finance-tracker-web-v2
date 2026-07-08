@@ -6,7 +6,10 @@ import type {
   TransactionAccountStatisticsAccount,
   TransactionAccountStatisticsCurrency,
 } from '@transactions/api';
-import { formatCurrencyAmount, getTransactionNamedResourceLabel } from '@transactions/utils';
+import {
+  formatCurrencyAmount,
+  getTransactionNamedResourceLabel,
+} from '@transactions/utils';
 import { Card } from '@ui';
 
 import { AccountNamePopover } from './account-name-popover';

@@ -33,5 +33,7 @@ export const LoadingCard = ({
 
   if (!widthClassName) return content;
 
-  return <div className={`${DEFAULT_WRAPPER_CLASS_NAME} ${widthClassName}`}>{content}</div>;
+  return (
+    <div className={`${DEFAULT_WRAPPER_CLASS_NAME} ${widthClassName}`}>{content}</div>
+  );
 };

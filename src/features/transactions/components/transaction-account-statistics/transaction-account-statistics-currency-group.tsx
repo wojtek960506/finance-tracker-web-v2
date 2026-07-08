@@ -23,17 +23,21 @@ export const TransactionAccountStatisticsCurrencyGroup = ({
 
   return (
     <section className="flex flex-col gap-3">
-      <Card className={clsx(
-        "currency-statistics-card-container gap-0 rounded-2xl border-fg/15 bg-bg/55",
-        "p-0 shadow-none sm:p-0",
-      )}>
+      <Card
+        className={clsx(
+          'currency-statistics-card-container gap-0 rounded-2xl border-fg/15 bg-bg/55',
+          'p-0 shadow-none sm:p-0',
+        )}
+      >
         <Collapsible
           header={
             <div className="flex min-w-0 flex-1 flex-wrap items-center justify-between gap-2 pl-1 ">
               <div className="flex min-w-0 items-center gap-2">
-                <h3 className={clsx(
-                  "min-w-10 truncate text-left text-lg font-semibold sm:min-w-11 sm:text-xl"
-                )}>
+                <h3
+                  className={clsx(
+                    'min-w-10 truncate text-left text-lg font-semibold sm:min-w-11 sm:text-xl',
+                  )}
+                >
                   {currencyGroup.currency}
                 </h3>
                 <div

@@ -14,8 +14,15 @@ type NamedResourceInputProps = {
 };
 
 export const NamedResourceInput = (props: NamedResourceInputProps) => {
-  const { handleCancel, handleKeyDown, handleSubmit, isError, isSubmitting, setValue, value } =
-    useNamedResourceInput(props);
+  const {
+    handleCancel,
+    handleKeyDown,
+    handleSubmit,
+    isError,
+    isSubmitting,
+    setValue,
+    value,
+  } = useNamedResourceInput(props);
 
   return (
     <NamedResourceInputView

@@ -31,7 +31,8 @@ vi.mock('@transactions/api', () => ({
 }));
 
 vi.mock('@transactions/utils', () => ({
-  formatCurrencyAmount: (amount: number, currency: string) => `${amount.toFixed(2)} ${currency}`,
+  formatCurrencyAmount: (amount: number, currency: string) =>
+    `${amount.toFixed(2)} ${currency}`,
   getTransactionNamedResourceLabel: (
     resource: { name: string; type: 'system' | 'user' },
     tNamedResources: (key: string) => string,
@@ -99,7 +100,10 @@ describe('TransactionAccountStatistics', () => {
     expect(screen.getByText('PLN')).toBeInTheDocument();
     expect(screen.getByText('2 accounts')).toBeInTheDocument();
     expect(
-      screen.getByText((_, element) => element?.tagName === 'DIV' && element.textContent === '+73.45 PLN'),
+      screen.getByText(
+        (_, element) =>
+          element?.tagName === 'DIV' && element.textContent === '+73.45 PLN',
+      ),
     ).toBeInTheDocument();
     expect(screen.getByText('totalItems: 6')).toBeInTheDocument();
     expect(screen.getByText('Main')).toBeInTheDocument();
