@@ -146,6 +146,22 @@ export type TransactionTotalsResponse = {
   overall: TransactionTotalsOverall;
 };
 
+export type TransactionAccountStatisticsAccount = {
+  accountId: string;
+  accountName: string;
+  totalAmount: number;
+  totalItems: number;
+};
+
+export type TransactionAccountStatisticsCurrency = {
+  currency: string;
+  accounts: TransactionAccountStatisticsAccount[];
+};
+
+export type TransactionAccountStatisticsResponse = {
+  currencies: TransactionAccountStatisticsCurrency[];
+};
+
 export type UpdateManyReply = {
   acknowledged: boolean;
   matchedCount: number;

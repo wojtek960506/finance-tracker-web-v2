@@ -7,6 +7,7 @@
   "newTransferTransaction": "Neue Transfertransaktion",
   "newExchangeTransaction": "Neue Wechseltransaktion",
   "newBulkTransaction": "Sammelerfassung von Transaktionen",
+  "transactionStatistics": "Kontostatistiken",
   "transactionDetails": "Transaktionsdetails",
   "trashedTransactionDetails": "Details der gelöschten Transaktion",
   "editTransaction": "Transaktion bearbeiten",
