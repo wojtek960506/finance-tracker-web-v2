@@ -61,7 +61,10 @@ export const ExportTransactionsButton = ({ filters }: ExportTransactionsProps) =
         ref={buttonRef}
         type="button"
         variant="default"
-        className={clsx(FORM_BUTTON_SIZE_CLASS, 'w-full gap-2 font-semibold sm:font-bold')}
+        className={clsx(
+          FORM_BUTTON_SIZE_CLASS,
+          'w-full gap-2 font-semibold sm:font-bold',
+        )}
         disabled={isPending}
         onClick={() => setIsModalOpen(true)}
       >

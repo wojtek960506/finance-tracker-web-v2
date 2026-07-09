@@ -22,7 +22,9 @@ export const ExportTransactionsModal = ({
   const [fileName, setFileName] = useState(fileNamePlaceholder);
   const [fileNameError, setFileNameError] = useState<string | null>(null);
   const errorMessage = fileNameError ? t(fileNameError) : null;
-  const submitLabel = t(isPending ? 'exportingTransactionsSubmit' : 'exportTransactionsSubmit');
+  const submitLabel = t(
+    isPending ? 'exportingTransactionsSubmit' : 'exportTransactionsSubmit',
+  );
 
   const handleClose = () => !isPending && onClose();
 
@@ -58,13 +60,17 @@ export const ExportTransactionsModal = ({
         }}
       >
         <div className="flex flex-col gap-2">
-          <h2 className="text-lg sm:text-xl font-semibold">{t('exportTransactionsModalTitle')}</h2>
+          <h2 className="text-lg sm:text-xl font-semibold">
+            {t('exportTransactionsModalTitle')}
+          </h2>
           <p className="text-sm sm:text-base text-text-muted">
             {t('exportTransactionsModalDescription')}
           </p>
         </div>
         <label className="flex flex-col gap-2">
-          <span className="text-sm sm:text-base font-medium">{t('exportFileNameLabel')}</span>
+          <span className="text-sm sm:text-base font-medium">
+            {t('exportFileNameLabel')}
+          </span>
           <Input
             value={fileName}
             onChange={(event) => handleChange(event.target.value)}
@@ -73,10 +79,17 @@ export const ExportTransactionsModal = ({
             disabled={isPending}
             aria-invalid={Boolean(errorMessage)}
           />
-          {errorMessage ? <span className="text-xs sm:text-sm text-destructive">{errorMessage}</span> : null}
+          {errorMessage ? (
+            <span className="text-xs sm:text-sm text-destructive">{errorMessage}</span>
+          ) : null}
         </label>
         <div className="flex justify-end gap-2">
-          <Button type="button" variant="outline" onClick={handleClose} disabled={isPending}>
+          <Button
+            type="button"
+            variant="outline"
+            onClick={handleClose}
+            disabled={isPending}
+          >
             {t('cancel')}
           </Button>
           <Button type="submit" variant="primary" disabled={isPending}>

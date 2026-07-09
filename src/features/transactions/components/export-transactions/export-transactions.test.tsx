@@ -48,7 +48,9 @@ describe('ExportTransactionsButton', () => {
       configurable: true,
       value: revokeObjectUrlSpy,
     });
-    const clickSpy = vi.spyOn(HTMLAnchorElement.prototype, 'click').mockImplementation(() => undefined);
+    const clickSpy = vi
+      .spyOn(HTMLAnchorElement.prototype, 'click')
+      .mockImplementation(() => undefined);
     const createElementSpy = vi.spyOn(document, 'createElement');
     createElementSpy.mockImplementation((tagName: string) => {
       const element = document.createElementNS('http://www.w3.org/1999/xhtml', tagName);

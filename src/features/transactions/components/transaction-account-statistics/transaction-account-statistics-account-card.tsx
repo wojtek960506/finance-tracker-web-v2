@@ -48,7 +48,9 @@ export const TransactionAccountStatisticsAccountCard = ({
           currency={baseCurrency}
           size="secondary"
         />
-        <TransactionAccountStatisticsAccountCardItemsCount totalItems={account.totalItems} />
+        <TransactionAccountStatisticsAccountCardItemsCount
+          totalItems={account.totalItems}
+        />
       </div>
     </Card>
   );
