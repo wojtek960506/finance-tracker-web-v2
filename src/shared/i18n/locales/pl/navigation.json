@@ -7,6 +7,7 @@
   "newTransferTransaction": "Nowy transfer",
   "newExchangeTransaction": "Nowa wymiana walut",
   "newBulkTransaction": "Zbiorcze dodawanie transakcji",
+  "transactionStatistics": "Statystyki kont",
   "transactionDetails": "Szczegóły transakcji",
   "trashedTransactionDetails": "Szczegóły transakcji w koszu",
   "editTransaction": "Edytuj transakcję",

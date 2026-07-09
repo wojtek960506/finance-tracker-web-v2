@@ -6,7 +6,7 @@ import { ProtectedLayout } from './protected-layout';
 
 describe('ProtectedLayout', () => {
   it('renders outlet when authenticated', () => {
-    render(
+    const { container } = render(
       <MemoryRouter initialEntries={['/protected']}>
         <Routes>
           <Route element={<ProtectedLayout isAuthenticated />}>
@@ -17,6 +17,14 @@ describe('ProtectedLayout', () => {
     );
 
     expect(screen.getByText('Protected')).toBeInTheDocument();
+    expect(container.firstChild).toHaveClass(
+      'flex',
+      'h-full',
+      'min-h-0',
+      'flex-1',
+      'flex-col',
+      'p-4',
+    );
   });
 
   it('redirects to login when not authenticated', () => {

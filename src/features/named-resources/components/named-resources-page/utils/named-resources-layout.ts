@@ -1,0 +1,1 @@
+export const NAMED_RESOURCES_PAGE_WIDTH_CLASS_NAME = 'max-w-100';

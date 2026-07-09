@@ -49,7 +49,7 @@ export const NamedResourceFilterField = ({
 }: NamedResourceFilterFieldProps) => {
   const form = useFormContext<TransactionFiltersFormValues>();
   const { t } = useTranslation('transactions');
-  const { t: tNamedResources } = useTranslation('namedResources');
+  const { t: tNamedResources, i18n } = useTranslation('namedResources');
   const resourceKeyBase = NAMED_RESOURCE[kind];
   const resourceKindSuffix = capitalize(kind);
   const fieldNames = TRANSACTION_FILTER_RESOURCE_FIELD_NAMES[kind];
@@ -57,6 +57,14 @@ export const NamedResourceFilterField = ({
     control: form.control,
     name: fieldNames.mode,
   });
+  const collator = useMemo(
+    () =>
+      new Intl.Collator(i18n.language, {
+        sensitivity: 'base',
+        numeric: true,
+      }),
+    [i18n.language],
+  );
 
   useEffect(() => {
     if (filterMode === 'include') {
@@ -88,12 +96,28 @@ export const NamedResourceFilterField = ({
     [excludedSystemNames, includeSystem, resources],
   );
   const favoriteResources = useMemo(
-    () => availableResources.filter((resource) => resource.isFavorite),
-    [availableResources],
+    () =>
+      [...availableResources]
+        .filter((resource) => resource.isFavorite)
+        .sort((left, right) =>
+          collator.compare(
+            getTransactionNamedResourceLabel(left, tNamedResources),
+            getTransactionNamedResourceLabel(right, tNamedResources),
+          ),
+        ),
+    [availableResources, collator, tNamedResources],
   );
   const otherResources = useMemo(
-    () => availableResources.filter((resource) => !resource.isFavorite),
-    [availableResources],
+    () =>
+      [...availableResources]
+        .filter((resource) => !resource.isFavorite)
+        .sort((left, right) =>
+          collator.compare(
+            getTransactionNamedResourceLabel(left, tNamedResources),
+            getTransactionNamedResourceLabel(right, tNamedResources),
+          ),
+        ),
+    [availableResources, collator, tNamedResources],
   );
   const groups = useMemo<MultiSelectGroup[]>(() => {
     const favoritesGroup =

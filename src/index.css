@@ -175,6 +175,8 @@
 }
 
 @theme inline {
+  --breakpoint-3xl: 120rem;
+
   --color-fg: var(--fg);
   --color-bg: var(--bg);
   --color-hover: var(--hover);

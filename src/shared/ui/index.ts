@@ -7,6 +7,7 @@ export * from './dropdown';
 export * from './input';
 export * from './label';
 export * from './link';
+export * from './loading-card';
 export * from './loading-state';
 export * from './modal';
 export * from './number-input';

@@ -11,7 +11,7 @@ import {
   subscribeToAuthSessionEvents,
 } from '@shared/store/auth-store';
 import { useUIStore } from '@store/ui-store';
-import { Card, LoadingState } from '@ui';
+import { LoadingCard } from '@ui';
 
 import { MainLayout } from './layout';
 import {
@@ -58,15 +58,11 @@ function App() {
   if (!isAuthResolved) {
     return (
       <MainLayout>
-        <div className="mx-auto w-full max-w-[35rem]">
-          <Card className="mt-2 gap-4 rounded-3xl border-fg/20 bg-modal-bg/95 p-6 sm:mt-3 sm:p-8">
-            <LoadingState
-              title={t('restoringSessionTitle')}
-              description={t('restoringSessionDescription')}
-              className="py-4"
-            />
-          </Card>
-        </div>
+        <LoadingCard
+          title={t('restoringSessionTitle')}
+          description={t('restoringSessionDescription')}
+          widthClassName="max-w-[35rem]"
+        />
       </MainLayout>
     );
   }

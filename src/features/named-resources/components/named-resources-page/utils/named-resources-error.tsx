@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next';
 
 import { Button, Card } from '@ui';
 
+import { NAMED_RESOURCES_PAGE_WIDTH_CLASS_NAME } from './named-resources-layout';
+
 import { FORM_BUTTON_SIZE_CLASS } from '@/shared/consts';
 
 export const NamedResourcesError = ({
@@ -17,7 +19,12 @@ export const NamedResourcesError = ({
   const { t } = useTranslation('namedResources');
 
   return (
-    <div className="m-auto flex w-full max-w-100 flex-col gap-2 sm:gap-3">
+    <div
+      className={clsx(
+        'm-auto flex w-full flex-col gap-2 sm:gap-3',
+        NAMED_RESOURCES_PAGE_WIDTH_CLASS_NAME,
+      )}
+    >
       <Card className="gap-4 rounded-3xl border-fg/20 bg-modal-bg/95 p-6 sm:p-8">
         <div className="flex flex-col gap-2 text-center">
           <h2 className="text-xl font-semibold sm:text-2xl">

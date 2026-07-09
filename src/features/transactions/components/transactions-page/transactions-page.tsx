@@ -16,7 +16,7 @@ import {
   IS_XL_MEDIA_QUERY,
 } from '@shared/consts';
 import { useMediaQuery } from '@shared/hooks';
-import { Button, Card, Drawer, LoadingState } from '@shared/ui';
+import { Button, Card, Drawer, LoadingCard } from '@shared/ui';
 import { useUIStore } from '@store/ui-store';
 import { getTransactions, type TransactionFilters } from '@transactions/api';
 import { TransactionsFiltersPanel } from '@transactions/components/transactions-filters';
@@ -95,15 +95,11 @@ export const TransactionsPage = () => {
 
   if (isLoading) {
     return (
-      <div className="mx-auto w-full max-w-[35rem]">
-        <Card className="mt-2 gap-4 rounded-3xl border-fg/20 bg-modal-bg/95 p-6 sm:mt-3 sm:p-8">
-          <LoadingState
-            title={t('loadingTransactions')}
-            description={t('loadingTransactionsDescription')}
-            className="py-4"
-          />
-        </Card>
-      </div>
+      <LoadingCard
+        title={t('loadingTransactions')}
+        description={t('loadingTransactionsDescription')}
+        widthClassName="max-w-[35rem]"
+      />
     );
   }
   if (error) return <p>{error.message}</p>;

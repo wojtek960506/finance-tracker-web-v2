@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+import clsx from 'clsx';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -12,6 +13,7 @@ import { capitalize } from '@shared/utils';
 import { CreateNamedResource } from './create-named-resource';
 import {
   getNamedResourceDisplayLabel,
+  NAMED_RESOURCES_PAGE_WIDTH_CLASS_NAME,
   NamedResourcesEmpty,
   NamedResourcesError,
   NamedResourcesList,
@@ -59,14 +61,21 @@ export const NamedResourcesPage = ({ kind }: { kind: NamedResourceKind }) => {
 
   const isEmpty = sortedResources.length === 0;
   return (
-    <div className="m-auto flex max-w-100 flex-col gap-2 sm:gap-3">
+    <div
+      className={clsx(
+        'mx-auto flex h-full min-h-0 w-full flex-col gap-2 overflow-hidden sm:gap-3',
+        NAMED_RESOURCES_PAGE_WIDTH_CLASS_NAME,
+      )}
+    >
       <CreateNamedResource kind={kind} />
 
-      {isEmpty ? (
-        <NamedResourcesEmpty keySuffix={resourceKindKeySuffix} />
-      ) : (
-        <NamedResourcesList kind={kind} sortedResources={sortedResources} />
-      )}
+      <div className="min-h-0 flex-1 overflow-y-auto pr-1">
+        {isEmpty ? (
+          <NamedResourcesEmpty keySuffix={resourceKindKeySuffix} />
+        ) : (
+          <NamedResourcesList kind={kind} sortedResources={sortedResources} />
+        )}
+      </div>
     </div>
   );
 };

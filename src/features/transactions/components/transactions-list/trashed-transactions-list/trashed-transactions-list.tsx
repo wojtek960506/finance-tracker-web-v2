@@ -14,7 +14,7 @@ import {
   TransactionActionModal,
   useInvalidateTransactionQueries,
 } from '@transactions/components/shared';
-import { Button, Card, Input, Label, LoadingState } from '@ui';
+import { Button, Card, Input, Label, LoadingCard } from '@ui';
 
 import { TransactionPreview } from '../transaction-preview';
 import { TransactionsPagination } from '../transactions-pagination';
@@ -52,15 +52,11 @@ export const TrashedTransactionsList = () => {
 
   if (isLoading) {
     return (
-      <div className="mx-auto w-full max-w-[35rem]">
-        <Card className="mt-2 gap-4 rounded-3xl border-fg/20 bg-modal-bg/95 p-6 sm:mt-3 sm:p-8">
-          <LoadingState
-            title={t('loadingTrash')}
-            description={t('loadingTrashDescription')}
-            className="py-4"
-          />
-        </Card>
-      </div>
+      <LoadingCard
+        title={t('loadingTrash')}
+        description={t('loadingTrashDescription')}
+        widthClassName="max-w-[35rem]"
+      />
     );
   }
   if (error) return <p>{error.message}</p>;
@@ -93,8 +89,8 @@ export const TrashedTransactionsList = () => {
     return (
       <Card
         className={clsx(
-          'mx-auto mt-2 w-full max-w-[35rem] gap-5 rounded-3xl border-fg/20',
-          'bg-modal-bg/95 p-6 sm:mt-3 sm:p-8',
+          'mx-auto w-full max-w-[35rem] gap-5 rounded-3xl border-fg/20',
+          'bg-modal-bg/95 p-6 sm:p-8',
         )}
       >
         <div className="flex items-start justify-between gap-4">

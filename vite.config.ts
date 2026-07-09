@@ -3,9 +3,18 @@ import react from '@vitejs/plugin-react';
 import path from 'path';
 import { defineConfig } from 'vite';
 
+const usePolling = process.env.CHOKIDAR_USEPOLLING === '1';
+
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss()],
+  server: {
+    watch: {
+      ignored: ['**/coverage/**', '**/dist/**', '**/.prettierignore/**'],
+      usePolling,
+      interval: usePolling ? 1000 : undefined,
+    },
+  },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),

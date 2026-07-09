@@ -101,6 +101,16 @@ export const Navigation = () => {
             </li>
             <li>
               <NavigationItem
+                to="/transactions/statistics"
+                title={t('transactionStatistics')}
+                Icon={Banknote}
+                additionalAction={() =>
+                  setNavigationItemExpanded(TRANSACTIONS_NAVIGATION_ITEM_ID, true)
+                }
+              />
+            </li>
+            <li>
+              <NavigationItem
                 to="/transactions/trash"
                 title={t('transactionsTrash')}
                 Icon={Trash2}

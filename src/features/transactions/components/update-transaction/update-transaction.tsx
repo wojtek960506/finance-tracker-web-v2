@@ -9,7 +9,7 @@ import {
   getTransactionsReturnTo,
   isNotFoundTransactionQueryError,
 } from '@transactions/utils';
-import { Card, LoadingState } from '@ui';
+import { LoadingCard } from '@ui';
 
 import { UpdateExchangeTransactionView } from './update-exchange-transaction-view';
 import { UpdateStandardTransactionView } from './update-standard-transaction-view';
@@ -48,15 +48,11 @@ export const UpdateTransaction = () => {
 
   if (isTransactionLoading || isTransactionRefLoading) {
     return (
-      <div className="m-auto flex max-w-100 flex-col gap-2 sm:gap-3">
-        <Card className="gap-4 rounded-3xl border-fg/20 bg-modal-bg/95 p-6 sm:p-8">
-          <LoadingState
-            title={t('loadingTransactionForm')}
-            description={t('loadingTransactionFormDescription')}
-            className="py-4"
-          />
-        </Card>
-      </div>
+      <LoadingCard
+        title={t('loadingTransactionForm')}
+        description={t('loadingTransactionFormDescription')}
+        widthClassName="max-w-100"
+      />
     );
   }
 
