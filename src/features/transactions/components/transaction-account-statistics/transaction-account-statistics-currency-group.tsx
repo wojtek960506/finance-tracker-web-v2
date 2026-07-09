@@ -4,12 +4,8 @@ import {
   CurrencyCollapsibleCardHeader,
 } from '@transactions/components/shared';
 
-import {
-  TransactionAccountStatisticsAccountsGrid
-} from './transaction-account-statistics-accounts-grid';
-import {
-  TransactionAccountStatisticsCurrencyGroupBadges
-} from './transaction-account-statistics-currency-group-badges';
+import { TransactionAccountStatisticsAccountsGrid } from './transaction-account-statistics-accounts-grid';
+import { TransactionAccountStatisticsCurrencyGroupBadges } from './transaction-account-statistics-currency-group-badges';
 
 const BALANCE_POSITIVE_CLASS = 'text-bt-primary';
 const BALANCE_NEGATIVE_CLASS = 'text-destructive';
