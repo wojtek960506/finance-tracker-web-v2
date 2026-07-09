@@ -1,21 +1,15 @@
-import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 
-import { useLanguage } from '@shared/hooks';
 import type {
   TransactionAccountStatisticsAccount,
   TransactionAccountStatisticsCurrency,
 } from '@transactions/api';
-import {
-  formatCurrencyAmount,
-  getTransactionNamedResourceLabel,
-} from '@transactions/utils';
+import { getTransactionNamedResourceLabel } from '@transactions/utils';
 import { Card } from '@ui';
 
 import { AccountNamePopover } from './account-name-popover';
-
-const BALANCE_POSITIVE_CLASS = 'text-bt-primary';
-const BALANCE_NEGATIVE_CLASS = 'text-destructive';
+import { TransactionAccountStatisticsAccountCardAmount } from './transaction-account-statistics-account-card-amount';
+import { TransactionAccountStatisticsAccountCardItemsCount } from './transaction-account-statistics-account-card-items-count';
 
 type TransactionAccountStatisticsAccountCardProps = {
   account: TransactionAccountStatisticsAccount;
@@ -28,12 +22,8 @@ export const TransactionAccountStatisticsAccountCard = ({
   currency,
   baseCurrency,
 }: TransactionAccountStatisticsAccountCardProps) => {
-  const { t } = useTranslation('transactions');
   const { t: tNamedResources } = useTranslation('namedResources');
-  const { language } = useLanguage();
 
-  const balanceClassName =
-    account.totalAmount < 0 ? BALANCE_NEGATIVE_CLASS : BALANCE_POSITIVE_CLASS;
   const accountLabel = getTransactionNamedResourceLabel(
     {
       name: account.accountName,
@@ -49,41 +39,16 @@ export const TransactionAccountStatisticsAccountCard = ({
     >
       <div className="flex min-w-0 flex-col gap-1 md:gap-2">
         <AccountNamePopover label={accountLabel} />
-        <div
-          className={clsx(
-            'flex flex-wrap items-baseline gap-2 text-lg font-semibold sm:text-xl',
-            balanceClassName,
-          )}
-        >
-          <span>
-            {account.totalAmount >= 0 && '+'}
-            {formatCurrencyAmount(account.totalAmount, currency, language)}
-          </span>
-        </div>
-        {account.normalizedTotalAmount !== undefined ? (
-          <div
-            className={clsx(
-              'flex flex-wrap items-baseline gap-2 text-sm font-semibold',
-              account.normalizedTotalAmount < 0
-                ? BALANCE_NEGATIVE_CLASS
-                : BALANCE_POSITIVE_CLASS,
-            )}
-          >
-            <span>
-              {account.normalizedTotalAmount >= 0 && '+'}
-              {formatCurrencyAmount(
-                account.normalizedTotalAmount,
-                baseCurrency,
-                language,
-              )}
-            </span>
-          </div>
-        ) : null}
-
-        <div className="text-sm text-text-muted">
-          <span>{t('transactionsCount')}: </span>
-          <span className="font-semibold text-text">{account.totalItems}</span>
-        </div>
+        <TransactionAccountStatisticsAccountCardAmount
+          amount={account.totalAmount}
+          currency={currency}
+        />
+        <TransactionAccountStatisticsAccountCardAmount
+          amount={account.normalizedTotalAmount}
+          currency={baseCurrency}
+          size="secondary"
+        />
+        <TransactionAccountStatisticsAccountCardItemsCount totalItems={account.totalItems} />
       </div>
     </Card>
   );
