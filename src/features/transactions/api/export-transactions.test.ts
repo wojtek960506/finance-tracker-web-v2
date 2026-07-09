@@ -14,9 +14,6 @@ describe('exportTransactions', () => {
     const csv = new Blob(['date,amount']);
     getMock.mockResolvedValueOnce({
       data: csv,
-      headers: {
-        'content-disposition': 'attachment; filename="transactions-backup.csv"',
-      },
     });
 
     const result = await exportTransactions({
@@ -43,7 +40,6 @@ describe('exportTransactions', () => {
     );
     expect(result).toEqual({
       csv,
-      fileName: 'transactions-backup.csv',
     });
   });
 });

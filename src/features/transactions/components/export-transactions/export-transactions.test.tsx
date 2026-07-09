@@ -62,7 +62,6 @@ describe('ExportTransactionsButton', () => {
 
     mocks.exportTransactions.mockResolvedValueOnce({
       csv,
-      fileName: 'transactions-backup.csv',
     });
 
     const client = new QueryClient({
