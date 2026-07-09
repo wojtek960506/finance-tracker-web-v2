@@ -8,7 +8,7 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   server: {
     watch: {
-      ignored: ['**/coverage/**', '**/dist/**'],
+      ignored: ['**/coverage/**', '**/dist/**', '**/.prettierignore/**'],
     },
   },
   resolve: {

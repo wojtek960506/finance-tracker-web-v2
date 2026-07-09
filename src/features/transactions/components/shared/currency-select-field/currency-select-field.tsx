@@ -22,6 +22,7 @@ type CurrencySelectFieldProps = {
   placeholder: string;
   searchPlaceholder: string;
   emptyMessage: string;
+  showClear?: boolean;
 };
 
 export const CurrencySelectField = ({
@@ -30,6 +31,7 @@ export const CurrencySelectField = ({
   placeholder,
   searchPlaceholder,
   emptyMessage,
+  showClear = true,
 }: CurrencySelectFieldProps) => {
   const { data = [], isLoading } = useQuery({
     queryKey: ['currencies'],
@@ -52,7 +54,7 @@ export const CurrencySelectField = ({
         className="w-full"
         placeholder={isLoading ? 'Loading...' : searchPlaceholder || placeholder}
         disabled={isLoading}
-        showClear
+        showClear={showClear}
       />
       <ComboboxContent>
         <ComboboxEmpty>{emptyMessage}</ComboboxEmpty>

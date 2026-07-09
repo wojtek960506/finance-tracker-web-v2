@@ -20,11 +20,13 @@ const BALANCE_NEGATIVE_CLASS = 'text-destructive';
 type TransactionAccountStatisticsAccountCardProps = {
   account: TransactionAccountStatisticsAccount;
   currency: TransactionAccountStatisticsCurrency['currency'];
+  baseCurrency: string;
 };
 
 export const TransactionAccountStatisticsAccountCard = ({
   account,
   currency,
+  baseCurrency,
 }: TransactionAccountStatisticsAccountCardProps) => {
   const { t } = useTranslation('transactions');
   const { t: tNamedResources } = useTranslation('namedResources');
@@ -45,7 +47,7 @@ export const TransactionAccountStatisticsAccountCard = ({
       className="gap-3 rounded-2xl border-fg/15 bg-bg/65 p-4 shadow-none"
       data-testid={`transaction-account-statistics-account-${account.accountId}`}
     >
-      <div className="flex min-w-0 flex-col gap-2">
+      <div className="flex min-w-0 flex-col gap-1 md:gap-2">
         <AccountNamePopover label={accountLabel} />
         <div
           className={clsx(
@@ -58,12 +60,27 @@ export const TransactionAccountStatisticsAccountCard = ({
             {formatCurrencyAmount(account.totalAmount, currency, language)}
           </span>
         </div>
+        {account.normalizedTotalAmount !== undefined ? (
+          <div
+            className={clsx(
+              'flex flex-wrap items-baseline gap-2 text-sm font-semibold',
+              account.normalizedTotalAmount < 0 ? BALANCE_NEGATIVE_CLASS : BALANCE_POSITIVE_CLASS,
+            )}
+          >
+            <span>
+              {account.normalizedTotalAmount >= 0 && '+'}
+              {formatCurrencyAmount(account.normalizedTotalAmount, baseCurrency, language)}
+            </span>
+          </div>
+        ) : null}
+
+        <div className="text-sm text-text-muted">
+          <span>{t('transactionsCount')}: </span>
+          <span className="font-semibold text-text">{account.totalItems}</span>
+        </div>
       </div>
 
-      <div className="flex items-center justify-between gap-2 text-sm text-text-muted">
-        <span>{t('transactionsCount')}</span>
-        <span className="font-semibold text-text">{account.totalItems}</span>
-      </div>
+      
     </Card>
   );
 };

@@ -32,7 +32,7 @@ export const CurrencyCollapsibleCardHeader = ({
         <h3 className="min-w-10 truncate text-left text-lg font-semibold sm:min-w-11 sm:text-xl">
           {currency}
         </h3>
-        <div className={clsx('text-base font-semibold sm:text-lg', balanceClassName)}>
+        <div className={clsx('text-lg font-semibold sm:text-xl', balanceClassName)}>
           {balance >= 0 && '+'}
           {formatCurrencyAmount(balance, balanceCurrency, language)}
         </div>
