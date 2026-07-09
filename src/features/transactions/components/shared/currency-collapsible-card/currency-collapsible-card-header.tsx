@@ -24,10 +24,12 @@ export const CurrencyCollapsibleCardHeader = ({
   const { language } = useLanguage();
 
   return (
-    <div className={clsx(
-      'flex min-w-0 flex-1 flex-wrap items-center justify-between gap-2 pl-1',
-      className,
-    )}>
+    <div
+      className={clsx(
+        'flex min-w-0 flex-1 flex-wrap items-center justify-between gap-2 pl-1',
+        className,
+      )}
+    >
       <div className="flex min-w-0 items-center gap-2">
         <h3 className="min-w-10 truncate text-left text-lg font-semibold sm:min-w-11 sm:text-xl">
           {currency}

@@ -34,7 +34,9 @@ export const CurrencyTotalsCard = ({
           balanceClassName={balanceClassName}
           rightContent={
             <div className="rounded-full bg-bg px-3 py-1 text-sm font-semibold text-text">
-              <span className="currency-totals-total-items-label">{t('totalItems')}:</span>{' '}
+              <span className="currency-totals-total-items-label">
+                {t('totalItems')}:
+              </span>{' '}
               {totals.totalItems}
             </div>
           }

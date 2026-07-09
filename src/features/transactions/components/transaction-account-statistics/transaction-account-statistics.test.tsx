@@ -60,9 +60,7 @@ vi.mock('@/components/ui/combobox', () => ({
   ComboboxList: ({
     children,
   }: {
-    children:
-      | ((item: { code: string; name: string }) => ReactNode)
-      | ReactNode;
+    children: ((item: { code: string; name: string }) => ReactNode) | ReactNode;
   }) =>
     typeof children === 'function' ? (
       <div>{children({ code: 'PLN', name: 'Polish złoty' })}</div>
@@ -158,9 +156,7 @@ describe('TransactionAccountStatistics', () => {
     expect(screen.getByText('2 accounts')).toBeInTheDocument();
     expect(screen.getByText('showClear:false')).toBeInTheDocument();
     expect(
-      screen.getByText(
-        (_, element) => element?.textContent === 'Liczba transakcji: 4',
-      ),
+      screen.getByText((_, element) => element?.textContent === 'Liczba transakcji: 4'),
     ).toBeInTheDocument();
     expect(screen.getByText('6 transakcji')).toBeInTheDocument();
     expect(screen.getByText('Main')).toBeInTheDocument();

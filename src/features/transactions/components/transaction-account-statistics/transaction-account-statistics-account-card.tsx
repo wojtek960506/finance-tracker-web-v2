@@ -64,12 +64,18 @@ export const TransactionAccountStatisticsAccountCard = ({
           <div
             className={clsx(
               'flex flex-wrap items-baseline gap-2 text-sm font-semibold',
-              account.normalizedTotalAmount < 0 ? BALANCE_NEGATIVE_CLASS : BALANCE_POSITIVE_CLASS,
+              account.normalizedTotalAmount < 0
+                ? BALANCE_NEGATIVE_CLASS
+                : BALANCE_POSITIVE_CLASS,
             )}
           >
             <span>
               {account.normalizedTotalAmount >= 0 && '+'}
-              {formatCurrencyAmount(account.normalizedTotalAmount, baseCurrency, language)}
+              {formatCurrencyAmount(
+                account.normalizedTotalAmount,
+                baseCurrency,
+                language,
+              )}
             </span>
           </div>
         ) : null}
@@ -79,8 +85,6 @@ export const TransactionAccountStatisticsAccountCard = ({
           <span className="font-semibold text-text">{account.totalItems}</span>
         </div>
       </div>
-
-      
     </Card>
   );
 };

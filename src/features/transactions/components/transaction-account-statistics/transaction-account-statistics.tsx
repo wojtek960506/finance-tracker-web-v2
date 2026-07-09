@@ -16,8 +16,8 @@ import { TransactionAccountStatisticsEmptyState } from './transaction-account-st
 import { TransactionAccountStatisticsHeader } from './transaction-account-statistics-header';
 
 const MAX_WIDTH = clsx(
-  "max-w-[44rem] md:max-w-[56rem] lg:max-w-[72rem] xl:max-w-[88rem] 2xl:max-w-[104rem]",
-  "3xl:max-w-[128rem]",
+  'max-w-[44rem] md:max-w-[56rem] lg:max-w-[72rem] xl:max-w-[88rem] 2xl:max-w-[104rem]',
+  '3xl:max-w-[128rem]',
 );
 
 const DEFAULT_BASE_CURRENCY = 'PLN';
@@ -40,7 +40,10 @@ const getTransactionAccountStatisticsQuery = (
     return undefined;
   })(),
   currency: normalizeCurrencyCode(searchParams.get('currency')),
-  baseCurrency: normalizeCurrencyCode(searchParams.get('baseCurrency'), DEFAULT_BASE_CURRENCY),
+  baseCurrency: normalizeCurrencyCode(
+    searchParams.get('baseCurrency'),
+    DEFAULT_BASE_CURRENCY,
+  ),
 });
 
 // TODO split the remaining orchestration further if the statistics page grows again.
@@ -97,9 +100,12 @@ export const TransactionAccountStatistics = () => {
   }
 
   return (
-    <div className={clsx(
-      "mx-auto flex w-full flex-col gap-4 overflow-y-auto sm:gap-6", MAX_WIDTH,
-    )}>
+    <div
+      className={clsx(
+        'mx-auto flex w-full flex-col gap-4 overflow-y-auto sm:gap-6',
+        MAX_WIDTH,
+      )}
+    >
       <TransactionAccountStatisticsHeader
         baseCurrency={baseCurrency}
         normalizedTotalAmount={normalizedTotalAmount}
