@@ -4,7 +4,7 @@ import type { TransactionFilters } from './types';
 
 import { api } from '@/shared/api';
 
-const DEFAULT_EXPORT_FILENAME = 'transactions-export.csv';
+export const DEFAULT_EXPORT_FILENAME = 'transactions-export.csv';
 
 const getExportFilename = (contentDisposition?: string) => {
   if (!contentDisposition) return DEFAULT_EXPORT_FILENAME;
