@@ -146,6 +146,36 @@ export type TransactionTotalsResponse = {
   overall: TransactionTotalsOverall;
 };
 
+export type TransactionAccountStatisticsAccount = {
+  accountId: string;
+  accountName: string;
+  accountType: 'user' | 'system';
+  totalAmount: number;
+  totalItems: number;
+  normalizedTotalAmount?: number;
+};
+
+export type TransactionAccountStatisticsCurrency = {
+  currency: string;
+  totalAmount: number;
+  totalItems: number;
+  normalizedTotalAmount?: number;
+  accounts: TransactionAccountStatisticsAccount[];
+};
+
+export type TransactionAccountStatisticsResponse = {
+  currencies: TransactionAccountStatisticsCurrency[];
+  normalizedBaseCurrency?: string;
+  normalizedTotalAmount?: number;
+};
+
+export type TransactionAccountStatisticsQuery = Pick<
+  TransactionFilters,
+  'startDate' | 'endDate' | 'transactionType' | 'currency'
+> & {
+  baseCurrency?: string;
+};
+
 export type UpdateManyReply = {
   acknowledged: boolean;
   matchedCount: number;

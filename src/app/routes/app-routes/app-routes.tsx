@@ -9,6 +9,7 @@ import {
   CreateStandardTransaction,
   CreateTransaction,
   CreateTransferTransaction,
+  TransactionAccountStatistics,
   TransactionDetails,
   TransactionsPage,
   TrashedTransactionDetails,
@@ -89,6 +90,11 @@ export const PROTECTED_APP_ROUTES: AppRouteConfig[] = [
     path: '/transactions/new/bulk',
     element: <CreateBulkTransaction />,
     title: { namespace: 'navigation', key: 'newBulkTransaction' },
+  },
+  {
+    path: '/transactions/statistics',
+    element: <TransactionAccountStatistics />,
+    title: { namespace: 'navigation', key: 'transactionStatistics' },
   },
   {
     path: '/transactions/:transactionId',

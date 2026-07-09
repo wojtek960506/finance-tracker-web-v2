@@ -62,10 +62,14 @@ export const CreateUser = () => {
   return (
     <div className={AUTH_PAGE_WRAPPER_CLASS}>
       <div className={CREATE_USER_CONTENT_CLASS}>
-        {createdEmail
-          ? <RegistrationSuccess createdEmail={createdEmail} />
-          : <CreateUserForm isPending={createUserMutation.isPending} onSubmit={handleSubmit} /> 
-        }
+        {createdEmail ? (
+          <RegistrationSuccess createdEmail={createdEmail} />
+        ) : (
+          <CreateUserForm
+            isPending={createUserMutation.isPending}
+            onSubmit={handleSubmit}
+          />
+        )}
       </div>
     </div>
   );

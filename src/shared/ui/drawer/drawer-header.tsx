@@ -15,7 +15,11 @@ export const DrawerHeader = ({ fromLeft, onClose, headerLeft }: DrawerHeaderProp
     className={clsx(
       'flex p-2 h-[var(--topbar-h)] sm:h-[var(--topbar-h-sm)] border-b border-foreground',
       'min-h-[var(--topbar-h)] sm:min-h-[var(--topbar-h-sm)]',
-      headerLeft ? 'items-center justify-between gap-2' : fromLeft ? 'justify-end' : 'justify-start',
+      headerLeft
+        ? 'items-center justify-between gap-2'
+        : fromLeft
+          ? 'justify-end'
+          : 'justify-start',
     )}
   >
     {headerLeft ? <div className="flex items-center gap-1">{headerLeft}</div> : null}

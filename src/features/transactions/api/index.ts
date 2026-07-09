@@ -5,6 +5,7 @@ export * from './create-transfer-transaction';
 export * from './export-transactions';
 export * from './delete-trashed-transaction';
 export * from './empty-trash';
+export * from './get-account-statistics';
 export * from './get-transaction';
 export * from './get-transaction-totals';
 export * from './get-transactions';

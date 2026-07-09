@@ -12,6 +12,7 @@ type CollapsibleProps = {
   onOpenChange?: (isOpen: boolean) => void;
   triggerMode?: 'split' | 'full-row';
   contentInset?: 'default' | 'none';
+  className?: string;
   triggerClassName?: string;
   contentClassName?: string;
 };
@@ -25,6 +26,7 @@ export const Collapsible = ({
   onOpenChange,
   triggerMode = 'split',
   contentInset = 'default',
+  className,
   triggerClassName,
   contentClassName,
 }: CollapsibleProps) => {
@@ -43,7 +45,7 @@ export const Collapsible = ({
   };
 
   return (
-    <div className="min-w-0">
+    <div className={className ? `min-w-0 ${className}` : 'min-w-0'}>
       <CollapsibleTrigger
         actualIsOpen={actualIsOpen}
         header={header}

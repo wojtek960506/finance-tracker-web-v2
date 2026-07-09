@@ -1,10 +1,12 @@
 {
   "name": "finance-tracker-web-v2",
   "private": true,
-  "version": "1.2.6",
+  "version": "1.2.7",
   "type": "module",
   "scripts": {
-    "dev": "vite --host",
+    "dev": "CHOKIDAR_USEPOLLING=1 vite --host",
+    "dev:events": "vite --host",
+    "dev:polling": "CHOKIDAR_USEPOLLING=1 vite --host",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
@@ -14,6 +16,7 @@
     "test": "vitest run",
     "test:quiet": "vitest run --reporter=dot",
     "test:watch": "vitest",
+    "test:watch:polling": "CHOKIDAR_USEPOLLING=1 vitest",
     "test:coverage": "vitest run --reporter=dot --coverage",
     "coverage:missing": "node scripts/coverage-missing.mjs",
     "coverage:summary-only": "pnpm test:coverage --coverage.reporter=json-summary",

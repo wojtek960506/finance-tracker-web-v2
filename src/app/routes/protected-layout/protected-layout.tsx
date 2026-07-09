@@ -6,7 +6,7 @@ export const ProtectedLayout = ({ isAuthenticated }: ProtectedLayoutProps) => {
   if (!isAuthenticated) return <Navigate to="/login" replace />;
 
   return (
-    <div className="p-4">
+    <div className="flex h-full min-h-0 flex-1 flex-col p-3 sm:p-4">
       <Outlet />
     </div>
   );

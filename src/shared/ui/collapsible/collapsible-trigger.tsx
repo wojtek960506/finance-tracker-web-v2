@@ -14,8 +14,7 @@ type CollapsibleTriggerProps = {
   contentId: string;
 };
 
-const ICON_CLASS_NAME =
-  'h-4 w-4 shrink-0 transition-transform duration-300 ease-out';
+const ICON_CLASS_NAME = 'h-4 w-4 shrink-0 transition-transform duration-300 ease-out';
 
 export const CollapsibleTrigger = ({
   actualIsOpen,
@@ -43,7 +42,11 @@ export const CollapsibleTrigger = ({
     return (
       <Button
         {...buttonProps}
-        className={clsx('w-full min-w-0', isIndicatorLeft ? '' : 'flex-row-reverse', triggerClassName)}
+        className={clsx(
+          'w-full min-w-0',
+          isIndicatorLeft ? '' : 'flex-row-reverse',
+          triggerClassName,
+        )}
       >
         <div
           className={clsx(
@@ -69,7 +72,12 @@ export const CollapsibleTrigger = ({
       )}
     >
       <Button {...buttonProps}>
-        <SplitTriggerIcon className={clsx(ICON_CLASS_NAME, actualIsOpen && (isIndicatorLeft ? 'rotate-90' : '-rotate-90'))} />
+        <SplitTriggerIcon
+          className={clsx(
+            ICON_CLASS_NAME,
+            actualIsOpen && (isIndicatorLeft ? 'rotate-90' : '-rotate-90'),
+          )}
+        />
       </Button>
       {header}
     </div>

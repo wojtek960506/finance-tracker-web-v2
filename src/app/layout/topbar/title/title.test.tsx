@@ -17,14 +17,17 @@ vi.mock('@auth/components', () => ({
 }));
 
 vi.mock('@named-resources/components', () => ({
+  NamedResourcesPage: ({ kind }: { kind: string }) => <div>{kind}</div>,
   NamedResourcesList: ({ kind }: { kind: string }) => <div>{kind}</div>,
 }));
 
 vi.mock('@transactions/components', () => ({
+  CreateBulkTransaction: () => <div>bulk</div>,
   CreateExchangeTransaction: () => <div>exchange</div>,
   CreateStandardTransaction: () => <div>standard</div>,
   CreateTransaction: () => <div>new</div>,
   CreateTransferTransaction: () => <div>transfer</div>,
+  TransactionAccountStatistics: () => <div>stats</div>,
   TrashedTransactionDetails: () => <div>trash-details</div>,
   TrashedTransactionsList: () => <div>trash-list</div>,
   TransactionDetails: () => <div>details</div>,
@@ -90,6 +93,18 @@ describe('Title', () => {
 
     expect(
       screen.getByRole('heading', { name: 'navigation:transactionsTrash' }),
+    ).toBeInTheDocument();
+  });
+
+  it('renders statistics title on account statistics page', () => {
+    render(
+      <MemoryRouter initialEntries={['/transactions/statistics']}>
+        <Title />
+      </MemoryRouter>,
+    );
+
+    expect(
+      screen.getByRole('heading', { name: 'navigation:transactionStatistics' }),
     ).toBeInTheDocument();
   });
 
