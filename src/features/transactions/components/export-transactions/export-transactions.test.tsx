@@ -89,7 +89,8 @@ describe('ExportTransactionsButton', () => {
     });
     expect(createObjectUrlSpy).toHaveBeenCalledWith(csv);
     expect(clickSpy).toHaveBeenCalled();
-    expect(createdAnchor?.download).toMatch(
+    expect(createdAnchor).not.toBeNull();
+    expect(createdAnchor!.download).toMatch(
       /^monthly-summary_\d{4}-\d{2}-\d{2}_\d{2}-\d{2}-\d{2}\.csv$/,
     );
     expect(revokeObjectUrlSpy).toHaveBeenCalledWith('blob:transactions-export');
