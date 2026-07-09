@@ -22,7 +22,7 @@
   "exportTransactionsSubmit": "Экспортировать",
   "exportingTransactionsSubmit": "Экспорт...",
   "exportTransactionsModalTitle": "Экспортировать транзакции в CSV",
-  "exportTransactionsModalDescription": "Введите базовое имя файла. Приложение автоматически добавит дату, время экспорта и расширение файла.",
+  "exportTransactionsModalDescription": "Введите базовое имя файла. При экспорте будут учтены текущие применённые фильтры, а приложение автоматически добавит дату, время экспорта и расширение файла.",
   "exportFileNameLabel": "Базовое имя файла",
   "exportFileNameRequired": "Базовое имя файла обязательно.",
   "exportingTransactions": "Экспорт транзакций...",

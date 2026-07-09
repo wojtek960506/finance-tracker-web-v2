@@ -22,7 +22,7 @@
   "exportTransactionsSubmit": "Exportieren",
   "exportingTransactionsSubmit": "Exportiere...",
   "exportTransactionsModalTitle": "Transaktionen als CSV exportieren",
-  "exportTransactionsModalDescription": "Geben Sie den Basisdateinamen ein. Die App ergänzt automatisch Exportdatum, Uhrzeit und die Dateiendung.",
+  "exportTransactionsModalDescription": "Geben Sie den Basisdateinamen ein. Der Export berücksichtigt die aktuell angewendeten Filter, und die App ergänzt automatisch Exportdatum, Uhrzeit und die Dateiendung.",
   "exportFileNameLabel": "Basisdateiname",
   "exportFileNameRequired": "Der Basisdateiname ist erforderlich.",
   "exportingTransactions": "Transaktionen werden exportiert...",

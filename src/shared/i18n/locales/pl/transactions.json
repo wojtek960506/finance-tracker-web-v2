@@ -22,7 +22,7 @@
   "exportTransactionsSubmit": "Eksportuj",
   "exportingTransactionsSubmit": "Eksportowanie...",
   "exportTransactionsModalTitle": "Eksportuj transakcje do CSV",
-  "exportTransactionsModalDescription": "Podaj bazową nazwę pliku. Aplikacja automatycznie doda datę, godzinę eksportu oraz rozszerzenie pliku.",
+  "exportTransactionsModalDescription": "Podaj bazową nazwę pliku. Eksport uwzględni aktualnie zastosowane filtry, a aplikacja automatycznie doda datę, godzinę eksportu oraz rozszerzenie pliku.",
   "exportFileNameLabel": "Bazowa nazwa pliku",
   "exportFileNameRequired": "Bazowa nazwa pliku jest wymagana.",
   "exportingTransactions": "Eksportowanie transakcji...",
