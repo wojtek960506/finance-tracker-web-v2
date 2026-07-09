@@ -1,7 +1,7 @@
 {
   "name": "finance-tracker-web-v2",
   "private": true,
-  "version": "1.2.6",
+  "version": "1.2.7",
   "type": "module",
   "scripts": {
     "dev": "CHOKIDAR_USEPOLLING=1 vite --host",
