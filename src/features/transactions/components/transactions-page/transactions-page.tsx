@@ -1,22 +1,10 @@
-import { useQuery } from '@tanstack/react-query';
-import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { LoadingCard } from '@shared/ui';
-import { getTransactions, type TransactionFilters } from '@transactions/api';
-import { TransactionsFiltersPanel } from '@transactions/components/transactions-filters';
-import { TransactionsTotalsPanel } from '@transactions/components/transactions-totals';
-import { getTransactionsRouteState } from '@transactions/utils/transactions-navigation';
-import {
-  buildTransactionsRouteSearchParams,
-  countActiveTransactionFilters,
-  parseTransactionsRouteSearchParams,
-} from '@transactions/utils/transactions-query';
 
 import { TransactionsPageContent } from './transactions-page-content';
 import { TransactionsPageProvider } from './transactions-page-context';
-import { useTransactionsPageLayout } from './use-transactions-page-layout';
+import { useTransactionsPage } from './use-transactions-page';
 
 // TODO:
 // 1. refactor this file
@@ -37,42 +25,7 @@ import { useTransactionsPageLayout } from './use-transactions-page-layout';
 // 11. revisit bundle size warnings and introduce route-level code splitting where it helps PR #13
 export const TransactionsPage = () => {
   const { t } = useTranslation('transactions');
-  const navigate = useNavigate();
-  const [searchParams, setSearchParams] = useSearchParams();
-  const totalsButtonRef = useRef<HTMLButtonElement | null>(null);
-  const filtersButtonRef = useRef<HTMLButtonElement | null>(null);
-  const {
-    isFiltersOpen,
-    isTotalsOpen,
-    isDrawerPanels,
-    isSharedSidebarVisible,
-    isLargeSidebarLayout,
-    handleToggleFilters,
-    handleToggleTotals,
-    handleFiltersApplied,
-    closePanels,
-  } = useTransactionsPageLayout();
-
-  const { page, filters } = parseTransactionsRouteSearchParams(searchParams);
-  const currentTransactionsRoute = `/transactions${
-    searchParams.size > 0 ? `?${searchParams.toString()}` : ''
-  }`;
-  const activeFiltersCount = countActiveTransactionFilters(filters);
-
-  const { data, isLoading, error } = useQuery({
-    queryKey: ['transactions', page, filters],
-    queryFn: async () => await getTransactions({ page, filters }),
-  });
-  const hasNoTransactions = (data?.total ?? 0) === 0 && activeFiltersCount === 0;
-
-  // when page is too big then we show the last available page
-  useEffect(() => {
-    if (data && data.totalPages < data.page && data.total > 0) {
-      setSearchParams(
-        buildTransactionsRouteSearchParams({ page: data.totalPages, filters }),
-      );
-    }
-  }, [data, filters, setSearchParams]);
+  const { isLoading, error, contextValue } = useTransactionsPage();
 
   if (isLoading) {
     return (
@@ -85,52 +38,8 @@ export const TransactionsPage = () => {
   }
   if (error) return <p>{error.message}</p>;
 
-  const handleApplyFilters = (nextFilters: TransactionFilters) => {
-    setSearchParams(
-      buildTransactionsRouteSearchParams({ page: 1, filters: nextFilters }),
-    );
-    handleFiltersApplied();
-  };
-
-  const handlePageChange = (nextPage: number) => {
-    setSearchParams(buildTransactionsRouteSearchParams({ page: nextPage, filters }));
-  };
-
-  const handleNavigateToNewTransaction = () => {
-    navigate('/transactions/new', {
-      state: getTransactionsRouteState(currentTransactionsRoute),
-    });
-  };
-
-  const filtersPanel = (
-    <TransactionsFiltersPanel appliedFilters={filters} onApply={handleApplyFilters} />
-  );
-  const totalsPanel = <TransactionsTotalsPanel filters={filters} />;
-
   return (
-    <TransactionsPageProvider
-      value={{
-        isFiltersOpen,
-        isTotalsOpen,
-        isDrawerPanels,
-        isSharedSidebarVisible,
-        isLargeSidebarLayout,
-        hasNoTransactions,
-        filters,
-        data,
-        page,
-        activeFiltersCount,
-        totalsButtonRef,
-        filtersButtonRef,
-        handleToggleTotals,
-        handleToggleFilters,
-        closePanels,
-        handleNavigateToNewTransaction,
-        handlePageChange,
-        totalsPanel,
-        filtersPanel,
-      }}
-    >
+    <TransactionsPageProvider value={contextValue}>
       <TransactionsPageContent />
     </TransactionsPageProvider>
   );
