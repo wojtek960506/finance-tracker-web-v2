@@ -39,7 +39,7 @@ export const TransactionsPageMainColumn = () => {
         isLargeSidebarLayout && 'xl:col-start-2 xl:mx-auto xl:w-full xl:max-w-[35rem]',
       )}
     >
-      {!hasNoTransactions ? (
+      {!hasNoTransactions && (
         <div className="grid grid-cols-4 gap-2 sm:grid-cols-2 sm:gap-3">
           <Button
             variant="primary"
@@ -98,18 +98,16 @@ export const TransactionsPageMainColumn = () => {
             </span>
           </Button>
         </div>
-      ) : null}
+      )}
 
-      <div className="min-h-0 flex flex-1 flex-col overflow-hidden">
-        <TransactionsList
-          transactions={data?.items ?? []}
-          hasAnyTransactions={(data?.total ?? 0) > 0}
-          currentPage={data?.page ?? page}
-          totalPages={data?.totalPages ?? 0}
-          activeFiltersCount={activeFiltersCount}
-          onPageChange={handlePageChange}
-        />
-      </div>
+      <TransactionsList
+        transactions={data?.items ?? []}
+        hasAnyTransactions={(data?.total ?? 0) > 0}
+        currentPage={data?.page ?? page}
+        totalPages={data?.totalPages ?? 0}
+        activeFiltersCount={activeFiltersCount}
+        onPageChange={handlePageChange}
+      />
     </div>
   );
 };
