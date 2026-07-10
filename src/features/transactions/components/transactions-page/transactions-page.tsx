@@ -18,6 +18,7 @@ import {
 
 import { TransactionsPageProvider } from './transactions-page-context';
 import { TransactionsPageMainColumn } from './transactions-page-main-column';
+import { TransactionsPageTotalsDrawer } from './transactions-page-totals-drawer';
 import { TransactionsPageWideTotalsSidebar } from './transactions-page-wide-totals-sidebar';
 import { useTransactionsPageLayout } from './use-transactions-page-layout';
 
@@ -140,11 +141,11 @@ export const TransactionsPage = () => {
   );
 
   return (
-    <>
-      <TransactionsPageProvider
+    <TransactionsPageProvider
         value={{
           isFiltersOpen,
           isTotalsOpen,
+          isDrawerPanels,
           isSharedSidebarVisible,
           isLargeSidebarLayout,
           hasNoTransactions,
@@ -156,6 +157,7 @@ export const TransactionsPage = () => {
           filtersButtonRef,
           handleToggleTotals,
           handleToggleFilters,
+          closePanels,
           handleNavigateToNewTransaction,
           handlePageChange,
           totalsPanel,
@@ -163,6 +165,7 @@ export const TransactionsPage = () => {
           emptyTransactionsState,
         }}
       >
+      <>
         <div
           className={clsx(
             'h-full min-h-0 w-full overflow-hidden',
@@ -205,41 +208,25 @@ export const TransactionsPage = () => {
             </aside>
           ) : null}
         </div>
-      </TransactionsPageProvider>
+        <TransactionsPageTotalsDrawer />
 
-      {!hasNoTransactions && isDrawerPanels && isTotalsOpen ? (
-        <Drawer
-          isOpen={isTotalsOpen}
-          fromLeft={false}
-          onClose={closePanels}
-          restoreFocusRef={totalsButtonRef}
-          ariaLabel={t('totals')}
-          showOverlay={false}
-          panelClassName="w-full overflow-x-auto w-[min(340px,100vh)"
-          contentClassName="min-w-[340px]"
-        >
-          <div id="transactions-totals-panel" className="pb-6">
-            {totalsPanel}
-          </div>
-        </Drawer>
-      ) : null}
-
-      {!hasNoTransactions && isDrawerPanels && isFiltersOpen ? (
-        <Drawer
-          isOpen={isFiltersOpen}
-          fromLeft={false}
-          onClose={closePanels}
-          restoreFocusRef={filtersButtonRef}
-          ariaLabel={t('filters')}
-          showOverlay={false}
-          panelClassName="w-full overflow-x-auto w-[min(340px,100vh)"
-          contentClassName="min-w-[340px]"
-        >
-          <div id="transactions-filters-panel" className="pb-6">
-            {filtersPanel}
-          </div>
-        </Drawer>
-      ) : null}
-    </>
+        {!hasNoTransactions && isDrawerPanels && isFiltersOpen ? (
+          <Drawer
+            isOpen={isFiltersOpen}
+            fromLeft={false}
+            onClose={closePanels}
+            restoreFocusRef={filtersButtonRef}
+            ariaLabel={t('filters')}
+            showOverlay={false}
+            panelClassName="w-full overflow-x-auto w-[min(340px,100vh)"
+            contentClassName="min-w-[340px]"
+          >
+            <div id="transactions-filters-panel" className="pb-6">
+              {filtersPanel}
+            </div>
+          </Drawer>
+        ) : null}
+      </>
+    </TransactionsPageProvider>
   );
 };

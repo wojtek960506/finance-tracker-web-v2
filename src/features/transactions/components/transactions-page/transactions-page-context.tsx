@@ -6,6 +6,7 @@ import type { TransactionFilters, TransactionsResponse } from '@transactions/api
 type TransactionsPageContextValue = {
   isFiltersOpen: boolean;
   isTotalsOpen: boolean;
+  isDrawerPanels: boolean;
   isSharedSidebarVisible: boolean;
   isLargeSidebarLayout: boolean;
   hasNoTransactions: boolean;
@@ -17,6 +18,7 @@ type TransactionsPageContextValue = {
   filtersButtonRef: RefObject<HTMLButtonElement | null>;
   handleToggleTotals: () => void;
   handleToggleFilters: () => void;
+  closePanels: () => void;
   handleNavigateToNewTransaction: () => void;
   handlePageChange: (page: number) => void;
   totalsPanel: ReactNode;
