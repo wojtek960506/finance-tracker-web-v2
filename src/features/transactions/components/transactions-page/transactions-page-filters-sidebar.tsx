@@ -1,5 +1,8 @@
 import clsx from 'clsx';
 
+import { TransactionsFiltersPanel } from '@transactions/components/transactions-filters';
+import { TransactionsTotalsPanel } from '@transactions/components/transactions-totals';
+
 import { useTransactionsPageContext } from './use-transactions-page-context';
 
 export const TransactionsPageFiltersSidebar = () => {
@@ -9,8 +12,8 @@ export const TransactionsPageFiltersSidebar = () => {
     isSharedSidebarVisible,
     isFiltersOpen,
     isTotalsOpen,
-    filtersPanel,
-    totalsPanel,
+    filters,
+    handleApplyFilters,
   } = useTransactionsPageContext();
 
   if (hasNoTransactions) return null;
@@ -22,7 +25,12 @@ export const TransactionsPageFiltersSidebar = () => {
           id="transactions-filters-panel"
           className="hidden min-h-0 min-w-0 xl:col-start-3 xl:block xl:w-full"
         >
-          <div className="h-full overflow-y-auto pr-1">{filtersPanel}</div>
+          <div className="h-full overflow-y-auto pr-1">
+            <TransactionsFiltersPanel
+              appliedFilters={filters}
+              onApply={handleApplyFilters}
+            />
+          </div>
         </aside>
       );
     }
@@ -43,7 +51,14 @@ export const TransactionsPageFiltersSidebar = () => {
           id={isTotalsOpen ? 'transactions-totals-panel' : 'transactions-filters-panel'}
           className="h-full"
         >
-          {isTotalsOpen ? totalsPanel : filtersPanel}
+          {isTotalsOpen ? (
+            <TransactionsTotalsPanel filters={filters} />
+          ) : (
+            <TransactionsFiltersPanel
+              appliedFilters={filters}
+              onApply={handleApplyFilters}
+            />
+          )}
         </div>
       </aside>
     );

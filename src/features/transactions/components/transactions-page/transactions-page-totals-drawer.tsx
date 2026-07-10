@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 
 import { Drawer } from '@shared/ui';
+import { TransactionsTotalsPanel } from '@transactions/components/transactions-totals';
 
 import {
   TRANSACTIONS_PAGE_DRAWER_CONTENT_CLASS_NAME,
@@ -16,7 +17,7 @@ export const TransactionsPageTotalsDrawer = () => {
     isTotalsOpen,
     closePanels,
     totalsButtonRef,
-    totalsPanel,
+    filters,
   } = useTransactionsPageContext();
 
   if (hasNoTransactions || !isDrawerPanels || !isTotalsOpen) return null;
@@ -33,7 +34,7 @@ export const TransactionsPageTotalsDrawer = () => {
       contentClassName={TRANSACTIONS_PAGE_DRAWER_CONTENT_CLASS_NAME}
     >
       <div id="transactions-totals-panel" className="pb-6">
-        {totalsPanel}
+        <TransactionsTotalsPanel filters={filters} />
       </div>
     </Drawer>
   );

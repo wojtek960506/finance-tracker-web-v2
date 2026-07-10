@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 
 import { Drawer } from '@shared/ui';
+import { TransactionsFiltersPanel } from '@transactions/components/transactions-filters';
 
 import {
   TRANSACTIONS_PAGE_DRAWER_CONTENT_CLASS_NAME,
@@ -16,7 +17,8 @@ export const TransactionsPageFiltersDrawer = () => {
     isFiltersOpen,
     closePanels,
     filtersButtonRef,
-    filtersPanel,
+    filters,
+    handleApplyFilters,
   } = useTransactionsPageContext();
 
   if (hasNoTransactions || !isDrawerPanels || !isFiltersOpen) return null;
@@ -33,7 +35,7 @@ export const TransactionsPageFiltersDrawer = () => {
       contentClassName={TRANSACTIONS_PAGE_DRAWER_CONTENT_CLASS_NAME}
     >
       <div id="transactions-filters-panel" className="pb-6">
-        {filtersPanel}
+        <TransactionsFiltersPanel appliedFilters={filters} onApply={handleApplyFilters} />
       </div>
     </Drawer>
   );

@@ -3,8 +3,6 @@ import { useEffect, useRef } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { getTransactions, type TransactionFilters } from '@transactions/api';
-import { TransactionsFiltersPanel } from '@transactions/components/transactions-filters';
-import { TransactionsTotalsPanel } from '@transactions/components/transactions-totals';
 import { getTransactionsRouteState } from '@transactions/utils/transactions-navigation';
 import {
   buildTransactionsRouteSearchParams,
@@ -60,11 +58,6 @@ export const useTransactionsPage = () => {
     });
   };
 
-  const filtersPanel = (
-    <TransactionsFiltersPanel appliedFilters={filters} onApply={handleApplyFilters} />
-  );
-  const totalsPanel = <TransactionsTotalsPanel filters={filters} />;
-
   const contextValue: TransactionsPageContextValue = {
     isFiltersOpen: layoutState.isFiltersOpen,
     isTotalsOpen: layoutState.isTotalsOpen,
@@ -82,9 +75,8 @@ export const useTransactionsPage = () => {
     handleToggleFilters: layoutState.handleToggleFilters,
     closePanels: layoutState.closePanels,
     handleNavigateToNewTransaction,
+    handleApplyFilters,
     handlePageChange,
-    totalsPanel,
-    filtersPanel,
   };
 
   return {

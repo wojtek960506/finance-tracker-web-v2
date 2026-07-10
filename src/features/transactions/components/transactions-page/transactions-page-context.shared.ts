@@ -1,4 +1,4 @@
-import type { ReactNode, RefObject } from 'react';
+import type { RefObject } from 'react';
 import { createContext } from 'react';
 
 import type { TransactionFilters, TransactionsResponse } from '@transactions/api';
@@ -20,9 +20,8 @@ export type TransactionsPageContextValue = {
   handleToggleFilters: () => void;
   closePanels: () => void;
   handleNavigateToNewTransaction: () => void;
+  handleApplyFilters: (nextFilters: TransactionFilters) => void;
   handlePageChange: (page: number) => void;
-  totalsPanel: ReactNode;
-  filtersPanel: ReactNode;
 };
 
 export const TransactionsPageContext = createContext<TransactionsPageContextValue | null>(
