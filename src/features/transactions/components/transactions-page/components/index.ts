@@ -4,4 +4,4 @@ export * from './transactions-page-filters-drawer';
 export * from './transactions-page-filters-sidebar';
 export * from './transactions-page-main-column';
 export * from './transactions-page-totals-drawer';
-export * from './transactions-page-wide-totals-sidebar';
+export * from './transactions-page-totals-sidebar';

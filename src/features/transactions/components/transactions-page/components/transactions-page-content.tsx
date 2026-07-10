@@ -6,7 +6,7 @@ import { TransactionsPageFiltersDrawer } from './transactions-page-filters-drawe
 import { TransactionsPageFiltersSidebar } from './transactions-page-filters-sidebar';
 import { TransactionsPageMainColumn } from './transactions-page-main-column';
 import { TransactionsPageTotalsDrawer } from './transactions-page-totals-drawer';
-import { TransactionsPageWideTotalsSidebar } from './transactions-page-wide-totals-sidebar';
+import { TransactionsPageTotalsSidebar } from './transactions-page-totals-sidebar';
 
 export const TransactionsPageContent = () => {
   const { isSharedSidebarVisible, isLargeSidebarLayout } = useTransactionsPageContext();
@@ -28,7 +28,7 @@ export const TransactionsPageContent = () => {
             ),
         )}
       >
-        <TransactionsPageWideTotalsSidebar />
+        <TransactionsPageTotalsSidebar />
         <TransactionsPageMainColumn />
         <TransactionsPageFiltersSidebar />
       </div>

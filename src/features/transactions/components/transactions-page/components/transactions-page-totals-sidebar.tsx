@@ -2,7 +2,7 @@ import { TransactionsTotalsPanel } from '@transactions/components/transactions-t
 
 import { useTransactionsPageContext } from '../context';
 
-export const TransactionsPageWideTotalsSidebar = () => {
+export const TransactionsPageTotalsSidebar = () => {
   const {
     hasNoTransactions,
     isLargeSidebarLayout,
