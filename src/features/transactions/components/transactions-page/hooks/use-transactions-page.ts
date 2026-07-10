@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 
 import { getTransactionsRouteState } from '@transactions/utils/transactions-navigation';
 
-import type { TransactionsPageContextValue } from './transactions-page-context.shared';
+import type { TransactionsPageContextValue } from '../context';
+
 import { useTransactionsPageLayout } from './use-transactions-page-layout';
 import { useTransactionsPageQuery } from './use-transactions-page-query';
 

@@ -1,6 +1,6 @@
 import { TransactionsTotalsPanel } from '@transactions/components/transactions-totals';
 
-import { useTransactionsPageContext } from './use-transactions-page-context';
+import { useTransactionsPageContext } from '../context';
 
 export const TransactionsPageWideTotalsSidebar = () => {
   const {

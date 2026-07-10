@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { FORM_BUTTON_SIZE_CLASS } from '@shared/consts';
 import { Button, Card } from '@shared/ui';
-import { useTransactionsPageContext } from '@transactions/components/transactions-page/use-transactions-page-context';
+import { useTransactionsPageContext } from '@transactions/components/transactions-page/context';
 
 export const TransactionsListEmptyState = () => {
   const { t } = useTranslation('transactions');

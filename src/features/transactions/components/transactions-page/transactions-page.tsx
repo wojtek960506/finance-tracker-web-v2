@@ -2,9 +2,9 @@ import { useTranslation } from 'react-i18next';
 
 import { LoadingCard } from '@shared/ui';
 
-import { TransactionsPageContent } from './transactions-page-content';
-import { TransactionsPageProvider } from './transactions-page-context';
-import { useTransactionsPage } from './use-transactions-page';
+import { TransactionsPageContent } from './components';
+import { TransactionsPageProvider } from './context';
+import { useTransactionsPage } from './hooks';
 
 // TODO:
 // 1. refactor this file

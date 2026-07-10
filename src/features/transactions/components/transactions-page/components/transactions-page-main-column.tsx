@@ -7,7 +7,7 @@ import { Button } from '@shared/ui';
 import { ExportTransactionsButton } from '@transactions/components/export-transactions';
 import { TransactionsList } from '@transactions/components/transactions-list';
 
-import { useTransactionsPageContext } from './use-transactions-page-context';
+import { useTransactionsPageContext } from '../context';
 
 export const TransactionsPageMainColumn = () => {
   const { t } = useTranslation('transactions');

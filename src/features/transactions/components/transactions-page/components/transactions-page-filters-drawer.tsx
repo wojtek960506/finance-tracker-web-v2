@@ -3,11 +3,12 @@ import { useTranslation } from 'react-i18next';
 import { Drawer } from '@shared/ui';
 import { TransactionsFiltersPanel } from '@transactions/components/transactions-filters';
 
+import { useTransactionsPageContext } from '../context';
+
 import {
   TRANSACTIONS_PAGE_DRAWER_CONTENT_CLASS_NAME,
   TRANSACTIONS_PAGE_DRAWER_PANEL_CLASS_NAME,
 } from './transactions-page-drawer.consts';
-import { useTransactionsPageContext } from './use-transactions-page-context';
 
 export const TransactionsPageFiltersDrawer = () => {
   const { t } = useTranslation('transactions');

@@ -1,11 +1,12 @@
 import clsx from 'clsx';
 
+import { useTransactionsPageContext } from '../context';
+
 import { TransactionsPageFiltersDrawer } from './transactions-page-filters-drawer';
 import { TransactionsPageFiltersSidebar } from './transactions-page-filters-sidebar';
 import { TransactionsPageMainColumn } from './transactions-page-main-column';
 import { TransactionsPageTotalsDrawer } from './transactions-page-totals-drawer';
 import { TransactionsPageWideTotalsSidebar } from './transactions-page-wide-totals-sidebar';
-import { useTransactionsPageContext } from './use-transactions-page-context';
 
 export const TransactionsPageContent = () => {
   const { isSharedSidebarVisible, isLargeSidebarLayout } =
