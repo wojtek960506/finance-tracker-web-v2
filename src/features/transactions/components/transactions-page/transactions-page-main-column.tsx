@@ -6,7 +6,8 @@ import { FORM_BUTTON_SIZE_CLASS } from '@shared/consts';
 import { Button } from '@shared/ui';
 import { ExportTransactionsButton } from '@transactions/components/export-transactions';
 import { TransactionsList } from '@transactions/components/transactions-list';
-import { useTransactionsPageContext } from './transactions-page-context';
+
+import { useTransactionsPageContext } from './use-transactions-page-context';
 
 export const TransactionsPageMainColumn = () => {
   const { t } = useTranslation('transactions');
@@ -36,8 +37,7 @@ export const TransactionsPageMainColumn = () => {
         isSharedSidebarVisible
           ? 'w-full lg:mx-0 lg:max-w-[35rem]'
           : 'mx-auto w-full max-w-[35rem]',
-        isLargeSidebarLayout &&
-          'xl:col-start-2 xl:mx-auto xl:w-full xl:max-w-[35rem]',
+        isLargeSidebarLayout && 'xl:col-start-2 xl:mx-auto xl:w-full xl:max-w-[35rem]',
       )}
     >
       {!hasNoTransactions ? (

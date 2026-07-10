@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 
-import { useTransactionsPageContext } from './transactions-page-context';
+import { useTransactionsPageContext } from './use-transactions-page-context';
 
 export const TransactionsPageFiltersSidebar = () => {
   const {

@@ -144,37 +144,43 @@ export const TransactionsPage = () => {
 
   return (
     <TransactionsPageProvider
-        value={{
-          isFiltersOpen,
-          isTotalsOpen,
-          isDrawerPanels,
-          isSharedSidebarVisible,
-          isLargeSidebarLayout,
-          hasNoTransactions,
-          filters,
-          data,
-          page,
-          activeFiltersCount,
-          totalsButtonRef,
-          filtersButtonRef,
-          handleToggleTotals,
-          handleToggleFilters,
-          closePanels,
-          handleNavigateToNewTransaction,
-          handlePageChange,
-          totalsPanel,
-          filtersPanel,
-          emptyTransactionsState,
-        }}
-      >
+      value={{
+        isFiltersOpen,
+        isTotalsOpen,
+        isDrawerPanels,
+        isSharedSidebarVisible,
+        isLargeSidebarLayout,
+        hasNoTransactions,
+        filters,
+        data,
+        page,
+        activeFiltersCount,
+        totalsButtonRef,
+        filtersButtonRef,
+        handleToggleTotals,
+        handleToggleFilters,
+        closePanels,
+        handleNavigateToNewTransaction,
+        handlePageChange,
+        totalsPanel,
+        filtersPanel,
+        emptyTransactionsState,
+      }}
+    >
       <>
         <div
           className={clsx(
             'h-full min-h-0 w-full overflow-hidden',
             isLargeSidebarLayout &&
-              'xl:grid xl:grid-cols-[minmax(10rem,1fr)_35rem_minmax(10rem,1fr)] xl:justify-center xl:items-stretch xl:gap-6',
+              clsx(
+                'xl:grid xl:grid-cols-[minmax(10rem,1fr)_35rem_minmax(10rem,1fr)]',
+                'xl:justify-center xl:items-stretch xl:gap-6',
+              ),
             isSharedSidebarVisible &&
-              'lg:grid lg:grid-cols-[35rem_minmax(10rem,1fr)] lg:justify-center lg:items-stretch lg:gap-4',
+              clsx(
+                'lg:grid lg:grid-cols-[35rem_minmax(10rem,1fr)]',
+                'lg:justify-center lg:items-stretch lg:gap-4',
+              ),
           )}
         >
           <TransactionsPageWideTotalsSidebar />

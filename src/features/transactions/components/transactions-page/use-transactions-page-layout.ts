@@ -1,7 +1,4 @@
-import {
-  IS_LG_MEDIA_QUERY,
-  IS_XL_MEDIA_QUERY,
-} from '@shared/consts';
+import { IS_LG_MEDIA_QUERY, IS_XL_MEDIA_QUERY } from '@shared/consts';
 import { useMediaQuery } from '@shared/hooks';
 import { useUIStore } from '@store/ui-store';
 
@@ -43,9 +40,7 @@ export const useTransactionsPageLayout = () => {
       ? isTransactionsFiltersOpen
       : visiblePanel === 'filters';
   const isTotalsOpen =
-    layoutMode === 'three-column'
-      ? isTransactionsTotalsOpen
-      : visiblePanel === 'totals';
+    layoutMode === 'three-column' ? isTransactionsTotalsOpen : visiblePanel === 'totals';
 
   const isDrawerPanels = layoutMode === 'single-column';
   const isSharedSidebarVisible =

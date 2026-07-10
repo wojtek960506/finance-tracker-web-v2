@@ -1,4 +1,4 @@
-import { useTransactionsPageContext } from './transactions-page-context';
+import { useTransactionsPageContext } from './use-transactions-page-context';
 
 export const TransactionsPageWideTotalsSidebar = () => {
   const {

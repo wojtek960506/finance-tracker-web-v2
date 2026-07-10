@@ -2,11 +2,11 @@ import { useTranslation } from 'react-i18next';
 
 import { Drawer } from '@shared/ui';
 
-import { useTransactionsPageContext } from './transactions-page-context';
 import {
   TRANSACTIONS_PAGE_DRAWER_CONTENT_CLASS_NAME,
   TRANSACTIONS_PAGE_DRAWER_PANEL_CLASS_NAME,
 } from './transactions-page-drawer.consts';
+import { useTransactionsPageContext } from './use-transactions-page-context';
 
 export const TransactionsPageTotalsDrawer = () => {
   const { t } = useTranslation('transactions');
