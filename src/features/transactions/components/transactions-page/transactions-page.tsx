@@ -4,8 +4,7 @@ import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
-import { FORM_BUTTON_SIZE_CLASS } from '@shared/consts';
-import { Button, Card, LoadingCard } from '@shared/ui';
+import { LoadingCard } from '@shared/ui';
 import { getTransactions, type TransactionFilters } from '@transactions/api';
 import { TransactionsFiltersPanel } from '@transactions/components/transactions-filters';
 import { TransactionsTotalsPanel } from '@transactions/components/transactions-totals';
@@ -112,35 +111,6 @@ export const TransactionsPage = () => {
     <TransactionsFiltersPanel appliedFilters={filters} onApply={handleApplyFilters} />
   );
   const totalsPanel = <TransactionsTotalsPanel filters={filters} />;
-  const emptyTransactionsState = (
-    <Card
-      className={clsx(
-        'mx-auto mt-2 w-full max-w-[35rem] items-center gap-4 rounded-3xl border-fg/20',
-        'bg-modal-bg/95 p-6 text-center sm:mt-3 sm:p-8',
-      )}
-    >
-      <div className="flex flex-col gap-2">
-        <h2 className="text-xl font-semibold sm:text-2xl">
-          {t('emptyTransactionsTitle')}
-        </h2>
-        <p className="text-sm text-text-muted sm:text-base">
-          {t('emptyTransactionsDescription')}
-        </p>
-      </div>
-
-      <Button
-        variant="primary"
-        className={clsx(FORM_BUTTON_SIZE_CLASS, 'mt-2 sm:mt-3 w-full')}
-        onClick={() =>
-          navigate('/transactions/new', {
-            state: getTransactionsRouteState(currentTransactionsRoute),
-          })
-        }
-      >
-        {t('createFirstTransaction')}
-      </Button>
-    </Card>
-  );
 
   return (
     <TransactionsPageProvider
@@ -164,7 +134,6 @@ export const TransactionsPage = () => {
         handlePageChange,
         totalsPanel,
         filtersPanel,
-        emptyTransactionsState,
       }}
     >
       <>

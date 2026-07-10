@@ -23,7 +23,6 @@ export type TransactionsPageContextValue = {
   handlePageChange: (page: number) => void;
   totalsPanel: ReactNode;
   filtersPanel: ReactNode;
-  emptyTransactionsState: ReactNode;
 };
 
 export const TransactionsPageContext = createContext<TransactionsPageContextValue | null>(

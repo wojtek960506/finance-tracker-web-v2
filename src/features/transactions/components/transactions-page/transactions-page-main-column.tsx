@@ -27,7 +27,6 @@ export const TransactionsPageMainColumn = () => {
     handleToggleFilters,
     handleNavigateToNewTransaction,
     handlePageChange,
-    emptyTransactionsState,
   } = useTransactionsPageContext();
 
   return (
@@ -109,7 +108,6 @@ export const TransactionsPageMainColumn = () => {
           totalPages={data?.totalPages ?? 0}
           activeFiltersCount={activeFiltersCount}
           onPageChange={handlePageChange}
-          emptyState={emptyTransactionsState}
         />
       </div>
     </div>
