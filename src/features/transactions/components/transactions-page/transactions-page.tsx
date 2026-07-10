@@ -18,6 +18,7 @@ import {
 
 import { TransactionsPageProvider } from './transactions-page-context';
 import { TransactionsPageFiltersDrawer } from './transactions-page-filters-drawer';
+import { TransactionsPageFiltersSidebar } from './transactions-page-filters-sidebar';
 import { TransactionsPageMainColumn } from './transactions-page-main-column';
 import { TransactionsPageTotalsDrawer } from './transactions-page-totals-drawer';
 import { TransactionsPageWideTotalsSidebar } from './transactions-page-wide-totals-sidebar';
@@ -177,37 +178,8 @@ export const TransactionsPage = () => {
           )}
         >
           <TransactionsPageWideTotalsSidebar />
-
           <TransactionsPageMainColumn />
-
-          {!hasNoTransactions && isLargeSidebarLayout ? (
-            isFiltersOpen ? (
-              <aside
-                id="transactions-filters-panel"
-                className="hidden min-h-0 min-w-0 xl:col-start-3 xl:block xl:w-full"
-              >
-                <div className="h-full overflow-y-auto pr-1">{filtersPanel}</div>
-              </aside>
-            ) : isTotalsOpen ? (
-              <div className="hidden xl:block" aria-hidden="true" />
-            ) : null
-          ) : !hasNoTransactions && isSharedSidebarVisible ? (
-            <aside
-              className={clsx(
-                'hidden min-h-0 min-w-0 lg:block lg:w-full',
-                'lg:col-start-2',
-              )}
-            >
-              <div
-                id={
-                  isTotalsOpen ? 'transactions-totals-panel' : 'transactions-filters-panel'
-                }
-                className="h-full"
-              >
-                {isTotalsOpen ? totalsPanel : filtersPanel}
-              </div>
-            </aside>
-          ) : null}
+          <TransactionsPageFiltersSidebar />
         </div>
         <TransactionsPageTotalsDrawer />
         <TransactionsPageFiltersDrawer />
