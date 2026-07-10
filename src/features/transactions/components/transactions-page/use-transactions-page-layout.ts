@@ -2,21 +2,13 @@ import { IS_LG_MEDIA_QUERY, IS_XL_MEDIA_QUERY } from '@shared/consts';
 import { useMediaQuery } from '@shared/hooks';
 import { useUIStore } from '@store/ui-store';
 
-type TransactionsPageLayoutMode = 'single-column' | 'two-column' | 'three-column';
-type TransactionsPageVisiblePanel = 'filters' | 'totals' | null;
-
-const getLayoutMode = ({
-  isLgScreen,
-  isXlScreen,
-}: {
-  isLgScreen: boolean;
-  isXlScreen: boolean;
-}): TransactionsPageLayoutMode => {
-  if (isXlScreen) return 'three-column';
-  if (isLgScreen) return 'two-column';
-
-  return 'single-column';
-};
+import type { TransactionsPageVisiblePanel } from './use-transactions-page-layout.types';
+import {
+  getLayoutMode,
+  getLayoutState,
+  getNextPanelState,
+  getOpenPanels,
+} from './use-transactions-page-layout.utils';
 
 export const useTransactionsPageLayout = () => {
   const isLgScreen = useMediaQuery(IS_LG_MEDIA_QUERY);
@@ -29,24 +21,16 @@ export const useTransactionsPageLayout = () => {
   } = useUIStore();
 
   const layoutMode = getLayoutMode({ isLgScreen, isXlScreen });
-  const visiblePanel: TransactionsPageVisiblePanel = isTransactionsFiltersOpen
-    ? 'filters'
-    : isTransactionsTotalsOpen
-      ? 'totals'
-      : null;
-
-  const isFiltersOpen =
-    layoutMode === 'three-column'
-      ? isTransactionsFiltersOpen
-      : visiblePanel === 'filters';
-  const isTotalsOpen =
-    layoutMode === 'three-column' ? isTransactionsTotalsOpen : visiblePanel === 'totals';
-
-  const isDrawerPanels = layoutMode === 'single-column';
-  const isSharedSidebarVisible =
-    layoutMode === 'two-column' && (isFiltersOpen || isTotalsOpen);
-  const isLargeSidebarLayout =
-    layoutMode === 'three-column' && (isFiltersOpen || isTotalsOpen);
+  const panels = getOpenPanels({
+    layoutMode,
+    isTransactionsFiltersOpen,
+    isTransactionsTotalsOpen,
+  });
+  const layout = getLayoutState({
+    layoutMode,
+    isFiltersOpen: panels.isFiltersOpen,
+    isTotalsOpen: panels.isTotalsOpen,
+  });
 
   const setClosedPanels = () => {
     setIsTransactionsFiltersOpen(false);
@@ -54,19 +38,16 @@ export const useTransactionsPageLayout = () => {
   };
 
   const togglePanel = (panel: Exclude<TransactionsPageVisiblePanel, null>) => {
-    if (layoutMode === 'three-column') {
-      if (panel === 'filters') {
-        setIsTransactionsFiltersOpen(!isTransactionsFiltersOpen);
-        return;
-      }
+    const nextState = getNextPanelState({
+      layoutMode,
+      panel,
+      visiblePanel: panels.visiblePanel,
+      isTransactionsFiltersOpen,
+      isTransactionsTotalsOpen,
+    });
 
-      setIsTransactionsTotalsOpen(!isTransactionsTotalsOpen);
-      return;
-    }
-
-    const isPanelVisible = visiblePanel === panel;
-    setIsTransactionsFiltersOpen(!isPanelVisible && panel === 'filters');
-    setIsTransactionsTotalsOpen(!isPanelVisible && panel === 'totals');
+    setIsTransactionsFiltersOpen(nextState.isTransactionsFiltersOpen);
+    setIsTransactionsTotalsOpen(nextState.isTransactionsTotalsOpen);
   };
 
   const handleToggleFilters = () => togglePanel('filters');
@@ -83,15 +64,13 @@ export const useTransactionsPageLayout = () => {
 
   return {
     layoutMode,
-    visiblePanel,
-    isFiltersOpen,
-    isTotalsOpen,
-    isDrawerPanels,
-    isSharedSidebarVisible,
-    isLargeSidebarLayout,
-    handleToggleFilters,
-    handleToggleTotals,
-    handleFiltersApplied,
-    closePanels: setClosedPanels,
+    panels,
+    layout,
+    actions: {
+      handleToggleFilters,
+      handleToggleTotals,
+      handleFiltersApplied,
+      closePanels: setClosedPanels,
+    },
   };
 };

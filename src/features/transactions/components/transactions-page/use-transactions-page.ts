@@ -13,7 +13,7 @@ export const useTransactionsPage = () => {
   const filtersButtonRef = useRef<HTMLButtonElement | null>(null);
   const layoutState = useTransactionsPageLayout();
   const queryState = useTransactionsPageQuery({
-    onFiltersApplied: layoutState.handleFiltersApplied,
+    onFiltersApplied: layoutState.actions.handleFiltersApplied,
   });
   const {
     data,
@@ -33,11 +33,11 @@ export const useTransactionsPage = () => {
   };
 
   const contextValue: TransactionsPageContextValue = {
-    isFiltersOpen: layoutState.isFiltersOpen,
-    isTotalsOpen: layoutState.isTotalsOpen,
-    isDrawerPanels: layoutState.isDrawerPanels,
-    isSharedSidebarVisible: layoutState.isSharedSidebarVisible,
-    isLargeSidebarLayout: layoutState.isLargeSidebarLayout,
+    isFiltersOpen: layoutState.panels.isFiltersOpen,
+    isTotalsOpen: layoutState.panels.isTotalsOpen,
+    isDrawerPanels: layoutState.layout.isDrawerPanels,
+    isSharedSidebarVisible: layoutState.layout.isSharedSidebarVisible,
+    isLargeSidebarLayout: layoutState.layout.isLargeSidebarLayout,
     hasNoTransactions,
     filters,
     data,
@@ -45,9 +45,9 @@ export const useTransactionsPage = () => {
     activeFiltersCount,
     totalsButtonRef,
     filtersButtonRef,
-    handleToggleTotals: layoutState.handleToggleTotals,
-    handleToggleFilters: layoutState.handleToggleFilters,
-    closePanels: layoutState.closePanels,
+    handleToggleTotals: layoutState.actions.handleToggleTotals,
+    handleToggleFilters: layoutState.actions.handleToggleFilters,
+    closePanels: layoutState.actions.closePanels,
     handleNavigateToNewTransaction,
     handleApplyFilters,
     handlePageChange,
