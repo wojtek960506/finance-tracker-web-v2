@@ -16,6 +16,7 @@ import {
   parseTransactionsRouteSearchParams,
 } from '@transactions/utils/transactions-query';
 
+import { TransactionsPageProvider } from './transactions-page-context';
 import { TransactionsPageMainColumn } from './transactions-page-main-column';
 import { TransactionsPageWideTotalsSidebar } from './transactions-page-wide-totals-sidebar';
 import { useTransactionsPageLayout } from './use-transactions-page-layout';
@@ -140,78 +141,71 @@ export const TransactionsPage = () => {
 
   return (
     <>
-      <div
-        className={clsx(
-          'h-full min-h-0 w-full overflow-hidden',
-          isLargeSidebarLayout &&
-            'xl:grid xl:grid-cols-[minmax(10rem,1fr)_35rem_minmax(10rem,1fr)] xl:justify-center xl:items-stretch xl:gap-6',
-          isSharedSidebarVisible &&
-            'lg:grid lg:grid-cols-[35rem_minmax(10rem,1fr)] lg:justify-center lg:items-stretch lg:gap-4',
-        )}
+      <TransactionsPageProvider
+        value={{
+          isFiltersOpen,
+          isTotalsOpen,
+          isSharedSidebarVisible,
+          isLargeSidebarLayout,
+          hasNoTransactions,
+          filters,
+          data,
+          page,
+          activeFiltersCount,
+          totalsButtonRef,
+          filtersButtonRef,
+          handleToggleTotals,
+          handleToggleFilters,
+          handleNavigateToNewTransaction,
+          handlePageChange,
+          totalsPanel,
+          filtersPanel,
+          emptyTransactionsState,
+        }}
       >
-        <TransactionsPageWideTotalsSidebar
-          hasNoTransactions={hasNoTransactions}
-          isLargeSidebarLayout={isLargeSidebarLayout}
-          isTotalsOpen={isTotalsOpen}
-          isFiltersOpen={isFiltersOpen}
-          totalsPanel={totalsPanel}
-        />
+        <div
+          className={clsx(
+            'h-full min-h-0 w-full overflow-hidden',
+            isLargeSidebarLayout &&
+              'xl:grid xl:grid-cols-[minmax(10rem,1fr)_35rem_minmax(10rem,1fr)] xl:justify-center xl:items-stretch xl:gap-6',
+            isSharedSidebarVisible &&
+              'lg:grid lg:grid-cols-[35rem_minmax(10rem,1fr)] lg:justify-center lg:items-stretch lg:gap-4',
+          )}
+        >
+          <TransactionsPageWideTotalsSidebar />
 
-        <TransactionsPageMainColumn
-          layout={{
-            isSharedSidebarVisible,
-            isLargeSidebarLayout,
-            hasNoTransactions,
-          }}
-          actions={{
-            onCreateTransaction: handleNavigateToNewTransaction,
-            filters,
-            isTotalsOpen,
-            isFiltersOpen,
-            activeFiltersCount,
-            totalsButtonRef,
-            filtersButtonRef,
-            onToggleTotals: handleToggleTotals,
-            onToggleFilters: handleToggleFilters,
-          }}
-          listState={{
-            data,
-            page,
-            activeFiltersCount,
-            onPageChange: handlePageChange,
-            emptyState: emptyTransactionsState,
-          }}
-        />
+          <TransactionsPageMainColumn />
 
-        {!hasNoTransactions && isLargeSidebarLayout ? (
-          isFiltersOpen ? (
+          {!hasNoTransactions && isLargeSidebarLayout ? (
+            isFiltersOpen ? (
+              <aside
+                id="transactions-filters-panel"
+                className="hidden min-h-0 min-w-0 xl:col-start-3 xl:block xl:w-full"
+              >
+                <div className="h-full overflow-y-auto pr-1">{filtersPanel}</div>
+              </aside>
+            ) : isTotalsOpen ? (
+              <div className="hidden xl:block" aria-hidden="true" />
+            ) : null
+          ) : !hasNoTransactions && isSharedSidebarVisible ? (
             <aside
-              id="transactions-filters-panel"
-              className="hidden min-h-0 min-w-0 xl:col-start-3 xl:block xl:w-full"
+              className={clsx(
+                'hidden min-h-0 min-w-0 lg:block lg:w-full',
+                'lg:col-start-2',
+              )}
             >
-              <div className="h-full overflow-y-auto pr-1">{filtersPanel}</div>
+              <div
+                id={
+                  isTotalsOpen ? 'transactions-totals-panel' : 'transactions-filters-panel'
+                }
+                className="h-full"
+              >
+                {isTotalsOpen ? totalsPanel : filtersPanel}
+              </div>
             </aside>
-          ) : isTotalsOpen ? (
-            <div className="hidden xl:block" aria-hidden="true" />
-          ) : null
-        ) : !hasNoTransactions && isSharedSidebarVisible ? (
-          <aside
-            className={clsx(
-              'hidden min-h-0 min-w-0 lg:block lg:w-full',
-              'lg:col-start-2',
-            )}
-          >
-            <div
-              id={
-                isTotalsOpen ? 'transactions-totals-panel' : 'transactions-filters-panel'
-              }
-              className="h-full"
-            >
-              {isTotalsOpen ? totalsPanel : filtersPanel}
-            </div>
-          </aside>
-        ) : null}
-      </div>
+          ) : null}
+        </div>
+      </TransactionsPageProvider>
 
       {!hasNoTransactions && isDrawerPanels && isTotalsOpen ? (
         <Drawer

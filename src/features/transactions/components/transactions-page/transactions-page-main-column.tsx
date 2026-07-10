@@ -1,73 +1,33 @@
 import clsx from 'clsx';
 import { ChartColumnBig, Funnel, Plus } from 'lucide-react';
-import type { ComponentProps, ReactNode, RefObject } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { FORM_BUTTON_SIZE_CLASS } from '@shared/consts';
 import { Button } from '@shared/ui';
-import type { TransactionFilters, TransactionsResponse } from '@transactions/api';
 import { ExportTransactionsButton } from '@transactions/components/export-transactions';
 import { TransactionsList } from '@transactions/components/transactions-list';
+import { useTransactionsPageContext } from './transactions-page-context';
 
-type TransactionsPageMainColumnLayoutProps = {
-  isSharedSidebarVisible: boolean;
-  isLargeSidebarLayout: boolean;
-  hasNoTransactions: boolean;
-};
-
-type TransactionsPageMainColumnActionsProps = {
-  onCreateTransaction: () => void;
-  filters: TransactionFilters;
-  isTotalsOpen: boolean;
-  isFiltersOpen: boolean;
-  activeFiltersCount: number;
-  totalsButtonRef: RefObject<HTMLButtonElement | null>;
-  filtersButtonRef: RefObject<HTMLButtonElement | null>;
-  onToggleTotals: () => void;
-  onToggleFilters: () => void;
-};
-
-type TransactionsPageMainColumnProps = {
-  layout: TransactionsPageMainColumnLayoutProps;
-  actions: TransactionsPageMainColumnActionsProps;
-  listState: {
-    data: TransactionsResponse | undefined;
-    page: number;
-    activeFiltersCount: number;
-    onPageChange: (page: number) => void;
-    emptyState: ReactNode;
-  };
-};
-
-export const TransactionsPageMainColumn = ({
-  layout,
-  actions,
-  listState,
-}: TransactionsPageMainColumnProps) => {
+export const TransactionsPageMainColumn = () => {
   const { t } = useTranslation('transactions');
   const {
     isSharedSidebarVisible,
     isLargeSidebarLayout,
     hasNoTransactions,
-  } = layout;
-  const {
-    onCreateTransaction,
     filters,
     isTotalsOpen,
     isFiltersOpen,
     activeFiltersCount,
     totalsButtonRef,
     filtersButtonRef,
-    onToggleTotals,
-    onToggleFilters,
-  } = actions;
-  const {
     data,
     page,
-    activeFiltersCount: listActiveFiltersCount,
-    onPageChange,
-    emptyState,
-  } = listState;
+    handleToggleTotals,
+    handleToggleFilters,
+    handleNavigateToNewTransaction,
+    handlePageChange,
+    emptyTransactionsState,
+  } = useTransactionsPageContext();
 
   return (
     <div
@@ -86,7 +46,7 @@ export const TransactionsPageMainColumn = ({
             variant="primary"
             className={clsx(FORM_BUTTON_SIZE_CLASS, 'gap-2 font-semibold sm:font-bold')}
             aria-label={t('newTransaction')}
-            onClick={onCreateTransaction}
+            onClick={handleNavigateToNewTransaction}
           >
             <Plus className="size-4 sm:size-5" aria-hidden="true" />
             <span aria-hidden="true" className="hidden sm:inline">
@@ -104,7 +64,7 @@ export const TransactionsPageMainColumn = ({
             aria-label={isTotalsOpen ? t('hideTotals') : t('showTotals')}
             aria-expanded={isTotalsOpen}
             aria-controls="transactions-totals-panel"
-            onClick={onToggleTotals}
+            onClick={handleToggleTotals}
           >
             <ChartColumnBig className="size-4 sm:size-5" aria-hidden="true" />
             <span aria-hidden="true" className="hidden sm:inline">
@@ -120,7 +80,7 @@ export const TransactionsPageMainColumn = ({
             aria-label={isFiltersOpen ? t('hideFilters') : t('showFilters')}
             aria-expanded={isFiltersOpen}
             aria-controls="transactions-filters-panel"
-            onClick={onToggleFilters}
+            onClick={handleToggleFilters}
           >
             <Funnel className="size-4 sm:size-5" aria-hidden="true" />
             <span aria-hidden="true" className="hidden sm:inline">
@@ -147,9 +107,9 @@ export const TransactionsPageMainColumn = ({
           hasAnyTransactions={(data?.total ?? 0) > 0}
           currentPage={data?.page ?? page}
           totalPages={data?.totalPages ?? 0}
-          activeFiltersCount={listActiveFiltersCount}
-          onPageChange={onPageChange}
-          emptyState={emptyState}
+          activeFiltersCount={activeFiltersCount}
+          onPageChange={handlePageChange}
+          emptyState={emptyTransactionsState}
         />
       </div>
     </div>

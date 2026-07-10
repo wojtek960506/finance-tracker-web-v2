@@ -1,20 +1,14 @@
-import type { ReactNode } from 'react';
+import { useTransactionsPageContext } from './transactions-page-context';
 
-type TransactionsPageWideTotalsSidebarProps = {
-  hasNoTransactions: boolean;
-  isLargeSidebarLayout: boolean;
-  isTotalsOpen: boolean;
-  isFiltersOpen: boolean;
-  totalsPanel: ReactNode;
-};
+export const TransactionsPageWideTotalsSidebar = () => {
+  const {
+    hasNoTransactions,
+    isLargeSidebarLayout,
+    isTotalsOpen,
+    isFiltersOpen,
+    totalsPanel,
+  } = useTransactionsPageContext();
 
-export const TransactionsPageWideTotalsSidebar = ({
-  hasNoTransactions,
-  isLargeSidebarLayout,
-  isTotalsOpen,
-  isFiltersOpen,
-  totalsPanel,
-}: TransactionsPageWideTotalsSidebarProps) => {
   if (hasNoTransactions || !isLargeSidebarLayout) return null;
 
   if (isTotalsOpen) {
