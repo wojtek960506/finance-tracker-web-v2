@@ -1,22 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
 import clsx from 'clsx';
-import {
-  ChartColumnBig,
-  Funnel,
-  Plus,
-} from 'lucide-react';
 import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
-import {
-  FORM_BUTTON_SIZE_CLASS,
-} from '@shared/consts';
+import { FORM_BUTTON_SIZE_CLASS } from '@shared/consts';
 import { Button, Card, Drawer, LoadingCard } from '@shared/ui';
 import { getTransactions, type TransactionFilters } from '@transactions/api';
-import { ExportTransactionsButton } from '@transactions/components/export-transactions';
 import { TransactionsFiltersPanel } from '@transactions/components/transactions-filters';
-import { TransactionsList } from '@transactions/components/transactions-list';
 import { TransactionsTotalsPanel } from '@transactions/components/transactions-totals';
 import { getTransactionsRouteState } from '@transactions/utils/transactions-navigation';
 import {
@@ -25,6 +16,7 @@ import {
   parseTransactionsRouteSearchParams,
 } from '@transactions/utils/transactions-query';
 
+import { TransactionsPageMainColumn } from './transactions-page-main-column';
 import { TransactionsPageWideTotalsSidebar } from './transactions-page-wide-totals-sidebar';
 import { useTransactionsPageLayout } from './use-transactions-page-layout';
 
@@ -106,6 +98,12 @@ export const TransactionsPage = () => {
     setSearchParams(buildTransactionsRouteSearchParams({ page: nextPage, filters }));
   };
 
+  const handleNavigateToNewTransaction = () => {
+    navigate('/transactions/new', {
+      state: getTransactionsRouteState(currentTransactionsRoute),
+    });
+  };
+
   const filtersPanel = (
     <TransactionsFiltersPanel appliedFilters={filters} onApply={handleApplyFilters} />
   );
@@ -159,96 +157,31 @@ export const TransactionsPage = () => {
           totalsPanel={totalsPanel}
         />
 
-        <div
-          className={clsx(
-            'transactions-page-main-column flex h-full min-h-0 min-w-0 flex-col gap-2 sm:gap-3',
-            isSharedSidebarVisible
-              ? 'w-full lg:mx-0 lg:max-w-[35rem]'
-              : 'mx-auto w-full max-w-[35rem]',
-            isLargeSidebarLayout &&
-              'xl:col-start-2 xl:mx-auto xl:w-full xl:max-w-[35rem]',
-          )}
-        >
-          {!hasNoTransactions ? (
-            <div className="grid grid-cols-4 gap-2 sm:grid-cols-2 sm:gap-3">
-              <Button
-                variant="primary"
-                className={clsx(
-                  FORM_BUTTON_SIZE_CLASS,
-                  'gap-2 font-semibold sm:font-bold',
-                )}
-                aria-label={t('newTransaction')}
-                onClick={() =>
-                  navigate('/transactions/new', {
-                    state: getTransactionsRouteState(currentTransactionsRoute),
-                  })
-                }
-              >
-                <Plus className="size-4 sm:size-5" aria-hidden="true" />
-                <span aria-hidden="true" className="hidden sm:inline">
-                  {t('newButtonShort')}
-                </span>
-              </Button>
-
-              <ExportTransactionsButton filters={filters} />
-
-              <Button
-                ref={totalsButtonRef}
-                type="button"
-                variant={isTotalsOpen ? 'secondary' : 'outline'}
-                className={clsx(FORM_BUTTON_SIZE_CLASS, 'gap-2')}
-                aria-label={isTotalsOpen ? t('hideTotals') : t('showTotals')}
-                aria-expanded={isTotalsOpen}
-                aria-controls="transactions-totals-panel"
-                onClick={handleToggleTotals}
-              >
-                <ChartColumnBig className="size-4 sm:size-5" aria-hidden="true" />
-                <span aria-hidden="true" className="hidden sm:inline">
-                  {t('totals')}
-                </span>
-              </Button>
-
-              <Button
-                ref={filtersButtonRef}
-                type="button"
-                variant={isFiltersOpen ? 'secondary' : 'outline'}
-                className={clsx(FORM_BUTTON_SIZE_CLASS, 'gap-1 xs:gap-2 sm:gap-3')}
-                aria-label={isFiltersOpen ? t('hideFilters') : t('showFilters')}
-                aria-expanded={isFiltersOpen}
-                aria-controls="transactions-filters-panel"
-                onClick={handleToggleFilters}
-              >
-                <Funnel className="size-4 sm:size-5" aria-hidden="true" />
-                <span aria-hidden="true" className="hidden sm:inline">
-                  {t('filters')}
-                </span>
-                <span
-                  aria-hidden="true"
-                  className={clsx(
-                    'inline-flex size-6 items-center justify-center rounded-full border border-1 text-xs font-semibold',
-                    activeFiltersCount > 0
-                      ? 'bg-bt-primary text-white'
-                      : 'bg-bg text-text-muted',
-                  )}
-                >
-                  {activeFiltersCount}
-                </span>
-              </Button>
-            </div>
-          ) : null}
-
-          <div className="min-h-0 flex flex-1 flex-col overflow-hidden">
-            <TransactionsList
-              transactions={data?.items ?? []}
-              hasAnyTransactions={(data?.total ?? 0) > 0}
-              currentPage={data?.page ?? page}
-              totalPages={data?.totalPages ?? 0}
-              activeFiltersCount={activeFiltersCount}
-              onPageChange={handlePageChange}
-              emptyState={emptyTransactionsState}
-            />
-          </div>
-        </div>
+        <TransactionsPageMainColumn
+          layout={{
+            isSharedSidebarVisible,
+            isLargeSidebarLayout,
+            hasNoTransactions,
+          }}
+          actions={{
+            onCreateTransaction: handleNavigateToNewTransaction,
+            filters,
+            isTotalsOpen,
+            isFiltersOpen,
+            activeFiltersCount,
+            totalsButtonRef,
+            filtersButtonRef,
+            onToggleTotals: handleToggleTotals,
+            onToggleFilters: handleToggleFilters,
+          }}
+          listState={{
+            data,
+            page,
+            activeFiltersCount,
+            onPageChange: handlePageChange,
+            emptyState: emptyTransactionsState,
+          }}
+        />
 
         {!hasNoTransactions && isLargeSidebarLayout ? (
           isFiltersOpen ? (
