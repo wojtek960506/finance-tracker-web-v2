@@ -8,32 +8,32 @@ import {
   TRANSACTIONS_PAGE_DRAWER_PANEL_CLASS_NAME,
 } from './transactions-page-drawer.consts';
 
-export const TransactionsPageTotalsDrawer = () => {
+export const TransactionsPageFiltersDrawer = () => {
   const { t } = useTranslation('transactions');
   const {
     hasNoTransactions,
     isDrawerPanels,
-    isTotalsOpen,
+    isFiltersOpen,
     closePanels,
-    totalsButtonRef,
-    totalsPanel,
+    filtersButtonRef,
+    filtersPanel,
   } = useTransactionsPageContext();
 
-  if (hasNoTransactions || !isDrawerPanels || !isTotalsOpen) return null;
+  if (hasNoTransactions || !isDrawerPanels || !isFiltersOpen) return null;
 
   return (
     <Drawer
-      isOpen={isTotalsOpen}
+      isOpen={isFiltersOpen}
       fromLeft={false}
       onClose={closePanels}
-      restoreFocusRef={totalsButtonRef}
-      ariaLabel={t('totals')}
+      restoreFocusRef={filtersButtonRef}
+      ariaLabel={t('filters')}
       showOverlay={false}
       panelClassName={TRANSACTIONS_PAGE_DRAWER_PANEL_CLASS_NAME}
       contentClassName={TRANSACTIONS_PAGE_DRAWER_CONTENT_CLASS_NAME}
     >
-      <div id="transactions-totals-panel" className="pb-6">
-        {totalsPanel}
+      <div id="transactions-filters-panel" className="pb-6">
+        {filtersPanel}
       </div>
     </Drawer>
   );

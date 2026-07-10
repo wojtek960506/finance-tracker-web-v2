@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { FORM_BUTTON_SIZE_CLASS } from '@shared/consts';
-import { Button, Card, Drawer, LoadingCard } from '@shared/ui';
+import { Button, Card, LoadingCard } from '@shared/ui';
 import { getTransactions, type TransactionFilters } from '@transactions/api';
 import { TransactionsFiltersPanel } from '@transactions/components/transactions-filters';
 import { TransactionsTotalsPanel } from '@transactions/components/transactions-totals';
@@ -17,6 +17,7 @@ import {
 } from '@transactions/utils/transactions-query';
 
 import { TransactionsPageProvider } from './transactions-page-context';
+import { TransactionsPageFiltersDrawer } from './transactions-page-filters-drawer';
 import { TransactionsPageMainColumn } from './transactions-page-main-column';
 import { TransactionsPageTotalsDrawer } from './transactions-page-totals-drawer';
 import { TransactionsPageWideTotalsSidebar } from './transactions-page-wide-totals-sidebar';
@@ -209,23 +210,7 @@ export const TransactionsPage = () => {
           ) : null}
         </div>
         <TransactionsPageTotalsDrawer />
-
-        {!hasNoTransactions && isDrawerPanels && isFiltersOpen ? (
-          <Drawer
-            isOpen={isFiltersOpen}
-            fromLeft={false}
-            onClose={closePanels}
-            restoreFocusRef={filtersButtonRef}
-            ariaLabel={t('filters')}
-            showOverlay={false}
-            panelClassName="w-full overflow-x-auto w-[min(340px,100vh)"
-            contentClassName="min-w-[340px]"
-          >
-            <div id="transactions-filters-panel" className="pb-6">
-              {filtersPanel}
-            </div>
-          </Drawer>
-        ) : null}
+        <TransactionsPageFiltersDrawer />
       </>
     </TransactionsPageProvider>
   );
