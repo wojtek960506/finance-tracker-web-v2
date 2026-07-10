@@ -65,11 +65,14 @@ export const ExportTransactionsButton = ({ filters }: ExportTransactionsProps) =
           FORM_BUTTON_SIZE_CLASS,
           'w-full gap-2 font-semibold sm:font-bold',
         )}
+        aria-label={buttonLabel}
         disabled={isPending}
         onClick={() => setIsModalOpen(true)}
       >
         <Download className="size-4 sm:size-5" aria-hidden="true" />
-        <span>{buttonLabel}</span>
+        <span aria-hidden="true" className="hidden sm:inline">
+          {t('exportButtonShort')}
+        </span>
       </Button>
       {isModalOpen ? (
         <ExportTransactionsModal

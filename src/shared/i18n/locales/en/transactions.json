@@ -1,5 +1,6 @@
 {
   "newTransaction": "New transaction",
+  "newButtonShort": "New",
   "chooseTransactionKind": "Choose transaction type",
   "chooseTransactionKindDescription": "Pick the kind of transaction you want to create.",
   "standardTransaction": "Regular",
@@ -19,6 +20,7 @@
   "duplicateLastRow": "Duplicate last row",
   "createTransactions": "Create transactions",
   "exportTransactions": "Export transactions",
+  "exportButtonShort": "Export",
   "exportTransactionsSubmit": "Export",
   "exportingTransactionsSubmit": "Exporting...",
   "exportTransactionsModalTitle": "Export transactions as CSV",

@@ -1,5 +1,6 @@
 {
   "newTransaction": "Neue Transaktion",
+  "newButtonShort": "Neu",
   "chooseTransactionKind": "Transaktionstyp wählen",
   "chooseTransactionKindDescription": "Wählen Sie die Art der Transaktion, die Sie erstellen möchten.",
   "standardTransaction": "Regulär",
@@ -19,6 +20,7 @@
   "duplicateLastRow": "Letzte Zeile duplizieren",
   "createTransactions": "Transaktionen erstellen",
   "exportTransactions": "Transaktionen exportieren",
+  "exportButtonShort": "Export",
   "exportTransactionsSubmit": "Exportieren",
   "exportingTransactionsSubmit": "Exportiere...",
   "exportTransactionsModalTitle": "Transaktionen als CSV exportieren",

@@ -175,6 +175,7 @@
 }
 
 @theme inline {
+  --breakpoint-xs: 30rem;
   --breakpoint-3xl: 120rem;
 
   --color-fg: var(--fg);

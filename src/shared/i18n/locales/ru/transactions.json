@@ -1,5 +1,6 @@
 {
   "newTransaction": "Новая транзакция",
+  "newButtonShort": "Новая",
   "chooseTransactionKind": "Выберите тип транзакции",
   "chooseTransactionKindDescription": "Выберите вид транзакции, которую хотите создать.",
   "standardTransaction": "Обычная",
@@ -19,6 +20,7 @@
   "duplicateLastRow": "Дублировать последнюю строку",
   "createTransactions": "Создать транзакции",
   "exportTransactions": "Экспортировать транзакции",
+  "exportButtonShort": "Экспорт",
   "exportTransactionsSubmit": "Экспортировать",
   "exportingTransactionsSubmit": "Экспорт...",
   "exportTransactionsModalTitle": "Экспортировать транзакции в CSV",

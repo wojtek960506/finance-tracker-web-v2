@@ -1,10 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 import clsx from 'clsx';
 import {
-  PanelLeftClose,
-  PanelLeftOpen,
-  PanelRightClose,
-  PanelRightOpen,
+  ChartColumnBig,
+  Funnel,
+  Plus,
 } from 'lucide-react';
 import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -219,66 +218,70 @@ export const TransactionsPage = () => {
           )}
         >
           {!hasNoTransactions ? (
-            <div className="flex flex-col gap-2 sm:gap-3">
+            <div className="grid grid-cols-4 gap-2 sm:grid-cols-2 sm:gap-3">
               <Button
                 variant="primary"
-                className={clsx(FORM_BUTTON_SIZE_CLASS, 'font-semibold sm:font-bold')}
+                className={clsx(
+                  FORM_BUTTON_SIZE_CLASS,
+                  'gap-2 font-semibold sm:font-bold',
+                )}
+                aria-label={t('newTransaction')}
                 onClick={() =>
                   navigate('/transactions/new', {
                     state: getTransactionsRouteState(currentTransactionsRoute),
                   })
                 }
               >
-                {t('newTransaction')}
+                <Plus className="size-4 sm:size-5" aria-hidden="true" />
+                <span aria-hidden="true" className="hidden sm:inline">
+                  {t('newButtonShort')}
+                </span>
               </Button>
 
-              <div className="transactions-page-panel-toggle-grid grid items-center gap-2 sm:gap-3">
-                <Button
-                  ref={totalsButtonRef}
-                  type="button"
-                  variant={isTotalsOpen ? 'secondary' : 'outline'}
-                  className={clsx(FORM_BUTTON_SIZE_CLASS, 'gap-2')}
-                  aria-expanded={isTotalsOpen}
-                  aria-controls="transactions-totals-panel"
-                  onClick={handleToggleTotals}
-                >
-                  <span>{isTotalsOpen ? t('hideTotals') : t('showTotals')}</span>
-                  {isTotalsOpen ? (
-                    <PanelLeftClose className="size-4 sm:size-5" aria-hidden="true" />
-                  ) : (
-                    <PanelLeftOpen className="size-4 sm:size-5" aria-hidden="true" />
-                  )}
-                </Button>
-
-                <Button
-                  ref={filtersButtonRef}
-                  type="button"
-                  variant={isFiltersOpen ? 'secondary' : 'outline'}
-                  className={clsx(FORM_BUTTON_SIZE_CLASS, 'gap-2')}
-                  aria-expanded={isFiltersOpen}
-                  aria-controls="transactions-filters-panel"
-                  onClick={handleToggleFilters}
-                >
-                  {isFiltersOpen ? (
-                    <PanelRightClose className="size-4 sm:size-5" aria-hidden="true" />
-                  ) : (
-                    <PanelRightOpen className="size-4 sm:size-5" aria-hidden="true" />
-                  )}
-                  <span>{isFiltersOpen ? t('hideFilters') : t('showFilters')}</span>
-                  <span
-                    className={clsx(
-                      'inline-flex size-6 items-center justify-center rounded-full text-xs font-semibold border border-1',
-                      activeFiltersCount > 0
-                        ? 'bg-bt-primary text-white'
-                        : 'bg-bg text-text-muted',
-                    )}
-                  >
-                    {activeFiltersCount}
-                  </span>
-                </Button>
-              </div>
-
               <ExportTransactionsButton filters={filters} />
+
+              <Button
+                ref={totalsButtonRef}
+                type="button"
+                variant={isTotalsOpen ? 'secondary' : 'outline'}
+                className={clsx(FORM_BUTTON_SIZE_CLASS, 'gap-2')}
+                aria-label={isTotalsOpen ? t('hideTotals') : t('showTotals')}
+                aria-expanded={isTotalsOpen}
+                aria-controls="transactions-totals-panel"
+                onClick={handleToggleTotals}
+              >
+                <ChartColumnBig className="size-4 sm:size-5" aria-hidden="true" />
+                <span aria-hidden="true" className="hidden sm:inline">
+                  {t('totals')}
+                </span>
+              </Button>
+
+              <Button
+                ref={filtersButtonRef}
+                type="button"
+                variant={isFiltersOpen ? 'secondary' : 'outline'}
+                className={clsx(FORM_BUTTON_SIZE_CLASS, 'gap-1 xs:gap-2 sm:gap-3')}
+                aria-label={isFiltersOpen ? t('hideFilters') : t('showFilters')}
+                aria-expanded={isFiltersOpen}
+                aria-controls="transactions-filters-panel"
+                onClick={handleToggleFilters}
+              >
+                <Funnel className="size-4 sm:size-5" aria-hidden="true" />
+                <span aria-hidden="true" className="hidden sm:inline">
+                  {t('filters')}
+                </span>
+                <span
+                  aria-hidden="true"
+                  className={clsx(
+                    'inline-flex size-6 items-center justify-center rounded-full border border-1 text-xs font-semibold',
+                    activeFiltersCount > 0
+                      ? 'bg-bt-primary text-white'
+                      : 'bg-bg text-text-muted',
+                  )}
+                >
+                  {activeFiltersCount}
+                </span>
+              </Button>
             </div>
           ) : null}
 
