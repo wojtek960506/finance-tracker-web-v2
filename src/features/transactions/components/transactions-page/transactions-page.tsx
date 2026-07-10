@@ -25,6 +25,7 @@ import {
   parseTransactionsRouteSearchParams,
 } from '@transactions/utils/transactions-query';
 
+import { TransactionsPageWideTotalsSidebar } from './transactions-page-wide-totals-sidebar';
 import { useTransactionsPageLayout } from './use-transactions-page-layout';
 
 // TODO:
@@ -150,18 +151,13 @@ export const TransactionsPage = () => {
             'lg:grid lg:grid-cols-[35rem_minmax(10rem,1fr)] lg:justify-center lg:items-stretch lg:gap-4',
         )}
       >
-        {!hasNoTransactions && isLargeSidebarLayout ? (
-          isTotalsOpen ? (
-            <aside
-              id="transactions-totals-panel"
-              className="hidden min-h-0 min-w-0 xl:block xl:col-start-1 xl:w-full"
-            >
-              <div className="h-full">{totalsPanel}</div>
-            </aside>
-          ) : isFiltersOpen ? (
-            <div className="hidden xl:block" aria-hidden="true" />
-          ) : null
-        ) : null}
+        <TransactionsPageWideTotalsSidebar
+          hasNoTransactions={hasNoTransactions}
+          isLargeSidebarLayout={isLargeSidebarLayout}
+          isTotalsOpen={isTotalsOpen}
+          isFiltersOpen={isFiltersOpen}
+          totalsPanel={totalsPanel}
+        />
 
         <div
           className={clsx(
