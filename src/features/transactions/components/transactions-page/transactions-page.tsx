@@ -11,12 +11,8 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import {
   FORM_BUTTON_SIZE_CLASS,
-  IS_LG_MEDIA_QUERY,
-  IS_XL_MEDIA_QUERY,
 } from '@shared/consts';
-import { useMediaQuery } from '@shared/hooks';
 import { Button, Card, Drawer, LoadingCard } from '@shared/ui';
-import { useUIStore } from '@store/ui-store';
 import { getTransactions, type TransactionFilters } from '@transactions/api';
 import { ExportTransactionsButton } from '@transactions/components/export-transactions';
 import { TransactionsFiltersPanel } from '@transactions/components/transactions-filters';
@@ -28,6 +24,8 @@ import {
   countActiveTransactionFilters,
   parseTransactionsRouteSearchParams,
 } from '@transactions/utils/transactions-query';
+
+import { useTransactionsPageLayout } from './use-transactions-page-layout';
 
 // TODO:
 // 1. refactor this file
@@ -52,31 +50,23 @@ export const TransactionsPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const totalsButtonRef = useRef<HTMLButtonElement | null>(null);
   const filtersButtonRef = useRef<HTMLButtonElement | null>(null);
-  const isLgScreen = useMediaQuery(IS_LG_MEDIA_QUERY);
-  const isXlScreen = useMediaQuery(IS_XL_MEDIA_QUERY);
   const {
-    isTransactionsFiltersOpen,
-    isTransactionsTotalsOpen,
-    setIsTransactionsFiltersOpen,
-    setIsTransactionsTotalsOpen,
-  } = useUIStore();
+    isFiltersOpen,
+    isTotalsOpen,
+    isDrawerPanels,
+    isSharedSidebarVisible,
+    isLargeSidebarLayout,
+    handleToggleFilters,
+    handleToggleTotals,
+    handleFiltersApplied,
+    closePanels,
+  } = useTransactionsPageLayout();
 
   const { page, filters } = parseTransactionsRouteSearchParams(searchParams);
   const currentTransactionsRoute = `/transactions${
     searchParams.size > 0 ? `?${searchParams.toString()}` : ''
   }`;
   const activeFiltersCount = countActiveTransactionFilters(filters);
-  const visibleCompactPanel = isTransactionsFiltersOpen
-    ? 'filters'
-    : isTransactionsTotalsOpen
-      ? 'totals'
-      : null;
-  const isFiltersOpen = isXlScreen
-    ? isTransactionsFiltersOpen
-    : visibleCompactPanel === 'filters';
-  const isTotalsOpen = isXlScreen
-    ? isTransactionsTotalsOpen
-    : visibleCompactPanel === 'totals';
 
   const { data, isLoading, error } = useQuery({
     queryKey: ['transactions', page, filters],
@@ -104,45 +94,11 @@ export const TransactionsPage = () => {
   }
   if (error) return <p>{error.message}</p>;
 
-  const isDrawerPanels = !isLgScreen;
-  const isSharedSidebarVisible =
-    isLgScreen && !isXlScreen && (isFiltersOpen || isTotalsOpen);
-  const isLargeSidebarLayout = isXlScreen && (isFiltersOpen || isTotalsOpen);
-
-  const handleToggleFilters = () => {
-    if (isXlScreen) {
-      setIsTransactionsFiltersOpen(!isTransactionsFiltersOpen);
-      return;
-    }
-
-    const shouldOpenFilters = visibleCompactPanel !== 'filters';
-    setIsTransactionsFiltersOpen(shouldOpenFilters);
-    setIsTransactionsTotalsOpen(false);
-  };
-
-  const handleToggleTotals = () => {
-    if (isXlScreen) {
-      setIsTransactionsTotalsOpen(!isTransactionsTotalsOpen);
-      return;
-    }
-
-    const shouldOpenTotals = visibleCompactPanel !== 'totals';
-    setIsTransactionsTotalsOpen(shouldOpenTotals);
-    setIsTransactionsFiltersOpen(false);
-  };
-
   const handleApplyFilters = (nextFilters: TransactionFilters) => {
     setSearchParams(
       buildTransactionsRouteSearchParams({ page: 1, filters: nextFilters }),
     );
-
-    if (isXlScreen) {
-      setIsTransactionsFiltersOpen(false);
-      return;
-    }
-
-    setIsTransactionsFiltersOpen(false);
-    setIsTransactionsTotalsOpen(false);
+    handleFiltersApplied();
   };
 
   const handlePageChange = (nextPage: number) => {
@@ -332,10 +288,7 @@ export const TransactionsPage = () => {
         <Drawer
           isOpen={isTotalsOpen}
           fromLeft={false}
-          onClose={() => {
-            setIsTransactionsFiltersOpen(false);
-            setIsTransactionsTotalsOpen(false);
-          }}
+          onClose={closePanels}
           restoreFocusRef={totalsButtonRef}
           ariaLabel={t('totals')}
           showOverlay={false}
@@ -352,10 +305,7 @@ export const TransactionsPage = () => {
         <Drawer
           isOpen={isFiltersOpen}
           fromLeft={false}
-          onClose={() => {
-            setIsTransactionsFiltersOpen(false);
-            setIsTransactionsTotalsOpen(false);
-          }}
+          onClose={closePanels}
           restoreFocusRef={filtersButtonRef}
           ariaLabel={t('filters')}
           showOverlay={false}
