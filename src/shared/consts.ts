@@ -15,6 +15,7 @@ export const SUPPORTED_LANGUAGES: Record<Language, LanguageProps> = {
   ru: { label: 'Русский', isoCode: 'RU' },
 };
 
+export const IS_XS_MEDIA_QUERY = '(min-width: 480px)';
 export const IS_SM_MEDIA_QUERY = '(min-width: 640px)';
 export const IS_MD_MEDIA_QUERY = '(min-width: 768px)';
 export const IS_LG_MEDIA_QUERY = '(min-width: 1024px)';

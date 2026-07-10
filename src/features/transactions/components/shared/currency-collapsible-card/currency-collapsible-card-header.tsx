@@ -39,7 +39,9 @@ export const CurrencyCollapsibleCardHeader = ({
           {formatCurrencyAmount(balance, balanceCurrency, language)}
         </div>
       </div>
-      <div className="flex flex-wrap items-center justify-end gap-2">{rightContent}</div>
+      <div className="flex flex-wrap items-center justify-start gap-2">
+        {rightContent}
+      </div>
     </div>
   );
 };
