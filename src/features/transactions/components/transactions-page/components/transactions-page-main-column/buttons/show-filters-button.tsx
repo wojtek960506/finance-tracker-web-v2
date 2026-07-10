@@ -8,12 +8,8 @@ import { useTransactionsPageContext } from '@transactions/components/transaction
 
 export const ShowFiltersButton = () => {
   const { t } = useTranslation('transactions');
-  const {
-    isFiltersOpen,
-    activeFiltersCount,
-    filtersButtonRef,
-    handleToggleFilters,
-  } = useTransactionsPageContext();
+  const { isFiltersOpen, activeFiltersCount, filtersButtonRef, handleToggleFilters } =
+    useTransactionsPageContext();
 
   return (
     <Button
@@ -35,9 +31,7 @@ export const ShowFiltersButton = () => {
         className={clsx(
           'inline-flex size-6 items-center justify-center rounded-full',
           'border border-1 text-xs font-semibold',
-          activeFiltersCount > 0
-            ? 'bg-bt-primary text-white'
-            : 'bg-bg text-text-muted',
+          activeFiltersCount > 0 ? 'bg-bt-primary text-white' : 'bg-bg text-text-muted',
         )}
       >
         {activeFiltersCount}

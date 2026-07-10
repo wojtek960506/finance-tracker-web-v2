@@ -9,8 +9,7 @@ import { TransactionsPageTotalsDrawer } from './transactions-page-totals-drawer'
 import { TransactionsPageWideTotalsSidebar } from './transactions-page-wide-totals-sidebar';
 
 export const TransactionsPageContent = () => {
-  const { isSharedSidebarVisible, isLargeSidebarLayout } =
-    useTransactionsPageContext();
+  const { isSharedSidebarVisible, isLargeSidebarLayout } = useTransactionsPageContext();
 
   return (
     <>

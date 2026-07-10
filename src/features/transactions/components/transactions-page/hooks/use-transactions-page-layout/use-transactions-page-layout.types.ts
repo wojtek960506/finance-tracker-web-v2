@@ -1,7 +1,4 @@
-export type TransactionsPageLayoutMode =
-  | 'single-column'
-  | 'two-column'
-  | 'three-column';
+export type TransactionsPageLayoutMode = 'single-column' | 'two-column' | 'three-column';
 
 export type TransactionsPageVisiblePanel = 'filters' | 'totals' | null;
 

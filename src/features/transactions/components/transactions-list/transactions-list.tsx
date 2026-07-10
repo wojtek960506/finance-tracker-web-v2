@@ -28,7 +28,9 @@ export const TransactionsList = ({
   if (transactions.length === 0) {
     return hasAnyTransactions || activeFiltersCount > 0 ? (
       <p>{t('noTransactionsMatchingFilters')}</p>
-    ) : (<TransactionsListEmptyState />);
+    ) : (
+      <TransactionsListEmptyState />
+    );
   }
 
   return (

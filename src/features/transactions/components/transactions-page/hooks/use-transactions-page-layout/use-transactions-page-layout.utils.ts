@@ -52,10 +52,8 @@ export const getLayoutState = ({
   isTotalsOpen,
 }: GetLayoutStateArgs): TransactionsPageLayoutState => ({
   isDrawerPanels: layoutMode === 'single-column',
-  isSharedSidebarVisible:
-    layoutMode === 'two-column' && (isFiltersOpen || isTotalsOpen),
-  isLargeSidebarLayout:
-    layoutMode === 'three-column' && (isFiltersOpen || isTotalsOpen),
+  isSharedSidebarVisible: layoutMode === 'two-column' && (isFiltersOpen || isTotalsOpen),
+  isLargeSidebarLayout: layoutMode === 'three-column' && (isFiltersOpen || isTotalsOpen),
 });
 
 export const getNextPanelState = ({

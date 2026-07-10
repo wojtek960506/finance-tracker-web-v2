@@ -14,7 +14,7 @@ export const TransactionsPageMainButtons = () => {
   return (
     <div className="grid grid-cols-4 gap-2 sm:grid-cols-2 sm:gap-3">
       <NewTransactionButton />
-      <ExportTransactionsButton filters={filters}/>
+      <ExportTransactionsButton filters={filters} />
       <ShowTotalsButton />
       <ShowFiltersButton />
     </div>
