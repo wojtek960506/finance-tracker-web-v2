@@ -9,6 +9,7 @@ import {
   CreateStandardTransaction,
   CreateTransaction,
   CreateTransferTransaction,
+  InvestmentsPage,
   TransactionAccountStatistics,
   TransactionDetails,
   TransactionsPage,
@@ -60,6 +61,11 @@ export const PROTECTED_APP_ROUTES: AppRouteConfig[] = [
     path: '/transactions/trash',
     element: <TrashedTransactionsList />,
     title: { namespace: 'navigation', key: 'transactionsTrash' },
+  },
+  {
+    path: '/transactions/investments',
+    element: <InvestmentsPage />,
+    title: { namespace: 'navigation', key: 'investments' },
   },
   {
     path: '/transactions/trash/:transactionId',

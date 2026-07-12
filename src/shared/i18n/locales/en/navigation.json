@@ -1,6 +1,7 @@
 {
   "hi": "Hello",
   "transactions": "Transactions",
+  "investments": "Investments",
   "transactionsTrash": "Transaction Trash",
   "newTransaction": "New Transaction",
   "newStandardTransaction": "New Regular Transaction",

@@ -1,6 +1,7 @@
 {
   "hi": "Привет",
   "transactions": "Транзакции",
+  "investments": "Инвестиции",
   "transactionsTrash": "Корзина транзакций",
   "newTransaction": "Новая транзакция",
   "newStandardTransaction": "Новая обычная транзакция",

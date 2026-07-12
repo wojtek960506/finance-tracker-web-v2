@@ -1,6 +1,7 @@
 {
   "hi": "Hallo",
   "transactions": "Transaktionen",
+  "investments": "Investitionen",
   "transactionsTrash": "Transaktionspapierkorb",
   "newTransaction": "Neue Transaktion",
   "newStandardTransaction": "Neue reguläre Transaktion",
