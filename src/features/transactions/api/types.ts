@@ -2,19 +2,29 @@ import type { components, paths } from '@shared/types/api.generated';
 
 export type NamedResource = components['schemas']['TransactionResponse']['category'];
 
-export type TransactionType = components['schemas']['TransactionStandard']['transactionType'];
+export type TransactionType =
+  components['schemas']['TransactionStandard']['transactionType'];
 
 export type CurrencyCode = components['schemas']['TransactionStandard']['currency'];
 
-export type TransactionStandardDTO = Omit<components['schemas']['TransactionStandard'], 'currency'> & {
+export type TransactionStandardDTO = Omit<
+  components['schemas']['TransactionStandard'],
+  'currency'
+> & {
   currency: CurrencyCode | (string & {});
 };
 
-export type TransactionTransferDTO = Omit<components['schemas']['TransactionTransfer'], 'currency'> & {
+export type TransactionTransferDTO = Omit<
+  components['schemas']['TransactionTransfer'],
+  'currency'
+> & {
   currency: CurrencyCode | (string & {});
 };
 
-export type TransactionExchangeDTO = Omit<components['schemas']['TransactionExchange'], 'currencyExpense' | 'currencyIncome'> & {
+export type TransactionExchangeDTO = Omit<
+  components['schemas']['TransactionExchange'],
+  'currencyExpense' | 'currencyIncome'
+> & {
   currencyExpense: CurrencyCode | (string & {});
   currencyIncome: CurrencyCode | (string & {});
 };
@@ -36,7 +46,8 @@ export type TransactionDetails = components['schemas']['TransactionDetailsRespon
 
 export type TrashedTransaction = components['schemas']['TrashedTransactionResponse'];
 
-export type TrashedTransactionDetails = components['schemas']['TrashedTransactionDetailsResponse'];
+export type TrashedTransactionDetails =
+  components['schemas']['TrashedTransactionDetailsResponse'];
 
 export type TransactionsResponse =
   paths['/api/transactions/']['get']['responses'][200]['content']['application/json'];
@@ -47,8 +58,7 @@ export type TrashedTransactionsResponse =
 export type TransactionTotalsResponse =
   paths['/api/transactions/totals']['get']['responses'][200]['content']['application/json'];
 
-export type TransactionTotalsByCurrency =
-  TransactionTotalsResponse['byCurrency'][string];
+export type TransactionTotalsByCurrency = TransactionTotalsResponse['byCurrency'][string];
 
 export type TransactionTotalsDetails = TransactionTotalsByCurrency['expense'];
 

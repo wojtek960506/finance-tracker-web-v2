@@ -4,9 +4,11 @@
   "version": "1.2.9",
   "type": "module",
   "scripts": {
+    "predev": "pnpm generate:types",
     "dev": "CHOKIDAR_USEPOLLING=1 vite --host",
     "dev:events": "vite --host",
     "dev:polling": "CHOKIDAR_USEPOLLING=1 vite --host",
+    "prebuild": "pnpm generate:types",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
@@ -22,7 +24,17 @@
     "coverage:missing": "node scripts/coverage-missing.mjs",
     "coverage:summary-only": "pnpm test:coverage --coverage.reporter=json-summary",
     "coverage:check-missing": "vitest run --reporter=dot --coverage --coverage.reporter=json-summary --coverage.reporter=lcov && node scripts/coverage-missing.mjs",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,css,md}": [
+      "prettier --write"
+    ]
   },
   "dependencies": {
     "@base-ui/react": "^1.4.1",
@@ -70,7 +82,9 @@
     "eslint-plugin-react-refresh": "^0.4.24",
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "globals": "^16.5.0",
+    "husky": "^9.1.7",
     "jsdom": "^29.0.1",
+    "lint-staged": "^13.3.0",
     "openapi-typescript": "^7.13.0",
     "prettier": "^3.8.1",
     "tailwindcss": "^4.2.1",

@@ -10,7 +10,12 @@ import prettier from 'eslint-config-prettier';
 
 export default defineConfig(
   {
-    ignores: ['dist/**', 'coverage/**', 'node_modules/**'],
+    ignores: [
+      'dist/**',
+      'coverage/**',
+      'node_modules/**',
+      'src/shared/types/api.generated.ts',
+    ],
   },
   js.configs.recommended,
   ...tseslint.configs.recommended,
