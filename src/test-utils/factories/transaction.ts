@@ -6,7 +6,7 @@ export const makeTransaction = (overrides: Partial<Transaction> = {}): Transacti
     ownerId: 'owner-1',
     createdAt: '2024-01-01',
     updatedAt: '2024-01-02',
-    sourceIndex: 'source-1',
+    sourceIndex: 1,
     date: '2024-01-03',
     description: 'Test transaction',
     amount: 10,
@@ -15,9 +15,9 @@ export const makeTransaction = (overrides: Partial<Transaction> = {}): Transacti
     refId: undefined,
     currencies: undefined,
     exchangeRate: undefined,
-    category: { id: 'cat-1', type: 'category', name: 'Food' },
-    paymentMethod: { id: 'pm-1', type: 'paymentMethod', name: 'Card' },
-    account: { id: 'acc-1', type: 'account', name: 'Main' },
+    category: { id: 'cat-1', type: 'user', name: 'Food' },
+    paymentMethod: { id: 'pm-1', type: 'user', name: 'Card' },
+    account: { id: 'acc-1', type: 'user', name: 'Main' },
   };
 
   return {

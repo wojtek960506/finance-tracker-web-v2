@@ -141,8 +141,8 @@ describe('AdditionalDetails', () => {
         transactionType: 'expense',
         date: '2024-01-03',
         category: { id: 'cat-1', type: 'user', name: 'Food' },
-        paymentMethod: { id: 'pm-1', type: 'paymentMethod', name: 'Card' },
-        account: { id: 'acc-1', type: 'account', name: 'Main' },
+        paymentMethod: { id: 'pm-1', type: 'user', name: 'Card' },
+        account: { id: 'acc-1', type: 'user', name: 'Main' },
       }),
       reference: makeTransaction({
         id: 'ref-123',

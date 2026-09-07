@@ -90,13 +90,13 @@ describe('UpdateExchangeTransactionView', () => {
     id: 'tx-1',
     transactionType: 'expense',
     refId: 'tx-2',
-    category: { id: 'cat-exchange', type: 'category', name: 'exchange' },
+    category: { id: 'cat-exchange', type: 'system', name: 'exchange' },
   });
   const transactionRef = makeTransaction({
     id: 'tx-2',
     transactionType: 'income',
     refId: 'tx-1',
-    category: { id: 'cat-exchange', type: 'category', name: 'exchange' },
+    category: { id: 'cat-exchange', type: 'system', name: 'exchange' },
   });
 
   it('updates an exchange transaction', async () => {

@@ -1,42 +1,22 @@
-export type NamedResource = {
-  id: string;
-  type: string;
-  name: string;
+import type { components, paths } from '@shared/types/api.generated';
+
+export type NamedResource = components['schemas']['TransactionResponse']['category'];
+
+export type TransactionType = components['schemas']['TransactionStandard']['transactionType'];
+
+export type CurrencyCode = components['schemas']['TransactionStandard']['currency'];
+
+export type TransactionStandardDTO = Omit<components['schemas']['TransactionStandard'], 'currency'> & {
+  currency: CurrencyCode | (string & {});
 };
 
-export type TransactionType = 'expense' | 'income';
-
-export type TransactionStandardDTO = {
-  date: string;
-  description: string;
-  amount: number;
-  currency: string;
-  categoryId?: string | null;
-  paymentMethodId?: string | null;
-  accountId?: string | null;
-  transactionType: TransactionType;
+export type TransactionTransferDTO = Omit<components['schemas']['TransactionTransfer'], 'currency'> & {
+  currency: CurrencyCode | (string & {});
 };
 
-export type TransactionTransferDTO = {
-  date: string;
-  description: string;
-  amount: number;
-  currency: string;
-  accountExpenseId?: string | null;
-  accountIncomeId?: string | null;
-  paymentMethodId?: string | null;
-};
-
-export type TransactionExchangeDTO = {
-  date: string;
-  description: string;
-  amountExpense: number;
-  amountIncome: number;
-  currencyExpense: string;
-  currencyIncome: string;
-  accountExpenseId?: string | null;
-  accountIncomeId?: string | null;
-  paymentMethodId?: string | null;
+export type TransactionExchangeDTO = Omit<components['schemas']['TransactionExchange'], 'currencyExpense' | 'currencyIncome'> & {
+  currencyExpense: CurrencyCode | (string & {});
+  currencyIncome: CurrencyCode | (string & {});
 };
 
 export type BulkTransactionDTO =
@@ -48,50 +28,46 @@ export type CreateBulkTransactionsDTO = {
   transactions: BulkTransactionDTO[];
 };
 
-export type Transaction = {
-  date: string;
-  description: string;
-  amount: number;
-  currency: string;
-  transactionType: TransactionType;
-  id: string;
-  ownerId: string;
-  createdAt: string;
-  updatedAt: string;
-  sourceIndex: string;
-  sourceRefIndex?: string;
-  refId?: string;
-  currencies?: string;
-  exchangeRate?: number;
-  category: NamedResource;
-  paymentMethod: NamedResource;
-  account: NamedResource;
-};
+export type Transaction = components['schemas']['TransactionResponse'];
 
-export type TransactionDeletion = {
-  deletedAt: string;
-  purgeAt: string;
-};
+export type TransactionDeletion = components['schemas']['TransactionDeletion'];
 
-export type TransactionDetails = Transaction & {
-  reference?: Transaction;
-};
+export type TransactionDetails = components['schemas']['TransactionDetailsResponse'];
 
-export type TrashedTransaction = Transaction & {
-  deletion: TransactionDeletion;
-};
+export type TrashedTransaction = components['schemas']['TrashedTransactionResponse'];
 
-export type TrashedTransactionDetails = TrashedTransaction & {
-  reference?: TrashedTransaction;
-};
+export type TrashedTransactionDetails = components['schemas']['TrashedTransactionDetailsResponse'];
 
-export type TransactionsResponse = {
-  page: number;
-  limit: number;
-  total: number;
-  totalPages: number;
-  items: Transaction[];
-};
+export type TransactionsResponse =
+  paths['/api/transactions/']['get']['responses'][200]['content']['application/json'];
+
+export type TrashedTransactionsResponse =
+  paths['/api/transactions/trash']['get']['responses'][200]['content']['application/json'];
+
+export type TransactionTotalsResponse =
+  paths['/api/transactions/totals']['get']['responses'][200]['content']['application/json'];
+
+export type TransactionTotalsByCurrency =
+  TransactionTotalsResponse['byCurrency'][string];
+
+export type TransactionTotalsDetails = TransactionTotalsByCurrency['expense'];
+
+export type TransactionTotalsOverall = TransactionTotalsResponse['overall'];
+
+export type TransactionAccountStatisticsResponse =
+  paths['/api/transactions/statistics/accounts']['get']['responses'][200]['content']['application/json'];
+
+export type TransactionAccountStatisticsCurrency =
+  TransactionAccountStatisticsResponse['currencies'][number];
+
+export type TransactionAccountStatisticsAccount =
+  TransactionAccountStatisticsCurrency['accounts'][number];
+
+export type UpdateManyReply =
+  paths['/api/transactions/trash/restore']['post']['responses'][200]['content']['application/json'];
+
+export type DeleteManyReply =
+  paths['/api/transactions/trash']['delete']['responses'][200]['content']['application/json'];
 
 export type TransactionFilters = {
   startDate?: string;
@@ -113,76 +89,9 @@ export type GetTransactionsQuery = {
   filters?: TransactionFilters;
 };
 
-export type TrashedTransactionsResponse = {
-  page: number;
-  limit: number;
-  total: number;
-  totalPages: number;
-  items: TrashedTransaction[];
-};
-
-export type TransactionTotalsDetails = {
-  totalAmount: number;
-  totalItems: number;
-  averageAmount: number;
-  maxAmount: number;
-  minAmount: number;
-};
-
-export type TransactionTotalsByCurrency = {
-  totalItems: number;
-  expense: TransactionTotalsDetails;
-  income: TransactionTotalsDetails;
-};
-
-export type TransactionTotalsOverall = {
-  totalItems: number;
-  expense: { totalItems: number };
-  income: { totalItems: number };
-};
-
-export type TransactionTotalsResponse = {
-  byCurrency: Record<string, TransactionTotalsByCurrency>;
-  overall: TransactionTotalsOverall;
-};
-
-export type TransactionAccountStatisticsAccount = {
-  accountId: string;
-  accountName: string;
-  accountType: 'user' | 'system';
-  totalAmount: number;
-  totalItems: number;
-  normalizedTotalAmount?: number;
-};
-
-export type TransactionAccountStatisticsCurrency = {
-  currency: string;
-  totalAmount: number;
-  totalItems: number;
-  normalizedTotalAmount?: number;
-  accounts: TransactionAccountStatisticsAccount[];
-};
-
-export type TransactionAccountStatisticsResponse = {
-  currencies: TransactionAccountStatisticsCurrency[];
-  normalizedBaseCurrency?: string;
-  normalizedTotalAmount?: number;
-};
-
 export type TransactionAccountStatisticsQuery = Pick<
   TransactionFilters,
   'startDate' | 'endDate' | 'transactionType' | 'currency'
 > & {
   baseCurrency?: string;
-};
-
-export type UpdateManyReply = {
-  acknowledged: boolean;
-  matchedCount: number;
-  modifiedCount: number;
-};
-
-export type DeleteManyReply = {
-  acknowledged: boolean;
-  deletedCount: number;
 };
