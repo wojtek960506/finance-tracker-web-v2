@@ -102,6 +102,7 @@ describe('TransactionPreview', () => {
       <MemoryRouter>
         <TransactionPreview
           transaction={makeTransaction({
+            kind: 'transfer',
             category: { id: 'cat-1', type: 'system', name: TRANSFER_CATEGORY },
           })}
         />
@@ -119,6 +120,7 @@ describe('TransactionPreview', () => {
       <MemoryRouter>
         <TransactionPreview
           transaction={makeTransaction({
+            kind: 'exchange',
             category: { id: 'cat-1', type: 'system', name: EXCHANGE_CATEGORY },
           })}
         />

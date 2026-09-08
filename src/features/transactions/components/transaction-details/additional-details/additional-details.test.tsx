@@ -58,6 +58,7 @@ describe('AdditionalDetails', () => {
   it('renders reference link for transfer transactions', () => {
     const transaction: Transaction = {
       ...baseTransaction,
+      kind: 'transfer',
       category: { ...baseTransaction.category, name: TRANSFER_CATEGORY, type: 'system' },
       refId: 'ref-123',
     };
@@ -71,6 +72,7 @@ describe('AdditionalDetails', () => {
   it('renders exchange rate and reference link for exchange transactions', () => {
     const transaction: Transaction = {
       ...baseTransaction,
+      kind: 'exchange',
       category: { ...baseTransaction.category, name: EXCHANGE_CATEGORY, type: 'system' },
       currencies: 'USD/PLN',
       exchangeRate: 3.5,
@@ -90,6 +92,7 @@ describe('AdditionalDetails', () => {
   it('handles missing exchange data and reference id', () => {
     const transaction: Transaction = {
       ...baseTransaction,
+      kind: 'exchange',
       category: { ...baseTransaction.category, name: EXCHANGE_CATEGORY, type: 'system' },
       currencies: undefined,
       exchangeRate: undefined,
@@ -105,6 +108,7 @@ describe('AdditionalDetails', () => {
   it('uses a custom reference path prefix when provided', () => {
     const transaction: Transaction = {
       ...baseTransaction,
+      kind: 'transfer',
       category: { ...baseTransaction.category, name: TRANSFER_CATEGORY, type: 'system' },
       refId: 'trash-ref-123',
     };
