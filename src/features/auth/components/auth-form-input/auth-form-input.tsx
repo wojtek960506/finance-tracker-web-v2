@@ -13,6 +13,7 @@ type AuthFormInputProps<T extends FieldValues> = {
   placeholder: string;
   getFieldErrorMessage?: (fieldName: Path<T>) => string | undefined;
   type?: HTMLInputTypeAttribute | undefined;
+  autoFocus?: boolean;
 };
 
 export const AuthFormInput = <T extends FieldValues>({
@@ -21,6 +22,7 @@ export const AuthFormInput = <T extends FieldValues>({
   placeholder,
   getFieldErrorMessage,
   type = 'text',
+  autoFocus,
 }: AuthFormInputProps<T>) => {
   const { t } = useTranslation('auth');
 
@@ -30,6 +32,7 @@ export const AuthFormInput = <T extends FieldValues>({
         {...form.register(name)}
         id={String(name)}
         type={type}
+        autoFocus={autoFocus}
         placeholder={t(placeholder)}
         autoComplete="off"
         className={FIELD_CONTROL_CLASS_NAME}

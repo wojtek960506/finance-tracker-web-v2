@@ -333,6 +333,7 @@ describe('TransactionDetails', () => {
   it('shows an error toast and re-enables the query when move to trash fails', async () => {
     mocks.getTransaction.mockResolvedValueOnce({
       ...baseTransaction,
+      kind: 'transfer',
       refId: 'tx-2',
       category: { id: 'cat-transfer', type: 'system', name: 'myAccount' },
     });
@@ -364,6 +365,7 @@ describe('TransactionDetails', () => {
   it('removes affected transaction detail queries on unmount after a successful move', async () => {
     mocks.getTransaction.mockResolvedValueOnce({
       ...baseTransaction,
+      kind: 'transfer',
       refId: 'tx-2',
     });
     mocks.moveTransactionToTrash.mockResolvedValueOnce({

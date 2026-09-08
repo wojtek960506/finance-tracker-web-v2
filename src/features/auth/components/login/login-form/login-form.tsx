@@ -37,6 +37,7 @@ export const LoginForm = ({ redirectedEmail, isPending, onSubmit }: LoginFormPro
 
   const handleSubmit: SubmitHandler<LoginFormValues> = async (submittedValues) => {
     await onSubmit(submittedValues);
+    form.reset(getDefaultLoginFormValues());
   };
 
   const getFieldErrorMessage = (fieldName: FieldName) => {
@@ -62,6 +63,7 @@ export const LoginForm = ({ redirectedEmail, isPending, onSubmit }: LoginFormPro
           placeholder={`${name}Placeholder`}
           getFieldErrorMessage={getFieldErrorMessage}
           type={name === 'password' ? 'password' : 'text'}
+          autoFocus={name === 'email'}
         />
       ))}
 

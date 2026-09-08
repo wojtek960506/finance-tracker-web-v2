@@ -27,6 +27,7 @@ vi.mock('@transactions/components', () => ({
   CreateStandardTransaction: () => <div>standard</div>,
   CreateTransaction: () => <div>new</div>,
   CreateTransferTransaction: () => <div>transfer</div>,
+  InvestmentsPage: () => <div>investments</div>,
   TransactionAccountStatistics: () => <div>stats</div>,
   TrashedTransactionDetails: () => <div>trash-details</div>,
   TrashedTransactionsList: () => <div>trash-list</div>,

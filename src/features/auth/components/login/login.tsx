@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router-dom';
 
@@ -24,24 +24,20 @@ const LOGIN_DESCRIPTION_CLASS = clsx(
 
 export const Login = () => {
   const { t } = useTranslation('auth');
-  const emailInputRef = useRef<HTMLInputElement>(null);
   const [searchParams] = useSearchParams();
   const redirectedEmail = searchParams.get('email') ?? '';
 
   const [isLoginPending, setIsLoginPending] = useState(false);
   const [unverifiedEmail, setUnverifiedEmail] = useState<string | null>(null);
+  const [lastEmail, setLastEmail] = useState<string | null>(null);
 
   const { setAuthToken } = useAuthToken();
   const catchLoginError = useCatchLoginError(setUnverifiedEmail);
 
-  useEffect(() => {
-    if (unverifiedEmail) return;
-    emailInputRef.current?.focus();
-  }, [unverifiedEmail]);
-
   const handleSubmit = async ({ email, password }: LoginFormValues) => {
     try {
       setIsLoginPending(true);
+      setLastEmail(email);
       const res = await login(email, password);
       setAuthToken(res, { broadcast: true });
     } catch (error) {
@@ -69,7 +65,7 @@ export const Login = () => {
         </div>
 
         <LoginForm
-          redirectedEmail={redirectedEmail}
+          redirectedEmail={lastEmail ?? redirectedEmail}
           isPending={isLoginPending}
           onSubmit={handleSubmit}
         />
