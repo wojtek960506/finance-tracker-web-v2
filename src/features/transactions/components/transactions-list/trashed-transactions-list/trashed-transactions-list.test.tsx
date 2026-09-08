@@ -58,6 +58,12 @@ vi.mock('@ui', () => ({
   Card: ({ children }: { children: ReactNode }) => <div>{children}</div>,
   Input: (props: React.InputHTMLAttributes<HTMLInputElement>) => <input {...props} />,
   Label: ({ children }: { children: ReactNode }) => <label>{children}</label>,
+  LoadingCard: ({ title, description }: { title: string; description?: string }) => (
+    <div>
+      <p>{title}</p>
+      {description ? <p>{description}</p> : null}
+    </div>
+  ),
   LoadingState: ({ title, description }: { title: string; description?: string }) => (
     <div>
       <p>{title}</p>

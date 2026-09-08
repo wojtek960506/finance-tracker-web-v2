@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import type { ReactNode } from 'react';
+import { MemoryRouter } from 'react-router-dom';
 import { describe, expect, it, vi } from 'vitest';
 
 import {
@@ -10,6 +11,8 @@ import type { Transaction, TransactionDetails } from '@transactions/api';
 import { EXCHANGE_CATEGORY, TRANSFER_CATEGORY } from '@transactions/consts';
 
 import { AdditionalDetails } from './additional-details';
+
+const renderWithRouter = (ui: ReactNode) => render(<MemoryRouter>{ui}</MemoryRouter>);
 
 const mocks = vi.hoisted(() => ({
   language: 'en' as const,
@@ -45,7 +48,9 @@ const baseTransaction: Transaction = makeTransaction();
 
 describe('AdditionalDetails', () => {
   it('renders nothing for non transfer/exchange categories', () => {
-    const { container } = render(<AdditionalDetails transaction={baseTransaction} />);
+    const { container } = renderWithRouter(
+      <AdditionalDetails transaction={baseTransaction} />,
+    );
 
     expect(container).toBeEmptyDOMElement();
   });
@@ -57,7 +62,7 @@ describe('AdditionalDetails', () => {
       refId: 'ref-123',
     };
 
-    render(<AdditionalDetails transaction={transaction} />);
+    renderWithRouter(<AdditionalDetails transaction={transaction} />);
 
     const link = screen.getByText('goToReferencedTransaction');
     expect(link).toHaveAttribute('href', '/transactions/ref-123');
@@ -72,7 +77,7 @@ describe('AdditionalDetails', () => {
       refId: 'ref-123',
     };
 
-    render(<AdditionalDetails transaction={transaction} />);
+    renderWithRouter(<AdditionalDetails transaction={transaction} />);
 
     expect(screen.getByText('exchangeRate')).toBeInTheDocument();
     expect(screen.getByText('1 USD = 3.5000 PLN')).toBeInTheDocument();
@@ -91,7 +96,7 @@ describe('AdditionalDetails', () => {
       refId: undefined,
     };
 
-    render(<AdditionalDetails transaction={transaction} />);
+    renderWithRouter(<AdditionalDetails transaction={transaction} />);
 
     expect(screen.queryByText('exchangeRate')).not.toBeInTheDocument();
     expect(screen.queryByText('goToReferencedTransaction')).not.toBeInTheDocument();
@@ -104,7 +109,7 @@ describe('AdditionalDetails', () => {
       refId: 'trash-ref-123',
     };
 
-    render(
+    renderWithRouter(
       <AdditionalDetails
         transaction={transaction}
         referencePathPrefix="/transactions/trash"
@@ -125,7 +130,7 @@ describe('AdditionalDetails', () => {
       exchangeRate: 3.5,
     };
 
-    render(<AdditionalDetails transaction={transaction} />);
+    renderWithRouter(<AdditionalDetails transaction={transaction} />);
 
     expect(screen.getByText('exchangeRate')).toBeInTheDocument();
     expect(screen.getByText('1 USD = 3.5000 PLN')).toBeInTheDocument();
@@ -156,7 +161,7 @@ describe('AdditionalDetails', () => {
       }),
     };
 
-    render(<AdditionalDetails transaction={transaction} />);
+    renderWithRouter(<AdditionalDetails transaction={transaction} />);
 
     expect(screen.getByText('referencedTransaction')).toBeInTheDocument();
     expect(screen.getByText('amount')).toHaveClass('text-transaction-income-label');
@@ -181,7 +186,7 @@ describe('AdditionalDetails', () => {
       }),
     };
 
-    render(
+    renderWithRouter(
       <AdditionalDetails
         transaction={transaction}
         referencePathPrefix="/transactions/trash"
@@ -202,7 +207,7 @@ describe('AdditionalDetails', () => {
       reference,
     };
 
-    render(<AdditionalDetails transaction={transaction} />);
+    renderWithRouter(<AdditionalDetails transaction={transaction} />);
 
     expect(screen.queryByText('referencedTransaction')).not.toBeInTheDocument();
     expect(screen.getByText('goToReferencedTransaction')).toHaveAttribute(
@@ -217,7 +222,7 @@ describe('AdditionalDetails', () => {
       reference: makeTransaction({ id: 'ref-123', currency: 'EUR' }),
     };
 
-    render(<AdditionalDetails transaction={transaction} />);
+    renderWithRouter(<AdditionalDetails transaction={transaction} />);
 
     expect(screen.getByText('-10.00 EUR')).toBeInTheDocument();
   });
@@ -228,7 +233,7 @@ describe('AdditionalDetails', () => {
       reference: makeTransaction({ id: 'ref-123', transactionType: 'income' }),
     };
 
-    render(<AdditionalDetails transaction={transaction} />);
+    renderWithRouter(<AdditionalDetails transaction={transaction} />);
 
     expect(screen.getByText('+10.00 USD')).toBeInTheDocument();
   });

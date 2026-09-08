@@ -54,6 +54,12 @@ vi.mock('@ui', () => ({
     </button>
   ),
   Card: ({ children }: { children: ReactNode }) => <div>{children}</div>,
+  LoadingCard: ({ title, description }: { title: string; description?: string }) => (
+    <div>
+      <p>{title}</p>
+      {description ? <p>{description}</p> : null}
+    </div>
+  ),
   LoadingState: ({ title, description }: { title: string; description?: string }) => (
     <div>
       <p>{title}</p>
