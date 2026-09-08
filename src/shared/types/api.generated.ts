@@ -2470,7 +2470,45 @@ export interface components {
             accountIncomeId?: string | null;
             paymentMethodId?: string | null;
         };
-        TransactionCreateBulkItemInput: unknown;
+        TransactionCreateBulkItemInput: {
+            date: unknown;
+            description: string;
+            amount: number;
+            /** @enum {string} */
+            currency: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            categoryId?: string | null;
+            paymentMethodId?: string | null;
+            accountId?: string | null;
+            /** @enum {string} */
+            transactionType: "expense" | "income";
+            /** @constant */
+            kind: "standard";
+        } | {
+            date: unknown;
+            description: string;
+            amountExpense: number;
+            amountIncome: number;
+            /** @enum {string} */
+            currencyExpense: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            /** @enum {string} */
+            currencyIncome: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            accountExpenseId?: string | null;
+            accountIncomeId?: string | null;
+            paymentMethodId?: string | null;
+            /** @constant */
+            kind: "exchange";
+        } | {
+            date: unknown;
+            description: string;
+            amount: number;
+            /** @enum {string} */
+            currency: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            accountExpenseId?: string | null;
+            accountIncomeId?: string | null;
+            paymentMethodId?: string | null;
+            /** @constant */
+            kind: "transfer";
+        };
         TransactionBulkCreateInput: {
             transactions: components["schemas"]["TransactionCreateBulkItemInput"][];
         };
@@ -2483,6 +2521,8 @@ export interface components {
             /** @enum {string} */
             transactionType: "expense" | "income";
             id: string;
+            /** @enum {string} */
+            kind: "standard" | "exchange" | "transfer" | "investment";
             ownerId: string;
             createdAt: unknown;
             updatedAt: unknown;
@@ -2519,6 +2559,8 @@ export interface components {
             /** @enum {string} */
             transactionType: "expense" | "income";
             id: string;
+            /** @enum {string} */
+            kind: "standard" | "exchange" | "transfer" | "investment";
             ownerId: string;
             createdAt: unknown;
             updatedAt: unknown;
@@ -2560,6 +2602,8 @@ export interface components {
             /** @enum {string} */
             transactionType: "expense" | "income";
             id: string;
+            /** @enum {string} */
+            kind: "standard" | "exchange" | "transfer" | "investment";
             ownerId: string;
             createdAt: unknown;
             updatedAt: unknown;
@@ -2597,6 +2641,8 @@ export interface components {
             /** @enum {string} */
             transactionType: "expense" | "income";
             id: string;
+            /** @enum {string} */
+            kind: "standard" | "exchange" | "transfer" | "investment";
             ownerId: string;
             createdAt: unknown;
             updatedAt: unknown;
@@ -2734,7 +2780,48 @@ export interface components {
             accountIncomeId?: string | null;
             paymentMethodId?: string | null;
         };
-        TransactionCreateBulkItem: unknown;
+        TransactionCreateBulkItem: {
+            /** Format: date-time */
+            date: string;
+            description: string;
+            amount: number;
+            /** @enum {string} */
+            currency: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            categoryId?: string | null;
+            paymentMethodId?: string | null;
+            accountId?: string | null;
+            /** @enum {string} */
+            transactionType: "expense" | "income";
+            /** @constant */
+            kind: "standard";
+        } | {
+            /** Format: date-time */
+            date: string;
+            description: string;
+            amountExpense: number;
+            amountIncome: number;
+            /** @enum {string} */
+            currencyExpense: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            /** @enum {string} */
+            currencyIncome: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            accountExpenseId?: string | null;
+            accountIncomeId?: string | null;
+            paymentMethodId?: string | null;
+            /** @constant */
+            kind: "exchange";
+        } | {
+            /** Format: date-time */
+            date: string;
+            description: string;
+            amount: number;
+            /** @enum {string} */
+            currency: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            accountExpenseId?: string | null;
+            accountIncomeId?: string | null;
+            paymentMethodId?: string | null;
+            /** @constant */
+            kind: "transfer";
+        };
         TransactionBulkCreate: {
             transactions: components["schemas"]["TransactionCreateBulkItem"][];
         };
@@ -2748,6 +2835,8 @@ export interface components {
             /** @enum {string} */
             transactionType: "expense" | "income";
             id: string;
+            /** @enum {string} */
+            kind: "standard" | "exchange" | "transfer" | "investment";
             ownerId: string;
             /** Format: date-time */
             createdAt: string;
@@ -2787,6 +2876,8 @@ export interface components {
             /** @enum {string} */
             transactionType: "expense" | "income";
             id: string;
+            /** @enum {string} */
+            kind: "standard" | "exchange" | "transfer" | "investment";
             ownerId: string;
             /** Format: date-time */
             createdAt: string;
@@ -2833,6 +2924,8 @@ export interface components {
             /** @enum {string} */
             transactionType: "expense" | "income";
             id: string;
+            /** @enum {string} */
+            kind: "standard" | "exchange" | "transfer" | "investment";
             ownerId: string;
             /** Format: date-time */
             createdAt: string;
@@ -2873,6 +2966,8 @@ export interface components {
             /** @enum {string} */
             transactionType: "expense" | "income";
             id: string;
+            /** @enum {string} */
+            kind: "standard" | "exchange" | "transfer" | "investment";
             ownerId: string;
             /** Format: date-time */
             createdAt: string;
