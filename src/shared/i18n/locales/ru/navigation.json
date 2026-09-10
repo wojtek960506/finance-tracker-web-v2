@@ -5,6 +5,7 @@
   "transactionsTrash": "Корзина транзакций",
   "newTransaction": "Новая транзакция",
   "newStandardTransaction": "Новая обычная транзакция",
+  "newInvestmentTransaction": "Новая инвестиционная транзакция",
   "newTransferTransaction": "Новый перевод",
   "newExchangeTransaction": "Новая валютная операция",
   "newBulkTransaction": "Массовое добавление транзакций",

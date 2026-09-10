@@ -1,5 +1,6 @@
 export { CreateBulkTransaction } from './create-transaction';
 export { CreateExchangeTransaction } from './create-transaction';
+export { CreateInvestmentTransaction } from './create-transaction';
 export { CreateStandardTransaction } from './create-transaction';
 export { CreateTransaction } from './create-transaction';
 export { CreateTransferTransaction } from './create-transaction';

@@ -2,6 +2,7 @@ import clsx from 'clsx';
 import { Trash2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
+import { InstrumentKindBadge } from '@features/investments/components/instruments';
 import { useLanguage } from '@shared/hooks';
 import type { TransactionDetails, TrashedTransactionDetails } from '@transactions/api';
 import { getTransactionNamedResourceLabel } from '@transactions/utils';
@@ -46,6 +47,11 @@ export const TransactionDetailsCard = ({
     tNamedResources,
   );
 
+  const isInvestment =
+    transaction.kind === 'investment' &&
+    'investment' in transaction &&
+    Boolean(transaction.investment);
+
   return (
     <Card className="relative gap-3 p-4 sm:gap-4 sm:p-5">
       {isTrashMode ? (
@@ -72,6 +78,34 @@ export const TransactionDetailsCard = ({
         >
           {amountPresentation.formattedAmount}
         </Detail>
+        {isInvestment && transaction.investment ? (
+          <>
+            <Detail title={t('investmentOperationKind')}>
+              <span
+                className="font-semibold capitalize"
+                data-testid="transaction-details-operation-kind"
+              >
+                {t(`operationKind.${transaction.investment.operationKind}`)}
+              </span>
+            </Detail>
+            <Detail title={t('investmentInstrument')}>
+              <div
+                className="flex items-center gap-2"
+                data-testid="transaction-details-instrument"
+              >
+                <span>{transaction.investment.instrument.name}</span>
+                <InstrumentKindBadge kind={transaction.investment.instrument.kind} />
+              </div>
+            </Detail>
+            {transaction.investment.note ? (
+              <Detail title={t('investmentNote')}>
+                <span data-testid="transaction-details-investment-note">
+                  {transaction.investment.note}
+                </span>
+              </Detail>
+            ) : null}
+          </>
+        ) : null}
         <Detail title={t('category')}>
           <HoverLink to="/categories">{categoryLabel}</HoverLink>
         </Detail>

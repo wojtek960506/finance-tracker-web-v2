@@ -5,6 +5,19 @@
   "chooseTransactionKindDescription": "Wybierz rodzaj transakcji, którą chcesz utworzyć.",
   "standardTransaction": "Zwykła",
   "standardTransactionDescription": "Utwórz zwykły przychód lub wydatek z kategorią.",
+  "investmentTransaction": "Inwestycja",
+  "investmentTransactionDescription": "Zapisz kupno, sprzedaż, odsetki lub prowizje powiązane z instrumentem.",
+  "investmentOperationKind": "Typ operacji",
+  "investmentInstrument": "Instrument",
+  "investmentNote": "Notatka inwestycyjna",
+  "investmentNotePlaceholder": "np. 10 akcji po 150 zł lub notatki o tickerze",
+  "selectInstrumentPlaceholder": "Wybierz instrument...",
+  "operationKind": {
+    "buy": "Kupno",
+    "sell": "Sprzedaż",
+    "interest": "Odsetki",
+    "fee": "Prowizja"
+  },
   "transferTransaction": "Transfer",
   "transferTransactionDescription": "Przenieś środki pomiędzy własnymi kontami.",
   "exchangeTransaction": "Wymiana",
@@ -246,5 +259,6 @@
   "amountIncomeRequired": "Kwota otrzymana jest wymagana.",
   "expenseCurrencyRequired": "Waluta wydana jest wymagana.",
   "incomeCurrencyRequired": "Waluta otrzymana jest wymagana.",
-  "exchangeCurrenciesMustDiffer": "Waluta wydana i otrzymana muszą być różne."
+  "exchangeCurrenciesMustDiffer": "Waluta wydana i otrzymana muszą być różne.",
+  "instrumentRequired": "Instrument jest wymagany."
 }

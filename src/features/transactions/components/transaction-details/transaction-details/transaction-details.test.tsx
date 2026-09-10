@@ -5,6 +5,7 @@ import type { ComponentProps, ReactNode } from 'react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { ApiError } from '@shared/api/api-error';
+import { createTestQueryClient } from '@test-utils/create-test-query-client';
 import { makeTransaction } from '@test-utils/factories/transaction';
 import type { TransactionDetails as ApiTransactionDetails } from '@transactions/api';
 
@@ -404,5 +405,34 @@ describe('TransactionDetails', () => {
       queryKey: ['transaction', 'tx-2'],
       exact: true,
     });
+  });
+
+  it('renders investment details with instrument and operation kind', async () => {
+    const client = createTestQueryClient();
+    const investmentTx = makeTransaction({
+      id: 'tx-1',
+      kind: 'investment',
+      description: 'Investment tx description',
+      investment: {
+        operationKind: 'buy',
+        instrument: {
+          id: 'inst-1',
+          name: 'Apple Inc.',
+          kind: 'share',
+          currency: 'USD',
+        },
+        note: 'Bought 10 shares',
+      },
+    });
+    mocks.getTransaction.mockResolvedValue(investmentTx);
+
+    render(
+      <QueryClientProvider client={client}>
+        <TransactionDetails />
+      </QueryClientProvider>,
+    );
+
+    expect(await screen.findByText('Investment tx description')).toBeInTheDocument();
+    expect(screen.getByTestId('transaction-details-card')).toBeInTheDocument();
   });
 });

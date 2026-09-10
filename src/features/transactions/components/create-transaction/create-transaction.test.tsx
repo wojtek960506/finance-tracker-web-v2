@@ -26,6 +26,7 @@ describe('CreateTransaction', () => {
     expect(screen.getByText('chooseTransactionKindDescription')).toBeInTheDocument();
 
     await user.click(screen.getByRole('button', { name: /standardTransaction/i }));
+    await user.click(screen.getByRole('button', { name: /investmentTransaction/i }));
     await user.click(screen.getByRole('button', { name: /transferTransaction/i }));
     await user.click(screen.getByRole('button', { name: /exchangeTransaction/i }));
     await user.click(screen.getByRole('button', { name: /bulkTransaction/i }));
@@ -33,13 +34,16 @@ describe('CreateTransaction', () => {
     expect(navigate).toHaveBeenNthCalledWith(1, '/transactions/new/standard', {
       state: { returnTo: '/transactions' },
     });
-    expect(navigate).toHaveBeenNthCalledWith(2, '/transactions/new/transfer', {
+    expect(navigate).toHaveBeenNthCalledWith(2, '/transactions/new/investment', {
       state: { returnTo: '/transactions' },
     });
-    expect(navigate).toHaveBeenNthCalledWith(3, '/transactions/new/exchange', {
+    expect(navigate).toHaveBeenNthCalledWith(3, '/transactions/new/transfer', {
       state: { returnTo: '/transactions' },
     });
-    expect(navigate).toHaveBeenNthCalledWith(4, '/transactions/new/bulk', {
+    expect(navigate).toHaveBeenNthCalledWith(4, '/transactions/new/exchange', {
+      state: { returnTo: '/transactions' },
+    });
+    expect(navigate).toHaveBeenNthCalledWith(5, '/transactions/new/bulk', {
       state: { returnTo: '/transactions' },
     });
   });

@@ -5,6 +5,19 @@
   "chooseTransactionKindDescription": "Pick the kind of transaction you want to create.",
   "standardTransaction": "Regular",
   "standardTransactionDescription": "Create a regular income or expense with a category.",
+  "investmentTransaction": "Investment",
+  "investmentTransactionDescription": "Record investment purchases, sales, interest, or fees linked to an instrument.",
+  "investmentOperationKind": "Operation type",
+  "investmentInstrument": "Instrument",
+  "investmentNote": "Investment note",
+  "investmentNotePlaceholder": "e.g., 10 shares @ $150 or ticker notes",
+  "selectInstrumentPlaceholder": "Select instrument...",
+  "operationKind": {
+    "buy": "Buy",
+    "sell": "Sell",
+    "interest": "Interest",
+    "fee": "Fee"
+  },
   "transferTransaction": "Transfer",
   "transferTransactionDescription": "Move money between your own accounts.",
   "exchangeTransaction": "Exchange",
@@ -240,5 +253,6 @@
   "amountIncomeRequired": "Received amount is required.",
   "expenseCurrencyRequired": "Spent currency is required.",
   "incomeCurrencyRequired": "Received currency is required.",
-  "exchangeCurrenciesMustDiffer": "Spent and received currencies must be different."
+  "exchangeCurrenciesMustDiffer": "Spent and received currencies must be different.",
+  "instrumentRequired": "Instrument is required."
 }

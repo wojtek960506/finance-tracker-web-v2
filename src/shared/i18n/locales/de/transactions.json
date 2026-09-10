@@ -5,6 +5,19 @@
   "chooseTransactionKindDescription": "Wählen Sie die Art der Transaktion, die Sie erstellen möchten.",
   "standardTransaction": "Regulär",
   "standardTransactionDescription": "Erstellen Sie eine normale Einnahme oder Ausgabe mit Kategorie.",
+  "investmentTransaction": "Anlage",
+  "investmentTransactionDescription": "Erfassen Sie Käufe, Verkäufe, Zinsen oder Gebühren verknüpft mit einem Instrument.",
+  "investmentOperationKind": "Vorgangsart",
+  "investmentInstrument": "Instrument",
+  "investmentNote": "Anlagenotiz",
+  "investmentNotePlaceholder": "z. B. 10 Aktien zu 150 $ oder Ticker-Notizen",
+  "selectInstrumentPlaceholder": "Instrument auswählen...",
+  "operationKind": {
+    "buy": "Kauf",
+    "sell": "Verkauf",
+    "interest": "Zinsen",
+    "fee": "Gebühr"
+  },
   "transferTransaction": "Transfer",
   "transferTransactionDescription": "Verschieben Sie Geld zwischen Ihren eigenen Konten.",
   "exchangeTransaction": "Wechsel",
@@ -240,5 +253,6 @@
   "amountIncomeRequired": "Erhaltener Betrag ist erforderlich.",
   "expenseCurrencyRequired": "Ausgabewährung ist erforderlich.",
   "incomeCurrencyRequired": "Empfangswährung ist erforderlich.",
-  "exchangeCurrenciesMustDiffer": "Ausgabe- und Empfangswährung müssen unterschiedlich sein."
+  "exchangeCurrenciesMustDiffer": "Ausgabe- und Empfangswährung müssen unterschiedlich sein.",
+  "instrumentRequired": "Instrument ist erforderlich."
 }

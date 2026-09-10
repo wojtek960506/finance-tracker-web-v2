@@ -12,6 +12,7 @@ import {
 import { LoadingCard } from '@ui';
 
 import { UpdateExchangeTransactionView } from './update-exchange-transaction-view';
+import { UpdateInvestmentTransactionView } from './update-investment-transaction-view';
 import { UpdateStandardTransactionView } from './update-standard-transaction-view';
 import { UpdateTransferTransactionView } from './update-transfer-transaction-view';
 
@@ -33,7 +34,9 @@ export const UpdateTransaction = () => {
 
   const transactionKind = transaction ? getTransactionKind(transaction) : undefined;
   const shouldLoadReference =
-    Boolean(transaction?.refId) && transactionKind !== 'standard';
+    Boolean(transaction?.refId) &&
+    transactionKind !== 'standard' &&
+    transactionKind !== 'investment';
 
   const {
     data: transactionRef,
@@ -95,6 +98,10 @@ export const UpdateTransaction = () => {
 
   if (transactionKind === 'standard') {
     return <UpdateStandardTransactionView transaction={transaction} />;
+  }
+
+  if (transactionKind === 'investment') {
+    return <UpdateInvestmentTransactionView transaction={transaction} />;
   }
 
   if (!transactionRef) return transactionNotFoundState;

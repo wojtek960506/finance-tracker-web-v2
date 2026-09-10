@@ -84,4 +84,36 @@ describe('TransactionDetailsCard', () => {
     expect(screen.getByText('cash')).toBeInTheDocument();
     expect(screen.getByText('savings')).toBeInTheDocument();
   });
+
+  it('renders investment details with instrument, operation kind, and note', () => {
+    render(
+      <MemoryRouter>
+        <TransactionDetailsCard
+          transaction={makeTransaction({
+            kind: 'investment',
+            investment: {
+              operationKind: 'buy',
+              instrument: {
+                id: 'inst-1',
+                name: 'Apple Inc.',
+                kind: 'share',
+                currency: 'USD',
+              },
+              note: 'Bought 10 shares',
+            },
+          })}
+        />
+      </MemoryRouter>,
+    );
+
+    expect(screen.getByTestId('transaction-details-operation-kind')).toHaveTextContent(
+      'operationKind.buy',
+    );
+    expect(screen.getByTestId('transaction-details-instrument')).toHaveTextContent(
+      'Apple Inc.',
+    );
+    expect(screen.getByTestId('transaction-details-investment-note')).toHaveTextContent(
+      'Bought 10 shares',
+    );
+  });
 });

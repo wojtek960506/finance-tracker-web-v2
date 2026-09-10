@@ -149,4 +149,36 @@ describe('TransactionPreview', () => {
       'standardTransaction',
     );
   });
+
+  it('renders investment operation kind and instrument name for investment transactions', () => {
+    const investmentTx = makeTransaction({
+      kind: 'investment',
+      investment: {
+        operationKind: 'buy',
+        instrument: {
+          id: 'inst-1',
+          name: 'Vanguard S&P 500 ETF',
+          kind: 'fund',
+          currency: 'USD',
+        },
+      },
+    });
+
+    render(
+      <MemoryRouter>
+        <TransactionPreview transaction={investmentTx} />
+      </MemoryRouter>,
+    );
+
+    expect(screen.getByTestId('transaction-kind-icon')).toHaveAttribute(
+      'aria-label',
+      'investmentTransaction',
+    );
+    expect(screen.getByTestId('transaction-preview-operation-kind')).toHaveTextContent(
+      'operationKind.buy',
+    );
+    expect(screen.getByTestId('transaction-preview-instrument-name')).toHaveTextContent(
+      'Vanguard S&P 500 ETF',
+    );
+  });
 });

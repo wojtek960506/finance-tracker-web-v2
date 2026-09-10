@@ -5,6 +5,7 @@
   "transactionsTrash": "Transaktionspapierkorb",
   "newTransaction": "Neue Transaktion",
   "newStandardTransaction": "Neue reguläre Transaktion",
+  "newInvestmentTransaction": "Neue Anlagetransaktion",
   "newTransferTransaction": "Neue Transfertransaktion",
   "newExchangeTransaction": "Neue Wechseltransaktion",
   "newBulkTransaction": "Sammelerfassung von Transaktionen",

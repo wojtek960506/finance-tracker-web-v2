@@ -5,6 +5,19 @@
   "chooseTransactionKindDescription": "Выберите вид транзакции, которую хотите создать.",
   "standardTransaction": "Обычная",
   "standardTransactionDescription": "Создайте обычный доход или расход с категорией.",
+  "investmentTransaction": "Инвестиционная",
+  "investmentTransactionDescription": "Зафиксируйте покупку, продажу, проценты или комиссии, связанные с инструментом.",
+  "investmentOperationKind": "Тип операции",
+  "investmentInstrument": "Инструмент",
+  "investmentNote": "Инвестиционная заметка",
+  "investmentNotePlaceholder": "напр. 10 акций по $150 или заметки по тикеру",
+  "selectInstrumentPlaceholder": "Выберите инструмент...",
+  "operationKind": {
+    "buy": "Покупка",
+    "sell": "Продажа",
+    "interest": "Проценты",
+    "fee": "Комиссия"
+  },
   "transferTransaction": "Перевод",
   "transferTransactionDescription": "Переместите деньги между своими счетами.",
   "exchangeTransaction": "Обмен",
@@ -246,5 +259,6 @@
   "amountIncomeRequired": "Полученная сумма обязательна.",
   "expenseCurrencyRequired": "Списываемая валюта обязательна.",
   "incomeCurrencyRequired": "Получаемая валюта обязательна.",
-  "exchangeCurrenciesMustDiffer": "Списываемая и получаемая валюты должны отличаться."
+  "exchangeCurrenciesMustDiffer": "Списываемая и получаемая валюты должны отличаться.",
+  "instrumentRequired": "Инструмент обязателен."
 }
