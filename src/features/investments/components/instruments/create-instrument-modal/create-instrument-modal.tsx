@@ -38,7 +38,6 @@ export const CreateInstrumentModal = ({
       pushToast({
         variant: 'success',
         title: t('toasts.createdTitle', {
-          defaultValue: 'Instrument created',
           name: created.name,
         }),
       });
@@ -49,9 +48,7 @@ export const CreateInstrumentModal = ({
       const apiError = normalizeApiError(error);
       pushToast({
         variant: 'error',
-        title: t('toasts.createErrorTitle', {
-          defaultValue: 'Could not create instrument',
-        }),
+        title: t('toasts.createErrorTitle'),
         message: apiError.message,
       });
     },
@@ -69,24 +66,13 @@ export const CreateInstrumentModal = ({
   };
 
   return (
-    <Modal
-      isOpen={isOpen}
-      onClose={onClose}
-      ariaLabel={t('modals.createTitle', {
-        defaultValue: 'Create Investment Instrument',
-      })}
-    >
+    <Modal isOpen={isOpen} onClose={onClose} ariaLabel={t('modals.createTitle')}>
       <div className="flex flex-col gap-4">
         <header className="space-y-1">
           <h2 className="text-xl font-semibold tracking-tight">
-            {t('modals.createTitle', { defaultValue: 'New Instrument' })}
+            {t('modals.createTitle')}
           </h2>
-          <p className="text-sm text-text-muted">
-            {t('modals.createDescription', {
-              defaultValue:
-                'Add a new stock, ETF, fund, or custom asset to your portfolio.',
-            })}
-          </p>
+          <p className="text-sm text-text-muted">{t('modals.createDescription')}</p>
         </header>
 
         <InstrumentForm

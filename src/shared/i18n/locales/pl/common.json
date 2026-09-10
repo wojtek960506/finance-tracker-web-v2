@@ -1,3 +1,6 @@
 {
-  "title": "FinOnion"
+  "title": "FinOnion",
+  "cancel": "Anuluj",
+  "saving": "Zapisywanie...",
+  "deleting": "Usuwanie..."
 }

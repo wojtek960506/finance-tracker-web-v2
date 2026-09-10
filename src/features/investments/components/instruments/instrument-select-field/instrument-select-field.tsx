@@ -62,21 +62,14 @@ export const InstrumentSelectField = ({
             className="w-full"
             placeholder={
               isLoading
-                ? t('loading', { defaultValue: 'Loading instruments...' })
-                : searchPlaceholder ||
-                  placeholder ||
-                  t('selectInstrumentPlaceholder', {
-                    defaultValue: 'Select instrument...',
-                  })
+                ? t('loading')
+                : searchPlaceholder || placeholder || t('selectInstrumentPlaceholder')
             }
             disabled={isLoading}
             showClear={showClear}
           />
           <ComboboxContent>
-            <ComboboxEmpty>
-              {emptyMessage ||
-                t('noInstrumentsFound', { defaultValue: 'No instruments found' })}
-            </ComboboxEmpty>
+            <ComboboxEmpty>{emptyMessage || t('noInstrumentsFound')}</ComboboxEmpty>
             <ComboboxList>
               {(inst) => (
                 <ComboboxItem key={inst.id} value={inst}>
@@ -101,14 +94,12 @@ export const InstrumentSelectField = ({
           type="button"
           variant="outline"
           onClick={onAddNewInstrument}
-          title={t('addNewInstrument', { defaultValue: 'Create new instrument' })}
-          aria-label={t('addNewInstrument', { defaultValue: 'Create new instrument' })}
+          title={t('addNewInstrument')}
+          aria-label={t('addNewInstrument')}
           className="shrink-0 gap-1 px-3 py-1 text-xs"
         >
           <Plus className="size-4" />
-          <span className="hidden sm:inline">
-            {t('quickAdd', { defaultValue: 'New' })}
-          </span>
+          <span className="hidden sm:inline">{t('quickAdd')}</span>
         </Button>
       ) : null}
     </div>

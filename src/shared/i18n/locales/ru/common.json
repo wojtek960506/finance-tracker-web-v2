@@ -1,3 +1,6 @@
 {
-  "title": "FinOnion"
+  "title": "FinOnion",
+  "cancel": "Отмена",
+  "saving": "Сохранение...",
+  "deleting": "Удаление..."
 }

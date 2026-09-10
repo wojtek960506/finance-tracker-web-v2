@@ -32,13 +32,9 @@ export const InstrumentsListHeader = ({
           <Input
             value={searchQuery}
             onChange={(e) => onSearchQueryChange(e.target.value)}
-            placeholder={t('searchPlaceholder', {
-              defaultValue: 'Search instruments...',
-            })}
+            placeholder={t('searchPlaceholder')}
             className="w-full pr-9 sm:pr-10"
-            aria-label={t('searchPlaceholder', {
-              defaultValue: 'Search instruments...',
-            })}
+            aria-label={t('searchPlaceholder')}
           />
           {isFetching ? (
             <LoaderCircle className="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 animate-spin text-text-muted" />
@@ -59,7 +55,7 @@ export const InstrumentsListHeader = ({
             )}
             onClick={() => onSelectedKindChange('all')}
           >
-            {t('allKinds', { defaultValue: 'All' })}
+            {t('allKinds')}
           </button>
           {INSTRUMENT_KINDS.map((kind) => (
             <button
@@ -73,7 +69,7 @@ export const InstrumentsListHeader = ({
               )}
               onClick={() => onSelectedKindChange(kind)}
             >
-              {t(`kind.${kind}`, { defaultValue: kind })}
+              {t(`kind.${kind}`)}
             </button>
           ))}
         </div>
@@ -86,7 +82,7 @@ export const InstrumentsListHeader = ({
         className="shrink-0 gap-1.5 self-stretch sm:self-auto"
       >
         <Plus className="size-4" />
-        <span>{t('newInstrument', { defaultValue: 'New Instrument' })}</span>
+        <span>{t('newInstrument')}</span>
       </Button>
     </div>
   );

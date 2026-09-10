@@ -44,7 +44,6 @@ export const UpdateInstrumentModal = ({
       pushToast({
         variant: 'success',
         title: t('toasts.updatedTitle', {
-          defaultValue: 'Instrument updated',
           name: updated.name,
         }),
       });
@@ -54,9 +53,7 @@ export const UpdateInstrumentModal = ({
       const apiError = normalizeApiError(error);
       pushToast({
         variant: 'error',
-        title: t('toasts.updateErrorTitle', {
-          defaultValue: 'Could not update instrument',
-        }),
+        title: t('toasts.updateErrorTitle'),
         message: apiError.message,
       });
     },
@@ -76,23 +73,13 @@ export const UpdateInstrumentModal = ({
   };
 
   return (
-    <Modal
-      isOpen={isOpen}
-      onClose={onClose}
-      ariaLabel={t('modals.updateTitle', {
-        defaultValue: 'Update Investment Instrument',
-      })}
-    >
+    <Modal isOpen={isOpen} onClose={onClose} ariaLabel={t('modals.updateTitle')}>
       <div className="flex flex-col gap-4">
         <header className="space-y-1">
           <h2 className="text-xl font-semibold tracking-tight">
-            {t('modals.updateTitle', { defaultValue: 'Edit Instrument' })}
+            {t('modals.updateTitle')}
           </h2>
-          <p className="text-sm text-text-muted">
-            {t('modals.updateDescription', {
-              defaultValue: 'Update instrument name, kind, currency or notes.',
-            })}
-          </p>
+          <p className="text-sm text-text-muted">{t('modals.updateDescription')}</p>
         </header>
 
         <InstrumentForm

@@ -1,0 +1,70 @@
+{
+  "searchPlaceholder": "Instrumente suchen...",
+  "allKinds": "Alle",
+  "newInstrument": "Neues Instrument",
+  "emptyTitle": "Noch keine Anlageinstrumente",
+  "emptyDescription": "Erstellen Sie Ihr erstes Instrument wie Apple (AAPL), S&P 500 ETF oder Bitcoin, um Investitionen zu verfolgen.",
+  "noResultsTitle": "Keine passenden Instrumente",
+  "noResultsDescription": "Versuchen Sie, die Suchanfrage oder den Typfilter zu ändern.",
+  "createFirstInstrument": "Erstes Instrument hinzufügen",
+  "loadingTitle": "Lade Instrumente",
+  "loadingDescription": "Lade Ihre Anlageinstrumente...",
+  "loadingInstruments": "Lade Instrumente...",
+  "selectInstrumentPlaceholder": "Instrument auswählen...",
+  "noInstrumentsFound": "Keine Instrumente gefunden",
+  "addNewInstrument": "Neues Instrument erstellen",
+  "quickAdd": "Neu",
+  "loading": "Laden...",
+  "createdOn": "Erstellt am",
+  "kind": {
+    "share": "Aktie",
+    "fund": "Fonds",
+    "termDeposit": "Festgeld",
+    "savings": "Sparkonto",
+    "bond": "Anleihe",
+    "crypto": "Krypto",
+    "commodity": "Rohstoff",
+    "custom": "Benutzerdefiniert"
+  },
+  "form": {
+    "name": "Name",
+    "namePlaceholder": "z. B. Apple, S&P 500 ETF",
+    "kind": "Art",
+    "currency": "Währung",
+    "currencyPlaceholder": "Währung auswählen...",
+    "searchCurrency": "Währung suchen...",
+    "noCurrencyFound": "Keine Währung gefunden",
+    "notes": "Notizen",
+    "notesPlaceholder": "Optionale Beschreibung oder Ticker",
+    "createSubmit": "Instrument erstellen",
+    "updateSubmit": "Änderungen speichern",
+    "errors": {
+      "nameRequired": "Name ist erforderlich",
+      "currencyRequired": "Währung ist erforderlich"
+    }
+  },
+  "modals": {
+    "createTitle": "Neues Instrument",
+    "createDescription": "Fügen Sie ein Anlageinstrument hinzu, um es in Ihrem Portfolio zu verfolgen.",
+    "updateTitle": "Instrument bearbeiten",
+    "updateDescription": "Aktualisieren Sie die Details dieses Anlageinstruments.",
+    "deleteTitle": "Instrument löschen",
+    "deletePrompt": "Möchten Sie „{{name}}“ wirklich löschen? Diese Aktion löscht auch alle zugehörigen Snapshot-Operationen.",
+    "deleteConfirm": "Löschen"
+  },
+  "actions": {
+    "edit": "Instrument bearbeiten",
+    "delete": "Instrument löschen"
+  },
+  "cancel": "Abbrechen",
+  "saving": "Speichern...",
+  "deleting": "Löschen...",
+  "toasts": {
+    "createdTitle": "Instrument erstellt",
+    "createErrorTitle": "Instrument konnte nicht erstellt werden",
+    "updatedTitle": "Instrument aktualisiert",
+    "updateErrorTitle": "Instrument konnte nicht aktualisiert werden",
+    "deletedTitle": "Instrument gelöscht",
+    "deleteErrorTitle": "Instrument konnte nicht gelöscht werden"
+  }
+}

@@ -4,6 +4,10 @@ import { describe, expect, it, vi } from 'vitest';
 import { InstrumentForm } from './instrument-form';
 import { getDefaultInstrumentFormValues } from './utils';
 
+vi.mock('react-i18next', () => ({
+  useTranslation: () => ({ t: (key: string) => key }),
+}));
+
 vi.mock('@transactions/components/shared', () => ({
   CurrencySelectField: ({
     value,
@@ -39,8 +43,8 @@ describe('InstrumentForm', () => {
     fireEvent.click(submitBtn);
 
     await waitFor(() => {
-      expect(screen.getByText('nameRequired')).toBeInTheDocument();
-      expect(screen.getByText('currencyRequired')).toBeInTheDocument();
+      expect(screen.getByText('form.errors.nameRequired')).toBeInTheDocument();
+      expect(screen.getByText('form.errors.currencyRequired')).toBeInTheDocument();
     });
     expect(onSubmit).not.toHaveBeenCalled();
   });

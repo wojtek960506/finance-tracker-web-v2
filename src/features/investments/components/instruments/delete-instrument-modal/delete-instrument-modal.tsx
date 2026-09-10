@@ -31,7 +31,6 @@ export const DeleteInstrumentModal = ({
       pushToast({
         variant: 'success',
         title: t('toasts.deletedTitle', {
-          defaultValue: 'Instrument deleted',
           name: instrument?.name,
         }),
       });
@@ -41,9 +40,7 @@ export const DeleteInstrumentModal = ({
       const apiError = normalizeApiError(error);
       pushToast({
         variant: 'error',
-        title: t('toasts.deleteErrorTitle', {
-          defaultValue: 'Could not delete instrument',
-        }),
+        title: t('toasts.deleteErrorTitle'),
         message: apiError.message,
       });
     },
@@ -56,13 +53,7 @@ export const DeleteInstrumentModal = ({
   };
 
   return (
-    <Modal
-      isOpen={isOpen}
-      onClose={onClose}
-      ariaLabel={t('modals.deleteTitle', {
-        defaultValue: 'Delete Investment Instrument',
-      })}
-    >
+    <Modal isOpen={isOpen} onClose={onClose} ariaLabel={t('modals.deleteTitle')}>
       <div className="flex flex-col gap-4">
         <header className="flex items-start gap-3">
           <div className="rounded-full bg-destructive/10 p-2 text-destructive">
@@ -70,12 +61,10 @@ export const DeleteInstrumentModal = ({
           </div>
           <div className="space-y-1">
             <h2 className="text-lg font-semibold tracking-tight text-foreground">
-              {t('modals.deleteTitle', { defaultValue: 'Delete Instrument' })}
+              {t('modals.deleteTitle')}
             </h2>
             <p className="text-sm text-text-muted break-words [overflow-wrap:anywhere]">
               {t('modals.deletePrompt', {
-                defaultValue:
-                  'Are you sure you want to delete "{{name}}"? This action will also delete all associated snapshot operations.',
                 name: instrument.name,
               })}
             </p>
@@ -89,7 +78,7 @@ export const DeleteInstrumentModal = ({
             onClick={onClose}
             disabled={deleteMutation.isPending}
           >
-            {tCommon('cancel', { defaultValue: 'Cancel' })}
+            {tCommon('cancel')}
           </Button>
           <Button
             type="button"
@@ -97,9 +86,7 @@ export const DeleteInstrumentModal = ({
             onClick={handleDelete}
             disabled={deleteMutation.isPending}
           >
-            {deleteMutation.isPending
-              ? tCommon('deleting', { defaultValue: 'Deleting...' })
-              : t('modals.deleteConfirm', { defaultValue: 'Delete' })}
+            {deleteMutation.isPending ? tCommon('deleting') : t('modals.deleteConfirm')}
           </Button>
         </div>
       </div>

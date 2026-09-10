@@ -1,0 +1,70 @@
+{
+  "searchPlaceholder": "Szukaj instrumentów...",
+  "allKinds": "Wszystkie",
+  "newInstrument": "Nowy instrument",
+  "emptyTitle": "Brak instrumentów inwestycyjnych",
+  "emptyDescription": "Utwórz swój pierwszy instrument, np. Apple (AAPL), S&P 500 ETF lub Bitcoin, aby rozpocząć śledzenie inwestycji.",
+  "noResultsTitle": "Brak pasujących instrumentów",
+  "noResultsDescription": "Spróbuj zmienić zapytanie lub filtr rodzaju.",
+  "createFirstInstrument": "Dodaj pierwszy instrument",
+  "loadingTitle": "Ładowanie instrumentów",
+  "loadingDescription": "Pobieranie Twoich instrumentów inwestycyjnych...",
+  "loadingInstruments": "Ładowanie instrumentów...",
+  "selectInstrumentPlaceholder": "Wybierz instrument...",
+  "noInstrumentsFound": "Nie znaleziono instrumentów",
+  "addNewInstrument": "Utwórz nowy instrument",
+  "quickAdd": "Nowy",
+  "loading": "Ładowanie...",
+  "createdOn": "Utworzono",
+  "kind": {
+    "share": "Akcja",
+    "fund": "Fundusz",
+    "termDeposit": "Lokata",
+    "savings": "Konto oszczędnościowe",
+    "bond": "Obligacja",
+    "crypto": "Kryptowaluta",
+    "commodity": "Surowiec",
+    "custom": "Własny"
+  },
+  "form": {
+    "name": "Nazwa",
+    "namePlaceholder": "np. Apple, S&P 500 ETF",
+    "kind": "Rodzaj",
+    "currency": "Waluta",
+    "currencyPlaceholder": "Wybierz walutę...",
+    "searchCurrency": "Szukaj waluty...",
+    "noCurrencyFound": "Nie znaleziono waluty",
+    "notes": "Notatki",
+    "notesPlaceholder": "Opcjonalny opis lub ticker",
+    "createSubmit": "Utwórz instrument",
+    "updateSubmit": "Zapisz zmiany",
+    "errors": {
+      "nameRequired": "Nazwa jest wymagana",
+      "currencyRequired": "Waluta jest wymagana"
+    }
+  },
+  "modals": {
+    "createTitle": "Nowy instrument",
+    "createDescription": "Dodaj instrument inwestycyjny, aby śledzić go w swoim portfelu.",
+    "updateTitle": "Edytuj instrument",
+    "updateDescription": "Zaktualizuj szczegóły tego instrumentu inwestycyjnego.",
+    "deleteTitle": "Usuń instrument",
+    "deletePrompt": "Czy na pewno chcesz usunąć „{{name}}”? Spowoduje to również usunięcie wszystkich powiązanych operacji.",
+    "deleteConfirm": "Usuń"
+  },
+  "actions": {
+    "edit": "Edytuj instrument",
+    "delete": "Usuń instrument"
+  },
+  "cancel": "Anuluj",
+  "saving": "Zapisywanie...",
+  "deleting": "Usuwanie...",
+  "toasts": {
+    "createdTitle": "Utworzono instrument",
+    "createErrorTitle": "Nie udało się utworzyć instrumentu",
+    "updatedTitle": "Zaktualizowano instrument",
+    "updateErrorTitle": "Nie udało się zaktualizować instrumentu",
+    "deletedTitle": "Usunięto instrument",
+    "deleteErrorTitle": "Nie udało się usunąć instrumentu"
+  }
+}

@@ -1,3 +1,6 @@
 {
-  "title": "FinOnion"
+  "title": "FinOnion",
+  "cancel": "Cancel",
+  "saving": "Saving...",
+  "deleting": "Deleting..."
 }

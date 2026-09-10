@@ -68,9 +68,7 @@ export const InstrumentForm = ({
         />
         {form.formState.errors.name && (
           <span className="text-xs text-destructive">
-            {t(`form.errors.${form.formState.errors.name.message}`, {
-              defaultValue: form.formState.errors.name.message,
-            })}
+            {t(`form.errors.${form.formState.errors.name.message}`)}
           </span>
         )}
       </div>
@@ -127,9 +125,7 @@ export const InstrumentForm = ({
         />
         {form.formState.errors.currency && (
           <span className="text-xs text-destructive">
-            {t(`form.errors.${form.formState.errors.currency.message}`, {
-              defaultValue: form.formState.errors.currency.message,
-            })}
+            {t(`form.errors.${form.formState.errors.currency.message}`)}
           </span>
         )}
       </div>
@@ -148,11 +144,11 @@ export const InstrumentForm = ({
       {/* Form actions */}
       <div className="mt-2 flex items-center justify-end gap-2">
         <Button type="button" variant="outline" onClick={onCancel} disabled={isPending}>
-          {tCommon('cancel', { defaultValue: 'Cancel' })}
+          {tCommon('cancel')}
         </Button>
         <Button type="submit" variant="primary" disabled={isPending}>
           {isPending
-            ? tCommon('saving', { defaultValue: 'Saving...' })
+            ? tCommon('saving')
             : mode === 'create'
               ? t('form.createSubmit')
               : t('form.updateSubmit')}

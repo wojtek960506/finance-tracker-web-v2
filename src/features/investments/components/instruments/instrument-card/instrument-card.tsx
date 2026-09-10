@@ -58,8 +58,8 @@ export const InstrumentCard = ({ instrument, onEdit, onDelete }: InstrumentCardP
               variant="ghost"
               className="size-8 p-0 text-text-muted hover:text-foreground"
               onClick={() => onEdit(instrument)}
-              title={t('actions.edit', { defaultValue: 'Edit instrument' })}
-              aria-label={t('actions.edit', { defaultValue: 'Edit instrument' })}
+              title={t('actions.edit')}
+              aria-label={t('actions.edit')}
             >
               <Edit2 className="size-4" />
             </Button>
@@ -67,8 +67,8 @@ export const InstrumentCard = ({ instrument, onEdit, onDelete }: InstrumentCardP
               variant="ghost"
               className="size-8 p-0 text-text-muted hover:text-destructive"
               onClick={() => onDelete(instrument)}
-              title={t('actions.delete', { defaultValue: 'Delete instrument' })}
-              aria-label={t('actions.delete', { defaultValue: 'Delete instrument' })}
+              title={t('actions.delete')}
+              aria-label={t('actions.delete')}
             >
               <Trash2 className="size-4" />
             </Button>
@@ -94,8 +94,7 @@ export const InstrumentCard = ({ instrument, onEdit, onDelete }: InstrumentCardP
         )}
       >
         <span>
-          {t('createdOn', { defaultValue: 'Created' })}:{' '}
-          {new Date(instrument.createdAt).toLocaleDateString(language)}
+          {t('createdOn')}: {new Date(instrument.createdAt).toLocaleDateString(language)}
         </span>
       </footer>
     </Card>

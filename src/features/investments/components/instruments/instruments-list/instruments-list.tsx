@@ -32,10 +32,8 @@ export const InstrumentsList = () => {
   if (isLoading) {
     return (
       <LoadingCard
-        title={t('loadingTitle', { defaultValue: 'Loading instruments' })}
-        description={t('loadingDescription', {
-          defaultValue: 'Fetching your investment instruments...',
-        })}
+        title={t('loadingTitle')}
+        description={t('loadingDescription')}
         widthClassName="max-w-[35rem]"
       />
     );

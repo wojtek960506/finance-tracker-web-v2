@@ -21,27 +21,16 @@ export const InstrumentsListEmptyState = ({
       </div>
       <div className="space-y-1">
         <h3 className="text-base font-semibold text-foreground">
-          {!hasAnyInstruments
-            ? t('emptyTitle', { defaultValue: 'No investment instruments yet' })
-            : t('noResultsTitle', { defaultValue: 'No matching instruments' })}
+          {!hasAnyInstruments ? t('emptyTitle') : t('noResultsTitle')}
         </h3>
         <p className="text-sm text-text-muted max-w-sm">
-          {!hasAnyInstruments
-            ? t('emptyDescription', {
-                defaultValue:
-                  'Create your first instrument like Apple (AAPL), S&P 500 ETF, or Bitcoin to start tracking investments.',
-              })
-            : t('noResultsDescription', {
-                defaultValue: 'Try changing your search query or kind filter.',
-              })}
+          {!hasAnyInstruments ? t('emptyDescription') : t('noResultsDescription')}
         </p>
       </div>
       {!hasAnyInstruments ? (
         <Button variant="primary" onClick={onCreateNew} className="mt-2 gap-1.5">
           <Plus className="size-4" />
-          <span>
-            {t('createFirstInstrument', { defaultValue: 'Add First Instrument' })}
-          </span>
+          <span>{t('createFirstInstrument')}</span>
         </Button>
       ) : null}
     </Card>

@@ -60,7 +60,7 @@ export const InstrumentKindBadge = ({ kind, className }: InstrumentKindBadgeProp
       data-testid="instrument-kind-badge"
     >
       <Icon className="size-3.5" />
-      <span>{t(`kind.${kind}`, { defaultValue: kind })}</span>
+      <span>{t(`kind.${kind}`)}</span>
     </span>
   );
 };
