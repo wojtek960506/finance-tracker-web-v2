@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { LoaderCircle, Plus, Search } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
@@ -50,11 +51,12 @@ export const InstrumentsListHeader = ({
         <div className="flex flex-wrap items-center gap-1">
           <button
             type="button"
-            className={`rounded-full px-3 py-1 text-xs font-semibold transition-colors ${
+            className={clsx(
+              'rounded-full px-3 py-1 text-xs font-semibold transition-colors',
               selectedKind === 'all'
                 ? 'bg-bt-primary text-bt-primary-fg'
-                : 'bg-muted/50 text-text-muted hover:bg-muted'
-            }`}
+                : 'bg-muted/50 text-text-muted hover:bg-muted',
+            )}
             onClick={() => onSelectedKindChange('all')}
           >
             {t('allKinds', { defaultValue: 'All' })}
@@ -63,11 +65,12 @@ export const InstrumentsListHeader = ({
             <button
               key={kind}
               type="button"
-              className={`rounded-full px-3 py-1 text-xs font-semibold capitalize transition-colors ${
+              className={clsx(
+                'rounded-full px-3 py-1 text-xs font-semibold capitalize transition-colors',
                 selectedKind === kind
                   ? 'bg-bt-primary text-bt-primary-fg'
-                  : 'bg-muted/50 text-text-muted hover:bg-muted'
-              }`}
+                  : 'bg-muted/50 text-text-muted hover:bg-muted',
+              )}
               onClick={() => onSelectedKindChange(kind)}
             >
               {t(`kind.${kind}`, { defaultValue: kind })}

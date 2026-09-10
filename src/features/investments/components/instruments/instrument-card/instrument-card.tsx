@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { Edit2, Trash2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
@@ -19,19 +20,32 @@ export const InstrumentCard = ({ instrument, onEdit, onDelete }: InstrumentCardP
 
   return (
     <Card
-      className="flex flex-col justify-between gap-3 p-4 transition-all hover:border-fg/30 hover:shadow-sm sm:p-5"
+      className={clsx(
+        'flex flex-col justify-between gap-3 p-4 sm:p-5',
+        'transition-all hover:border-fg/30 hover:shadow-sm',
+      )}
       data-testid="instrument-card"
     >
       <div className="flex flex-col gap-2">
         <div className="flex items-start justify-between gap-2">
           <div className="flex min-w-0 flex-1 flex-col gap-1">
-            <h3 className="text-base font-semibold tracking-tight text-foreground sm:text-lg break-words [overflow-wrap:anywhere]">
+            <h3
+              className={clsx(
+                'text-base font-semibold tracking-tight text-foreground sm:text-lg',
+                'break-words [overflow-wrap:anywhere]',
+              )}
+            >
               {instrument.name}
             </h3>
             <div className="flex flex-wrap items-center gap-1.5">
               <InstrumentKindBadge kind={instrument.kind} />
               {instrument.currency ? (
-                <span className="inline-flex items-center rounded-md border border-fg/10 bg-bg px-2 py-0.5 text-xs font-medium text-text-muted">
+                <span
+                  className={clsx(
+                    'inline-flex items-center rounded-md border border-fg/10 bg-bg',
+                    'px-2 py-0.5 text-xs font-medium text-text-muted',
+                  )}
+                >
                   {instrument.currency}
                 </span>
               ) : null}
@@ -62,13 +76,23 @@ export const InstrumentCard = ({ instrument, onEdit, onDelete }: InstrumentCardP
         </div>
 
         {instrument.notes ? (
-          <p className="text-xs text-text-muted sm:text-sm break-words [overflow-wrap:anywhere]">
+          <p
+            className={clsx(
+              'text-xs text-text-muted sm:text-sm',
+              'break-words [overflow-wrap:anywhere]',
+            )}
+          >
             {instrument.notes}
           </p>
         ) : null}
       </div>
 
-      <footer className="flex items-center justify-between border-t border-fg/10 pt-2 text-xs text-text-muted">
+      <footer
+        className={clsx(
+          'flex items-center justify-between border-t border-fg/10 pt-2',
+          'text-xs text-text-muted',
+        )}
+      >
         <span>
           {t('createdOn', { defaultValue: 'Created' })}:{' '}
           {new Date(instrument.createdAt).toLocaleDateString(language)}
