@@ -58,11 +58,13 @@ function App() {
   if (!isAuthResolved) {
     return (
       <MainLayout>
-        <LoadingCard
-          title={t('restoringSessionTitle')}
-          description={t('restoringSessionDescription')}
-          widthClassName="max-w-[35rem]"
-        />
+        <div className="flex h-full min-h-0 flex-1 flex-col p-3 sm:p-4">
+          <LoadingCard
+            title={t('restoringSessionTitle')}
+            description={t('restoringSessionDescription')}
+            widthClassName="max-w-[35rem]"
+          />
+        </div>
       </MainLayout>
     );
   }
