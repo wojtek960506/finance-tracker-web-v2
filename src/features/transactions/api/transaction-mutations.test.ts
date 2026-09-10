@@ -4,6 +4,7 @@ import { api } from '@shared/api';
 
 import { createBulkTransactions } from './create-bulk-transactions';
 import { createExchangeTransaction } from './create-exchange-transaction';
+import { createInvestmentTransaction } from './create-investment-transaction';
 import { createStandardTransaction } from './create-standard-transaction';
 import { createTransferTransaction } from './create-transfer-transaction';
 import { deleteTrashedTransaction } from './delete-trashed-transaction';
@@ -11,6 +12,7 @@ import { emptyTrash } from './empty-trash';
 import { moveTransactionToTrash } from './move-transaction-to-trash';
 import { restoreTransaction } from './restore-transaction';
 import { updateExchangeTransaction } from './update-exchange-transaction';
+import { updateInvestmentTransaction } from './update-investment-transaction';
 import { updateStandardTransaction } from './update-standard-transaction';
 import { updateTransferTransaction } from './update-transfer-transaction';
 
@@ -19,6 +21,52 @@ vi.mock('@shared/api', () => ({
 }));
 
 describe('transaction mutations api', () => {
+  it('creates an investment transaction', async () => {
+    const payload = {
+      date: '2024-01-03',
+      description: 'Buy AAPL',
+      amount: 500,
+      currency: 'USD',
+      categoryId: 'cat-1',
+      paymentMethodId: 'pm-1',
+      accountId: 'acc-1',
+      investment: {
+        operationKind: 'buy' as const,
+        instrumentId: 'inst-1',
+      },
+    };
+    const response = { id: 'tx-inv-1', kind: 'investment' };
+    vi.mocked(api.post).mockResolvedValueOnce({ data: response });
+
+    const result = await createInvestmentTransaction(payload);
+
+    expect(api.post).toHaveBeenCalledWith('/transactions/investment', payload);
+    expect(result).toEqual(response);
+  });
+
+  it('updates an investment transaction', async () => {
+    const payload = {
+      date: '2024-01-03',
+      description: 'Buy AAPL updated',
+      amount: 600,
+      currency: 'USD',
+      categoryId: 'cat-1',
+      paymentMethodId: 'pm-1',
+      accountId: 'acc-1',
+      investment: {
+        operationKind: 'buy' as const,
+        instrumentId: 'inst-1',
+      },
+    };
+    const response = { id: 'tx-inv-1', kind: 'investment' };
+    vi.mocked(api.put).mockResolvedValueOnce({ data: response });
+
+    const result = await updateInvestmentTransaction('tx-inv-1', payload);
+
+    expect(api.put).toHaveBeenCalledWith('/transactions/investment/tx-inv-1', payload);
+    expect(result).toEqual(response);
+  });
+
   it('creates transactions in bulk', async () => {
     const payload = {
       transactions: [

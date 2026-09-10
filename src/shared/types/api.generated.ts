@@ -2050,7 +2050,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["TransactionResponse"];
+                        "application/json": components["schemas"]["TransactionStandardResponse"];
                     };
                 };
             };
@@ -2136,7 +2136,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["TransactionResponse"][];
+                        "application/json": (components["schemas"]["TransactionExchangeResponse"] | components["schemas"]["TransactionExchangeResponse"])[];
                     };
                 };
             };
@@ -2179,7 +2179,50 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["TransactionResponse"][];
+                        "application/json": (components["schemas"]["TransactionTransferResponse"] | components["schemas"]["TransactionTransferResponse"])[];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/transactions/investment": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Create investment transaction
+         * @description Create an investment transaction linked to an instrument.
+         */
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["TransactionInvestmentInput"];
+                };
+            };
+            responses: {
+                /** @description Default Response */
+                201: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["TransactionInvestmentResponse"];
                     };
                 };
             };
@@ -2224,7 +2267,53 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["TransactionResponse"];
+                        "application/json": components["schemas"]["TransactionStandardResponse"];
+                    };
+                };
+            };
+        };
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/transactions/investment/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Update investment transaction
+         * @description Update an investment transaction by id.
+         */
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description Resource id */
+                    id: string;
+                };
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["TransactionInvestmentInput"];
+                };
+            };
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["TransactionInvestmentResponse"];
                     };
                 };
             };
@@ -2270,7 +2359,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["TransactionResponse"][];
+                        "application/json": (components["schemas"]["TransactionTransferResponse"] | components["schemas"]["TransactionTransferResponse"])[];
                     };
                 };
             };
@@ -2316,7 +2405,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["TransactionResponse"][];
+                        "application/json": (components["schemas"]["TransactionExchangeResponse"] | components["schemas"]["TransactionExchangeResponse"])[];
                     };
                 };
             };
@@ -2371,10 +2460,387 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/investments/instruments/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List investment instruments
+         * @description Return list of investment instruments for the authenticated user.
+         */
+        get: {
+            parameters: {
+                query?: {
+                    kind?: "share" | "fund" | "termDeposit" | "savings";
+                    currency?: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+                };
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["InvestmentInstrumentListResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        /**
+         * Create investment instrument
+         * @description Create a new investment instrument (holding/asset).
+         */
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["InvestmentInstrumentInput"];
+                };
+            };
+            responses: {
+                /** @description Default Response */
+                201: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["InvestmentInstrumentResponse"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/investments/instruments/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get investment instrument by id
+         * @description Return a single investment instrument by id.
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description Resource id */
+                    id: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["InvestmentInstrumentResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        /**
+         * Delete investment instrument
+         * @description Delete an investment instrument and its associated snapshot operations.
+         */
+        delete: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description Resource id */
+                    id: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            id: string;
+                        };
+                    };
+                };
+            };
+        };
+        options?: never;
+        head?: never;
+        /**
+         * Update investment instrument
+         * @description Update an investment instrument by id.
+         */
+        patch: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description Resource id */
+                    id: string;
+                };
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["InvestmentInstrumentUpdateInput"];
+                };
+            };
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["InvestmentInstrumentResponse"];
+                    };
+                };
+            };
+        };
+        trace?: never;
+    };
+    "/api/investments/operations/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List investment operations
+         * @description Return investment operations filtered by instrument, kind, or date.
+         */
+        get: {
+            parameters: {
+                query?: {
+                    instrumentId?: string;
+                    kind?: "buy" | "sell" | "interest" | "fee" | "snapshot";
+                    startDate?: unknown;
+                    endDate?: unknown;
+                };
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["InvestmentOperationListResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        /**
+         * Create snapshot investment operation
+         * @description Record a point-in-time balance snapshot for an instrument. Non-snapshot operations (buy, sell, interest, fee) must be created via transactions.
+         */
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["InvestmentSnapshotOperationInput"];
+                };
+            };
+            responses: {
+                /** @description Default Response */
+                201: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["InvestmentOperationResponse"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/investments/operations/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Delete snapshot investment operation
+         * @description Delete a snapshot investment operation. Cash-flow operations linked to transactions cannot be deleted here.
+         */
+        delete: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description Resource id */
+                    id: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            id: string;
+                        };
+                    };
+                };
+            };
+        };
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        InvestmentInstrumentInput: {
+            name: string;
+            /** @enum {string} */
+            kind: "share" | "fund" | "termDeposit" | "savings";
+            /** @enum {string} */
+            currency: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            notes?: string;
+        };
+        InvestmentInstrumentUpdateInput: {
+            name?: string;
+            /** @enum {string} */
+            kind?: "share" | "fund" | "termDeposit" | "savings";
+            /** @enum {string} */
+            currency?: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            notes?: string;
+        };
+        InvestmentInstrumentResponseInput: {
+            name: string;
+            /** @enum {string} */
+            kind: "share" | "fund" | "termDeposit" | "savings";
+            /** @enum {string} */
+            currency: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            notes?: string;
+            id: string;
+            ownerId: string;
+            nameNormalized: string;
+            createdAt: unknown;
+            updatedAt: unknown;
+        };
+        InvestmentInstrumentListResponseInput: components["schemas"]["InvestmentInstrumentResponseInput"][];
+        InvestmentSnapshotOperationInput: {
+            instrumentId: string;
+            amount: number;
+            /** @enum {string} */
+            currency: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            date: unknown;
+            note?: string;
+            /** @constant */
+            kind?: "snapshot";
+        };
+        InvestmentSnapshotOperationItemInput: {
+            instrumentId: string;
+            amount: number;
+            /** @enum {string} */
+            currency: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            date: unknown;
+            note?: string;
+            /** @constant */
+            kind: "snapshot";
+        };
+        InvestmentCashFlowOperationInput: {
+            instrumentId: string;
+            amount: number;
+            /** @enum {string} */
+            currency: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            date: unknown;
+            note?: string;
+            /** @enum {string} */
+            kind: "buy" | "sell" | "interest" | "fee";
+            transactionId: string;
+        };
+        InvestmentOperationInput: components["schemas"]["InvestmentCashFlowOperationInput"] | components["schemas"]["InvestmentSnapshotOperationItemInput"];
+        InvestmentSnapshotOperationResponseInput: {
+            instrumentId: string;
+            amount: number;
+            /** @enum {string} */
+            currency: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            date: unknown;
+            note?: string;
+            id: string;
+            ownerId: string;
+            createdAt: unknown;
+            updatedAt: unknown;
+            /** @constant */
+            kind: "snapshot";
+        };
+        InvestmentCashFlowOperationResponseInput: {
+            instrumentId: string;
+            amount: number;
+            /** @enum {string} */
+            currency: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            date: unknown;
+            note?: string;
+            id: string;
+            ownerId: string;
+            createdAt: unknown;
+            updatedAt: unknown;
+            /** @enum {string} */
+            kind: "buy" | "sell" | "interest" | "fee";
+            transactionId: string;
+        };
+        InvestmentOperationResponseInput: components["schemas"]["InvestmentCashFlowOperationResponseInput"] | components["schemas"]["InvestmentSnapshotOperationResponseInput"];
+        InvestmentOperationListResponseInput: components["schemas"]["InvestmentOperationResponseInput"][];
         WelcomeResponseInput: {
             message: string;
         };
@@ -2470,6 +2936,54 @@ export interface components {
             accountIncomeId?: string | null;
             paymentMethodId?: string | null;
         };
+        TransactionInvestmentNewInstrumentInput: {
+            name: string;
+            /**
+             * @default share
+             * @enum {string}
+             */
+            kind: "share" | "fund" | "termDeposit" | "savings";
+            /** @enum {string} */
+            currency?: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            notes?: string;
+        };
+        TransactionInvestmentDetailsInput: {
+            /** @enum {string} */
+            operationKind: "buy" | "sell" | "interest" | "fee";
+            note?: string;
+            instrumentId: string;
+            newInstrument?: unknown;
+        } | {
+            /** @enum {string} */
+            operationKind: "buy" | "sell" | "interest" | "fee";
+            note?: string;
+            instrumentId?: unknown;
+            newInstrument: components["schemas"]["TransactionInvestmentNewInstrumentInput"];
+        };
+        TransactionInvestmentInput: {
+            date: unknown;
+            description: string;
+            amount: number;
+            /** @enum {string} */
+            currency: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            categoryId?: string | null;
+            paymentMethodId?: string | null;
+            accountId?: string | null;
+            investment: components["schemas"]["TransactionInvestmentDetailsInput"];
+        };
+        TransactionInvestmentResponseDetailsInput: {
+            /** @enum {string} */
+            operationKind: "buy" | "sell" | "interest" | "fee";
+            instrument: {
+                id: string;
+                name: string;
+                /** @enum {string} */
+                kind: "share" | "fund" | "termDeposit" | "savings";
+                /** @enum {string} */
+                currency: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            };
+            note?: string;
+        };
         TransactionCreateBulkItemInput: {
             date: unknown;
             description: string;
@@ -2508,11 +3022,23 @@ export interface components {
             paymentMethodId?: string | null;
             /** @constant */
             kind: "transfer";
+        } | {
+            date: unknown;
+            description: string;
+            amount: number;
+            /** @enum {string} */
+            currency: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            categoryId?: string | null;
+            paymentMethodId?: string | null;
+            accountId?: string | null;
+            investment: components["schemas"]["TransactionInvestmentDetailsInput"];
+            /** @constant */
+            kind: "investment";
         };
         TransactionBulkCreateInput: {
             transactions: components["schemas"]["TransactionCreateBulkItemInput"][];
         };
-        TransactionResponseInput: {
+        TransactionStandardResponseInput: {
             date: unknown;
             description: string;
             amount: number;
@@ -2521,16 +3047,12 @@ export interface components {
             /** @enum {string} */
             transactionType: "expense" | "income";
             id: string;
-            /** @enum {string} */
-            kind: "standard" | "exchange" | "transfer" | "investment";
             ownerId: string;
             createdAt: unknown;
             updatedAt: unknown;
             sourceIndex: number;
             sourceRefIndex?: number;
             refId?: string;
-            currencies?: string;
-            exchangeRate?: number;
             category: {
                 id: string;
                 /** @enum {string} */
@@ -2549,8 +3071,10 @@ export interface components {
                 type: "user" | "system";
                 name: string;
             };
+            /** @constant */
+            kind: "standard";
         };
-        TransactionDetailsResponseInput: {
+        TransactionTransferResponseInput: {
             date: unknown;
             description: string;
             amount: number;
@@ -2559,16 +3083,12 @@ export interface components {
             /** @enum {string} */
             transactionType: "expense" | "income";
             id: string;
-            /** @enum {string} */
-            kind: "standard" | "exchange" | "transfer" | "investment";
             ownerId: string;
             createdAt: unknown;
             updatedAt: unknown;
             sourceIndex: number;
             sourceRefIndex?: number;
             refId?: string;
-            currencies?: string;
-            exchangeRate?: number;
             category: {
                 id: string;
                 /** @enum {string} */
@@ -2587,13 +3107,167 @@ export interface components {
                 type: "user" | "system";
                 name: string;
             };
+            /** @constant */
+            kind: "transfer";
+        };
+        TransactionExchangeResponseInput: {
+            date: unknown;
+            description: string;
+            amount: number;
+            /** @enum {string} */
+            currency: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            /** @enum {string} */
+            transactionType: "expense" | "income";
+            id: string;
+            ownerId: string;
+            createdAt: unknown;
+            updatedAt: unknown;
+            sourceIndex: number;
+            sourceRefIndex?: number;
+            refId?: string;
+            category: {
+                id: string;
+                /** @enum {string} */
+                type: "user" | "system";
+                name: string;
+            };
+            paymentMethod: {
+                id: string;
+                /** @enum {string} */
+                type: "user" | "system";
+                name: string;
+            };
+            account: {
+                id: string;
+                /** @enum {string} */
+                type: "user" | "system";
+                name: string;
+            };
+            /** @constant */
+            kind: "exchange";
+            currencies: string;
+            exchangeRate: number;
+        };
+        TransactionInvestmentResponseInput: {
+            date: unknown;
+            description: string;
+            amount: number;
+            /** @enum {string} */
+            currency: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            /** @enum {string} */
+            transactionType: "expense" | "income";
+            id: string;
+            ownerId: string;
+            createdAt: unknown;
+            updatedAt: unknown;
+            sourceIndex: number;
+            sourceRefIndex?: number;
+            refId?: string;
+            category: {
+                id: string;
+                /** @enum {string} */
+                type: "user" | "system";
+                name: string;
+            };
+            paymentMethod: {
+                id: string;
+                /** @enum {string} */
+                type: "user" | "system";
+                name: string;
+            };
+            account: {
+                id: string;
+                /** @enum {string} */
+                type: "user" | "system";
+                name: string;
+            };
+            /** @constant */
+            kind: "investment";
+            investment?: components["schemas"]["TransactionInvestmentResponseDetailsInput"];
+        };
+        TransactionTransferDetailsResponseInput: {
+            date: unknown;
+            description: string;
+            amount: number;
+            /** @enum {string} */
+            currency: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            /** @enum {string} */
+            transactionType: "expense" | "income";
+            id: string;
+            ownerId: string;
+            createdAt: unknown;
+            updatedAt: unknown;
+            sourceIndex: number;
+            sourceRefIndex?: number;
+            refId?: string;
+            category: {
+                id: string;
+                /** @enum {string} */
+                type: "user" | "system";
+                name: string;
+            };
+            paymentMethod: {
+                id: string;
+                /** @enum {string} */
+                type: "user" | "system";
+                name: string;
+            };
+            account: {
+                id: string;
+                /** @enum {string} */
+                type: "user" | "system";
+                name: string;
+            };
+            /** @constant */
+            kind: "transfer";
             reference?: components["schemas"]["TransactionResponseInput"];
         };
+        TransactionExchangeDetailsResponseInput: {
+            date: unknown;
+            description: string;
+            amount: number;
+            /** @enum {string} */
+            currency: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            /** @enum {string} */
+            transactionType: "expense" | "income";
+            id: string;
+            ownerId: string;
+            createdAt: unknown;
+            updatedAt: unknown;
+            sourceIndex: number;
+            sourceRefIndex?: number;
+            refId?: string;
+            category: {
+                id: string;
+                /** @enum {string} */
+                type: "user" | "system";
+                name: string;
+            };
+            paymentMethod: {
+                id: string;
+                /** @enum {string} */
+                type: "user" | "system";
+                name: string;
+            };
+            account: {
+                id: string;
+                /** @enum {string} */
+                type: "user" | "system";
+                name: string;
+            };
+            /** @constant */
+            kind: "exchange";
+            currencies: string;
+            exchangeRate: number;
+            reference?: components["schemas"]["TransactionResponseInput"];
+        };
+        TransactionResponseInput: components["schemas"]["TransactionStandardResponseInput"] | components["schemas"]["TransactionTransferResponseInput"] | components["schemas"]["TransactionExchangeResponseInput"] | components["schemas"]["TransactionInvestmentResponseInput"];
+        TransactionDetailsResponseInput: components["schemas"]["TransactionStandardResponseInput"] | components["schemas"]["TransactionTransferDetailsResponseInput"] | components["schemas"]["TransactionExchangeDetailsResponseInput"] | components["schemas"]["TransactionInvestmentResponseInput"];
         TransactionDeletionInput: {
             deletedAt: unknown;
             purgeAt: unknown;
         };
-        TrashedTransactionResponseInput: {
+        TrashedTransactionStandardResponseInput: {
             date: unknown;
             description: string;
             amount: number;
@@ -2602,16 +3276,12 @@ export interface components {
             /** @enum {string} */
             transactionType: "expense" | "income";
             id: string;
-            /** @enum {string} */
-            kind: "standard" | "exchange" | "transfer" | "investment";
             ownerId: string;
             createdAt: unknown;
             updatedAt: unknown;
             sourceIndex: number;
             sourceRefIndex?: number;
             refId?: string;
-            currencies?: string;
-            exchangeRate?: number;
             category: {
                 id: string;
                 /** @enum {string} */
@@ -2630,9 +3300,11 @@ export interface components {
                 type: "user" | "system";
                 name: string;
             };
+            /** @constant */
+            kind: "standard";
             deletion: components["schemas"]["TransactionDeletionInput"];
         };
-        TrashedTransactionDetailsResponseInput: {
+        TrashedTransactionTransferResponseInput: {
             date: unknown;
             description: string;
             amount: number;
@@ -2641,16 +3313,12 @@ export interface components {
             /** @enum {string} */
             transactionType: "expense" | "income";
             id: string;
-            /** @enum {string} */
-            kind: "standard" | "exchange" | "transfer" | "investment";
             ownerId: string;
             createdAt: unknown;
             updatedAt: unknown;
             sourceIndex: number;
             sourceRefIndex?: number;
             refId?: string;
-            currencies?: string;
-            exchangeRate?: number;
             category: {
                 id: string;
                 /** @enum {string} */
@@ -2669,9 +3337,167 @@ export interface components {
                 type: "user" | "system";
                 name: string;
             };
+            /** @constant */
+            kind: "transfer";
+            deletion: components["schemas"]["TransactionDeletionInput"];
+        };
+        TrashedTransactionExchangeResponseInput: {
+            date: unknown;
+            description: string;
+            amount: number;
+            /** @enum {string} */
+            currency: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            /** @enum {string} */
+            transactionType: "expense" | "income";
+            id: string;
+            ownerId: string;
+            createdAt: unknown;
+            updatedAt: unknown;
+            sourceIndex: number;
+            sourceRefIndex?: number;
+            refId?: string;
+            category: {
+                id: string;
+                /** @enum {string} */
+                type: "user" | "system";
+                name: string;
+            };
+            paymentMethod: {
+                id: string;
+                /** @enum {string} */
+                type: "user" | "system";
+                name: string;
+            };
+            account: {
+                id: string;
+                /** @enum {string} */
+                type: "user" | "system";
+                name: string;
+            };
+            /** @constant */
+            kind: "exchange";
+            currencies: string;
+            exchangeRate: number;
+            deletion: components["schemas"]["TransactionDeletionInput"];
+        };
+        TrashedTransactionInvestmentResponseInput: {
+            date: unknown;
+            description: string;
+            amount: number;
+            /** @enum {string} */
+            currency: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            /** @enum {string} */
+            transactionType: "expense" | "income";
+            id: string;
+            ownerId: string;
+            createdAt: unknown;
+            updatedAt: unknown;
+            sourceIndex: number;
+            sourceRefIndex?: number;
+            refId?: string;
+            category: {
+                id: string;
+                /** @enum {string} */
+                type: "user" | "system";
+                name: string;
+            };
+            paymentMethod: {
+                id: string;
+                /** @enum {string} */
+                type: "user" | "system";
+                name: string;
+            };
+            account: {
+                id: string;
+                /** @enum {string} */
+                type: "user" | "system";
+                name: string;
+            };
+            /** @constant */
+            kind: "investment";
+            investment?: components["schemas"]["TransactionInvestmentResponseDetailsInput"];
+            deletion: components["schemas"]["TransactionDeletionInput"];
+        };
+        TrashedTransactionTransferDetailsResponseInput: {
+            date: unknown;
+            description: string;
+            amount: number;
+            /** @enum {string} */
+            currency: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            /** @enum {string} */
+            transactionType: "expense" | "income";
+            id: string;
+            ownerId: string;
+            createdAt: unknown;
+            updatedAt: unknown;
+            sourceIndex: number;
+            sourceRefIndex?: number;
+            refId?: string;
+            category: {
+                id: string;
+                /** @enum {string} */
+                type: "user" | "system";
+                name: string;
+            };
+            paymentMethod: {
+                id: string;
+                /** @enum {string} */
+                type: "user" | "system";
+                name: string;
+            };
+            account: {
+                id: string;
+                /** @enum {string} */
+                type: "user" | "system";
+                name: string;
+            };
+            /** @constant */
+            kind: "transfer";
             deletion: components["schemas"]["TransactionDeletionInput"];
             reference?: components["schemas"]["TrashedTransactionResponseInput"];
         };
+        TrashedTransactionExchangeDetailsResponseInput: {
+            date: unknown;
+            description: string;
+            amount: number;
+            /** @enum {string} */
+            currency: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            /** @enum {string} */
+            transactionType: "expense" | "income";
+            id: string;
+            ownerId: string;
+            createdAt: unknown;
+            updatedAt: unknown;
+            sourceIndex: number;
+            sourceRefIndex?: number;
+            refId?: string;
+            category: {
+                id: string;
+                /** @enum {string} */
+                type: "user" | "system";
+                name: string;
+            };
+            paymentMethod: {
+                id: string;
+                /** @enum {string} */
+                type: "user" | "system";
+                name: string;
+            };
+            account: {
+                id: string;
+                /** @enum {string} */
+                type: "user" | "system";
+                name: string;
+            };
+            /** @constant */
+            kind: "exchange";
+            currencies: string;
+            exchangeRate: number;
+            deletion: components["schemas"]["TransactionDeletionInput"];
+            reference?: components["schemas"]["TrashedTransactionResponseInput"];
+        };
+        TrashedTransactionResponseInput: components["schemas"]["TrashedTransactionStandardResponseInput"] | components["schemas"]["TrashedTransactionTransferResponseInput"] | components["schemas"]["TrashedTransactionExchangeResponseInput"] | components["schemas"]["TrashedTransactionInvestmentResponseInput"];
+        TrashedTransactionDetailsResponseInput: components["schemas"]["TrashedTransactionStandardResponseInput"] | components["schemas"]["TrashedTransactionTransferDetailsResponseInput"] | components["schemas"]["TrashedTransactionExchangeDetailsResponseInput"] | components["schemas"]["TrashedTransactionInvestmentResponseInput"];
         TransactionsResponseInput: components["schemas"]["TransactionResponseInput"][];
         TrashedTransactionsResponseInput: components["schemas"]["TrashedTransactionResponseInput"][];
         TestTransactionsCreateInput: {
@@ -2680,6 +3506,110 @@ export interface components {
         TestTransactionsCreateResponseInput: {
             insertedCount: number;
         };
+        InvestmentInstrument: {
+            name: string;
+            /** @enum {string} */
+            kind: "share" | "fund" | "termDeposit" | "savings";
+            /** @enum {string} */
+            currency: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            notes?: string;
+        };
+        InvestmentInstrumentUpdate: {
+            name?: string;
+            /** @enum {string} */
+            kind?: "share" | "fund" | "termDeposit" | "savings";
+            /** @enum {string} */
+            currency?: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            notes?: string;
+        };
+        InvestmentInstrumentResponse: {
+            name: string;
+            /** @enum {string} */
+            kind: "share" | "fund" | "termDeposit" | "savings";
+            /** @enum {string} */
+            currency: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            notes?: string;
+            id: string;
+            ownerId: string;
+            nameNormalized: string;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            updatedAt: string;
+        };
+        InvestmentInstrumentListResponse: components["schemas"]["InvestmentInstrumentResponse"][];
+        InvestmentSnapshotOperation: {
+            instrumentId: string;
+            amount: number;
+            /** @enum {string} */
+            currency: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            /** Format: date-time */
+            date: string;
+            note?: string;
+            /** @constant */
+            kind?: "snapshot";
+        };
+        InvestmentSnapshotOperationItem: {
+            instrumentId: string;
+            amount: number;
+            /** @enum {string} */
+            currency: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            /** Format: date-time */
+            date: string;
+            note?: string;
+            /** @constant */
+            kind: "snapshot";
+        };
+        InvestmentCashFlowOperation: {
+            instrumentId: string;
+            amount: number;
+            /** @enum {string} */
+            currency: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            /** Format: date-time */
+            date: string;
+            note?: string;
+            /** @enum {string} */
+            kind: "buy" | "sell" | "interest" | "fee";
+            transactionId: string;
+        };
+        InvestmentOperation: components["schemas"]["InvestmentCashFlowOperation"] | components["schemas"]["InvestmentSnapshotOperationItem"];
+        InvestmentSnapshotOperationResponse: {
+            instrumentId: string;
+            amount: number;
+            /** @enum {string} */
+            currency: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            /** Format: date-time */
+            date: string;
+            note?: string;
+            id: string;
+            ownerId: string;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            updatedAt: string;
+            /** @constant */
+            kind: "snapshot";
+        };
+        InvestmentCashFlowOperationResponse: {
+            instrumentId: string;
+            amount: number;
+            /** @enum {string} */
+            currency: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            /** Format: date-time */
+            date: string;
+            note?: string;
+            id: string;
+            ownerId: string;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            updatedAt: string;
+            /** @enum {string} */
+            kind: "buy" | "sell" | "interest" | "fee";
+            transactionId: string;
+        };
+        InvestmentOperationResponse: components["schemas"]["InvestmentCashFlowOperationResponse"] | components["schemas"]["InvestmentSnapshotOperationResponse"];
+        InvestmentOperationListResponse: components["schemas"]["InvestmentOperationResponse"][];
         WelcomeResponse: {
             message: string;
         };
@@ -2780,6 +3710,55 @@ export interface components {
             accountIncomeId?: string | null;
             paymentMethodId?: string | null;
         };
+        TransactionInvestmentNewInstrument: {
+            name: string;
+            /**
+             * @default share
+             * @enum {string}
+             */
+            kind: "share" | "fund" | "termDeposit" | "savings";
+            /** @enum {string} */
+            currency?: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            notes?: string;
+        };
+        TransactionInvestmentDetails: {
+            /** @enum {string} */
+            operationKind: "buy" | "sell" | "interest" | "fee";
+            note?: string;
+            instrumentId: string;
+            newInstrument?: null;
+        } | {
+            /** @enum {string} */
+            operationKind: "buy" | "sell" | "interest" | "fee";
+            note?: string;
+            instrumentId?: null;
+            newInstrument: components["schemas"]["TransactionInvestmentNewInstrument"];
+        };
+        TransactionInvestment: {
+            /** Format: date-time */
+            date: string;
+            description: string;
+            amount: number;
+            /** @enum {string} */
+            currency: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            categoryId?: string | null;
+            paymentMethodId?: string | null;
+            accountId?: string | null;
+            investment: components["schemas"]["TransactionInvestmentDetails"];
+        };
+        TransactionInvestmentResponseDetails: {
+            /** @enum {string} */
+            operationKind: "buy" | "sell" | "interest" | "fee";
+            instrument: {
+                id: string;
+                name: string;
+                /** @enum {string} */
+                kind: "share" | "fund" | "termDeposit" | "savings";
+                /** @enum {string} */
+                currency: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            };
+            note?: string;
+        };
         TransactionCreateBulkItem: {
             /** Format: date-time */
             date: string;
@@ -2821,11 +3800,24 @@ export interface components {
             paymentMethodId?: string | null;
             /** @constant */
             kind: "transfer";
+        } | {
+            /** Format: date-time */
+            date: string;
+            description: string;
+            amount: number;
+            /** @enum {string} */
+            currency: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            categoryId?: string | null;
+            paymentMethodId?: string | null;
+            accountId?: string | null;
+            investment: components["schemas"]["TransactionInvestmentDetails"];
+            /** @constant */
+            kind: "investment";
         };
         TransactionBulkCreate: {
             transactions: components["schemas"]["TransactionCreateBulkItem"][];
         };
-        TransactionResponse: {
+        TransactionStandardResponse: {
             /** Format: date-time */
             date: string;
             description: string;
@@ -2835,8 +3827,6 @@ export interface components {
             /** @enum {string} */
             transactionType: "expense" | "income";
             id: string;
-            /** @enum {string} */
-            kind: "standard" | "exchange" | "transfer" | "investment";
             ownerId: string;
             /** Format: date-time */
             createdAt: string;
@@ -2845,8 +3835,6 @@ export interface components {
             sourceIndex: number;
             sourceRefIndex?: number;
             refId?: string;
-            currencies?: string;
-            exchangeRate?: number;
             category: {
                 id: string;
                 /** @enum {string} */
@@ -2865,8 +3853,10 @@ export interface components {
                 type: "user" | "system";
                 name: string;
             };
+            /** @constant */
+            kind: "standard";
         };
-        TransactionDetailsResponse: {
+        TransactionTransferResponse: {
             /** Format: date-time */
             date: string;
             description: string;
@@ -2876,8 +3866,6 @@ export interface components {
             /** @enum {string} */
             transactionType: "expense" | "income";
             id: string;
-            /** @enum {string} */
-            kind: "standard" | "exchange" | "transfer" | "investment";
             ownerId: string;
             /** Format: date-time */
             createdAt: string;
@@ -2886,8 +3874,6 @@ export interface components {
             sourceIndex: number;
             sourceRefIndex?: number;
             refId?: string;
-            currencies?: string;
-            exchangeRate?: number;
             category: {
                 id: string;
                 /** @enum {string} */
@@ -2906,15 +3892,181 @@ export interface components {
                 type: "user" | "system";
                 name: string;
             };
+            /** @constant */
+            kind: "transfer";
+        };
+        TransactionExchangeResponse: {
+            /** Format: date-time */
+            date: string;
+            description: string;
+            amount: number;
+            /** @enum {string} */
+            currency: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            /** @enum {string} */
+            transactionType: "expense" | "income";
+            id: string;
+            ownerId: string;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            updatedAt: string;
+            sourceIndex: number;
+            sourceRefIndex?: number;
+            refId?: string;
+            category: {
+                id: string;
+                /** @enum {string} */
+                type: "user" | "system";
+                name: string;
+            };
+            paymentMethod: {
+                id: string;
+                /** @enum {string} */
+                type: "user" | "system";
+                name: string;
+            };
+            account: {
+                id: string;
+                /** @enum {string} */
+                type: "user" | "system";
+                name: string;
+            };
+            /** @constant */
+            kind: "exchange";
+            currencies: string;
+            exchangeRate: number;
+        };
+        TransactionInvestmentResponse: {
+            /** Format: date-time */
+            date: string;
+            description: string;
+            amount: number;
+            /** @enum {string} */
+            currency: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            /** @enum {string} */
+            transactionType: "expense" | "income";
+            id: string;
+            ownerId: string;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            updatedAt: string;
+            sourceIndex: number;
+            sourceRefIndex?: number;
+            refId?: string;
+            category: {
+                id: string;
+                /** @enum {string} */
+                type: "user" | "system";
+                name: string;
+            };
+            paymentMethod: {
+                id: string;
+                /** @enum {string} */
+                type: "user" | "system";
+                name: string;
+            };
+            account: {
+                id: string;
+                /** @enum {string} */
+                type: "user" | "system";
+                name: string;
+            };
+            /** @constant */
+            kind: "investment";
+            investment?: components["schemas"]["TransactionInvestmentResponseDetails"];
+        };
+        TransactionTransferDetailsResponse: {
+            /** Format: date-time */
+            date: string;
+            description: string;
+            amount: number;
+            /** @enum {string} */
+            currency: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            /** @enum {string} */
+            transactionType: "expense" | "income";
+            id: string;
+            ownerId: string;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            updatedAt: string;
+            sourceIndex: number;
+            sourceRefIndex?: number;
+            refId?: string;
+            category: {
+                id: string;
+                /** @enum {string} */
+                type: "user" | "system";
+                name: string;
+            };
+            paymentMethod: {
+                id: string;
+                /** @enum {string} */
+                type: "user" | "system";
+                name: string;
+            };
+            account: {
+                id: string;
+                /** @enum {string} */
+                type: "user" | "system";
+                name: string;
+            };
+            /** @constant */
+            kind: "transfer";
             reference?: components["schemas"]["TransactionResponse"];
         };
+        TransactionExchangeDetailsResponse: {
+            /** Format: date-time */
+            date: string;
+            description: string;
+            amount: number;
+            /** @enum {string} */
+            currency: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            /** @enum {string} */
+            transactionType: "expense" | "income";
+            id: string;
+            ownerId: string;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            updatedAt: string;
+            sourceIndex: number;
+            sourceRefIndex?: number;
+            refId?: string;
+            category: {
+                id: string;
+                /** @enum {string} */
+                type: "user" | "system";
+                name: string;
+            };
+            paymentMethod: {
+                id: string;
+                /** @enum {string} */
+                type: "user" | "system";
+                name: string;
+            };
+            account: {
+                id: string;
+                /** @enum {string} */
+                type: "user" | "system";
+                name: string;
+            };
+            /** @constant */
+            kind: "exchange";
+            currencies: string;
+            exchangeRate: number;
+            reference?: components["schemas"]["TransactionResponse"];
+        };
+        TransactionResponse: components["schemas"]["TransactionStandardResponse"] | components["schemas"]["TransactionTransferResponse"] | components["schemas"]["TransactionExchangeResponse"] | components["schemas"]["TransactionInvestmentResponse"];
+        TransactionDetailsResponse: components["schemas"]["TransactionStandardResponse"] | components["schemas"]["TransactionTransferDetailsResponse"] | components["schemas"]["TransactionExchangeDetailsResponse"] | components["schemas"]["TransactionInvestmentResponse"];
         TransactionDeletion: {
             /** Format: date-time */
             deletedAt: string;
             /** Format: date-time */
             purgeAt: string;
         };
-        TrashedTransactionResponse: {
+        TrashedTransactionStandardResponse: {
             /** Format: date-time */
             date: string;
             description: string;
@@ -2924,8 +4076,6 @@ export interface components {
             /** @enum {string} */
             transactionType: "expense" | "income";
             id: string;
-            /** @enum {string} */
-            kind: "standard" | "exchange" | "transfer" | "investment";
             ownerId: string;
             /** Format: date-time */
             createdAt: string;
@@ -2934,8 +4084,6 @@ export interface components {
             sourceIndex: number;
             sourceRefIndex?: number;
             refId?: string;
-            currencies?: string;
-            exchangeRate?: number;
             category: {
                 id: string;
                 /** @enum {string} */
@@ -2954,9 +4102,11 @@ export interface components {
                 type: "user" | "system";
                 name: string;
             };
+            /** @constant */
+            kind: "standard";
             deletion: components["schemas"]["TransactionDeletion"];
         };
-        TrashedTransactionDetailsResponse: {
+        TrashedTransactionTransferResponse: {
             /** Format: date-time */
             date: string;
             description: string;
@@ -2966,8 +4116,6 @@ export interface components {
             /** @enum {string} */
             transactionType: "expense" | "income";
             id: string;
-            /** @enum {string} */
-            kind: "standard" | "exchange" | "transfer" | "investment";
             ownerId: string;
             /** Format: date-time */
             createdAt: string;
@@ -2976,8 +4124,6 @@ export interface components {
             sourceIndex: number;
             sourceRefIndex?: number;
             refId?: string;
-            currencies?: string;
-            exchangeRate?: number;
             category: {
                 id: string;
                 /** @enum {string} */
@@ -2996,9 +4142,179 @@ export interface components {
                 type: "user" | "system";
                 name: string;
             };
+            /** @constant */
+            kind: "transfer";
+            deletion: components["schemas"]["TransactionDeletion"];
+        };
+        TrashedTransactionExchangeResponse: {
+            /** Format: date-time */
+            date: string;
+            description: string;
+            amount: number;
+            /** @enum {string} */
+            currency: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            /** @enum {string} */
+            transactionType: "expense" | "income";
+            id: string;
+            ownerId: string;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            updatedAt: string;
+            sourceIndex: number;
+            sourceRefIndex?: number;
+            refId?: string;
+            category: {
+                id: string;
+                /** @enum {string} */
+                type: "user" | "system";
+                name: string;
+            };
+            paymentMethod: {
+                id: string;
+                /** @enum {string} */
+                type: "user" | "system";
+                name: string;
+            };
+            account: {
+                id: string;
+                /** @enum {string} */
+                type: "user" | "system";
+                name: string;
+            };
+            /** @constant */
+            kind: "exchange";
+            currencies: string;
+            exchangeRate: number;
+            deletion: components["schemas"]["TransactionDeletion"];
+        };
+        TrashedTransactionInvestmentResponse: {
+            /** Format: date-time */
+            date: string;
+            description: string;
+            amount: number;
+            /** @enum {string} */
+            currency: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            /** @enum {string} */
+            transactionType: "expense" | "income";
+            id: string;
+            ownerId: string;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            updatedAt: string;
+            sourceIndex: number;
+            sourceRefIndex?: number;
+            refId?: string;
+            category: {
+                id: string;
+                /** @enum {string} */
+                type: "user" | "system";
+                name: string;
+            };
+            paymentMethod: {
+                id: string;
+                /** @enum {string} */
+                type: "user" | "system";
+                name: string;
+            };
+            account: {
+                id: string;
+                /** @enum {string} */
+                type: "user" | "system";
+                name: string;
+            };
+            /** @constant */
+            kind: "investment";
+            investment?: components["schemas"]["TransactionInvestmentResponseDetails"];
+            deletion: components["schemas"]["TransactionDeletion"];
+        };
+        TrashedTransactionTransferDetailsResponse: {
+            /** Format: date-time */
+            date: string;
+            description: string;
+            amount: number;
+            /** @enum {string} */
+            currency: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            /** @enum {string} */
+            transactionType: "expense" | "income";
+            id: string;
+            ownerId: string;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            updatedAt: string;
+            sourceIndex: number;
+            sourceRefIndex?: number;
+            refId?: string;
+            category: {
+                id: string;
+                /** @enum {string} */
+                type: "user" | "system";
+                name: string;
+            };
+            paymentMethod: {
+                id: string;
+                /** @enum {string} */
+                type: "user" | "system";
+                name: string;
+            };
+            account: {
+                id: string;
+                /** @enum {string} */
+                type: "user" | "system";
+                name: string;
+            };
+            /** @constant */
+            kind: "transfer";
             deletion: components["schemas"]["TransactionDeletion"];
             reference?: components["schemas"]["TrashedTransactionResponse"];
         };
+        TrashedTransactionExchangeDetailsResponse: {
+            /** Format: date-time */
+            date: string;
+            description: string;
+            amount: number;
+            /** @enum {string} */
+            currency: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            /** @enum {string} */
+            transactionType: "expense" | "income";
+            id: string;
+            ownerId: string;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            updatedAt: string;
+            sourceIndex: number;
+            sourceRefIndex?: number;
+            refId?: string;
+            category: {
+                id: string;
+                /** @enum {string} */
+                type: "user" | "system";
+                name: string;
+            };
+            paymentMethod: {
+                id: string;
+                /** @enum {string} */
+                type: "user" | "system";
+                name: string;
+            };
+            account: {
+                id: string;
+                /** @enum {string} */
+                type: "user" | "system";
+                name: string;
+            };
+            /** @constant */
+            kind: "exchange";
+            currencies: string;
+            exchangeRate: number;
+            deletion: components["schemas"]["TransactionDeletion"];
+            reference?: components["schemas"]["TrashedTransactionResponse"];
+        };
+        TrashedTransactionResponse: components["schemas"]["TrashedTransactionStandardResponse"] | components["schemas"]["TrashedTransactionTransferResponse"] | components["schemas"]["TrashedTransactionExchangeResponse"] | components["schemas"]["TrashedTransactionInvestmentResponse"];
+        TrashedTransactionDetailsResponse: components["schemas"]["TrashedTransactionStandardResponse"] | components["schemas"]["TrashedTransactionTransferDetailsResponse"] | components["schemas"]["TrashedTransactionExchangeDetailsResponse"] | components["schemas"]["TrashedTransactionInvestmentResponse"];
         TransactionsResponse: components["schemas"]["TransactionResponse"][];
         TrashedTransactionsResponse: components["schemas"]["TrashedTransactionResponse"][];
         TestTransactionsCreate: {

@@ -29,6 +29,13 @@ export type TransactionExchangeDTO = Omit<
   currencyIncome: CurrencyCode | (string & {});
 };
 
+export type TransactionInvestmentDTO = Omit<
+  components['schemas']['TransactionInvestmentInput'],
+  'currency'
+> & {
+  currency: CurrencyCode | (string & {});
+};
+
 export type BulkTransactionDTO =
   | ({ kind: 'standard' } & TransactionStandardDTO)
   | ({ kind: 'transfer' } & TransactionTransferDTO)
@@ -39,6 +46,9 @@ export type CreateBulkTransactionsDTO = {
 };
 
 export type Transaction = components['schemas']['TransactionResponse'];
+
+export type TransactionInvestment =
+  components['schemas']['TransactionInvestmentResponse'];
 
 export type TransactionDeletion = components['schemas']['TransactionDeletion'];
 

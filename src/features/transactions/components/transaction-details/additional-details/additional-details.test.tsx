@@ -5,7 +5,9 @@ import { describe, expect, it, vi } from 'vitest';
 
 import {
   makeTransaction,
+  makeTransactionDetails,
   makeTrashedTransaction,
+  makeTrashedTransactionDetails,
 } from '@test-utils/factories/transaction';
 import type { Transaction, TransactionDetails } from '@transactions/api';
 import { EXCHANGE_CATEGORY, TRANSFER_CATEGORY } from '@transactions/consts';
@@ -90,14 +92,11 @@ describe('AdditionalDetails', () => {
   });
 
   it('handles missing exchange data and reference id', () => {
-    const transaction: Transaction = {
-      ...baseTransaction,
-      kind: 'exchange',
+    const transaction: Transaction = makeTransaction({
+      kind: 'standard',
       category: { ...baseTransaction.category, name: EXCHANGE_CATEGORY, type: 'system' },
-      currencies: undefined,
-      exchangeRate: undefined,
       refId: undefined,
-    };
+    });
 
     renderWithRouter(<AdditionalDetails transaction={transaction} />);
 
@@ -106,12 +105,11 @@ describe('AdditionalDetails', () => {
   });
 
   it('uses a custom reference path prefix when provided', () => {
-    const transaction: Transaction = {
-      ...baseTransaction,
+    const transaction: Transaction = makeTransaction({
       kind: 'transfer',
       category: { ...baseTransaction.category, name: TRANSFER_CATEGORY, type: 'system' },
       refId: 'trash-ref-123',
-    };
+    });
 
     renderWithRouter(
       <AdditionalDetails
@@ -127,12 +125,12 @@ describe('AdditionalDetails', () => {
   });
 
   it('does not treat a user category with a reserved system name as a linked transaction kind', () => {
-    const transaction: Transaction = {
-      ...baseTransaction,
+    const transaction: Transaction = makeTransaction({
+      kind: 'exchange',
       category: { ...baseTransaction.category, name: TRANSFER_CATEGORY, type: 'user' },
       currencies: 'USD/PLN',
       exchangeRate: 3.5,
-    };
+    });
 
     renderWithRouter(<AdditionalDetails transaction={transaction} />);
 
@@ -142,17 +140,16 @@ describe('AdditionalDetails', () => {
   });
 
   it('renders a referenced transaction summary with only changed fields', () => {
-    const transaction: TransactionDetails = {
-      ...makeTransaction({
-        refId: 'ref-123',
-        amount: 10,
-        currency: 'USD',
-        transactionType: 'expense',
-        date: '2024-01-03',
-        category: { id: 'cat-1', type: 'user', name: 'Food' },
-        paymentMethod: { id: 'pm-1', type: 'user', name: 'Card' },
-        account: { id: 'acc-1', type: 'user', name: 'Main' },
-      }),
+    const transaction: TransactionDetails = makeTransactionDetails({
+      kind: 'transfer',
+      refId: 'ref-123',
+      amount: 10,
+      currency: 'USD',
+      transactionType: 'expense',
+      date: '2024-01-03',
+      category: { id: 'cat-1', type: 'user', name: 'Food' },
+      paymentMethod: { id: 'pm-1', type: 'user', name: 'Card' },
+      account: { id: 'acc-1', type: 'user', name: 'Main' },
       reference: makeTransaction({
         id: 'ref-123',
         amount: 20,
@@ -163,7 +160,7 @@ describe('AdditionalDetails', () => {
         paymentMethod: { id: 'pm-system', type: 'system', name: 'cash' },
         account: { id: 'acc-system', type: 'system', name: 'savings' },
       }),
-    };
+    });
 
     renderWithRouter(<AdditionalDetails transaction={transaction} />);
 
@@ -181,14 +178,15 @@ describe('AdditionalDetails', () => {
   });
 
   it('renders reference summary for trashed transaction details too', () => {
-    const transaction = {
-      ...makeTrashedTransaction({ refId: 'trash-ref-123' }),
+    const transaction = makeTrashedTransactionDetails({
+      kind: 'transfer',
+      refId: 'trash-ref-123',
       reference: makeTrashedTransaction({
         id: 'trash-ref-123',
         amount: 30,
         currency: 'PLN',
       }),
-    };
+    });
 
     renderWithRouter(
       <AdditionalDetails
@@ -206,10 +204,11 @@ describe('AdditionalDetails', () => {
 
   it('does not render reference summary when referenced transaction has the same visible details', () => {
     const reference = makeTransaction({ id: 'ref-123' });
-    const transaction: TransactionDetails = {
-      ...makeTransaction({ refId: 'ref-123' }),
+    const transaction: TransactionDetails = makeTransactionDetails({
+      kind: 'transfer',
+      refId: 'ref-123',
       reference,
-    };
+    });
 
     renderWithRouter(<AdditionalDetails transaction={transaction} />);
 
@@ -221,10 +220,11 @@ describe('AdditionalDetails', () => {
   });
 
   it('shows amount summary when only currency differs in referenced transaction', () => {
-    const transaction: TransactionDetails = {
-      ...makeTransaction({ refId: 'ref-123' }),
+    const transaction: TransactionDetails = makeTransactionDetails({
+      kind: 'transfer',
+      refId: 'ref-123',
       reference: makeTransaction({ id: 'ref-123', currency: 'EUR' }),
-    };
+    });
 
     renderWithRouter(<AdditionalDetails transaction={transaction} />);
 
@@ -232,10 +232,11 @@ describe('AdditionalDetails', () => {
   });
 
   it('shows amount summary when only transaction type differs in referenced transaction', () => {
-    const transaction: TransactionDetails = {
-      ...makeTransaction({ refId: 'ref-123' }),
+    const transaction: TransactionDetails = makeTransactionDetails({
+      kind: 'transfer',
+      refId: 'ref-123',
       reference: makeTransaction({ id: 'ref-123', transactionType: 'income' }),
-    };
+    });
 
     renderWithRouter(<AdditionalDetails transaction={transaction} />);
 
