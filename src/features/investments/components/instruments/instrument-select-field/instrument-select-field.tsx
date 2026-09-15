@@ -1,5 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
+import clsx from 'clsx';
 import { Plus } from 'lucide-react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { getInstruments, type InvestmentInstrument } from '@features/investments/api';
@@ -24,6 +26,7 @@ type InstrumentSelectFieldProps = {
   emptyMessage?: string;
   showClear?: boolean;
   onAddNewInstrument?: () => void;
+  addNewPlacement?: 'side' | 'menu';
 };
 
 export const InstrumentSelectField = ({
@@ -34,8 +37,10 @@ export const InstrumentSelectField = ({
   emptyMessage,
   showClear = true,
   onAddNewInstrument,
+  addNewPlacement = 'side',
 }: InstrumentSelectFieldProps) => {
   const { t } = useTranslation('investments');
+  const [open, setOpen] = useState(false);
 
   const { data = [], isLoading } = useQuery({
     queryKey: ['instruments'],
@@ -54,6 +59,8 @@ export const InstrumentSelectField = ({
           items={data}
           value={selectedInstrument}
           disabled={isLoading}
+          open={open}
+          onOpenChange={setOpen}
           itemToStringLabel={(inst) => inst.name}
           itemToStringValue={formatInstrumentLabel}
           onValueChange={(inst) => onChange(inst?.id ?? '')}
@@ -69,13 +76,35 @@ export const InstrumentSelectField = ({
             showClear={showClear}
           />
           <ComboboxContent>
+            {onAddNewInstrument && addNewPlacement === 'menu' && (
+              <div className="border-b border-fg/10 p-1">
+                <Button
+                  type="button"
+                  variant="ghost"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setOpen(false);
+                    onAddNewInstrument();
+                  }}
+                  title={t('addNewInstrument')}
+                  aria-label={t('addNewInstrument')}
+                  className={clsx(
+                    'flex h-8 w-full items-center justify-start gap-2 rounded-lg',
+                    'px-2 text-xs font-medium text-primary hover:bg-bg whitespace-nowrap',
+                  )}
+                >
+                  <Plus className="size-3.5 shrink-0" />
+                  <span className="whitespace-nowrap">{t('addNewInstrument')}</span>
+                </Button>
+              </div>
+            )}
             <ComboboxEmpty>{emptyMessage || t('noInstrumentsFound')}</ComboboxEmpty>
             <ComboboxList>
               {(inst) => (
-                <ComboboxItem key={inst.id} value={inst}>
-                  <div className="flex w-full items-center justify-between gap-2">
-                    <span className="font-medium">{inst.name}</span>
-                    <div className="flex items-center gap-1.5">
+                <ComboboxItem key={inst.id} value={inst} className="whitespace-nowrap">
+                  <div className="flex w-full items-center justify-between gap-4 whitespace-nowrap">
+                    <span className="font-medium whitespace-nowrap">{inst.name}</span>
+                    <div className="flex shrink-0 items-center gap-1.5">
                       <InstrumentKindBadge kind={inst.kind} />
                       {inst.currency ? (
                         <span className="text-xs text-text-muted">{inst.currency}</span>
@@ -89,7 +118,7 @@ export const InstrumentSelectField = ({
         </Combobox>
       </div>
 
-      {onAddNewInstrument ? (
+      {onAddNewInstrument && addNewPlacement === 'side' ? (
         <Button
           type="button"
           variant="outline"

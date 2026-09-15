@@ -10,6 +10,7 @@
   "investmentOperationKind": "Vorgangsart",
   "investmentInstrument": "Instrument",
   "investmentNote": "Anlagenotiz",
+  "note": "Notiz",
   "investmentNotePlaceholder": "z. B. 10 Aktien zu 150 $ oder Ticker-Notizen",
   "selectInstrumentPlaceholder": "Instrument auswählen...",
   "operationKind": {
@@ -25,6 +26,7 @@
   "bulkStandardTransaction": "Regulär",
   "bulkTransferTransaction": "Transfer",
   "bulkExchangeTransaction": "Wechsel",
+  "bulkInvestmentTransaction": "Investition",
   "bulkTransaction": "Sammelerfassung",
   "bulkTransactionDescription": "Erstelle mehrere Transaktionen an einem Ort mit untereinander angeordneten Zeilen.",
   "bulkTransactionPageTitle": "Sammelerfassung von Transaktionen",

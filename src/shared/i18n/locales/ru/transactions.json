@@ -10,6 +10,7 @@
   "investmentOperationKind": "Тип операции",
   "investmentInstrument": "Инструмент",
   "investmentNote": "Инвестиционная заметка",
+  "note": "Заметка",
   "investmentNotePlaceholder": "напр. 10 акций по $150 или заметки по тикеру",
   "selectInstrumentPlaceholder": "Выберите инструмент...",
   "operationKind": {
@@ -25,6 +26,7 @@
   "bulkStandardTransaction": "Обычная",
   "bulkTransferTransaction": "Перевод",
   "bulkExchangeTransaction": "Обмен",
+  "bulkInvestmentTransaction": "Инвестиция",
   "bulkTransaction": "Массовое добавление",
   "bulkTransactionDescription": "Создавайте несколько транзакций в одном месте с помощью последовательных строк.",
   "bulkTransactionPageTitle": "Массовое добавление транзакций",

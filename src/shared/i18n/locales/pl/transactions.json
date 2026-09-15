@@ -10,6 +10,7 @@
   "investmentOperationKind": "Typ operacji",
   "investmentInstrument": "Instrument",
   "investmentNote": "Notatka inwestycyjna",
+  "note": "Notatka",
   "investmentNotePlaceholder": "np. 10 akcji po 150 zł lub notatki o tickerze",
   "selectInstrumentPlaceholder": "Wybierz instrument...",
   "operationKind": {
@@ -25,6 +26,7 @@
   "bulkStandardTransaction": "Zwykła",
   "bulkTransferTransaction": "Transfer",
   "bulkExchangeTransaction": "Wymiana",
+  "bulkInvestmentTransaction": "Inwestycja",
   "bulkTransaction": "Dodawanie zbiorcze",
   "bulkTransactionDescription": "Twórz wiele transakcji w jednym miejscu za pomocą kolejnych wierszy.",
   "bulkTransactionPageTitle": "Zbiorcze dodawanie transakcji",

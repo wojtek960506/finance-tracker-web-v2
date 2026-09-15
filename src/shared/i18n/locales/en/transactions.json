@@ -10,6 +10,7 @@
   "investmentOperationKind": "Operation type",
   "investmentInstrument": "Instrument",
   "investmentNote": "Investment note",
+  "note": "Note",
   "investmentNotePlaceholder": "e.g., 10 shares @ $150 or ticker notes",
   "selectInstrumentPlaceholder": "Select instrument...",
   "operationKind": {
@@ -25,6 +26,7 @@
   "bulkStandardTransaction": "Regular",
   "bulkTransferTransaction": "Transfer",
   "bulkExchangeTransaction": "Exchange",
+  "bulkInvestmentTransaction": "Investment",
   "bulkTransaction": "Batch entry",
   "bulkTransactionDescription": "Create several transactions in one place using stacked rows.",
   "bulkTransactionPageTitle": "Batch transaction entry",

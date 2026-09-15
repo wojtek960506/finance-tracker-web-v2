@@ -39,7 +39,8 @@ export type TransactionInvestmentDTO = Omit<
 export type BulkTransactionDTO =
   | ({ kind: 'standard' } & TransactionStandardDTO)
   | ({ kind: 'transfer' } & TransactionTransferDTO)
-  | ({ kind: 'exchange' } & TransactionExchangeDTO);
+  | ({ kind: 'exchange' } & TransactionExchangeDTO)
+  | ({ kind: 'investment' } & TransactionInvestmentDTO);
 
 export type CreateBulkTransactionsDTO = {
   transactions: BulkTransactionDTO[];

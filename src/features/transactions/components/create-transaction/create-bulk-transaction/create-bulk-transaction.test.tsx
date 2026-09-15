@@ -38,6 +38,56 @@ vi.mock('@store/toast-store', () => ({
     selector({ pushToast: mocks.pushToast }),
 }));
 
+vi.mock('@features/investments/components/instruments', () => ({
+  InstrumentSelectField: ({
+    value,
+    onChange,
+    onAddNewInstrument,
+  }: {
+    value: string;
+    onChange: (value: string) => void;
+    onAddNewInstrument?: () => void;
+  }) => (
+    <div>
+      <input
+        aria-label="investmentInstrument"
+        value={value}
+        onChange={(event) => onChange(event.target.value)}
+      />
+      {onAddNewInstrument ? (
+        <button type="button" onClick={onAddNewInstrument}>
+          quickAdd
+        </button>
+      ) : null}
+    </div>
+  ),
+  CreateInstrumentModal: ({
+    isOpen,
+    onClose,
+    onSuccess,
+  }: {
+    isOpen: boolean;
+    onClose: () => void;
+    onSuccess: (id: string) => void;
+  }) =>
+    isOpen ? (
+      <div data-testid="create-instrument-modal">
+        <button
+          type="button"
+          onClick={() => {
+            onSuccess('inst-999');
+            onClose();
+          }}
+        >
+          confirm-create-instrument
+        </button>
+        <button type="button" onClick={onClose}>
+          cancel-create-instrument
+        </button>
+      </div>
+    ) : null,
+}));
+
 vi.mock('@shared/ui', async () => {
   const actual = await vi.importActual<typeof import('@shared/ui')>('@shared/ui');
 
@@ -666,6 +716,196 @@ describe('CreateBulkTransaction', () => {
             accountExpenseId: undefined,
             accountIncomeId: undefined,
             paymentMethodId: undefined,
+          },
+        ],
+      }),
+    );
+  });
+
+  it('creates bulk transactions with investment rows including all details', async () => {
+    const user = userEvent.setup();
+    const client = createTestQueryClient();
+    mocks.createBulkTransactions.mockResolvedValueOnce([{ id: 'tx-inv-1' }]);
+
+    render(
+      <QueryClientProvider client={client}>
+        <CreateBulkTransaction />
+      </QueryClientProvider>,
+    );
+
+    await user.selectOptions(
+      screen.getByRole('combobox', { name: 'transactionKind' }),
+      'investment',
+    );
+    await user.type(
+      screen.getByLabelText(
+        'h-10 sm:h-11 rounded-xl px-3 sm:px-4 text-base sm:text-lg h-9 text-sm',
+      ),
+      '2024-03-15',
+    );
+    await user.selectOptions(
+      screen.getByRole('combobox', { name: 'investmentOperationKind' }),
+      'buy',
+    );
+    await user.type(
+      screen.getByRole('textbox', { name: 'investmentInstrument' }),
+      'inst-apple-id',
+    );
+    await user.type(
+      screen.getByRole('textbox', { name: 'description' }),
+      'Buy 5 AAPL shares',
+    );
+    await user.type(screen.getByLabelText('number-input'), '750.50');
+    await user.type(screen.getByLabelText('currency'), 'USD');
+    await user.type(
+      screen.getByRole('textbox', { name: 'note' }),
+      'Portfolio allocation',
+    );
+
+    await user.click(screen.getByRole('button', { name: 'createTransactions' }));
+
+    await waitFor(() =>
+      expect(mocks.createBulkTransactions).toHaveBeenCalledWith({
+        transactions: [
+          {
+            kind: 'investment',
+            date: expect.any(String),
+            description: 'Buy 5 AAPL shares',
+            amount: 750.5,
+            currency: 'USD',
+            paymentMethodId: undefined,
+            accountId: undefined,
+            investment: {
+              operationKind: 'buy',
+              instrumentId: 'inst-apple-id',
+              note: 'Portfolio allocation',
+            },
+          },
+        ],
+      }),
+    );
+  });
+
+  it('supports quick-adding an instrument via modal in an investment row', async () => {
+    const user = userEvent.setup();
+    const client = createTestQueryClient();
+    mocks.createBulkTransactions.mockResolvedValueOnce([{ id: 'tx-inv-2' }]);
+
+    render(
+      <QueryClientProvider client={client}>
+        <CreateBulkTransaction />
+      </QueryClientProvider>,
+    );
+
+    await user.selectOptions(
+      screen.getByRole('combobox', { name: 'transactionKind' }),
+      'investment',
+    );
+
+    expect(screen.queryByTestId('create-instrument-modal')).not.toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: 'quickAdd' }));
+
+    expect(screen.getByTestId('create-instrument-modal')).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: 'confirm-create-instrument' }));
+
+    expect(screen.queryByTestId('create-instrument-modal')).not.toBeInTheDocument();
+    expect(screen.getByRole('textbox', { name: 'investmentInstrument' })).toHaveValue(
+      'inst-999',
+    );
+  });
+
+  it('sends mixed rows including investment transactions in a single payload', async () => {
+    const user = userEvent.setup();
+    const client = createTestQueryClient();
+    mocks.createBulkTransactions.mockResolvedValueOnce([
+      { id: 'tx-1' },
+      { id: 'tx-2' },
+      { id: 'tx-3' },
+    ]);
+
+    render(
+      <QueryClientProvider client={client}>
+        <CreateBulkTransaction />
+      </QueryClientProvider>,
+    );
+
+    // Row 1: standard
+    await user.selectOptions(
+      screen.getByRole('combobox', { name: 'transactionKind' }),
+      'standard',
+    );
+    await user.type(
+      screen.getByLabelText(
+        'h-10 sm:h-11 rounded-xl px-3 sm:px-4 text-base sm:text-lg h-9 text-sm',
+      ),
+      '2024-01-03',
+    );
+    await user.selectOptions(
+      screen.getByRole('combobox', { name: 'transactionType' }),
+      'income',
+    );
+    await user.type(screen.getByRole('textbox', { name: 'description' }), 'Salary');
+    await user.type(screen.getByLabelText('number-input'), '5000');
+    await user.type(screen.getByLabelText('currency'), 'USD');
+
+    // Add Row 2: investment
+    await user.click(screen.getByRole('button', { name: 'addTransactionRow' }));
+
+    const kindSelects = screen.getAllByRole('combobox', { name: 'transactionKind' });
+    await user.selectOptions(kindSelects[1], 'investment');
+
+    const dateInputs = screen.getAllByLabelText(
+      'h-10 sm:h-11 rounded-xl px-3 sm:px-4 text-base sm:text-lg h-9 text-sm',
+    );
+    await user.type(dateInputs[1], '2024-01-05');
+
+    await user.selectOptions(
+      screen.getByRole('combobox', { name: 'investmentOperationKind' }),
+      'interest',
+    );
+    await user.type(
+      screen.getByRole('textbox', { name: 'investmentInstrument' }),
+      'inst-msft',
+    );
+    const descriptions = screen.getAllByRole('textbox', { name: 'description' });
+    await user.type(descriptions[1], 'MSFT Dividend');
+
+    const numberInputs = screen.getAllByLabelText('number-input');
+    await user.type(numberInputs[1], '120');
+
+    await user.type(screen.getAllByLabelText('currency')[1], 'USD');
+
+    await user.click(screen.getByRole('button', { name: 'createTransactions' }));
+
+    await waitFor(() =>
+      expect(mocks.createBulkTransactions).toHaveBeenCalledWith({
+        transactions: [
+          {
+            kind: 'standard',
+            date: expect.any(String),
+            description: 'Salary',
+            amount: 5000,
+            currency: 'USD',
+            categoryId: undefined,
+            paymentMethodId: undefined,
+            accountId: undefined,
+            transactionType: 'income',
+          },
+          {
+            kind: 'investment',
+            date: expect.any(String),
+            description: 'MSFT Dividend',
+            amount: 120,
+            currency: 'USD',
+            paymentMethodId: undefined,
+            accountId: undefined,
+            investment: {
+              operationKind: 'interest',
+              instrumentId: 'inst-msft',
+              note: undefined,
+            },
           },
         ],
       }),
