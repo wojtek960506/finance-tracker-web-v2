@@ -6,7 +6,6 @@ import { type Ref, useEffect, useRef, useState } from 'react';
 import { Controller, useFieldArray, useForm, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { z } from 'zod';
 
 import {
   CreateInstrumentModal,
@@ -22,28 +21,17 @@ import {
   TransactionActionModal,
 } from '@transactions/components/shared';
 import {
-  exchangeTransactionFormSchema,
-  type ExchangeTransactionFormValues,
   FieldError,
   FORM_BUTTON_CLASS_NAME,
-  getDefaultExchangeTransactionFormValues,
-  getDefaultInvestmentTransactionFormValues,
-  getDefaultStandardTransactionFormValues,
-  getDefaultTransferTransactionFormValues,
   INVESTMENT_OPERATION_KINDS,
   type InvestmentOperationKind,
-  investmentTransactionFormSchema,
-  type InvestmentTransactionFormValues,
   normalizeExchangeTransactionFormValues,
   normalizeInvestmentTransactionFormValues,
   normalizeStandardTransactionFormValues,
   normalizeTransferTransactionFormValues,
   preventImplicitFormSubmit,
-  standardTransactionFormSchema,
   type StandardTransactionFormValues,
   standardTransactionTypeOptions,
-  transferTransactionFormSchema,
-  type TransferTransactionFormValues,
 } from '@transactions/components/transaction-forms';
 import { EXCHANGE_CATEGORY, TRANSFER_CATEGORY } from '@transactions/consts';
 import {
@@ -64,12 +52,24 @@ import {
   INLINE_FIELD_CLASS_NAME,
   INLINE_KIND_FIELD_CLASS_NAME,
 } from './consts';
+import { bulkTransactionFormSchema } from './schemas';
 import type {
   BulkTransactionFormValues,
   BulkTransactionKind,
   BulkTransactionKindValue,
-  BulkTransactionRowValues,
 } from './types';
+import {
+  cloneBulkTransactionRowValues,
+  getBulkExchangeTransactionFormValues,
+  getBulkInvestmentTransactionFormValues,
+  getBulkKindTranslationKey,
+  getBulkStandardTransactionFormValues,
+  getBulkTransactionRowDate,
+  getBulkTransferTransactionFormValues,
+  getDefaultBulkTransactionRowValues,
+  getDeleteActionLabel,
+  getMeaningfulBulkTransactionRows,
+} from './utils';
 
 import { Input } from '@/components/ui/input';
 import { NumberInput } from '@/components/ui/number-input';
@@ -80,104 +80,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-
-const bulkTransactionRowSchema = z
-  .object({
-    kind: z.enum(['', ...bulkTransactionKinds]),
-    standardValues: z.custom<StandardTransactionFormValues>(),
-    transferValues: z.custom<TransferTransactionFormValues>(),
-    exchangeValues: z.custom<ExchangeTransactionFormValues>(),
-    investmentValues: z.custom<InvestmentTransactionFormValues>(),
-  })
-  .superRefine((row, ctx) => {
-    if (row.kind === '') return;
-
-    const validationResult =
-      row.kind === 'standard'
-        ? standardTransactionFormSchema.safeParse(row.standardValues)
-        : row.kind === 'transfer'
-          ? transferTransactionFormSchema.safeParse(row.transferValues)
-          : row.kind === 'exchange'
-            ? exchangeTransactionFormSchema.safeParse(row.exchangeValues)
-            : investmentTransactionFormSchema.safeParse(row.investmentValues);
-
-    if (validationResult.success) return;
-
-    const valuesPath =
-      row.kind === 'standard'
-        ? 'standardValues'
-        : row.kind === 'transfer'
-          ? 'transferValues'
-          : row.kind === 'exchange'
-            ? 'exchangeValues'
-            : 'investmentValues';
-
-    for (const issue of validationResult.error.issues) {
-      ctx.addIssue({
-        ...issue,
-        path: [valuesPath, ...issue.path],
-      });
-    }
-  });
-
-const bulkTransactionFormSchema = z.object({
-  rows: z.array(bulkTransactionRowSchema).min(1),
-});
-
-const getBulkStandardTransactionFormValues = (): StandardTransactionFormValues => ({
-  ...getDefaultStandardTransactionFormValues(),
-  date: '',
-  transactionType: '' as StandardTransactionFormValues['transactionType'],
-});
-
-const getBulkTransferTransactionFormValues = (): TransferTransactionFormValues => ({
-  ...getDefaultTransferTransactionFormValues(),
-  date: '',
-});
-
-const getBulkExchangeTransactionFormValues = (): ExchangeTransactionFormValues => ({
-  ...getDefaultExchangeTransactionFormValues(),
-  date: '',
-});
-
-const getBulkInvestmentTransactionFormValues = (): InvestmentTransactionFormValues => ({
-  ...getDefaultInvestmentTransactionFormValues(),
-  date: '',
-});
-
-const getDefaultBulkTransactionRowValues = (): BulkTransactionRowValues => ({
-  kind: '',
-  standardValues: getBulkStandardTransactionFormValues(),
-  transferValues: getBulkTransferTransactionFormValues(),
-  exchangeValues: getBulkExchangeTransactionFormValues(),
-  investmentValues: getBulkInvestmentTransactionFormValues(),
-});
-
-const getDeleteActionLabel = (index: number) => `delete-row-${index + 1}`;
-const getBulkKindTranslationKey = (kind: BulkTransactionKind) =>
-  `bulk${kind.charAt(0).toUpperCase()}${kind.slice(1)}Transaction`;
-
-const getMeaningfulBulkTransactionRows = (rows: BulkTransactionRowValues[]) =>
-  rows.filter((row) => row.kind !== '');
-
-const getBulkTransactionRowDate = (row: BulkTransactionRowValues) =>
-  row.kind === 'standard'
-    ? row.standardValues.date
-    : row.kind === 'transfer'
-      ? row.transferValues.date
-      : row.kind === 'exchange'
-        ? row.exchangeValues.date
-        : row.investmentValues.date;
-
-const cloneBulkTransactionRowValues = (
-  row: BulkTransactionRowValues,
-): BulkTransactionRowValues => ({
-  kind: row.kind,
-  standardValues: { ...row.standardValues },
-  transferValues: { ...row.transferValues },
-  exchangeValues: { ...row.exchangeValues },
-  investmentValues: { ...row.investmentValues },
-});
 
 const BulkTransactionKindField = ({
   index,
