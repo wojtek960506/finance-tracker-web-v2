@@ -61,12 +61,12 @@ export const DeleteInstrumentModal = ({
           </div>
           <div className="space-y-1">
             <h2 className="text-lg font-semibold tracking-tight text-foreground">
-              {t('modals.deleteTitle')}
-            </h2>
-            <p className="text-sm text-text-muted break-words [overflow-wrap:anywhere]">
               {t('modals.deletePrompt', {
                 name: instrument.name,
               })}
+            </h2>
+            <p className="text-sm text-text-muted break-words [overflow-wrap:anywhere]">
+              {t('modals.deleteHint')}
             </p>
           </div>
         </header>

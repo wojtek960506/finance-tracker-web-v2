@@ -49,7 +49,8 @@
     "updateTitle": "Edytuj instrument",
     "updateDescription": "Zaktualizuj szczegóły tego instrumentu inwestycyjnego.",
     "deleteTitle": "Usuń instrument",
-    "deletePrompt": "Czy na pewno chcesz usunąć „{{name}}”? Spowoduje to również usunięcie wszystkich powiązanych operacji.",
+    "deletePrompt": "Czy na pewno chcesz usunąć instrument „{{name}}”?",
+    "deleteHint": "Instrument można usunąć tylko wtedy, gdy nie jest używany przez żadną transakcję ani operację.",
     "deleteConfirm": "Usuń"
   },
   "actions": {
