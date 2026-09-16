@@ -49,7 +49,8 @@
     "updateTitle": "Edit Instrument",
     "updateDescription": "Update details for this investment instrument.",
     "deleteTitle": "Delete Instrument",
-    "deletePrompt": "Are you sure you want to delete \"{{name}}\"? This action will also delete all associated snapshot operations.",
+    "deletePrompt": "Are you sure you want to delete instrument \"{{name}}\"?",
+    "deleteHint": "Instrument can only be deleted when it is not used by any transaction or operation.",
     "deleteConfirm": "Delete"
   },
   "actions": {

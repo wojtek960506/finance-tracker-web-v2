@@ -49,7 +49,8 @@
     "updateTitle": "Instrument bearbeiten",
     "updateDescription": "Aktualisieren Sie die Details dieses Anlageinstruments.",
     "deleteTitle": "Instrument löschen",
-    "deletePrompt": "Möchten Sie „{{name}}“ wirklich löschen? Diese Aktion löscht auch alle zugehörigen Snapshot-Operationen.",
+    "deletePrompt": "Möchten Sie das Instrument „{{name}}“ wirklich löschen?",
+    "deleteHint": "Ein Instrument kann nur gelöscht werden, wenn es von keiner Transaktion oder Operation verwendet wird.",
     "deleteConfirm": "Löschen"
   },
   "actions": {

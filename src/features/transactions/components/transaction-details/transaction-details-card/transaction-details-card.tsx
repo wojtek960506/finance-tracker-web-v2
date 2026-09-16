@@ -1,8 +1,6 @@
 import clsx from 'clsx';
-import { Trash2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
-import { InstrumentKindBadge } from '@features/investments/components/instruments';
 import { useLanguage } from '@shared/hooks';
 import type { TransactionDetails, TrashedTransactionDetails } from '@transactions/api';
 import { getTransactionNamedResourceLabel } from '@transactions/utils';
@@ -11,6 +9,8 @@ import { Card, HoverLink } from '@ui';
 
 import { AdditionalDetails } from '../additional-details';
 import { Detail } from '../detail';
+
+import { InvestmentDetails, TrashBadge, TrashDetails } from './components';
 
 type TransactionDetailsCardProps = {
   transaction: TransactionDetails | TrashedTransactionDetails;
@@ -21,7 +21,6 @@ const isTrashedTransaction = (
   transaction: TransactionDetails | TrashedTransactionDetails,
 ): transaction is TrashedTransactionDetails => 'deletion' in transaction;
 
-// TODO maybe split this file
 export const TransactionDetailsCard = ({
   transaction,
   mode = 'active',
@@ -54,11 +53,8 @@ export const TransactionDetailsCard = ({
 
   return (
     <Card className="relative gap-3 p-4 sm:gap-4 sm:p-5">
-      {isTrashMode ? (
-        <div className="absolute right-4 top-4 rounded-full border border-destructive-border bg-destructive/10 p-2 text-destructive">
-          <Trash2 className="size-7 sm:size-8" aria-label={t('trashedTransaction')} />
-        </div>
-      ) : null}
+      {isTrashMode && <TrashBadge label={t('trashedTransaction')} />}
+
       <h1
         className={clsx(
           isTrashMode && 'pr-16',
@@ -67,10 +63,12 @@ export const TransactionDetailsCard = ({
       >
         {transaction.description}
       </h1>
+
       <div className="flex flex-col gap-2">
         <Detail title={t('date')}>
           <time>{new Date(transaction.date).toLocaleDateString(language)}</time>
         </Detail>
+
         <Detail
           title={t('amount')}
           titleClassName={amountPresentation.labelClassName}
@@ -78,65 +76,27 @@ export const TransactionDetailsCard = ({
         >
           {amountPresentation.formattedAmount}
         </Detail>
-        {isInvestment && transaction.investment ? (
-          <>
-            <Detail title={t('investmentOperationKind')}>
-              <span
-                className="font-semibold capitalize"
-                data-testid="transaction-details-operation-kind"
-              >
-                {t(`operationKind.${transaction.investment.operationKind}`)}
-              </span>
-            </Detail>
-            <Detail title={t('investmentInstrument')}>
-              <div
-                className="flex items-center gap-2"
-                data-testid="transaction-details-instrument"
-              >
-                <span>{transaction.investment.instrument.name}</span>
-                <InstrumentKindBadge kind={transaction.investment.instrument.kind} />
-              </div>
-            </Detail>
-            {transaction.investment.note ? (
-              <Detail title={t('investmentNote')}>
-                <span data-testid="transaction-details-investment-note">
-                  {transaction.investment.note}
-                </span>
-              </Detail>
-            ) : null}
-          </>
-        ) : null}
+
+        {isInvestment && transaction.investment && (
+          <InvestmentDetails investment={transaction.investment} />
+        )}
+
         <Detail title={t('category')}>
           <HoverLink to="/categories">{categoryLabel}</HoverLink>
         </Detail>
+
         <Detail title={t('paymentMethod')}>
           <HoverLink to="/paymentMethods">{paymentMethodLabel}</HoverLink>
         </Detail>
+
         <Detail title={t('account')}>
           <HoverLink to="/accounts">{accountLabel}</HoverLink>
         </Detail>
-        {isTrashedTransaction(transaction) ? (
-          <>
-            <Detail
-              title={t('deletedAt')}
-              titleClassName="text-transaction-expense-label"
-              valueClassName="text-destructive"
-            >
-              <time>
-                {new Date(transaction.deletion.deletedAt).toLocaleString(language)}
-              </time>
-            </Detail>
-            <Detail
-              title={t('purgeAt')}
-              titleClassName="text-transaction-expense-label"
-              valueClassName="text-destructive"
-            >
-              <time>
-                {new Date(transaction.deletion.purgeAt).toLocaleString(language)}
-              </time>
-            </Detail>
-          </>
-        ) : null}
+
+        {isTrashedTransaction(transaction) && (
+          <TrashDetails deletion={transaction.deletion} />
+        )}
+
         <AdditionalDetails
           transaction={transaction}
           referencePathPrefix={isTrashMode ? '/transactions/trash' : '/transactions'}

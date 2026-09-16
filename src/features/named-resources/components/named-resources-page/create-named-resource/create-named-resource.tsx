@@ -3,9 +3,9 @@ import clsx from 'clsx';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { NamedResourceInput } from '@named-resources/components/named-resource-input';
 import { Button } from '@ui';
 
-import { NamedResourceInput } from '../../named-resource-input';
 import { getNamedResourceErrorToast } from '../get-named-resource-error-toast';
 
 import {
