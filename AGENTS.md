@@ -73,3 +73,7 @@ src/
 5. **Type Safety & Clean Code**:
    - Avoid `any` — use explicit TypeScript types and narrow types with Zod schemas.
    - Maintain consistent import ordering (external libraries, shared aliases `@features/*`, `@shared/*`, `@transactions/*`, relative imports `./...`).
+
+6. **JSX & Conditional Rendering**:
+   - Prefer `{condition && <Component />}` over `{condition ? <Component /> : null}` for single-branch conditional rendering.
+   - For multi-branch rendering based on a kind/discriminated union, use a helper function or subcomponent with a clean `switch` statement rather than chained ternary operators or multiple isolated condition checks.

@@ -1,6 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQueryClient } from '@tanstack/react-query';
-import { Trash2 } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { useFieldArray, useForm, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -13,7 +12,6 @@ import { useToastStore } from '@store/toast-store';
 import { createBulkTransactions } from '@transactions/api';
 import { TransactionActionModal } from '@transactions/components/shared';
 import {
-  FieldError,
   FORM_BUTTON_CLASS_NAME,
   normalizeExchangeTransactionFormValues,
   normalizeInvestmentTransactionFormValues,
@@ -27,12 +25,8 @@ import {
   shouldWarnAboutHiddenTransactions,
 } from '@transactions/utils';
 
-import { BulkTransactionKindField } from './bulk-transaction-kind-field';
-import { ExchangeRowFields } from './exchange-row-fields';
-import { InvestmentRowFields } from './investment-row-fields';
+import { BulkTransactionRow } from './bulk-transaction-row';
 import { bulkTransactionFormSchema } from './schemas';
-import { StandardRowFields } from './standard-row-fields';
-import { TransferRowFields } from './transfer-row-fields';
 import type { BulkTransactionFormValues, BulkTransactionKind } from './types';
 import {
   cloneBulkTransactionRowValues,
@@ -42,7 +36,6 @@ import {
   getBulkTransactionRowDate,
   getBulkTransferTransactionFormValues,
   getDefaultBulkTransactionRowValues,
-  getDeleteActionLabel,
   getMeaningfulBulkTransactionRows,
 } from './utils';
 
@@ -284,69 +277,22 @@ export const CreateBulkTransaction = () => {
           <div className="flex flex-col gap-2">
             {fields.map((field, index) => {
               const row = rows?.[index] ?? getDefaultBulkTransactionRowValues();
-              const kindError = form.formState.errors.rows?.[index]?.kind?.message;
               const previousRowKind = index > 0 ? (rows?.[index - 1]?.kind ?? '') : null;
               const showLabels = index === 0 || previousRowKind !== row.kind;
 
               return (
-                <div
+                <BulkTransactionRow
                   key={field.id}
-                  className="overflow-x-auto rounded-xl border border-fg/10 bg-bg/30 p-2"
-                >
-                  <div className="flex min-w-max items-stretch gap-2">
-                    <div className="flex self-stretch flex-col">
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        className="my-auto rounded-lg px-2 text-text-muted"
-                        onClick={() => deleteRow(index)}
-                        aria-label={getDeleteActionLabel(index)}
-                        disabled={fields.length === 1 && row.kind === ''}
-                      >
-                        <Trash2 aria-hidden="true" />
-                      </Button>
-                    </div>
-                    <div className="space-y-1">
-                      <BulkTransactionKindField
-                        index={index}
-                        kind={row.kind}
-                        showLabel={showLabels && !(row.kind === '' && index > 0)}
-                        triggerRef={registerKindSelectTrigger(index)}
-                        setKind={(kind) => setRowKind(index, kind)}
-                      />
-                      <FieldError message={kindError && t(kindError)} />
-                    </div>
-                    {row.kind === 'standard' ? (
-                      <StandardRowFields
-                        form={form}
-                        index={index}
-                        showLabels={showLabels}
-                      />
-                    ) : null}
-                    {row.kind === 'transfer' ? (
-                      <TransferRowFields
-                        form={form}
-                        index={index}
-                        showLabels={showLabels}
-                      />
-                    ) : null}
-                    {row.kind === 'exchange' ? (
-                      <ExchangeRowFields
-                        form={form}
-                        index={index}
-                        showLabels={showLabels}
-                      />
-                    ) : null}
-                    {row.kind === 'investment' ? (
-                      <InvestmentRowFields
-                        form={form}
-                        index={index}
-                        showLabels={showLabels}
-                        onAddNewInstrument={() => setCreateInstrumentRowIndex(index)}
-                      />
-                    ) : null}
-                  </div>
-                </div>
+                  form={form}
+                  index={index}
+                  row={row}
+                  isDeleteDisabled={fields.length === 1 && row.kind === ''}
+                  showLabels={showLabels}
+                  registerKindSelectTrigger={registerKindSelectTrigger(index)}
+                  onSetRowKind={(kind) => setRowKind(index, kind)}
+                  onDeleteRow={() => deleteRow(index)}
+                  onAddNewInstrument={() => setCreateInstrumentRowIndex(index)}
+                />
               );
             })}
           </div>
