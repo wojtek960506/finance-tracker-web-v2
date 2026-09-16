@@ -26,7 +26,7 @@ export const CreateTransactionCard = ({
 
       <div className="flex flex-col gap-3">
         {cardTypes.map((cardType) => (
-          <CreateTransactionCardButton cardType={cardType} />
+          <CreateTransactionCardButton key={cardType.key} cardType={cardType} />
         ))}
       </div>
     </Card>

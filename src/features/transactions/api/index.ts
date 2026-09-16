@@ -1,5 +1,6 @@
 export * from './create-bulk-transactions';
 export * from './create-exchange-transaction';
+export * from './create-investment-transaction';
 export * from './create-standard-transaction';
 export * from './create-transfer-transaction';
 export * from './delete-trashed-transaction';
@@ -15,5 +16,6 @@ export * from './move-transaction-to-trash';
 export * from './restore-transaction';
 export * from './types';
 export * from './update-exchange-transaction';
+export * from './update-investment-transaction';
 export * from './update-standard-transaction';
 export * from './update-transfer-transaction';

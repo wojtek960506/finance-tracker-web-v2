@@ -15,8 +15,8 @@ vi.mock('@shared/store/auth-store', () => ({
   useAuthStore: () => ({
     authToken: mocks.authToken.value,
     isAuthResolved: mocks.isAuthResolved.value,
-    clearAuthToken: mocks.clearAuthToken,
   }),
+  clearAuthToken: mocks.clearAuthToken,
   ensureAuthResolved: mocks.ensureAuthResolved,
   setAuthToken: mocks.setAuthToken,
 }));

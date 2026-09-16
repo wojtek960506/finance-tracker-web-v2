@@ -26,11 +26,16 @@ type ReferenceDetail = {
   valueClassName?: string;
 };
 
+type TransactionWithRefObj = Extract<
+  TransactionWithReference,
+  { reference?: Transaction | TrashedTransaction }
+>;
+
 const hasReference = (
   transaction: TransactionWithReference,
-): transaction is TransactionWithReference & {
+): transaction is TransactionWithRefObj & {
   reference: Transaction | TrashedTransaction;
-} => Boolean(transaction.reference);
+} => 'reference' in transaction && Boolean(transaction.reference);
 
 const formatExchangeRate = (exchangeRate: number, currencies: string) => {
   const [baseCurrency, quoteCurrency] = currencies.split('/');
@@ -109,7 +114,12 @@ export const AdditionalDetails = ({
   const { t: tNamedResources } = useTranslation('namedResources');
   const { language } = useLanguage();
   const location = useLocation();
-  const { refId, currencies, exchangeRate } = transaction;
+
+  const refId = 'refId' in transaction ? transaction.refId : undefined;
+  const currencies = 'currencies' in transaction ? transaction.currencies : undefined;
+  const exchangeRate =
+    'exchangeRate' in transaction ? transaction.exchangeRate : undefined;
+
   const returnTo = getTransactionsReturnTo(location.state);
   const hasExchangeRate = Boolean(currencies && exchangeRate);
   const referenceDetails = getReferenceDetails(transaction, t, tNamedResources, language);

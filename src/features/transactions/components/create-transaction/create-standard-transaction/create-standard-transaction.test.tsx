@@ -139,7 +139,7 @@ describe('CreateStandardTransaction', () => {
     const client = createTestQueryClient();
     mocks.location.state = { returnTo: '/transactions?categoryIds=cat-2' };
     mocks.createStandardTransaction.mockResolvedValueOnce(
-      makeTransaction({ category: { id: 'cat-1', type: 'category', name: 'Food' } }),
+      makeTransaction({ category: { id: 'cat-1', type: 'user', name: 'Food' } }),
     );
 
     render(

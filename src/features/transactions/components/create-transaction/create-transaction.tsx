@@ -11,6 +11,7 @@ export type TransactionCardType = { key: TransactionKind | 'bulk' };
 
 const transactionTypeCards: TransactionCardType[] = [
   { key: 'standard' },
+  { key: 'investment' },
   { key: 'transfer' },
   { key: 'exchange' },
   { key: 'bulk' },
@@ -22,7 +23,7 @@ export const CreateTransaction = () => {
   const returnTo = getTransactionsReturnTo(location.state);
 
   return (
-    <div className="mx-auto flex max-w-[35rem] flex-col gap-2 sm:gap-3">
+    <div className="m-auto pb-3 sm:pb-4 flex max-w-[35rem] flex-col gap-2 sm:gap-3">
       <TransactionBackButton label={t('backToTransactions')} to={returnTo} />
 
       <CreateTransactionCard

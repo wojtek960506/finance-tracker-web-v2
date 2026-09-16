@@ -88,13 +88,13 @@ describe('UpdateTransferTransactionView', () => {
     id: 'tx-1',
     transactionType: 'expense',
     refId: 'tx-2',
-    category: { id: 'cat-transfer', type: 'category', name: 'myAccount' },
+    category: { id: 'cat-transfer', type: 'system', name: 'myAccount' },
   });
   const transactionRef = makeTransaction({
     id: 'tx-2',
     transactionType: 'income',
     refId: 'tx-1',
-    category: { id: 'cat-transfer', type: 'category', name: 'myAccount' },
+    category: { id: 'cat-transfer', type: 'system', name: 'myAccount' },
   });
 
   it('updates a transfer transaction', async () => {

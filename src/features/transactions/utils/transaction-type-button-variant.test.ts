@@ -17,8 +17,12 @@ describe('getTransactionTypeButtonVariant', () => {
   });
 
   it('returns a muted inactive color class for each type', () => {
-    expect(getTransactionTypeButtonClassName('expense', false)).toBe('text-destructive');
-    expect(getTransactionTypeButtonClassName('income', false)).toBe('text-bt-primary');
-    expect(getTransactionTypeButtonClassName('expense', true)).toBe('');
+    expect(getTransactionTypeButtonClassName('expense', false)).toContain(
+      'text-destructive',
+    );
+    expect(getTransactionTypeButtonClassName('income', false)).toContain(
+      'text-bt-primary',
+    );
+    expect(getTransactionTypeButtonClassName('expense', true)).toBe('transition-colors');
   });
 });

@@ -1,15 +1,20 @@
 import { render, screen } from '@testing-library/react';
 import type { ReactNode } from 'react';
+import { MemoryRouter } from 'react-router-dom';
 import { describe, expect, it, vi } from 'vitest';
 
 import {
   makeTransaction,
+  makeTransactionDetails,
   makeTrashedTransaction,
+  makeTrashedTransactionDetails,
 } from '@test-utils/factories/transaction';
 import type { Transaction, TransactionDetails } from '@transactions/api';
 import { EXCHANGE_CATEGORY, TRANSFER_CATEGORY } from '@transactions/consts';
 
 import { AdditionalDetails } from './additional-details';
+
+const renderWithRouter = (ui: ReactNode) => render(<MemoryRouter>{ui}</MemoryRouter>);
 
 const mocks = vi.hoisted(() => ({
   language: 'en' as const,
@@ -45,7 +50,9 @@ const baseTransaction: Transaction = makeTransaction();
 
 describe('AdditionalDetails', () => {
   it('renders nothing for non transfer/exchange categories', () => {
-    const { container } = render(<AdditionalDetails transaction={baseTransaction} />);
+    const { container } = renderWithRouter(
+      <AdditionalDetails transaction={baseTransaction} />,
+    );
 
     expect(container).toBeEmptyDOMElement();
   });
@@ -53,11 +60,12 @@ describe('AdditionalDetails', () => {
   it('renders reference link for transfer transactions', () => {
     const transaction: Transaction = {
       ...baseTransaction,
+      kind: 'transfer',
       category: { ...baseTransaction.category, name: TRANSFER_CATEGORY, type: 'system' },
       refId: 'ref-123',
     };
 
-    render(<AdditionalDetails transaction={transaction} />);
+    renderWithRouter(<AdditionalDetails transaction={transaction} />);
 
     const link = screen.getByText('goToReferencedTransaction');
     expect(link).toHaveAttribute('href', '/transactions/ref-123');
@@ -66,13 +74,14 @@ describe('AdditionalDetails', () => {
   it('renders exchange rate and reference link for exchange transactions', () => {
     const transaction: Transaction = {
       ...baseTransaction,
+      kind: 'exchange',
       category: { ...baseTransaction.category, name: EXCHANGE_CATEGORY, type: 'system' },
       currencies: 'USD/PLN',
       exchangeRate: 3.5,
       refId: 'ref-123',
     };
 
-    render(<AdditionalDetails transaction={transaction} />);
+    renderWithRouter(<AdditionalDetails transaction={transaction} />);
 
     expect(screen.getByText('exchangeRate')).toBeInTheDocument();
     expect(screen.getByText('1 USD = 3.5000 PLN')).toBeInTheDocument();
@@ -83,28 +92,26 @@ describe('AdditionalDetails', () => {
   });
 
   it('handles missing exchange data and reference id', () => {
-    const transaction: Transaction = {
-      ...baseTransaction,
+    const transaction: Transaction = makeTransaction({
+      kind: 'standard',
       category: { ...baseTransaction.category, name: EXCHANGE_CATEGORY, type: 'system' },
-      currencies: undefined,
-      exchangeRate: undefined,
       refId: undefined,
-    };
+    });
 
-    render(<AdditionalDetails transaction={transaction} />);
+    renderWithRouter(<AdditionalDetails transaction={transaction} />);
 
     expect(screen.queryByText('exchangeRate')).not.toBeInTheDocument();
     expect(screen.queryByText('goToReferencedTransaction')).not.toBeInTheDocument();
   });
 
   it('uses a custom reference path prefix when provided', () => {
-    const transaction: Transaction = {
-      ...baseTransaction,
+    const transaction: Transaction = makeTransaction({
+      kind: 'transfer',
       category: { ...baseTransaction.category, name: TRANSFER_CATEGORY, type: 'system' },
       refId: 'trash-ref-123',
-    };
+    });
 
-    render(
+    renderWithRouter(
       <AdditionalDetails
         transaction={transaction}
         referencePathPrefix="/transactions/trash"
@@ -118,14 +125,14 @@ describe('AdditionalDetails', () => {
   });
 
   it('does not treat a user category with a reserved system name as a linked transaction kind', () => {
-    const transaction: Transaction = {
-      ...baseTransaction,
+    const transaction: Transaction = makeTransaction({
+      kind: 'exchange',
       category: { ...baseTransaction.category, name: TRANSFER_CATEGORY, type: 'user' },
       currencies: 'USD/PLN',
       exchangeRate: 3.5,
-    };
+    });
 
-    render(<AdditionalDetails transaction={transaction} />);
+    renderWithRouter(<AdditionalDetails transaction={transaction} />);
 
     expect(screen.getByText('exchangeRate')).toBeInTheDocument();
     expect(screen.getByText('1 USD = 3.5000 PLN')).toBeInTheDocument();
@@ -133,17 +140,16 @@ describe('AdditionalDetails', () => {
   });
 
   it('renders a referenced transaction summary with only changed fields', () => {
-    const transaction: TransactionDetails = {
-      ...makeTransaction({
-        refId: 'ref-123',
-        amount: 10,
-        currency: 'USD',
-        transactionType: 'expense',
-        date: '2024-01-03',
-        category: { id: 'cat-1', type: 'user', name: 'Food' },
-        paymentMethod: { id: 'pm-1', type: 'paymentMethod', name: 'Card' },
-        account: { id: 'acc-1', type: 'account', name: 'Main' },
-      }),
+    const transaction: TransactionDetails = makeTransactionDetails({
+      kind: 'transfer',
+      refId: 'ref-123',
+      amount: 10,
+      currency: 'USD',
+      transactionType: 'expense',
+      date: '2024-01-03',
+      category: { id: 'cat-1', type: 'user', name: 'Food' },
+      paymentMethod: { id: 'pm-1', type: 'user', name: 'Card' },
+      account: { id: 'acc-1', type: 'user', name: 'Main' },
       reference: makeTransaction({
         id: 'ref-123',
         amount: 20,
@@ -154,9 +160,9 @@ describe('AdditionalDetails', () => {
         paymentMethod: { id: 'pm-system', type: 'system', name: 'cash' },
         account: { id: 'acc-system', type: 'system', name: 'savings' },
       }),
-    };
+    });
 
-    render(<AdditionalDetails transaction={transaction} />);
+    renderWithRouter(<AdditionalDetails transaction={transaction} />);
 
     expect(screen.getByText('referencedTransaction')).toBeInTheDocument();
     expect(screen.getByText('amount')).toHaveClass('text-transaction-income-label');
@@ -172,16 +178,17 @@ describe('AdditionalDetails', () => {
   });
 
   it('renders reference summary for trashed transaction details too', () => {
-    const transaction = {
-      ...makeTrashedTransaction({ refId: 'trash-ref-123' }),
+    const transaction = makeTrashedTransactionDetails({
+      kind: 'transfer',
+      refId: 'trash-ref-123',
       reference: makeTrashedTransaction({
         id: 'trash-ref-123',
         amount: 30,
         currency: 'PLN',
       }),
-    };
+    });
 
-    render(
+    renderWithRouter(
       <AdditionalDetails
         transaction={transaction}
         referencePathPrefix="/transactions/trash"
@@ -197,12 +204,13 @@ describe('AdditionalDetails', () => {
 
   it('does not render reference summary when referenced transaction has the same visible details', () => {
     const reference = makeTransaction({ id: 'ref-123' });
-    const transaction: TransactionDetails = {
-      ...makeTransaction({ refId: 'ref-123' }),
+    const transaction: TransactionDetails = makeTransactionDetails({
+      kind: 'transfer',
+      refId: 'ref-123',
       reference,
-    };
+    });
 
-    render(<AdditionalDetails transaction={transaction} />);
+    renderWithRouter(<AdditionalDetails transaction={transaction} />);
 
     expect(screen.queryByText('referencedTransaction')).not.toBeInTheDocument();
     expect(screen.getByText('goToReferencedTransaction')).toHaveAttribute(
@@ -212,23 +220,25 @@ describe('AdditionalDetails', () => {
   });
 
   it('shows amount summary when only currency differs in referenced transaction', () => {
-    const transaction: TransactionDetails = {
-      ...makeTransaction({ refId: 'ref-123' }),
+    const transaction: TransactionDetails = makeTransactionDetails({
+      kind: 'transfer',
+      refId: 'ref-123',
       reference: makeTransaction({ id: 'ref-123', currency: 'EUR' }),
-    };
+    });
 
-    render(<AdditionalDetails transaction={transaction} />);
+    renderWithRouter(<AdditionalDetails transaction={transaction} />);
 
     expect(screen.getByText('-10.00 EUR')).toBeInTheDocument();
   });
 
   it('shows amount summary when only transaction type differs in referenced transaction', () => {
-    const transaction: TransactionDetails = {
-      ...makeTransaction({ refId: 'ref-123' }),
+    const transaction: TransactionDetails = makeTransactionDetails({
+      kind: 'transfer',
+      refId: 'ref-123',
       reference: makeTransaction({ id: 'ref-123', transactionType: 'income' }),
-    };
+    });
 
-    render(<AdditionalDetails transaction={transaction} />);
+    renderWithRouter(<AdditionalDetails transaction={transaction} />);
 
     expect(screen.getByText('+10.00 USD')).toBeInTheDocument();
   });

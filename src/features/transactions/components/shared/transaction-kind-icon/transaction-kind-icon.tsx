@@ -1,4 +1,4 @@
-import { ArrowRightLeft, Euro, Rows3, Wallet } from 'lucide-react';
+import { ArrowRightLeft, Euro, Rows3, TrendingUp, Wallet } from 'lucide-react';
 import type { ComponentType } from 'react';
 
 import type { TransactionKind } from '@transactions/consts';
@@ -21,6 +21,7 @@ const transactionKindIcons: Record<
   standard: Wallet,
   transfer: ArrowRightLeft,
   exchange: Euro,
+  investment: TrendingUp,
   bulk: Rows3,
 };
 

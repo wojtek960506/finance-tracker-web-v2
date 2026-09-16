@@ -1,0 +1,70 @@
+{
+  "searchPlaceholder": "Search instruments...",
+  "allKinds": "All",
+  "newInstrument": "New Instrument",
+  "emptyTitle": "No investment instruments yet",
+  "emptyDescription": "Create your first instrument like Apple (AAPL), S&P 500 ETF, or Bitcoin to start tracking investments.",
+  "noResultsTitle": "No matching instruments",
+  "noResultsDescription": "Try changing your search query or kind filter.",
+  "createFirstInstrument": "Add First Instrument",
+  "loadingTitle": "Loading instruments",
+  "loadingDescription": "Fetching your investment instruments...",
+  "loadingInstruments": "Loading instruments...",
+  "selectInstrumentPlaceholder": "Select instrument...",
+  "noInstrumentsFound": "No instruments found",
+  "addNewInstrument": "Create new instrument",
+  "quickAdd": "New",
+  "loading": "Loading...",
+  "createdOn": "Created",
+  "kind": {
+    "share": "Share",
+    "fund": "Fund",
+    "termDeposit": "Term Deposit",
+    "savings": "Savings",
+    "bond": "Bond",
+    "crypto": "Crypto",
+    "commodity": "Commodity",
+    "custom": "Custom"
+  },
+  "form": {
+    "name": "Name",
+    "namePlaceholder": "e.g. Apple, S&P 500 ETF",
+    "kind": "Kind",
+    "currency": "Currency",
+    "currencyPlaceholder": "Select currency...",
+    "searchCurrency": "Search currency...",
+    "noCurrencyFound": "No currency found",
+    "notes": "Notes",
+    "notesPlaceholder": "Optional description or ticker",
+    "createSubmit": "Create Instrument",
+    "updateSubmit": "Save Changes",
+    "errors": {
+      "nameRequired": "Name is required",
+      "currencyRequired": "Currency is required"
+    }
+  },
+  "modals": {
+    "createTitle": "New Instrument",
+    "createDescription": "Add an investment instrument to track in your portfolio.",
+    "updateTitle": "Edit Instrument",
+    "updateDescription": "Update details for this investment instrument.",
+    "deleteTitle": "Delete Instrument",
+    "deletePrompt": "Are you sure you want to delete \"{{name}}\"? This action will also delete all associated snapshot operations.",
+    "deleteConfirm": "Delete"
+  },
+  "actions": {
+    "edit": "Edit instrument",
+    "delete": "Delete instrument"
+  },
+  "cancel": "Cancel",
+  "saving": "Saving...",
+  "deleting": "Deleting...",
+  "toasts": {
+    "createdTitle": "Instrument created",
+    "createErrorTitle": "Could not create instrument",
+    "updatedTitle": "Instrument updated",
+    "updateErrorTitle": "Could not update instrument",
+    "deletedTitle": "Instrument deleted",
+    "deleteErrorTitle": "Could not delete instrument"
+  }
+}

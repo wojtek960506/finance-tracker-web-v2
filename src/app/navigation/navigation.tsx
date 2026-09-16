@@ -3,6 +3,7 @@ import {
   Banknote,
   Bike,
   Car,
+  ChartNoAxesColumn,
   Landmark,
   LogOut,
   Settings,
@@ -69,6 +70,16 @@ export const Navigation = () => {
           }
         >
           <ul>
+            <li>
+              <NavigationItem
+                to="/transactions/investments"
+                title={t('investments')}
+                Icon={ChartNoAxesColumn}
+                additionalAction={() =>
+                  setNavigationItemExpanded(TRANSACTIONS_NAVIGATION_ITEM_ID, true)
+                }
+              />
+            </li>
             <li>
               <NavigationItem
                 to="/categories"

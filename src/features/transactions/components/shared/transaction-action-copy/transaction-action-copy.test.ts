@@ -34,6 +34,7 @@ describe('transaction-action-copy', () => {
     expect(
       getReferenceActionMessage(
         makeTransaction({
+          kind: 'transfer',
           refId: 'tx-2',
           category: { id: 'cat-transfer', type: 'system', name: TRANSFER_CATEGORY },
         }),
@@ -47,6 +48,7 @@ describe('transaction-action-copy', () => {
     expect(
       getReferenceActionMessage(
         makeTrashedTransaction({
+          kind: 'exchange',
           refId: 'tx-2',
           category: { id: 'cat-exchange', type: 'system', name: EXCHANGE_CATEGORY },
         }),

@@ -23,7 +23,8 @@ describe('ProtectedLayout', () => {
       'min-h-0',
       'flex-1',
       'flex-col',
-      'p-4',
+      'p-3',
+      'sm:p-4',
     );
   });
 

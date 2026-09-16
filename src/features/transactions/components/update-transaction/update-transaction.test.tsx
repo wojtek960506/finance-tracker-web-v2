@@ -54,6 +54,12 @@ vi.mock('@ui', () => ({
     </button>
   ),
   Card: ({ children }: { children: ReactNode }) => <div>{children}</div>,
+  LoadingCard: ({ title, description }: { title: string; description?: string }) => (
+    <div>
+      <p>{title}</p>
+      {description ? <p>{description}</p> : null}
+    </div>
+  ),
   LoadingState: ({ title, description }: { title: string; description?: string }) => (
     <div>
       <p>{title}</p>
@@ -84,6 +90,7 @@ const renderUpdateTransaction = (transactionId = 'tx-1') => {
 describe('UpdateTransaction', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    mocks.getTransaction.mockReset();
   });
 
   it('renders the standard transaction form with current transaction defaults', async () => {
@@ -121,6 +128,7 @@ describe('UpdateTransaction', () => {
 
   it('renders the transfer form with derived pair defaults', async () => {
     const incomeTransaction = makeTransaction({
+      kind: 'transfer',
       id: 'tx-income',
       refId: 'tx-expense',
       description: 'Checking --> Savings (Monthly move)',
@@ -130,6 +138,7 @@ describe('UpdateTransaction', () => {
       paymentMethod: { id: 'pm-transfer', name: 'Bank transfer', type: 'user' },
     });
     const expenseTransaction = makeTransaction({
+      kind: 'transfer',
       id: 'tx-expense',
       refId: 'tx-income',
       description: 'Checking --> Savings (Monthly move)',
@@ -165,6 +174,7 @@ describe('UpdateTransaction', () => {
 
   it('renders the exchange form with derived pair defaults', async () => {
     const incomeTransaction = makeTransaction({
+      kind: 'exchange',
       id: 'tx-income',
       refId: 'tx-expense',
       description: 'USD -> EUR (Vacation cash)',
@@ -176,6 +186,7 @@ describe('UpdateTransaction', () => {
       paymentMethod: { id: 'pm-exchange', name: 'Cash', type: 'user' },
     });
     const expenseTransaction = makeTransaction({
+      kind: 'exchange',
       id: 'tx-expense',
       refId: 'tx-income',
       description: 'USD -> EUR (Vacation cash)',
@@ -226,6 +237,7 @@ describe('UpdateTransaction', () => {
     mocks.getTransaction
       .mockResolvedValueOnce(
         makeTransaction({
+          kind: 'transfer',
           id: 'tx-income',
           refId: 'tx-expense',
           description: 'Checking --> Savings',
@@ -254,6 +266,7 @@ describe('UpdateTransaction', () => {
     mocks.getTransaction
       .mockResolvedValueOnce(
         makeTransaction({
+          kind: 'transfer',
           id: 'tx-income',
           refId: 'tx-expense',
           description: 'Checking --> Savings',

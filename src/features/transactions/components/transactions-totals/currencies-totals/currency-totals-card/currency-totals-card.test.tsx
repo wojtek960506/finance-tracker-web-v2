@@ -54,18 +54,14 @@ describe('CurrencyTotalsCard', () => {
     render(<CurrencyTotalsCard currency="USD" totals={makeTotals(40, 60)} isOpen />);
 
     expect(
-      screen.getByText((_, element) => element?.textContent === 'totalItems: 12'),
+      screen.getAllByText((_, element) => element?.textContent === 'totalItems: 12')[0],
     ).toBeInTheDocument();
-    expect(
-      screen.getByText((_, element) => element?.textContent === 'balance: 20.00 USD'),
-    ).toHaveClass('text-bt-primary');
+    expect(screen.getByText('+20.00')).toHaveClass('text-bt-primary');
   });
 
   it('colors balance red when negative', () => {
     render(<CurrencyTotalsCard currency="USD" totals={makeTotals(80, 35)} isOpen />);
 
-    expect(
-      screen.getByText((_, element) => element?.textContent === 'balance: -45.00 USD'),
-    ).toHaveClass('text-destructive');
+    expect(screen.getByText('-45.00')).toHaveClass('text-destructive');
   });
 });

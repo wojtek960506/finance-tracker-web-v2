@@ -6,9 +6,11 @@ import { NamedResourcesPage } from '@named-resources/components';
 import {
   CreateBulkTransaction,
   CreateExchangeTransaction,
+  CreateInvestmentTransaction,
   CreateStandardTransaction,
   CreateTransaction,
   CreateTransferTransaction,
+  InvestmentsPage,
   TransactionAccountStatistics,
   TransactionDetails,
   TransactionsPage,
@@ -62,6 +64,11 @@ export const PROTECTED_APP_ROUTES: AppRouteConfig[] = [
     title: { namespace: 'navigation', key: 'transactionsTrash' },
   },
   {
+    path: '/transactions/investments',
+    element: <InvestmentsPage />,
+    title: { namespace: 'navigation', key: 'investments' },
+  },
+  {
     path: '/transactions/trash/:transactionId',
     element: <TrashedTransactionDetails />,
     title: { namespace: 'navigation', key: 'trashedTransactionDetails' },
@@ -75,6 +82,11 @@ export const PROTECTED_APP_ROUTES: AppRouteConfig[] = [
     path: '/transactions/new/standard',
     element: <CreateStandardTransaction />,
     title: { namespace: 'navigation', key: 'newStandardTransaction' },
+  },
+  {
+    path: '/transactions/new/investment',
+    element: <CreateInvestmentTransaction />,
+    title: { namespace: 'navigation', key: 'newInvestmentTransaction' },
   },
   {
     path: '/transactions/new/transfer',

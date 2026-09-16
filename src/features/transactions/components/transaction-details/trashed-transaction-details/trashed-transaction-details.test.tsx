@@ -57,6 +57,12 @@ vi.mock('@ui', () => ({
   Card: ({ children, ...props }: ComponentProps<'div'> & { children: ReactNode }) => (
     <div {...props}>{children}</div>
   ),
+  LoadingCard: ({ title, description }: { title: string; description?: string }) => (
+    <div>
+      <p>{title}</p>
+      {description ? <p>{description}</p> : null}
+    </div>
+  ),
   LoadingState: ({ title, description }: { title: string; description?: string }) => (
     <div>
       <p>{title}</p>
@@ -314,6 +320,7 @@ describe('TrashedTransactionDetails', () => {
   it('shows an error toast when restore fails', async () => {
     mocks.getTrashedTransaction.mockResolvedValueOnce({
       ...baseTransaction,
+      kind: 'transfer',
       refId: 'tx-2',
       category: { id: 'cat-transfer', type: 'system', name: 'myAccount' },
     });
@@ -345,6 +352,7 @@ describe('TrashedTransactionDetails', () => {
   it('permanently deletes a trashed transaction after confirmation', async () => {
     mocks.getTrashedTransaction.mockResolvedValueOnce({
       ...baseTransaction,
+      kind: 'exchange',
       refId: 'tx-2',
       category: { id: 'cat-exchange', type: 'system', name: 'exchange' },
     });

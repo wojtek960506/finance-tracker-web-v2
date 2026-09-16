@@ -1,0 +1,70 @@
+{
+  "searchPlaceholder": "Поиск инструментов...",
+  "allKinds": "Все",
+  "newInstrument": "Новый инструмент",
+  "emptyTitle": "Инвестиционные инструменты еще не добавлены",
+  "emptyDescription": "Создайте свой первый инструмент, например Apple (AAPL), S&P 500 ETF или Bitcoin, чтобы начать отслеживание инвестиций.",
+  "noResultsTitle": "Нет подходящих инструментов",
+  "noResultsDescription": "Попробуйте изменить поисковый запрос или фильтр типа.",
+  "createFirstInstrument": "Добавить первый инструмент",
+  "loadingTitle": "Загрузка инструментов",
+  "loadingDescription": "Получение ваших инвестиционных инструментов...",
+  "loadingInstruments": "Загрузка инструментов...",
+  "selectInstrumentPlaceholder": "Выберите инструмент...",
+  "noInstrumentsFound": "Инструменты не найдены",
+  "addNewInstrument": "Создать новый инструмент",
+  "quickAdd": "Новый",
+  "loading": "Загрузка...",
+  "createdOn": "Создано",
+  "kind": {
+    "share": "Акция",
+    "fund": "Фонд",
+    "termDeposit": "Депозит",
+    "savings": "Сбережения",
+    "bond": "Облигация",
+    "crypto": "Криптовалюта",
+    "commodity": "Товар",
+    "custom": "Пользовательский"
+  },
+  "form": {
+    "name": "Название",
+    "namePlaceholder": "напр. Apple, S&P 500 ETF",
+    "kind": "Тип",
+    "currency": "Валюта",
+    "currencyPlaceholder": "Выберите валюту...",
+    "searchCurrency": "Поиск валюты...",
+    "noCurrencyFound": "Валюта не найдена",
+    "notes": "Заметки",
+    "notesPlaceholder": "Дополнительное описание или тикер",
+    "createSubmit": "Создать инструмент",
+    "updateSubmit": "Сохранить изменения",
+    "errors": {
+      "nameRequired": "Название обязательно",
+      "currencyRequired": "Валюта обязательна"
+    }
+  },
+  "modals": {
+    "createTitle": "Новый инструмент",
+    "createDescription": "Добавьте инвестиционный инструмент для отслеживания в вашем портфеле.",
+    "updateTitle": "Редактировать инструмент",
+    "updateDescription": "Обновите данные этого инвестиционного инструмента.",
+    "deleteTitle": "Удалить инструмент",
+    "deletePrompt": "Вы уверены, что хотите удалить «{{name}}»? Это действие также удалит все связанные операции.",
+    "deleteConfirm": "Удалить"
+  },
+  "actions": {
+    "edit": "Редактировать инструмент",
+    "delete": "Удалить инструмент"
+  },
+  "cancel": "Отмена",
+  "saving": "Сохранение...",
+  "deleting": "Удаление...",
+  "toasts": {
+    "createdTitle": "Инструмент создан",
+    "createErrorTitle": "Не удалось создать инструмент",
+    "updatedTitle": "Инструмент обновлен",
+    "updateErrorTitle": "Не удалось обновить инструмент",
+    "deletedTitle": "Инструмент удален",
+    "deleteErrorTitle": "Не удалось удалить инструмент"
+  }
+}

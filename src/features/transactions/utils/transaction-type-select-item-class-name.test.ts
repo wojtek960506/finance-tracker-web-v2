@@ -20,8 +20,10 @@ describe('getTransactionTypeSelectItemClassName', () => {
   });
 
   it('returns transaction-type-colored selected value classes', () => {
-    expect(getTransactionTypeSelectValueClassName('expense')).toBe('text-destructive');
-    expect(getTransactionTypeSelectValueClassName('income')).toBe('text-bt-primary');
+    expect(getTransactionTypeSelectValueClassName('expense')).toContain(
+      'text-destructive',
+    );
+    expect(getTransactionTypeSelectValueClassName('income')).toContain('text-bt-primary');
     expect(getTransactionTypeSelectValueClassName('')).toBe('');
   });
 });

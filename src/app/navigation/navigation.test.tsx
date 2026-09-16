@@ -161,6 +161,7 @@ describe('Navigation', () => {
     render(<Navigation />);
 
     await user.click(screen.getByRole('button', { name: 'categories' }));
+    await user.click(screen.getByRole('button', { name: 'investments' }));
     await user.click(screen.getByRole('button', { name: 'paymentMethods' }));
     await user.click(screen.getByRole('button', { name: 'bankAccounts' }));
     await user.click(screen.getByRole('button', { name: 'transactionsTrash' }));

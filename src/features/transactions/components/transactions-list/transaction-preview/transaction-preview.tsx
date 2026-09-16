@@ -51,6 +51,11 @@ export const TransactionPreview = ({
   );
   const ghostLinkCn = 'text-sm sm:text-base';
 
+  const isInvestment =
+    transactionKind === 'investment' &&
+    'investment' in transaction &&
+    Boolean(transaction.investment);
+
   return (
     <li>
       <Card className="sm:gap-1">
@@ -85,7 +90,34 @@ export const TransactionPreview = ({
             <h1 className="text-lg sm:text-xl font-semibold">
               {transaction.description}
             </h1>
-            {metadata ? <div className="pt-1">{metadata}</div> : null}
+            {metadata ? (
+              <div className="pt-1">{metadata}</div>
+            ) : isInvestment && transaction.investment ? (
+              <div className="flex flex-wrap items-center gap-1.5 pt-1 text-xs">
+                <span
+                  className={clsx(
+                    'inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-semibold capitalize',
+                    transaction.investment.operationKind === 'buy' &&
+                      'border-blue-500/20 bg-blue-500/10 text-blue-600 dark:text-blue-400',
+                    transaction.investment.operationKind === 'sell' &&
+                      'border-emerald-500/20 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400',
+                    transaction.investment.operationKind === 'interest' &&
+                      'border-purple-500/20 bg-purple-500/10 text-purple-600 dark:text-purple-400',
+                    transaction.investment.operationKind === 'fee' &&
+                      'border-amber-500/20 bg-amber-500/10 text-amber-600 dark:text-amber-400',
+                  )}
+                  data-testid="transaction-preview-operation-kind"
+                >
+                  {t(`operationKind.${transaction.investment.operationKind}`)}
+                </span>
+                <span
+                  className="font-medium text-text-muted"
+                  data-testid="transaction-preview-instrument-name"
+                >
+                  {transaction.investment.instrument.name}
+                </span>
+              </div>
+            ) : null}
           </main>
         </Link>
 

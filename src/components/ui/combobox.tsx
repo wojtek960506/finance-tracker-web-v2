@@ -127,7 +127,7 @@ function ComboboxContent({
           data-slot="combobox-content"
           data-chips={!!anchor}
           className={cn(
-            'group/combobox-content relative max-h-(--available-height) w-[calc(var(--anchor-width)+2px)] min-w-[calc(var(--anchor-width)+2px)] max-w-(--available-width) origin-(--transform-origin) overflow-hidden rounded-2xl border border-fg bg-modal-bg text-fg shadow-md data-[chips=true]:min-w-(--anchor-width) *:data-[slot=input-group]:m-2 *:data-[slot=input-group]:mb-0 *:data-[slot=input-group]:h-10 *:data-[slot=input-group]:rounded-xl *:data-[slot=input-group]:border-fg *:data-[slot=input-group]:bg-bg *:data-[slot=input-group]:shadow-none',
+            'group/combobox-content relative max-h-(--available-height) w-max min-w-[calc(var(--anchor-width)+2px)] max-w-(--available-width) origin-(--transform-origin) overflow-hidden rounded-2xl border border-fg bg-modal-bg text-fg shadow-md data-[chips=true]:min-w-(--anchor-width) *:data-[slot=input-group]:m-2 *:data-[slot=input-group]:mb-0 *:data-[slot=input-group]:h-10 *:data-[slot=input-group]:rounded-xl *:data-[slot=input-group]:border-fg *:data-[slot=input-group]:bg-bg *:data-[slot=input-group]:shadow-none',
             className,
           )}
           {...props}

@@ -18,7 +18,7 @@ describe('BrandLink', () => {
     render(<BrandLink />);
 
     const link = screen.getByRole('link', { name: 'Open Devonion home page' });
-    const image = screen.getByAltText('Devonion');
+    const image = screen.getByAltText('DevOnion');
 
     expect(link).toHaveAttribute('href', 'https://devonion.com');
     expect(link).toHaveAttribute('target', '_blank');
@@ -30,7 +30,7 @@ describe('BrandLink', () => {
 
     render(<BrandLink />);
 
-    expect(screen.getByAltText('Devonion')).toHaveAttribute(
+    expect(screen.getByAltText('DevOnion')).toHaveAttribute(
       'src',
       '/brand/DEVONION-LOGO-DARK.svg',
     );

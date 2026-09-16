@@ -1,9 +1,11 @@
 {
   "hi": "Cześć",
   "transactions": "Transakcje",
+  "investments": "Inwestycje",
   "transactionsTrash": "Kosz transakcji",
   "newTransaction": "Nowa transakcja",
   "newStandardTransaction": "Nowa zwykła transakcja",
+  "newInvestmentTransaction": "Nowa transakcja inwestycyjna",
   "newTransferTransaction": "Nowy transfer",
   "newExchangeTransaction": "Nowa wymiana walut",
   "newBulkTransaction": "Zbiorcze dodawanie transakcji",
