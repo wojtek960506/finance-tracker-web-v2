@@ -2,8 +2,7 @@ import { useTranslation } from 'react-i18next';
 
 import { InstrumentKindBadge } from '@features/investments/components/instruments';
 import type { TransactionInvestmentDetails } from '@transactions/api';
-
-import { Detail } from '../../detail';
+import { Detail } from '@transactions/components/transaction-details/detail';
 
 type InvestmentDetailsProps = {
   investment: TransactionInvestmentDetails;

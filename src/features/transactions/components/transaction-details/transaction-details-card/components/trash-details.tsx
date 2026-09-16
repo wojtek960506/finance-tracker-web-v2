@@ -3,8 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { useLanguage } from '@shared/hooks';
 import type { TransactionDeletion } from '@transactions/api';
-
-import { Detail } from '../../detail';
+import { Detail } from '@transactions/components/transaction-details/detail';
 
 type TrashBadgeProps = {
   label?: string;
