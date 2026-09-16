@@ -1,6 +1,4 @@
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useState } from 'react';
-import { Controller, type SubmitHandler, useForm, useWatch } from 'react-hook-form';
+import { Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import { CreateInstrumentModal } from '@features/investments/components/instruments';
@@ -19,10 +17,8 @@ import {
   InvestmentInstrumentField,
   InvestmentOperationKindSelector,
 } from './components';
-import {
-  investmentTransactionFormSchema,
-  type InvestmentTransactionFormValues,
-} from './utils';
+import { useInvestmentTransactionForm } from './hooks';
+import type { InvestmentTransactionFormValues } from './utils';
 
 import { Input } from '@/components/ui/input';
 import { NumberInput } from '@/components/ui/number-input';
@@ -43,28 +39,16 @@ export const InvestmentTransactionForm = ({
   onCancel,
 }: InvestmentTransactionFormProps) => {
   const { t } = useTranslation('transactions');
-  const [isCreateInstrumentModalOpen, setIsCreateInstrumentModalOpen] = useState(false);
-
-  const form = useForm<InvestmentTransactionFormValues>({
-    resolver: zodResolver(investmentTransactionFormSchema),
-    defaultValues,
-  });
-
-  const selectedOperationKind = useWatch({
-    control: form.control,
-    name: 'operationKind',
-  });
-
-  const [paymentMethodId, accountId] = useWatch({
-    control: form.control,
-    name: ['paymentMethodId', 'accountId'],
-  });
-
-  const shouldOpenAdvancedFields = Boolean(paymentMethodId || accountId);
-
-  const handleSubmit: SubmitHandler<InvestmentTransactionFormValues> = async (values) => {
-    await onSubmit(values);
-  };
+  const {
+    form,
+    selectedOperationKind,
+    shouldOpenAdvancedFields,
+    isCreateInstrumentModalOpen,
+    setIsCreateInstrumentModalOpen,
+    handleSelectOperationKind,
+    handleInstrumentCreated,
+    handleSubmit,
+  } = useInvestmentTransactionForm({ defaultValues, onSubmit });
 
   return (
     <>
@@ -72,7 +56,7 @@ export const InvestmentTransactionForm = ({
         <form
           className="grid gap-3 sm:gap-4 sm:grid-cols-2"
           onKeyDown={preventImplicitFormSubmit}
-          onSubmit={form.handleSubmit(handleSubmit)}
+          onSubmit={handleSubmit}
           data-testid="investment-transaction-form"
         >
           {/* Description Field */}
@@ -95,7 +79,7 @@ export const InvestmentTransactionForm = ({
           {/* Operation Kind Selector */}
           <InvestmentOperationKindSelector
             selectedKind={selectedOperationKind}
-            onSelectKind={(kind) => form.setValue('operationKind', kind)}
+            onSelectKind={handleSelectOperationKind}
             disabled={isPending}
           />
 
@@ -205,9 +189,7 @@ export const InvestmentTransactionForm = ({
       <CreateInstrumentModal
         isOpen={isCreateInstrumentModalOpen}
         onClose={() => setIsCreateInstrumentModalOpen(false)}
-        onSuccess={(instrumentId) => {
-          form.setValue('instrumentId', instrumentId, { shouldValidate: true });
-        }}
+        onSuccess={handleInstrumentCreated}
       />
     </>
   );
