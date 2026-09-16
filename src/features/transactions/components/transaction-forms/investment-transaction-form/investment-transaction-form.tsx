@@ -1,30 +1,25 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import clsx from 'clsx';
 import { useState } from 'react';
 import { Controller, type SubmitHandler, useForm, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import {
-  CreateInstrumentModal,
-  InstrumentSelectField,
-} from '@features/investments/components/instruments';
-import { Button, Card, Collapsible, DateInput, Label } from '@shared/ui';
-import {
-  CurrencySelectField,
-  NamedResourceSelectField,
-} from '@transactions/components/shared';
+import { CreateInstrumentModal } from '@features/investments/components/instruments';
+import { Card, DateInput, Label } from '@shared/ui';
+import { CurrencySelectField } from '@transactions/components/shared';
 import {
   FIELD_CONTROL_CLASS_NAME,
   FieldError,
-  FORM_BUTTON_CLASS_NAME,
   preventImplicitFormSubmit,
   REQUIRED_LABEL_CLASS_NAME,
   TransactionFormActions,
 } from '@transactions/components/transaction-forms';
 
 import {
-  INVESTMENT_OPERATION_KINDS,
-  type InvestmentOperationKind,
+  InvestmentAdvancedFields,
+  InvestmentInstrumentField,
+  InvestmentOperationKindSelector,
+} from './components';
+import {
   investmentTransactionFormSchema,
   type InvestmentTransactionFormValues,
 } from './utils';
@@ -38,23 +33,6 @@ type InvestmentTransactionFormProps = {
   mode: 'create' | 'update';
   onSubmit: (values: InvestmentTransactionFormValues) => Promise<void> | void;
   onCancel: () => void;
-};
-
-const getOperationButtonStyles = (kind: InvestmentOperationKind, isSelected: boolean) => {
-  if (!isSelected) {
-    return 'border-border bg-card-bg text-text-muted hover:text-fg hover:border-fg/40';
-  }
-
-  switch (kind) {
-    case 'buy':
-      return 'border-blue-500 bg-blue-500/10 text-blue-600 dark:text-blue-400 font-semibold shadow-sm';
-    case 'sell':
-      return 'border-emerald-500 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-semibold shadow-sm';
-    case 'interest':
-      return 'border-purple-500 bg-purple-500/10 text-purple-600 dark:text-purple-400 font-semibold shadow-sm';
-    case 'fee':
-      return 'border-amber-500 bg-amber-500/10 text-amber-600 dark:text-amber-400 font-semibold shadow-sm';
-  }
 };
 
 export const InvestmentTransactionForm = ({
@@ -115,58 +93,18 @@ export const InvestmentTransactionForm = ({
           </Label>
 
           {/* Operation Kind Selector */}
-          <div className="sm:col-span-2 flex flex-col gap-1.5">
-            <Label>
-              <span className={REQUIRED_LABEL_CLASS_NAME}>
-                {t('investmentOperationKind')}
-              </span>
-            </Label>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-              {INVESTMENT_OPERATION_KINDS.map((kind) => {
-                const isSelected = selectedOperationKind === kind;
-                return (
-                  <Button
-                    key={kind}
-                    type="button"
-                    variant="outline"
-                    className={clsx(
-                      FORM_BUTTON_CLASS_NAME,
-                      'capitalize transition-all border',
-                      getOperationButtonStyles(kind, isSelected),
-                    )}
-                    onClick={() => form.setValue('operationKind', kind)}
-                    disabled={isPending}
-                    data-testid={`operation-kind-${kind}`}
-                  >
-                    {t(`operationKind.${kind}`)}
-                  </Button>
-                );
-              })}
-            </div>
-          </div>
+          <InvestmentOperationKindSelector
+            selectedKind={selectedOperationKind}
+            onSelectKind={(kind) => form.setValue('operationKind', kind)}
+            disabled={isPending}
+          />
 
           {/* Instrument Selector */}
-          <Label className="sm:col-span-2">
-            <span className={REQUIRED_LABEL_CLASS_NAME}>{t('investmentInstrument')}</span>
-            <Controller
-              control={form.control}
-              name="instrumentId"
-              render={({ field }) => (
-                <InstrumentSelectField
-                  value={field.value}
-                  onChange={field.onChange}
-                  placeholder={t('selectInstrumentPlaceholder')}
-                  onAddNewInstrument={() => setIsCreateInstrumentModalOpen(true)}
-                />
-              )}
-            />
-            <FieldError
-              message={
-                form.formState.errors.instrumentId?.message &&
-                t(form.formState.errors.instrumentId.message)
-              }
-            />
-          </Label>
+          <InvestmentInstrumentField
+            control={form.control}
+            errorMessage={form.formState.errors.instrumentId?.message}
+            onAddNewInstrument={() => setIsCreateInstrumentModalOpen(true)}
+          />
 
           {/* Date Field */}
           <Label>
@@ -253,66 +191,11 @@ export const InvestmentTransactionForm = ({
           </Label>
 
           {/* Advanced Named Resources */}
-          <div className="sm:col-span-2">
-            <Collapsible
-              header={
-                <span className="text-base font-medium sm:text-lg">
-                  {t('advancedFields')}
-                </span>
-              }
-              indicatorPosition="left"
-              isInitiallyOpen={shouldOpenAdvancedFields}
-              triggerMode="full-row"
-              contentInset="none"
-              contentClassName="px-[2px] pb-[2px]"
-            >
-              <div className="grid gap-3 sm:gap-4 sm:grid-cols-2">
-                <Label>
-                  <span>{t('paymentMethod')}</span>
-                  <Controller
-                    control={form.control}
-                    name="paymentMethodId"
-                    render={({ field }) => (
-                      <NamedResourceSelectField
-                        kind="paymentMethods"
-                        value={field.value}
-                        onChange={field.onChange}
-                        placeholder={t('paymentMethodPlaceholder')}
-                      />
-                    )}
-                  />
-                  <FieldError
-                    message={
-                      form.formState.errors.paymentMethodId?.message &&
-                      t(form.formState.errors.paymentMethodId.message)
-                    }
-                  />
-                </Label>
-
-                <Label>
-                  <span>{t('account')}</span>
-                  <Controller
-                    control={form.control}
-                    name="accountId"
-                    render={({ field }) => (
-                      <NamedResourceSelectField
-                        kind="accounts"
-                        value={field.value}
-                        onChange={field.onChange}
-                        placeholder={t('accountPlaceholder')}
-                      />
-                    )}
-                  />
-                  <FieldError
-                    message={
-                      form.formState.errors.accountId?.message &&
-                      t(form.formState.errors.accountId.message)
-                    }
-                  />
-                </Label>
-              </div>
-            </Collapsible>
-          </div>
+          <InvestmentAdvancedFields
+            control={form.control}
+            errors={form.formState.errors}
+            isInitiallyOpen={shouldOpenAdvancedFields}
+          />
 
           {/* Form Actions */}
           <TransactionFormActions isPending={isPending} mode={mode} onCancel={onCancel} />
