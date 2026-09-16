@@ -51,6 +51,9 @@ export type Transaction = components['schemas']['TransactionResponse'];
 export type TransactionInvestment =
   components['schemas']['TransactionInvestmentResponse'];
 
+export type TransactionInvestmentDetails =
+  components['schemas']['TransactionInvestmentResponseDetails'];
+
 export type TransactionDeletion = components['schemas']['TransactionDeletion'];
 
 export type TransactionDetails = components['schemas']['TransactionDetailsResponse'];
