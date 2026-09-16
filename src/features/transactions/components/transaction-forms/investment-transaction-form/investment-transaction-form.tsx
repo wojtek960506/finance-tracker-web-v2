@@ -1,14 +1,15 @@
-import { Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import { CreateInstrumentModal } from '@features/investments/components/instruments';
-import { Card, DateInput, Label } from '@shared/ui';
-import { CurrencySelectField } from '@transactions/components/shared';
+import { Card, Label } from '@shared/ui';
 import {
   FIELD_CONTROL_CLASS_NAME,
   FieldError,
   preventImplicitFormSubmit,
-  REQUIRED_LABEL_CLASS_NAME,
+  TransactionAmountField,
+  TransactionCurrencyField,
+  TransactionDateField,
+  TransactionDescriptionField,
   TransactionFormActions,
 } from '@transactions/components/transaction-forms';
 
@@ -21,7 +22,6 @@ import { useInvestmentTransactionForm } from './hooks';
 import type { InvestmentTransactionFormValues } from './utils';
 
 import { Input } from '@/components/ui/input';
-import { NumberInput } from '@/components/ui/number-input';
 
 type InvestmentTransactionFormProps = {
   defaultValues: InvestmentTransactionFormValues;
@@ -60,21 +60,11 @@ export const InvestmentTransactionForm = ({
           data-testid="investment-transaction-form"
         >
           {/* Description Field */}
-          <Label className="sm:col-span-2">
-            <span className={REQUIRED_LABEL_CLASS_NAME}>{t('description')}</span>
-            <Input
-              className={FIELD_CONTROL_CLASS_NAME}
-              {...form.register('description')}
-              placeholder={t('descriptionPlaceholder')}
-              disabled={isPending}
-            />
-            <FieldError
-              message={
-                form.formState.errors.description?.message &&
-                t(form.formState.errors.description.message)
-              }
-            />
-          </Label>
+          <TransactionDescriptionField
+            registration={form.register('description')}
+            errorMessage={form.formState.errors.description?.message}
+            disabled={isPending}
+          />
 
           {/* Operation Kind Selector */}
           <InvestmentOperationKindSelector
@@ -91,71 +81,27 @@ export const InvestmentTransactionForm = ({
           />
 
           {/* Date Field */}
-          <Label>
-            <span className={REQUIRED_LABEL_CLASS_NAME}>{t('date')}</span>
-            <Controller
-              control={form.control}
-              name="date"
-              render={({ field }) => (
-                <DateInput {...field} className={FIELD_CONTROL_CLASS_NAME} />
-              )}
-            />
-            <FieldError
-              message={
-                form.formState.errors.date?.message &&
-                t(form.formState.errors.date.message)
-              }
-            />
-          </Label>
+          <TransactionDateField
+            control={form.control}
+            name="date"
+            errorMessage={form.formState.errors.date?.message}
+            disabled={isPending}
+          />
 
           {/* Amount Field */}
-          <Label>
-            <span className={REQUIRED_LABEL_CLASS_NAME}>{t('amount')}</span>
-            <Controller
-              control={form.control}
-              name="amount"
-              render={({ field }) => (
-                <NumberInput
-                  value={field.value}
-                  onValueChange={field.onChange}
-                  decimalPlaces={2}
-                  step="0.01"
-                  min="0"
-                  className={FIELD_CONTROL_CLASS_NAME}
-                />
-              )}
-            />
-            <FieldError
-              message={
-                form.formState.errors.amount?.message &&
-                t(form.formState.errors.amount.message)
-              }
-            />
-          </Label>
+          <TransactionAmountField
+            control={form.control}
+            name="amount"
+            errorMessage={form.formState.errors.amount?.message}
+            disabled={isPending}
+          />
 
           {/* Currency Field */}
-          <Label className="sm:col-span-2">
-            <span className={REQUIRED_LABEL_CLASS_NAME}>{t('currency')}</span>
-            <Controller
-              control={form.control}
-              name="currency"
-              render={({ field }) => (
-                <CurrencySelectField
-                  value={field.value}
-                  onChange={field.onChange}
-                  placeholder={t('currencyPlaceholder')}
-                  searchPlaceholder={t('searchCurrencyPlaceholder')}
-                  emptyMessage={t('noCurrenciesFound')}
-                />
-              )}
-            />
-            <FieldError
-              message={
-                form.formState.errors.currency?.message &&
-                t(form.formState.errors.currency.message)
-              }
-            />
-          </Label>
+          <TransactionCurrencyField
+            control={form.control}
+            name="currency"
+            errorMessage={form.formState.errors.currency?.message}
+          />
 
           {/* Investment Note Field */}
           <Label className="sm:col-span-2">
@@ -178,7 +124,7 @@ export const InvestmentTransactionForm = ({
           <InvestmentAdvancedFields
             control={form.control}
             errors={form.formState.errors}
-            isInitiallyOpen={shouldOpenAdvancedFields}
+            isOpen={shouldOpenAdvancedFields}
           />
 
           {/* Form Actions */}
