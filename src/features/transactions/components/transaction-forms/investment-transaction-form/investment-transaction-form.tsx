@@ -6,6 +6,7 @@ import {
   FIELD_CONTROL_CLASS_NAME,
   FieldError,
   preventImplicitFormSubmit,
+  SingleAccountAdvancedFields,
   TransactionAmountField,
   TransactionCurrencyField,
   TransactionDateField,
@@ -13,11 +14,7 @@ import {
   TransactionFormActions,
 } from '@transactions/components/transaction-forms';
 
-import {
-  InvestmentAdvancedFields,
-  InvestmentInstrumentField,
-  InvestmentOperationKindSelector,
-} from './components';
+import { InvestmentInstrumentField, InvestmentOperationKindSelector } from './components';
 import { useInvestmentTransactionForm } from './hooks';
 import type { InvestmentTransactionFormValues } from './utils';
 
@@ -121,7 +118,7 @@ export const InvestmentTransactionForm = ({
           </Label>
 
           {/* Advanced Named Resources */}
-          <InvestmentAdvancedFields
+          <SingleAccountAdvancedFields
             control={form.control}
             errors={form.formState.errors}
             isOpen={shouldOpenAdvancedFields}

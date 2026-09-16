@@ -10,7 +10,7 @@ import {
   FORM_BUTTON_CLASS_NAME,
   preventImplicitFormSubmit,
   REQUIRED_LABEL_CLASS_NAME,
-  TransactionAdvancedFieldsCollapsible,
+  SingleAccountAdvancedFields,
   TransactionAmountField,
   TransactionCurrencyField,
   TransactionDateField,
@@ -123,7 +123,11 @@ export const StandardTransactionForm = ({
           colSpan="single"
         />
 
-        <TransactionAdvancedFieldsCollapsible isOpen={shouldOpenAdvancedFields}>
+        <SingleAccountAdvancedFields
+          control={form.control}
+          errors={form.formState.errors}
+          isOpen={shouldOpenAdvancedFields}
+        >
           <Label className="sm:col-span-2">
             <span>{t('category')}</span>
             <Controller
@@ -147,51 +151,7 @@ export const StandardTransactionForm = ({
               }
             />
           </Label>
-
-          <Label>
-            <span>{t('paymentMethod')}</span>
-            <Controller
-              control={form.control}
-              name="paymentMethodId"
-              render={({ field }) => (
-                <NamedResourceSelectField
-                  kind="paymentMethods"
-                  value={field.value}
-                  onChange={field.onChange}
-                  placeholder={t('paymentMethodPlaceholder')}
-                />
-              )}
-            />
-            <FieldError
-              message={
-                form.formState.errors.paymentMethodId?.message &&
-                t(form.formState.errors.paymentMethodId.message)
-              }
-            />
-          </Label>
-
-          <Label>
-            <span>{t('account')}</span>
-            <Controller
-              control={form.control}
-              name="accountId"
-              render={({ field }) => (
-                <NamedResourceSelectField
-                  kind="accounts"
-                  value={field.value}
-                  onChange={field.onChange}
-                  placeholder={t('accountPlaceholder')}
-                />
-              )}
-            />
-            <FieldError
-              message={
-                form.formState.errors.accountId?.message &&
-                t(form.formState.errors.accountId.message)
-              }
-            />
-          </Label>
-        </TransactionAdvancedFieldsCollapsible>
+        </SingleAccountAdvancedFields>
 
         <TransactionFormActions isPending={isPending} mode={mode} onCancel={onCancel} />
       </form>
