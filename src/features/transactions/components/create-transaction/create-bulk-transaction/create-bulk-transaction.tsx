@@ -1,30 +1,20 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQueryClient } from '@tanstack/react-query';
-import clsx from 'clsx';
 import { Trash2 } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
-import { Controller, useFieldArray, useForm, useWatch } from 'react-hook-form';
+import { useFieldArray, useForm, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import {
-  CreateInstrumentModal,
-  InstrumentSelectField,
-} from '@features/investments/components/instruments';
+import { CreateInstrumentModal } from '@features/investments/components/instruments';
 import { normalizeApiError } from '@shared/api/api-error';
-import { Button, Card, DateInput, Label } from '@shared/ui';
+import { Button, Card } from '@shared/ui';
 import { useToastStore } from '@store/toast-store';
 import { createBulkTransactions } from '@transactions/api';
-import {
-  CurrencySelectField,
-  NamedResourceSelectField,
-  TransactionActionModal,
-} from '@transactions/components/shared';
+import { TransactionActionModal } from '@transactions/components/shared';
 import {
   FieldError,
   FORM_BUTTON_CLASS_NAME,
-  INVESTMENT_OPERATION_KINDS,
-  type InvestmentOperationKind,
   normalizeExchangeTransactionFormValues,
   normalizeInvestmentTransactionFormValues,
   normalizeStandardTransactionFormValues,
@@ -38,15 +28,8 @@ import {
 } from '@transactions/utils';
 
 import { BulkTransactionKindField } from './bulk-transaction-kind-field';
-import {
-  COMPACT_FIELD_CLASS_NAME,
-  COMPACT_LABEL_CLASS_NAME,
-  getBulkLabelClassName,
-  getInvestmentOperationKindSelectItemClassName,
-  getInvestmentOperationKindSelectValueClassName,
-  INLINE_FIELD_CLASS_NAME,
-} from './consts';
 import { ExchangeRowFields } from './exchange-row-fields';
+import { InvestmentRowFields } from './investment-row-fields';
 import { bulkTransactionFormSchema } from './schemas';
 import { StandardRowFields } from './standard-row-fields';
 import { TransferRowFields } from './transfer-row-fields';
@@ -62,206 +45,6 @@ import {
   getDeleteActionLabel,
   getMeaningfulBulkTransactionRows,
 } from './utils';
-
-import { Input } from '@/components/ui/input';
-import { NumberInput } from '@/components/ui/number-input';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-
-const InvestmentRowFields = ({
-  form,
-  index,
-  showLabels,
-  onAddNewInstrument,
-}: {
-  form: ReturnType<typeof useForm<BulkTransactionFormValues>>;
-  index: number;
-  showLabels: boolean;
-  onAddNewInstrument: () => void;
-}) => {
-  const { t } = useTranslation('transactions');
-  const errors = form.formState.errors.rows?.[index]?.investmentValues;
-  const selectedOperationKind = useWatch({
-    control: form.control,
-    name: `rows.${index}.investmentValues.operationKind`,
-  });
-
-  return (
-    <div className="flex min-w-max items-start gap-2">
-      <Label className={`${COMPACT_LABEL_CLASS_NAME} ${INLINE_FIELD_CLASS_NAME}`}>
-        <span className={getBulkLabelClassName(showLabels, true)}>{t('date')}</span>
-        <Controller
-          control={form.control}
-          name={`rows.${index}.investmentValues.date`}
-          render={({ field }) => (
-            <DateInput {...field} className={COMPACT_FIELD_CLASS_NAME} />
-          )}
-        />
-        <FieldError message={errors?.date?.message && t(errors.date.message)} />
-      </Label>
-
-      <Label className={`${COMPACT_LABEL_CLASS_NAME} ${INLINE_FIELD_CLASS_NAME}`}>
-        <span className={getBulkLabelClassName(showLabels, true)}>
-          {t('investmentOperationKind')}
-        </span>
-        <Select
-          value={selectedOperationKind}
-          onValueChange={(value) =>
-            form.setValue(
-              `rows.${index}.investmentValues.operationKind`,
-              value as InvestmentOperationKind,
-              { shouldDirty: true, shouldValidate: form.formState.isSubmitted },
-            )
-          }
-        >
-          <SelectTrigger
-            aria-label={t('investmentOperationKind')}
-            className={clsx(
-              COMPACT_FIELD_CLASS_NAME,
-              getInvestmentOperationKindSelectValueClassName(selectedOperationKind),
-            )}
-          >
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent position="popper">
-            {INVESTMENT_OPERATION_KINDS.map((operationKind) => (
-              <SelectItem
-                key={`${index}-${operationKind}`}
-                value={operationKind}
-                className={getInvestmentOperationKindSelectItemClassName(operationKind)}
-              >
-                {t(`operationKind.${operationKind}`)}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </Label>
-
-      <Label className={`${COMPACT_LABEL_CLASS_NAME} ${INLINE_FIELD_CLASS_NAME}`}>
-        <span className={getBulkLabelClassName(showLabels, true)}>
-          {t('investmentInstrument')}
-        </span>
-        <Controller
-          control={form.control}
-          name={`rows.${index}.investmentValues.instrumentId`}
-          render={({ field }) => (
-            <InstrumentSelectField
-              value={field.value}
-              onChange={field.onChange}
-              placeholder=""
-              searchPlaceholder=""
-              onAddNewInstrument={onAddNewInstrument}
-              addNewPlacement="menu"
-            />
-          )}
-        />
-        <FieldError
-          message={errors?.instrumentId?.message && t(errors.instrumentId.message)}
-        />
-      </Label>
-
-      <Label className={`${COMPACT_LABEL_CLASS_NAME} ${INLINE_FIELD_CLASS_NAME}`}>
-        <span className={getBulkLabelClassName(showLabels, true)}>
-          {t('description')}
-        </span>
-        <Input
-          {...form.register(`rows.${index}.investmentValues.description`)}
-          className={COMPACT_FIELD_CLASS_NAME}
-        />
-        <FieldError
-          message={errors?.description?.message && t(errors.description.message)}
-        />
-      </Label>
-
-      <Label className={`${COMPACT_LABEL_CLASS_NAME} ${INLINE_FIELD_CLASS_NAME}`}>
-        <span className={getBulkLabelClassName(showLabels, true)}>{t('amount')}</span>
-        <Controller
-          control={form.control}
-          name={`rows.${index}.investmentValues.amount`}
-          render={({ field }) => (
-            <NumberInput
-              value={field.value}
-              onValueChange={field.onChange}
-              decimalPlaces={2}
-              step="0.01"
-              min="0"
-              className={COMPACT_FIELD_CLASS_NAME}
-            />
-          )}
-        />
-        <FieldError message={errors?.amount?.message && t(errors.amount.message)} />
-      </Label>
-
-      <Label className={`${COMPACT_LABEL_CLASS_NAME} ${INLINE_FIELD_CLASS_NAME}`}>
-        <span className={getBulkLabelClassName(showLabels, true)}>{t('currency')}</span>
-        <Controller
-          control={form.control}
-          name={`rows.${index}.investmentValues.currency`}
-          render={({ field }) => (
-            <CurrencySelectField
-              value={field.value}
-              onChange={field.onChange}
-              placeholder=""
-              searchPlaceholder=""
-              emptyMessage={t('noCurrenciesFound')}
-            />
-          )}
-        />
-        <FieldError message={errors?.currency?.message && t(errors.currency.message)} />
-      </Label>
-
-      <Label className={`${COMPACT_LABEL_CLASS_NAME} ${INLINE_FIELD_CLASS_NAME}`}>
-        <span className={getBulkLabelClassName(showLabels)}>{t('paymentMethod')}</span>
-        <Controller
-          control={form.control}
-          name={`rows.${index}.investmentValues.paymentMethodId`}
-          render={({ field }) => (
-            <NamedResourceSelectField
-              kind="paymentMethods"
-              value={field.value}
-              onChange={field.onChange}
-              placeholder=""
-            />
-          )}
-        />
-        <FieldError
-          message={errors?.paymentMethodId?.message && t(errors.paymentMethodId.message)}
-        />
-      </Label>
-
-      <Label className={`${COMPACT_LABEL_CLASS_NAME} ${INLINE_FIELD_CLASS_NAME}`}>
-        <span className={getBulkLabelClassName(showLabels)}>{t('account')}</span>
-        <Controller
-          control={form.control}
-          name={`rows.${index}.investmentValues.accountId`}
-          render={({ field }) => (
-            <NamedResourceSelectField
-              kind="accounts"
-              value={field.value}
-              onChange={field.onChange}
-              placeholder=""
-            />
-          )}
-        />
-        <FieldError message={errors?.accountId?.message && t(errors.accountId.message)} />
-      </Label>
-
-      <Label className={`${COMPACT_LABEL_CLASS_NAME} ${INLINE_FIELD_CLASS_NAME}`}>
-        <span className={getBulkLabelClassName(showLabels)}>{t('note')}</span>
-        <Input
-          {...form.register(`rows.${index}.investmentValues.note`)}
-          className={COMPACT_FIELD_CLASS_NAME}
-        />
-        <FieldError message={errors?.note?.message && t(errors.note.message)} />
-      </Label>
-    </div>
-  );
-};
 
 export const CreateBulkTransaction = () => {
   const location = useLocation();
