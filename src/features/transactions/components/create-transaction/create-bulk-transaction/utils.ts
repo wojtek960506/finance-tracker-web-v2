@@ -1,3 +1,4 @@
+import type { BulkTransactionDTO } from '@transactions/api';
 import {
   type ExchangeTransactionFormValues,
   getDefaultExchangeTransactionFormValues,
@@ -5,6 +6,10 @@ import {
   getDefaultStandardTransactionFormValues,
   getDefaultTransferTransactionFormValues,
   type InvestmentTransactionFormValues,
+  normalizeExchangeTransactionFormValues,
+  normalizeInvestmentTransactionFormValues,
+  normalizeStandardTransactionFormValues,
+  normalizeTransferTransactionFormValues,
   type StandardTransactionFormValues,
   type TransferTransactionFormValues,
 } from '@transactions/components/transaction-forms';
@@ -76,3 +81,37 @@ export const cloneBulkTransactionRowValues = (
   exchangeValues: { ...row.exchangeValues },
   investmentValues: { ...row.investmentValues },
 });
+
+export const toBulkTransactionDto = (
+  row: BulkTransactionRowValues,
+): BulkTransactionDTO => {
+  switch (row.kind) {
+    case 'standard':
+      return {
+        kind: 'standard',
+        ...normalizeStandardTransactionFormValues(row.standardValues),
+        amount: Number(row.standardValues.amount),
+      };
+    case 'transfer':
+      return {
+        kind: 'transfer',
+        ...normalizeTransferTransactionFormValues(row.transferValues),
+        amount: Number(row.transferValues.amount),
+      };
+    case 'exchange':
+      return {
+        kind: 'exchange',
+        ...normalizeExchangeTransactionFormValues(row.exchangeValues),
+        amountExpense: Number(row.exchangeValues.amountExpense),
+        amountIncome: Number(row.exchangeValues.amountIncome),
+      };
+    case 'investment':
+      return {
+        kind: 'investment',
+        ...normalizeInvestmentTransactionFormValues(row.investmentValues),
+        amount: Number(row.investmentValues.amount),
+      };
+    default:
+      throw new Error(`Unsupported transaction kind: ${row.kind}`);
+  }
+};

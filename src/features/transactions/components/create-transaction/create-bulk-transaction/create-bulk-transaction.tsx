@@ -13,10 +13,6 @@ import { createBulkTransactions } from '@transactions/api';
 import { TransactionActionModal } from '@transactions/components/shared';
 import {
   FORM_BUTTON_CLASS_NAME,
-  normalizeExchangeTransactionFormValues,
-  normalizeInvestmentTransactionFormValues,
-  normalizeStandardTransactionFormValues,
-  normalizeTransferTransactionFormValues,
   preventImplicitFormSubmit,
 } from '@transactions/components/transaction-forms';
 import {
@@ -37,6 +33,7 @@ import {
   getBulkTransferTransactionFormValues,
   getDefaultBulkTransactionRowValues,
   getMeaningfulBulkTransactionRows,
+  toBulkTransactionDto,
 } from './utils';
 
 export const CreateBulkTransaction = () => {
@@ -165,38 +162,7 @@ export const CreateBulkTransaction = () => {
     setIsPending(true);
     try {
       const createdTransactions = await createBulkTransactions({
-        transactions: transactionsToCreate.map((row) => {
-          if (row.kind === 'standard') {
-            return {
-              kind: 'standard' as const,
-              ...normalizeStandardTransactionFormValues(row.standardValues),
-              amount: Number(row.standardValues.amount),
-            };
-          }
-
-          if (row.kind === 'transfer') {
-            return {
-              kind: 'transfer' as const,
-              ...normalizeTransferTransactionFormValues(row.transferValues),
-              amount: Number(row.transferValues.amount),
-            };
-          }
-
-          if (row.kind === 'exchange') {
-            return {
-              kind: 'exchange' as const,
-              ...normalizeExchangeTransactionFormValues(row.exchangeValues),
-              amountExpense: Number(row.exchangeValues.amountExpense),
-              amountIncome: Number(row.exchangeValues.amountIncome),
-            };
-          }
-
-          return {
-            kind: 'investment' as const,
-            ...normalizeInvestmentTransactionFormValues(row.investmentValues),
-            amount: Number(row.investmentValues.amount),
-          };
-        }),
+        transactions: transactionsToCreate.map(toBulkTransactionDto),
       });
 
       await queryClient.invalidateQueries({ queryKey: ['transactions'] });
