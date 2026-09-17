@@ -82,15 +82,15 @@ export const TransactionDetailsCard = ({
         )}
 
         <Detail title={t('category')}>
-          <HoverLink to="/categories">{categoryLabel}</HoverLink>
+          <HoverLink to="/transactions/categories">{categoryLabel}</HoverLink>
         </Detail>
 
         <Detail title={t('paymentMethod')}>
-          <HoverLink to="/paymentMethods">{paymentMethodLabel}</HoverLink>
+          <HoverLink to="/transactions/payment-methods">{paymentMethodLabel}</HoverLink>
         </Detail>
 
         <Detail title={t('account')}>
-          <HoverLink to="/accounts">{accountLabel}</HoverLink>
+          <HoverLink to="/transactions/accounts">{accountLabel}</HoverLink>
         </Detail>
 
         {isTrashedTransaction(transaction) && (

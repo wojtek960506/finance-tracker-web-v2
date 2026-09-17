@@ -90,6 +90,42 @@ describe('Title', () => {
     expect(screen.queryByRole('link')).not.toBeInTheDocument();
   });
 
+  it('renders categories title on categories page', () => {
+    render(
+      <MemoryRouter initialEntries={['/transactions/categories']}>
+        <Title />
+      </MemoryRouter>,
+    );
+
+    expect(
+      screen.getByRole('heading', { name: 'navigation:categories' }),
+    ).toBeInTheDocument();
+  });
+
+  it('renders payment methods title on payment methods page', () => {
+    render(
+      <MemoryRouter initialEntries={['/transactions/payment-methods']}>
+        <Title />
+      </MemoryRouter>,
+    );
+
+    expect(
+      screen.getByRole('heading', { name: 'navigation:paymentMethods' }),
+    ).toBeInTheDocument();
+  });
+
+  it('renders bank accounts title on accounts page', () => {
+    render(
+      <MemoryRouter initialEntries={['/transactions/accounts']}>
+        <Title />
+      </MemoryRouter>,
+    );
+
+    expect(
+      screen.getByRole('heading', { name: 'navigation:bankAccounts' }),
+    ).toBeInTheDocument();
+  });
+
   it('renders transaction details title on transaction details page', () => {
     render(
       <MemoryRouter initialEntries={['/transactions/123']}>

@@ -4,7 +4,7 @@ This document outlines the architectural decisions, URL structure, component des
 
 ---
 
-## 1. Domain Separation & Navigation
+## 1. Domain Separation & Navigation `[✅ Completed]`
 
 ### Top-Level Module
 
@@ -15,9 +15,9 @@ This document outlines the architectural decisions, URL structure, component des
 ```
 Sidebar Navigation:
 ├── Transactions (/transactions)
-│   ├── Categories (/categories)
-│   ├── Payment Methods (/paymentMethods)
-│   ├── Bank Accounts (/accounts)
+│   ├── Categories (/transactions/categories)
+│   ├── Payment Methods (/transactions/payment-methods)
+│   ├── Bank Accounts (/transactions/accounts)
 │   ├── Statistics (/transactions/statistics)
 │   └── Trash (/transactions/trash)
 ├── Investments (/investments)  <-- [Top-level navigation item]
@@ -100,20 +100,22 @@ src/
 
 ## 6. Implementation Steps for Next Branch
 
-1. **Branch Creation**: `feature/investment-operations-and-snapshots`
-2. **Navigation & Route Restructuring**:
-   - Move Investments to top level in `navigation.tsx`.
-   - Update `app-routes.tsx` to handle `/investments`, `/investments/instruments`, `/investments/operations`, `/investments/instruments/:id`.
-3. **Investments Layout & Tabs**:
-   - Create `InvestmentsLayout` with tab navigation between Instruments and Operations.
-4. **Operations Listing & Filters**:
-   - Implement `OperationsList`, `OperationCard`, and `OperationsFilters` using `getOperations`.
-5. **Create Snapshot Flow**:
-   - Implement `CreateSnapshotModal` and `SnapshotForm` with `createSnapshotOperation` mutation.
-6. **Instrument Details Page**:
-   - Implement `/investments/instruments/:id` with summary cards, historical timeline, and instrument-specific operations.
-7. **Localization**:
-   - Add all strings across `en`, `pl`, `de`, `ru` in `investments.json` and `navigation.json`.
-8. **Verification & Tests**:
-   - Write unit tests for new components, forms, and pages.
-   - Run `npx vitest run`, `pnpm tsc --noEmit`, and `npm run fix`.
+- [x] **1. Branch Creation**: `feature/investment-operations-and-snapshots`
+- [x] **2. Domain Separation & Navigation Restructuring (Point 1)**:
+  - [x] Move Investments to top level in `navigation.tsx` (`/investments`).
+  - [x] Harmonize nested transaction sub-routes (`/transactions/categories`, `/transactions/payment-methods`, `/transactions/accounts`).
+  - [x] Move `InvestmentsPage` into `@investments/components` domain module and configure `@investments/*` alias.
+- [ ] **3. URL Routing Architecture & Layout Tabs (Point 2)**:
+  - [ ] Update `app-routes.tsx` to handle `/investments` (redirect to `/investments/instruments`), `/investments/instruments`, `/investments/operations`, `/investments/instruments/:id`.
+  - [ ] Create `InvestmentsLayout` with tab navigation between Instruments and Operations.
+- [ ] **4. Operations Listing & Filters (Point 4)**:
+  - [ ] Implement `OperationsList`, `OperationCard`, and `OperationsFilters` using `getOperations`.
+- [ ] **5. Create Snapshot Flow (Point 3 & 4)**:
+  - [ ] Implement `CreateSnapshotModal` and `SnapshotForm` with `createSnapshotOperation` mutation.
+- [ ] **6. Instrument Details Page (Point 3)**:
+  - [ ] Implement `/investments/instruments/:id` with summary cards, historical timeline, and instrument-specific operations.
+- [ ] **7. Localization**:
+  - [ ] Add all strings across `en`, `pl`, `de`, `ru` in `investments.json` and `navigation.json`.
+- [ ] **8. Verification & Tests**:
+  - [ ] Write unit tests for new components, forms, and pages.
+  - [ ] Run `npx vitest run`, `pnpm tsc --noEmit`, and `npm run fix`.

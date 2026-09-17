@@ -104,9 +104,19 @@ export const PROTECTED_APP_ROUTES: AppRouteConfig[] = [
     title: { namespace: 'navigation', key: 'transactionStatistics' },
   },
   {
-    path: '/transactions/:transactionId',
-    element: <TransactionDetails />,
-    title: { namespace: 'navigation', key: 'transactionDetails' },
+    path: '/transactions/categories',
+    element: <NamedResourcesPage kind="categories" />,
+    title: { namespace: 'navigation', key: 'categories' },
+  },
+  {
+    path: '/transactions/payment-methods',
+    element: <NamedResourcesPage kind="paymentMethods" />,
+    title: { namespace: 'navigation', key: 'paymentMethods' },
+  },
+  {
+    path: '/transactions/accounts',
+    element: <NamedResourcesPage kind="accounts" />,
+    title: { namespace: 'navigation', key: 'bankAccounts' },
   },
   {
     path: '/transactions/:transactionId/edit',
@@ -114,19 +124,9 @@ export const PROTECTED_APP_ROUTES: AppRouteConfig[] = [
     title: { namespace: 'navigation', key: 'editTransaction' },
   },
   {
-    path: '/categories',
-    element: <NamedResourcesPage kind="categories" />,
-    title: { namespace: 'navigation', key: 'categories' },
-  },
-  {
-    path: '/paymentMethods',
-    element: <NamedResourcesPage kind="paymentMethods" />,
-    title: { namespace: 'navigation', key: 'paymentMethods' },
-  },
-  {
-    path: '/accounts',
-    element: <NamedResourcesPage kind="accounts" />,
-    title: { namespace: 'navigation', key: 'bankAccounts' },
+    path: '/transactions/:transactionId',
+    element: <TransactionDetails />,
+    title: { namespace: 'navigation', key: 'transactionDetails' },
   },
   {
     path: '/investments',

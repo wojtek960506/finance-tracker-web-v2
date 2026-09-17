@@ -72,7 +72,7 @@ export const Navigation = () => {
           <ul>
             <li>
               <NavigationItem
-                to="/categories"
+                to="/transactions/categories"
                 title={t('categories')}
                 Icon={Tags}
                 additionalAction={() =>
@@ -82,7 +82,7 @@ export const Navigation = () => {
             </li>
             <li>
               <NavigationItem
-                to="/paymentMethods"
+                to="/transactions/payment-methods"
                 title={t('paymentMethods')}
                 Icon={WalletCards}
                 additionalAction={() =>
@@ -92,7 +92,7 @@ export const Navigation = () => {
             </li>
             <li>
               <NavigationItem
-                to="/accounts"
+                to="/transactions/accounts"
                 title={t('bankAccounts')}
                 Icon={Landmark}
                 additionalAction={() =>
