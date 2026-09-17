@@ -9,9 +9,10 @@ import type {
   InvestmentSnapshotOperation,
 } from '@features/investments/api';
 import { InstrumentKindBadge } from '@features/investments/components/instruments/instrument-kind-badge';
+import { InvestmentCard } from '@features/investments/components/shared';
 import { formatCurrencyAmount } from '@features/investments/utils';
 import { useLanguage } from '@shared/hooks';
-import { Button, Card } from '@shared/ui';
+import { Button } from '@shared/ui';
 
 import { OperationKindBadge } from '../operation-kind-badge';
 
@@ -37,19 +38,7 @@ export const OperationCard = ({
   );
 
   return (
-    <Card
-      className={clsx(
-        'flex flex-col justify-between gap-3 p-4 sm:p-5',
-        'transition-all hover:shadow-sm',
-        isSnapshot
-          ? clsx(
-              'border-sky-500/25 bg-sky-500/[0.03] hover:border-sky-500/50',
-              'dark:border-sky-500/30 dark:bg-sky-950/20 dark:hover:border-sky-500/60',
-            )
-          : 'border-fg/15 hover:border-fg/40',
-      )}
-      data-testid="operation-card"
-    >
+    <InvestmentCard isSnapshot={isSnapshot} testId="operation-card">
       <div className="flex flex-col gap-2">
         <div className="flex items-start justify-between gap-2">
           <div className="flex min-w-0 flex-1 flex-col gap-1">
@@ -68,7 +57,6 @@ export const OperationCard = ({
             </h3>
           </div>
 
-          {/* Action button */}
           <div className="flex shrink-0 items-center gap-1">
             {isSnapshot && onDeleteSnapshot ? (
               <Button
@@ -99,7 +87,6 @@ export const OperationCard = ({
           </div>
         </div>
 
-        {/* Amount */}
         <div className="flex items-baseline gap-2">
           {isSnapshot ? (
             <span className="text-xs font-medium text-text-muted">
@@ -132,6 +119,6 @@ export const OperationCard = ({
       >
         <span>{new Date(operation.date).toLocaleDateString(language)}</span>
       </footer>
-    </Card>
+    </InvestmentCard>
   );
 };

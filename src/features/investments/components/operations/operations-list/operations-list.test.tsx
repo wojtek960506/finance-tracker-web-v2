@@ -89,6 +89,13 @@ describe('OperationsList', () => {
     renderWithProviders(<OperationsList />);
 
     expect(await screen.findByText(/no operations yet/i)).toBeInTheDocument();
+    expect(screen.queryByTestId('operations-list-header')).not.toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: /record first snapshot/i }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('link', { name: /new investment transaction/i }),
+    ).toBeInTheDocument();
   });
 
   it('renders no results empty state with clear filters button when filters match nothing', async () => {

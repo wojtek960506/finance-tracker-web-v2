@@ -3,8 +3,9 @@ import { Edit2, Trash2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 import type { InvestmentInstrument } from '@features/investments/api';
+import { InvestmentCard } from '@features/investments/components/shared';
 import { useLanguage } from '@shared/hooks';
-import { Button, Card } from '@shared/ui';
+import { Button } from '@shared/ui';
 
 import { InstrumentKindBadge } from '../instrument-kind-badge';
 
@@ -19,13 +20,7 @@ export const InstrumentCard = ({ instrument, onEdit, onDelete }: InstrumentCardP
   const { language } = useLanguage();
 
   return (
-    <Card
-      className={clsx(
-        'flex flex-col justify-between gap-3 p-4 sm:p-5',
-        'border-fg/15 transition-all hover:border-fg/40 hover:shadow-sm',
-      )}
-      data-testid="instrument-card"
-    >
+    <InvestmentCard testId="instrument-card">
       <div className="flex flex-col gap-2">
         <div className="flex items-start justify-between gap-2">
           <div className="flex min-w-0 flex-1 flex-col gap-1">
@@ -37,6 +32,7 @@ export const InstrumentCard = ({ instrument, onEdit, onDelete }: InstrumentCardP
             >
               {instrument.name}
             </h3>
+
             <div className="flex flex-wrap items-center gap-1.5">
               <InstrumentKindBadge kind={instrument.kind} />
               {instrument.currency ? (
@@ -52,7 +48,6 @@ export const InstrumentCard = ({ instrument, onEdit, onDelete }: InstrumentCardP
             </div>
           </div>
 
-          {/* Action buttons */}
           <div className="flex shrink-0 items-center gap-1">
             <Button
               variant="ghost"
@@ -87,16 +82,11 @@ export const InstrumentCard = ({ instrument, onEdit, onDelete }: InstrumentCardP
         ) : null}
       </div>
 
-      <footer
-        className={clsx(
-          'flex items-center justify-between border-t border-fg/10 pt-2',
-          'text-xs text-text-muted',
-        )}
-      >
+      <footer className="border-t border-fg/10 pt-2 text-xs text-text-muted">
         <span>
           {t('createdOn')}: {new Date(instrument.createdAt).toLocaleDateString(language)}
         </span>
       </footer>
-    </Card>
+    </InvestmentCard>
   );
 };

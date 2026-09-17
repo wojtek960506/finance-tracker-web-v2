@@ -49,21 +49,24 @@ export const OperationsList = () => {
 
   return (
     <div className="flex flex-col gap-4 p-1" data-testid="operations-list">
-      <OperationsListHeader
-        searchQuery={searchQuery}
-        onSearchQueryChange={setSearchQuery}
-        selectedKind={selectedKind}
-        onSelectedKindChange={setSelectedKind}
-        selectedInstrumentId={selectedInstrumentId}
-        onSelectedInstrumentIdChange={setSelectedInstrumentId}
-        instruments={instruments}
-        isFetching={isFetching}
-        onCreateSnapshot={() => setIsCreateSnapshotModalOpen(true)}
-      />
+      {operations.length > 0 && (
+        <OperationsListHeader
+          searchQuery={searchQuery}
+          onSearchQueryChange={setSearchQuery}
+          selectedKind={selectedKind}
+          onSelectedKindChange={setSelectedKind}
+          selectedInstrumentId={selectedInstrumentId}
+          onSelectedInstrumentIdChange={setSelectedInstrumentId}
+          instruments={instruments}
+          isFetching={isFetching}
+          onCreateSnapshot={() => setIsCreateSnapshotModalOpen(true)}
+        />
+      )}
 
       {filteredOperations.length === 0 ? (
         <OperationsListEmptyState
           hasAnyOperations={operations.length > 0}
+          onCreateSnapshot={() => setIsCreateSnapshotModalOpen(true)}
           onResetFilters={resetFilters}
         />
       ) : (

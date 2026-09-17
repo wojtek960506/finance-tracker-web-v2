@@ -64,6 +64,7 @@ describe('InstrumentsList', () => {
     renderWithProviders(<InstrumentsList />);
 
     expect(await screen.findByText(/no investment instruments/i)).toBeInTheDocument();
+    expect(screen.queryByTestId('instruments-list-header')).not.toBeInTheDocument();
     expect(
       screen.getByRole('button', { name: /add first instrument/i }),
     ).toBeInTheDocument();

@@ -46,14 +46,16 @@ export const InstrumentsList = () => {
 
   return (
     <div className="flex flex-col gap-4 p-1" data-testid="instruments-list">
-      <InstrumentsListHeader
-        searchQuery={searchQuery}
-        onSearchQueryChange={setSearchQuery}
-        selectedKind={selectedKind}
-        onSelectedKindChange={setSelectedKind}
-        isFetching={isFetching}
-        onCreateNew={() => setIsCreateModalOpen(true)}
-      />
+      {instruments.length > 0 && (
+        <InstrumentsListHeader
+          searchQuery={searchQuery}
+          onSearchQueryChange={setSearchQuery}
+          selectedKind={selectedKind}
+          onSelectedKindChange={setSelectedKind}
+          isFetching={isFetching}
+          onCreateNew={() => setIsCreateModalOpen(true)}
+        />
+      )}
 
       {filteredInstruments.length === 0 ? (
         <InstrumentsListEmptyState

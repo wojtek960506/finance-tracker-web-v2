@@ -1,7 +1,9 @@
-import { Camera, FilterX, Layers } from 'lucide-react';
+import { Camera, FilterX, Layers, Plus } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 import { Button, Card } from '@shared/ui';
+import { getButtonClassName } from '@shared/ui/button/get-button-class-name';
 
 type OperationsListEmptyStateProps = {
   hasAnyOperations: boolean;
@@ -40,12 +42,28 @@ export const OperationsListEmptyState = ({
             : t('operations.noResultsDescription')}
         </p>
       </div>
-      {!hasAnyOperations && onCreateSnapshot ? (
-        <Button variant="primary" onClick={onCreateSnapshot} className="mt-2 gap-1.5">
-          <Camera className="size-4" />
-          <span>{t('operations.recordFirstSnapshot')}</span>
-        </Button>
+
+      {!hasAnyOperations ? (
+        <div className="mt-2 flex flex-col items-center gap-2 sm:flex-row">
+          {onCreateSnapshot ? (
+            <Button variant="primary" onClick={onCreateSnapshot} className="gap-1.5">
+              <Camera className="size-4" />
+              <span>{t('operations.recordFirstSnapshot')}</span>
+            </Button>
+          ) : null}
+          <Link
+            to="/transactions/new/investment"
+            className={getButtonClassName({
+              variant: 'outline',
+              className: 'gap-1.5',
+            })}
+          >
+            <Plus className="size-4" />
+            <span>{t('operations.newInvestmentTransaction')}</span>
+          </Link>
+        </div>
       ) : null}
+
       {hasAnyOperations && onResetFilters ? (
         <Button variant="outline" onClick={onResetFilters} className="mt-2 gap-1.5">
           <FilterX className="size-4" />
