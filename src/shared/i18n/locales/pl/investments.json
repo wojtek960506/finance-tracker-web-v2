@@ -71,6 +71,7 @@
     "createSubmit": "Utwórz instrument",
     "updateSubmit": "Zapisz zmiany",
     "createSnapshotSubmit": "Zarejestruj wycenę",
+    "updateSnapshotSubmit": "Zapisz zmiany",
     "errors": {
       "nameRequired": "Nazwa jest wymagana",
       "currencyRequired": "Waluta jest wymagana",
@@ -91,6 +92,8 @@
     "deleteConfirm": "Usuń",
     "createSnapshotTitle": "Zarejestruj wycenę salda",
     "createSnapshotDescription": "Zapisz aktualny stan instrumentu inwestycyjnego w określonym dniu.",
+    "updateSnapshotTitle": "Edytuj wycenę salda",
+    "updateSnapshotDescription": "Zaktualizuj saldo, walutę, datę lub notatki dla tej wyceny.",
     "deleteSnapshotTitle": "Usuń wycenę",
     "deleteSnapshotPrompt": "Czy na pewno chcesz usunąć wycenę dla „{{instrumentName}}” z dnia {{date}}?",
     "deleteSnapshotHint": "Ta wycena zostanie trwale usunięta z historii Twoich inwestycji.",
@@ -100,6 +103,7 @@
     "edit": "Edytuj instrument",
     "delete": "Usuń instrument",
     "viewTransaction": "Zobacz transakcję",
+    "editSnapshot": "Edytuj wycenę",
     "deleteSnapshot": "Usuń wycenę"
   },
   "cancel": "Anuluj",
@@ -114,6 +118,8 @@
     "deleteErrorTitle": "Nie udało się usunąć instrumentu",
     "snapshotCreatedTitle": "Zarejestrowano wycenę",
     "snapshotCreateErrorTitle": "Nie udało się zarejestrować wyceny",
+    "snapshotUpdatedTitle": "Zaktualizowano wycenę",
+    "snapshotUpdateErrorTitle": "Nie udało się zaktualizować wyceny",
     "snapshotDeletedTitle": "Usunięto wycenę",
     "snapshotDeleteErrorTitle": "Nie udało się usunąć wyceny"
   }

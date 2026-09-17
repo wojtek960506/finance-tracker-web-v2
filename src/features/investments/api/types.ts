@@ -39,6 +39,15 @@ export type CreateSnapshotPayload = Omit<
   currency: CurrencyCode | (string & {});
 };
 
+export type UpdateSnapshotPayload = {
+  instrumentId?: string;
+  amount?: number;
+  currency?: CurrencyCode | (string & {});
+  date?: string;
+  note?: string;
+  notes?: string;
+};
+
 export type GetInstrumentsQuery = {
   kind?: InvestmentInstrumentKind;
   currency?: string;

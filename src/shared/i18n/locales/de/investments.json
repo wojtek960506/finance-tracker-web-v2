@@ -71,6 +71,7 @@
     "createSubmit": "Instrument erstellen",
     "updateSubmit": "Änderungen speichern",
     "createSnapshotSubmit": "Momentaufnahme erfassen",
+    "updateSnapshotSubmit": "Änderungen speichern",
     "errors": {
       "nameRequired": "Name ist erforderlich",
       "currencyRequired": "Währung ist erforderlich",
@@ -91,6 +92,8 @@
     "deleteConfirm": "Löschen",
     "createSnapshotTitle": "Momentaufnahme erfassen",
     "createSnapshotDescription": "Erfassen Sie den aktuellen Gesamtsaldo eines Anlageinstruments an einem bestimmten Datum.",
+    "updateSnapshotTitle": "Momentaufnahme bearbeiten",
+    "updateSnapshotDescription": "Aktualisieren Sie den Saldo, die Währung, das Datum oder Notizen dieser Momentaufnahme.",
     "deleteSnapshotTitle": "Momentaufnahme löschen",
     "deleteSnapshotPrompt": "Möchten Sie die Momentaufnahme für „{{instrumentName}}“ vom {{date}} wirklich löschen?",
     "deleteSnapshotHint": "Diese Momentaufnahme wird dauerhaft aus Ihrer Anlagehistorie entfernt.",
@@ -100,6 +103,7 @@
     "edit": "Instrument bearbeiten",
     "delete": "Instrument löschen",
     "viewTransaction": "Transaktion anzeigen",
+    "editSnapshot": "Momentaufnahme bearbeiten",
     "deleteSnapshot": "Momentaufnahme löschen"
   },
   "cancel": "Abbrechen",
@@ -114,6 +118,8 @@
     "deleteErrorTitle": "Instrument konnte nicht gelöscht werden",
     "snapshotCreatedTitle": "Momentaufnahme erfasst",
     "snapshotCreateErrorTitle": "Momentaufnahme konnte nicht erfasst werden",
+    "snapshotUpdatedTitle": "Momentaufnahme aktualisiert",
+    "snapshotUpdateErrorTitle": "Momentaufnahme konnte nicht aktualisiert werden",
     "snapshotDeletedTitle": "Momentaufnahme gelöscht",
     "snapshotDeleteErrorTitle": "Momentaufnahme konnte nicht gelöscht werden"
   }

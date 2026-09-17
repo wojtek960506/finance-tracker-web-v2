@@ -22,6 +22,8 @@ export const OperationsList = () => {
     resetFilters,
     isCreateSnapshotModalOpen,
     setIsCreateSnapshotModalOpen,
+    editingSnapshot,
+    setEditingSnapshot,
     deletingSnapshot,
     setDeletingSnapshot,
     instruments,
@@ -73,6 +75,7 @@ export const OperationsList = () => {
         <OperationsListGrid
           operations={filteredOperations}
           instrumentsMap={instrumentsMap}
+          onEditSnapshot={(snapshot) => setEditingSnapshot(snapshot)}
           onDeleteSnapshot={(snapshot) => setDeletingSnapshot(snapshot)}
         />
       )}
@@ -80,6 +83,8 @@ export const OperationsList = () => {
       <OperationsListModals
         isCreateSnapshotModalOpen={isCreateSnapshotModalOpen}
         onCloseCreateSnapshotModal={() => setIsCreateSnapshotModalOpen(false)}
+        editingSnapshot={editingSnapshot}
+        onCloseEditSnapshotModal={() => setEditingSnapshot(null)}
         deletingSnapshot={deletingSnapshot}
         onCloseDeleteSnapshotModal={() => setDeletingSnapshot(null)}
         instrumentsMap={instrumentsMap}

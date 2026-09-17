@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { ExternalLink, Trash2 } from 'lucide-react';
+import { Edit2, ExternalLink, Trash2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
@@ -19,12 +19,14 @@ import { OperationKindBadge } from '../operation-kind-badge';
 type OperationCardProps = {
   operation: InvestmentOperation;
   instrument?: InvestmentInstrument;
+  onEditSnapshot?: (snapshot: InvestmentSnapshotOperation) => void;
   onDeleteSnapshot?: (snapshot: InvestmentSnapshotOperation) => void;
 };
 
 export const OperationCard = ({
   operation,
   instrument,
+  onEditSnapshot,
   onDeleteSnapshot,
 }: OperationCardProps) => {
   const { t } = useTranslation('investments');
@@ -58,16 +60,36 @@ export const OperationCard = ({
           </div>
 
           <div className="flex shrink-0 items-center gap-1">
-            {isSnapshot && onDeleteSnapshot ? (
-              <Button
-                variant="ghost"
-                className="size-8 p-0 text-text-muted hover:text-destructive"
-                onClick={() => onDeleteSnapshot(operation as InvestmentSnapshotOperation)}
-                title={t('actions.deleteSnapshot')}
-                aria-label={t('actions.deleteSnapshot')}
-              >
-                <Trash2 className="size-4" />
-              </Button>
+            {isSnapshot ? (
+              <>
+                {onEditSnapshot ? (
+                  <Button
+                    variant="ghost"
+                    className="size-8 p-0 text-text-muted hover:text-foreground"
+                    onClick={() =>
+                      onEditSnapshot(operation as InvestmentSnapshotOperation)
+                    }
+                    title={t('actions.editSnapshot')}
+                    aria-label={t('actions.editSnapshot')}
+                  >
+                    <Edit2 className="size-4" />
+                  </Button>
+                ) : null}
+
+                {onDeleteSnapshot ? (
+                  <Button
+                    variant="ghost"
+                    className="size-8 p-0 text-text-muted hover:text-destructive"
+                    onClick={() =>
+                      onDeleteSnapshot(operation as InvestmentSnapshotOperation)
+                    }
+                    title={t('actions.deleteSnapshot')}
+                    aria-label={t('actions.deleteSnapshot')}
+                  >
+                    <Trash2 className="size-4" />
+                  </Button>
+                ) : null}
+              </>
             ) : null}
 
             {!isSnapshot && 'transactionId' in operation && operation.transactionId ? (

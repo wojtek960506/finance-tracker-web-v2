@@ -14,6 +14,8 @@ export const useOperationsList = () => {
   const [selectedKind, setSelectedKind] = useState<string>('all');
   const [selectedInstrumentId, setSelectedInstrumentId] = useState<string>('all');
   const [isCreateSnapshotModalOpen, setIsCreateSnapshotModalOpen] = useState(false);
+  const [editingSnapshot, setEditingSnapshot] =
+    useState<InvestmentSnapshotOperation | null>(null);
   const [deletingSnapshot, setDeletingSnapshot] =
     useState<InvestmentSnapshotOperation | null>(null);
 
@@ -86,6 +88,8 @@ export const useOperationsList = () => {
     hasActiveFilters,
     isCreateSnapshotModalOpen,
     setIsCreateSnapshotModalOpen,
+    editingSnapshot,
+    setEditingSnapshot,
     deletingSnapshot,
     setDeletingSnapshot,
     instruments,

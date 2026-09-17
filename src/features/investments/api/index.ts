@@ -7,3 +7,4 @@ export * from './get-instruments';
 export * from './get-operations';
 export * from './types';
 export * from './update-instrument';
+export * from './update-snapshot-operation';

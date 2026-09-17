@@ -1,5 +1,5 @@
-import { screen } from '@testing-library/react';
-import { describe, expect, it } from 'vitest';
+import { fireEvent, screen } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
 
 import type {
   InvestmentCashFlowOperation,
@@ -49,15 +49,31 @@ const mockCashFlow: InvestmentCashFlowOperation = {
 };
 
 describe('OperationCard', () => {
-  it('renders snapshot operation correctly', () => {
+  it('renders snapshot operation correctly with edit and delete callbacks', () => {
+    const onEditSnapshot = vi.fn();
+    const onDeleteSnapshot = vi.fn();
+
     renderWithProviders(
-      <OperationCard operation={mockSnapshot} instrument={mockInstrument} />,
+      <OperationCard
+        operation={mockSnapshot}
+        instrument={mockInstrument}
+        onEditSnapshot={onEditSnapshot}
+        onDeleteSnapshot={onDeleteSnapshot}
+      />,
     );
 
     expect(screen.getByTestId('operation-card')).toBeInTheDocument();
     expect(screen.getByText('Apple Inc')).toBeInTheDocument();
     expect(screen.getByText('Monthly valuation')).toBeInTheDocument();
     expect(screen.getByText(/15/)).toBeInTheDocument();
+
+    const editBtn = screen.getByRole('button', { name: /edit snapshot/i });
+    fireEvent.click(editBtn);
+    expect(onEditSnapshot).toHaveBeenCalledWith(mockSnapshot);
+
+    const deleteBtn = screen.getByRole('button', { name: /delete snapshot/i });
+    fireEvent.click(deleteBtn);
+    expect(onDeleteSnapshot).toHaveBeenCalledWith(mockSnapshot);
   });
 
   it('renders cash flow operation with link to transaction', () => {

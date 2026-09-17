@@ -14,6 +14,7 @@ import { snapshotFormSchema, type SnapshotFormValues } from './utils';
 
 type SnapshotFormProps = {
   defaultValues: SnapshotFormValues;
+  submitLabel?: string;
   isPending: boolean;
   onSubmit: (values: SnapshotFormValues) => Promise<void> | void;
   onCancel: () => void;
@@ -21,6 +22,7 @@ type SnapshotFormProps = {
 
 export const SnapshotForm = ({
   defaultValues,
+  submitLabel,
   isPending,
   onSubmit,
   onCancel,
@@ -192,7 +194,7 @@ export const SnapshotForm = ({
           {tCommon('cancel')}
         </Button>
         <Button type="submit" variant="primary" disabled={isPending}>
-          {isPending ? tCommon('saving') : t('form.createSnapshotSubmit')}
+          {isPending ? tCommon('saving') : submitLabel || t('form.createSnapshotSubmit')}
         </Button>
       </div>
     </form>

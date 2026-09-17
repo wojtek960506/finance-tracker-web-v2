@@ -71,6 +71,7 @@
     "createSubmit": "Создать инструмент",
     "updateSubmit": "Сохранить изменения",
     "createSnapshotSubmit": "Записать оценку",
+    "updateSnapshotSubmit": "Сохранить изменения",
     "errors": {
       "nameRequired": "Название обязательно",
       "currencyRequired": "Валюта обязательна",
@@ -91,6 +92,8 @@
     "deleteConfirm": "Удалить",
     "createSnapshotTitle": "Записать оценку баланса",
     "createSnapshotDescription": "Зафиксируйте текущий общий баланс инвестиционного инструмента на определенную дату.",
+    "updateSnapshotTitle": "Редактировать оценку баланса",
+    "updateSnapshotDescription": "Обновите баланс, валюту, дату или заметки для этой оценки.",
     "deleteSnapshotTitle": "Удалить оценку",
     "deleteSnapshotPrompt": "Вы уверены, что хотите удалить оценку для «{{instrumentName}}» от {{date}}?",
     "deleteSnapshotHint": "Эта оценка будет безвозвратно удалена из истории ваших инвестиций.",
@@ -100,6 +103,7 @@
     "edit": "Редактировать инструмент",
     "delete": "Удалить инструмент",
     "viewTransaction": "Просмотреть транзакцию",
+    "editSnapshot": "Редактировать оценку",
     "deleteSnapshot": "Удалить оценку"
   },
   "cancel": "Отмена",
@@ -114,6 +118,8 @@
     "deleteErrorTitle": "Не удалось удалить инструмент",
     "snapshotCreatedTitle": "Оценка записана",
     "snapshotCreateErrorTitle": "Не удалось записать оценку",
+    "snapshotUpdatedTitle": "Оценка обновлена",
+    "snapshotUpdateErrorTitle": "Не удалось обновить оценку",
     "snapshotDeletedTitle": "Оценка удалена",
     "snapshotDeleteErrorTitle": "Не удалось удалить оценку"
   }

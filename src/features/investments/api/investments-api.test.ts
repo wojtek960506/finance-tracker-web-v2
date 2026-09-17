@@ -14,6 +14,7 @@ import {
   type InvestmentOperation,
   type InvestmentSnapshotOperation,
   updateInstrument,
+  updateSnapshotOperation,
 } from './index';
 
 vi.mock('@shared/api', () => ({
@@ -165,6 +166,19 @@ describe('investments api', () => {
 
       expect(postMock).toHaveBeenCalledWith('/investments/operations', payload);
       expect(result).toEqual(mockSnapshot);
+    });
+
+    it('updates a balance snapshot operation', async () => {
+      const patchMock = vi.mocked(api.patch);
+      patchMock.mockResolvedValueOnce({
+        data: { ...mockSnapshot, amount: 2000 },
+      });
+
+      const payload = { amount: 2000 };
+      const result = await updateSnapshotOperation('op-1', payload);
+
+      expect(patchMock).toHaveBeenCalledWith('/investments/operations/op-1', payload);
+      expect(result).toEqual({ ...mockSnapshot, amount: 2000 });
     });
 
     it('deletes a snapshot operation', async () => {

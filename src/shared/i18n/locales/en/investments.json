@@ -71,6 +71,7 @@
     "createSubmit": "Create Instrument",
     "updateSubmit": "Save Changes",
     "createSnapshotSubmit": "Record Snapshot",
+    "updateSnapshotSubmit": "Save Changes",
     "errors": {
       "nameRequired": "Name is required",
       "currencyRequired": "Currency is required",
@@ -91,6 +92,8 @@
     "deleteConfirm": "Delete",
     "createSnapshotTitle": "Record Balance Snapshot",
     "createSnapshotDescription": "Record the current total balance for an investment instrument at a specific date.",
+    "updateSnapshotTitle": "Edit Balance Snapshot",
+    "updateSnapshotDescription": "Update balance, currency, date, or notes for this valuation snapshot.",
     "deleteSnapshotTitle": "Delete Snapshot",
     "deleteSnapshotPrompt": "Are you sure you want to delete the snapshot for \"{{instrumentName}}\" from {{date}}?",
     "deleteSnapshotHint": "This snapshot will be permanently removed from your investment history.",
@@ -100,6 +103,7 @@
     "edit": "Edit instrument",
     "delete": "Delete instrument",
     "viewTransaction": "View Transaction",
+    "editSnapshot": "Edit snapshot",
     "deleteSnapshot": "Delete snapshot"
   },
   "cancel": "Cancel",
@@ -114,6 +118,8 @@
     "deleteErrorTitle": "Could not delete instrument",
     "snapshotCreatedTitle": "Snapshot recorded",
     "snapshotCreateErrorTitle": "Could not record snapshot",
+    "snapshotUpdatedTitle": "Snapshot updated",
+    "snapshotUpdateErrorTitle": "Could not update snapshot",
     "snapshotDeletedTitle": "Snapshot deleted",
     "snapshotDeleteErrorTitle": "Could not delete snapshot"
   }
