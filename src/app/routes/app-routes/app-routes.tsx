@@ -1,4 +1,9 @@
-import { InvestmentsPage } from '@investments/components';
+import {
+  InstrumentDetailsPage,
+  InvestmentsLayout,
+  InvestmentsPage,
+  OperationsPage,
+} from '@investments/components';
 import { type ReactNode } from 'react';
 import { matchPath, Navigate } from 'react-router-dom';
 
@@ -130,8 +135,26 @@ export const PROTECTED_APP_ROUTES: AppRouteConfig[] = [
   },
   {
     path: '/investments',
+    element: <Navigate to="/investments/instruments" replace />,
+  },
+  {
+    path: '/investments/instruments',
     element: <InvestmentsPage />,
     title: { namespace: 'navigation', key: 'investments' },
+  },
+  {
+    path: '/investments/operations',
+    element: (
+      <InvestmentsLayout>
+        <OperationsPage />
+      </InvestmentsLayout>
+    ),
+    title: { namespace: 'navigation', key: 'investments' },
+  },
+  {
+    path: '/investments/instruments/:id',
+    element: <InstrumentDetailsPage />,
+    title: { namespace: 'navigation', key: 'instrumentDetails' },
   },
   {
     path: '/vehicles',

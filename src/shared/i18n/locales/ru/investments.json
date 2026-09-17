@@ -1,4 +1,8 @@
 {
+  "tabs": {
+    "instruments": "Инструменты",
+    "operations": "Операции"
+  },
   "searchPlaceholder": "Поиск инструментов...",
   "allKinds": "Все",
   "newInstrument": "Новый инструмент",

@@ -22,7 +22,12 @@ vi.mock('@named-resources/components', () => ({
 }));
 
 vi.mock('@investments/components', () => ({
+  InvestmentsLayout: ({ children }: { children: React.ReactNode }) => (
+    <div>{children}</div>
+  ),
   InvestmentsPage: () => <div>investments</div>,
+  OperationsPage: () => <div>operations</div>,
+  InstrumentDetailsPage: () => <div>instrument-details</div>,
 }));
 
 vi.mock('@transactions/components', () => ({
@@ -77,15 +82,41 @@ describe('Title', () => {
     expect(screen.queryByRole('link')).not.toBeInTheDocument();
   });
 
-  it('renders investments title on investments page', () => {
+  it('renders investments title on investments instruments page', () => {
     render(
-      <MemoryRouter initialEntries={['/investments']}>
+      <MemoryRouter initialEntries={['/investments/instruments']}>
         <Title />
       </MemoryRouter>,
     );
 
     expect(
       screen.getByRole('heading', { name: 'navigation:investments' }),
+    ).toBeInTheDocument();
+    expect(screen.queryByRole('link')).not.toBeInTheDocument();
+  });
+
+  it('renders investments title on investments operations page', () => {
+    render(
+      <MemoryRouter initialEntries={['/investments/operations']}>
+        <Title />
+      </MemoryRouter>,
+    );
+
+    expect(
+      screen.getByRole('heading', { name: 'navigation:investments' }),
+    ).toBeInTheDocument();
+    expect(screen.queryByRole('link')).not.toBeInTheDocument();
+  });
+
+  it('renders instrument details title on instrument details page', () => {
+    render(
+      <MemoryRouter initialEntries={['/investments/instruments/inst-1']}>
+        <Title />
+      </MemoryRouter>,
+    );
+
+    expect(
+      screen.getByRole('heading', { name: 'navigation:instrumentDetails' }),
     ).toBeInTheDocument();
     expect(screen.queryByRole('link')).not.toBeInTheDocument();
   });

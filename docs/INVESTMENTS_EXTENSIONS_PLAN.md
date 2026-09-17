@@ -28,7 +28,7 @@ Sidebar Navigation:
 
 ---
 
-## 2. URL Routing Architecture
+## 2. URL Routing Architecture `[✅ Completed]`
 
 URL sub-routes are used for tabs and detail views instead of internal state, ensuring full linkability, bookmarking, and native browser back/forward navigation.
 
@@ -105,9 +105,9 @@ src/
   - [x] Move Investments to top level in `navigation.tsx` (`/investments`).
   - [x] Harmonize nested transaction sub-routes (`/transactions/categories`, `/transactions/payment-methods`, `/transactions/accounts`).
   - [x] Move `InvestmentsPage` into `@investments/components` domain module and configure `@investments/*` alias.
-- [ ] **3. URL Routing Architecture & Layout Tabs (Point 2)**:
-  - [ ] Update `app-routes.tsx` to handle `/investments` (redirect to `/investments/instruments`), `/investments/instruments`, `/investments/operations`, `/investments/instruments/:id`.
-  - [ ] Create `InvestmentsLayout` with tab navigation between Instruments and Operations.
+- [x] **3. URL Routing Architecture & Layout Tabs (Point 2)**:
+  - [x] Update `app-routes.tsx` to handle `/investments` (redirect to `/investments/instruments`), `/investments/instruments`, `/investments/operations`, `/investments/instruments/:id`.
+  - [x] Create `InvestmentsLayout` with tab navigation between Instruments and Operations.
 - [ ] **4. Operations Listing & Filters (Point 4)**:
   - [ ] Implement `OperationsList`, `OperationCard`, and `OperationsFilters` using `getOperations`.
 - [ ] **5. Create Snapshot Flow (Point 3 & 4)**:
