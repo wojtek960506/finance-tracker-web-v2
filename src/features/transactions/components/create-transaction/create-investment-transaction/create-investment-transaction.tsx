@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 
 import { normalizeApiError } from '@shared/api/api-error';
 import { useToastStore } from '@store/toast-store';
@@ -21,12 +22,26 @@ import {
 } from '@transactions/utils';
 
 export const CreateInvestmentTransaction = () => {
+  const [searchParams] = useSearchParams();
   const location = useLocation();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const pushToast = useToastStore((state) => state.pushToast);
   const { t } = useTranslation('transactions');
-  const returnTo = getTransactionsReturnTo(location.state);
+
+  const instrumentIdFromQuery = searchParams.get('instrumentId') || '';
+  const defaultReturnTo = instrumentIdFromQuery
+    ? `/investments/instruments/${instrumentIdFromQuery}`
+    : getTransactionsReturnTo(location.state);
+  const returnTo = location.state?.returnTo ?? defaultReturnTo;
+
+  const defaultValues = useMemo(
+    () =>
+      getDefaultInvestmentTransactionFormValues({
+        instrumentId: instrumentIdFromQuery,
+      }),
+    [instrumentIdFromQuery],
+  );
 
   const createTransactionMutation = useMutation({
     mutationFn: async (payload: TransactionInvestmentDTO) =>
@@ -63,17 +78,24 @@ export const CreateInvestmentTransaction = () => {
     }
   };
 
+  const handleCancel = () => {
+    if (instrumentIdFromQuery) {
+      navigate(returnTo);
+      return;
+    }
+    navigate('/transactions/new', {
+      state: getTransactionsRouteState(returnTo),
+    });
+  };
+
   return (
     <InvestmentTransactionForm
-      defaultValues={getDefaultInvestmentTransactionFormValues()}
+      defaultValues={defaultValues}
       isPending={createTransactionMutation.isPending}
+      isInstrumentDisabled={Boolean(instrumentIdFromQuery)}
       mode="create"
       onSubmit={onSubmit}
-      onCancel={() =>
-        navigate('/transactions/new', {
-          state: getTransactionsRouteState(returnTo),
-        })
-      }
+      onCancel={handleCancel}
     />
   );
 };

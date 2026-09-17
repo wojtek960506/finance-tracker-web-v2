@@ -122,5 +122,23 @@
     "snapshotUpdateErrorTitle": "Momentaufnahme konnte nicht aktualisiert werden",
     "snapshotDeletedTitle": "Momentaufnahme gelöscht",
     "snapshotDeleteErrorTitle": "Momentaufnahme konnte nicht gelöscht werden"
+  },
+  "details": {
+    "backToInstruments": "Zurück zu Instrumenten",
+    "currentValuation": "Aktuelle Bewertung",
+    "noValuationRecorded": "Keine Momentaufnahme erfasst",
+    "lastSnapshotOn": "Letzte Momentaufnahme am",
+    "netInvested": "Investiertes Kapital",
+    "capitalInjected": "Gesamtes eingezahltes Nettokapital",
+    "totalProfit": "Gesamtertrag / Gewinn",
+    "totalOperations": "Anzahl Operationen",
+    "operationsCountHint": "Erfasste Momentaufnahmen und Transaktionen",
+    "operationsHistory": "Historie der Operationen",
+    "noOperationsYet": "Keine Operationen für dieses Instrument erfasst",
+    "noOperationsYetDescription": "Erfassen Sie eine erste Momentaufnahme oder verknüpfen Sie eine Anlagetransaktion, um die Historie zu verfolgen.",
+    "loadingTitle": "Lade Instrumentendetails",
+    "loadingDescription": "Lade Anlagedaten und Operationen...",
+    "notFoundTitle": "Instrument nicht gefunden",
+    "notFoundDescription": "Das angeforderte Anlageinstrument wurde nicht gefunden oder wurde gelöscht."
   }
 }

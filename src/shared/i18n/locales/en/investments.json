@@ -122,5 +122,23 @@
     "snapshotUpdateErrorTitle": "Could not update snapshot",
     "snapshotDeletedTitle": "Snapshot deleted",
     "snapshotDeleteErrorTitle": "Could not delete snapshot"
+  },
+  "details": {
+    "backToInstruments": "Back to Instruments",
+    "currentValuation": "Current Valuation",
+    "noValuationRecorded": "No snapshot valuation recorded",
+    "lastSnapshotOn": "Last snapshot on",
+    "netInvested": "Net Invested",
+    "capitalInjected": "Total net capital injected",
+    "totalProfit": "Total Return / Profit",
+    "totalOperations": "Total Operations",
+    "operationsCountHint": "Historical snapshots and transactions",
+    "operationsHistory": "Operations History",
+    "noOperationsYet": "No operations recorded for this instrument",
+    "noOperationsYetDescription": "Record your first valuation snapshot or link an investment transaction to start tracking history.",
+    "loadingTitle": "Loading instrument details",
+    "loadingDescription": "Fetching asset metadata and operations...",
+    "notFoundTitle": "Instrument not found",
+    "notFoundDescription": "The requested investment instrument could not be found or may have been deleted."
   }
 }

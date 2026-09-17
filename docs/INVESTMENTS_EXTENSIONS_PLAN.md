@@ -114,10 +114,10 @@ src/
 - [x] **5. Create & Delete Snapshot Flow (Point 3 & 4)**:
   - [x] Implement `CreateSnapshotModal`, `DeleteSnapshotModal`, and `SnapshotForm` with `createSnapshotOperation` and `deleteOperation` mutations.
   - [x] Add 2 action buttons in `OperationsListHeader` (Record Snapshot & New Investment Transaction).
-- [ ] **6. Instrument Details Page (Point 3)**:
-  - [ ] Implement `/investments/instruments/:id` with summary cards, historical timeline, and instrument-specific operations.
-- [ ] **7. Localization**:
-  - [ ] Add all strings across `en`, `pl`, `de`, `ru` in `investments.json` and `navigation.json`.
-- [ ] **8. Verification & Tests**:
-  - [ ] Write unit tests for new components, forms, and pages.
-  - [ ] Run `npx vitest run`, `pnpm tsc --noEmit`, and `npm run fix`.
+- [x] **6. Instrument Details Page (Point 3)**:
+  - [x] Implement `/investments/instruments/:id` with summary cards, historical timeline, and instrument-specific operations.
+- [x] **7. Localization**:
+  - [x] Add all strings across `en`, `pl`, `de`, `ru` in `investments.json` and `navigation.json`.
+- [x] **8. Verification & Tests**:
+  - [x] Write unit tests for new components, forms, and pages.
+  - [x] Run `npx vitest run`, `pnpm tsc --noEmit`, and `npm run fix`.

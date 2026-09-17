@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import type { ReactNode } from 'react';
+import type { MouseEvent, ReactNode } from 'react';
 
 import { Card } from '@shared/ui';
 
@@ -7,6 +7,7 @@ type InvestmentCardProps = {
   isSnapshot?: boolean;
   className?: string;
   testId?: string;
+  onClick?: (event: MouseEvent<HTMLDivElement>) => void;
   children: ReactNode;
 };
 
@@ -14,6 +15,7 @@ export const InvestmentCard = ({
   isSnapshot = false,
   className,
   testId,
+  onClick,
   children,
 }: InvestmentCardProps) => {
   return (
@@ -29,6 +31,7 @@ export const InvestmentCard = ({
           : 'border-fg/15 hover:border-fg/40',
         className,
       )}
+      onClick={onClick}
       data-testid={testId}
     >
       {children}

@@ -17,14 +17,17 @@ vi.mock('@features/investments/components/instruments', () => ({
   InstrumentSelectField: ({
     value,
     onChange,
+    disabled,
   }: {
     value: string;
     onChange: (v: string) => void;
+    disabled?: boolean;
   }) => (
     <input
       data-testid="mock-instrument-select"
       value={value}
       onChange={(e) => onChange(e.target.value)}
+      disabled={disabled}
     />
   ),
   CreateInstrumentModal: () => null,
@@ -166,5 +169,26 @@ describe('InvestmentTransactionForm', () => {
     fireEvent.keyDown(descInput, { key: 'Enter', code: 'Enter' });
 
     expect(onSubmit).not.toHaveBeenCalled();
+  });
+
+  it('disables instrument select field when isInstrumentDisabled is true', () => {
+    const onSubmit = vi.fn();
+    const onCancel = vi.fn();
+
+    render(
+      <InvestmentTransactionForm
+        defaultValues={getDefaultInvestmentTransactionFormValues({
+          instrumentId: 'inst-1',
+        })}
+        isPending={false}
+        isInstrumentDisabled={true}
+        mode="create"
+        onSubmit={onSubmit}
+        onCancel={onCancel}
+      />,
+    );
+
+    const select = screen.getByTestId('mock-instrument-select');
+    expect(select).toBeDisabled();
   });
 });

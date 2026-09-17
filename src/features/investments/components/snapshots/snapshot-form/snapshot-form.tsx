@@ -16,6 +16,7 @@ type SnapshotFormProps = {
   defaultValues: SnapshotFormValues;
   submitLabel?: string;
   isPending: boolean;
+  isInstrumentDisabled?: boolean;
   onSubmit: (values: SnapshotFormValues) => Promise<void> | void;
   onCancel: () => void;
 };
@@ -24,6 +25,7 @@ export const SnapshotForm = ({
   defaultValues,
   submitLabel,
   isPending,
+  isInstrumentDisabled = false,
   onSubmit,
   onCancel,
 }: SnapshotFormProps) => {
@@ -88,6 +90,7 @@ export const SnapshotForm = ({
               value={field.value}
               onChange={(val) => handleInstrumentChange(val, field.onChange)}
               placeholder={t('selectInstrumentPlaceholder')}
+              disabled={isInstrumentDisabled || isPending}
             />
           )}
         />

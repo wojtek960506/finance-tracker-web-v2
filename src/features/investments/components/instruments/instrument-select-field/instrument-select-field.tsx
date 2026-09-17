@@ -25,6 +25,7 @@ type InstrumentSelectFieldProps = {
   searchPlaceholder?: string;
   emptyMessage?: string;
   showClear?: boolean;
+  disabled?: boolean;
   onAddNewInstrument?: () => void;
   addNewPlacement?: 'side' | 'menu';
 };
@@ -36,6 +37,7 @@ export const InstrumentSelectField = ({
   searchPlaceholder,
   emptyMessage,
   showClear = true,
+  disabled = false,
   onAddNewInstrument,
   addNewPlacement = 'side',
 }: InstrumentSelectFieldProps) => {
@@ -52,13 +54,15 @@ export const InstrumentSelectField = ({
   const formatInstrumentLabel = (inst: InvestmentInstrument) =>
     `${inst.name} ${inst.kind}`;
 
+  const isFieldDisabled = disabled || isLoading;
+
   return (
     <div className="flex w-full items-center gap-2" data-testid="instrument-select-field">
       <div className="flex-1">
         <Combobox<InvestmentInstrument>
           items={data}
           value={selectedInstrument}
-          disabled={isLoading}
+          disabled={isFieldDisabled}
           open={open}
           onOpenChange={setOpen}
           itemToStringLabel={(inst) => inst.name}
@@ -72,11 +76,11 @@ export const InstrumentSelectField = ({
                 ? t('loading')
                 : searchPlaceholder || placeholder || t('selectInstrumentPlaceholder')
             }
-            disabled={isLoading}
-            showClear={showClear}
+            disabled={isFieldDisabled}
+            showClear={showClear && !disabled}
           />
           <ComboboxContent>
-            {onAddNewInstrument && addNewPlacement === 'menu' && (
+            {onAddNewInstrument && addNewPlacement === 'menu' && !disabled && (
               <div className="border-b border-fg/10 p-1">
                 <Button
                   type="button"
@@ -118,7 +122,7 @@ export const InstrumentSelectField = ({
         </Combobox>
       </div>
 
-      {onAddNewInstrument && addNewPlacement === 'side' ? (
+      {onAddNewInstrument && addNewPlacement === 'side' && !disabled ? (
         <Button
           type="button"
           variant="outline"

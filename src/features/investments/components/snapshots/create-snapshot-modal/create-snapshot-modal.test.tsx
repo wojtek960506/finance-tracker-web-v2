@@ -53,7 +53,9 @@ describe('CreateSnapshotModal', () => {
       />,
     );
 
-    expect(await screen.findByDisplayValue('Apple Inc.')).toBeInTheDocument();
+    const instrumentInput = await screen.findByDisplayValue('Apple Inc.');
+    expect(instrumentInput).toBeInTheDocument();
+    expect(instrumentInput).toBeDisabled();
 
     const amountInput = screen.getByLabelText(/balance amount/i);
     fireEvent.change(amountInput, { target: { value: '4000' } });

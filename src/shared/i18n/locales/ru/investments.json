@@ -122,5 +122,23 @@
     "snapshotUpdateErrorTitle": "Не удалось обновить оценку",
     "snapshotDeletedTitle": "Оценка удалена",
     "snapshotDeleteErrorTitle": "Не удалось удалить оценку"
+  },
+  "details": {
+    "backToInstruments": "Назад к инструментам",
+    "currentValuation": "Текущая оценка",
+    "noValuationRecorded": "Оценка еще не зафиксирована",
+    "lastSnapshotOn": "Последняя оценка от",
+    "netInvested": "Вложенный капитал",
+    "capitalInjected": "Всего внесено капитала нетто",
+    "totalProfit": "Общий доход / прибыль",
+    "totalOperations": "Количество операций",
+    "operationsCountHint": "Зафиксированные оценки и транзакции",
+    "operationsHistory": "История операций",
+    "noOperationsYet": "Для этого инструмента еще нет операций",
+    "noOperationsYetDescription": "Зафиксируйте первую оценку баланса или привяжите инвестиционную транзакцию, чтобы начать отслеживание истории.",
+    "loadingTitle": "Загрузка данных инструмента",
+    "loadingDescription": "Получение сведений об активе и операциях...",
+    "notFoundTitle": "Инструмент не найден",
+    "notFoundDescription": "Запрошенный инвестиционный инструмент не найден или был удален."
   }
 }

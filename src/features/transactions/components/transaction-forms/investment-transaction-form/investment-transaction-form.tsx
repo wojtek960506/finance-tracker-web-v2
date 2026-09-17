@@ -23,6 +23,7 @@ import { Input } from '@/components/ui/input';
 type InvestmentTransactionFormProps = {
   defaultValues: InvestmentTransactionFormValues;
   isPending: boolean;
+  isInstrumentDisabled?: boolean;
   mode: 'create' | 'update';
   onSubmit: (values: InvestmentTransactionFormValues) => Promise<void> | void;
   onCancel: () => void;
@@ -31,6 +32,7 @@ type InvestmentTransactionFormProps = {
 export const InvestmentTransactionForm = ({
   defaultValues,
   isPending,
+  isInstrumentDisabled = false,
   mode,
   onSubmit,
   onCancel,
@@ -74,6 +76,7 @@ export const InvestmentTransactionForm = ({
           <InvestmentInstrumentField
             control={form.control}
             errorMessage={form.formState.errors.instrumentId?.message}
+            disabled={isInstrumentDisabled || isPending}
             onAddNewInstrument={() => setIsCreateInstrumentModalOpen(true)}
           />
 

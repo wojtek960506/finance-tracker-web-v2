@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { Edit2, ExternalLink, Trash2 } from 'lucide-react';
+import { ExternalLink, Pencil, Trash } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
@@ -72,7 +72,7 @@ export const OperationCard = ({
                     title={t('actions.editSnapshot')}
                     aria-label={t('actions.editSnapshot')}
                   >
-                    <Edit2 className="size-4" />
+                    <Pencil className="size-4" />
                   </Button>
                 ) : null}
 
@@ -86,7 +86,7 @@ export const OperationCard = ({
                     title={t('actions.deleteSnapshot')}
                     aria-label={t('actions.deleteSnapshot')}
                   >
-                    <Trash2 className="size-4" />
+                    <Trash className="size-4" />
                   </Button>
                 ) : null}
               </>

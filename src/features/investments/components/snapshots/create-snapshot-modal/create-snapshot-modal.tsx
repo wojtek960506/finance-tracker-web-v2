@@ -19,12 +19,16 @@ type CreateSnapshotModalProps = {
   isOpen: boolean;
   onClose: () => void;
   defaultInstrumentId?: string;
+  defaultCurrency?: string;
+  isInstrumentDisabled?: boolean;
 };
 
 export const CreateSnapshotModal = ({
   isOpen,
   onClose,
   defaultInstrumentId,
+  defaultCurrency,
+  isInstrumentDisabled,
 }: CreateSnapshotModalProps) => {
   const { t } = useTranslation('investments');
   const queryClient = useQueryClient();
@@ -64,6 +68,8 @@ export const CreateSnapshotModal = ({
     await createMutation.mutateAsync(payload);
   };
 
+  const shouldDisableInstrument = isInstrumentDisabled ?? Boolean(defaultInstrumentId);
+
   return (
     <Modal isOpen={isOpen} onClose={onClose} ariaLabel={t('modals.createSnapshotTitle')}>
       <div className="flex flex-col gap-4">
@@ -77,8 +83,12 @@ export const CreateSnapshotModal = ({
         </header>
 
         <SnapshotForm
-          defaultValues={getDefaultSnapshotFormValues(defaultInstrumentId)}
+          defaultValues={getDefaultSnapshotFormValues(
+            defaultInstrumentId,
+            defaultCurrency,
+          )}
           isPending={createMutation.isPending}
+          isInstrumentDisabled={shouldDisableInstrument}
           onSubmit={handleSubmit}
           onCancel={onClose}
         />

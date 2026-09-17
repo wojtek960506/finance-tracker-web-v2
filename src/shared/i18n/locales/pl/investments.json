@@ -122,5 +122,23 @@
     "snapshotUpdateErrorTitle": "Nie udało się zaktualizować wyceny",
     "snapshotDeletedTitle": "Usunięto wycenę",
     "snapshotDeleteErrorTitle": "Nie udało się usunąć wyceny"
+  },
+  "details": {
+    "backToInstruments": "Powrót do instrumentów",
+    "currentValuation": "Aktualna wycena",
+    "noValuationRecorded": "Brak zarejestrowanej wyceny",
+    "lastSnapshotOn": "Ostatnia wycena z dnia",
+    "netInvested": "Zainwestowany kapitał",
+    "capitalInjected": "Łączny wpłacony kapitał netto",
+    "totalProfit": "Łączny zwrot / zysk",
+    "totalOperations": "Liczba operacji",
+    "operationsCountHint": "Zarejestrowane wyceny i transakcje",
+    "operationsHistory": "Historia operacji",
+    "noOperationsYet": "Brak operacji dla tego instrumentu",
+    "noOperationsYetDescription": "Zarejestruj pierwszą wycenę lub przypisz transakcję inwestycyjną, aby rozpocząć śledzenie historii.",
+    "loadingTitle": "Ładowanie szczegółów instrumentu",
+    "loadingDescription": "Pobieranie danych instrumentu i operacji...",
+    "notFoundTitle": "Nie znaleziono instrumentu",
+    "notFoundDescription": "Żądany instrument inwestycyjny nie został odnaleziony lub mógł zostać usunięty."
   }
 }

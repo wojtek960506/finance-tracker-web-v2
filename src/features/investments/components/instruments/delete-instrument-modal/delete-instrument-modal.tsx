@@ -11,12 +11,14 @@ type DeleteInstrumentModalProps = {
   instrument: InvestmentInstrument | null;
   isOpen: boolean;
   onClose: () => void;
+  onSuccess?: () => void;
 };
 
 export const DeleteInstrumentModal = ({
   instrument,
   isOpen,
   onClose,
+  onSuccess,
 }: DeleteInstrumentModalProps) => {
   const { t } = useTranslation('investments');
   const { t: tCommon } = useTranslation('common');
@@ -35,6 +37,7 @@ export const DeleteInstrumentModal = ({
         }),
       });
       onClose();
+      onSuccess?.();
     },
     onError: (error) => {
       const apiError = normalizeApiError(error);
