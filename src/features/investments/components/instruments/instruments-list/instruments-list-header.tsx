@@ -1,9 +1,10 @@
-import clsx from 'clsx';
-import { LoaderCircle, Plus, Search } from 'lucide-react';
+import { Plus } from 'lucide-react';
+import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { FilterPills, SearchFilterInput } from '@features/investments/components/shared';
 import { INSTRUMENT_KINDS } from '@features/investments/consts';
-import { Button, Input } from '@shared/ui';
+import { Button } from '@shared/ui';
 
 type InstrumentsListHeaderProps = {
   searchQuery: string;
@@ -24,66 +25,39 @@ export const InstrumentsListHeader = ({
 }: InstrumentsListHeaderProps) => {
   const { t } = useTranslation('investments');
 
+  const kindItems = useMemo(
+    () =>
+      INSTRUMENT_KINDS.map((kind) => ({
+        key: kind,
+        label: t(`kind.${kind}`),
+      })),
+    [t],
+  );
+
   return (
-    <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-      <div className="flex flex-1 flex-wrap items-center gap-2">
-        {/* Search input */}
-        <div className="relative min-w-[200px] flex-1">
-          <Input
-            value={searchQuery}
-            onChange={(e) => onSearchQueryChange(e.target.value)}
-            placeholder={t('searchPlaceholder')}
-            className="w-full pr-9 sm:pr-10"
-            aria-label={t('searchPlaceholder')}
-          />
-          {isFetching ? (
-            <LoaderCircle className="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 animate-spin text-text-muted" />
-          ) : (
-            <Search className="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 text-text-muted" />
-          )}
-        </div>
-
-        {/* Kind filter pills */}
-        <div className="flex flex-wrap items-center gap-1">
-          <button
-            type="button"
-            className={clsx(
-              'rounded-full px-3 py-1 text-xs font-semibold transition-colors',
-              selectedKind === 'all'
-                ? 'bg-bt-primary text-bt-primary-fg'
-                : 'bg-muted/50 text-text-muted hover:bg-muted',
-            )}
-            onClick={() => onSelectedKindChange('all')}
-          >
-            {t('allKinds')}
-          </button>
-          {INSTRUMENT_KINDS.map((kind) => (
-            <button
-              key={kind}
-              type="button"
-              className={clsx(
-                'rounded-full px-3 py-1 text-xs font-semibold capitalize transition-colors',
-                selectedKind === kind
-                  ? 'bg-bt-primary text-bt-primary-fg'
-                  : 'bg-muted/50 text-text-muted hover:bg-muted',
-              )}
-              onClick={() => onSelectedKindChange(kind)}
-            >
-              {t(`kind.${kind}`)}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Create Button */}
-      <Button
-        variant="primary"
-        onClick={onCreateNew}
-        className="shrink-0 gap-1.5 self-stretch sm:self-auto"
-      >
+    <div className="flex flex-col gap-3" data-testid="instruments-list-header">
+      {/* Top row: New Instrument button (full width) */}
+      <Button variant="primary" onClick={onCreateNew} className="w-full gap-1.5">
         <Plus className="size-4" />
         <span>{t('newInstrument')}</span>
       </Button>
+
+      {/* Filters: separate rows below md, side-by-side on md and above */}
+      <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+        <SearchFilterInput
+          value={searchQuery}
+          onChange={onSearchQueryChange}
+          placeholder={t('searchPlaceholder')}
+          isFetching={isFetching}
+        />
+
+        <FilterPills
+          selected={selectedKind}
+          onSelect={onSelectedKindChange}
+          allLabel={t('allKinds')}
+          items={kindItems}
+        />
+      </div>
     </div>
   );
 };
