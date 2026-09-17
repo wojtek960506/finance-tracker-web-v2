@@ -9,8 +9,9 @@
   "emptyTitle": "Noch keine Anlageinstrumente",
   "emptyDescription": "Erstellen Sie Ihr erstes Instrument wie Apple (AAPL), S&P 500 ETF oder Bitcoin, um Investitionen zu verfolgen.",
   "noResultsTitle": "Keine passenden Instrumente",
-  "noResultsDescription": "Versuchen Sie, die Suchanfrage oder den Typfilter zu ändern.",
+  "noResultsDescription": "Versuchen Sie, den Suchbegriff oder die Filter zu ändern.",
   "createFirstInstrument": "Erstes Instrument hinzufügen",
+  "clearFilters": "Filter zurücksetzen",
   "loadingTitle": "Lade Instrumente",
   "loadingDescription": "Lade Ihre Anlageinstrumente...",
   "loadingInstruments": "Lade Instrumente...",
@@ -20,6 +21,7 @@
   "quickAdd": "Neu",
   "loading": "Laden...",
   "createdOn": "Erstellt am",
+  "unknownInstrument": "Unbekanntes Instrument",
   "kind": {
     "share": "Aktie",
     "fund": "Fonds",
@@ -29,6 +31,27 @@
     "crypto": "Krypto",
     "commodity": "Rohstoff",
     "custom": "Benutzerdefiniert"
+  },
+  "operationKind": {
+    "snapshot": "Momentaufnahme",
+    "buy": "Kauf",
+    "sell": "Verkauf",
+    "interest": "Zinsen",
+    "fee": "Gebühr"
+  },
+  "operations": {
+    "searchPlaceholder": "Operationen suchen...",
+    "allInstruments": "Alle Instrumente",
+    "newSnapshot": "Momentaufnahme erfassen",
+    "snapshotBalance": "Saldo",
+    "emptyTitle": "Noch keine Operationen",
+    "emptyDescription": "Erfassen Sie eine Momentaufnahme oder erstellen Sie eine Anlagetransaktion, um die Historie anzuzeigen.",
+    "noResultsTitle": "Keine passenden Operationen",
+    "noResultsDescription": "Versuchen Sie, den Suchbegriff oder die Filter zu ändern.",
+    "recordFirstSnapshot": "Erste Momentaufnahme erfassen",
+    "clearFilters": "Filter zurücksetzen",
+    "loadingTitle": "Lade Operationen",
+    "loadingDescription": "Lade Historie der Anlageoperationen..."
   },
   "form": {
     "name": "Name",
@@ -59,7 +82,9 @@
   },
   "actions": {
     "edit": "Instrument bearbeiten",
-    "delete": "Instrument löschen"
+    "delete": "Instrument löschen",
+    "viewTransaction": "Transaktion anzeigen",
+    "deleteSnapshot": "Momentaufnahme löschen"
   },
   "cancel": "Abbrechen",
   "saving": "Speichern...",

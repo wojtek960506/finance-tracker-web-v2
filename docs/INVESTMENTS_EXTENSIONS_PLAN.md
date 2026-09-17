@@ -108,8 +108,9 @@ src/
 - [x] **3. URL Routing Architecture & Layout Tabs (Point 2)**:
   - [x] Update `app-routes.tsx` to handle `/investments` (redirect to `/investments/instruments`), `/investments/instruments`, `/investments/operations`, `/investments/instruments/:id`.
   - [x] Create `InvestmentsLayout` with tab navigation between Instruments and Operations.
-- [ ] **4. Operations Listing & Filters (Point 4)**:
-  - [ ] Implement `OperationsList`, `OperationCard`, and `OperationsFilters` using `getOperations`.
+- [x] **4. Operations Listing & Filters (Point 4)**:
+  - [x] Implement `OperationsList`, `OperationCard`, `OperationKindBadge`, and `OperationsFilters` using `getOperations`.
+
 - [ ] **5. Create Snapshot Flow (Point 3 & 4)**:
   - [ ] Implement `CreateSnapshotModal` and `SnapshotForm` with `createSnapshotOperation` mutation.
 - [ ] **6. Instrument Details Page (Point 3)**:

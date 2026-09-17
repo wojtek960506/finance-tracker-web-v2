@@ -9,8 +9,9 @@
   "emptyTitle": "No investment instruments yet",
   "emptyDescription": "Create your first instrument like Apple (AAPL), S&P 500 ETF, or Bitcoin to start tracking investments.",
   "noResultsTitle": "No matching instruments",
-  "noResultsDescription": "Try changing your search query or kind filter.",
+  "noResultsDescription": "Try changing your search query or filters.",
   "createFirstInstrument": "Add First Instrument",
+  "clearFilters": "Clear filters",
   "loadingTitle": "Loading instruments",
   "loadingDescription": "Fetching your investment instruments...",
   "loadingInstruments": "Loading instruments...",
@@ -20,6 +21,7 @@
   "quickAdd": "New",
   "loading": "Loading...",
   "createdOn": "Created",
+  "unknownInstrument": "Unknown Instrument",
   "kind": {
     "share": "Share",
     "fund": "Fund",
@@ -29,6 +31,27 @@
     "crypto": "Crypto",
     "commodity": "Commodity",
     "custom": "Custom"
+  },
+  "operationKind": {
+    "snapshot": "Snapshot",
+    "buy": "Buy",
+    "sell": "Sell",
+    "interest": "Interest",
+    "fee": "Fee"
+  },
+  "operations": {
+    "searchPlaceholder": "Search operations...",
+    "allInstruments": "All Instruments",
+    "newSnapshot": "Record Snapshot",
+    "snapshotBalance": "Balance",
+    "emptyTitle": "No operations yet",
+    "emptyDescription": "Record a balance snapshot or create an investment transaction to start seeing operations.",
+    "noResultsTitle": "No matching operations",
+    "noResultsDescription": "Try changing your search query or filters.",
+    "recordFirstSnapshot": "Record First Snapshot",
+    "clearFilters": "Clear filters",
+    "loadingTitle": "Loading operations",
+    "loadingDescription": "Fetching investment operations history..."
   },
   "form": {
     "name": "Name",
@@ -59,7 +82,9 @@
   },
   "actions": {
     "edit": "Edit instrument",
-    "delete": "Delete instrument"
+    "delete": "Delete instrument",
+    "viewTransaction": "View Transaction",
+    "deleteSnapshot": "Delete snapshot"
   },
   "cancel": "Cancel",
   "saving": "Saving...",

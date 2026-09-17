@@ -9,8 +9,9 @@
   "emptyTitle": "Brak instrumentów inwestycyjnych",
   "emptyDescription": "Utwórz swój pierwszy instrument, np. Apple (AAPL), S&P 500 ETF lub Bitcoin, aby rozpocząć śledzenie inwestycji.",
   "noResultsTitle": "Brak pasujących instrumentów",
-  "noResultsDescription": "Spróbuj zmienić zapytanie lub filtr rodzaju.",
+  "noResultsDescription": "Spróbuj zmienić wyszukiwaną frazę lub filtry.",
   "createFirstInstrument": "Dodaj pierwszy instrument",
+  "clearFilters": "Wyczyść filtry",
   "loadingTitle": "Ładowanie instrumentów",
   "loadingDescription": "Pobieranie Twoich instrumentów inwestycyjnych...",
   "loadingInstruments": "Ładowanie instrumentów...",
@@ -20,6 +21,7 @@
   "quickAdd": "Nowy",
   "loading": "Ładowanie...",
   "createdOn": "Utworzono",
+  "unknownInstrument": "Nieznany instrument",
   "kind": {
     "share": "Akcja",
     "fund": "Fundusz",
@@ -29,6 +31,27 @@
     "crypto": "Kryptowaluta",
     "commodity": "Surowiec",
     "custom": "Własny"
+  },
+  "operationKind": {
+    "snapshot": "Wycena",
+    "buy": "Kupno",
+    "sell": "Sprzedaż",
+    "interest": "Odsetki",
+    "fee": "Prowizja"
+  },
+  "operations": {
+    "searchPlaceholder": "Szukaj operacji...",
+    "allInstruments": "Wszystkie instrumenty",
+    "newSnapshot": "Nowa wycena",
+    "snapshotBalance": "Stan",
+    "emptyTitle": "Brak operacji",
+    "emptyDescription": "Zarejestruj wycenę lub utwórz transakcję inwestycyjną, aby zobaczyć historię operacji.",
+    "noResultsTitle": "Brak pasujących operacji",
+    "noResultsDescription": "Spróbuj zmienić wyszukiwaną frazę lub filtry.",
+    "recordFirstSnapshot": "Zarejestruj pierwszą wycenę",
+    "clearFilters": "Wyczyść filtry",
+    "loadingTitle": "Ładowanie operacji",
+    "loadingDescription": "Pobieranie historii operacji inwestycyjnych..."
   },
   "form": {
     "name": "Nazwa",
@@ -59,7 +82,9 @@
   },
   "actions": {
     "edit": "Edytuj instrument",
-    "delete": "Usuń instrument"
+    "delete": "Usuń instrument",
+    "viewTransaction": "Zobacz transakcję",
+    "deleteSnapshot": "Usuń wycenę"
   },
   "cancel": "Anuluj",
   "saving": "Zapisywanie...",

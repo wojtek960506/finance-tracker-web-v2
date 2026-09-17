@@ -16,6 +16,7 @@ export const InstrumentsList = () => {
     setSearchQuery,
     selectedKind,
     setSelectedKind,
+    resetFilters,
     isCreateModalOpen,
     setIsCreateModalOpen,
     editingInstrument,
@@ -58,6 +59,7 @@ export const InstrumentsList = () => {
         <InstrumentsListEmptyState
           hasAnyInstruments={instruments.length > 0}
           onCreateNew={() => setIsCreateModalOpen(true)}
+          onResetFilters={resetFilters}
         />
       ) : (
         <InstrumentsListGrid

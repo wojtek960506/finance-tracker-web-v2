@@ -1,6 +1,5 @@
 import {
   InstrumentDetailsPage,
-  InvestmentsLayout,
   InvestmentsPage,
   OperationsPage,
 } from '@investments/components';
@@ -144,11 +143,7 @@ export const PROTECTED_APP_ROUTES: AppRouteConfig[] = [
   },
   {
     path: '/investments/operations',
-    element: (
-      <InvestmentsLayout>
-        <OperationsPage />
-      </InvestmentsLayout>
-    ),
+    element: <OperationsPage />,
     title: { namespace: 'navigation', key: 'investments' },
   },
   {

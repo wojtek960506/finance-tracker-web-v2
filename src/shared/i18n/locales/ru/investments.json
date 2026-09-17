@@ -9,8 +9,9 @@
   "emptyTitle": "Инвестиционные инструменты еще не добавлены",
   "emptyDescription": "Создайте свой первый инструмент, например Apple (AAPL), S&P 500 ETF или Bitcoin, чтобы начать отслеживание инвестиций.",
   "noResultsTitle": "Нет подходящих инструментов",
-  "noResultsDescription": "Попробуйте изменить поисковый запрос или фильтр типа.",
+  "noResultsDescription": "Попробуйте изменить поисковый запрос или фильтры.",
   "createFirstInstrument": "Добавить первый инструмент",
+  "clearFilters": "Сбросить фильтры",
   "loadingTitle": "Загрузка инструментов",
   "loadingDescription": "Получение ваших инвестиционных инструментов...",
   "loadingInstruments": "Загрузка инструментов...",
@@ -20,6 +21,7 @@
   "quickAdd": "Новый",
   "loading": "Загрузка...",
   "createdOn": "Создано",
+  "unknownInstrument": "Неизвестный инструмент",
   "kind": {
     "share": "Акция",
     "fund": "Фонд",
@@ -29,6 +31,27 @@
     "crypto": "Криптовалюта",
     "commodity": "Товар",
     "custom": "Пользовательский"
+  },
+  "operationKind": {
+    "snapshot": "Оценка",
+    "buy": "Покупка",
+    "sell": "Продажа",
+    "interest": "Проценты",
+    "fee": "Комиссия"
+  },
+  "operations": {
+    "searchPlaceholder": "Поиск операций...",
+    "allInstruments": "Все инструменты",
+    "newSnapshot": "Записать оценку",
+    "snapshotBalance": "Баланс",
+    "emptyTitle": "Операций пока нет",
+    "emptyDescription": "Запишите оценку баланса или создайте инвестиционную транзакцию, чтобы увидеть историю операций.",
+    "noResultsTitle": "Нет подходящих операций",
+    "noResultsDescription": "Попробуйте изменить поисковый запрос или фильтры.",
+    "recordFirstSnapshot": "Записать первую оценку",
+    "clearFilters": "Сбросить фильтры",
+    "loadingTitle": "Загрузка операций",
+    "loadingDescription": "Получение истории инвестиционных операций..."
   },
   "form": {
     "name": "Название",
@@ -59,7 +82,9 @@
   },
   "actions": {
     "edit": "Редактировать инструмент",
-    "delete": "Удалить инструмент"
+    "delete": "Удалить инструмент",
+    "viewTransaction": "Просмотреть транзакцию",
+    "deleteSnapshot": "Удалить оценку"
   },
   "cancel": "Отмена",
   "saving": "Сохранение...",
