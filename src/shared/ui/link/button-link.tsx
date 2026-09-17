@@ -2,13 +2,14 @@ import clsx from 'clsx';
 import type { ComponentProps, ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 
-import { type ButtonVariant, getButtonClassName } from '@ui';
+import { type ButtonSize, type ButtonVariant, getButtonClassName } from '@ui';
 
 export const ButtonLink = ({
   to,
   state,
   className,
   variant = 'inverse',
+  size,
   children,
   preventFocusOnPress = false,
   onMouseDown,
@@ -18,6 +19,7 @@ export const ButtonLink = ({
   state?: unknown;
   className?: string;
   variant?: ButtonVariant;
+  size?: ButtonSize;
   children: ReactNode;
   preventFocusOnPress?: boolean;
   onMouseDown?: ComponentProps<typeof Link>['onMouseDown'];
@@ -47,6 +49,7 @@ export const ButtonLink = ({
     }}
     className={getButtonClassName({
       variant,
+      size,
       className: clsx(
         'py-0 sm:py-0',
         disabled && 'pointer-events-none opacity-70',

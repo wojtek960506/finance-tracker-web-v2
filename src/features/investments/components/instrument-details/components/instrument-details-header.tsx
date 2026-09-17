@@ -97,23 +97,23 @@ export const InstrumentDetailsHeader = ({
           <Button
             type="button"
             variant="secondary"
+            size="icon"
             onClick={onEditInstrument}
             title={t('actions.edit')}
             aria-label={t('actions.edit')}
-            className="aspect-square"
           >
-            <Pencil className="size-6 sm:size-7" />
+            <Pencil />
           </Button>
 
           <Button
             type="button"
             variant="destructive"
+            size="icon"
             onClick={onDeleteInstrument}
             title={t('actions.delete')}
             aria-label={t('actions.delete')}
-            className="aspect-square"
           >
-            <Trash className="size-6 sm:size-7" />
+            <Trash />
           </Button>
         </div>
       </div>
