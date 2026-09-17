@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 
-import { InstrumentsList } from '@features/investments/components';
+import { InstrumentsList } from '../instruments';
 
 export const InvestmentsPage = () => {
   return (

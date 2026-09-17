@@ -1,3 +1,4 @@
+import { InvestmentsPage } from '@investments/components';
 import { type ReactNode } from 'react';
 import { matchPath, Navigate } from 'react-router-dom';
 
@@ -10,7 +11,6 @@ import {
   CreateStandardTransaction,
   CreateTransaction,
   CreateTransferTransaction,
-  InvestmentsPage,
   TransactionAccountStatistics,
   TransactionDetails,
   TransactionsPage,
@@ -62,11 +62,6 @@ export const PROTECTED_APP_ROUTES: AppRouteConfig[] = [
     path: '/transactions/trash',
     element: <TrashedTransactionsList />,
     title: { namespace: 'navigation', key: 'transactionsTrash' },
-  },
-  {
-    path: '/transactions/investments',
-    element: <InvestmentsPage />,
-    title: { namespace: 'navigation', key: 'investments' },
   },
   {
     path: '/transactions/trash/:transactionId',
@@ -132,6 +127,11 @@ export const PROTECTED_APP_ROUTES: AppRouteConfig[] = [
     path: '/accounts',
     element: <NamedResourcesPage kind="accounts" />,
     title: { namespace: 'navigation', key: 'bankAccounts' },
+  },
+  {
+    path: '/investments',
+    element: <InvestmentsPage />,
+    title: { namespace: 'navigation', key: 'investments' },
   },
   {
     path: '/vehicles',

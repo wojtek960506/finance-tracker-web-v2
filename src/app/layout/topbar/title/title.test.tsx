@@ -21,13 +21,17 @@ vi.mock('@named-resources/components', () => ({
   NamedResourcesList: ({ kind }: { kind: string }) => <div>{kind}</div>,
 }));
 
+vi.mock('@investments/components', () => ({
+  InvestmentsPage: () => <div>investments</div>,
+}));
+
 vi.mock('@transactions/components', () => ({
   CreateBulkTransaction: () => <div>bulk</div>,
   CreateExchangeTransaction: () => <div>exchange</div>,
+  CreateInvestmentTransaction: () => <div>investment</div>,
   CreateStandardTransaction: () => <div>standard</div>,
   CreateTransaction: () => <div>new</div>,
   CreateTransferTransaction: () => <div>transfer</div>,
-  InvestmentsPage: () => <div>investments</div>,
   TransactionAccountStatistics: () => <div>stats</div>,
   TrashedTransactionDetails: () => <div>trash-details</div>,
   TrashedTransactionsList: () => <div>trash-list</div>,
@@ -69,6 +73,19 @@ describe('Title', () => {
 
     expect(
       screen.getByRole('heading', { name: 'navigation:transactions' }),
+    ).toBeInTheDocument();
+    expect(screen.queryByRole('link')).not.toBeInTheDocument();
+  });
+
+  it('renders investments title on investments page', () => {
+    render(
+      <MemoryRouter initialEntries={['/investments']}>
+        <Title />
+      </MemoryRouter>,
+    );
+
+    expect(
+      screen.getByRole('heading', { name: 'navigation:investments' }),
     ).toBeInTheDocument();
     expect(screen.queryByRole('link')).not.toBeInTheDocument();
   });
