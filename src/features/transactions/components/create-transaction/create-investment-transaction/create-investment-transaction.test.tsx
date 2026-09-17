@@ -11,6 +11,7 @@ import { CreateInvestmentTransaction } from './create-investment-transaction';
 const mocks = vi.hoisted(() => ({
   createInvestmentTransaction: vi.fn(),
   location: { state: undefined as { returnTo: string } | undefined },
+  searchParams: new URLSearchParams(),
   normalizeApiError: vi.fn(),
   navigate: vi.fn(),
   pushToast: vi.fn(),
@@ -23,6 +24,7 @@ vi.mock('react-i18next', () => ({
 vi.mock('react-router-dom', () => ({
   useNavigate: () => mocks.navigate,
   useLocation: () => mocks.location,
+  useSearchParams: () => [mocks.searchParams],
 }));
 
 vi.mock('@transactions/api', () => ({
@@ -40,7 +42,7 @@ vi.mock('@store/toast-store', () => ({
 }));
 
 vi.mock('@transactions/components/transaction-forms', () => ({
-  getDefaultInvestmentTransactionFormValues: () => ({
+  getDefaultInvestmentTransactionFormValues: (initialValues: any = {}) => ({
     date: '2026-09-10',
     description: 'Buy Apple stock',
     amount: '1000',
@@ -50,6 +52,7 @@ vi.mock('@transactions/components/transaction-forms', () => ({
     operationKind: 'buy',
     instrumentId: 'inst-1',
     note: '',
+    ...initialValues,
   }),
   normalizeInvestmentTransactionFormValues: (values: any) => ({
     date: values.date,
@@ -68,12 +71,18 @@ vi.mock('@transactions/components/transaction-forms', () => ({
     onSubmit,
     onCancel,
     defaultValues,
+    isInstrumentDisabled,
   }: {
     onSubmit: (values: any) => void;
     onCancel: () => void;
     defaultValues: any;
+    isInstrumentDisabled?: boolean;
   }) => (
     <div>
+      <span data-testid="default-instrument-id">{defaultValues.instrumentId}</span>
+      <span data-testid="is-instrument-disabled">
+        {String(Boolean(isInstrumentDisabled))}
+      </span>
       <button
         type="button"
         onClick={() =>
@@ -83,7 +92,7 @@ vi.mock('@transactions/components/transaction-forms', () => ({
             amount: '1000',
             currency: 'USD',
             operationKind: 'buy',
-            instrumentId: 'inst-1',
+            instrumentId: defaultValues.instrumentId || 'inst-1',
           })
         }
       >
@@ -100,6 +109,7 @@ describe('CreateInvestmentTransaction', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     mocks.location.state = undefined;
+    mocks.searchParams = new URLSearchParams();
     mocks.normalizeApiError.mockReturnValue({ message: 'Error message' });
   });
 
@@ -166,7 +176,7 @@ describe('CreateInvestmentTransaction', () => {
     });
   });
 
-  it('navigates back on cancel', async () => {
+  it('navigates back on cancel when no instrumentId query param', async () => {
     const queryClient = createTestQueryClient();
     const user = userEvent.setup();
 
@@ -180,5 +190,25 @@ describe('CreateInvestmentTransaction', () => {
     await user.click(cancelBtn);
 
     expect(mocks.navigate).toHaveBeenCalledWith('/transactions/new', expect.anything());
+  });
+
+  it('populates instrumentId from query and navigates back to instrument details on cancel', async () => {
+    mocks.searchParams = new URLSearchParams('instrumentId=inst-999');
+    const queryClient = createTestQueryClient();
+    const user = userEvent.setup();
+
+    render(
+      <QueryClientProvider client={queryClient}>
+        <CreateInvestmentTransaction />
+      </QueryClientProvider>,
+    );
+
+    expect(screen.getByTestId('default-instrument-id')).toHaveTextContent('inst-999');
+    expect(screen.getByTestId('is-instrument-disabled')).toHaveTextContent('true');
+
+    const cancelBtn = screen.getByRole('button', { name: /cancel/i });
+    await user.click(cancelBtn);
+
+    expect(mocks.navigate).toHaveBeenCalledWith('/investments/instruments/inst-999');
   });
 });

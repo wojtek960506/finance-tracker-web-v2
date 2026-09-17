@@ -64,8 +64,30 @@ describe('InstrumentsList', () => {
     renderWithProviders(<InstrumentsList />);
 
     expect(await screen.findByText(/no investment instruments/i)).toBeInTheDocument();
+    expect(screen.queryByTestId('instruments-list-header')).not.toBeInTheDocument();
     expect(
       screen.getByRole('button', { name: /add first instrument/i }),
     ).toBeInTheDocument();
+  });
+
+  it('renders no results empty state with clear filters button when search matches nothing', async () => {
+    vi.mocked(investmentsApi.getInstruments).mockResolvedValue(mockInstruments);
+
+    renderWithProviders(<InstrumentsList />);
+
+    expect(await screen.findByText('Apple Inc.')).toBeInTheDocument();
+
+    const searchInput = screen.getByLabelText(/search instruments/i);
+    fireEvent.change(searchInput, { target: { value: 'Nonexistent' } });
+
+    expect(await screen.findByText(/no matching instruments/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/try changing your search query or filters/i),
+    ).toBeInTheDocument();
+
+    const clearBtn = screen.getByRole('button', { name: /clear filters/i });
+    fireEvent.click(clearBtn);
+
+    expect(await screen.findByText('Apple Inc.')).toBeInTheDocument();
   });
 });

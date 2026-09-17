@@ -30,13 +30,13 @@ export const TransactionPreviewFooter = ({
 
   return (
     <footer className="flex flex-wrap items-center justify-between justify-end gap-1">
-      <ButtonLink to="/accounts" className={GHOST_LINK_CLASS_NAME}>
+      <ButtonLink to="/transactions/accounts" className={GHOST_LINK_CLASS_NAME}>
         {accountLabel}
       </ButtonLink>
-      <ButtonLink to="/paymentMethods" className={GHOST_LINK_CLASS_NAME}>
+      <ButtonLink to="/transactions/payment-methods" className={GHOST_LINK_CLASS_NAME}>
         {paymentMethodLabel}
       </ButtonLink>
-      <ButtonLink to="/categories" className={GHOST_LINK_CLASS_NAME}>
+      <ButtonLink to="/transactions/categories" className={GHOST_LINK_CLASS_NAME}>
         {categoryLabel}
       </ButtonLink>
     </footer>

@@ -2567,7 +2567,7 @@ export interface paths {
         post?: never;
         /**
          * Delete investment instrument
-         * @description Delete an investment instrument and its associated snapshot operations.
+         * @description Delete an investment instrument (only allowed if it has no associated operations).
          */
         delete: {
             parameters: {
@@ -2741,7 +2741,37 @@ export interface paths {
         };
         options?: never;
         head?: never;
-        patch?: never;
+        /**
+         * Update snapshot investment operation
+         * @description Update a snapshot investment operation. Non-snapshot operations linked to transactions cannot be edited here.
+         */
+        patch: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description Resource id */
+                    id: string;
+                };
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["InvestmentOperationUpdateInput"];
+                };
+            };
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["InvestmentOperationResponse"];
+                    };
+                };
+            };
+        };
         trace?: never;
     };
 }
@@ -2810,6 +2840,15 @@ export interface components {
             transactionId: string;
         };
         InvestmentOperationInput: components["schemas"]["InvestmentCashFlowOperationInput"] | components["schemas"]["InvestmentSnapshotOperationItemInput"];
+        InvestmentOperationUpdateInput: {
+            instrumentId?: string;
+            amount?: number;
+            /** @enum {string} */
+            currency?: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            date?: unknown;
+            note?: string;
+            notes?: string;
+        };
         InvestmentSnapshotOperationResponseInput: {
             instrumentId: string;
             amount: number;
@@ -3573,6 +3612,16 @@ export interface components {
             transactionId: string;
         };
         InvestmentOperation: components["schemas"]["InvestmentCashFlowOperation"] | components["schemas"]["InvestmentSnapshotOperationItem"];
+        InvestmentOperationUpdate: {
+            instrumentId?: string;
+            amount?: number;
+            /** @enum {string} */
+            currency?: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            /** Format: date-time */
+            date?: string;
+            note?: string;
+            notes?: string;
+        };
         InvestmentSnapshotOperationResponse: {
             instrumentId: string;
             amount: number;

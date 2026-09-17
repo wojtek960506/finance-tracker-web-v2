@@ -2,15 +2,26 @@ import clsx from 'clsx';
 
 import { cn } from '@shared/utils';
 
-import type { ButtonVariant } from './button';
+export type ButtonVariant =
+  | 'default'
+  | 'inverse'
+  | 'primary'
+  | 'secondary'
+  | 'destructive'
+  | 'ghost'
+  | 'outline';
+
+export type ButtonSize = 'default' | 'icon';
 
 type GetButtonClassNameArgs = {
   variant?: ButtonVariant;
+  size?: ButtonSize;
   className?: string;
 };
 
 export const getButtonClassName = ({
   variant = 'default',
+  size = 'default',
   className,
 }: GetButtonClassNameArgs = {}) => {
   let variantClassName = '';
@@ -65,10 +76,21 @@ export const getButtonClassName = ({
       );
   }
 
+  let sizeClassName = '';
+  switch (size) {
+    case 'icon':
+      sizeClassName = 'aspect-square [&>svg]:size-6 sm:[&>svg]:size-7';
+      break;
+    case 'default':
+    default:
+      sizeClassName = '';
+  }
+
   return cn(
     'border border-transparent p-1 sm:p-2 rounded-lg sm:rounded-xl',
     'text-base sm:text-lg cursor-pointer disabled:cursor-not-allowed',
     'flex items-center justify-center disabled:bg-bt-disabled disabled:text-bg',
+    sizeClassName,
     variantClassName,
     className,
   );

@@ -1,12 +1,17 @@
 {
+  "tabs": {
+    "instruments": "Instrumenty",
+    "operations": "Operacje"
+  },
   "searchPlaceholder": "Szukaj instrumentów...",
   "allKinds": "Wszystkie",
   "newInstrument": "Nowy instrument",
   "emptyTitle": "Brak instrumentów inwestycyjnych",
   "emptyDescription": "Utwórz swój pierwszy instrument, np. Apple (AAPL), S&P 500 ETF lub Bitcoin, aby rozpocząć śledzenie inwestycji.",
   "noResultsTitle": "Brak pasujących instrumentów",
-  "noResultsDescription": "Spróbuj zmienić zapytanie lub filtr rodzaju.",
+  "noResultsDescription": "Spróbuj zmienić wyszukiwaną frazę lub filtry.",
   "createFirstInstrument": "Dodaj pierwszy instrument",
+  "clearFilters": "Wyczyść filtry",
   "loadingTitle": "Ładowanie instrumentów",
   "loadingDescription": "Pobieranie Twoich instrumentów inwestycyjnych...",
   "loadingInstruments": "Ładowanie instrumentów...",
@@ -16,6 +21,7 @@
   "quickAdd": "Nowy",
   "loading": "Ładowanie...",
   "createdOn": "Utworzono",
+  "unknownInstrument": "Nieznany instrument",
   "kind": {
     "share": "Akcja",
     "fund": "Fundusz",
@@ -26,6 +32,28 @@
     "commodity": "Surowiec",
     "custom": "Własny"
   },
+  "operationKind": {
+    "snapshot": "Wycena",
+    "buy": "Kupno",
+    "sell": "Sprzedaż",
+    "interest": "Odsetki",
+    "fee": "Prowizja"
+  },
+  "operations": {
+    "searchPlaceholder": "Szukaj operacji...",
+    "allInstruments": "Wszystkie instrumenty",
+    "recordSnapshot": "Zarejestruj wycenę",
+    "newInvestmentTransaction": "Nowa transakcja inwestycyjna",
+    "snapshotBalance": "Stan",
+    "emptyTitle": "Brak operacji",
+    "emptyDescription": "Zarejestruj wycenę lub utwórz transakcję inwestycyjną, aby zobaczyć historię operacji.",
+    "noResultsTitle": "Brak pasujących operacji",
+    "noResultsDescription": "Spróbuj zmienić wyszukiwaną frazę lub filtry.",
+    "recordFirstSnapshot": "Zarejestruj pierwszą wycenę",
+    "clearFilters": "Wyczyść filtry",
+    "loadingTitle": "Ładowanie operacji",
+    "loadingDescription": "Pobieranie historii operacji inwestycyjnych..."
+  },
   "form": {
     "name": "Nazwa",
     "namePlaceholder": "np. Apple, S&P 500 ETF",
@@ -34,13 +62,23 @@
     "currencyPlaceholder": "Wybierz walutę...",
     "searchCurrency": "Szukaj waluty...",
     "noCurrencyFound": "Nie znaleziono waluty",
+    "instrument": "Instrument",
+    "balance": "Kwota salda",
+    "date": "Data",
     "notes": "Notatki",
     "notesPlaceholder": "Opcjonalny opis lub ticker",
+    "snapshotNotePlaceholder": "Opcjonalna notatka (np. wycena miesięczna)",
     "createSubmit": "Utwórz instrument",
     "updateSubmit": "Zapisz zmiany",
+    "createSnapshotSubmit": "Zarejestruj wycenę",
+    "updateSnapshotSubmit": "Zapisz zmiany",
     "errors": {
       "nameRequired": "Nazwa jest wymagana",
-      "currencyRequired": "Waluta jest wymagana"
+      "currencyRequired": "Waluta jest wymagana",
+      "instrumentRequired": "Instrument jest wymagany",
+      "amountRequired": "Kwota salda jest wymagana",
+      "amountPositive": "Kwota salda musi być większa od 0",
+      "dateRequired": "Data jest wymagana"
     }
   },
   "modals": {
@@ -51,11 +89,22 @@
     "deleteTitle": "Usuń instrument",
     "deletePrompt": "Czy na pewno chcesz usunąć instrument „{{name}}”?",
     "deleteHint": "Instrument można usunąć tylko wtedy, gdy nie jest używany przez żadną transakcję ani operację.",
-    "deleteConfirm": "Usuń"
+    "deleteConfirm": "Usuń",
+    "createSnapshotTitle": "Zarejestruj wycenę salda",
+    "createSnapshotDescription": "Zapisz aktualny stan instrumentu inwestycyjnego w określonym dniu.",
+    "updateSnapshotTitle": "Edytuj wycenę salda",
+    "updateSnapshotDescription": "Zaktualizuj saldo, walutę, datę lub notatki dla tej wyceny.",
+    "deleteSnapshotTitle": "Usuń wycenę",
+    "deleteSnapshotPrompt": "Czy na pewno chcesz usunąć wycenę dla „{{instrumentName}}” z dnia {{date}}?",
+    "deleteSnapshotHint": "Ta wycena zostanie trwale usunięta z historii Twoich inwestycji.",
+    "deleteSnapshotConfirm": "Usuń wycenę"
   },
   "actions": {
     "edit": "Edytuj instrument",
-    "delete": "Usuń instrument"
+    "delete": "Usuń instrument",
+    "viewTransaction": "Zobacz transakcję",
+    "editSnapshot": "Edytuj wycenę",
+    "deleteSnapshot": "Usuń wycenę"
   },
   "cancel": "Anuluj",
   "saving": "Zapisywanie...",
@@ -66,6 +115,30 @@
     "updatedTitle": "Zaktualizowano instrument",
     "updateErrorTitle": "Nie udało się zaktualizować instrumentu",
     "deletedTitle": "Usunięto instrument",
-    "deleteErrorTitle": "Nie udało się usunąć instrumentu"
+    "deleteErrorTitle": "Nie udało się usunąć instrumentu",
+    "snapshotCreatedTitle": "Zarejestrowano wycenę",
+    "snapshotCreateErrorTitle": "Nie udało się zarejestrować wyceny",
+    "snapshotUpdatedTitle": "Zaktualizowano wycenę",
+    "snapshotUpdateErrorTitle": "Nie udało się zaktualizować wyceny",
+    "snapshotDeletedTitle": "Usunięto wycenę",
+    "snapshotDeleteErrorTitle": "Nie udało się usunąć wyceny"
+  },
+  "details": {
+    "backToInstruments": "Powrót do instrumentów",
+    "currentValuation": "Aktualna wycena",
+    "noValuationRecorded": "Brak zarejestrowanej wyceny",
+    "lastSnapshotOn": "Ostatnia wycena z dnia",
+    "netInvested": "Zainwestowany kapitał",
+    "capitalInjected": "Łączny wpłacony kapitał netto",
+    "totalProfit": "Łączny zwrot / zysk",
+    "totalOperations": "Liczba operacji",
+    "operationsCountHint": "Zarejestrowane wyceny i transakcje",
+    "operationsHistory": "Historia operacji",
+    "noOperationsYet": "Brak operacji dla tego instrumentu",
+    "noOperationsYetDescription": "Zarejestruj pierwszą wycenę lub przypisz transakcję inwestycyjną, aby rozpocząć śledzenie historii.",
+    "loadingTitle": "Ładowanie szczegółów instrumentu",
+    "loadingDescription": "Pobieranie danych instrumentu i operacji...",
+    "notFoundTitle": "Nie znaleziono instrumentu",
+    "notFoundDescription": "Żądany instrument inwestycyjny nie został odnaleziony lub mógł zostać usunięty."
   }
 }

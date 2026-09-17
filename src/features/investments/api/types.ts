@@ -39,6 +39,14 @@ export type CreateSnapshotPayload = Omit<
   currency: CurrencyCode | (string & {});
 };
 
+export type UpdateSnapshotPayload = Omit<
+  components['schemas']['InvestmentOperationUpdateInput'],
+  'currency' | 'date'
+> & {
+  currency?: CurrencyCode | (string & {});
+  date?: string;
+};
+
 export type GetInstrumentsQuery = {
   kind?: InvestmentInstrumentKind;
   currency?: string;

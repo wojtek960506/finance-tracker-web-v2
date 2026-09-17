@@ -1,12 +1,17 @@
 {
+  "tabs": {
+    "instruments": "Instruments",
+    "operations": "Operations"
+  },
   "searchPlaceholder": "Search instruments...",
   "allKinds": "All",
   "newInstrument": "New Instrument",
   "emptyTitle": "No investment instruments yet",
   "emptyDescription": "Create your first instrument like Apple (AAPL), S&P 500 ETF, or Bitcoin to start tracking investments.",
   "noResultsTitle": "No matching instruments",
-  "noResultsDescription": "Try changing your search query or kind filter.",
+  "noResultsDescription": "Try changing your search query or filters.",
   "createFirstInstrument": "Add First Instrument",
+  "clearFilters": "Clear filters",
   "loadingTitle": "Loading instruments",
   "loadingDescription": "Fetching your investment instruments...",
   "loadingInstruments": "Loading instruments...",
@@ -16,6 +21,7 @@
   "quickAdd": "New",
   "loading": "Loading...",
   "createdOn": "Created",
+  "unknownInstrument": "Unknown Instrument",
   "kind": {
     "share": "Share",
     "fund": "Fund",
@@ -26,6 +32,28 @@
     "commodity": "Commodity",
     "custom": "Custom"
   },
+  "operationKind": {
+    "snapshot": "Snapshot",
+    "buy": "Buy",
+    "sell": "Sell",
+    "interest": "Interest",
+    "fee": "Fee"
+  },
+  "operations": {
+    "searchPlaceholder": "Search operations...",
+    "allInstruments": "All Instruments",
+    "recordSnapshot": "Record Snapshot",
+    "newInvestmentTransaction": "New Investment Transaction",
+    "snapshotBalance": "Balance",
+    "emptyTitle": "No operations yet",
+    "emptyDescription": "Record a balance snapshot or create an investment transaction to start seeing operations.",
+    "noResultsTitle": "No matching operations",
+    "noResultsDescription": "Try changing your search query or filters.",
+    "recordFirstSnapshot": "Record First Snapshot",
+    "clearFilters": "Clear filters",
+    "loadingTitle": "Loading operations",
+    "loadingDescription": "Fetching investment operations history..."
+  },
   "form": {
     "name": "Name",
     "namePlaceholder": "e.g. Apple, S&P 500 ETF",
@@ -34,13 +62,23 @@
     "currencyPlaceholder": "Select currency...",
     "searchCurrency": "Search currency...",
     "noCurrencyFound": "No currency found",
+    "instrument": "Instrument",
+    "balance": "Balance Amount",
+    "date": "Date",
     "notes": "Notes",
     "notesPlaceholder": "Optional description or ticker",
+    "snapshotNotePlaceholder": "Optional note (e.g. monthly valuation)",
     "createSubmit": "Create Instrument",
     "updateSubmit": "Save Changes",
+    "createSnapshotSubmit": "Record Snapshot",
+    "updateSnapshotSubmit": "Save Changes",
     "errors": {
       "nameRequired": "Name is required",
-      "currencyRequired": "Currency is required"
+      "currencyRequired": "Currency is required",
+      "instrumentRequired": "Instrument is required",
+      "amountRequired": "Balance amount is required",
+      "amountPositive": "Balance amount must be greater than 0",
+      "dateRequired": "Date is required"
     }
   },
   "modals": {
@@ -51,11 +89,22 @@
     "deleteTitle": "Delete Instrument",
     "deletePrompt": "Are you sure you want to delete instrument \"{{name}}\"?",
     "deleteHint": "Instrument can only be deleted when it is not used by any transaction or operation.",
-    "deleteConfirm": "Delete"
+    "deleteConfirm": "Delete",
+    "createSnapshotTitle": "Record Balance Snapshot",
+    "createSnapshotDescription": "Record the current total balance for an investment instrument at a specific date.",
+    "updateSnapshotTitle": "Edit Balance Snapshot",
+    "updateSnapshotDescription": "Update balance, currency, date, or notes for this valuation snapshot.",
+    "deleteSnapshotTitle": "Delete Snapshot",
+    "deleteSnapshotPrompt": "Are you sure you want to delete the snapshot for \"{{instrumentName}}\" from {{date}}?",
+    "deleteSnapshotHint": "This snapshot will be permanently removed from your investment history.",
+    "deleteSnapshotConfirm": "Delete Snapshot"
   },
   "actions": {
     "edit": "Edit instrument",
-    "delete": "Delete instrument"
+    "delete": "Delete instrument",
+    "viewTransaction": "View Transaction",
+    "editSnapshot": "Edit snapshot",
+    "deleteSnapshot": "Delete snapshot"
   },
   "cancel": "Cancel",
   "saving": "Saving...",
@@ -66,6 +115,30 @@
     "updatedTitle": "Instrument updated",
     "updateErrorTitle": "Could not update instrument",
     "deletedTitle": "Instrument deleted",
-    "deleteErrorTitle": "Could not delete instrument"
+    "deleteErrorTitle": "Could not delete instrument",
+    "snapshotCreatedTitle": "Snapshot recorded",
+    "snapshotCreateErrorTitle": "Could not record snapshot",
+    "snapshotUpdatedTitle": "Snapshot updated",
+    "snapshotUpdateErrorTitle": "Could not update snapshot",
+    "snapshotDeletedTitle": "Snapshot deleted",
+    "snapshotDeleteErrorTitle": "Could not delete snapshot"
+  },
+  "details": {
+    "backToInstruments": "Back to Instruments",
+    "currentValuation": "Current Valuation",
+    "noValuationRecorded": "No snapshot valuation recorded",
+    "lastSnapshotOn": "Last snapshot on",
+    "netInvested": "Net Invested",
+    "capitalInjected": "Total net capital injected",
+    "totalProfit": "Total Return / Profit",
+    "totalOperations": "Total Operations",
+    "operationsCountHint": "Historical snapshots and transactions",
+    "operationsHistory": "Operations History",
+    "noOperationsYet": "No operations recorded for this instrument",
+    "noOperationsYetDescription": "Record your first valuation snapshot or link an investment transaction to start tracking history.",
+    "loadingTitle": "Loading instrument details",
+    "loadingDescription": "Fetching asset metadata and operations...",
+    "notFoundTitle": "Instrument not found",
+    "notFoundDescription": "The requested investment instrument could not be found or may have been deleted."
   }
 }

@@ -21,13 +21,22 @@ vi.mock('@named-resources/components', () => ({
   NamedResourcesList: ({ kind }: { kind: string }) => <div>{kind}</div>,
 }));
 
+vi.mock('@investments/components', () => ({
+  InvestmentsLayout: ({ children }: { children: React.ReactNode }) => (
+    <div>{children}</div>
+  ),
+  InvestmentsPage: () => <div>investments</div>,
+  OperationsPage: () => <div>operations</div>,
+  InstrumentDetailsPage: () => <div>instrument-details</div>,
+}));
+
 vi.mock('@transactions/components', () => ({
   CreateBulkTransaction: () => <div>bulk</div>,
   CreateExchangeTransaction: () => <div>exchange</div>,
+  CreateInvestmentTransaction: () => <div>investment</div>,
   CreateStandardTransaction: () => <div>standard</div>,
   CreateTransaction: () => <div>new</div>,
   CreateTransferTransaction: () => <div>transfer</div>,
-  InvestmentsPage: () => <div>investments</div>,
   TransactionAccountStatistics: () => <div>stats</div>,
   TrashedTransactionDetails: () => <div>trash-details</div>,
   TrashedTransactionsList: () => <div>trash-list</div>,
@@ -71,6 +80,81 @@ describe('Title', () => {
       screen.getByRole('heading', { name: 'navigation:transactions' }),
     ).toBeInTheDocument();
     expect(screen.queryByRole('link')).not.toBeInTheDocument();
+  });
+
+  it('renders investments title on investments instruments page', () => {
+    render(
+      <MemoryRouter initialEntries={['/investments/instruments']}>
+        <Title />
+      </MemoryRouter>,
+    );
+
+    expect(
+      screen.getByRole('heading', { name: 'navigation:investments' }),
+    ).toBeInTheDocument();
+    expect(screen.queryByRole('link')).not.toBeInTheDocument();
+  });
+
+  it('renders investments title on investments operations page', () => {
+    render(
+      <MemoryRouter initialEntries={['/investments/operations']}>
+        <Title />
+      </MemoryRouter>,
+    );
+
+    expect(
+      screen.getByRole('heading', { name: 'navigation:investments' }),
+    ).toBeInTheDocument();
+    expect(screen.queryByRole('link')).not.toBeInTheDocument();
+  });
+
+  it('renders instrument details title on instrument details page', () => {
+    render(
+      <MemoryRouter initialEntries={['/investments/instruments/inst-1']}>
+        <Title />
+      </MemoryRouter>,
+    );
+
+    expect(
+      screen.getByRole('heading', { name: 'navigation:instrumentDetails' }),
+    ).toBeInTheDocument();
+    expect(screen.queryByRole('link')).not.toBeInTheDocument();
+  });
+
+  it('renders categories title on categories page', () => {
+    render(
+      <MemoryRouter initialEntries={['/transactions/categories']}>
+        <Title />
+      </MemoryRouter>,
+    );
+
+    expect(
+      screen.getByRole('heading', { name: 'navigation:categories' }),
+    ).toBeInTheDocument();
+  });
+
+  it('renders payment methods title on payment methods page', () => {
+    render(
+      <MemoryRouter initialEntries={['/transactions/payment-methods']}>
+        <Title />
+      </MemoryRouter>,
+    );
+
+    expect(
+      screen.getByRole('heading', { name: 'navigation:paymentMethods' }),
+    ).toBeInTheDocument();
+  });
+
+  it('renders bank accounts title on accounts page', () => {
+    render(
+      <MemoryRouter initialEntries={['/transactions/accounts']}>
+        <Title />
+      </MemoryRouter>,
+    );
+
+    expect(
+      screen.getByRole('heading', { name: 'navigation:bankAccounts' }),
+    ).toBeInTheDocument();
   });
 
   it('renders transaction details title on transaction details page', () => {

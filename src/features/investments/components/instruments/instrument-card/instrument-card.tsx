@@ -1,10 +1,12 @@
 import clsx from 'clsx';
-import { Edit2, Trash2 } from 'lucide-react';
+import { Pencil, Trash } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { Link, useNavigate } from 'react-router-dom';
 
 import type { InvestmentInstrument } from '@features/investments/api';
+import { InvestmentCard } from '@features/investments/components/shared';
 import { useLanguage } from '@shared/hooks';
-import { Button, Card } from '@shared/ui';
+import { Button } from '@shared/ui';
 
 import { InstrumentKindBadge } from '../instrument-kind-badge';
 
@@ -17,14 +19,13 @@ type InstrumentCardProps = {
 export const InstrumentCard = ({ instrument, onEdit, onDelete }: InstrumentCardProps) => {
   const { t } = useTranslation('investments');
   const { language } = useLanguage();
+  const navigate = useNavigate();
 
   return (
-    <Card
-      className={clsx(
-        'flex flex-col justify-between gap-3 p-4 sm:p-5',
-        'transition-all hover:border-fg/30 hover:shadow-sm',
-      )}
-      data-testid="instrument-card"
+    <InvestmentCard
+      testId="instrument-card"
+      className="group cursor-pointer transition-colors hover:border-primary/50"
+      onClick={() => navigate(`/investments/instruments/${instrument.id}`)}
     >
       <div className="flex flex-col gap-2">
         <div className="flex items-start justify-between gap-2">
@@ -35,8 +36,15 @@ export const InstrumentCard = ({ instrument, onEdit, onDelete }: InstrumentCardP
                 'break-words [overflow-wrap:anywhere]',
               )}
             >
-              {instrument.name}
+              <Link
+                to={`/investments/instruments/${instrument.id}`}
+                className="transition-colors group-hover:text-primary"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {instrument.name}
+              </Link>
             </h3>
+
             <div className="flex flex-wrap items-center gap-1.5">
               <InstrumentKindBadge kind={instrument.kind} />
               {instrument.currency ? (
@@ -52,25 +60,30 @@ export const InstrumentCard = ({ instrument, onEdit, onDelete }: InstrumentCardP
             </div>
           </div>
 
-          {/* Action buttons */}
           <div className="flex shrink-0 items-center gap-1">
             <Button
               variant="ghost"
               className="size-8 p-0 text-text-muted hover:text-foreground"
-              onClick={() => onEdit(instrument)}
+              onClick={(e) => {
+                e.stopPropagation();
+                onEdit(instrument);
+              }}
               title={t('actions.edit')}
               aria-label={t('actions.edit')}
             >
-              <Edit2 className="size-4" />
+              <Pencil className="size-4" />
             </Button>
             <Button
               variant="ghost"
               className="size-8 p-0 text-text-muted hover:text-destructive"
-              onClick={() => onDelete(instrument)}
+              onClick={(e) => {
+                e.stopPropagation();
+                onDelete(instrument);
+              }}
               title={t('actions.delete')}
               aria-label={t('actions.delete')}
             >
-              <Trash2 className="size-4" />
+              <Trash className="size-4" />
             </Button>
           </div>
         </div>
@@ -87,16 +100,11 @@ export const InstrumentCard = ({ instrument, onEdit, onDelete }: InstrumentCardP
         ) : null}
       </div>
 
-      <footer
-        className={clsx(
-          'flex items-center justify-between border-t border-fg/10 pt-2',
-          'text-xs text-text-muted',
-        )}
-      >
+      <footer className="border-t border-fg/10 pt-2 text-xs text-text-muted">
         <span>
           {t('createdOn')}: {new Date(instrument.createdAt).toLocaleDateString(language)}
         </span>
       </footer>
-    </Card>
+    </InvestmentCard>
   );
 };

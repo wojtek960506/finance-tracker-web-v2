@@ -1,12 +1,17 @@
 {
+  "tabs": {
+    "instruments": "Instrumente",
+    "operations": "Operationen"
+  },
   "searchPlaceholder": "Instrumente suchen...",
   "allKinds": "Alle",
   "newInstrument": "Neues Instrument",
   "emptyTitle": "Noch keine Anlageinstrumente",
   "emptyDescription": "Erstellen Sie Ihr erstes Instrument wie Apple (AAPL), S&P 500 ETF oder Bitcoin, um Investitionen zu verfolgen.",
   "noResultsTitle": "Keine passenden Instrumente",
-  "noResultsDescription": "Versuchen Sie, die Suchanfrage oder den Typfilter zu ändern.",
+  "noResultsDescription": "Versuchen Sie, den Suchbegriff oder die Filter zu ändern.",
   "createFirstInstrument": "Erstes Instrument hinzufügen",
+  "clearFilters": "Filter zurücksetzen",
   "loadingTitle": "Lade Instrumente",
   "loadingDescription": "Lade Ihre Anlageinstrumente...",
   "loadingInstruments": "Lade Instrumente...",
@@ -16,6 +21,7 @@
   "quickAdd": "Neu",
   "loading": "Laden...",
   "createdOn": "Erstellt am",
+  "unknownInstrument": "Unbekanntes Instrument",
   "kind": {
     "share": "Aktie",
     "fund": "Fonds",
@@ -26,6 +32,28 @@
     "commodity": "Rohstoff",
     "custom": "Benutzerdefiniert"
   },
+  "operationKind": {
+    "snapshot": "Momentaufnahme",
+    "buy": "Kauf",
+    "sell": "Verkauf",
+    "interest": "Zinsen",
+    "fee": "Gebühr"
+  },
+  "operations": {
+    "searchPlaceholder": "Operationen suchen...",
+    "allInstruments": "Alle Instrumente",
+    "recordSnapshot": "Momentaufnahme erfassen",
+    "newInvestmentTransaction": "Neue Anlagetransaktion",
+    "snapshotBalance": "Saldo",
+    "emptyTitle": "Noch keine Operationen",
+    "emptyDescription": "Erfassen Sie eine Momentaufnahme oder erstellen Sie eine Anlagetransaktion, um die Historie anzuzeigen.",
+    "noResultsTitle": "Keine passenden Operationen",
+    "noResultsDescription": "Versuchen Sie, den Suchbegriff oder die Filter zu ändern.",
+    "recordFirstSnapshot": "Erste Momentaufnahme erfassen",
+    "clearFilters": "Filter zurücksetzen",
+    "loadingTitle": "Lade Operationen",
+    "loadingDescription": "Lade Historie der Anlageoperationen..."
+  },
   "form": {
     "name": "Name",
     "namePlaceholder": "z. B. Apple, S&P 500 ETF",
@@ -34,13 +62,23 @@
     "currencyPlaceholder": "Währung auswählen...",
     "searchCurrency": "Währung suchen...",
     "noCurrencyFound": "Keine Währung gefunden",
+    "instrument": "Instrument",
+    "balance": "Saldobetrag",
+    "date": "Datum",
     "notes": "Notizen",
     "notesPlaceholder": "Optionale Beschreibung oder Ticker",
+    "snapshotNotePlaceholder": "Optionale Notiz (z. B. monatliche Bewertung)",
     "createSubmit": "Instrument erstellen",
     "updateSubmit": "Änderungen speichern",
+    "createSnapshotSubmit": "Momentaufnahme erfassen",
+    "updateSnapshotSubmit": "Änderungen speichern",
     "errors": {
       "nameRequired": "Name ist erforderlich",
-      "currencyRequired": "Währung ist erforderlich"
+      "currencyRequired": "Währung ist erforderlich",
+      "instrumentRequired": "Instrument ist erforderlich",
+      "amountRequired": "Saldobetrag ist erforderlich",
+      "amountPositive": "Saldobetrag muss größer als 0 sein",
+      "dateRequired": "Datum ist erforderlich"
     }
   },
   "modals": {
@@ -51,11 +89,22 @@
     "deleteTitle": "Instrument löschen",
     "deletePrompt": "Möchten Sie das Instrument „{{name}}“ wirklich löschen?",
     "deleteHint": "Ein Instrument kann nur gelöscht werden, wenn es von keiner Transaktion oder Operation verwendet wird.",
-    "deleteConfirm": "Löschen"
+    "deleteConfirm": "Löschen",
+    "createSnapshotTitle": "Momentaufnahme erfassen",
+    "createSnapshotDescription": "Erfassen Sie den aktuellen Gesamtsaldo eines Anlageinstruments an einem bestimmten Datum.",
+    "updateSnapshotTitle": "Momentaufnahme bearbeiten",
+    "updateSnapshotDescription": "Aktualisieren Sie den Saldo, die Währung, das Datum oder Notizen dieser Momentaufnahme.",
+    "deleteSnapshotTitle": "Momentaufnahme löschen",
+    "deleteSnapshotPrompt": "Möchten Sie die Momentaufnahme für „{{instrumentName}}“ vom {{date}} wirklich löschen?",
+    "deleteSnapshotHint": "Diese Momentaufnahme wird dauerhaft aus Ihrer Anlagehistorie entfernt.",
+    "deleteSnapshotConfirm": "Momentaufnahme löschen"
   },
   "actions": {
     "edit": "Instrument bearbeiten",
-    "delete": "Instrument löschen"
+    "delete": "Instrument löschen",
+    "viewTransaction": "Transaktion anzeigen",
+    "editSnapshot": "Momentaufnahme bearbeiten",
+    "deleteSnapshot": "Momentaufnahme löschen"
   },
   "cancel": "Abbrechen",
   "saving": "Speichern...",
@@ -66,6 +115,30 @@
     "updatedTitle": "Instrument aktualisiert",
     "updateErrorTitle": "Instrument konnte nicht aktualisiert werden",
     "deletedTitle": "Instrument gelöscht",
-    "deleteErrorTitle": "Instrument konnte nicht gelöscht werden"
+    "deleteErrorTitle": "Instrument konnte nicht gelöscht werden",
+    "snapshotCreatedTitle": "Momentaufnahme erfasst",
+    "snapshotCreateErrorTitle": "Momentaufnahme konnte nicht erfasst werden",
+    "snapshotUpdatedTitle": "Momentaufnahme aktualisiert",
+    "snapshotUpdateErrorTitle": "Momentaufnahme konnte nicht aktualisiert werden",
+    "snapshotDeletedTitle": "Momentaufnahme gelöscht",
+    "snapshotDeleteErrorTitle": "Momentaufnahme konnte nicht gelöscht werden"
+  },
+  "details": {
+    "backToInstruments": "Zurück zu Instrumenten",
+    "currentValuation": "Aktuelle Bewertung",
+    "noValuationRecorded": "Keine Momentaufnahme erfasst",
+    "lastSnapshotOn": "Letzte Momentaufnahme am",
+    "netInvested": "Investiertes Kapital",
+    "capitalInjected": "Gesamtes eingezahltes Nettokapital",
+    "totalProfit": "Gesamtertrag / Gewinn",
+    "totalOperations": "Anzahl Operationen",
+    "operationsCountHint": "Erfasste Momentaufnahmen und Transaktionen",
+    "operationsHistory": "Historie der Operationen",
+    "noOperationsYet": "Keine Operationen für dieses Instrument erfasst",
+    "noOperationsYetDescription": "Erfassen Sie eine erste Momentaufnahme oder verknüpfen Sie eine Anlagetransaktion, um die Historie zu verfolgen.",
+    "loadingTitle": "Lade Instrumentendetails",
+    "loadingDescription": "Lade Anlagedaten und Operationen...",
+    "notFoundTitle": "Instrument nicht gefunden",
+    "notFoundDescription": "Das angeforderte Anlageinstrument wurde nicht gefunden oder wurde gelöscht."
   }
 }

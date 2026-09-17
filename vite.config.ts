@@ -26,6 +26,7 @@ export default defineConfig({
       '@shared': path.resolve(__dirname, './src/shared'),
       '@auth': path.resolve(__dirname, './src/features/auth'),
       '@transactions': path.resolve(__dirname, './src/features/transactions'),
+      '@investments': path.resolve(__dirname, './src/features/investments'),
       '@test-utils': path.resolve(__dirname, './src/test-utils'),
       '@named-resources': path.resolve(__dirname, './src/features/named-resources'),
     },

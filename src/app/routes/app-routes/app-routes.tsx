@@ -1,3 +1,8 @@
+import {
+  InstrumentDetailsPage,
+  InvestmentsPage,
+  OperationsPage,
+} from '@investments/components';
 import { type ReactNode } from 'react';
 import { matchPath, Navigate } from 'react-router-dom';
 
@@ -10,7 +15,6 @@ import {
   CreateStandardTransaction,
   CreateTransaction,
   CreateTransferTransaction,
-  InvestmentsPage,
   TransactionAccountStatistics,
   TransactionDetails,
   TransactionsPage,
@@ -64,11 +68,6 @@ export const PROTECTED_APP_ROUTES: AppRouteConfig[] = [
     title: { namespace: 'navigation', key: 'transactionsTrash' },
   },
   {
-    path: '/transactions/investments',
-    element: <InvestmentsPage />,
-    title: { namespace: 'navigation', key: 'investments' },
-  },
-  {
     path: '/transactions/trash/:transactionId',
     element: <TrashedTransactionDetails />,
     title: { namespace: 'navigation', key: 'trashedTransactionDetails' },
@@ -109,9 +108,19 @@ export const PROTECTED_APP_ROUTES: AppRouteConfig[] = [
     title: { namespace: 'navigation', key: 'transactionStatistics' },
   },
   {
-    path: '/transactions/:transactionId',
-    element: <TransactionDetails />,
-    title: { namespace: 'navigation', key: 'transactionDetails' },
+    path: '/transactions/categories',
+    element: <NamedResourcesPage kind="categories" />,
+    title: { namespace: 'navigation', key: 'categories' },
+  },
+  {
+    path: '/transactions/payment-methods',
+    element: <NamedResourcesPage kind="paymentMethods" />,
+    title: { namespace: 'navigation', key: 'paymentMethods' },
+  },
+  {
+    path: '/transactions/accounts',
+    element: <NamedResourcesPage kind="accounts" />,
+    title: { namespace: 'navigation', key: 'bankAccounts' },
   },
   {
     path: '/transactions/:transactionId/edit',
@@ -119,19 +128,28 @@ export const PROTECTED_APP_ROUTES: AppRouteConfig[] = [
     title: { namespace: 'navigation', key: 'editTransaction' },
   },
   {
-    path: '/categories',
-    element: <NamedResourcesPage kind="categories" />,
-    title: { namespace: 'navigation', key: 'categories' },
+    path: '/transactions/:transactionId',
+    element: <TransactionDetails />,
+    title: { namespace: 'navigation', key: 'transactionDetails' },
   },
   {
-    path: '/paymentMethods',
-    element: <NamedResourcesPage kind="paymentMethods" />,
-    title: { namespace: 'navigation', key: 'paymentMethods' },
+    path: '/investments',
+    element: <Navigate to="/investments/instruments" replace />,
   },
   {
-    path: '/accounts',
-    element: <NamedResourcesPage kind="accounts" />,
-    title: { namespace: 'navigation', key: 'bankAccounts' },
+    path: '/investments/instruments',
+    element: <InvestmentsPage />,
+    title: { namespace: 'navigation', key: 'investments' },
+  },
+  {
+    path: '/investments/operations',
+    element: <OperationsPage />,
+    title: { namespace: 'navigation', key: 'investments' },
+  },
+  {
+    path: '/investments/instruments/:id',
+    element: <InstrumentDetailsPage />,
+    title: { namespace: 'navigation', key: 'instrumentDetails' },
   },
   {
     path: '/vehicles',

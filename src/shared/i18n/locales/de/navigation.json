@@ -2,6 +2,7 @@
   "hi": "Hallo",
   "transactions": "Transaktionen",
   "investments": "Investitionen",
+  "instrumentDetails": "Instrumentendetails",
   "transactionsTrash": "Transaktionspapierkorb",
   "newTransaction": "Neue Transaktion",
   "newStandardTransaction": "Neue reguläre Transaktion",

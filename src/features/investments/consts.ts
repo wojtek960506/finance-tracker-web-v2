@@ -1,4 +1,4 @@
-import type { InvestmentInstrumentKind } from './api/types';
+import type { InvestmentInstrumentKind, InvestmentOperationKind } from './api/types';
 
 export const INSTRUMENT_KINDS: InvestmentInstrumentKind[] = [
   'share',
@@ -8,3 +8,11 @@ export const INSTRUMENT_KINDS: InvestmentInstrumentKind[] = [
 ] as const;
 
 export const DEFAULT_INSTRUMENT_KIND: InvestmentInstrumentKind = 'share';
+
+export const OPERATION_KINDS: InvestmentOperationKind[] = [
+  'snapshot',
+  'buy',
+  'sell',
+  'interest',
+  'fee',
+] as const;

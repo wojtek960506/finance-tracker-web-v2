@@ -1,12 +1,17 @@
 {
+  "tabs": {
+    "instruments": "Инструменты",
+    "operations": "Операции"
+  },
   "searchPlaceholder": "Поиск инструментов...",
   "allKinds": "Все",
   "newInstrument": "Новый инструмент",
   "emptyTitle": "Инвестиционные инструменты еще не добавлены",
   "emptyDescription": "Создайте свой первый инструмент, например Apple (AAPL), S&P 500 ETF или Bitcoin, чтобы начать отслеживание инвестиций.",
   "noResultsTitle": "Нет подходящих инструментов",
-  "noResultsDescription": "Попробуйте изменить поисковый запрос или фильтр типа.",
+  "noResultsDescription": "Попробуйте изменить поисковый запрос или фильтры.",
   "createFirstInstrument": "Добавить первый инструмент",
+  "clearFilters": "Сбросить фильтры",
   "loadingTitle": "Загрузка инструментов",
   "loadingDescription": "Получение ваших инвестиционных инструментов...",
   "loadingInstruments": "Загрузка инструментов...",
@@ -16,6 +21,7 @@
   "quickAdd": "Новый",
   "loading": "Загрузка...",
   "createdOn": "Создано",
+  "unknownInstrument": "Неизвестный инструмент",
   "kind": {
     "share": "Акция",
     "fund": "Фонд",
@@ -26,6 +32,28 @@
     "commodity": "Товар",
     "custom": "Пользовательский"
   },
+  "operationKind": {
+    "snapshot": "Оценка",
+    "buy": "Покупка",
+    "sell": "Продажа",
+    "interest": "Проценты",
+    "fee": "Комиссия"
+  },
+  "operations": {
+    "searchPlaceholder": "Поиск операций...",
+    "allInstruments": "Все инструменты",
+    "recordSnapshot": "Записать оценку",
+    "newInvestmentTransaction": "Новая инвестиционная транзакция",
+    "snapshotBalance": "Баланс",
+    "emptyTitle": "Операций пока нет",
+    "emptyDescription": "Запишите оценку баланса или создайте инвестиционную транзакцию, чтобы увидеть историю операций.",
+    "noResultsTitle": "Нет подходящих операций",
+    "noResultsDescription": "Попробуйте изменить поисковый запрос или фильтры.",
+    "recordFirstSnapshot": "Записать первую оценку",
+    "clearFilters": "Сбросить фильтры",
+    "loadingTitle": "Загрузка операций",
+    "loadingDescription": "Получение истории инвестиционных операций..."
+  },
   "form": {
     "name": "Название",
     "namePlaceholder": "напр. Apple, S&P 500 ETF",
@@ -34,13 +62,23 @@
     "currencyPlaceholder": "Выберите валюту...",
     "searchCurrency": "Поиск валюты...",
     "noCurrencyFound": "Валюта не найдена",
+    "instrument": "Инструмент",
+    "balance": "Сумма баланса",
+    "date": "Дата",
     "notes": "Заметки",
     "notesPlaceholder": "Дополнительное описание или тикер",
+    "snapshotNotePlaceholder": "Опциональная заметка (напр., ежемесячная оценка)",
     "createSubmit": "Создать инструмент",
     "updateSubmit": "Сохранить изменения",
+    "createSnapshotSubmit": "Записать оценку",
+    "updateSnapshotSubmit": "Сохранить изменения",
     "errors": {
       "nameRequired": "Название обязательно",
-      "currencyRequired": "Валюта обязательна"
+      "currencyRequired": "Валюта обязательна",
+      "instrumentRequired": "Инструмент обязателен",
+      "amountRequired": "Сумма баланса обязательна",
+      "amountPositive": "Сумма баланса должна быть больше 0",
+      "dateRequired": "Дата обязательна"
     }
   },
   "modals": {
@@ -51,11 +89,22 @@
     "deleteTitle": "Удалить инструмент",
     "deletePrompt": "Вы уверены, что хотите удалить инструмент «{{name}}»?",
     "deleteHint": "Инструмент можно удалить только в том случае, если он не используется ни в одной транзакции или операции.",
-    "deleteConfirm": "Удалить"
+    "deleteConfirm": "Удалить",
+    "createSnapshotTitle": "Записать оценку баланса",
+    "createSnapshotDescription": "Зафиксируйте текущий общий баланс инвестиционного инструмента на определенную дату.",
+    "updateSnapshotTitle": "Редактировать оценку баланса",
+    "updateSnapshotDescription": "Обновите баланс, валюту, дату или заметки для этой оценки.",
+    "deleteSnapshotTitle": "Удалить оценку",
+    "deleteSnapshotPrompt": "Вы уверены, что хотите удалить оценку для «{{instrumentName}}» от {{date}}?",
+    "deleteSnapshotHint": "Эта оценка будет безвозвратно удалена из истории ваших инвестиций.",
+    "deleteSnapshotConfirm": "Удалить оценку"
   },
   "actions": {
     "edit": "Редактировать инструмент",
-    "delete": "Удалить инструмент"
+    "delete": "Удалить инструмент",
+    "viewTransaction": "Просмотреть транзакцию",
+    "editSnapshot": "Редактировать оценку",
+    "deleteSnapshot": "Удалить оценку"
   },
   "cancel": "Отмена",
   "saving": "Сохранение...",
@@ -66,6 +115,30 @@
     "updatedTitle": "Инструмент обновлен",
     "updateErrorTitle": "Не удалось обновить инструмент",
     "deletedTitle": "Инструмент удален",
-    "deleteErrorTitle": "Не удалось удалить инструмент"
+    "deleteErrorTitle": "Не удалось удалить инструмент",
+    "snapshotCreatedTitle": "Оценка записана",
+    "snapshotCreateErrorTitle": "Не удалось записать оценку",
+    "snapshotUpdatedTitle": "Оценка обновлена",
+    "snapshotUpdateErrorTitle": "Не удалось обновить оценку",
+    "snapshotDeletedTitle": "Оценка удалена",
+    "snapshotDeleteErrorTitle": "Не удалось удалить оценку"
+  },
+  "details": {
+    "backToInstruments": "Назад к инструментам",
+    "currentValuation": "Текущая оценка",
+    "noValuationRecorded": "Оценка еще не зафиксирована",
+    "lastSnapshotOn": "Последняя оценка от",
+    "netInvested": "Вложенный капитал",
+    "capitalInjected": "Всего внесено капитала нетто",
+    "totalProfit": "Общий доход / прибыль",
+    "totalOperations": "Количество операций",
+    "operationsCountHint": "Зафиксированные оценки и транзакции",
+    "operationsHistory": "История операций",
+    "noOperationsYet": "Для этого инструмента еще нет операций",
+    "noOperationsYetDescription": "Зафиксируйте первую оценку баланса или привяжите инвестиционную транзакцию, чтобы начать отслеживание истории.",
+    "loadingTitle": "Загрузка данных инструмента",
+    "loadingDescription": "Получение сведений об активе и операциях...",
+    "notFoundTitle": "Инструмент не найден",
+    "notFoundDescription": "Запрошенный инвестиционный инструмент не найден или был удален."
   }
 }

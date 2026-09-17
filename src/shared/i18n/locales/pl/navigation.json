@@ -2,6 +2,7 @@
   "hi": "Cześć",
   "transactions": "Transakcje",
   "investments": "Inwestycje",
+  "instrumentDetails": "Szczegóły instrumentu",
   "transactionsTrash": "Kosz transakcji",
   "newTransaction": "Nowa transakcja",
   "newStandardTransaction": "Nowa zwykła transakcja",

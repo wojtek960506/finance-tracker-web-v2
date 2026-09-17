@@ -14,12 +14,14 @@ import type { InvestmentTransactionFormValues } from '../utils';
 type InvestmentInstrumentFieldProps = {
   control: Control<InvestmentTransactionFormValues>;
   errorMessage?: string;
+  disabled?: boolean;
   onAddNewInstrument: () => void;
 };
 
 export const InvestmentInstrumentField = ({
   control,
   errorMessage,
+  disabled,
   onAddNewInstrument,
 }: InvestmentInstrumentFieldProps) => {
   const { t } = useTranslation('transactions');
@@ -35,6 +37,7 @@ export const InvestmentInstrumentField = ({
             value={field.value}
             onChange={field.onChange}
             placeholder={t('selectInstrumentPlaceholder')}
+            disabled={disabled}
             onAddNewInstrument={onAddNewInstrument}
           />
         )}

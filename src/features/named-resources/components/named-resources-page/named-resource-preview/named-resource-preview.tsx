@@ -253,12 +253,17 @@ export const NamedResourcePreview = ({
           <div className="flex items-center gap-1">
             {namedResource.type !== 'system' ? (
               <>
-                <Button variant="secondary" onClick={() => setIsEditing(true)}>
+                <Button
+                  variant="secondary"
+                  size="icon"
+                  onClick={() => setIsEditing(true)}
+                >
                   <Pencil />
                 </Button>
                 <Button
                   ref={deleteButtonRef}
                   variant="destructive"
+                  size="icon"
                   onClick={openDeleteModal}
                 >
                   <Trash />
@@ -269,6 +274,7 @@ export const NamedResourcePreview = ({
             )}
             <Button
               variant="default"
+              size="icon"
               onClick={() => void handleFavoriteClick()}
               disabled={isFavoriteMutationPending}
               aria-label={

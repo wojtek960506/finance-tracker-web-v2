@@ -2,6 +2,7 @@
   "hi": "Привет",
   "transactions": "Транзакции",
   "investments": "Инвестиции",
+  "instrumentDetails": "Детали инструмента",
   "transactionsTrash": "Корзина транзакций",
   "newTransaction": "Новая транзакция",
   "newStandardTransaction": "Новая обычная транзакция",

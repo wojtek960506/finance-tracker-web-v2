@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 import { getInstruments, type InvestmentInstrument } from '@features/investments/api';
 
@@ -23,6 +23,13 @@ export const useInstrumentsList = () => {
     queryFn: async () => await getInstruments(),
   });
 
+  const resetFilters = useCallback(() => {
+    setSearchQuery('');
+    setSelectedKind('all');
+  }, []);
+
+  const hasActiveFilters = Boolean(searchQuery.trim()) || selectedKind !== 'all';
+
   const filteredInstruments = useMemo(() => {
     return instruments.filter((inst) => {
       const matchesSearch =
@@ -42,6 +49,8 @@ export const useInstrumentsList = () => {
     setSearchQuery,
     selectedKind,
     setSelectedKind,
+    resetFilters,
+    hasActiveFilters,
     isCreateModalOpen,
     setIsCreateModalOpen,
     editingInstrument,

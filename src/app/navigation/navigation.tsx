@@ -72,17 +72,7 @@ export const Navigation = () => {
           <ul>
             <li>
               <NavigationItem
-                to="/transactions/investments"
-                title={t('investments')}
-                Icon={ChartNoAxesColumn}
-                additionalAction={() =>
-                  setNavigationItemExpanded(TRANSACTIONS_NAVIGATION_ITEM_ID, true)
-                }
-              />
-            </li>
-            <li>
-              <NavigationItem
-                to="/categories"
+                to="/transactions/categories"
                 title={t('categories')}
                 Icon={Tags}
                 additionalAction={() =>
@@ -92,7 +82,7 @@ export const Navigation = () => {
             </li>
             <li>
               <NavigationItem
-                to="/paymentMethods"
+                to="/transactions/payment-methods"
                 title={t('paymentMethods')}
                 Icon={WalletCards}
                 additionalAction={() =>
@@ -102,7 +92,7 @@ export const Navigation = () => {
             </li>
             <li>
               <NavigationItem
-                to="/accounts"
+                to="/transactions/accounts"
                 title={t('bankAccounts')}
                 Icon={Landmark}
                 additionalAction={() =>
@@ -134,6 +124,16 @@ export const Navigation = () => {
         </Collapsible>
       </li>
 
+      <li>
+        <NavigationItem
+          to="/investments"
+          title={t('investments')}
+          Icon={ChartNoAxesColumn}
+          additionalAction={() =>
+            setNavigationItemExpanded(TRANSACTIONS_NAVIGATION_ITEM_ID, false)
+          }
+        />
+      </li>
       <li>
         <NavigationItem
           to="/vehicles"
