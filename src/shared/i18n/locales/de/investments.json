@@ -42,7 +42,8 @@
   "operations": {
     "searchPlaceholder": "Operationen suchen...",
     "allInstruments": "Alle Instrumente",
-    "newSnapshot": "Momentaufnahme erfassen",
+    "recordSnapshot": "Momentaufnahme erfassen",
+    "newInvestmentTransaction": "Neue Anlagetransaktion",
     "snapshotBalance": "Saldo",
     "emptyTitle": "Noch keine Operationen",
     "emptyDescription": "Erfassen Sie eine Momentaufnahme oder erstellen Sie eine Anlagetransaktion, um die Historie anzuzeigen.",
@@ -61,13 +62,22 @@
     "currencyPlaceholder": "Währung auswählen...",
     "searchCurrency": "Währung suchen...",
     "noCurrencyFound": "Keine Währung gefunden",
+    "instrument": "Instrument",
+    "balance": "Saldobetrag",
+    "date": "Datum",
     "notes": "Notizen",
     "notesPlaceholder": "Optionale Beschreibung oder Ticker",
+    "snapshotNotePlaceholder": "Optionale Notiz (z. B. monatliche Bewertung)",
     "createSubmit": "Instrument erstellen",
     "updateSubmit": "Änderungen speichern",
+    "createSnapshotSubmit": "Momentaufnahme erfassen",
     "errors": {
       "nameRequired": "Name ist erforderlich",
-      "currencyRequired": "Währung ist erforderlich"
+      "currencyRequired": "Währung ist erforderlich",
+      "instrumentRequired": "Instrument ist erforderlich",
+      "amountRequired": "Saldobetrag ist erforderlich",
+      "amountPositive": "Saldobetrag muss größer als 0 sein",
+      "dateRequired": "Datum ist erforderlich"
     }
   },
   "modals": {
@@ -78,7 +88,13 @@
     "deleteTitle": "Instrument löschen",
     "deletePrompt": "Möchten Sie das Instrument „{{name}}“ wirklich löschen?",
     "deleteHint": "Ein Instrument kann nur gelöscht werden, wenn es von keiner Transaktion oder Operation verwendet wird.",
-    "deleteConfirm": "Löschen"
+    "deleteConfirm": "Löschen",
+    "createSnapshotTitle": "Momentaufnahme erfassen",
+    "createSnapshotDescription": "Erfassen Sie den aktuellen Gesamtsaldo eines Anlageinstruments an einem bestimmten Datum.",
+    "deleteSnapshotTitle": "Momentaufnahme löschen",
+    "deleteSnapshotPrompt": "Möchten Sie die Momentaufnahme für „{{instrumentName}}“ vom {{date}} wirklich löschen?",
+    "deleteSnapshotHint": "Diese Momentaufnahme wird dauerhaft aus Ihrer Anlagehistorie entfernt.",
+    "deleteSnapshotConfirm": "Momentaufnahme löschen"
   },
   "actions": {
     "edit": "Instrument bearbeiten",
@@ -95,6 +111,10 @@
     "updatedTitle": "Instrument aktualisiert",
     "updateErrorTitle": "Instrument konnte nicht aktualisiert werden",
     "deletedTitle": "Instrument gelöscht",
-    "deleteErrorTitle": "Instrument konnte nicht gelöscht werden"
+    "deleteErrorTitle": "Instrument konnte nicht gelöscht werden",
+    "snapshotCreatedTitle": "Momentaufnahme erfasst",
+    "snapshotCreateErrorTitle": "Momentaufnahme konnte nicht erfasst werden",
+    "snapshotDeletedTitle": "Momentaufnahme gelöscht",
+    "snapshotDeleteErrorTitle": "Momentaufnahme konnte nicht gelöscht werden"
   }
 }

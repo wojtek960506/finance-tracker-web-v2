@@ -22,7 +22,7 @@ export const InstrumentCard = ({ instrument, onEdit, onDelete }: InstrumentCardP
     <Card
       className={clsx(
         'flex flex-col justify-between gap-3 p-4 sm:p-5',
-        'transition-all hover:border-fg/30 hover:shadow-sm',
+        'border-fg/15 transition-all hover:border-fg/40 hover:shadow-sm',
       )}
       data-testid="instrument-card"
     >

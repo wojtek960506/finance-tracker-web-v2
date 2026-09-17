@@ -2,11 +2,12 @@ import { useTranslation } from 'react-i18next';
 
 import { LoadingCard } from '@shared/ui';
 
-import { OperationsFilters } from '../operations-filters';
+import { OperationsListHeader } from '../operations-list-header';
 
 import { useOperationsList } from './hooks';
 import { OperationsListEmptyState } from './operations-list-empty-state';
 import { OperationsListGrid } from './operations-list-grid';
+import { OperationsListModals } from './operations-list-modals';
 
 export const OperationsList = () => {
   const { t } = useTranslation('investments');
@@ -19,6 +20,10 @@ export const OperationsList = () => {
     selectedInstrumentId,
     setSelectedInstrumentId,
     resetFilters,
+    isCreateSnapshotModalOpen,
+    setIsCreateSnapshotModalOpen,
+    deletingSnapshot,
+    setDeletingSnapshot,
     instruments,
     instrumentsMap,
     operations,
@@ -44,7 +49,7 @@ export const OperationsList = () => {
 
   return (
     <div className="flex flex-col gap-4 p-1" data-testid="operations-list">
-      <OperationsFilters
+      <OperationsListHeader
         searchQuery={searchQuery}
         onSearchQueryChange={setSearchQuery}
         selectedKind={selectedKind}
@@ -53,6 +58,7 @@ export const OperationsList = () => {
         onSelectedInstrumentIdChange={setSelectedInstrumentId}
         instruments={instruments}
         isFetching={isFetching}
+        onCreateSnapshot={() => setIsCreateSnapshotModalOpen(true)}
       />
 
       {filteredOperations.length === 0 ? (
@@ -64,8 +70,17 @@ export const OperationsList = () => {
         <OperationsListGrid
           operations={filteredOperations}
           instrumentsMap={instrumentsMap}
+          onDeleteSnapshot={(snapshot) => setDeletingSnapshot(snapshot)}
         />
       )}
+
+      <OperationsListModals
+        isCreateSnapshotModalOpen={isCreateSnapshotModalOpen}
+        onCloseCreateSnapshotModal={() => setIsCreateSnapshotModalOpen(false)}
+        deletingSnapshot={deletingSnapshot}
+        onCloseDeleteSnapshotModal={() => setDeletingSnapshot(null)}
+        instrumentsMap={instrumentsMap}
+      />
     </div>
   );
 };

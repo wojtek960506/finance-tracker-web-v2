@@ -4,3 +4,4 @@ export * from './investments-layout';
 export * from './investments-page';
 export * from './operations';
 export * from './shared';
+export * from './snapshots';

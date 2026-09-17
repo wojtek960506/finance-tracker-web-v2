@@ -42,7 +42,8 @@
   "operations": {
     "searchPlaceholder": "Search operations...",
     "allInstruments": "All Instruments",
-    "newSnapshot": "Record Snapshot",
+    "recordSnapshot": "Record Snapshot",
+    "newInvestmentTransaction": "New Investment Transaction",
     "snapshotBalance": "Balance",
     "emptyTitle": "No operations yet",
     "emptyDescription": "Record a balance snapshot or create an investment transaction to start seeing operations.",
@@ -61,13 +62,22 @@
     "currencyPlaceholder": "Select currency...",
     "searchCurrency": "Search currency...",
     "noCurrencyFound": "No currency found",
+    "instrument": "Instrument",
+    "balance": "Balance Amount",
+    "date": "Date",
     "notes": "Notes",
     "notesPlaceholder": "Optional description or ticker",
+    "snapshotNotePlaceholder": "Optional note (e.g. monthly valuation)",
     "createSubmit": "Create Instrument",
     "updateSubmit": "Save Changes",
+    "createSnapshotSubmit": "Record Snapshot",
     "errors": {
       "nameRequired": "Name is required",
-      "currencyRequired": "Currency is required"
+      "currencyRequired": "Currency is required",
+      "instrumentRequired": "Instrument is required",
+      "amountRequired": "Balance amount is required",
+      "amountPositive": "Balance amount must be greater than 0",
+      "dateRequired": "Date is required"
     }
   },
   "modals": {
@@ -78,7 +88,13 @@
     "deleteTitle": "Delete Instrument",
     "deletePrompt": "Are you sure you want to delete instrument \"{{name}}\"?",
     "deleteHint": "Instrument can only be deleted when it is not used by any transaction or operation.",
-    "deleteConfirm": "Delete"
+    "deleteConfirm": "Delete",
+    "createSnapshotTitle": "Record Balance Snapshot",
+    "createSnapshotDescription": "Record the current total balance for an investment instrument at a specific date.",
+    "deleteSnapshotTitle": "Delete Snapshot",
+    "deleteSnapshotPrompt": "Are you sure you want to delete the snapshot for \"{{instrumentName}}\" from {{date}}?",
+    "deleteSnapshotHint": "This snapshot will be permanently removed from your investment history.",
+    "deleteSnapshotConfirm": "Delete Snapshot"
   },
   "actions": {
     "edit": "Edit instrument",
@@ -95,6 +111,10 @@
     "updatedTitle": "Instrument updated",
     "updateErrorTitle": "Could not update instrument",
     "deletedTitle": "Instrument deleted",
-    "deleteErrorTitle": "Could not delete instrument"
+    "deleteErrorTitle": "Could not delete instrument",
+    "snapshotCreatedTitle": "Snapshot recorded",
+    "snapshotCreateErrorTitle": "Could not record snapshot",
+    "snapshotDeletedTitle": "Snapshot deleted",
+    "snapshotDeleteErrorTitle": "Could not delete snapshot"
   }
 }

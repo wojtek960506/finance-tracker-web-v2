@@ -111,8 +111,9 @@ src/
 - [x] **4. Operations Listing & Filters (Point 4)**:
   - [x] Implement `OperationsList`, `OperationCard`, `OperationKindBadge`, and `OperationsFilters` using `getOperations`.
 
-- [ ] **5. Create Snapshot Flow (Point 3 & 4)**:
-  - [ ] Implement `CreateSnapshotModal` and `SnapshotForm` with `createSnapshotOperation` mutation.
+- [x] **5. Create & Delete Snapshot Flow (Point 3 & 4)**:
+  - [x] Implement `CreateSnapshotModal`, `DeleteSnapshotModal`, and `SnapshotForm` with `createSnapshotOperation` and `deleteOperation` mutations.
+  - [x] Add 2 action buttons in `OperationsListHeader` (Record Snapshot & New Investment Transaction).
 - [ ] **6. Instrument Details Page (Point 3)**:
   - [ ] Implement `/investments/instruments/:id` with summary cards, historical timeline, and instrument-specific operations.
 - [ ] **7. Localization**:

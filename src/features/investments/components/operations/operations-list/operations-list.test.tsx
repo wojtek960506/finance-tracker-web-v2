@@ -112,4 +112,30 @@ describe('OperationsList', () => {
 
     expect(await screen.findByText('Q1 balance')).toBeInTheDocument();
   });
+
+  it('opens create snapshot modal when record snapshot button is clicked', async () => {
+    vi.mocked(investmentsApi.getInstruments).mockResolvedValue(mockInstruments);
+    vi.mocked(investmentsApi.getOperations).mockResolvedValue(mockOperations);
+
+    renderWithProviders(<OperationsList />);
+
+    const recordBtn = await screen.findByRole('button', { name: /record snapshot/i });
+    fireEvent.click(recordBtn);
+
+    expect(
+      screen.getByRole('dialog', { name: /record balance snapshot/i }),
+    ).toBeInTheDocument();
+  });
+
+  it('opens delete snapshot modal when trash button is clicked on a snapshot card', async () => {
+    vi.mocked(investmentsApi.getInstruments).mockResolvedValue(mockInstruments);
+    vi.mocked(investmentsApi.getOperations).mockResolvedValue(mockOperations);
+
+    renderWithProviders(<OperationsList />);
+
+    const deleteBtn = await screen.findByRole('button', { name: /delete snapshot/i });
+    fireEvent.click(deleteBtn);
+
+    expect(screen.getByRole('dialog', { name: /delete snapshot/i })).toBeInTheDocument();
+  });
 });

@@ -40,7 +40,13 @@ export const OperationCard = ({
     <Card
       className={clsx(
         'flex flex-col justify-between gap-3 p-4 sm:p-5',
-        'transition-all hover:border-fg/30 hover:shadow-sm',
+        'transition-all hover:shadow-sm',
+        isSnapshot
+          ? clsx(
+              'border-sky-500/25 bg-sky-500/[0.03] hover:border-sky-500/50',
+              'dark:border-sky-500/30 dark:bg-sky-950/20 dark:hover:border-sky-500/60',
+            )
+          : 'border-fg/15 hover:border-fg/40',
       )}
       data-testid="operation-card"
     >
@@ -119,8 +125,9 @@ export const OperationCard = ({
 
       <footer
         className={clsx(
-          'flex items-center justify-between border-t border-fg/10 pt-2',
+          'flex items-center justify-between border-t pt-2',
           'text-xs text-text-muted',
+          isSnapshot ? 'border-sky-500/15' : 'border-fg/10',
         )}
       >
         <span>{new Date(operation.date).toLocaleDateString(language)}</span>

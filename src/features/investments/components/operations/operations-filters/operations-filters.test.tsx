@@ -11,6 +11,7 @@ const mockInstruments: InvestmentInstrument[] = [
   {
     id: 'inst-1',
     name: 'Apple Inc',
+    nameNormalized: 'apple inc',
     kind: 'share',
     currency: 'USD',
     createdAt: '2026-01-01T00:00:00Z',

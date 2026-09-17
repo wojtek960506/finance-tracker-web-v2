@@ -42,7 +42,8 @@
   "operations": {
     "searchPlaceholder": "Поиск операций...",
     "allInstruments": "Все инструменты",
-    "newSnapshot": "Записать оценку",
+    "recordSnapshot": "Записать оценку",
+    "newInvestmentTransaction": "Новая инвестиционная транзакция",
     "snapshotBalance": "Баланс",
     "emptyTitle": "Операций пока нет",
     "emptyDescription": "Запишите оценку баланса или создайте инвестиционную транзакцию, чтобы увидеть историю операций.",
@@ -61,13 +62,22 @@
     "currencyPlaceholder": "Выберите валюту...",
     "searchCurrency": "Поиск валюты...",
     "noCurrencyFound": "Валюта не найдена",
+    "instrument": "Инструмент",
+    "balance": "Сумма баланса",
+    "date": "Дата",
     "notes": "Заметки",
     "notesPlaceholder": "Дополнительное описание или тикер",
+    "snapshotNotePlaceholder": "Опциональная заметка (напр., ежемесячная оценка)",
     "createSubmit": "Создать инструмент",
     "updateSubmit": "Сохранить изменения",
+    "createSnapshotSubmit": "Записать оценку",
     "errors": {
       "nameRequired": "Название обязательно",
-      "currencyRequired": "Валюта обязательна"
+      "currencyRequired": "Валюта обязательна",
+      "instrumentRequired": "Инструмент обязателен",
+      "amountRequired": "Сумма баланса обязательна",
+      "amountPositive": "Сумма баланса должна быть больше 0",
+      "dateRequired": "Дата обязательна"
     }
   },
   "modals": {
@@ -78,7 +88,13 @@
     "deleteTitle": "Удалить инструмент",
     "deletePrompt": "Вы уверены, что хотите удалить инструмент «{{name}}»?",
     "deleteHint": "Инструмент можно удалить только в том случае, если он не используется ни в одной транзакции или операции.",
-    "deleteConfirm": "Удалить"
+    "deleteConfirm": "Удалить",
+    "createSnapshotTitle": "Записать оценку баланса",
+    "createSnapshotDescription": "Зафиксируйте текущий общий баланс инвестиционного инструмента на определенную дату.",
+    "deleteSnapshotTitle": "Удалить оценку",
+    "deleteSnapshotPrompt": "Вы уверены, что хотите удалить оценку для «{{instrumentName}}» от {{date}}?",
+    "deleteSnapshotHint": "Эта оценка будет безвозвратно удалена из истории ваших инвестиций.",
+    "deleteSnapshotConfirm": "Удалить оценку"
   },
   "actions": {
     "edit": "Редактировать инструмент",
@@ -95,6 +111,10 @@
     "updatedTitle": "Инструмент обновлен",
     "updateErrorTitle": "Не удалось обновить инструмент",
     "deletedTitle": "Инструмент удален",
-    "deleteErrorTitle": "Не удалось удалить инструмент"
+    "deleteErrorTitle": "Не удалось удалить инструмент",
+    "snapshotCreatedTitle": "Оценка записана",
+    "snapshotCreateErrorTitle": "Не удалось записать оценку",
+    "snapshotDeletedTitle": "Оценка удалена",
+    "snapshotDeleteErrorTitle": "Не удалось удалить оценку"
   }
 }
