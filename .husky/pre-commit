@@ -1,2 +1,1 @@
-pnpm generate:types && pnpm lint-staged
-
+pnpm generate:types && git add src/shared/types/api.generated.ts && pnpm lint-staged
