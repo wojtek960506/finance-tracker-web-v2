@@ -6,19 +6,12 @@ import { formatCurrencyAmount } from '@features/investments/utils';
 import { useLanguage } from '@shared/hooks';
 import { Card } from '@shared/ui';
 
-import type { InstrumentMetrics } from '../utils';
+import { useInstrumentDetailsContext } from '../context';
 
-type InstrumentSummaryMetricsProps = {
-  metrics: InstrumentMetrics;
-  currency?: string;
-};
-
-export const InstrumentSummaryMetrics = ({
-  metrics,
-  currency = '',
-}: InstrumentSummaryMetricsProps) => {
+export const InstrumentSummaryMetrics = () => {
   const { t } = useTranslation('investments');
   const { language } = useLanguage();
+  const { metrics, currency } = useInstrumentDetailsContext();
 
   const formattedValuation =
     metrics.currentValuation !== null
@@ -44,7 +37,8 @@ export const InstrumentSummaryMetrics = ({
       <Card
         className={clsx(
           'flex flex-col justify-between gap-2 p-4',
-          'border-sky-500/25 bg-sky-500/[0.03] dark:border-sky-500/30 dark:bg-sky-950/20',
+          'border-sky-500/25 bg-sky-500/[0.03]',
+          'dark:border-sky-500/30 dark:bg-sky-950/20',
         )}
       >
         <div className="flex items-center justify-between text-text-muted">

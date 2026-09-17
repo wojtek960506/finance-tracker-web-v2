@@ -1,9 +1,5 @@
 import { useNavigate } from 'react-router-dom';
 
-import type {
-  InvestmentInstrument,
-  InvestmentSnapshotOperation,
-} from '@features/investments/api';
 import {
   DeleteInstrumentModal,
   UpdateInstrumentModal,
@@ -14,40 +10,29 @@ import {
   EditSnapshotModal,
 } from '@features/investments/components/snapshots';
 
-type InstrumentDetailsModalsProps = {
-  instrument: InvestmentInstrument;
-  isCreateSnapshotModalOpen: boolean;
-  onCloseCreateSnapshotModal: () => void;
-  editingSnapshot: InvestmentSnapshotOperation | null;
-  onCloseEditSnapshotModal: () => void;
-  deletingSnapshot: InvestmentSnapshotOperation | null;
-  onCloseDeleteSnapshotModal: () => void;
-  isUpdateInstrumentModalOpen: boolean;
-  onCloseUpdateInstrumentModal: () => void;
-  isDeleteInstrumentModalOpen: boolean;
-  onCloseDeleteInstrumentModal: () => void;
-};
+import { useInstrumentDetailsContext } from '../context';
 
-export const InstrumentDetailsModals = ({
-  instrument,
-  isCreateSnapshotModalOpen,
-  onCloseCreateSnapshotModal,
-  editingSnapshot,
-  onCloseEditSnapshotModal,
-  deletingSnapshot,
-  onCloseDeleteSnapshotModal,
-  isUpdateInstrumentModalOpen,
-  onCloseUpdateInstrumentModal,
-  isDeleteInstrumentModalOpen,
-  onCloseDeleteInstrumentModal,
-}: InstrumentDetailsModalsProps) => {
+export const InstrumentDetailsModals = () => {
   const navigate = useNavigate();
+  const {
+    instrument,
+    isCreateSnapshotModalOpen,
+    closeCreateSnapshotModal,
+    editingSnapshot,
+    closeEditSnapshotModal,
+    deletingSnapshot,
+    closeDeleteSnapshotModal,
+    isUpdateInstrumentModalOpen,
+    closeUpdateInstrumentModal,
+    isDeleteInstrumentModalOpen,
+    closeDeleteInstrumentModal,
+  } = useInstrumentDetailsContext();
 
   return (
     <>
       <CreateSnapshotModal
         isOpen={isCreateSnapshotModalOpen}
-        onClose={onCloseCreateSnapshotModal}
+        onClose={closeCreateSnapshotModal}
         defaultInstrumentId={instrument.id}
         defaultCurrency={instrument.currency}
         isInstrumentDisabled={true}
@@ -56,26 +41,26 @@ export const InstrumentDetailsModals = ({
       <EditSnapshotModal
         snapshot={editingSnapshot}
         isOpen={Boolean(editingSnapshot)}
-        onClose={onCloseEditSnapshotModal}
+        onClose={closeEditSnapshotModal}
       />
 
       <DeleteSnapshotModal
         snapshot={deletingSnapshot}
         instrument={instrument}
         isOpen={Boolean(deletingSnapshot)}
-        onClose={onCloseDeleteSnapshotModal}
+        onClose={closeDeleteSnapshotModal}
       />
 
       <UpdateInstrumentModal
         instrument={instrument}
         isOpen={isUpdateInstrumentModalOpen}
-        onClose={onCloseUpdateInstrumentModal}
+        onClose={closeUpdateInstrumentModal}
       />
 
       <DeleteInstrumentModal
         instrument={instrument}
         isOpen={isDeleteInstrumentModalOpen}
-        onClose={onCloseDeleteInstrumentModal}
+        onClose={closeDeleteInstrumentModal}
         onSuccess={() => navigate('/investments/instruments')}
       />
     </>

@@ -2,30 +2,20 @@ import { Camera, Plus } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
-import type {
-  InvestmentInstrument,
-  InvestmentOperation,
-  InvestmentSnapshotOperation,
-} from '@features/investments/api';
 import { OperationCard } from '@features/investments/components/operations/operation-card';
 import { Button, Card, getButtonClassName } from '@shared/ui';
 
-type InstrumentOperationsLedgerProps = {
-  instrument: InvestmentInstrument;
-  operations: InvestmentOperation[];
-  onRecordSnapshot: () => void;
-  onEditSnapshot: (snapshot: InvestmentSnapshotOperation) => void;
-  onDeleteSnapshot: (snapshot: InvestmentSnapshotOperation) => void;
-};
+import { useInstrumentDetailsContext } from '../context';
 
-export const InstrumentOperationsLedger = ({
-  instrument,
-  operations,
-  onRecordSnapshot,
-  onEditSnapshot,
-  onDeleteSnapshot,
-}: InstrumentOperationsLedgerProps) => {
+export const InstrumentOperationsLedger = () => {
   const { t } = useTranslation('investments');
+  const {
+    instrument,
+    operations,
+    openCreateSnapshotModal,
+    openEditSnapshotModal,
+    openDeleteSnapshotModal,
+  } = useInstrumentDetailsContext();
 
   const sortedOperations = [...operations].sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
@@ -60,7 +50,7 @@ export const InstrumentOperationsLedger = ({
             <Button
               type="button"
               variant="primary"
-              onClick={onRecordSnapshot}
+              onClick={openCreateSnapshotModal}
               className="flex items-center gap-1.5"
             >
               <Camera className="size-4" />
@@ -89,8 +79,8 @@ export const InstrumentOperationsLedger = ({
               key={op.id}
               operation={op}
               instrument={instrument}
-              onEditSnapshot={onEditSnapshot}
-              onDeleteSnapshot={onDeleteSnapshot}
+              onEditSnapshot={openEditSnapshotModal}
+              onDeleteSnapshot={openDeleteSnapshotModal}
             />
           ))}
         </div>

@@ -3,26 +3,21 @@ import { ArrowLeft, Camera, Pencil, Plus, Trash } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
-import type { InvestmentInstrument } from '@features/investments/api';
 import { InstrumentKindBadge } from '@features/investments/components/instruments/instrument-kind-badge';
 import { useLanguage } from '@shared/hooks';
 import { Button, getButtonClassName } from '@shared/ui';
 
-type InstrumentDetailsHeaderProps = {
-  instrument: InvestmentInstrument;
-  onRecordSnapshot: () => void;
-  onEditInstrument: () => void;
-  onDeleteInstrument: () => void;
-};
+import { useInstrumentDetailsContext } from '../context';
 
-export const InstrumentDetailsHeader = ({
-  instrument,
-  onRecordSnapshot,
-  onEditInstrument,
-  onDeleteInstrument,
-}: InstrumentDetailsHeaderProps) => {
+export const InstrumentDetailsHeader = () => {
   const { t } = useTranslation('investments');
   const { language } = useLanguage();
+  const {
+    instrument,
+    openCreateSnapshotModal,
+    openUpdateInstrumentModal,
+    openDeleteInstrumentModal,
+  } = useInstrumentDetailsContext();
 
   return (
     <header className="flex flex-col gap-4 border-b border-fg/10 pb-4">
@@ -76,7 +71,7 @@ export const InstrumentDetailsHeader = ({
           <Button
             type="button"
             variant="primary"
-            onClick={onRecordSnapshot}
+            onClick={openCreateSnapshotModal}
             className="flex items-center gap-1.5"
           >
             <Camera className="size-5 sm:size-6" />
@@ -98,7 +93,7 @@ export const InstrumentDetailsHeader = ({
             type="button"
             variant="secondary"
             size="icon"
-            onClick={onEditInstrument}
+            onClick={openUpdateInstrumentModal}
             title={t('actions.edit')}
             aria-label={t('actions.edit')}
           >
@@ -109,7 +104,7 @@ export const InstrumentDetailsHeader = ({
             type="button"
             variant="destructive"
             size="icon"
-            onClick={onDeleteInstrument}
+            onClick={openDeleteInstrumentModal}
             title={t('actions.delete')}
             aria-label={t('actions.delete')}
           >
