@@ -56,6 +56,11 @@
     "commodity": "Surowiec",
     "custom": "Własny"
   },
+  "status": {
+    "all": "Wszystkie",
+    "active": "Aktywne",
+    "closed": "Zamknięte"
+  },
   "operationKind": {
     "snapshot": "Wycena",
     "buy": "Kupno",

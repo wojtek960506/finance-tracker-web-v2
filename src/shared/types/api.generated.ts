@@ -3169,8 +3169,8 @@ export interface components {
             createdAt: unknown;
             updatedAt: unknown;
             sourceIndex: number;
-            sourceRefIndex?: number;
-            refId?: string;
+            sourceRefIndex?: number | null;
+            refId?: string | null;
             category: {
                 id: string;
                 /** @enum {string} */
@@ -3205,8 +3205,8 @@ export interface components {
             createdAt: unknown;
             updatedAt: unknown;
             sourceIndex: number;
-            sourceRefIndex?: number;
-            refId?: string;
+            sourceRefIndex?: number | null;
+            refId?: string | null;
             category: {
                 id: string;
                 /** @enum {string} */
@@ -3241,8 +3241,8 @@ export interface components {
             createdAt: unknown;
             updatedAt: unknown;
             sourceIndex: number;
-            sourceRefIndex?: number;
-            refId?: string;
+            sourceRefIndex?: number | null;
+            refId?: string | null;
             category: {
                 id: string;
                 /** @enum {string} */
@@ -3279,8 +3279,8 @@ export interface components {
             createdAt: unknown;
             updatedAt: unknown;
             sourceIndex: number;
-            sourceRefIndex?: number;
-            refId?: string;
+            sourceRefIndex?: number | null;
+            refId?: string | null;
             category: {
                 id: string;
                 /** @enum {string} */
@@ -3316,8 +3316,8 @@ export interface components {
             createdAt: unknown;
             updatedAt: unknown;
             sourceIndex: number;
-            sourceRefIndex?: number;
-            refId?: string;
+            sourceRefIndex?: number | null;
+            refId?: string | null;
             category: {
                 id: string;
                 /** @enum {string} */
@@ -3353,8 +3353,8 @@ export interface components {
             createdAt: unknown;
             updatedAt: unknown;
             sourceIndex: number;
-            sourceRefIndex?: number;
-            refId?: string;
+            sourceRefIndex?: number | null;
+            refId?: string | null;
             category: {
                 id: string;
                 /** @enum {string} */
@@ -3398,8 +3398,8 @@ export interface components {
             createdAt: unknown;
             updatedAt: unknown;
             sourceIndex: number;
-            sourceRefIndex?: number;
-            refId?: string;
+            sourceRefIndex?: number | null;
+            refId?: string | null;
             category: {
                 id: string;
                 /** @enum {string} */
@@ -3435,8 +3435,8 @@ export interface components {
             createdAt: unknown;
             updatedAt: unknown;
             sourceIndex: number;
-            sourceRefIndex?: number;
-            refId?: string;
+            sourceRefIndex?: number | null;
+            refId?: string | null;
             category: {
                 id: string;
                 /** @enum {string} */
@@ -3472,8 +3472,8 @@ export interface components {
             createdAt: unknown;
             updatedAt: unknown;
             sourceIndex: number;
-            sourceRefIndex?: number;
-            refId?: string;
+            sourceRefIndex?: number | null;
+            refId?: string | null;
             category: {
                 id: string;
                 /** @enum {string} */
@@ -3511,8 +3511,8 @@ export interface components {
             createdAt: unknown;
             updatedAt: unknown;
             sourceIndex: number;
-            sourceRefIndex?: number;
-            refId?: string;
+            sourceRefIndex?: number | null;
+            refId?: string | null;
             category: {
                 id: string;
                 /** @enum {string} */
@@ -3549,8 +3549,8 @@ export interface components {
             createdAt: unknown;
             updatedAt: unknown;
             sourceIndex: number;
-            sourceRefIndex?: number;
-            refId?: string;
+            sourceRefIndex?: number | null;
+            refId?: string | null;
             category: {
                 id: string;
                 /** @enum {string} */
@@ -3587,8 +3587,8 @@ export interface components {
             createdAt: unknown;
             updatedAt: unknown;
             sourceIndex: number;
-            sourceRefIndex?: number;
-            refId?: string;
+            sourceRefIndex?: number | null;
+            refId?: string | null;
             category: {
                 id: string;
                 /** @enum {string} */
@@ -4003,8 +4003,8 @@ export interface components {
             /** Format: date-time */
             updatedAt: string;
             sourceIndex: number;
-            sourceRefIndex?: number;
-            refId?: string;
+            sourceRefIndex?: number | null;
+            refId?: string | null;
             category: {
                 id: string;
                 /** @enum {string} */
@@ -4042,8 +4042,8 @@ export interface components {
             /** Format: date-time */
             updatedAt: string;
             sourceIndex: number;
-            sourceRefIndex?: number;
-            refId?: string;
+            sourceRefIndex?: number | null;
+            refId?: string | null;
             category: {
                 id: string;
                 /** @enum {string} */
@@ -4081,8 +4081,8 @@ export interface components {
             /** Format: date-time */
             updatedAt: string;
             sourceIndex: number;
-            sourceRefIndex?: number;
-            refId?: string;
+            sourceRefIndex?: number | null;
+            refId?: string | null;
             category: {
                 id: string;
                 /** @enum {string} */
@@ -4122,8 +4122,8 @@ export interface components {
             /** Format: date-time */
             updatedAt: string;
             sourceIndex: number;
-            sourceRefIndex?: number;
-            refId?: string;
+            sourceRefIndex?: number | null;
+            refId?: string | null;
             category: {
                 id: string;
                 /** @enum {string} */
@@ -4162,8 +4162,8 @@ export interface components {
             /** Format: date-time */
             updatedAt: string;
             sourceIndex: number;
-            sourceRefIndex?: number;
-            refId?: string;
+            sourceRefIndex?: number | null;
+            refId?: string | null;
             category: {
                 id: string;
                 /** @enum {string} */
@@ -4202,8 +4202,8 @@ export interface components {
             /** Format: date-time */
             updatedAt: string;
             sourceIndex: number;
-            sourceRefIndex?: number;
-            refId?: string;
+            sourceRefIndex?: number | null;
+            refId?: string | null;
             category: {
                 id: string;
                 /** @enum {string} */
@@ -4252,8 +4252,8 @@ export interface components {
             /** Format: date-time */
             updatedAt: string;
             sourceIndex: number;
-            sourceRefIndex?: number;
-            refId?: string;
+            sourceRefIndex?: number | null;
+            refId?: string | null;
             category: {
                 id: string;
                 /** @enum {string} */
@@ -4292,8 +4292,8 @@ export interface components {
             /** Format: date-time */
             updatedAt: string;
             sourceIndex: number;
-            sourceRefIndex?: number;
-            refId?: string;
+            sourceRefIndex?: number | null;
+            refId?: string | null;
             category: {
                 id: string;
                 /** @enum {string} */
@@ -4332,8 +4332,8 @@ export interface components {
             /** Format: date-time */
             updatedAt: string;
             sourceIndex: number;
-            sourceRefIndex?: number;
-            refId?: string;
+            sourceRefIndex?: number | null;
+            refId?: string | null;
             category: {
                 id: string;
                 /** @enum {string} */
@@ -4374,8 +4374,8 @@ export interface components {
             /** Format: date-time */
             updatedAt: string;
             sourceIndex: number;
-            sourceRefIndex?: number;
-            refId?: string;
+            sourceRefIndex?: number | null;
+            refId?: string | null;
             category: {
                 id: string;
                 /** @enum {string} */
@@ -4415,8 +4415,8 @@ export interface components {
             /** Format: date-time */
             updatedAt: string;
             sourceIndex: number;
-            sourceRefIndex?: number;
-            refId?: string;
+            sourceRefIndex?: number | null;
+            refId?: string | null;
             category: {
                 id: string;
                 /** @enum {string} */
@@ -4456,8 +4456,8 @@ export interface components {
             /** Format: date-time */
             updatedAt: string;
             sourceIndex: number;
-            sourceRefIndex?: number;
-            refId?: string;
+            sourceRefIndex?: number | null;
+            refId?: string | null;
             category: {
                 id: string;
                 /** @enum {string} */

@@ -4,5 +4,6 @@ export * from './instrument-card';
 export * from './instrument-form';
 export * from './instrument-kind-badge';
 export * from './instrument-select-field';
+export * from './instrument-status-badge';
 export * from './instruments-list';
 export * from './update-instrument-modal';

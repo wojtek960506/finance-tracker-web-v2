@@ -56,6 +56,11 @@
     "commodity": "Rohstoff",
     "custom": "Benutzerdefiniert"
   },
+  "status": {
+    "all": "Alle",
+    "active": "Aktiv",
+    "closed": "Geschlossen"
+  },
   "operationKind": {
     "snapshot": "Momentaufnahme",
     "buy": "Kauf",

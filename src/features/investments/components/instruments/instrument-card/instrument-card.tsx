@@ -9,14 +9,21 @@ import { useLanguage } from '@shared/hooks';
 import { Button } from '@shared/ui';
 
 import { InstrumentKindBadge } from '../instrument-kind-badge';
+import { InstrumentStatusBadge } from '../instrument-status-badge';
 
 type InstrumentCardProps = {
   instrument: InvestmentInstrument;
+  isClosed: boolean;
   onEdit: (instrument: InvestmentInstrument) => void;
   onDelete: (instrument: InvestmentInstrument) => void;
 };
 
-export const InstrumentCard = ({ instrument, onEdit, onDelete }: InstrumentCardProps) => {
+export const InstrumentCard = ({
+  instrument,
+  isClosed,
+  onEdit,
+  onDelete,
+}: InstrumentCardProps) => {
   const { t } = useTranslation('investments');
   const { language } = useLanguage();
   const navigate = useNavigate();
@@ -24,7 +31,16 @@ export const InstrumentCard = ({ instrument, onEdit, onDelete }: InstrumentCardP
   return (
     <InvestmentCard
       testId="instrument-card"
-      className="group cursor-pointer transition-colors hover:border-primary/50"
+      className={clsx(
+        'group cursor-pointer transition-colors',
+        isClosed
+          ? 'opacity-80 hover:opacity-100 hover:border-fg/30'
+          : clsx(
+              'border-emerald-500/20 bg-emerald-500/[0.02]',
+              'dark:border-emerald-500/25 dark:bg-emerald-950/10',
+              'hover:border-emerald-500/50',
+            ),
+      )}
       onClick={() => navigate(`/investments/instruments/${instrument.id}`)}
     >
       <div className="flex flex-col gap-2">
@@ -46,6 +62,7 @@ export const InstrumentCard = ({ instrument, onEdit, onDelete }: InstrumentCardP
             </h3>
 
             <div className="flex flex-wrap items-center gap-1.5">
+              <InstrumentStatusBadge isClosed={isClosed} />
               <InstrumentKindBadge kind={instrument.kind} />
               {instrument.currency ? (
                 <span

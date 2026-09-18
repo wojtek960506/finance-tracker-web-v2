@@ -56,6 +56,11 @@
     "commodity": "Товар",
     "custom": "Пользовательский"
   },
+  "status": {
+    "all": "Все",
+    "active": "Активные",
+    "closed": "Закрытые"
+  },
   "operationKind": {
     "snapshot": "Оценка",
     "buy": "Покупка",

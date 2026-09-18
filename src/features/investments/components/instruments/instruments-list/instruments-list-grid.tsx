@@ -4,12 +4,14 @@ import { InstrumentCard } from '../instrument-card';
 
 type InstrumentsListGridProps = {
   instruments: InvestmentInstrument[];
+  statusMap?: Map<string, boolean>;
   onEdit: (instrument: InvestmentInstrument) => void;
   onDelete: (instrument: InvestmentInstrument) => void;
 };
 
 export const InstrumentsListGrid = ({
   instruments,
+  statusMap,
   onEdit,
   onDelete,
 }: InstrumentsListGridProps) => {
@@ -19,6 +21,7 @@ export const InstrumentsListGrid = ({
         <InstrumentCard
           key={instrument.id}
           instrument={instrument}
+          isClosed={statusMap?.get(instrument.id) ?? true}
           onEdit={onEdit}
           onDelete={onDelete}
         />

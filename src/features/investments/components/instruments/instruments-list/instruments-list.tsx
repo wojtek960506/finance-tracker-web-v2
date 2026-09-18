@@ -16,6 +16,8 @@ export const InstrumentsList = () => {
     setSearchQuery,
     selectedKind,
     setSelectedKind,
+    selectedStatus,
+    setSelectedStatus,
     resetFilters,
     isCreateModalOpen,
     setIsCreateModalOpen,
@@ -24,6 +26,7 @@ export const InstrumentsList = () => {
     deletingInstrument,
     setDeletingInstrument,
     instruments,
+    statusMap,
     filteredInstruments,
     isLoading,
     isFetching,
@@ -52,6 +55,8 @@ export const InstrumentsList = () => {
           onSearchQueryChange={setSearchQuery}
           selectedKind={selectedKind}
           onSelectedKindChange={setSelectedKind}
+          selectedStatus={selectedStatus}
+          onSelectedStatusChange={setSelectedStatus}
           isFetching={isFetching}
           onCreateNew={() => setIsCreateModalOpen(true)}
         />
@@ -66,6 +71,7 @@ export const InstrumentsList = () => {
       ) : (
         <InstrumentsListGrid
           instruments={filteredInstruments}
+          statusMap={statusMap}
           onEdit={(inst) => setEditingInstrument(inst)}
           onDelete={(inst) => setDeletingInstrument(inst)}
         />

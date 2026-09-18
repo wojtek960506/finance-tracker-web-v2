@@ -56,6 +56,11 @@
     "commodity": "Commodity",
     "custom": "Custom"
   },
+  "status": {
+    "all": "All",
+    "active": "Active",
+    "closed": "Closed"
+  },
   "operationKind": {
     "snapshot": "Snapshot",
     "buy": "Buy",

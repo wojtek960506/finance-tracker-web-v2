@@ -117,4 +117,86 @@ describe('PortfolioPage', () => {
 
     expect(screen.getByText('Apple Inc.')).toBeInTheDocument();
   });
+
+  it('filters portfolio holdings by status (active vs closed)', async () => {
+    const user = userEvent.setup();
+    const { getInvestmentSummary } = await import('@features/investments/api');
+    vi.mocked(getInvestmentSummary).mockResolvedValueOnce({
+      totalsByCurrency: {
+        USD: {
+          currency: 'USD',
+          totalCurrentValue: 12500,
+          totalNetInvested: 10000,
+          totalBought: 10000,
+          totalSold: 0,
+          totalInterest: 0,
+          totalFees: 0,
+          totalPnL: 2500,
+          roiPercentage: 25,
+          instrumentsCount: 2,
+        },
+      },
+      instruments: [
+        {
+          id: 'inst-active',
+          name: 'Apple Inc.',
+          kind: 'share',
+          currency: 'USD',
+          currentValue: 12500,
+          netInvested: 10000,
+          totalBought: 10000,
+          totalSold: 0,
+          totalInterest: 0,
+          totalFees: 0,
+          pnl: 2500,
+          roiPercentage: 25,
+          lastSnapshotDate: '2026-02-01T00:00:00.000Z',
+          operationsCount: 2,
+          createdAt: '2026-01-01T00:00:00.000Z',
+          updatedAt: '2026-02-01T00:00:00.000Z',
+        },
+        {
+          id: 'inst-closed',
+          name: 'Closed Position Stock',
+          kind: 'share',
+          currency: 'USD',
+          currentValue: 0,
+          netInvested: 0,
+          totalBought: 2000,
+          totalSold: 2200,
+          totalInterest: 0,
+          totalFees: 0,
+          pnl: 200,
+          roiPercentage: 10,
+          lastSnapshotDate: null,
+          operationsCount: 2,
+          createdAt: '2026-01-01T00:00:00.000Z',
+          updatedAt: '2026-02-01T00:00:00.000Z',
+        },
+      ],
+    });
+
+    renderWithProviders(<PortfolioPage />);
+
+    expect(await screen.findByText('Apple Inc.')).toBeInTheDocument();
+    expect(screen.getByText('Closed Position Stock')).toBeInTheDocument();
+
+    const initialCards = screen.getAllByTestId('portfolio-holding-card');
+    expect(initialCards[0]).toHaveTextContent('Apple Inc.');
+    expect(initialCards[1]).toHaveTextContent('Closed Position Stock');
+
+    // Filter Active
+    const activeBtn = screen.getByRole('button', { name: /^active$/i });
+    await user.click(activeBtn);
+
+    expect(screen.getByText('Apple Inc.')).toBeInTheDocument();
+    expect(screen.queryByText('Closed Position Stock')).not.toBeInTheDocument();
+
+    // Filter Closed
+    const closedBtn = screen.getByRole('button', { name: /^closed$/i });
+    await user.click(closedBtn);
+
+    expect(screen.queryByText('Apple Inc.')).not.toBeInTheDocument();
+    expect(screen.getByText('Closed Position Stock')).toBeInTheDocument();
+  });
 });
