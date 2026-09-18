@@ -9,7 +9,6 @@ import {
 } from '@features/investments/api';
 
 import type { InstrumentDetailsContextValue } from '../context';
-import { calculateInstrumentMetrics } from '../utils';
 
 export const useInstrumentDetails = () => {
   const { id } = useParams<{ id: string }>();
@@ -87,15 +86,12 @@ export const useInstrumentDetails = () => {
     [],
   );
 
-  const metrics = useMemo(() => calculateInstrumentMetrics(operations), [operations]);
-
   const contextValue: InstrumentDetailsContextValue | null = useMemo(() => {
     if (!instrument) return null;
 
     return {
       instrument,
       operations,
-      metrics,
       currency: instrument.currency ?? '',
       isCreateSnapshotModalOpen,
       openCreateSnapshotModal,
@@ -116,7 +112,6 @@ export const useInstrumentDetails = () => {
   }, [
     instrument,
     operations,
-    metrics,
     isCreateSnapshotModalOpen,
     openCreateSnapshotModal,
     closeCreateSnapshotModal,

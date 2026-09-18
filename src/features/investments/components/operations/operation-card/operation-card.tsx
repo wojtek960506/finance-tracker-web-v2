@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 
 import type {
   InvestmentInstrument,
+  InvestmentInstrumentSummary,
   InvestmentOperation,
   InvestmentSnapshotOperation,
 } from '@features/investments/api';
@@ -18,7 +19,7 @@ import { OperationKindBadge } from '../operation-kind-badge';
 
 type OperationCardProps = {
   operation: InvestmentOperation;
-  instrument?: InvestmentInstrument;
+  instrument?: InvestmentInstrument | InvestmentInstrumentSummary;
   onEditSnapshot?: (snapshot: InvestmentSnapshotOperation) => void;
   onDeleteSnapshot?: (snapshot: InvestmentSnapshotOperation) => void;
 };

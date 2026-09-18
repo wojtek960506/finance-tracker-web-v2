@@ -63,6 +63,8 @@ export type GetOperationsQuery = {
 export type InvestmentInstrumentSummary =
   components['schemas']['InvestmentInstrumentSummary'];
 
+export type InvestmentInstrumentSummaryDTO = InvestmentInstrumentSummary;
+
 export type InvestmentCurrencySummary =
   components['schemas']['InvestmentCurrencySummary'];
 

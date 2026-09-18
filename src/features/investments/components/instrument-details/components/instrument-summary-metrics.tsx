@@ -11,25 +11,23 @@ import { useInstrumentDetailsContext } from '../context';
 export const InstrumentSummaryMetrics = () => {
   const { t } = useTranslation('investments');
   const { language } = useLanguage();
-  const { metrics, currency } = useInstrumentDetailsContext();
+  const { instrument, currency } = useInstrumentDetailsContext();
 
-  const formattedValuation =
-    metrics.currentValuation !== null
-      ? formatCurrencyAmount(metrics.currentValuation, currency, language)
-      : '—';
-
-  const formattedNetInvested = formatCurrencyAmount(
-    metrics.netInvested,
+  const formattedValuation = formatCurrencyAmount(
+    instrument.currentValue,
     currency,
     language,
   );
 
-  const formattedProfit =
-    metrics.totalProfit !== null
-      ? formatCurrencyAmount(metrics.totalProfit, currency, language)
-      : '—';
+  const formattedNetInvested = formatCurrencyAmount(
+    instrument.netInvested,
+    currency,
+    language,
+  );
 
-  const isProfitPositive = (metrics.totalProfit ?? 0) >= 0;
+  const formattedProfit = formatCurrencyAmount(instrument.pnl, currency, language);
+
+  const isProfitPositive = instrument.pnl >= 0;
 
   return (
     <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
@@ -53,10 +51,10 @@ export const InstrumentSummaryMetrics = () => {
             {formattedValuation}
           </div>
           <p className="mt-1 text-xs text-text-muted">
-            {metrics.lastSnapshotDate ? (
+            {instrument.lastSnapshotDate ? (
               <>
                 {t('details.lastSnapshotOn')}:{' '}
-                {new Date(metrics.lastSnapshotDate).toLocaleDateString(language)}
+                {new Date(instrument.lastSnapshotDate).toLocaleDateString(language)}
               </>
             ) : (
               t('details.noValuationRecorded')
@@ -88,7 +86,7 @@ export const InstrumentSummaryMetrics = () => {
           <span className="text-xs font-medium uppercase tracking-wider">
             {t('details.totalProfit')}
           </span>
-          {metrics.totalProfit !== null && isProfitPositive ? (
+          {isProfitPositive ? (
             <ArrowUpRight className="size-4 text-emerald-500" />
           ) : (
             <ArrowDownRight className="size-4 text-rose-500" />
@@ -99,31 +97,25 @@ export const InstrumentSummaryMetrics = () => {
           <div
             className={clsx(
               'text-xl font-bold tracking-tight sm:text-2xl',
-              metrics.totalProfit === null
-                ? 'text-foreground'
-                : isProfitPositive
-                  ? 'text-emerald-600 dark:text-emerald-400'
-                  : 'text-rose-600 dark:text-rose-400',
+              isProfitPositive
+                ? 'text-emerald-600 dark:text-emerald-400'
+                : 'text-rose-600 dark:text-rose-400',
             )}
           >
             {formattedProfit}
           </div>
           <p className="mt-1 text-xs text-text-muted">
-            {metrics.returnPercentage !== null ? (
-              <span
-                className={clsx(
-                  'font-semibold',
-                  isProfitPositive
-                    ? 'text-emerald-600 dark:text-emerald-400'
-                    : 'text-rose-600 dark:text-rose-400',
-                )}
-              >
-                {metrics.returnPercentage >= 0 ? '+' : ''}
-                {metrics.returnPercentage.toFixed(2)}%
-              </span>
-            ) : (
-              '—'
-            )}
+            <span
+              className={clsx(
+                'font-semibold',
+                isProfitPositive
+                  ? 'text-emerald-600 dark:text-emerald-400'
+                  : 'text-rose-600 dark:text-rose-400',
+              )}
+            >
+              {instrument.roiPercentage >= 0 ? '+' : ''}
+              {instrument.roiPercentage.toFixed(2)}%
+            </span>
           </p>
         </div>
       </Card>
@@ -139,7 +131,7 @@ export const InstrumentSummaryMetrics = () => {
 
         <div>
           <div className="text-xl font-bold tracking-tight text-foreground sm:text-2xl">
-            {metrics.totalOperationsCount}
+            {instrument.operationsCount}
           </div>
           <p className="mt-1 text-xs text-text-muted">
             {t('details.operationsCountHint')}

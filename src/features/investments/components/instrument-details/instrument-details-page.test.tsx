@@ -2,7 +2,7 @@ import { fireEvent, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import type {
-  InvestmentInstrument,
+  InvestmentInstrumentSummary,
   InvestmentOperation,
 } from '@features/investments/api';
 import { renderWithProviders } from '@test-utils';
@@ -34,14 +34,22 @@ vi.mock('@features/investments/api', async () => {
   };
 });
 
-const mockInstrument: InvestmentInstrument = {
+const mockInstrument: InvestmentInstrumentSummary = {
   id: 'inst-1',
   name: 'Apple Inc.',
-  nameNormalized: 'apple inc.',
   kind: 'share',
   currency: 'USD',
   notes: 'Tech giant',
-  ownerId: 'user-1',
+  currentValue: 1200,
+  netInvested: 1000,
+  totalBought: 1000,
+  totalSold: 0,
+  totalInterest: 0,
+  totalFees: 0,
+  pnl: 200,
+  roiPercentage: 20,
+  lastSnapshotDate: '2026-02-01T00:00:00.000Z',
+  operationsCount: 2,
   createdAt: '2026-01-01T00:00:00.000Z',
   updatedAt: '2026-01-01T00:00:00.000Z',
 };

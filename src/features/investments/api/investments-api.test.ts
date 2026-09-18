@@ -11,6 +11,7 @@ import {
   getInstruments,
   getOperations,
   type InvestmentInstrument,
+  type InvestmentInstrumentSummary,
   type InvestmentOperation,
   type InvestmentSnapshotOperation,
   updateInstrument,
@@ -34,6 +35,26 @@ const mockInstrument: InvestmentInstrument = {
   currency: 'USD',
   notes: 'Tech stock',
   ownerId: 'user-1',
+  createdAt: '2026-01-01T00:00:00.000Z',
+  updatedAt: '2026-01-01T00:00:00.000Z',
+};
+
+const mockInstrumentSummary: InvestmentInstrumentSummary = {
+  id: 'inst-1',
+  name: 'Apple Inc.',
+  kind: 'share',
+  currency: 'USD',
+  currentValue: 12500,
+  netInvested: 10000,
+  totalBought: 10000,
+  totalSold: 0,
+  totalInterest: 0,
+  totalFees: 0,
+  pnl: 2500,
+  roiPercentage: 25,
+  lastSnapshotDate: '2026-02-01T00:00:00.000Z',
+  operationsCount: 2,
+  notes: 'Tech stock',
   createdAt: '2026-01-01T00:00:00.000Z',
   updatedAt: '2026-01-01T00:00:00.000Z',
 };
@@ -105,12 +126,12 @@ describe('investments api', () => {
 
     it('gets a single instrument by id', async () => {
       const getMock = vi.mocked(api.get);
-      getMock.mockResolvedValueOnce({ data: mockInstrument });
+      getMock.mockResolvedValueOnce({ data: mockInstrumentSummary });
 
       const result = await getInstrument('inst-1');
 
       expect(getMock).toHaveBeenCalledWith('/investments/instruments/inst-1');
-      expect(result).toEqual(mockInstrument);
+      expect(result).toEqual(mockInstrumentSummary);
     });
 
     it('updates an instrument', async () => {

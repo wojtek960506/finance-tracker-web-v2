@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import {
   deleteOperation,
   type InvestmentInstrument,
+  type InvestmentInstrumentSummary,
   type InvestmentSnapshotOperation,
 } from '@features/investments/api';
 import { normalizeApiError } from '@shared/api/api-error';
@@ -14,7 +15,7 @@ import { Button, Modal } from '@shared/ui';
 
 type DeleteSnapshotModalProps = {
   snapshot: InvestmentSnapshotOperation | null;
-  instrument?: InvestmentInstrument;
+  instrument?: InvestmentInstrument | InvestmentInstrumentSummary;
   isOpen: boolean;
   onClose: () => void;
 };

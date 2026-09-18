@@ -3,6 +3,7 @@ import { z } from 'zod';
 import type {
   InvestmentInstrument,
   InvestmentInstrumentKind,
+  InvestmentInstrumentSummary,
 } from '@features/investments/api';
 import { DEFAULT_INSTRUMENT_KIND } from '@features/investments/consts';
 
@@ -25,7 +26,7 @@ export const getDefaultInstrumentFormValues = (
 });
 
 export const getInstrumentFormValuesFromEntity = (
-  instrument: InvestmentInstrument,
+  instrument: InvestmentInstrument | InvestmentInstrumentSummary,
 ): InstrumentFormValues => ({
   name: instrument.name,
   kind: (instrument.kind as InvestmentInstrumentKind) || DEFAULT_INSTRUMENT_KIND,
