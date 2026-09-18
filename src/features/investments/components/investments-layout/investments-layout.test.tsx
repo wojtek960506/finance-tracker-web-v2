@@ -16,6 +16,10 @@ describe('InvestmentsLayout', () => {
     expect(
       screen.getByRole('navigation', { name: 'Investments navigation' }),
     ).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Portfolio' })).toHaveAttribute(
+      'href',
+      '/investments/portfolio',
+    );
     expect(screen.getByRole('link', { name: 'Instruments' })).toHaveAttribute(
       'href',
       '/investments/instruments',

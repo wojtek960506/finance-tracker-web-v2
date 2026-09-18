@@ -1,7 +1,31 @@
 {
   "tabs": {
+    "portfolio": "Portfolio",
     "instruments": "Instrumente",
     "operations": "Operationen"
+  },
+  "portfolio": {
+    "title": "Investment-Portfolio",
+    "description": "Gesamtübersicht über Bewertungen, investiertes Kapital und Renditen Ihrer Anlagen.",
+    "currencySelector": "Währung",
+    "allCurrencies": "Alle Währungen",
+    "totalValuation": "Gesamtwert des Portfolios",
+    "netInvested": "Investiertes Nettokapital",
+    "totalProfit": "Gesamtrendite / Gewinn (PnL)",
+    "roi": "Rendite (ROI)",
+    "holdingsCount": "Aktive Instrumente",
+    "totalBought": "Gesamt gekauft",
+    "totalSold": "Gesamt verkauft",
+    "totalInterest": "Gesamtzinsen",
+    "totalFees": "Gesamtgebühren",
+    "holdingsTitle": "Bestandsübersicht",
+    "holdingsDescription": "Übersicht einzelner Anlageinstrumente und deren aktueller Performance.",
+    "emptyTitle": "Noch keine Anlagen vorhanden",
+    "emptyDescription": "Fügen Sie Anlageinstrumente hinzu und erfassen Sie Bewertungen oder Transaktionen, um die Portfolioübersicht zu sehen.",
+    "loadingTitle": "Portfolio-Zusammenfassung wird geladen",
+    "loadingDescription": "Mehrwährungs-Salden und Renditen werden berechnet...",
+    "goToInstruments": "Zu den Instrumenten",
+    "addHolding": "Instrument hinzufügen"
   },
   "searchPlaceholder": "Instrumente suchen...",
   "allKinds": "Alle",

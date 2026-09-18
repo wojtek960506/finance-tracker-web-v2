@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { ArrowLeftRight, Layers } from 'lucide-react';
+import { ArrowLeftRight, Layers, PieChart } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
 
@@ -9,6 +9,11 @@ export const InvestmentsTabs = () => {
   const { t } = useTranslation('investments');
 
   const tabs = [
+    {
+      to: '/investments/portfolio',
+      label: t('tabs.portfolio'),
+      Icon: PieChart,
+    },
     {
       to: '/investments/instruments',
       label: t('tabs.instruments'),

@@ -41,6 +41,7 @@ export const UpdateInstrumentModal = ({
     }) => await updateInstrument(id, payload),
     onSuccess: (updated) => {
       void queryClient.invalidateQueries({ queryKey: ['instruments'] });
+      void queryClient.invalidateQueries({ queryKey: ['investments-summary'] });
       pushToast({
         variant: 'success',
         title: t('toasts.updatedTitle', {

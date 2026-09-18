@@ -30,6 +30,7 @@ export const DeleteInstrumentModal = ({
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: ['instruments'] });
       void queryClient.invalidateQueries({ queryKey: ['operations'] });
+      void queryClient.invalidateQueries({ queryKey: ['investments-summary'] });
       pushToast({
         variant: 'success',
         title: t('toasts.deletedTitle', {

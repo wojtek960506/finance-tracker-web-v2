@@ -191,4 +191,54 @@ describe('investments api', () => {
       expect(result).toEqual({ acknowledged: true, deletedCount: 1 });
     });
   });
+
+  describe('summary', () => {
+    it('fetches investment portfolio summary', async () => {
+      const mockSummary = {
+        totalsByCurrency: {
+          USD: {
+            currency: 'USD',
+            totalCurrentValue: 12500,
+            totalNetInvested: 10000,
+            totalBought: 10000,
+            totalSold: 0,
+            totalInterest: 0,
+            totalFees: 0,
+            totalPnL: 2500,
+            roiPercentage: 25,
+            instrumentsCount: 1,
+          },
+        },
+        instruments: [
+          {
+            id: 'inst-1',
+            name: 'Apple Inc.',
+            kind: 'share' as const,
+            currency: 'USD',
+            currentValue: 12500,
+            netInvested: 10000,
+            totalBought: 10000,
+            totalSold: 0,
+            totalInterest: 0,
+            totalFees: 0,
+            pnl: 2500,
+            roiPercentage: 25,
+            lastSnapshotDate: '2026-02-01T00:00:00.000Z',
+            operationsCount: 2,
+            createdAt: '2026-01-01T00:00:00.000Z',
+            updatedAt: '2026-02-01T00:00:00.000Z',
+          },
+        ],
+      };
+
+      const getMock = vi.mocked(api.get);
+      getMock.mockResolvedValueOnce({ data: mockSummary });
+
+      const { getInvestmentSummary } = await import('./index');
+      const result = await getInvestmentSummary();
+
+      expect(getMock).toHaveBeenCalledWith('/investments/summary');
+      expect(result).toEqual(mockSummary);
+    });
+  });
 });
