@@ -11,6 +11,8 @@ type InstrumentsListHeaderProps = {
   onSearchQueryChange: (query: string) => void;
   selectedKind: string;
   onSelectedKindChange: (kind: string) => void;
+  selectedStatus: string;
+  onSelectedStatusChange: (status: string) => void;
   isFetching?: boolean;
   onCreateNew: () => void;
 };
@@ -20,6 +22,8 @@ export const InstrumentsListHeader = ({
   onSearchQueryChange,
   selectedKind,
   onSelectedKindChange,
+  selectedStatus,
+  onSelectedStatusChange,
   isFetching,
   onCreateNew,
 }: InstrumentsListHeaderProps) => {
@@ -34,6 +38,14 @@ export const InstrumentsListHeader = ({
     [t],
   );
 
+  const statusItems = useMemo(
+    () => [
+      { key: 'active', label: t('status.active') },
+      { key: 'closed', label: t('status.closed') },
+    ],
+    [t],
+  );
+
   return (
     <div className="flex flex-col gap-3" data-testid="instruments-list-header">
       {/* Top row: New Instrument button (full width) */}
@@ -42,8 +54,8 @@ export const InstrumentsListHeader = ({
         <span>{t('newInstrument')}</span>
       </Button>
 
-      {/* Filters: separate rows below md, side-by-side on md and above */}
-      <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+      {/* Filters: Search and Pill Groups */}
+      <div className="flex flex-col gap-2.5">
         <SearchFilterInput
           value={searchQuery}
           onChange={onSearchQueryChange}
@@ -51,12 +63,21 @@ export const InstrumentsListHeader = ({
           isFetching={isFetching}
         />
 
-        <FilterPills
-          selected={selectedKind}
-          onSelect={onSelectedKindChange}
-          allLabel={t('allKinds')}
-          items={kindItems}
-        />
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <FilterPills
+            selected={selectedStatus}
+            onSelect={onSelectedStatusChange}
+            allLabel={t('status.all')}
+            items={statusItems}
+          />
+
+          <FilterPills
+            selected={selectedKind}
+            onSelect={onSelectedKindChange}
+            allLabel={t('allKinds')}
+            items={kindItems}
+          />
+        </div>
       </div>
     </div>
   );

@@ -1,7 +1,31 @@
 {
   "tabs": {
+    "portfolio": "Portfel",
     "instruments": "Instrumenty",
     "operations": "Operacje"
+  },
+  "portfolio": {
+    "title": "Portfel inwestycyjny",
+    "description": "Przegląd wycen, zainwestowanego kapitału i wyników finansowych Twoich inwestycji.",
+    "currencySelector": "Waluta",
+    "allCurrencies": "Wszystkie waluty",
+    "totalValuation": "Wartość portfela",
+    "netInvested": "Zainwestowany kapitał",
+    "totalProfit": "Łączny zwrot / zysk (PnL)",
+    "roi": "Zwrot z inwestycji (ROI)",
+    "holdingsCount": "Aktywne instrumenty",
+    "totalBought": "Łącznie kupiono",
+    "totalSold": "Łącznie sprzedano",
+    "totalInterest": "Łączne odsetki",
+    "totalFees": "Łączne prowizje",
+    "holdingsTitle": "Struktura aktywów",
+    "holdingsDescription": "Zestawienie poszczególnych aktywów inwestycyjnych oraz ich ostatnich wyników.",
+    "emptyTitle": "Brak aktywów w portfelu",
+    "emptyDescription": "Dodaj instrumenty inwestycyjne i zarejestruj wyceny lub transakcje, aby zobaczyć podsumowanie portfela.",
+    "loadingTitle": "Ładowanie podsumowania portfela",
+    "loadingDescription": "Trwa agregowanie sald wielowalutowych i stóp zwrotu...",
+    "goToInstruments": "Przejdź do instrumentów",
+    "addHolding": "Dodaj instrument"
   },
   "searchPlaceholder": "Szukaj instrumentów...",
   "allKinds": "Wszystkie",
@@ -31,6 +55,11 @@
     "crypto": "Kryptowaluta",
     "commodity": "Surowiec",
     "custom": "Własny"
+  },
+  "status": {
+    "all": "Wszystkie",
+    "active": "Aktywne",
+    "closed": "Zamknięte"
   },
   "operationKind": {
     "snapshot": "Wycena",

@@ -40,7 +40,12 @@ describe('InstrumentCard', () => {
     const onDelete = vi.fn();
 
     renderWithProviders(
-      <InstrumentCard instrument={mockInstrument} onEdit={onEdit} onDelete={onDelete} />,
+      <InstrumentCard
+        instrument={mockInstrument}
+        isClosed={false}
+        onEdit={onEdit}
+        onDelete={onDelete}
+      />,
     );
 
     expect(screen.getByText('Apple Inc.')).toBeInTheDocument();
@@ -57,7 +62,12 @@ describe('InstrumentCard', () => {
     const onDelete = vi.fn();
 
     renderWithProviders(
-      <InstrumentCard instrument={mockInstrument} onEdit={onEdit} onDelete={onDelete} />,
+      <InstrumentCard
+        instrument={mockInstrument}
+        isClosed={false}
+        onEdit={onEdit}
+        onDelete={onDelete}
+      />,
     );
 
     const card = screen.getByTestId('instrument-card');
@@ -71,7 +81,12 @@ describe('InstrumentCard', () => {
     const onDelete = vi.fn();
 
     renderWithProviders(
-      <InstrumentCard instrument={mockInstrument} onEdit={onEdit} onDelete={onDelete} />,
+      <InstrumentCard
+        instrument={mockInstrument}
+        isClosed={false}
+        onEdit={onEdit}
+        onDelete={onDelete}
+      />,
     );
 
     const editBtn = screen.getByRole('button', { name: /edit/i });
@@ -86,7 +101,12 @@ describe('InstrumentCard', () => {
     const onDelete = vi.fn();
 
     renderWithProviders(
-      <InstrumentCard instrument={mockInstrument} onEdit={onEdit} onDelete={onDelete} />,
+      <InstrumentCard
+        instrument={mockInstrument}
+        isClosed={false}
+        onEdit={onEdit}
+        onDelete={onDelete}
+      />,
     );
 
     const deleteBtn = screen.getByRole('button', { name: /delete/i });
@@ -94,5 +114,31 @@ describe('InstrumentCard', () => {
 
     expect(onDelete).toHaveBeenCalledWith(mockInstrument);
     expect(mocks.navigate).not.toHaveBeenCalled();
+  });
+
+  it('renders active status badge when isClosed is false', () => {
+    renderWithProviders(
+      <InstrumentCard
+        instrument={mockInstrument}
+        isClosed={false}
+        onEdit={vi.fn()}
+        onDelete={vi.fn()}
+      />,
+    );
+
+    expect(screen.getByText('Active')).toBeInTheDocument();
+  });
+
+  it('renders closed status badge when isClosed is true', () => {
+    renderWithProviders(
+      <InstrumentCard
+        instrument={mockInstrument}
+        isClosed={true}
+        onEdit={vi.fn()}
+        onDelete={vi.fn()}
+      />,
+    );
+
+    expect(screen.getByText('Closed')).toBeInTheDocument();
   });
 });

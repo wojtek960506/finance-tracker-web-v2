@@ -2,13 +2,17 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AlertTriangle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
-import { deleteInstrument, type InvestmentInstrument } from '@features/investments/api';
+import {
+  deleteInstrument,
+  type InvestmentInstrument,
+  type InvestmentInstrumentSummary,
+} from '@features/investments/api';
 import { normalizeApiError } from '@shared/api/api-error';
 import { useToastStore } from '@shared/store/toast-store';
 import { Button, Modal } from '@shared/ui';
 
 type DeleteInstrumentModalProps = {
-  instrument: InvestmentInstrument | null;
+  instrument: InvestmentInstrument | InvestmentInstrumentSummary | null;
   isOpen: boolean;
   onClose: () => void;
   onSuccess?: () => void;
@@ -30,6 +34,7 @@ export const DeleteInstrumentModal = ({
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: ['instruments'] });
       void queryClient.invalidateQueries({ queryKey: ['operations'] });
+      void queryClient.invalidateQueries({ queryKey: ['investments-summary'] });
       pushToast({
         variant: 'success',
         title: t('toasts.deletedTitle', {

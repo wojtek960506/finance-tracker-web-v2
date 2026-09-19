@@ -1,8 +1,10 @@
 import { api } from '@shared/api';
 
-import type { InvestmentInstrument } from './types';
+import type { InvestmentInstrumentSummary } from './types';
 
-export const getInstrument = async (id: string): Promise<InvestmentInstrument> => {
-  const res = await api.get<InvestmentInstrument>(`/investments/instruments/${id}`);
+export const getInstrument = async (id: string): Promise<InvestmentInstrumentSummary> => {
+  const res = await api.get<InvestmentInstrumentSummary>(
+    `/investments/instruments/${id}`,
+  );
   return res.data;
 };

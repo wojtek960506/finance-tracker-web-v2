@@ -35,6 +35,7 @@ export const CreateInstrumentModal = ({
       await createInstrument(payload),
     onSuccess: (created) => {
       void queryClient.invalidateQueries({ queryKey: ['instruments'] });
+      void queryClient.invalidateQueries({ queryKey: ['investments-summary'] });
       pushToast({
         variant: 'success',
         title: t('toasts.createdTitle', {

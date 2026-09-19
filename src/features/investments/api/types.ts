@@ -59,3 +59,14 @@ export type GetOperationsQuery = {
   startDate?: string;
   endDate?: string;
 };
+
+export type InvestmentInstrumentSummary =
+  components['schemas']['InvestmentInstrumentSummary'];
+
+export type InvestmentInstrumentSummaryDTO = InvestmentInstrumentSummary;
+
+export type InvestmentCurrencySummary =
+  components['schemas']['InvestmentCurrencySummary'];
+
+export type InvestmentSummaryResponse =
+  components['schemas']['InvestmentSummaryResponse'];

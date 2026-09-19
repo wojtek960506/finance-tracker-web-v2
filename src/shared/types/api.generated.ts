@@ -2538,7 +2538,7 @@ export interface paths {
         };
         /**
          * Get investment instrument by id
-         * @description Return a single investment instrument by id.
+         * @description Return a single investment instrument by id with performance metrics.
          */
         get: {
             parameters: {
@@ -2558,7 +2558,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["InvestmentInstrumentResponse"];
+                        "application/json": components["schemas"]["InvestmentInstrumentSummary"];
                     };
                 };
             };
@@ -2774,6 +2774,45 @@ export interface paths {
         };
         trace?: never;
     };
+    "/api/investments/summary/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get investment portfolio summary
+         * @description Return aggregated portfolio valuation, performance totals by currency,and per-instrument summary metrics.
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["InvestmentSummaryResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -2876,10 +2915,50 @@ export interface components {
             updatedAt: unknown;
             /** @enum {string} */
             kind: "buy" | "sell" | "interest" | "fee";
-            transactionId: string;
+            transactionId?: string | null;
         };
         InvestmentOperationResponseInput: components["schemas"]["InvestmentCashFlowOperationResponseInput"] | components["schemas"]["InvestmentSnapshotOperationResponseInput"];
         InvestmentOperationListResponseInput: components["schemas"]["InvestmentOperationResponseInput"][];
+        InvestmentInstrumentSummaryInput: {
+            id: string;
+            name: string;
+            /** @enum {string} */
+            kind: "share" | "fund" | "termDeposit" | "savings";
+            /** @enum {string} */
+            currency: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            currentValue: number;
+            netInvested: number;
+            totalBought: number;
+            totalSold: number;
+            totalInterest: number;
+            totalFees: number;
+            pnl: number;
+            roiPercentage: number;
+            lastSnapshotDate: unknown | null;
+            operationsCount: number;
+            notes?: string;
+            createdAt: unknown;
+            updatedAt: unknown;
+        };
+        InvestmentCurrencySummaryInput: {
+            /** @enum {string} */
+            currency: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            totalCurrentValue: number;
+            totalNetInvested: number;
+            totalBought: number;
+            totalSold: number;
+            totalInterest: number;
+            totalFees: number;
+            totalPnL: number;
+            roiPercentage: number;
+            instrumentsCount: number;
+        };
+        InvestmentSummaryResponseInput: {
+            totalsByCurrency: {
+                [key: string]: components["schemas"]["InvestmentCurrencySummaryInput"];
+            };
+            instruments: components["schemas"]["InvestmentInstrumentSummaryInput"][];
+        };
         WelcomeResponseInput: {
             message: string;
         };
@@ -3090,8 +3169,8 @@ export interface components {
             createdAt: unknown;
             updatedAt: unknown;
             sourceIndex: number;
-            sourceRefIndex?: number;
-            refId?: string;
+            sourceRefIndex?: number | null;
+            refId?: string | null;
             category: {
                 id: string;
                 /** @enum {string} */
@@ -3126,8 +3205,8 @@ export interface components {
             createdAt: unknown;
             updatedAt: unknown;
             sourceIndex: number;
-            sourceRefIndex?: number;
-            refId?: string;
+            sourceRefIndex?: number | null;
+            refId?: string | null;
             category: {
                 id: string;
                 /** @enum {string} */
@@ -3162,8 +3241,8 @@ export interface components {
             createdAt: unknown;
             updatedAt: unknown;
             sourceIndex: number;
-            sourceRefIndex?: number;
-            refId?: string;
+            sourceRefIndex?: number | null;
+            refId?: string | null;
             category: {
                 id: string;
                 /** @enum {string} */
@@ -3200,8 +3279,8 @@ export interface components {
             createdAt: unknown;
             updatedAt: unknown;
             sourceIndex: number;
-            sourceRefIndex?: number;
-            refId?: string;
+            sourceRefIndex?: number | null;
+            refId?: string | null;
             category: {
                 id: string;
                 /** @enum {string} */
@@ -3237,8 +3316,8 @@ export interface components {
             createdAt: unknown;
             updatedAt: unknown;
             sourceIndex: number;
-            sourceRefIndex?: number;
-            refId?: string;
+            sourceRefIndex?: number | null;
+            refId?: string | null;
             category: {
                 id: string;
                 /** @enum {string} */
@@ -3274,8 +3353,8 @@ export interface components {
             createdAt: unknown;
             updatedAt: unknown;
             sourceIndex: number;
-            sourceRefIndex?: number;
-            refId?: string;
+            sourceRefIndex?: number | null;
+            refId?: string | null;
             category: {
                 id: string;
                 /** @enum {string} */
@@ -3319,8 +3398,8 @@ export interface components {
             createdAt: unknown;
             updatedAt: unknown;
             sourceIndex: number;
-            sourceRefIndex?: number;
-            refId?: string;
+            sourceRefIndex?: number | null;
+            refId?: string | null;
             category: {
                 id: string;
                 /** @enum {string} */
@@ -3356,8 +3435,8 @@ export interface components {
             createdAt: unknown;
             updatedAt: unknown;
             sourceIndex: number;
-            sourceRefIndex?: number;
-            refId?: string;
+            sourceRefIndex?: number | null;
+            refId?: string | null;
             category: {
                 id: string;
                 /** @enum {string} */
@@ -3393,8 +3472,8 @@ export interface components {
             createdAt: unknown;
             updatedAt: unknown;
             sourceIndex: number;
-            sourceRefIndex?: number;
-            refId?: string;
+            sourceRefIndex?: number | null;
+            refId?: string | null;
             category: {
                 id: string;
                 /** @enum {string} */
@@ -3432,8 +3511,8 @@ export interface components {
             createdAt: unknown;
             updatedAt: unknown;
             sourceIndex: number;
-            sourceRefIndex?: number;
-            refId?: string;
+            sourceRefIndex?: number | null;
+            refId?: string | null;
             category: {
                 id: string;
                 /** @enum {string} */
@@ -3470,8 +3549,8 @@ export interface components {
             createdAt: unknown;
             updatedAt: unknown;
             sourceIndex: number;
-            sourceRefIndex?: number;
-            refId?: string;
+            sourceRefIndex?: number | null;
+            refId?: string | null;
             category: {
                 id: string;
                 /** @enum {string} */
@@ -3508,8 +3587,8 @@ export interface components {
             createdAt: unknown;
             updatedAt: unknown;
             sourceIndex: number;
-            sourceRefIndex?: number;
-            refId?: string;
+            sourceRefIndex?: number | null;
+            refId?: string | null;
             category: {
                 id: string;
                 /** @enum {string} */
@@ -3655,10 +3734,52 @@ export interface components {
             updatedAt: string;
             /** @enum {string} */
             kind: "buy" | "sell" | "interest" | "fee";
-            transactionId: string;
+            transactionId?: string | null;
         };
         InvestmentOperationResponse: components["schemas"]["InvestmentCashFlowOperationResponse"] | components["schemas"]["InvestmentSnapshotOperationResponse"];
         InvestmentOperationListResponse: components["schemas"]["InvestmentOperationResponse"][];
+        InvestmentInstrumentSummary: {
+            id: string;
+            name: string;
+            /** @enum {string} */
+            kind: "share" | "fund" | "termDeposit" | "savings";
+            /** @enum {string} */
+            currency: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            currentValue: number;
+            netInvested: number;
+            totalBought: number;
+            totalSold: number;
+            totalInterest: number;
+            totalFees: number;
+            pnl: number;
+            roiPercentage: number;
+            lastSnapshotDate: string | null;
+            operationsCount: number;
+            notes?: string;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            updatedAt: string;
+        };
+        InvestmentCurrencySummary: {
+            /** @enum {string} */
+            currency: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            totalCurrentValue: number;
+            totalNetInvested: number;
+            totalBought: number;
+            totalSold: number;
+            totalInterest: number;
+            totalFees: number;
+            totalPnL: number;
+            roiPercentage: number;
+            instrumentsCount: number;
+        };
+        InvestmentSummaryResponse: {
+            totalsByCurrency: {
+                [key: string]: components["schemas"]["InvestmentCurrencySummary"];
+            };
+            instruments: components["schemas"]["InvestmentInstrumentSummary"][];
+        };
         WelcomeResponse: {
             message: string;
         };
@@ -3882,8 +4003,8 @@ export interface components {
             /** Format: date-time */
             updatedAt: string;
             sourceIndex: number;
-            sourceRefIndex?: number;
-            refId?: string;
+            sourceRefIndex?: number | null;
+            refId?: string | null;
             category: {
                 id: string;
                 /** @enum {string} */
@@ -3921,8 +4042,8 @@ export interface components {
             /** Format: date-time */
             updatedAt: string;
             sourceIndex: number;
-            sourceRefIndex?: number;
-            refId?: string;
+            sourceRefIndex?: number | null;
+            refId?: string | null;
             category: {
                 id: string;
                 /** @enum {string} */
@@ -3960,8 +4081,8 @@ export interface components {
             /** Format: date-time */
             updatedAt: string;
             sourceIndex: number;
-            sourceRefIndex?: number;
-            refId?: string;
+            sourceRefIndex?: number | null;
+            refId?: string | null;
             category: {
                 id: string;
                 /** @enum {string} */
@@ -4001,8 +4122,8 @@ export interface components {
             /** Format: date-time */
             updatedAt: string;
             sourceIndex: number;
-            sourceRefIndex?: number;
-            refId?: string;
+            sourceRefIndex?: number | null;
+            refId?: string | null;
             category: {
                 id: string;
                 /** @enum {string} */
@@ -4041,8 +4162,8 @@ export interface components {
             /** Format: date-time */
             updatedAt: string;
             sourceIndex: number;
-            sourceRefIndex?: number;
-            refId?: string;
+            sourceRefIndex?: number | null;
+            refId?: string | null;
             category: {
                 id: string;
                 /** @enum {string} */
@@ -4081,8 +4202,8 @@ export interface components {
             /** Format: date-time */
             updatedAt: string;
             sourceIndex: number;
-            sourceRefIndex?: number;
-            refId?: string;
+            sourceRefIndex?: number | null;
+            refId?: string | null;
             category: {
                 id: string;
                 /** @enum {string} */
@@ -4131,8 +4252,8 @@ export interface components {
             /** Format: date-time */
             updatedAt: string;
             sourceIndex: number;
-            sourceRefIndex?: number;
-            refId?: string;
+            sourceRefIndex?: number | null;
+            refId?: string | null;
             category: {
                 id: string;
                 /** @enum {string} */
@@ -4171,8 +4292,8 @@ export interface components {
             /** Format: date-time */
             updatedAt: string;
             sourceIndex: number;
-            sourceRefIndex?: number;
-            refId?: string;
+            sourceRefIndex?: number | null;
+            refId?: string | null;
             category: {
                 id: string;
                 /** @enum {string} */
@@ -4211,8 +4332,8 @@ export interface components {
             /** Format: date-time */
             updatedAt: string;
             sourceIndex: number;
-            sourceRefIndex?: number;
-            refId?: string;
+            sourceRefIndex?: number | null;
+            refId?: string | null;
             category: {
                 id: string;
                 /** @enum {string} */
@@ -4253,8 +4374,8 @@ export interface components {
             /** Format: date-time */
             updatedAt: string;
             sourceIndex: number;
-            sourceRefIndex?: number;
-            refId?: string;
+            sourceRefIndex?: number | null;
+            refId?: string | null;
             category: {
                 id: string;
                 /** @enum {string} */
@@ -4294,8 +4415,8 @@ export interface components {
             /** Format: date-time */
             updatedAt: string;
             sourceIndex: number;
-            sourceRefIndex?: number;
-            refId?: string;
+            sourceRefIndex?: number | null;
+            refId?: string | null;
             category: {
                 id: string;
                 /** @enum {string} */
@@ -4335,8 +4456,8 @@ export interface components {
             /** Format: date-time */
             updatedAt: string;
             sourceIndex: number;
-            sourceRefIndex?: number;
-            refId?: string;
+            sourceRefIndex?: number | null;
+            refId?: string | null;
             category: {
                 id: string;
                 /** @enum {string} */

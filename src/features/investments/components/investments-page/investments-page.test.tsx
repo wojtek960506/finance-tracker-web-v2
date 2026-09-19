@@ -11,6 +11,10 @@ vi.mock('@features/investments/api', async () => {
   return {
     ...actual,
     getInstruments: vi.fn(),
+    getInvestmentSummary: vi.fn().mockResolvedValue({
+      totalsByCurrency: {},
+      instruments: [],
+    }),
   };
 });
 

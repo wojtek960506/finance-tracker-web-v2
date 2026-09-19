@@ -2,6 +2,7 @@ import {
   InstrumentDetailsPage,
   InvestmentsPage,
   OperationsPage,
+  PortfolioPage,
 } from '@investments/components';
 import { type ReactNode } from 'react';
 import { matchPath, Navigate } from 'react-router-dom';
@@ -134,7 +135,12 @@ export const PROTECTED_APP_ROUTES: AppRouteConfig[] = [
   },
   {
     path: '/investments',
-    element: <Navigate to="/investments/instruments" replace />,
+    element: <Navigate to="/investments/portfolio" replace />,
+  },
+  {
+    path: '/investments/portfolio',
+    element: <PortfolioPage />,
+    title: { namespace: 'navigation', key: 'investments' },
   },
   {
     path: '/investments/instruments',

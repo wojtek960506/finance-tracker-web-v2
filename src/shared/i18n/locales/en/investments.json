@@ -1,7 +1,31 @@
 {
   "tabs": {
+    "portfolio": "Portfolio",
     "instruments": "Instruments",
     "operations": "Operations"
+  },
+  "portfolio": {
+    "title": "Investment Portfolio",
+    "description": "High-level overview of valuations, total capital invested, and return performance across your holdings.",
+    "currencySelector": "Currency",
+    "allCurrencies": "All Currencies",
+    "totalValuation": "Total Portfolio Value",
+    "netInvested": "Net Invested",
+    "totalProfit": "Total Return / Profit (PnL)",
+    "roi": "Return on Investment (ROI)",
+    "holdingsCount": "Active Instruments",
+    "totalBought": "Total Bought",
+    "totalSold": "Total Sold",
+    "totalInterest": "Total Interest",
+    "totalFees": "Total Fees",
+    "holdingsTitle": "Holdings Breakdown",
+    "holdingsDescription": "Summary of individual investment assets and their latest recorded performance.",
+    "emptyTitle": "No investment holdings yet",
+    "emptyDescription": "Add investment instruments and record balance snapshots or transactions to see your portfolio summary.",
+    "loadingTitle": "Loading portfolio summary",
+    "loadingDescription": "Aggregating multi-currency balances and returns...",
+    "goToInstruments": "Go to Instruments",
+    "addHolding": "Add Instrument"
   },
   "searchPlaceholder": "Search instruments...",
   "allKinds": "All",
@@ -31,6 +55,11 @@
     "crypto": "Crypto",
     "commodity": "Commodity",
     "custom": "Custom"
+  },
+  "status": {
+    "all": "All",
+    "active": "Active",
+    "closed": "Closed"
   },
   "operationKind": {
     "snapshot": "Snapshot",

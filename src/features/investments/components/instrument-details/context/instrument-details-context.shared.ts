@@ -1,17 +1,14 @@
 import { createContext } from 'react';
 
 import type {
-  InvestmentInstrument,
+  InvestmentInstrumentSummary,
   InvestmentOperation,
   InvestmentSnapshotOperation,
 } from '@features/investments/api';
 
-import type { InstrumentMetrics } from '../utils';
-
 export type InstrumentDetailsContextValue = {
-  instrument: InvestmentInstrument;
+  instrument: InvestmentInstrumentSummary;
   operations: InvestmentOperation[];
-  metrics: InstrumentMetrics;
   currency: string;
   isCreateSnapshotModalOpen: boolean;
   openCreateSnapshotModal: () => void;

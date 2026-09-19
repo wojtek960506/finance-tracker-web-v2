@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import {
   type InvestmentInstrument,
+  type InvestmentInstrumentSummary,
   updateInstrument,
   type UpdateInstrumentPayload,
 } from '@features/investments/api';
@@ -17,7 +18,7 @@ import {
 } from '../instrument-form';
 
 type UpdateInstrumentModalProps = {
-  instrument: InvestmentInstrument | null;
+  instrument: InvestmentInstrument | InvestmentInstrumentSummary | null;
   isOpen: boolean;
   onClose: () => void;
 };
@@ -41,6 +42,7 @@ export const UpdateInstrumentModal = ({
     }) => await updateInstrument(id, payload),
     onSuccess: (updated) => {
       void queryClient.invalidateQueries({ queryKey: ['instruments'] });
+      void queryClient.invalidateQueries({ queryKey: ['investments-summary'] });
       pushToast({
         variant: 'success',
         title: t('toasts.updatedTitle', {
