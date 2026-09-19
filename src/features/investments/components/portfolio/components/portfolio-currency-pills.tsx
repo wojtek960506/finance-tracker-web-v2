@@ -31,7 +31,6 @@ export const PortfolioCurrencyPills = ({
             key={currency}
             type="button"
             variant={isSelected ? 'default' : 'outline'}
-            size="sm"
             onClick={() => onSelectCurrency(currency)}
             className={clsx(
               'h-8 px-3 text-xs font-semibold uppercase tracking-wider',
