@@ -6,6 +6,7 @@ import {
   ChartNoAxesColumn,
   Landmark,
   LogOut,
+  PieChart,
   Settings,
   Tags,
   Trash2,
@@ -50,6 +51,17 @@ export const Navigation = () => {
 
   return (
     <ul className="text-base sm:text-lg">
+      <li>
+        <NavigationItem
+          to="/net-worth"
+          title={t('netWorth')}
+          Icon={PieChart}
+          additionalAction={() =>
+            setNavigationItemExpanded(TRANSACTIONS_NAVIGATION_ITEM_ID, false)
+          }
+        />
+      </li>
+
       <li>
         <Collapsible
           header={

@@ -21,6 +21,10 @@ vi.mock('@named-resources/components', () => ({
   NamedResourcesList: ({ kind }: { kind: string }) => <div>{kind}</div>,
 }));
 
+vi.mock('@net-worth/components', () => ({
+  NetWorthPage: () => <div>net-worth</div>,
+}));
+
 vi.mock('@investments/components', () => ({
   InvestmentsLayout: ({ children }: { children: React.ReactNode }) => (
     <div>{children}</div>
@@ -67,6 +71,19 @@ describe('Title', () => {
     );
 
     expect(screen.getByRole('heading', { name: 'common:title' })).toBeInTheDocument();
+    expect(screen.queryByRole('link')).not.toBeInTheDocument();
+  });
+
+  it('renders net worth title on net worth page', () => {
+    render(
+      <MemoryRouter initialEntries={['/net-worth']}>
+        <Title />
+      </MemoryRouter>,
+    );
+
+    expect(
+      screen.getByRole('heading', { name: 'navigation:netWorth' }),
+    ).toBeInTheDocument();
     expect(screen.queryByRole('link')).not.toBeInTheDocument();
   });
 

@@ -1,0 +1,27 @@
+{
+  "title": "Nettovermögen",
+  "description": "Umfassende Übersicht über liquide Bankguthaben und Anlageportfolios, normiert auf eine Basiswährung.",
+  "totalNetWorth": "Gesamtes Nettovermögen",
+  "liquidCash": "Liquide Mittel",
+  "investments": "Investitionen",
+  "liquidCashDescription": "Gesamtsaldo über alle Bankkonten",
+  "investmentsDescription": "Gesamtwert der Anlageinstrumente",
+  "assetAllocation": "Vermögensaufteilung",
+  "assetAllocationDescription": "Aufteilung des Vermögens auf Anlageklassen und Kontotypen.",
+  "currencyBreakdown": "Währungsaufteilung",
+  "currencyBreakdownDescription": "Gesamtes Bargeld und Anlagebestände nach Währung.",
+  "baseCurrency": "Basiswährung",
+  "normalized": "Umgerechnet",
+  "categories": {
+    "cash": "Bargeld & Bankkonten",
+    "share": "Aktien & Wertpapiere",
+    "fund": "Fonds & ETFs",
+    "termDeposit": "Festgelder",
+    "savings": "Sparkonten"
+  },
+  "emptyTitle": "Keine Nettovermögensdaten vorhanden",
+  "emptyDescription": "Fügen Sie Bankkonten, Transaktionen oder Anlageinstrumente hinzu, um Ihr Nettovermögen zu verfolgen.",
+  "noCurrenciesAvailable": "Keine Währungsbestände ungleich Null vorhanden.",
+  "loadingTitle": "Lade Nettovermögen",
+  "loadingDescription": "Gesamtvermögen wird berechnet und Vermögenswerte werden umgerechnet..."
+}

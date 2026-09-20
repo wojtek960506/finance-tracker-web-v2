@@ -68,5 +68,12 @@ export type InvestmentInstrumentSummaryDTO = InvestmentInstrumentSummary;
 export type InvestmentCurrencySummary =
   components['schemas']['InvestmentCurrencySummary'];
 
+export type InvestmentGrandTotalNormalized =
+  components['schemas']['InvestmentGrandTotalNormalized'];
+
 export type InvestmentSummaryResponse =
   components['schemas']['InvestmentSummaryResponse'];
+
+export type GetInvestmentSummaryParams = {
+  baseCurrency?: string;
+};

@@ -4,21 +4,30 @@ import { useMemo, useState } from 'react';
 import {
   getInvestmentSummary,
   type InvestmentCurrencySummary,
+  type InvestmentGrandTotalNormalized,
   type InvestmentInstrumentSummary,
   type InvestmentSummaryResponse,
 } from '@features/investments/api';
 
-export const usePortfolio = () => {
+export type UsePortfolioOptions = {
+  baseCurrency?: string;
+};
+
+export const usePortfolio = (options?: UsePortfolioOptions) => {
   const [selectedCurrency, setSelectedCurrency] = useState<string | null>(null);
 
   const { data, isLoading, isFetching, error, refetch } =
     useQuery<InvestmentSummaryResponse>({
-      queryKey: ['investments-summary'],
-      queryFn: async () => await getInvestmentSummary(),
+      queryKey: ['investments-summary', options?.baseCurrency],
+      queryFn: async () =>
+        await getInvestmentSummary({ baseCurrency: options?.baseCurrency }),
     });
 
   const totalsByCurrency = data?.totalsByCurrency;
   const rawInstruments = data?.instruments;
+  const grandTotalNormalized: InvestmentGrandTotalNormalized | null =
+    data?.grandTotalNormalized ?? null;
+  const baseCurrency = data?.baseCurrency;
 
   const currencies = useMemo(() => {
     if (!totalsByCurrency) return [];
@@ -47,6 +56,8 @@ export const usePortfolio = () => {
 
   return {
     summary: data,
+    baseCurrency,
+    grandTotalNormalized,
     currencies,
     activeCurrency,
     setActiveCurrency: setSelectedCurrency,
