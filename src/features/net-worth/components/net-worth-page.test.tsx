@@ -75,13 +75,15 @@ vi.mock('@features/net-worth/api', async () => {
 });
 
 describe('NetWorthPage', () => {
-  it('renders empty state when there is no net worth data', async () => {
+  it('renders empty state when there is no net worth data and hides page header', async () => {
     vi.mocked(netWorthApi.getNetWorth).mockResolvedValueOnce(mockEmptyNetWorth);
 
     renderWithProviders(<NetWorthPage />);
 
     expect(await screen.findByTestId('net-worth-empty-state')).toBeInTheDocument();
     expect(screen.getByText('No net worth data available')).toBeInTheDocument();
+    expect(screen.queryByTestId('net-worth-currency-selector')).not.toBeInTheDocument();
+    expect(screen.queryByRole('heading', { name: 'Net Worth' })).not.toBeInTheDocument();
   });
 
   it('renders summary cards, allocation breakdown, and currency breakdown', async () => {

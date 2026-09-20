@@ -26,22 +26,6 @@ export const NetWorthPage = () => {
 
   return (
     <div className="flex flex-col gap-5 p-4 sm:p-6" data-testid="net-worth-page">
-      {/* Header */}
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <h1 className="text-xl font-bold tracking-tight text-foreground sm:text-2xl">
-            {t('title')}
-          </h1>
-          <p className="text-xs text-text-muted sm:text-sm">{t('description')}</p>
-        </div>
-
-        <NetWorthCurrencySelector
-          activeCurrency={baseCurrency}
-          onSelectCurrency={setBaseCurrency}
-          availableCurrencies={currencies}
-        />
-      </div>
-
       {/* Loading state */}
       {isLoading && (
         <LoadingCard
@@ -59,22 +43,40 @@ export const NetWorthPage = () => {
 
       {/* Main Data Content */}
       {!isLoading && !error && hasData && totals && (
-        <div className="flex flex-col gap-6">
-          {/* Summary Cards */}
-          <NetWorthSummaryCards totals={totals} baseCurrency={baseCurrency} />
+        <>
+          {/* Header */}
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <h1 className="text-xl font-bold tracking-tight text-foreground sm:text-2xl">
+                {t('title')}
+              </h1>
+              <p className="text-xs text-text-muted sm:text-sm">{t('description')}</p>
+            </div>
 
-          {/* Allocation Breakdown */}
-          <NetWorthAllocationBreakdown
-            allocation={allocationList}
-            baseCurrency={baseCurrency}
-          />
+            <NetWorthCurrencySelector
+              activeCurrency={baseCurrency}
+              onSelectCurrency={setBaseCurrency}
+              availableCurrencies={currencies}
+            />
+          </div>
 
-          {/* By Currency Breakdown */}
-          <NetWorthCurrencyBreakdown
-            currencies={byCurrencyList}
-            baseCurrency={baseCurrency}
-          />
-        </div>
+          <div className="flex flex-col gap-6">
+            {/* Summary Cards */}
+            <NetWorthSummaryCards totals={totals} baseCurrency={baseCurrency} />
+
+            {/* Allocation Breakdown */}
+            <NetWorthAllocationBreakdown
+              allocation={allocationList}
+              baseCurrency={baseCurrency}
+            />
+
+            {/* By Currency Breakdown */}
+            <NetWorthCurrencyBreakdown
+              currencies={byCurrencyList}
+              baseCurrency={baseCurrency}
+            />
+          </div>
+        </>
       )}
     </div>
   );
