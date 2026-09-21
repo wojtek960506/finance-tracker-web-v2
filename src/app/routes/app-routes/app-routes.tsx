@@ -4,7 +4,7 @@ import {
   OperationsPage,
   PortfolioPage,
 } from '@investments/components';
-import { NetWorthPage } from '@net-worth/components';
+import { FinancialIndependencePage, NetWorthPage } from '@net-worth/components';
 import { type ReactNode } from 'react';
 import { matchPath, Navigate } from 'react-router-dom';
 
@@ -65,10 +65,20 @@ export const PROTECTED_APP_ROUTES: AppRouteConfig[] = [
     title: { namespace: 'navigation', key: 'netWorth' },
   },
   {
+    path: '/financial-independence',
+    element: <FinancialIndependencePage />,
+    title: { namespace: 'navigation', key: 'financialIndependence' },
+  },
+  {
+    path: '/net-worth/independence',
+    element: <Navigate to="/financial-independence" replace />,
+  },
+  {
     path: '/transactions',
     element: <TransactionsPage />,
     title: { namespace: 'navigation', key: 'transactions' },
   },
+
   {
     path: '/transactions/trash',
     element: <TrashedTransactionsList />,

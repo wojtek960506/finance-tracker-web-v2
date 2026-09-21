@@ -1,6 +1,7 @@
 {
   "hi": "Привет",
   "netWorth": "Чистый капитал",
+  "financialIndependence": "Финансовая независимость",
   "transactions": "Транзакции",
   "investments": "Инвестиции",
   "instrumentDetails": "Детали инструмента",

@@ -23,6 +23,7 @@ vi.mock('@named-resources/components', () => ({
 
 vi.mock('@net-worth/components', () => ({
   NetWorthPage: () => <div>net-worth</div>,
+  FinancialIndependencePage: () => <div>financial-independence</div>,
 }));
 
 vi.mock('@investments/components', () => ({
@@ -83,6 +84,19 @@ describe('Title', () => {
 
     expect(
       screen.getByRole('heading', { name: 'navigation:netWorth' }),
+    ).toBeInTheDocument();
+    expect(screen.queryByRole('link')).not.toBeInTheDocument();
+  });
+
+  it('renders financial independence title on financial independence page', () => {
+    render(
+      <MemoryRouter initialEntries={['/financial-independence']}>
+        <Title />
+      </MemoryRouter>,
+    );
+
+    expect(
+      screen.getByRole('heading', { name: 'navigation:financialIndependence' }),
     ).toBeInTheDocument();
     expect(screen.queryByRole('link')).not.toBeInTheDocument();
   });

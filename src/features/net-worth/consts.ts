@@ -51,3 +51,6 @@ export const FALLBACK_CATEGORY_STYLE: CategoryStyle = {
   bgClass: 'bg-neutral-500/10 dark:bg-neutral-500/20',
   progressClass: 'bg-neutral-500',
 };
+
+export const INDEPENDENCE_PERIOD_OPTIONS = [3, 6, 12, 24, 36] as const;
+export type IndependencePeriodOption = (typeof INDEPENDENCE_PERIOD_OPTIONS)[number];

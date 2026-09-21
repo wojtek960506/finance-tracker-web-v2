@@ -1,6 +1,7 @@
 {
   "hi": "Hello",
   "netWorth": "Net Worth",
+  "financialIndependence": "Financial Independence",
   "transactions": "Transactions",
   "investments": "Investments",
   "instrumentDetails": "Instrument Details",

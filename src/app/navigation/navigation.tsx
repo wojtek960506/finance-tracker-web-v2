@@ -8,6 +8,7 @@ import {
   LogOut,
   PieChart,
   Settings,
+  ShieldCheck,
   Tags,
   Trash2,
   WalletCards,
@@ -56,6 +57,16 @@ export const Navigation = () => {
           to="/net-worth"
           title={t('netWorth')}
           Icon={PieChart}
+          additionalAction={() =>
+            setNavigationItemExpanded(TRANSACTIONS_NAVIGATION_ITEM_ID, false)
+          }
+        />
+      </li>
+      <li>
+        <NavigationItem
+          to="/financial-independence"
+          title={t('financialIndependence')}
+          Icon={ShieldCheck}
           additionalAction={() =>
             setNavigationItemExpanded(TRANSACTIONS_NAVIGATION_ITEM_ID, false)
           }

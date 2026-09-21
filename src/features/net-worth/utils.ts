@@ -15,3 +15,20 @@ export const formatPercentage = (value: number, language: string): string =>
     minimumFractionDigits: 1,
     maximumFractionDigits: 2,
   }).format(value);
+
+export const formatHorizonYearsAndMonths = (
+  months: number,
+  t: (key: string, options?: Record<string, unknown>) => string,
+): string => {
+  const roundedMonths = Math.round(months);
+  const years = Math.floor(roundedMonths / 12);
+  const remMonths = roundedMonths % 12;
+
+  if (years > 0 && remMonths > 0) {
+    return t('horizonYearsAndMonths', { years, months: remMonths });
+  }
+  if (years > 0) {
+    return t('horizonYearsOnly', { years });
+  }
+  return t('horizonMonthsOnly', { months: roundedMonths });
+};
