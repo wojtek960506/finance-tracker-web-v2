@@ -1,4 +1,12 @@
-import { Coins, Landmark, Layers, Lock, PiggyBank, TrendingUp } from 'lucide-react';
+import {
+  Coins,
+  Landmark,
+  Layers,
+  Lock,
+  PiggyBank,
+  TrendingUp,
+  Wallet,
+} from 'lucide-react';
 import type { ElementType } from 'react';
 
 import type { NetWorthCategory } from './api';
@@ -54,3 +62,36 @@ export const FALLBACK_CATEGORY_STYLE: CategoryStyle = {
 
 export const INDEPENDENCE_PERIOD_OPTIONS = [3, 6, 12, 24, 36] as const;
 export type IndependencePeriodOption = (typeof INDEPENDENCE_PERIOD_OPTIONS)[number];
+
+export type SummaryCardVariant = 'total' | 'liquid' | 'investments';
+
+export type SummaryCardStyle = {
+  icon: ElementType;
+  iconClass: string;
+  cardClass?: string;
+  titleClass?: string;
+  valueClass?: string;
+  percentageClass?: string;
+};
+
+export const NET_WORTH_SUMMARY_CARD_STYLES: Record<SummaryCardVariant, SummaryCardStyle> =
+  {
+    total: {
+      icon: Wallet,
+      iconClass: 'text-primary',
+      cardClass:
+        'border-primary/30 bg-primary/[0.04] dark:border-primary/40 dark:bg-primary/10',
+      titleClass: 'text-primary',
+      valueClass: 'text-2xl font-black sm:text-3xl',
+    },
+    liquid: {
+      icon: Landmark,
+      iconClass: 'text-emerald-500',
+      percentageClass: 'text-emerald-600 dark:text-emerald-400',
+    },
+    investments: {
+      icon: TrendingUp,
+      iconClass: 'text-sky-500',
+      percentageClass: 'text-sky-600 dark:text-sky-400',
+    },
+  };

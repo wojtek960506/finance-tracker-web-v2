@@ -6,4 +6,5 @@ export * from './net-worth-independence-breakdown';
 export * from './net-worth-independence-cards';
 export * from './net-worth-independence-section';
 export * from './net-worth-page';
+export * from './net-worth-summary-card';
 export * from './net-worth-summary-cards';
