@@ -1,6 +1,7 @@
 export * from './financial-independence-page';
 export * from './net-worth-allocation-breakdown';
 export * from './net-worth-allocation-item';
+export * from './net-worth-allocation-progress-bar';
 export * from './net-worth-currency-breakdown';
 export * from './net-worth-empty-state';
 export * from './net-worth-independence-breakdown';

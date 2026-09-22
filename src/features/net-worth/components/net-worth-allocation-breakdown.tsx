@@ -1,14 +1,12 @@
-import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 
 import { useLanguage } from '@shared/hooks';
 import { Card } from '@shared/ui';
 
-import type { NetWorthAllocationItemDTO, NetWorthCategory } from '../api';
-import { FALLBACK_CATEGORY_STYLE, NET_WORTH_CATEGORY_STYLES } from '../consts';
-import { formatPercentage } from '../utils';
+import type { NetWorthAllocationItemDTO } from '../api';
 
 import { NetWorthAllocationItem } from './net-worth-allocation-item';
+import { NetWorthAllocationProgressBar } from './net-worth-allocation-progress-bar';
 
 type NetWorthAllocationBreakdownProps = {
   allocation: NetWorthAllocationItemDTO[];
@@ -36,31 +34,10 @@ export const NetWorthAllocationBreakdown = ({
         <p className="text-xs text-text-muted">{t('assetAllocationDescription')}</p>
       </div>
 
-      {/* Multi-segment visual progress bar */}
-      <div className="flex h-3 w-full overflow-hidden rounded-full bg-fg/5 p-0.5">
-        {allocation.map((item) => {
-          const style =
-            NET_WORTH_CATEGORY_STYLES[item.category as NetWorthCategory] ??
-            FALLBACK_CATEGORY_STYLE;
-
-          if (item.percentage <= 0) return null;
-
-          return (
-            <div
-              key={item.category}
-              title={`${t(`categories.${item.category}`, { defaultValue: item.category })}: ${formatPercentage(item.percentage, language)}%`}
-              style={{ width: `${Math.max(item.percentage, 1)}%` }}
-              className={clsx(
-                'h-full first:rounded-l-full last:rounded-r-full',
-                style.progressClass,
-              )}
-            />
-          );
-        })}
-      </div>
+      <NetWorthAllocationProgressBar allocation={allocation} />
 
       {/* Category breakdown grid */}
-      <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-2.5 lg:grid-cols-2 xl:grid-cols-3">
         {allocation.map((item) => (
           <NetWorthAllocationItem
             key={item.category}

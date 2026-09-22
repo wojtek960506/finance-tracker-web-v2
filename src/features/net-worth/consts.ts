@@ -47,9 +47,9 @@ export const NET_WORTH_CATEGORY_STYLES: Record<NetWorthCategory, CategoryStyle> 
   },
   savings: {
     icon: PiggyBank,
-    colorClass: 'text-teal-500',
-    bgClass: 'bg-teal-500/10 dark:bg-teal-500/20',
-    progressClass: 'bg-teal-500',
+    colorClass: 'text-pink-600',
+    bgClass: 'bg-pink-600/10 dark:bg-pink-600/20',
+    progressClass: 'bg-pink-600',
   },
 };
 
