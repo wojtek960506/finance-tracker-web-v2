@@ -14,7 +14,7 @@ export const InstrumentDetailsHeader = () => {
   const { language } = useLanguage();
   const {
     instrument,
-    openCreateSnapshotModal,
+    openCreateOperationModal,
     openUpdateInstrumentModal,
     openDeleteInstrumentModal,
   } = useInstrumentDetailsContext();
@@ -71,11 +71,20 @@ export const InstrumentDetailsHeader = () => {
           <Button
             type="button"
             variant="primary"
-            onClick={openCreateSnapshotModal}
+            onClick={openCreateOperationModal}
             className="flex items-center gap-1.5"
           >
-            <Camera className="size-5 sm:size-6" />
-            <span>{t('operations.recordSnapshot')}</span>
+            {instrument.kind === 'termDeposit' || instrument.kind === 'savings' ? (
+              <>
+                <Plus className="size-5 sm:size-6" />
+                <span>{t('operations.recordOperation')}</span>
+              </>
+            ) : (
+              <>
+                <Camera className="size-5 sm:size-6" />
+                <span>{t('operations.recordSnapshot')}</span>
+              </>
+            )}
           </Button>
 
           <Link

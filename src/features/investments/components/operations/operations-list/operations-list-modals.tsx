@@ -1,52 +1,53 @@
 import type {
   InvestmentInstrument,
-  InvestmentSnapshotOperation,
+  InvestmentOperation,
 } from '@features/investments/api';
-import {
-  CreateSnapshotModal,
-  DeleteSnapshotModal,
-  EditSnapshotModal,
-} from '@features/investments/components/snapshots';
+
+import { CreateOperationModal } from '../create-operation-modal';
+import { DeleteOperationModal } from '../delete-operation-modal';
+import { EditOperationModal } from '../edit-operation-modal';
 
 type OperationsListModalsProps = {
-  isCreateSnapshotModalOpen: boolean;
-  onCloseCreateSnapshotModal: () => void;
-  editingSnapshot: InvestmentSnapshotOperation | null;
-  onCloseEditSnapshotModal: () => void;
-  deletingSnapshot: InvestmentSnapshotOperation | null;
-  onCloseDeleteSnapshotModal: () => void;
+  isCreateOperationModalOpen: boolean;
+  onCloseCreateOperationModal: () => void;
+  editingOperation: InvestmentOperation | null;
+  onCloseEditOperationModal: () => void;
+  deletingOperation: InvestmentOperation | null;
+  onCloseDeleteOperationModal: () => void;
   instrumentsMap: Map<string, InvestmentInstrument>;
 };
 
 export const OperationsListModals = ({
-  isCreateSnapshotModalOpen,
-  onCloseCreateSnapshotModal,
-  editingSnapshot,
-  onCloseEditSnapshotModal,
-  deletingSnapshot,
-  onCloseDeleteSnapshotModal,
+  isCreateOperationModalOpen,
+  onCloseCreateOperationModal,
+  editingOperation,
+  onCloseEditOperationModal,
+  deletingOperation,
+  onCloseDeleteOperationModal,
   instrumentsMap,
 }: OperationsListModalsProps) => {
   return (
     <>
-      <CreateSnapshotModal
-        isOpen={isCreateSnapshotModalOpen}
-        onClose={onCloseCreateSnapshotModal}
+      <CreateOperationModal
+        isOpen={isCreateOperationModalOpen}
+        onClose={onCloseCreateOperationModal}
       />
 
-      <EditSnapshotModal
-        snapshot={editingSnapshot}
-        isOpen={Boolean(editingSnapshot)}
-        onClose={onCloseEditSnapshotModal}
+      <EditOperationModal
+        operation={editingOperation}
+        isOpen={Boolean(editingOperation)}
+        onClose={onCloseEditOperationModal}
       />
 
-      <DeleteSnapshotModal
-        snapshot={deletingSnapshot}
+      <DeleteOperationModal
+        operation={deletingOperation}
         instrument={
-          deletingSnapshot ? instrumentsMap.get(deletingSnapshot.instrumentId) : undefined
+          deletingOperation
+            ? instrumentsMap.get(deletingOperation.instrumentId)
+            : undefined
         }
-        isOpen={Boolean(deletingSnapshot)}
-        onClose={onCloseDeleteSnapshotModal}
+        isOpen={Boolean(deletingOperation)}
+        onClose={onCloseDeleteOperationModal}
       />
     </>
   );

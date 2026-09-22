@@ -72,6 +72,7 @@
     "searchPlaceholder": "Szukaj operacji...",
     "allInstruments": "Wszystkie instrumenty",
     "recordSnapshot": "Zarejestruj wycenę",
+    "recordOperation": "Zarejestruj operację",
     "newInvestmentTransaction": "Nowa transakcja inwestycyjna",
     "snapshotBalance": "Stan",
     "emptyTitle": "Brak operacji",
@@ -87,28 +88,36 @@
     "name": "Nazwa",
     "namePlaceholder": "np. Apple, S&P 500 ETF",
     "kind": "Rodzaj",
+    "operationKind": "Typ operacji",
     "currency": "Waluta",
     "currencyPlaceholder": "Wybierz walutę...",
     "searchCurrency": "Szukaj waluty...",
     "noCurrencyFound": "Nie znaleziono waluty",
     "instrument": "Instrument",
     "balance": "Kwota salda",
+    "amount": "Kwota",
     "date": "Data",
     "notes": "Notatki",
     "notesPlaceholder": "Opcjonalny opis lub ticker",
     "snapshotNotePlaceholder": "Opcjonalna notatka (np. wycena miesięczna)",
+    "operationNotePlaceholder": "Opcjonalna notatka (np. wypłata odsetek, prowizja)",
     "createSubmit": "Utwórz instrument",
     "updateSubmit": "Zapisz zmiany",
     "createSnapshotSubmit": "Zarejestruj wycenę",
+    "createOperationSubmit": "Zarejestruj operację",
     "updateSnapshotSubmit": "Zapisz zmiany",
     "errors": {
       "nameRequired": "Nazwa jest wymagana",
       "currencyRequired": "Waluta jest wymagana",
       "instrumentRequired": "Instrument jest wymagany",
-      "amountRequired": "Kwota salda jest wymagana",
-      "amountPositive": "Kwota salda musi być większa od 0",
+      "amountRequired": "Kwota jest wymagana",
+      "amountPositive": "Kwota musi być większa od 0",
       "dateRequired": "Data jest wymagana"
     }
+  },
+  "errors": {
+    "SNAPSHOT_NOT_ALLOWED_FOR_INSTRUMENT": "Wyceny salda nie są dozwolone dla tego typu instrumentu.",
+    "OPERATION_KIND_NOT_ALLOWED_FOR_INSTRUMENT": "Ten typ operacji nie jest dozwolony dla tego typu instrumentu."
   },
   "modals": {
     "createTitle": "Nowy instrument",
@@ -121,19 +130,29 @@
     "deleteConfirm": "Usuń",
     "createSnapshotTitle": "Zarejestruj wycenę salda",
     "createSnapshotDescription": "Zapisz aktualny stan instrumentu inwestycyjnego w określonym dniu.",
+    "createOperationTitle": "Zarejestruj operację",
+    "createOperationDescription": "Zarejestruj operację dla tego instrumentu inwestycyjnego.",
     "updateSnapshotTitle": "Edytuj wycenę salda",
     "updateSnapshotDescription": "Zaktualizuj saldo, walutę, datę lub notatki dla tej wyceny.",
+    "updateOperationTitle": "Edytuj operację",
+    "updateOperationDescription": "Zaktualizuj kwotę, walutę, datę lub notatki dla tej operacji.",
     "deleteSnapshotTitle": "Usuń wycenę",
     "deleteSnapshotPrompt": "Czy na pewno chcesz usunąć wycenę dla „{{instrumentName}}” z dnia {{date}}?",
     "deleteSnapshotHint": "Ta wycena zostanie trwale usunięta z historii Twoich inwestycji.",
-    "deleteSnapshotConfirm": "Usuń wycenę"
+    "deleteSnapshotConfirm": "Usuń wycenę",
+    "deleteOperationTitle": "Usuń operację",
+    "deleteOperationPrompt": "Czy na pewno chcesz usunąć operację dla „{{instrumentName}}” z dnia {{date}}?",
+    "deleteOperationHint": "Ta operacja zostanie trwale usunięta z historii Twoich inwestycji.",
+    "deleteOperationConfirm": "Usuń operację"
   },
   "actions": {
     "edit": "Edytuj instrument",
     "delete": "Usuń instrument",
     "viewTransaction": "Zobacz transakcję",
     "editSnapshot": "Edytuj wycenę",
-    "deleteSnapshot": "Usuń wycenę"
+    "deleteSnapshot": "Usuń wycenę",
+    "editOperation": "Edytuj operację",
+    "deleteOperation": "Usuń operację"
   },
   "cancel": "Anuluj",
   "saving": "Zapisywanie...",
@@ -150,7 +169,13 @@
     "snapshotUpdatedTitle": "Zaktualizowano wycenę",
     "snapshotUpdateErrorTitle": "Nie udało się zaktualizować wyceny",
     "snapshotDeletedTitle": "Usunięto wycenę",
-    "snapshotDeleteErrorTitle": "Nie udało się usunąć wyceny"
+    "snapshotDeleteErrorTitle": "Nie udało się usunąć wyceny",
+    "operationCreatedTitle": "Zarejestrowano operację",
+    "operationCreateErrorTitle": "Nie udało się zarejestrować operacji",
+    "operationUpdatedTitle": "Zaktualizowano operację",
+    "operationUpdateErrorTitle": "Nie udało się zaktualizować operacji",
+    "operationDeletedTitle": "Usunięto operację",
+    "operationDeleteErrorTitle": "Nie udało się usunąć operacji"
   },
   "details": {
     "backToInstruments": "Powrót do instrumentów",

@@ -12,9 +12,9 @@ export const InstrumentOperationsLedger = () => {
   const {
     instrument,
     operations,
-    openCreateSnapshotModal,
-    openEditSnapshotModal,
-    openDeleteSnapshotModal,
+    openCreateOperationModal,
+    openEditOperationModal,
+    openDeleteOperationModal,
   } = useInstrumentDetailsContext();
 
   const sortedOperations = [...operations].sort(
@@ -50,7 +50,7 @@ export const InstrumentOperationsLedger = () => {
             <Button
               type="button"
               variant="primary"
-              onClick={openCreateSnapshotModal}
+              onClick={openCreateOperationModal}
               className="flex items-center gap-1.5"
             >
               <Camera className="size-4" />
@@ -79,8 +79,8 @@ export const InstrumentOperationsLedger = () => {
               key={op.id}
               operation={op}
               instrument={instrument}
-              onEditSnapshot={openEditSnapshotModal}
-              onDeleteSnapshot={openDeleteSnapshotModal}
+              onEditOperation={openEditOperationModal}
+              onDeleteOperation={openDeleteOperationModal}
             />
           ))}
         </div>

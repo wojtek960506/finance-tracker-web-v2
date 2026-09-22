@@ -4,7 +4,7 @@ import { describe, expect, it, vi } from 'vitest';
 import type {
   InvestmentCashFlowOperation,
   InvestmentInstrument,
-  InvestmentSnapshotOperation,
+  InvestmentOperation,
 } from '@features/investments/api';
 import { renderWithProviders } from '@test-utils';
 
@@ -21,7 +21,7 @@ const mockInstrument: InvestmentInstrument = {
   ownerId: 'user-1',
 };
 
-const mockSnapshot: InvestmentSnapshotOperation = {
+const mockSnapshot: InvestmentOperation = {
   id: 'op-snap-1',
   kind: 'snapshot',
   instrumentId: 'inst-1',
@@ -50,15 +50,15 @@ const mockCashFlow: InvestmentCashFlowOperation = {
 
 describe('OperationCard', () => {
   it('renders snapshot operation correctly with edit and delete callbacks', () => {
-    const onEditSnapshot = vi.fn();
-    const onDeleteSnapshot = vi.fn();
+    const onEditOperation = vi.fn();
+    const onDeleteOperation = vi.fn();
 
     renderWithProviders(
       <OperationCard
         operation={mockSnapshot}
         instrument={mockInstrument}
-        onEditSnapshot={onEditSnapshot}
-        onDeleteSnapshot={onDeleteSnapshot}
+        onEditOperation={onEditOperation}
+        onDeleteOperation={onDeleteOperation}
       />,
     );
 
@@ -69,11 +69,11 @@ describe('OperationCard', () => {
 
     const editBtn = screen.getByRole('button', { name: /edit snapshot/i });
     fireEvent.click(editBtn);
-    expect(onEditSnapshot).toHaveBeenCalledWith(mockSnapshot);
+    expect(onEditOperation).toHaveBeenCalledWith(mockSnapshot);
 
     const deleteBtn = screen.getByRole('button', { name: /delete snapshot/i });
     fireEvent.click(deleteBtn);
-    expect(onDeleteSnapshot).toHaveBeenCalledWith(mockSnapshot);
+    expect(onDeleteOperation).toHaveBeenCalledWith(mockSnapshot);
   });
 
   it('renders cash flow operation with link to transaction', () => {

@@ -1,7 +1,6 @@
 import type {
   InvestmentInstrument,
   InvestmentOperation,
-  InvestmentSnapshotOperation,
 } from '@features/investments/api';
 
 import { OperationCard } from '../operation-card';
@@ -9,15 +8,15 @@ import { OperationCard } from '../operation-card';
 type OperationsListGridProps = {
   operations: InvestmentOperation[];
   instrumentsMap: Map<string, InvestmentInstrument>;
-  onEditSnapshot?: (snapshot: InvestmentSnapshotOperation) => void;
-  onDeleteSnapshot?: (snapshot: InvestmentSnapshotOperation) => void;
+  onEditOperation?: (operation: InvestmentOperation) => void;
+  onDeleteOperation?: (operation: InvestmentOperation) => void;
 };
 
 export const OperationsListGrid = ({
   operations,
   instrumentsMap,
-  onEditSnapshot,
-  onDeleteSnapshot,
+  onEditOperation,
+  onDeleteOperation,
 }: OperationsListGridProps) => {
   return (
     <div
@@ -29,8 +28,8 @@ export const OperationsListGrid = ({
           key={op.id}
           operation={op}
           instrument={instrumentsMap.get(op.instrumentId)}
-          onEditSnapshot={onEditSnapshot}
-          onDeleteSnapshot={onDeleteSnapshot}
+          onEditOperation={onEditOperation}
+          onDeleteOperation={onDeleteOperation}
         />
       ))}
     </div>

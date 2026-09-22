@@ -863,14 +863,14 @@ describe('CreateBulkTransaction', () => {
 
     await user.selectOptions(
       screen.getByRole('combobox', { name: 'investmentOperationKind' }),
-      'interest',
+      'sell',
     );
     await user.type(
       screen.getByRole('textbox', { name: 'investmentInstrument' }),
       'inst-msft',
     );
     const descriptions = screen.getAllByRole('textbox', { name: 'description' });
-    await user.type(descriptions[1], 'MSFT Dividend');
+    await user.type(descriptions[1], 'MSFT Sale');
 
     const numberInputs = screen.getAllByLabelText('number-input');
     await user.type(numberInputs[1], '120');
@@ -896,13 +896,13 @@ describe('CreateBulkTransaction', () => {
           {
             kind: 'investment',
             date: expect.any(String),
-            description: 'MSFT Dividend',
+            description: 'MSFT Sale',
             amount: 120,
             currency: 'USD',
             paymentMethodId: undefined,
             accountId: undefined,
             investment: {
-              operationKind: 'interest',
+              operationKind: 'sell',
               instrumentId: 'inst-msft',
               note: undefined,
             },
