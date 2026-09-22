@@ -29,10 +29,6 @@ export const getInvestmentOperationKindSelectValueClassName = (
     case 'buy':
       return 'text-blue-600 dark:text-blue-400 font-semibold';
     case 'sell':
-      return 'text-emerald-600 dark:text-emerald-400 font-semibold';
-    case 'interest':
-      return 'text-purple-600 dark:text-purple-400 font-semibold';
-    case 'fee':
       return 'text-amber-600 dark:text-amber-400 font-semibold';
     default:
       return '';
@@ -49,16 +45,6 @@ export const getInvestmentOperationKindSelectItemClassName = (
         'focus:text-blue-600 dark:focus:text-blue-400 font-semibold',
       );
     case 'sell':
-      return clsx(
-        'text-emerald-600 dark:text-emerald-400',
-        'focus:text-emerald-600 dark:focus:text-emerald-400 font-semibold',
-      );
-    case 'interest':
-      return clsx(
-        'text-purple-600 dark:text-purple-400',
-        'focus:text-purple-600 dark:focus:text-purple-400 font-semibold',
-      );
-    case 'fee':
       return clsx(
         'text-amber-600 dark:text-amber-400',
         'focus:text-amber-600 dark:focus:text-amber-400 font-semibold',

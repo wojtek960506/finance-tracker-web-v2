@@ -6,26 +6,26 @@ import {
   deleteOperation,
   type InvestmentInstrument,
   type InvestmentInstrumentSummary,
-  type InvestmentSnapshotOperation,
+  type InvestmentOperation,
 } from '@features/investments/api';
 import { normalizeApiError } from '@shared/api/api-error';
 import { useLanguage } from '@shared/hooks';
 import { useToastStore } from '@shared/store/toast-store';
 import { Button, Modal } from '@shared/ui';
 
-type DeleteSnapshotModalProps = {
-  snapshot: InvestmentSnapshotOperation | null;
+export type DeleteOperationModalProps = {
+  operation?: InvestmentOperation | null;
   instrument?: InvestmentInstrument | InvestmentInstrumentSummary;
   isOpen: boolean;
   onClose: () => void;
 };
 
-export const DeleteSnapshotModal = ({
-  snapshot,
+export const DeleteOperationModal = ({
+  operation,
   instrument,
   isOpen,
   onClose,
-}: DeleteSnapshotModalProps) => {
+}: DeleteOperationModalProps) => {
   const { t } = useTranslation('investments');
   const { t: tCommon } = useTranslation('common');
   const { language } = useLanguage();
@@ -40,31 +40,66 @@ export const DeleteSnapshotModal = ({
       void queryClient.invalidateQueries({ queryKey: ['investments-summary'] });
       pushToast({
         variant: 'success',
-        title: t('toasts.snapshotDeletedTitle'),
+        title:
+          operation?.kind === 'snapshot'
+            ? t('toasts.snapshotDeletedTitle')
+            : t('toasts.operationDeletedTitle'),
       });
       onClose();
     },
     onError: (error) => {
       const apiError = normalizeApiError(error);
+      const errorMessage =
+        apiError.code && t(`errors.${apiError.code}`, { defaultValue: '' })
+          ? t(`errors.${apiError.code}`)
+          : apiError.message;
       pushToast({
         variant: 'error',
-        title: t('toasts.snapshotDeleteErrorTitle'),
-        message: apiError.message,
+        title:
+          operation?.kind === 'snapshot'
+            ? t('toasts.snapshotDeleteErrorTitle')
+            : t('toasts.operationDeleteErrorTitle'),
+        message: errorMessage,
       });
     },
   });
 
-  if (!snapshot) return null;
+  if (!operation) return null;
 
   const handleDelete = async () => {
-    await deleteMutation.mutateAsync(snapshot.id);
+    await deleteMutation.mutateAsync(operation.id);
   };
 
-  const formattedDate = new Date(snapshot.date).toLocaleDateString(language);
+  const formattedDate = new Date(operation.date).toLocaleDateString(language);
   const instrumentName = instrument?.name ?? t('unknownInstrument');
+  const isSnapshot = operation.kind === 'snapshot';
+
+  const modalTitle = isSnapshot
+    ? t('modals.deleteSnapshotTitle')
+    : t('modals.deleteOperationTitle');
+  const modalPrompt = isSnapshot
+    ? t('modals.deleteSnapshotPrompt', { instrumentName, date: formattedDate })
+    : t('modals.deleteOperationPrompt', {
+        instrumentName,
+        date: formattedDate,
+        defaultValue: t('modals.deleteSnapshotPrompt', {
+          instrumentName,
+          date: formattedDate,
+        }),
+      });
+  const modalHint = isSnapshot
+    ? t('modals.deleteSnapshotHint')
+    : t('modals.deleteOperationHint', {
+        defaultValue: t('modals.deleteSnapshotHint'),
+      });
+  const confirmText = isSnapshot
+    ? t('modals.deleteSnapshotConfirm')
+    : t('modals.deleteOperationConfirm', {
+        defaultValue: t('modals.deleteSnapshotConfirm'),
+      });
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} ariaLabel={t('modals.deleteSnapshotTitle')}>
+    <Modal isOpen={isOpen} onClose={onClose} ariaLabel={modalTitle}>
       <div className="flex flex-col gap-4">
         <header className="flex items-start gap-3">
           <div className="rounded-full bg-destructive/10 p-2 text-destructive">
@@ -72,13 +107,10 @@ export const DeleteSnapshotModal = ({
           </div>
           <div className="space-y-1">
             <h2 className="text-lg font-semibold tracking-tight text-foreground">
-              {t('modals.deleteSnapshotPrompt', {
-                instrumentName,
-                date: formattedDate,
-              })}
+              {modalPrompt}
             </h2>
             <p className="text-sm text-text-muted break-words [overflow-wrap:anywhere]">
-              {t('modals.deleteSnapshotHint')}
+              {modalHint}
             </p>
           </div>
         </header>
@@ -98,9 +130,7 @@ export const DeleteSnapshotModal = ({
             onClick={handleDelete}
             disabled={deleteMutation.isPending}
           >
-            {deleteMutation.isPending
-              ? tCommon('deleting')
-              : t('modals.deleteSnapshotConfirm')}
+            {deleteMutation.isPending ? tCommon('deleting') : confirmText}
           </Button>
         </div>
       </div>

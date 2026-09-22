@@ -20,12 +20,12 @@ export const OperationsList = () => {
     selectedInstrumentId,
     setSelectedInstrumentId,
     resetFilters,
-    isCreateSnapshotModalOpen,
-    setIsCreateSnapshotModalOpen,
-    editingSnapshot,
-    setEditingSnapshot,
-    deletingSnapshot,
-    setDeletingSnapshot,
+    isCreateOperationModalOpen,
+    setIsCreateOperationModalOpen,
+    editingOperation,
+    setEditingOperation,
+    deletingOperation,
+    setDeletingOperation,
     instruments,
     instrumentsMap,
     operations,
@@ -61,32 +61,32 @@ export const OperationsList = () => {
           onSelectedInstrumentIdChange={setSelectedInstrumentId}
           instruments={instruments}
           isFetching={isFetching}
-          onCreateSnapshot={() => setIsCreateSnapshotModalOpen(true)}
+          onCreateOperation={() => setIsCreateOperationModalOpen(true)}
         />
       )}
 
       {filteredOperations.length === 0 ? (
         <OperationsListEmptyState
           hasAnyOperations={operations.length > 0}
-          onCreateSnapshot={() => setIsCreateSnapshotModalOpen(true)}
+          onCreateOperation={() => setIsCreateOperationModalOpen(true)}
           onResetFilters={resetFilters}
         />
       ) : (
         <OperationsListGrid
           operations={filteredOperations}
           instrumentsMap={instrumentsMap}
-          onEditSnapshot={(snapshot) => setEditingSnapshot(snapshot)}
-          onDeleteSnapshot={(snapshot) => setDeletingSnapshot(snapshot)}
+          onEditOperation={(operation) => setEditingOperation(operation)}
+          onDeleteOperation={(operation) => setDeletingOperation(operation)}
         />
       )}
 
       <OperationsListModals
-        isCreateSnapshotModalOpen={isCreateSnapshotModalOpen}
-        onCloseCreateSnapshotModal={() => setIsCreateSnapshotModalOpen(false)}
-        editingSnapshot={editingSnapshot}
-        onCloseEditSnapshotModal={() => setEditingSnapshot(null)}
-        deletingSnapshot={deletingSnapshot}
-        onCloseDeleteSnapshotModal={() => setDeletingSnapshot(null)}
+        isCreateOperationModalOpen={isCreateOperationModalOpen}
+        onCloseCreateOperationModal={() => setIsCreateOperationModalOpen(false)}
+        editingOperation={editingOperation}
+        onCloseEditOperationModal={() => setEditingOperation(null)}
+        deletingOperation={deletingOperation}
+        onCloseDeleteOperationModal={() => setDeletingOperation(null)}
         instrumentsMap={instrumentsMap}
       />
     </div>

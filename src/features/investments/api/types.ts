@@ -32,14 +32,18 @@ export type InvestmentSnapshotOperation =
 export type InvestmentCashFlowOperation =
   components['schemas']['InvestmentCashFlowOperationResponse'];
 
-export type CreateSnapshotPayload = Omit<
-  components['schemas']['InvestmentSnapshotOperationInput'],
-  'currency'
-> & {
+export type StandaloneInvestmentOperationKind = 'snapshot' | 'interest' | 'fee';
+
+export type CreateInvestmentOperationPayload = {
+  instrumentId: string;
+  kind?: StandaloneInvestmentOperationKind;
+  amount: number;
   currency: CurrencyCode | (string & {});
+  date: string;
+  note?: string;
 };
 
-export type UpdateSnapshotPayload = Omit<
+export type UpdateInvestmentOperationPayload = Omit<
   components['schemas']['InvestmentOperationUpdateInput'],
   'currency' | 'date'
 > & {
@@ -62,8 +66,6 @@ export type GetOperationsQuery = {
 
 export type InvestmentInstrumentSummary =
   components['schemas']['InvestmentInstrumentSummary'];
-
-export type InvestmentInstrumentSummaryDTO = InvestmentInstrumentSummary;
 
 export type InvestmentCurrencySummary =
   components['schemas']['InvestmentCurrencySummary'];

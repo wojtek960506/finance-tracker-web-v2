@@ -41,6 +41,12 @@ export const makeTransaction = (overrides: Partial<Transaction> = {}): Transacti
     return {
       ...baseCommon,
       kind: 'investment',
+      investment: {
+        operationKind: 'buy',
+        instrument: { id: 'inst-1', name: 'Apple Inc.', kind: 'share' },
+        note: '5 shares',
+        ...(overrides as { investment?: object }).investment,
+      },
       ...overrides,
       category: { ...baseCommon.category, ...overrides.category },
       paymentMethod: { ...baseCommon.paymentMethod, ...overrides.paymentMethod },
