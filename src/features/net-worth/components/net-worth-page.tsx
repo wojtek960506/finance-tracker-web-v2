@@ -25,7 +25,10 @@ export const NetWorthPage = () => {
   } = useNetWorth();
 
   return (
-    <div className="flex flex-col gap-5 p-4 sm:p-6" data-testid="net-worth-page">
+    <div
+      className="flex flex-col gap-5 px-0 xs:px-2 sm:px-3"
+      data-testid="net-worth-page"
+    >
       {/* Loading state */}
       {isLoading && (
         <LoadingCard

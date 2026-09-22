@@ -30,7 +30,7 @@ export const FinancialIndependencePage = () => {
 
   return (
     <div
-      className="flex flex-col gap-5 p-4 sm:p-6"
+      className="flex flex-col gap-5 px-0 xs:px-2 sm:px-3"
       data-testid="financial-independence-page"
     >
       {/* Loading state */}
