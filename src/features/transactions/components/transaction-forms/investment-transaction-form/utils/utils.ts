@@ -7,14 +7,9 @@ import {
   toOptionalId,
 } from '@transactions/components/transaction-forms';
 
-export type InvestmentOperationKind = 'buy' | 'sell' | 'interest' | 'fee';
+export type InvestmentOperationKind = 'buy' | 'sell';
 
-export const INVESTMENT_OPERATION_KINDS: InvestmentOperationKind[] = [
-  'buy',
-  'sell',
-  'interest',
-  'fee',
-];
+export const INVESTMENT_OPERATION_KINDS: InvestmentOperationKind[] = ['buy', 'sell'];
 
 export const investmentTransactionFormSchema = z.object({
   date: z.string().min(1, 'dateRequired'),
@@ -27,7 +22,7 @@ export const investmentTransactionFormSchema = z.object({
   currency: z.string().min(1, 'currencyRequired'),
   paymentMethodId: z.string(),
   accountId: z.string(),
-  operationKind: z.enum(['buy', 'sell', 'interest', 'fee']),
+  operationKind: z.enum(['buy', 'sell']),
   instrumentId: z.string().min(1, 'instrumentRequired'),
   note: z.string().optional(),
 });

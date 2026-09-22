@@ -1,8 +1,9 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { InstrumentSelectField } from '@investments/components/instruments/instrument-select-field';
 import { useQuery } from '@tanstack/react-query';
+import clsx from 'clsx';
 import { useEffect } from 'react';
-import { Controller, type SubmitHandler, useForm } from 'react-hook-form';
+import { Controller, type SubmitHandler, useForm, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import { getInstruments } from '@features/investments/api';
@@ -10,25 +11,31 @@ import { Button, DateInput, Input, Label } from '@shared/ui';
 import { preventImplicitFormSubmit } from '@shared/utils';
 import { CurrencySelectField } from '@transactions/components/shared';
 
-import { snapshotFormSchema, type SnapshotFormValues } from './utils';
+import {
+  isCashFlowOnlyInstrument,
+  isSnapshotOnlyInstrument,
+  operationFormSchema,
+  type OperationFormValues,
+} from './utils';
 
-type SnapshotFormProps = {
-  defaultValues: SnapshotFormValues;
+export type OperationFormProps = {
+  defaultValues: OperationFormValues;
   submitLabel?: string;
   isPending: boolean;
   isInstrumentDisabled?: boolean;
-  onSubmit: (values: SnapshotFormValues) => Promise<void> | void;
+  onSubmit: (values: OperationFormValues) => Promise<void> | void;
   onCancel: () => void;
 };
 
-export const SnapshotForm = ({
+// TODO split this file
+export const OperationForm = ({
   defaultValues,
   submitLabel,
   isPending,
   isInstrumentDisabled = false,
   onSubmit,
   onCancel,
-}: SnapshotFormProps) => {
+}: OperationFormProps) => {
   const { t } = useTranslation('investments');
   const { t: tCommon } = useTranslation('common');
 
@@ -37,47 +44,70 @@ export const SnapshotForm = ({
     queryFn: async () => await getInstruments(),
   });
 
-  const form = useForm<SnapshotFormValues>({
-    resolver: zodResolver(snapshotFormSchema),
+  const form = useForm<OperationFormValues>({
+    resolver: zodResolver(operationFormSchema),
     defaultValues,
   });
 
+  const currentInstrumentId = useWatch({
+    control: form.control,
+    name: 'instrumentId',
+  });
+  const currentKind = useWatch({ control: form.control, name: 'kind' });
+
+  const selectedInstrument = instruments.find((inst) => inst.id === currentInstrumentId);
+  const isCashFlow = isCashFlowOnlyInstrument(selectedInstrument?.kind);
+
   useEffect(() => {
-    const currentInstrumentId = form.getValues('instrumentId');
-    const currentCurrency = form.getValues('currency');
-    if (currentInstrumentId && !currentCurrency) {
-      const selectedInst = instruments.find((inst) => inst.id === currentInstrumentId);
-      if (selectedInst?.currency) {
-        form.setValue('currency', selectedInst.currency);
-      }
+    if (selectedInstrument?.currency && !form.getValues('currency')) {
+      form.setValue('currency', selectedInstrument.currency);
     }
-  }, [instruments, form]);
+
+    if (isCashFlow && currentKind === 'snapshot') {
+      form.setValue('kind', 'interest');
+    } else if (
+      selectedInstrument &&
+      isSnapshotOnlyInstrument(selectedInstrument.kind) &&
+      currentKind !== 'snapshot'
+    ) {
+      form.setValue('kind', 'snapshot');
+    }
+  }, [selectedInstrument, isCashFlow, currentKind, form]);
 
   const handleInstrumentChange = (
     instrumentId: string,
     fieldOnChange: (val: string) => void,
   ) => {
     fieldOnChange(instrumentId);
-    const selectedInst = instruments.find((inst) => inst.id === instrumentId);
-    if (selectedInst?.currency) {
-      form.setValue('currency', selectedInst.currency);
+    const inst = instruments.find((i) => i.id === instrumentId);
+    if (inst?.currency) {
+      form.setValue('currency', inst.currency);
+    }
+    if (isCashFlowOnlyInstrument(inst?.kind)) {
+      form.setValue('kind', 'interest');
+    } else if (isSnapshotOnlyInstrument(inst?.kind)) {
+      form.setValue('kind', 'snapshot');
     }
   };
 
-  const handleSubmit: SubmitHandler<SnapshotFormValues> = async (values) => {
+  const handleSubmit: SubmitHandler<OperationFormValues> = async (values) => {
     await onSubmit(values);
   };
+
+  const defaultSubmitText = isCashFlow
+    ? t('form.createOperationSubmit')
+    : t('form.createSnapshotSubmit');
 
   return (
     <form
       className="flex flex-col gap-4"
       onSubmit={form.handleSubmit(handleSubmit)}
       onKeyDown={preventImplicitFormSubmit}
-      data-testid="snapshot-form"
+      data-testid="operation-form"
     >
       {/* Instrument field */}
       <div className="flex flex-col gap-1.5">
-        <Label htmlFor="snapshot-instrument">
+        <Label htmlFor="operation-instrument">
           <span className="after:ml-0.5 after:text-destructive after:content-['*']">
             {t('form.instrument')}
           </span>
@@ -101,17 +131,60 @@ export const SnapshotForm = ({
         )}
       </div>
 
+      {/* Operation Kind selector for cash-flow instruments */}
+      {isCashFlow && (
+        <div className="flex flex-col gap-1.5">
+          <Label>
+            <span className="after:ml-0.5 after:text-destructive after:content-['*']">
+              {t('form.operationKind')}
+            </span>
+          </Label>
+          <div className="grid grid-cols-2 gap-2">
+            <Button
+              type="button"
+              variant="outline"
+              className={clsx(
+                'h-10 text-sm font-semibold capitalize border transition-all',
+                currentKind === 'interest'
+                  ? 'border-emerald-500 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 shadow-sm'
+                  : 'border-border bg-card-bg text-text-muted hover:text-fg hover:border-fg/40',
+              )}
+              onClick={() => form.setValue('kind', 'interest')}
+              disabled={isPending}
+              data-testid="operation-kind-interest"
+            >
+              {t('operationKind.interest')}
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              className={clsx(
+                'h-10 text-sm font-semibold capitalize border transition-all',
+                currentKind === 'fee'
+                  ? 'border-rose-500 bg-rose-500/10 text-rose-600 dark:text-rose-400 shadow-sm'
+                  : 'border-border bg-card-bg text-text-muted hover:text-fg hover:border-fg/40',
+              )}
+              onClick={() => form.setValue('kind', 'fee')}
+              disabled={isPending}
+              data-testid="operation-kind-fee"
+            >
+              {t('operationKind.fee')}
+            </Button>
+          </div>
+        </div>
+      )}
+
       {/* Amount & Currency row */}
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-        {/* Balance Amount field */}
+        {/* Amount field */}
         <div className="flex flex-col gap-1.5">
-          <Label htmlFor="snapshot-amount">
+          <Label htmlFor="operation-amount">
             <span className="after:ml-0.5 after:text-destructive after:content-['*']">
-              {t('form.balance')}
+              {isCashFlow ? t('form.amount') : t('form.balance')}
             </span>
           </Label>
           <Input
-            id="snapshot-amount"
+            id="operation-amount"
             type="number"
             step="any"
             placeholder="0.00"
@@ -128,7 +201,7 @@ export const SnapshotForm = ({
 
         {/* Currency field */}
         <div className="flex flex-col gap-1.5">
-          <Label htmlFor="snapshot-currency">
+          <Label htmlFor="operation-currency">
             <span className="after:ml-0.5 after:text-destructive after:content-['*']">
               {t('form.currency')}
             </span>
@@ -182,10 +255,14 @@ export const SnapshotForm = ({
 
       {/* Note field */}
       <div className="flex flex-col gap-1.5">
-        <Label htmlFor="snapshot-note">{t('form.notes')}</Label>
+        <Label htmlFor="operation-note">{t('form.notes')}</Label>
         <Input
-          id="snapshot-note"
-          placeholder={t('form.snapshotNotePlaceholder')}
+          id="operation-note"
+          placeholder={
+            isCashFlow
+              ? t('form.operationNotePlaceholder')
+              : t('form.snapshotNotePlaceholder')
+          }
           {...form.register('note')}
           disabled={isPending}
         />
@@ -197,7 +274,7 @@ export const SnapshotForm = ({
           {tCommon('cancel')}
         </Button>
         <Button type="submit" variant="primary" disabled={isPending}>
-          {isPending ? tCommon('saving') : submitLabel || t('form.createSnapshotSubmit')}
+          {isPending ? tCommon('saving') : submitLabel || defaultSubmitText}
         </Button>
       </div>
     </form>

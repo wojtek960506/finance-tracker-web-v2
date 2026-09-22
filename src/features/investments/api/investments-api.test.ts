@@ -4,7 +4,7 @@ import { api } from '@shared/api';
 
 import {
   createInstrument,
-  createSnapshotOperation,
+  createOperation,
   deleteInstrument,
   deleteOperation,
   getInstrument,
@@ -15,7 +15,7 @@ import {
   type InvestmentOperation,
   type InvestmentSnapshotOperation,
   updateInstrument,
-  updateSnapshotOperation,
+  updateOperation,
 } from './index';
 
 vi.mock('@shared/api', () => ({
@@ -172,7 +172,7 @@ describe('investments api', () => {
       expect(result).toEqual([mockCashFlow, mockSnapshot]);
     });
 
-    it('creates a balance snapshot operation', async () => {
+    it('creates an operation via createOperation', async () => {
       const postMock = vi.mocked(api.post);
       postMock.mockResolvedValueOnce({ data: mockSnapshot });
 
@@ -183,23 +183,48 @@ describe('investments api', () => {
         date: '2026-02-01T00:00:00.000Z',
         note: 'Monthly checkpoint',
       };
-      const result = await createSnapshotOperation(payload);
+      const result = await createOperation(payload);
 
       expect(postMock).toHaveBeenCalledWith('/investments/operations', payload);
       expect(result).toEqual(mockSnapshot);
     });
 
-    it('updates a balance snapshot operation', async () => {
+    it('creates a standalone interest/fee operation via createOperation', async () => {
+      const postMock = vi.mocked(api.post);
+      const mockInterestOp = {
+        id: 'op-3',
+        kind: 'interest',
+        instrumentId: 'inst-2',
+        amount: 50,
+        currency: 'PLN',
+        date: '2026-03-01T00:00:00.000Z',
+      } as InvestmentOperation;
+      postMock.mockResolvedValueOnce({ data: mockInterestOp });
+
+      const payload = {
+        instrumentId: 'inst-2',
+        kind: 'interest' as const,
+        amount: 50,
+        currency: 'PLN',
+        date: '2026-03-01T00:00:00.000Z',
+      };
+      const result = await createOperation(payload);
+
+      expect(postMock).toHaveBeenCalledWith('/investments/operations', payload);
+      expect(result).toEqual(mockInterestOp);
+    });
+
+    it('updates an operation via updateOperation', async () => {
       const patchMock = vi.mocked(api.patch);
       patchMock.mockResolvedValueOnce({
-        data: { ...mockSnapshot, amount: 2000 },
+        data: { ...mockSnapshot, amount: 2500 },
       });
 
-      const payload = { amount: 2000 };
-      const result = await updateSnapshotOperation('op-1', payload);
+      const payload = { amount: 2500 };
+      const result = await updateOperation('op-1', payload);
 
       expect(patchMock).toHaveBeenCalledWith('/investments/operations/op-1', payload);
-      expect(result).toEqual({ ...mockSnapshot, amount: 2000 });
+      expect(result).toEqual({ ...mockSnapshot, amount: 2500 });
     });
 
     it('deletes a snapshot operation', async () => {

@@ -4,7 +4,7 @@ import { describe, expect, it, vi } from 'vitest';
 import * as investmentsApi from '@features/investments/api';
 import { renderWithProviders } from '@test-utils';
 
-import { DeleteSnapshotModal } from './delete-snapshot-modal';
+import { DeleteOperationModal } from './delete-operation-modal';
 
 vi.mock('@features/investments/api', async () => {
   const actual = await vi.importActual('@features/investments/api');
@@ -14,7 +14,7 @@ vi.mock('@features/investments/api', async () => {
   };
 });
 
-const mockSnapshot: investmentsApi.InvestmentSnapshotOperation = {
+const mockSnapshot: investmentsApi.InvestmentOperation = {
   id: 'op-snap-1',
   kind: 'snapshot',
   instrumentId: 'inst-1',
@@ -37,7 +37,7 @@ const mockInstrument: investmentsApi.InvestmentInstrument = {
   ownerId: 'user-1',
 };
 
-describe('DeleteSnapshotModal', () => {
+describe('DeleteOperationModal', () => {
   it('calls deleteOperation on confirm and closes modal', async () => {
     vi.mocked(investmentsApi.deleteOperation).mockResolvedValue({
       acknowledged: true,
@@ -46,8 +46,8 @@ describe('DeleteSnapshotModal', () => {
     const onClose = vi.fn();
 
     renderWithProviders(
-      <DeleteSnapshotModal
-        snapshot={mockSnapshot}
+      <DeleteOperationModal
+        operation={mockSnapshot}
         instrument={mockInstrument}
         isOpen={true}
         onClose={onClose}

@@ -1,5 +1,5 @@
 export * from './create-instrument';
-export * from './create-snapshot-operation';
+export * from './create-operation';
 export * from './delete-instrument';
 export * from './delete-operation';
 export * from './get-instrument';
@@ -8,4 +8,4 @@ export * from './get-investment-summary';
 export * from './get-operations';
 export * from './types';
 export * from './update-instrument';
-export * from './update-snapshot-operation';
+export * from './update-operation';

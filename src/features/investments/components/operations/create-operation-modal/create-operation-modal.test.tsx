@@ -4,13 +4,13 @@ import { describe, expect, it, vi } from 'vitest';
 import * as investmentsApi from '@features/investments/api';
 import { renderWithProviders } from '@test-utils';
 
-import { CreateSnapshotModal } from './create-snapshot-modal';
+import { CreateOperationModal } from './create-operation-modal';
 
 vi.mock('@features/investments/api', async () => {
   const actual = await vi.importActual('@features/investments/api');
   return {
     ...actual,
-    createSnapshotOperation: vi.fn(),
+    createOperation: vi.fn(),
     getInstruments: vi.fn(),
   };
 });
@@ -28,10 +28,10 @@ const mockInstruments: investmentsApi.InvestmentInstrument[] = [
   },
 ];
 
-describe('CreateSnapshotModal', () => {
+describe('CreateOperationModal', () => {
   it('submits snapshot creation payload and closes modal', async () => {
     vi.mocked(investmentsApi.getInstruments).mockResolvedValue(mockInstruments);
-    vi.mocked(investmentsApi.createSnapshotOperation).mockResolvedValue({
+    vi.mocked(investmentsApi.createOperation).mockResolvedValue({
       id: 'op-new',
       kind: 'snapshot',
       instrumentId: 'inst-1',
@@ -46,10 +46,11 @@ describe('CreateSnapshotModal', () => {
     const onClose = vi.fn();
 
     renderWithProviders(
-      <CreateSnapshotModal
+      <CreateOperationModal
         isOpen={true}
         onClose={onClose}
         defaultInstrumentId="inst-1"
+        isInstrumentDisabled={true}
       />,
     );
 
@@ -57,16 +58,17 @@ describe('CreateSnapshotModal', () => {
     expect(instrumentInput).toBeInTheDocument();
     expect(instrumentInput).toBeDisabled();
 
-    const amountInput = screen.getByLabelText(/balance amount/i);
+    const amountInput = screen.getByLabelText(/^balance/i);
     fireEvent.change(amountInput, { target: { value: '4000' } });
 
     const submitBtn = screen.getByRole('button', { name: /record snapshot/i });
     fireEvent.click(submitBtn);
 
     await waitFor(() => {
-      expect(investmentsApi.createSnapshotOperation).toHaveBeenCalledWith(
+      expect(investmentsApi.createOperation).toHaveBeenCalledWith(
         expect.objectContaining({
           instrumentId: 'inst-1',
+          kind: 'snapshot',
           amount: 4000,
           currency: 'USD',
         }),

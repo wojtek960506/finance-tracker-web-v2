@@ -2667,8 +2667,8 @@ export interface paths {
         };
         put?: never;
         /**
-         * Create snapshot investment operation
-         * @description Record a point-in-time balance snapshot for an instrument. Non-snapshot operations (buy, sell, interest, fee) must be created via transactions.
+         * Create investment operation
+         * @description Record a standalone investment operation (snapshot for shares/funds, interest/fee for termDeposit/savings). Non-standalone operations (buy, sell) must be created via transactions.
          */
         post: {
             parameters: {
@@ -2679,7 +2679,7 @@ export interface paths {
             };
             requestBody: {
                 content: {
-                    "application/json": components["schemas"]["InvestmentSnapshotOperationInput"];
+                    "application/json": components["schemas"]["InvestmentOperationCreateInput"];
                 };
             };
             responses: {
@@ -2711,8 +2711,8 @@ export interface paths {
         put?: never;
         post?: never;
         /**
-         * Delete snapshot investment operation
-         * @description Delete a snapshot investment operation. Cash-flow operations linked to transactions cannot be deleted here.
+         * Delete investment operation
+         * @description Delete a standalone investment operation. Cash-flow operations linked to transactions cannot be deleted here.
          */
         delete: {
             parameters: {
@@ -2742,8 +2742,8 @@ export interface paths {
         options?: never;
         head?: never;
         /**
-         * Update snapshot investment operation
-         * @description Update a snapshot investment operation. Non-snapshot operations linked to transactions cannot be edited here.
+         * Update investment operation
+         * @description Update a standalone investment operation. Operations linked to transactions cannot be edited here.
          */
         patch: {
             parameters: {
@@ -2936,15 +2936,18 @@ export interface components {
             updatedAt: unknown;
         };
         InvestmentInstrumentListResponseInput: components["schemas"]["InvestmentInstrumentResponseInput"][];
-        InvestmentSnapshotOperationInput: {
+        InvestmentOperationCreateInput: {
             instrumentId: string;
             amount: number;
             /** @enum {string} */
             currency: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
             date: unknown;
             note?: string;
-            /** @constant */
-            kind?: "snapshot";
+            /**
+             * @default snapshot
+             * @enum {string}
+             */
+            kind: "snapshot" | "interest" | "fee";
         };
         InvestmentSnapshotOperationItemInput: {
             instrumentId: string;
@@ -2964,10 +2967,20 @@ export interface components {
             date: unknown;
             note?: string;
             /** @enum {string} */
-            kind: "buy" | "sell" | "interest" | "fee";
+            kind: "buy" | "sell";
             transactionId: string;
         };
-        InvestmentOperationInput: components["schemas"]["InvestmentCashFlowOperationInput"] | components["schemas"]["InvestmentSnapshotOperationItemInput"];
+        InvestmentOperationInput: components["schemas"]["InvestmentCashFlowOperationInput"] | components["schemas"]["InvestmentSnapshotOperationItemInput"] | {
+            instrumentId: string;
+            amount: number;
+            /** @enum {string} */
+            currency: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            date: unknown;
+            note?: string;
+            /** @enum {string} */
+            kind: "interest" | "fee";
+            transactionId?: string | null;
+        };
         InvestmentOperationUpdateInput: {
             instrumentId?: string;
             amount?: number;
@@ -3242,13 +3255,13 @@ export interface components {
         };
         TransactionInvestmentDetailsInput: {
             /** @enum {string} */
-            operationKind: "buy" | "sell" | "interest" | "fee";
+            operationKind: "buy" | "sell";
             note?: string;
             instrumentId: string;
             newInstrument?: unknown;
         } | {
             /** @enum {string} */
-            operationKind: "buy" | "sell" | "interest" | "fee";
+            operationKind: "buy" | "sell";
             note?: string;
             instrumentId?: unknown;
             newInstrument: components["schemas"]["TransactionInvestmentNewInstrumentInput"];
@@ -3266,7 +3279,7 @@ export interface components {
         };
         TransactionInvestmentResponseDetailsInput: {
             /** @enum {string} */
-            operationKind: "buy" | "sell" | "interest" | "fee";
+            operationKind: "buy" | "sell";
             instrument: {
                 id: string;
                 name: string;
@@ -3831,7 +3844,7 @@ export interface components {
             updatedAt: string;
         };
         InvestmentInstrumentListResponse: components["schemas"]["InvestmentInstrumentResponse"][];
-        InvestmentSnapshotOperation: {
+        InvestmentOperationCreate: {
             instrumentId: string;
             amount: number;
             /** @enum {string} */
@@ -3839,8 +3852,11 @@ export interface components {
             /** Format: date-time */
             date: string;
             note?: string;
-            /** @constant */
-            kind?: "snapshot";
+            /**
+             * @default snapshot
+             * @enum {string}
+             */
+            kind: "snapshot" | "interest" | "fee";
         };
         InvestmentSnapshotOperationItem: {
             instrumentId: string;
@@ -3862,10 +3878,21 @@ export interface components {
             date: string;
             note?: string;
             /** @enum {string} */
-            kind: "buy" | "sell" | "interest" | "fee";
+            kind: "buy" | "sell";
             transactionId: string;
         };
-        InvestmentOperation: components["schemas"]["InvestmentCashFlowOperation"] | components["schemas"]["InvestmentSnapshotOperationItem"];
+        InvestmentOperation: components["schemas"]["InvestmentCashFlowOperation"] | components["schemas"]["InvestmentSnapshotOperationItem"] | {
+            instrumentId: string;
+            amount: number;
+            /** @enum {string} */
+            currency: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            /** Format: date-time */
+            date: string;
+            note?: string;
+            /** @enum {string} */
+            kind: "interest" | "fee";
+            transactionId?: string | null;
+        };
         InvestmentOperationUpdate: {
             instrumentId?: string;
             amount?: number;
@@ -4154,13 +4181,13 @@ export interface components {
         };
         TransactionInvestmentDetails: {
             /** @enum {string} */
-            operationKind: "buy" | "sell" | "interest" | "fee";
+            operationKind: "buy" | "sell";
             note?: string;
             instrumentId: string;
             newInstrument?: null;
         } | {
             /** @enum {string} */
-            operationKind: "buy" | "sell" | "interest" | "fee";
+            operationKind: "buy" | "sell";
             note?: string;
             instrumentId?: null;
             newInstrument: components["schemas"]["TransactionInvestmentNewInstrument"];
@@ -4179,7 +4206,7 @@ export interface components {
         };
         TransactionInvestmentResponseDetails: {
             /** @enum {string} */
-            operationKind: "buy" | "sell" | "interest" | "fee";
+            operationKind: "buy" | "sell";
             instrument: {
                 id: string;
                 name: string;

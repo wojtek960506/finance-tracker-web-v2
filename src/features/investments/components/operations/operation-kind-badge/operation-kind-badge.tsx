@@ -26,18 +26,15 @@ const kindIcons: Record<string, ComponentType<{ className?: string }>> = {
 };
 
 const kindStyles: Record<string, string> = {
-  snapshot: clsx('bg-sky-500/10 text-sky-600 dark:text-sky-400', 'border-sky-500/20'),
-  buy: clsx(
-    'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400',
-    'border-emerald-500/20',
-  ),
-  sell: clsx(
+  snapshot: clsx(
     'bg-purple-500/10 text-purple-600 dark:text-purple-400',
     'border-purple-500/20',
   ),
+  buy: clsx('bg-blue-500/10 text-blue-600 dark:text-blue-400', 'border-blue-500/20'),
+  sell: clsx('bg-amber-500/10 text-amber-600 dark:text-amber-400', 'border-amber-500/20'),
   interest: clsx(
-    'bg-amber-500/10 text-amber-600 dark:text-amber-400',
-    'border-amber-500/20',
+    'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400',
+    'border-emerald-500/20',
   ),
   fee: clsx('bg-rose-500/10 text-rose-600 dark:text-rose-400', 'border-rose-500/20'),
 };

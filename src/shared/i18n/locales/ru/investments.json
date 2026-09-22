@@ -72,6 +72,7 @@
     "searchPlaceholder": "Поиск операций...",
     "allInstruments": "Все инструменты",
     "recordSnapshot": "Записать оценку",
+    "recordOperation": "Записать операцию",
     "newInvestmentTransaction": "Новая инвестиционная транзакция",
     "snapshotBalance": "Баланс",
     "emptyTitle": "Операций пока нет",
@@ -87,28 +88,36 @@
     "name": "Название",
     "namePlaceholder": "напр. Apple, S&P 500 ETF",
     "kind": "Тип",
+    "operationKind": "Тип операции",
     "currency": "Валюта",
     "currencyPlaceholder": "Выберите валюту...",
     "searchCurrency": "Поиск валюты...",
     "noCurrencyFound": "Валюта не найдена",
     "instrument": "Инструмент",
     "balance": "Сумма баланса",
+    "amount": "Сумма",
     "date": "Дата",
     "notes": "Заметки",
     "notesPlaceholder": "Дополнительное описание или тикер",
     "snapshotNotePlaceholder": "Опциональная заметка (напр., ежемесячная оценка)",
+    "operationNotePlaceholder": "Опциональная заметка (напр., выплата процентов, комиссия)",
     "createSubmit": "Создать инструмент",
     "updateSubmit": "Сохранить изменения",
     "createSnapshotSubmit": "Записать оценку",
+    "createOperationSubmit": "Записать операцию",
     "updateSnapshotSubmit": "Сохранить изменения",
     "errors": {
       "nameRequired": "Название обязательно",
       "currencyRequired": "Валюта обязательна",
       "instrumentRequired": "Инструмент обязателен",
-      "amountRequired": "Сумма баланса обязательна",
-      "amountPositive": "Сумма баланса должна быть больше 0",
+      "amountRequired": "Сумма обязательна",
+      "amountPositive": "Сумма должна быть больше 0",
       "dateRequired": "Дата обязательна"
     }
+  },
+  "errors": {
+    "SNAPSHOT_NOT_ALLOWED_FOR_INSTRUMENT": "Оценки баланса недоступны для этого типа инструмента.",
+    "OPERATION_KIND_NOT_ALLOWED_FOR_INSTRUMENT": "Этот тип операции недоступен для этого типа инструмента."
   },
   "modals": {
     "createTitle": "Новый инструмент",
@@ -121,19 +130,29 @@
     "deleteConfirm": "Удалить",
     "createSnapshotTitle": "Записать оценку баланса",
     "createSnapshotDescription": "Зафиксируйте текущий общий баланс инвестиционного инструмента на определенную дату.",
+    "createOperationTitle": "Записать операцию",
+    "createOperationDescription": "Зафиксируйте операцию для этого инвестиционного инструмента.",
     "updateSnapshotTitle": "Редактировать оценку баланса",
     "updateSnapshotDescription": "Обновите баланс, валюту, дату или заметки для этой оценки.",
+    "updateOperationTitle": "Редактировать операцию",
+    "updateOperationDescription": "Обновите сумму, валюту, дату или заметки для этой операции.",
     "deleteSnapshotTitle": "Удалить оценку",
     "deleteSnapshotPrompt": "Вы уверены, что хотите удалить оценку для «{{instrumentName}}» от {{date}}?",
     "deleteSnapshotHint": "Эта оценка будет безвозвратно удалена из истории ваших инвестиций.",
-    "deleteSnapshotConfirm": "Удалить оценку"
+    "deleteSnapshotConfirm": "Удалить оценку",
+    "deleteOperationTitle": "Удалить операцию",
+    "deleteOperationPrompt": "Вы уверены, что хотите удалить операцию для «{{instrumentName}}» от {{date}}?",
+    "deleteOperationHint": "Эта операция будет безвозвратно удалена из истории ваших инвестиций.",
+    "deleteOperationConfirm": "Удалить операцию"
   },
   "actions": {
     "edit": "Редактировать инструмент",
     "delete": "Удалить инструмент",
     "viewTransaction": "Просмотреть транзакцию",
     "editSnapshot": "Редактировать оценку",
-    "deleteSnapshot": "Удалить оценку"
+    "deleteSnapshot": "Удалить оценку",
+    "editOperation": "Редактировать операцию",
+    "deleteOperation": "Удалить операцию"
   },
   "cancel": "Отмена",
   "saving": "Сохранение...",
@@ -150,7 +169,13 @@
     "snapshotUpdatedTitle": "Оценка обновлена",
     "snapshotUpdateErrorTitle": "Не удалось обновить оценку",
     "snapshotDeletedTitle": "Оценка удалена",
-    "snapshotDeleteErrorTitle": "Не удалось удалить оценку"
+    "snapshotDeleteErrorTitle": "Не удалось удалить оценку",
+    "operationCreatedTitle": "Операция записана",
+    "operationCreateErrorTitle": "Не удалось записать операцию",
+    "operationUpdatedTitle": "Операция обновлена",
+    "operationUpdateErrorTitle": "Не удалось обновить операцию",
+    "operationDeletedTitle": "Операция удалена",
+    "operationDeleteErrorTitle": "Не удалось удалить операцию"
   },
   "details": {
     "backToInstruments": "Назад к инструментам",

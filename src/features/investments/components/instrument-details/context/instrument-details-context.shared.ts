@@ -3,22 +3,21 @@ import { createContext } from 'react';
 import type {
   InvestmentInstrumentSummary,
   InvestmentOperation,
-  InvestmentSnapshotOperation,
 } from '@features/investments/api';
 
 export type InstrumentDetailsContextValue = {
   instrument: InvestmentInstrumentSummary;
   operations: InvestmentOperation[];
   currency: string;
-  isCreateSnapshotModalOpen: boolean;
-  openCreateSnapshotModal: () => void;
-  closeCreateSnapshotModal: () => void;
-  editingSnapshot: InvestmentSnapshotOperation | null;
-  openEditSnapshotModal: (snapshot: InvestmentSnapshotOperation) => void;
-  closeEditSnapshotModal: () => void;
-  deletingSnapshot: InvestmentSnapshotOperation | null;
-  openDeleteSnapshotModal: (snapshot: InvestmentSnapshotOperation) => void;
-  closeDeleteSnapshotModal: () => void;
+  isCreateOperationModalOpen: boolean;
+  openCreateOperationModal: () => void;
+  closeCreateOperationModal: () => void;
+  editingOperation: InvestmentOperation | null;
+  openEditOperationModal: (operation: InvestmentOperation) => void;
+  closeEditOperationModal: () => void;
+  deletingOperation: InvestmentOperation | null;
+  openDeleteOperationModal: (operation: InvestmentOperation) => void;
+  closeDeleteOperationModal: () => void;
   isUpdateInstrumentModalOpen: boolean;
   openUpdateInstrumentModal: () => void;
   closeUpdateInstrumentModal: () => void;
