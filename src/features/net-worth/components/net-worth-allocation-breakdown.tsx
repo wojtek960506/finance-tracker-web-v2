@@ -6,7 +6,9 @@ import { Card } from '@shared/ui';
 
 import type { NetWorthAllocationItemDTO, NetWorthCategory } from '../api';
 import { FALLBACK_CATEGORY_STYLE, NET_WORTH_CATEGORY_STYLES } from '../consts';
-import { formatCurrencyAmount, formatPercentage } from '../utils';
+import { formatPercentage } from '../utils';
+
+import { NetWorthAllocationItem } from './net-worth-allocation-item';
 
 type NetWorthAllocationBreakdownProps = {
   allocation: NetWorthAllocationItemDTO[];
@@ -59,50 +61,14 @@ export const NetWorthAllocationBreakdown = ({
 
       {/* Category breakdown grid */}
       <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
-        {allocation.map((item) => {
-          const style =
-            NET_WORTH_CATEGORY_STYLES[item.category as NetWorthCategory] ??
-            FALLBACK_CATEGORY_STYLE;
-          const Icon = style.icon;
-          const categoryName = t(`categories.${item.category}`, {
-            defaultValue: item.category,
-          });
-
-          return (
-            <div
-              key={item.category}
-              className={clsx(
-                'flex items-center justify-between gap-3 rounded-xl border border-fg/10',
-                'bg-surface/40 p-3 transition-all hover:bg-surface/70',
-              )}
-            >
-              <div className="flex items-center gap-2.5 min-w-0">
-                <div
-                  className={clsx(
-                    'flex size-8 shrink-0 items-center justify-center rounded-lg',
-                    style.bgClass,
-                  )}
-                >
-                  <Icon className={clsx('size-4', style.colorClass)} />
-                </div>
-                <div className="flex flex-col min-w-0">
-                  <span className="truncate text-xs font-semibold text-foreground sm:text-sm">
-                    {categoryName}
-                  </span>
-                  <span className="text-xs font-medium text-text-muted">
-                    {formatPercentage(item.percentage, language)}%
-                  </span>
-                </div>
-              </div>
-
-              <div className="shrink-0 text-right">
-                <span className="text-xs font-bold text-foreground sm:text-sm">
-                  {formatCurrencyAmount(item.amount, baseCurrency, language)}
-                </span>
-              </div>
-            </div>
-          );
-        })}
+        {allocation.map((item) => (
+          <NetWorthAllocationItem
+            key={item.category}
+            item={item}
+            baseCurrency={baseCurrency}
+            language={language}
+          />
+        ))}
       </div>
     </Card>
   );
