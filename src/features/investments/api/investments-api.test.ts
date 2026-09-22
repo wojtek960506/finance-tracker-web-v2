@@ -239,11 +239,11 @@ describe('investments api', () => {
   });
 
   describe('summary', () => {
-    it('fetches investment portfolio summary', async () => {
+    it('fetches investment portfolio summary without params', async () => {
       const mockSummary = {
         totalsByCurrency: {
           USD: {
-            currency: 'USD',
+            currency: 'USD' as const,
             totalCurrentValue: 12500,
             totalNetInvested: 10000,
             totalBought: 10000,
@@ -260,7 +260,7 @@ describe('investments api', () => {
             id: 'inst-1',
             name: 'Apple Inc.',
             kind: 'share' as const,
-            currency: 'USD',
+            currency: 'USD' as const,
             currentValue: 12500,
             netInvested: 10000,
             totalBought: 10000,
@@ -283,8 +283,35 @@ describe('investments api', () => {
       const { getInvestmentSummary } = await import('./index');
       const result = await getInvestmentSummary();
 
-      expect(getMock).toHaveBeenCalledWith('/investments/summary');
+      expect(getMock).toHaveBeenCalledWith('/investments/summary', {
+        params: undefined,
+      });
       expect(result).toEqual(mockSummary);
+    });
+
+    it('fetches investment portfolio summary with baseCurrency param', async () => {
+      const mockNormalizedSummary = {
+        baseCurrency: 'PLN' as const,
+        grandTotalNormalized: {
+          currentValue: 50000,
+          netInvested: 40000,
+          pnl: 10000,
+          roiPercentage: 25,
+        },
+        totalsByCurrency: {},
+        instruments: [],
+      };
+
+      const getMock = vi.mocked(api.get);
+      getMock.mockResolvedValueOnce({ data: mockNormalizedSummary });
+
+      const { getInvestmentSummary } = await import('./index');
+      const result = await getInvestmentSummary({ baseCurrency: 'PLN' });
+
+      expect(getMock).toHaveBeenCalledWith('/investments/summary', {
+        params: { baseCurrency: 'PLN' },
+      });
+      expect(result).toEqual(mockNormalizedSummary);
     });
   });
 });

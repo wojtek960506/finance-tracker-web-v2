@@ -1,5 +1,6 @@
 {
   "hi": "Hello",
+  "netWorth": "Net Worth",
   "transactions": "Transactions",
   "investments": "Investments",
   "instrumentDetails": "Instrument Details",

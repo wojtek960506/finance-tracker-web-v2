@@ -4,6 +4,7 @@ import {
   OperationsPage,
   PortfolioPage,
 } from '@investments/components';
+import { NetWorthPage } from '@net-worth/components';
 import { type ReactNode } from 'react';
 import { matchPath, Navigate } from 'react-router-dom';
 
@@ -58,6 +59,11 @@ export const PUBLIC_APP_ROUTES: AppRouteConfig[] = [
 ];
 
 export const PROTECTED_APP_ROUTES: AppRouteConfig[] = [
+  {
+    path: '/net-worth',
+    element: <NetWorthPage />,
+    title: { namespace: 'navigation', key: 'netWorth' },
+  },
   {
     path: '/transactions',
     element: <TransactionsPage />,

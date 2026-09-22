@@ -2787,7 +2787,9 @@ export interface paths {
          */
         get: {
             parameters: {
-                query?: never;
+                query?: {
+                    baseCurrency?: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+                };
                 header?: never;
                 path?: never;
                 cookie?: never;
@@ -2801,6 +2803,47 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["InvestmentSummaryResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/net-worth/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get unified net worth and asset allocation
+         * @description Return unified net worth combining liquid cash from bank accounts and investments valuation,with optional base currency normalization and asset allocation breakdown.
+         */
+        get: {
+            parameters: {
+                query?: {
+                    baseCurrency?: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+                };
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["NetWorthResponse"];
                     };
                 };
             };
@@ -2953,6 +2996,12 @@ export interface components {
             createdAt: unknown;
             updatedAt: unknown;
         };
+        InvestmentGrandTotalNormalizedInput: {
+            currentValue: number;
+            netInvested: number;
+            pnl: number;
+            roiPercentage: number;
+        };
         InvestmentCurrencySummaryInput: {
             /** @enum {string} */
             currency: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
@@ -2965,12 +3014,48 @@ export interface components {
             totalPnL: number;
             roiPercentage: number;
             instrumentsCount: number;
+            normalizedTotalCurrentValue?: number;
+            normalizedTotalNetInvested?: number;
+            normalizedTotalPnL?: number;
         };
         InvestmentSummaryResponseInput: {
+            /** @enum {string} */
+            baseCurrency?: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            grandTotalNormalized?: components["schemas"]["InvestmentGrandTotalNormalizedInput"];
             totalsByCurrency: {
                 [key: string]: components["schemas"]["InvestmentCurrencySummaryInput"];
             };
             instruments: components["schemas"]["InvestmentInstrumentSummaryInput"][];
+        };
+        NetWorthTotalsInput: {
+            total: number;
+            liquidCash: number;
+            investments: number;
+        };
+        NetWorthCurrencyBreakdownInput: {
+            /** @enum {string} */
+            currency: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            cash: number;
+            investments: number;
+            total: number;
+            normalizedTotal?: number;
+        };
+        NetWorthAllocationItemInput: {
+            /** @enum {string} */
+            category: "cash" | "share" | "fund" | "termDeposit" | "savings";
+            amount: number;
+            percentage: number;
+        };
+        NetWorthResponseInput: {
+            /** @enum {string} */
+            baseCurrency?: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            netWorth: components["schemas"]["NetWorthTotalsInput"];
+            byCurrency: {
+                [key: string]: components["schemas"]["NetWorthCurrencyBreakdownInput"];
+            };
+            allocation: {
+                [key: string]: components["schemas"]["NetWorthAllocationItemInput"];
+            };
         };
         WelcomeResponseInput: {
             message: string;
@@ -3788,6 +3873,12 @@ export interface components {
             /** Format: date-time */
             updatedAt: string;
         };
+        InvestmentGrandTotalNormalized: {
+            currentValue: number;
+            netInvested: number;
+            pnl: number;
+            roiPercentage: number;
+        };
         InvestmentCurrencySummary: {
             /** @enum {string} */
             currency: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
@@ -3800,12 +3891,48 @@ export interface components {
             totalPnL: number;
             roiPercentage: number;
             instrumentsCount: number;
+            normalizedTotalCurrentValue?: number;
+            normalizedTotalNetInvested?: number;
+            normalizedTotalPnL?: number;
         };
         InvestmentSummaryResponse: {
+            /** @enum {string} */
+            baseCurrency?: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            grandTotalNormalized?: components["schemas"]["InvestmentGrandTotalNormalized"];
             totalsByCurrency: {
                 [key: string]: components["schemas"]["InvestmentCurrencySummary"];
             };
             instruments: components["schemas"]["InvestmentInstrumentSummary"][];
+        };
+        NetWorthTotals: {
+            total: number;
+            liquidCash: number;
+            investments: number;
+        };
+        NetWorthCurrencyBreakdown: {
+            /** @enum {string} */
+            currency: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            cash: number;
+            investments: number;
+            total: number;
+            normalizedTotal?: number;
+        };
+        NetWorthAllocationItem: {
+            /** @enum {string} */
+            category: "cash" | "share" | "fund" | "termDeposit" | "savings";
+            amount: number;
+            percentage: number;
+        };
+        NetWorthResponse: {
+            /** @enum {string} */
+            baseCurrency?: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            netWorth: components["schemas"]["NetWorthTotals"];
+            byCurrency: {
+                [key: string]: components["schemas"]["NetWorthCurrencyBreakdown"];
+            };
+            allocation: {
+                [key: string]: components["schemas"]["NetWorthAllocationItem"];
+            };
         };
         WelcomeResponse: {
             message: string;

@@ -1,0 +1,27 @@
+{
+  "title": "Wartość netto",
+  "description": "Kompleksowe podsumowanie płynnych środków bankowych oraz portfela inwestycyjnego przeliczone na wybraną walutę bazową.",
+  "totalNetWorth": "Całkowity majątek netto",
+  "liquidCash": "Płynna gotówka",
+  "investments": "Inwestycje",
+  "liquidCashDescription": "Suma sald na wszystkich rachunkach bankowych",
+  "investmentsDescription": "Łączna wycena aktywów inwestycyjnych",
+  "assetAllocation": "Alokacja aktywów",
+  "assetAllocationDescription": "Podział majątku według klas aktywów i rodzajów rachunków.",
+  "currencyBreakdown": "Rozbicie walutowe",
+  "currencyBreakdownDescription": "Wartość gotówki i inwestycji w podziale na waluty.",
+  "baseCurrency": "Waluta bazowa",
+  "normalized": "Przeliczone",
+  "categories": {
+    "cash": "Gotówka i rachunki bankowe",
+    "share": "Akcje i udziały",
+    "fund": "Fundusze i ETF-y",
+    "termDeposit": "Lokaty terminowe",
+    "savings": "Konta oszczędnościowe"
+  },
+  "emptyTitle": "Brak danych o majątku netto",
+  "emptyDescription": "Dodaj konta bankowe, transakcje lub instrumenty inwestycyjne, aby rozpocząć śledzenie wartości netto.",
+  "noCurrenciesAvailable": "Brak niezerowych sald walutowych do wyświetlenia.",
+  "loadingTitle": "Ładowanie wartości netto",
+  "loadingDescription": "Przeliczanie całkowitego majątku i normalizacja wartości aktywów..."
+}

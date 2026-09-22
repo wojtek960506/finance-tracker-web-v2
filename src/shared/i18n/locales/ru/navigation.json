@@ -1,5 +1,6 @@
 {
   "hi": "Привет",
+  "netWorth": "Чистый капитал",
   "transactions": "Транзакции",
   "investments": "Инвестиции",
   "instrumentDetails": "Детали инструмента",

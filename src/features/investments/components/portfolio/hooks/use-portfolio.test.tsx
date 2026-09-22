@@ -106,4 +106,37 @@ describe('usePortfolio', () => {
     expect(result.current.instruments[0]?.id).toBe('inst-2');
     expect(result.current.hasHoldings).toBe(true);
   });
+
+  it('supports baseCurrency option and returns grandTotalNormalized', async () => {
+    const mockNormalized: InvestmentSummaryResponse = {
+      ...mockSummary,
+      baseCurrency: 'PLN',
+      grandTotalNormalized: {
+        currentValue: 55000,
+        netInvested: 44500,
+        pnl: 10500,
+        roiPercentage: 23.59,
+      },
+    };
+
+    vi.mocked(investmentsApi.getInvestmentSummary).mockResolvedValueOnce(mockNormalized);
+
+    const queryClient = createTestQueryClient();
+    const wrapper = ({ children }: { children: ReactNode }) => (
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    );
+
+    const { result } = renderHook(() => usePortfolio({ baseCurrency: 'PLN' }), {
+      wrapper,
+    });
+
+    await waitFor(() => {
+      expect(result.current.isLoading).toBe(false);
+    });
+
+    expect(result.current.baseCurrency).toBe('PLN');
+    expect(result.current.grandTotalNormalized).toEqual(
+      mockNormalized.grandTotalNormalized,
+    );
+  });
 });

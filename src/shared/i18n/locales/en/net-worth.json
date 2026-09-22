@@ -1,0 +1,27 @@
+{
+  "title": "Net Worth",
+  "description": "Comprehensive overview of your liquid bank balances and investment portfolio normalized into a single currency.",
+  "totalNetWorth": "Total Net Worth",
+  "liquidCash": "Liquid Cash",
+  "investments": "Investments",
+  "liquidCashDescription": "Total balance across bank accounts",
+  "investmentsDescription": "Total valuation of investment assets",
+  "assetAllocation": "Asset Allocation",
+  "assetAllocationDescription": "Breakdown of wealth across asset classes and account types.",
+  "currencyBreakdown": "Currency Breakdown",
+  "currencyBreakdownDescription": "Total cash and investment holdings by currency.",
+  "baseCurrency": "Base Currency",
+  "normalized": "Normalized",
+  "categories": {
+    "cash": "Cash & Bank Accounts",
+    "share": "Stocks & Equities",
+    "fund": "Funds & ETFs",
+    "termDeposit": "Term Deposits",
+    "savings": "Savings Accounts"
+  },
+  "emptyTitle": "No net worth data available",
+  "emptyDescription": "Add bank accounts, transactions, or investment instruments to start tracking your net worth.",
+  "noCurrenciesAvailable": "No non-zero currency holdings to display.",
+  "loadingTitle": "Loading Net Worth",
+  "loadingDescription": "Calculating total wealth and normalizing asset values..."
+}
