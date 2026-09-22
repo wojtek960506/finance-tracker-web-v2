@@ -15,6 +15,63 @@ export default defineConfig({
       interval: usePolling ? 1000 : undefined,
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: (id) => {
+          if (!id.includes('node_modules')) return;
+
+          // Normalize pnpm and standard node_modules paths to package name
+          const pnpmMatch = id.match(
+            /node_modules\/\.pnpm\/([^/]+)\/node_modules\/((?:@[^/]+\/)?[^/]+)/,
+          );
+          const stdMatch = id.match(/node_modules\/((?:@[^/]+\/)?[^/]+)/);
+          const pkg = pnpmMatch ? pnpmMatch[2] : stdMatch ? stdMatch[1] : '';
+
+          if (
+            pkg === 'react' ||
+            pkg === 'react-dom' ||
+            pkg === 'scheduler' ||
+            pkg === 'react-router' ||
+            pkg === 'react-router-dom'
+          ) {
+            return 'vendor-react';
+          }
+          if (pkg.startsWith('@tanstack/') || pkg === 'axios' || pkg === 'zustand') {
+            return 'vendor-query';
+          }
+          if (
+            pkg === 'radix-ui' ||
+            pkg.startsWith('@radix-ui/') ||
+            pkg.startsWith('@base-ui/') ||
+            pkg === 'lucide-react' ||
+            pkg === 'clsx' ||
+            pkg === 'tailwind-merge' ||
+            pkg === 'class-variance-authority' ||
+            pkg === 'react-day-picker' ||
+            pkg === 'react-focus-lock' ||
+            pkg === 'react-flagkit'
+          ) {
+            return 'vendor-ui';
+          }
+          if (
+            pkg === 'i18next' ||
+            pkg === 'react-i18next' ||
+            pkg === 'i18next-browser-languagedetector'
+          ) {
+            return 'vendor-i18n';
+          }
+          if (
+            pkg === 'zod' ||
+            pkg === 'react-hook-form' ||
+            pkg.startsWith('@hookform/')
+          ) {
+            return 'vendor-forms';
+          }
+        },
+      },
+    },
+  },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),

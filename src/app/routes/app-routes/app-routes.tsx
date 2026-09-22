@@ -1,29 +1,110 @@
-import {
-  InstrumentDetailsPage,
-  InvestmentsPage,
-  OperationsPage,
-  PortfolioPage,
-} from '@investments/components';
-import { FinancialIndependencePage, NetWorthPage } from '@net-worth/components';
-import { type ReactNode } from 'react';
+import { lazy, type ReactNode } from 'react';
 import { matchPath, Navigate } from 'react-router-dom';
 
-import { CreateUser, Login, VerifyEmail } from '@auth/components';
-import { NamedResourcesPage } from '@named-resources/components';
-import {
-  CreateBulkTransaction,
-  CreateExchangeTransaction,
-  CreateInvestmentTransaction,
-  CreateStandardTransaction,
-  CreateTransaction,
-  CreateTransferTransaction,
-  TransactionAccountStatistics,
-  TransactionDetails,
-  TransactionsPage,
-  TrashedTransactionDetails,
-  TrashedTransactionsList,
-  UpdateTransaction,
-} from '@transactions/components';
+const Login = lazy(() => import('@auth/components').then((m) => ({ default: m.Login })));
+const CreateUser = lazy(() =>
+  import('@auth/components').then((m) => ({ default: m.CreateUser })),
+);
+const VerifyEmail = lazy(() =>
+  import('@auth/components').then((m) => ({ default: m.VerifyEmail })),
+);
+
+const NetWorthPage = lazy(() =>
+  import('@net-worth/components').then((m) => ({ default: m.NetWorthPage })),
+);
+const FinancialIndependencePage = lazy(() =>
+  import('@net-worth/components').then((m) => ({
+    default: m.FinancialIndependencePage,
+  })),
+);
+
+const NamedResourcesPage = lazy(() =>
+  import('@named-resources/components').then((m) => ({
+    default: m.NamedResourcesPage,
+  })),
+);
+
+const TransactionsPage = lazy(() =>
+  import('@transactions/components').then((m) => ({
+    default: m.TransactionsPage,
+  })),
+);
+const TrashedTransactionsList = lazy(() =>
+  import('@transactions/components').then((m) => ({
+    default: m.TrashedTransactionsList,
+  })),
+);
+const TrashedTransactionDetails = lazy(() =>
+  import('@transactions/components').then((m) => ({
+    default: m.TrashedTransactionDetails,
+  })),
+);
+const CreateTransaction = lazy(() =>
+  import('@transactions/components').then((m) => ({
+    default: m.CreateTransaction,
+  })),
+);
+const CreateStandardTransaction = lazy(() =>
+  import('@transactions/components').then((m) => ({
+    default: m.CreateStandardTransaction,
+  })),
+);
+const CreateInvestmentTransaction = lazy(() =>
+  import('@transactions/components').then((m) => ({
+    default: m.CreateInvestmentTransaction,
+  })),
+);
+const CreateTransferTransaction = lazy(() =>
+  import('@transactions/components').then((m) => ({
+    default: m.CreateTransferTransaction,
+  })),
+);
+const CreateExchangeTransaction = lazy(() =>
+  import('@transactions/components').then((m) => ({
+    default: m.CreateExchangeTransaction,
+  })),
+);
+const CreateBulkTransaction = lazy(() =>
+  import('@transactions/components').then((m) => ({
+    default: m.CreateBulkTransaction,
+  })),
+);
+const TransactionAccountStatistics = lazy(() =>
+  import('@transactions/components').then((m) => ({
+    default: m.TransactionAccountStatistics,
+  })),
+);
+const UpdateTransaction = lazy(() =>
+  import('@transactions/components').then((m) => ({
+    default: m.UpdateTransaction,
+  })),
+);
+const TransactionDetails = lazy(() =>
+  import('@transactions/components').then((m) => ({
+    default: m.TransactionDetails,
+  })),
+);
+
+const PortfolioPage = lazy(() =>
+  import('@investments/components').then((m) => ({
+    default: m.PortfolioPage,
+  })),
+);
+const InvestmentsPage = lazy(() =>
+  import('@investments/components').then((m) => ({
+    default: m.InvestmentsPage,
+  })),
+);
+const OperationsPage = lazy(() =>
+  import('@investments/components').then((m) => ({
+    default: m.OperationsPage,
+  })),
+);
+const InstrumentDetailsPage = lazy(() =>
+  import('@investments/components').then((m) => ({
+    default: m.InstrumentDetailsPage,
+  })),
+);
 
 type RouteTitle = {
   key: string;
