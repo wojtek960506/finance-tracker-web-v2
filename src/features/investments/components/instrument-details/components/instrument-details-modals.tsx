@@ -5,10 +5,10 @@ import {
   UpdateInstrumentModal,
 } from '@features/investments/components/instruments';
 import {
-  CreateSnapshotModal,
-  DeleteSnapshotModal,
-  EditSnapshotModal,
-} from '@features/investments/components/snapshots';
+  CreateOperationModal,
+  DeleteOperationModal,
+  EditOperationModal,
+} from '@features/investments/components/operations';
 
 import { useInstrumentDetailsContext } from '../context';
 
@@ -16,12 +16,12 @@ export const InstrumentDetailsModals = () => {
   const navigate = useNavigate();
   const {
     instrument,
-    isCreateSnapshotModalOpen,
-    closeCreateSnapshotModal,
-    editingSnapshot,
-    closeEditSnapshotModal,
-    deletingSnapshot,
-    closeDeleteSnapshotModal,
+    isCreateOperationModalOpen,
+    closeCreateOperationModal,
+    editingOperation,
+    closeEditOperationModal,
+    deletingOperation,
+    closeDeleteOperationModal,
     isUpdateInstrumentModalOpen,
     closeUpdateInstrumentModal,
     isDeleteInstrumentModalOpen,
@@ -30,25 +30,25 @@ export const InstrumentDetailsModals = () => {
 
   return (
     <>
-      <CreateSnapshotModal
-        isOpen={isCreateSnapshotModalOpen}
-        onClose={closeCreateSnapshotModal}
+      <CreateOperationModal
+        isOpen={isCreateOperationModalOpen}
+        onClose={closeCreateOperationModal}
         defaultInstrumentId={instrument.id}
         defaultCurrency={instrument.currency}
         isInstrumentDisabled={true}
       />
 
-      <EditSnapshotModal
-        snapshot={editingSnapshot}
-        isOpen={Boolean(editingSnapshot)}
-        onClose={closeEditSnapshotModal}
+      <EditOperationModal
+        operation={editingOperation}
+        isOpen={Boolean(editingOperation)}
+        onClose={closeEditOperationModal}
       />
 
-      <DeleteSnapshotModal
-        snapshot={deletingSnapshot}
+      <DeleteOperationModal
+        operation={deletingOperation}
         instrument={instrument}
-        isOpen={Boolean(deletingSnapshot)}
-        onClose={closeDeleteSnapshotModal}
+        isOpen={Boolean(deletingOperation)}
+        onClose={closeDeleteOperationModal}
       />
 
       <UpdateInstrumentModal

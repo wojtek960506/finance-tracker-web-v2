@@ -17,7 +17,7 @@ type OperationsListHeaderProps = {
   onSelectedInstrumentIdChange: (instrumentId: string) => void;
   instruments: InvestmentInstrument[];
   isFetching?: boolean;
-  onCreateSnapshot: () => void;
+  onCreateOperation: () => void;
 };
 
 export const OperationsListHeader = ({
@@ -29,15 +29,15 @@ export const OperationsListHeader = ({
   onSelectedInstrumentIdChange,
   instruments,
   isFetching,
-  onCreateSnapshot,
+  onCreateOperation,
 }: OperationsListHeaderProps) => {
   const { t } = useTranslation('investments');
 
   return (
     <div className="flex flex-col gap-3" data-testid="operations-list-header">
-      {/* Action buttons: Record Snapshot + New Investment Transaction */}
+      {/* Action buttons: Record Operation + New Investment Transaction */}
       <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-        <Button variant="primary" onClick={onCreateSnapshot} className="w-full gap-1.5">
+        <Button variant="primary" onClick={onCreateOperation} className="w-full gap-1.5">
           <Plus className="size-4" />
           <span>{t('operations.recordSnapshot')}</span>
         </Button>

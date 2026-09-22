@@ -7,7 +7,6 @@ import type {
   InvestmentInstrument,
   InvestmentInstrumentSummary,
   InvestmentOperation,
-  InvestmentSnapshotOperation,
 } from '@features/investments/api';
 import { InstrumentKindBadge } from '@features/investments/components/instruments/instrument-kind-badge';
 import { InvestmentCard } from '@features/investments/components/shared';
@@ -20,20 +19,26 @@ import { OperationKindBadge } from '../operation-kind-badge';
 type OperationCardProps = {
   operation: InvestmentOperation;
   instrument?: InvestmentInstrument | InvestmentInstrumentSummary;
-  onEditSnapshot?: (snapshot: InvestmentSnapshotOperation) => void;
-  onDeleteSnapshot?: (snapshot: InvestmentSnapshotOperation) => void;
+  onEditOperation?: (operation: InvestmentOperation) => void;
+  onDeleteOperation?: (operation: InvestmentOperation) => void;
 };
 
 export const OperationCard = ({
   operation,
   instrument,
-  onEditSnapshot,
-  onDeleteSnapshot,
+  onEditOperation,
+  onDeleteOperation,
 }: OperationCardProps) => {
   const { t } = useTranslation('investments');
   const { language } = useLanguage();
 
   const isSnapshot = operation.kind === 'snapshot';
+  const isStandalone = !(
+    'transactionId' in operation && Boolean(operation.transactionId)
+  );
+  const handleEdit = onEditOperation;
+  const handleDelete = onDeleteOperation;
+
   const formattedAmount = formatCurrencyAmount(
     operation.amount,
     operation.currency,
@@ -61,31 +66,39 @@ export const OperationCard = ({
           </div>
 
           <div className="flex shrink-0 items-center gap-1">
-            {isSnapshot ? (
+            {isStandalone ? (
               <>
-                {onEditSnapshot ? (
+                {handleEdit ? (
                   <Button
                     variant="ghost"
                     className="size-8 p-0 text-text-muted hover:text-foreground"
-                    onClick={() =>
-                      onEditSnapshot(operation as InvestmentSnapshotOperation)
+                    onClick={() => handleEdit(operation)}
+                    title={
+                      isSnapshot ? t('actions.editSnapshot') : t('actions.editOperation')
                     }
-                    title={t('actions.editSnapshot')}
-                    aria-label={t('actions.editSnapshot')}
+                    aria-label={
+                      isSnapshot ? t('actions.editSnapshot') : t('actions.editOperation')
+                    }
                   >
                     <Pencil className="size-4" />
                   </Button>
                 ) : null}
 
-                {onDeleteSnapshot ? (
+                {handleDelete ? (
                   <Button
                     variant="ghost"
                     className="size-8 p-0 text-text-muted hover:text-destructive"
-                    onClick={() =>
-                      onDeleteSnapshot(operation as InvestmentSnapshotOperation)
+                    onClick={() => handleDelete(operation)}
+                    title={
+                      isSnapshot
+                        ? t('actions.deleteSnapshot')
+                        : t('actions.deleteOperation')
                     }
-                    title={t('actions.deleteSnapshot')}
-                    aria-label={t('actions.deleteSnapshot')}
+                    aria-label={
+                      isSnapshot
+                        ? t('actions.deleteSnapshot')
+                        : t('actions.deleteOperation')
+                    }
                   >
                     <Trash className="size-4" />
                   </Button>
@@ -93,7 +106,7 @@ export const OperationCard = ({
               </>
             ) : null}
 
-            {!isSnapshot && 'transactionId' in operation && operation.transactionId ? (
+            {!isStandalone && 'transactionId' in operation && operation.transactionId ? (
               <Link
                 to={`/transactions/${operation.transactionId}`}
                 className={clsx(
@@ -137,7 +150,7 @@ export const OperationCard = ({
         className={clsx(
           'flex items-center justify-between border-t pt-2',
           'text-xs text-text-muted',
-          isSnapshot ? 'border-sky-500/15' : 'border-fg/10',
+          isSnapshot ? 'border-purple-500/15' : 'border-fg/10',
         )}
       >
         <span>{new Date(operation.date).toLocaleDateString(language)}</span>

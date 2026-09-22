@@ -4,7 +4,7 @@ import { describe, expect, it, vi } from 'vitest';
 import * as api from '@features/investments/api';
 import { renderWithProviders } from '@test-utils';
 
-import { EditSnapshotModal } from './edit-snapshot-modal';
+import { EditOperationModal } from './edit-operation-modal';
 
 vi.mock('@features/investments/api', async () => {
   const actual = await vi.importActual('@features/investments/api');
@@ -19,7 +19,7 @@ vi.mock('@features/investments/api', async () => {
         currency: 'USD',
       },
     ]),
-    updateSnapshotOperation: vi.fn().mockResolvedValue({
+    updateOperation: vi.fn().mockResolvedValue({
       id: 'op-1',
       kind: 'snapshot',
       instrumentId: 'inst-1',
@@ -30,7 +30,7 @@ vi.mock('@features/investments/api', async () => {
   };
 });
 
-const mockSnapshot: api.InvestmentSnapshotOperation = {
+const mockSnapshot: api.InvestmentOperation = {
   id: 'op-1',
   kind: 'snapshot',
   ownerId: 'user-1',
@@ -43,12 +43,12 @@ const mockSnapshot: api.InvestmentSnapshotOperation = {
   updatedAt: '2026-02-01T00:00:00Z',
 };
 
-describe('EditSnapshotModal', () => {
-  it('renders snapshot form with existing values and submits updates', async () => {
+describe('EditOperationModal', () => {
+  it('renders operation form with existing values and submits updates', async () => {
     const onClose = vi.fn();
 
     renderWithProviders(
-      <EditSnapshotModal snapshot={mockSnapshot} isOpen={true} onClose={onClose} />,
+      <EditOperationModal operation={mockSnapshot} isOpen={true} onClose={onClose} />,
     );
 
     expect(screen.getByText('Edit Balance Snapshot')).toBeInTheDocument();
@@ -62,7 +62,7 @@ describe('EditSnapshotModal', () => {
     fireEvent.click(submitBtn);
 
     await waitFor(() => {
-      expect(api.updateSnapshotOperation).toHaveBeenCalledWith('op-1', {
+      expect(api.updateOperation).toHaveBeenCalledWith('op-1', {
         instrumentId: 'inst-1',
         amount: 25000,
         currency: 'USD',

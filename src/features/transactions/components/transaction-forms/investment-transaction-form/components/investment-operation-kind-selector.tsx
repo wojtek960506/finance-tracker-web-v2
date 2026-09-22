@@ -31,16 +31,6 @@ const getOperationButtonStyles = (kind: InvestmentOperationKind, isSelected: boo
       );
     case 'sell':
       return clsx(
-        'border-emerald-500 bg-emerald-500/10 font-semibold shadow-sm',
-        'text-emerald-600 dark:text-emerald-400',
-      );
-    case 'interest':
-      return clsx(
-        'border-purple-500 bg-purple-500/10 font-semibold shadow-sm',
-        'text-purple-600 dark:text-purple-400',
-      );
-    case 'fee':
-      return clsx(
         'border-amber-500 bg-amber-500/10 font-semibold shadow-sm',
         'text-amber-600 dark:text-amber-400',
       );
@@ -59,7 +49,7 @@ export const InvestmentOperationKindSelector = ({
       <Label>
         <span className={REQUIRED_LABEL_CLASS_NAME}>{t('investmentOperationKind')}</span>
       </Label>
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+      <div className="grid grid-cols-2 gap-2">
         {INVESTMENT_OPERATION_KINDS.map((kind) => {
           const isSelected = selectedKind === kind;
           return (

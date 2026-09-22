@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import {
   getInstrument,
   getOperations,
-  type InvestmentSnapshotOperation,
+  type InvestmentOperation,
 } from '@features/investments/api';
 
 import type { InstrumentDetailsContextValue } from '../context';
@@ -13,11 +13,13 @@ import type { InstrumentDetailsContextValue } from '../context';
 export const useInstrumentDetails = () => {
   const { id } = useParams<{ id: string }>();
 
-  const [isCreateSnapshotModalOpen, setIsCreateSnapshotModalOpen] = useState(false);
-  const [editingSnapshot, setEditingSnapshot] =
-    useState<InvestmentSnapshotOperation | null>(null);
-  const [deletingSnapshot, setDeletingSnapshot] =
-    useState<InvestmentSnapshotOperation | null>(null);
+  const [isCreateOperationModalOpen, setIsCreateOperationModalOpen] = useState(false);
+  const [editingOperation, setEditingOperation] = useState<InvestmentOperation | null>(
+    null,
+  );
+  const [deletingOperation, setDeletingOperation] = useState<InvestmentOperation | null>(
+    null,
+  );
   const [isUpdateInstrumentModalOpen, setIsUpdateInstrumentModalOpen] = useState(false);
   const [isDeleteInstrumentModalOpen, setIsDeleteInstrumentModalOpen] = useState(false);
 
@@ -47,26 +49,26 @@ export const useInstrumentDetails = () => {
     enabled: Boolean(id),
   });
 
-  const openCreateSnapshotModal = useCallback(
-    () => setIsCreateSnapshotModalOpen(true),
+  const openCreateOperationModal = useCallback(
+    () => setIsCreateOperationModalOpen(true),
     [],
   );
-  const closeCreateSnapshotModal = useCallback(
-    () => setIsCreateSnapshotModalOpen(false),
+  const closeCreateOperationModal = useCallback(
+    () => setIsCreateOperationModalOpen(false),
     [],
   );
 
-  const openEditSnapshotModal = useCallback(
-    (snapshot: InvestmentSnapshotOperation) => setEditingSnapshot(snapshot),
+  const openEditOperationModal = useCallback(
+    (operation: InvestmentOperation) => setEditingOperation(operation),
     [],
   );
-  const closeEditSnapshotModal = useCallback(() => setEditingSnapshot(null), []);
+  const closeEditOperationModal = useCallback(() => setEditingOperation(null), []);
 
-  const openDeleteSnapshotModal = useCallback(
-    (snapshot: InvestmentSnapshotOperation) => setDeletingSnapshot(snapshot),
+  const openDeleteOperationModal = useCallback(
+    (operation: InvestmentOperation) => setDeletingOperation(operation),
     [],
   );
-  const closeDeleteSnapshotModal = useCallback(() => setDeletingSnapshot(null), []);
+  const closeDeleteOperationModal = useCallback(() => setDeletingOperation(null), []);
 
   const openUpdateInstrumentModal = useCallback(
     () => setIsUpdateInstrumentModalOpen(true),
@@ -93,15 +95,15 @@ export const useInstrumentDetails = () => {
       instrument,
       operations,
       currency: instrument.currency ?? '',
-      isCreateSnapshotModalOpen,
-      openCreateSnapshotModal,
-      closeCreateSnapshotModal,
-      editingSnapshot,
-      openEditSnapshotModal,
-      closeEditSnapshotModal,
-      deletingSnapshot,
-      openDeleteSnapshotModal,
-      closeDeleteSnapshotModal,
+      isCreateOperationModalOpen,
+      openCreateOperationModal,
+      closeCreateOperationModal,
+      editingOperation,
+      openEditOperationModal,
+      closeEditOperationModal,
+      deletingOperation,
+      openDeleteOperationModal,
+      closeDeleteOperationModal,
       isUpdateInstrumentModalOpen,
       openUpdateInstrumentModal,
       closeUpdateInstrumentModal,
@@ -112,15 +114,15 @@ export const useInstrumentDetails = () => {
   }, [
     instrument,
     operations,
-    isCreateSnapshotModalOpen,
-    openCreateSnapshotModal,
-    closeCreateSnapshotModal,
-    editingSnapshot,
-    openEditSnapshotModal,
-    closeEditSnapshotModal,
-    deletingSnapshot,
-    openDeleteSnapshotModal,
-    closeDeleteSnapshotModal,
+    isCreateOperationModalOpen,
+    openCreateOperationModal,
+    closeCreateOperationModal,
+    editingOperation,
+    openEditOperationModal,
+    closeEditOperationModal,
+    deletingOperation,
+    openDeleteOperationModal,
+    closeDeleteOperationModal,
     isUpdateInstrumentModalOpen,
     openUpdateInstrumentModal,
     closeUpdateInstrumentModal,

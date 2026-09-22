@@ -8,13 +8,13 @@ import { getButtonClassName } from '@shared/ui/button/get-button-class-name';
 type OperationsListEmptyStateProps = {
   hasAnyOperations: boolean;
   onResetFilters?: () => void;
-  onCreateSnapshot?: () => void;
+  onCreateOperation?: () => void;
 };
 
 export const OperationsListEmptyState = ({
   hasAnyOperations,
   onResetFilters,
-  onCreateSnapshot,
+  onCreateOperation,
 }: OperationsListEmptyStateProps) => {
   const { t } = useTranslation('investments');
 
@@ -45,8 +45,8 @@ export const OperationsListEmptyState = ({
 
       {!hasAnyOperations ? (
         <div className="mt-2 flex flex-col items-center gap-2 sm:flex-row">
-          {onCreateSnapshot ? (
-            <Button variant="primary" onClick={onCreateSnapshot} className="gap-1.5">
+          {onCreateOperation ? (
+            <Button variant="primary" onClick={onCreateOperation} className="gap-1.5">
               <Camera className="size-4" />
               <span>{t('operations.recordFirstSnapshot')}</span>
             </Button>

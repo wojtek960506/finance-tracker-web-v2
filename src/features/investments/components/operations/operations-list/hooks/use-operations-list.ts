@@ -6,18 +6,19 @@ import {
   getOperations,
   type InvestmentInstrument,
   type InvestmentOperation,
-  type InvestmentSnapshotOperation,
 } from '@features/investments/api';
 
 export const useOperationsList = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedKind, setSelectedKind] = useState<string>('all');
   const [selectedInstrumentId, setSelectedInstrumentId] = useState<string>('all');
-  const [isCreateSnapshotModalOpen, setIsCreateSnapshotModalOpen] = useState(false);
-  const [editingSnapshot, setEditingSnapshot] =
-    useState<InvestmentSnapshotOperation | null>(null);
-  const [deletingSnapshot, setDeletingSnapshot] =
-    useState<InvestmentSnapshotOperation | null>(null);
+  const [isCreateOperationModalOpen, setIsCreateOperationModalOpen] = useState(false);
+  const [editingOperation, setEditingOperation] = useState<InvestmentOperation | null>(
+    null,
+  );
+  const [deletingOperation, setDeletingOperation] = useState<InvestmentOperation | null>(
+    null,
+  );
 
   const { data: instruments = [], isLoading: isLoadingInstruments } = useQuery({
     queryKey: ['instruments'],
@@ -86,12 +87,12 @@ export const useOperationsList = () => {
     setSelectedInstrumentId,
     resetFilters,
     hasActiveFilters,
-    isCreateSnapshotModalOpen,
-    setIsCreateSnapshotModalOpen,
-    editingSnapshot,
-    setEditingSnapshot,
-    deletingSnapshot,
-    setDeletingSnapshot,
+    isCreateOperationModalOpen,
+    setIsCreateOperationModalOpen,
+    editingOperation,
+    setEditingOperation,
+    deletingOperation,
+    setDeletingOperation,
     instruments,
     instrumentsMap,
     operations,
