@@ -32,7 +32,7 @@ export const NetWorthSummaryCard = ({
   return (
     <Card
       className={clsx(
-        'flex flex-col justify-between gap-0 sm:gap-1 p-4',
+        'flex flex-col justify-between gap-1 sm:gap-2 p-4',
         style.cardClass,
         className,
       )}
@@ -40,7 +40,7 @@ export const NetWorthSummaryCard = ({
       <div className="flex items-center justify-between gap-2 text-text-muted">
         <span
           className={clsx(
-            'text-sm font-semibold uppercase tracking-wider',
+            'text-sm sm:text-base font-semibold uppercase tracking-wider',
             style.titleClass,
           )}
         >
@@ -48,7 +48,12 @@ export const NetWorthSummaryCard = ({
         </span>
         <div className="flex items-center gap-3">
           {percentage !== undefined && (
-            <span className={clsx('text-sm font-semibold', style.percentageClass)}>
+            <span
+              className={clsx(
+                'text-sm sm:text-base font-semibold',
+                style.percentageClass,
+              )}
+            >
               {formatPercentage(percentage, language)}%
             </span>
           )}
@@ -66,7 +71,9 @@ export const NetWorthSummaryCard = ({
           {formatCurrencyAmount(amount, baseCurrency, language)}
         </div>
 
-        {description && <p className="mt-1 text-xs text-text-muted">{description}</p>}
+        {description && (
+          <p className="mt-1 text-xs sm:text-sm text-text-muted">{description}</p>
+        )}
       </div>
     </Card>
   );

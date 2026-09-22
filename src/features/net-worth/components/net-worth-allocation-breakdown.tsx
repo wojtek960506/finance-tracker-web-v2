@@ -31,7 +31,9 @@ export const NetWorthAllocationBreakdown = ({
         <h2 className="text-base font-bold tracking-tight text-foreground sm:text-lg">
           {t('assetAllocation')}
         </h2>
-        <p className="text-xs text-text-muted">{t('assetAllocationDescription')}</p>
+        <p className="text-xs sm:text-sm text-text-muted">
+          {t('assetAllocationDescription')}
+        </p>
       </div>
 
       <NetWorthAllocationProgressBar allocation={allocation} />

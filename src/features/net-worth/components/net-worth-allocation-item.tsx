@@ -42,17 +42,17 @@ export const NetWorthAllocationItem = ({
           <Icon className={clsx('size-4', style.colorClass)} />
         </div>
         <div className="flex min-w-0 flex-col">
-          <span className="truncate text-xs font-semibold text-foreground sm:text-sm">
+          <span className="truncate text-xs xs:text-sm sm:text-base font-semibold text-foreground">
             {categoryName}
           </span>
-          <span className="text-xs font-medium text-text-muted">
+          <span className="text-xs xs:text-sm sm:text-sm font-medium text-text-muted">
             {formatPercentage(item.percentage, language)}%
           </span>
         </div>
       </div>
 
       <div className="shrink-0 text-right">
-        <span className="text-xs font-bold text-foreground sm:text-sm">
+        <span className="text-sm xs:text-base sm:text-lg font-bold text-foreground ">
           {formatCurrencyAmount(item.amount, baseCurrency, language)}
         </span>
       </div>
