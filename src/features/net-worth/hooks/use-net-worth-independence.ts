@@ -1,6 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 
+import { useSettingsStore } from '@store/settings-store';
+
 import { getNetWorthIndependence, type NetWorthIndependenceResponseDTO } from '../api';
 
 export type UseNetWorthIndependenceOptions = {
@@ -10,10 +12,9 @@ export type UseNetWorthIndependenceOptions = {
 };
 
 export const useNetWorthIndependence = (options?: UseNetWorthIndependenceOptions) => {
-  const [baseCurrencyState, setBaseCurrency] = useState<string>(
-    options?.baseCurrency ?? options?.initialBaseCurrency ?? 'PLN',
-  );
-  const baseCurrency = options?.baseCurrency ?? baseCurrencyState;
+  const storeBaseCurrency = useSettingsStore((state) => state.baseCurrency);
+  const baseCurrency =
+    options?.baseCurrency ?? options?.initialBaseCurrency ?? storeBaseCurrency;
   const [periodMonths, setPeriodMonths] = useState<number>(
     options?.initialPeriodMonths ?? 12,
   );
@@ -48,7 +49,6 @@ export const useNetWorthIndependence = (options?: UseNetWorthIndependenceOptions
   return {
     data,
     baseCurrency,
-    setBaseCurrency,
     periodMonths,
     setPeriodMonths,
     period,

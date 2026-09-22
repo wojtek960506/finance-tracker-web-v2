@@ -2,7 +2,6 @@ import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 
 import { useLanguage } from '@shared/hooks';
-import { CurrencySelectField } from '@transactions/components/shared';
 import { formatCurrencyAmount } from '@transactions/utils';
 import { Card } from '@ui';
 
@@ -12,13 +11,11 @@ const BALANCE_NEGATIVE_CLASS = 'text-destructive';
 type TransactionAccountStatisticsHeaderProps = {
   baseCurrency: string;
   normalizedTotalAmount?: number;
-  onBaseCurrencyChange: (baseCurrency: string) => void;
 };
 
 export const TransactionAccountStatisticsHeader = ({
   baseCurrency,
   normalizedTotalAmount,
-  onBaseCurrencyChange,
 }: TransactionAccountStatisticsHeaderProps) => {
   const { t } = useTranslation('transactions');
   const { language } = useLanguage();
@@ -51,17 +48,6 @@ export const TransactionAccountStatisticsHeader = ({
         <p className="text-sm text-text-muted sm:text-base">
           {t('accountStatisticsDescription')}
         </p>
-
-        <div className="w-full max-w-[18rem]">
-          <CurrencySelectField
-            value={baseCurrency}
-            onChange={onBaseCurrencyChange}
-            placeholder={t('baseCurrency')}
-            searchPlaceholder={t('searchCurrencyPlaceholder')}
-            emptyMessage={t('noCurrenciesFound')}
-            showClear={false}
-          />
-        </div>
       </div>
     </Card>
   );

@@ -1,5 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
+
+import { useSettingsStore } from '@store/settings-store';
 
 import {
   getNetWorth,
@@ -10,13 +12,14 @@ import {
 } from '../api';
 
 export type UseNetWorthOptions = {
+  baseCurrency?: string;
   initialBaseCurrency?: string;
 };
 
 export const useNetWorth = (options?: UseNetWorthOptions) => {
-  const [baseCurrency, setBaseCurrency] = useState<string>(
-    options?.initialBaseCurrency ?? 'PLN',
-  );
+  const storeBaseCurrency = useSettingsStore((state) => state.baseCurrency);
+  const baseCurrency =
+    options?.baseCurrency ?? options?.initialBaseCurrency ?? storeBaseCurrency;
 
   const { data, isLoading, isFetching, error, refetch } = useQuery<NetWorthResponseDTO>({
     queryKey: ['net-worth', baseCurrency],
@@ -62,7 +65,6 @@ export const useNetWorth = (options?: UseNetWorthOptions) => {
   return {
     data,
     baseCurrency,
-    setBaseCurrency,
     totals,
     currencies,
     byCurrencyList,

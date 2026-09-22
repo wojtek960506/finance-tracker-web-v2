@@ -154,7 +154,6 @@ describe('TransactionAccountStatistics', () => {
     });
     expect(screen.getAllByRole('heading', { level: 3 })[0]).toHaveTextContent('PLN');
     expect(screen.getByText('2 accounts')).toBeInTheDocument();
-    expect(screen.getByText('showClear:false')).toBeInTheDocument();
     expect(
       screen.getByText((_, element) => element?.textContent === 'Liczba transakcji: 4'),
     ).toBeInTheDocument();

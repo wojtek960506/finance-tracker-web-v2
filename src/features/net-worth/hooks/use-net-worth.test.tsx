@@ -1,10 +1,11 @@
 import { QueryClientProvider } from '@tanstack/react-query';
-import { act, renderHook, waitFor } from '@testing-library/react';
+import { renderHook, waitFor } from '@testing-library/react';
 import type { ReactNode } from 'react';
 import { describe, expect, it, vi } from 'vitest';
 
 import type { NetWorthResponseDTO } from '@features/net-worth/api';
 import * as netWorthApi from '@features/net-worth/api';
+import { DEFAULT_BASE_CURRENCY, useSettingsStore } from '@store/settings-store';
 import { createTestQueryClient } from '@test-utils/create-test-query-client';
 
 import { useNetWorth } from './use-net-worth';
@@ -55,6 +56,9 @@ vi.mock('@features/net-worth/api', async () => {
 });
 
 describe('useNetWorth', () => {
+  beforeEach(() => {
+    useSettingsStore.setState({ baseCurrency: DEFAULT_BASE_CURRENCY });
+  });
   it('loads net worth data and derives sorted currencies and allocations', async () => {
     vi.mocked(netWorthApi.getNetWorth).mockResolvedValueOnce(mockNetWorthData);
 
@@ -80,13 +84,9 @@ describe('useNetWorth', () => {
     expect(result.current.hasData).toBe(true);
   });
 
-  it('allows changing base currency and refetches', async () => {
-    vi.mocked(netWorthApi.getNetWorth)
-      .mockResolvedValueOnce(mockNetWorthData)
-      .mockResolvedValueOnce({
-        ...mockNetWorthData,
-        baseCurrency: 'EUR',
-      });
+  it('reads base currency from settings store or options', async () => {
+    useSettingsStore.setState({ baseCurrency: 'USD' });
+    vi.mocked(netWorthApi.getNetWorth).mockResolvedValueOnce(mockNetWorthData);
 
     const queryClient = createTestQueryClient();
     const wrapper = ({ children }: { children: ReactNode }) => (
@@ -99,13 +99,8 @@ describe('useNetWorth', () => {
       expect(result.current.isLoading).toBe(false);
     });
 
-    act(() => {
-      result.current.setBaseCurrency('EUR');
-    });
-
-    await waitFor(() => {
-      expect(result.current.baseCurrency).toBe('EUR');
-    });
+    expect(result.current.baseCurrency).toBe('USD');
+    expect(netWorthApi.getNetWorth).toHaveBeenCalledWith({ baseCurrency: 'USD' });
   });
 
   it('filters out zero-value currencies and empty allocation items', async () => {

@@ -6,7 +6,6 @@ import { LoadingCard } from '@shared/ui';
 import { INDEPENDENCE_PERIOD_OPTIONS } from '../consts';
 import { useNetWorthIndependence } from '../hooks';
 
-import { NetWorthCurrencySelector } from './net-worth-currency-selector';
 import { NetWorthEmptyState } from './net-worth-empty-state';
 import { NetWorthIndependenceBreakdown } from './net-worth-independence-breakdown';
 import { NetWorthIndependenceCards } from './net-worth-independence-cards';
@@ -15,7 +14,6 @@ export const FinancialIndependencePage = () => {
   const { t } = useTranslation('net-worth');
   const {
     baseCurrency,
-    setBaseCurrency,
     periodMonths,
     setPeriodMonths,
     netWorth,
@@ -68,38 +66,30 @@ export const FinancialIndependencePage = () => {
                 </p>
               </div>
 
-              <div className="flex flex-wrap items-center gap-3">
-                {/* Period Selector Toggle */}
-                <div className="flex items-center gap-1.5 rounded-lg border border-border/60 bg-muted/30 p-1">
-                  <span className="px-2 text-xs font-medium text-text-muted">
-                    {t('periodSelectorLabel')}:
-                  </span>
-                  {INDEPENDENCE_PERIOD_OPTIONS.map((period) => {
-                    const isSelected = periodMonths === period;
-                    return (
-                      <button
-                        key={period}
-                        type="button"
-                        onClick={() => setPeriodMonths(period)}
-                        className={clsx(
-                          'rounded-md px-2.5 py-1 text-xs font-semibold transition-all',
-                          isSelected
-                            ? 'bg-card text-foreground shadow-sm'
-                            : 'text-text-muted hover:text-foreground',
-                        )}
-                        aria-pressed={isSelected}
-                      >
-                        {t('periodMonths', { count: period })}
-                      </button>
-                    );
-                  })}
-                </div>
-
-                {/* Currency Selector */}
-                <NetWorthCurrencySelector
-                  activeCurrency={baseCurrency}
-                  onSelectCurrency={setBaseCurrency}
-                />
+              {/* Period Selector Toggle */}
+              <div className="flex items-center gap-1.5 self-start rounded-lg border border-border/60 bg-muted/30 p-1 sm:self-auto">
+                <span className="px-2 text-xs font-medium text-text-muted">
+                  {t('periodSelectorLabel')}:
+                </span>
+                {INDEPENDENCE_PERIOD_OPTIONS.map((period) => {
+                  const isSelected = periodMonths === period;
+                  return (
+                    <button
+                      key={period}
+                      type="button"
+                      onClick={() => setPeriodMonths(period)}
+                      className={clsx(
+                        'rounded-md px-2.5 py-1 text-xs font-semibold transition-all',
+                        isSelected
+                          ? 'bg-card text-foreground shadow-sm'
+                          : 'text-text-muted hover:text-foreground',
+                      )}
+                      aria-pressed={isSelected}
+                    >
+                      {t('periodMonths', { count: period })}
+                    </button>
+                  );
+                })}
               </div>
             </div>
 

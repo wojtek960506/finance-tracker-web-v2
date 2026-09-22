@@ -105,6 +105,11 @@ const InstrumentDetailsPage = lazy(() =>
     default: m.InstrumentDetailsPage,
   })),
 );
+const SettingsPage = lazy(() =>
+  import('@features/settings').then((m) => ({
+    default: m.SettingsPage,
+  })),
+);
 
 type RouteTitle = {
   key: string;
@@ -266,7 +271,7 @@ export const PROTECTED_APP_ROUTES: AppRouteConfig[] = [
   },
   {
     path: '/settings',
-    element: <p>Settings will be there</p>,
+    element: <SettingsPage />,
     title: { namespace: 'navigation', key: 'settings' },
   },
 ];

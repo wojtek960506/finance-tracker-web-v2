@@ -1,9 +1,10 @@
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import type { NetWorthIndependenceResponseDTO } from '@features/net-worth/api';
 import * as netWorthApi from '@features/net-worth/api';
+import { DEFAULT_BASE_CURRENCY, useSettingsStore } from '@store/settings-store';
 import { renderWithProviders } from '@test-utils';
 
 import { FinancialIndependencePage } from './financial-independence-page';
@@ -92,6 +93,10 @@ vi.mock('@features/net-worth/api', async () => {
 });
 
 describe('FinancialIndependencePage', () => {
+  beforeEach(() => {
+    useSettingsStore.setState({ baseCurrency: DEFAULT_BASE_CURRENCY });
+  });
+
   it('renders empty state when there is no data', async () => {
     vi.mocked(netWorthApi.getNetWorthIndependence).mockResolvedValueOnce(
       mockEmptyIndependenceData,
@@ -119,10 +124,10 @@ describe('FinancialIndependencePage', () => {
     ).toBeInTheDocument();
   });
 
-  it('allows switching analysis period and currency', async () => {
+  it('allows switching analysis period and uses base currency from settings store', async () => {
+    useSettingsStore.setState({ baseCurrency: 'EUR' });
     const user = userEvent.setup();
     vi.mocked(netWorthApi.getNetWorthIndependence)
-      .mockResolvedValueOnce(mockIndependenceData)
       .mockResolvedValueOnce(mockIndependenceData)
       .mockResolvedValueOnce(mockIndependenceData);
 
@@ -134,15 +139,7 @@ describe('FinancialIndependencePage', () => {
     await user.click(period6mBtn);
 
     expect(netWorthApi.getNetWorthIndependence).toHaveBeenCalledWith({
-      baseCurrency: 'PLN',
-      periodMonths: 6,
-    });
-
-    const usdBtn = screen.getByRole('button', { name: 'USD' });
-    await user.click(usdBtn);
-
-    expect(netWorthApi.getNetWorthIndependence).toHaveBeenCalledWith({
-      baseCurrency: 'USD',
+      baseCurrency: 'EUR',
       periodMonths: 6,
     });
   });

@@ -1,0 +1,10 @@
+{
+  "title": "Einstellungen",
+  "description": "Verwalten Sie Ihre Anwendungseinstellungen und -konfigurationen.",
+  "generalPreferences": "Allgemeine Einstellungen",
+  "generalPreferencesDescription": "Konfigurieren Sie Ihre Basiswährung und Anzeigeoptionen.",
+  "baseCurrency": "Basiswährung",
+  "baseCurrencyDescription": "Die primäre Währung zur Umrechnung Ihres Nettovermögens, Ihrer finanziellen Unabhängigkeit und Kontostatistiken.",
+  "searchCurrencyPlaceholder": "Währung suchen...",
+  "noCurrenciesFound": "Keine Währungen gefunden"
+}

@@ -1,9 +1,9 @@
 import { screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import type { NetWorthResponseDTO } from '@features/net-worth/api';
 import * as netWorthApi from '@features/net-worth/api';
+import { DEFAULT_BASE_CURRENCY, useSettingsStore } from '@store/settings-store';
 import { renderWithProviders } from '@test-utils';
 
 import { NetWorthPage } from './net-worth-page';
@@ -75,6 +75,10 @@ vi.mock('@features/net-worth/api', async () => {
 });
 
 describe('NetWorthPage', () => {
+  beforeEach(() => {
+    useSettingsStore.setState({ baseCurrency: DEFAULT_BASE_CURRENCY });
+  });
+
   it('renders empty state when there is no net worth data and hides page header', async () => {
     vi.mocked(netWorthApi.getNetWorth).mockResolvedValueOnce(mockEmptyNetWorth);
 
@@ -82,7 +86,6 @@ describe('NetWorthPage', () => {
 
     expect(await screen.findByTestId('net-worth-empty-state')).toBeInTheDocument();
     expect(screen.getByText('No net worth data available')).toBeInTheDocument();
-    expect(screen.queryByTestId('net-worth-currency-selector')).not.toBeInTheDocument();
     expect(screen.queryByRole('heading', { name: 'Net Worth' })).not.toBeInTheDocument();
   });
 
@@ -102,24 +105,18 @@ describe('NetWorthPage', () => {
     expect(screen.getAllByText('Investments').length).toBeGreaterThan(0);
   });
 
-  it('allows switching base currency', async () => {
-    const user = userEvent.setup();
-    vi.mocked(netWorthApi.getNetWorth)
-      .mockResolvedValueOnce(mockFullNetWorth)
-      .mockResolvedValueOnce({
-        ...mockFullNetWorth,
-        baseCurrency: 'USD',
-      });
+  it('fetches net worth using the base currency from settings store', async () => {
+    useSettingsStore.setState({ baseCurrency: 'EUR' });
+    vi.mocked(netWorthApi.getNetWorth).mockResolvedValueOnce({
+      ...mockFullNetWorth,
+      baseCurrency: 'EUR',
+    });
 
     renderWithProviders(<NetWorthPage />);
 
     expect(await screen.findByTestId('net-worth-summary-cards')).toBeInTheDocument();
-
-    const usdBtn = screen.getByRole('button', { name: 'USD' });
-    await user.click(usdBtn);
-
     expect(netWorthApi.getNetWorth).toHaveBeenCalledWith({
-      baseCurrency: 'USD',
+      baseCurrency: 'EUR',
     });
   });
 });

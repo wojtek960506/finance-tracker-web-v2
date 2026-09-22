@@ -3,6 +3,7 @@ import { act, renderHook, waitFor } from '@testing-library/react';
 import type { ReactNode } from 'react';
 import { describe, expect, it, vi } from 'vitest';
 
+import { DEFAULT_BASE_CURRENCY, useSettingsStore } from '@store/settings-store';
 import { createTestQueryClient } from '@test-utils/create-test-query-client';
 
 import type { NetWorthIndependenceResponseDTO } from '../api';
@@ -59,6 +60,10 @@ vi.mock('../api', async () => {
 });
 
 describe('useNetWorthIndependence', () => {
+  beforeEach(() => {
+    useSettingsStore.setState({ baseCurrency: DEFAULT_BASE_CURRENCY });
+  });
+
   it('fetches independence data with default 12 periodMonths and baseCurrency', async () => {
     vi.mocked(netWorthApi.getNetWorthIndependence).mockResolvedValueOnce(
       mockIndependenceData,
@@ -130,7 +135,8 @@ describe('useNetWorthIndependence', () => {
     });
   });
 
-  it('allows updating baseCurrency to trigger refetch', async () => {
+  it('reads baseCurrency from settings store or options', async () => {
+    useSettingsStore.setState({ baseCurrency: 'EUR' });
     vi.mocked(netWorthApi.getNetWorthIndependence).mockResolvedValue(
       mockIndependenceData,
     );
@@ -140,25 +146,16 @@ describe('useNetWorthIndependence', () => {
       <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
     );
 
-    const { result } = renderHook(
-      () => useNetWorthIndependence({ initialBaseCurrency: 'PLN' }),
-      { wrapper },
-    );
+    const { result } = renderHook(() => useNetWorthIndependence(), { wrapper });
 
     await waitFor(() => {
       expect(result.current.isLoading).toBe(false);
     });
 
-    act(() => {
-      result.current.setBaseCurrency('EUR');
-    });
-
-    await waitFor(() => {
-      expect(result.current.baseCurrency).toBe('EUR');
-      expect(netWorthApi.getNetWorthIndependence).toHaveBeenCalledWith({
-        baseCurrency: 'EUR',
-        periodMonths: 12,
-      });
+    expect(result.current.baseCurrency).toBe('EUR');
+    expect(netWorthApi.getNetWorthIndependence).toHaveBeenCalledWith({
+      baseCurrency: 'EUR',
+      periodMonths: 12,
     });
   });
 });
