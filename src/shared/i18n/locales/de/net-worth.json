@@ -32,7 +32,7 @@
   "financialIndependenceDescription": "Monate zur Sicherung des Lebensstils bei Verflüssigung des gesamten Vermögens (Bargeld, Sparen, Anlagen)",
   "liquidSafetyBuffer": "Liquide Sicherheitsreserve",
   "liquidSafetyBufferDescription": "Monate zur Deckung der Ausgaben aus Bargeld und Sparen ohne Verkauf von Anlagen",
-  "netBurnRate": "Monatliche Netto-Burn-Rate",
+  "netBurnRate": "Monatlicher Netto-Kapitalverbrauch",
   "netBurnRateDescription": "Monatlicher Betrag, der nach Abzug passiver Einnahmen aus dem Kapital gedeckt werden muss",
   "zeroIncomeBaseline": "Konservativer 0-Einkommen-Test",
   "zeroIncomeBaselineDescription": "Reichweite im Ernstfall, falls alle Einkommensquellen bei gleichbleibenden Ausgaben auf null sinken",

@@ -32,7 +32,7 @@
   "financialIndependenceDescription": "Miesiące utrzymania obecnego poziomu życia przy spieniężeniu całego majątku (gotówka, oszczędności, inwestycje)",
   "liquidSafetyBuffer": "Poduszka płynna",
   "liquidSafetyBufferDescription": "Czas pokrycia wydatków z gotówki i oszczędności bez konieczności sprzedaży inwestycji",
-  "netBurnRate": "Miesięczne tempo zużycia kapitału (Net Burn)",
+  "netBurnRate": "Miesięczne tempo zużycia kapitału",
   "netBurnRateDescription": "Miesięczna kwota pokrywana z kapitału po odliczeniu wpływów pasywnych od wydatków",
   "zeroIncomeBaseline": "Wariant konserwatywny (0 dochodu)",
   "zeroIncomeBaselineDescription": "Awaryjny czas przetrwania, gdyby wszystkie źródła dochodu spadły do zera przy obecnych wydatkach",

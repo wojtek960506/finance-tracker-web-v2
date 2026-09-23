@@ -125,11 +125,7 @@ export const NetWorthIndependenceCards = ({
         title={t('netBurnRate')}
         value={formatCurrencyAmount(monthlyAverages.netBurnRate, baseCurrency, language)}
         unit={`/ ${t('perMonth')}`}
-        secondaryValue={`${t('grossExpenses')}: ${formatCurrencyAmount(
-          monthlyAverages.grossExpenses,
-          baseCurrency,
-          language,
-        )}`}
+        secondaryValue=""
         description={t('netBurnRateDescription')}
       />
     </div>
