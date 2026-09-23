@@ -26,7 +26,7 @@ export const TransactionsFiltersActions = ({
       </Button>
       <Button
         type="button"
-        variant="secondary"
+        variant="destructive"
         className={FORM_BUTTON_CLASS_NAME}
         onClick={onClear}
       >

@@ -180,7 +180,7 @@ export const NamedResourceFilterField = ({
           >
             <Button
               type="button"
-              variant={field.value === 'include' ? 'primary' : 'outline'}
+              variant={field.value === 'include' ? 'secondary' : 'outline'}
               className={clsx('w-full min-w-0', FORM_BUTTON_CLASS_NAME)}
               onClick={() => field.onChange('include')}
             >
@@ -188,7 +188,7 @@ export const NamedResourceFilterField = ({
             </Button>
             <Button
               type="button"
-              variant={field.value === 'exclude' ? 'primary' : 'outline'}
+              variant={field.value === 'exclude' ? 'warning' : 'outline'}
               className={clsx('w-full min-w-0', FORM_BUTTON_CLASS_NAME)}
               onClick={() => field.onChange('exclude')}
             >
