@@ -33,7 +33,7 @@ export const NetWorthEmptyState = () => {
         </Button>
         <Button
           variant="outline"
-          onClick={() => navigate('/investments/instruments')}
+          onClick={() => navigate('/investments/portfolio')}
           className="gap-1.5"
         >
           <Landmark className="size-4" />

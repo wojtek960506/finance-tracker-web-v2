@@ -28,6 +28,8 @@
     "addHolding": "Добавить инструмент"
   },
   "searchPlaceholder": "Поиск инструментов...",
+  "filters": "Фильтры",
+  "statusLabel": "Статус",
   "allKinds": "Все",
   "newInstrument": "Новый инструмент",
   "emptyTitle": "Инвестиционные инструменты еще не добавлены",

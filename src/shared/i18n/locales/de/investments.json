@@ -28,6 +28,8 @@
     "addHolding": "Instrument hinzufügen"
   },
   "searchPlaceholder": "Instrumente suchen...",
+  "filters": "Filter",
+  "statusLabel": "Status",
   "allKinds": "Alle",
   "newInstrument": "Neues Instrument",
   "emptyTitle": "Noch keine Anlageinstrumente",

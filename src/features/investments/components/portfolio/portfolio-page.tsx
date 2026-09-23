@@ -63,7 +63,7 @@ export const PortfolioPage = () => {
                 <Button
                   variant="primary"
                   onClick={() => setIsCreateModalOpen(true)}
-                  className="gap-1.5"
+                  className="gap-1.5 shrink-0 whitespace-nowrap"
                 >
                   <Plus className="size-4" />
                   <span>{t('newInstrument')}</span>

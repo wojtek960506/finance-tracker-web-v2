@@ -185,6 +185,10 @@ describe('PortfolioPage', () => {
     expect(initialCards[0]).toHaveTextContent('Apple Inc.');
     expect(initialCards[1]).toHaveTextContent('Closed Position Stock');
 
+    // Open filters panel
+    const filterToggle = screen.getByTestId('toggle-filters-button');
+    await user.click(filterToggle);
+
     // Filter Active
     const activeBtn = screen.getByRole('button', { name: /^active$/i });
     await user.click(activeBtn);

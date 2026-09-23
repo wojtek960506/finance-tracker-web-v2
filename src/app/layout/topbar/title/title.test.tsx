@@ -31,7 +31,6 @@ vi.mock('@investments/components', () => ({
     <div>{children}</div>
   ),
   PortfolioPage: () => <div>portfolio</div>,
-  InvestmentsPage: () => <div>investments</div>,
   OperationsPage: () => <div>operations</div>,
   InstrumentDetailsPage: () => <div>instrument-details</div>,
 }));
@@ -117,19 +116,6 @@ describe('Title', () => {
   it('renders investments title on investments portfolio page', () => {
     render(
       <MemoryRouter initialEntries={['/investments/portfolio']}>
-        <Title />
-      </MemoryRouter>,
-    );
-
-    expect(
-      screen.getByRole('heading', { name: 'navigation:investments' }),
-    ).toBeInTheDocument();
-    expect(screen.queryByRole('link')).not.toBeInTheDocument();
-  });
-
-  it('renders investments title on investments instruments page', () => {
-    render(
-      <MemoryRouter initialEntries={['/investments/instruments']}>
         <Title />
       </MemoryRouter>,
     );

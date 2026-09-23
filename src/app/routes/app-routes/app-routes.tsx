@@ -90,11 +90,6 @@ const PortfolioPage = lazy(() =>
     default: m.PortfolioPage,
   })),
 );
-const InvestmentsPage = lazy(() =>
-  import('@investments/components').then((m) => ({
-    default: m.InvestmentsPage,
-  })),
-);
 const OperationsPage = lazy(() =>
   import('@investments/components').then((m) => ({
     default: m.OperationsPage,
@@ -246,7 +241,7 @@ export const PROTECTED_APP_ROUTES: AppRouteConfig[] = [
   },
   {
     path: '/investments/instruments',
-    element: <InvestmentsPage />,
+    element: <Navigate to="/investments/portfolio" replace />,
     title: { namespace: 'navigation', key: 'investments' },
   },
   {

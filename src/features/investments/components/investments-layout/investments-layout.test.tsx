@@ -20,10 +20,6 @@ describe('InvestmentsLayout', () => {
       'href',
       '/investments/portfolio',
     );
-    expect(screen.getByRole('link', { name: 'Instruments' })).toHaveAttribute(
-      'href',
-      '/investments/instruments',
-    );
     expect(screen.getByRole('link', { name: 'Operations' })).toHaveAttribute(
       'href',
       '/investments/operations',

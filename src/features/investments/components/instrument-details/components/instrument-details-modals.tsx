@@ -61,7 +61,7 @@ export const InstrumentDetailsModals = () => {
         instrument={instrument}
         isOpen={isDeleteInstrumentModalOpen}
         onClose={closeDeleteInstrumentModal}
-        onSuccess={() => navigate('/investments/instruments')}
+        onSuccess={() => navigate('/investments/portfolio')}
       />
     </>
   );

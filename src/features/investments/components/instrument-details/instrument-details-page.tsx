@@ -41,7 +41,7 @@ export const InstrumentDetailsPage = () => {
             {t('details.notFoundDescription')}
           </p>
           <Link
-            to="/investments/instruments"
+            to="/investments/portfolio"
             className={clsx(
               'mt-2 inline-flex items-center gap-1.5 text-xs font-medium',
               'text-primary hover:underline',
