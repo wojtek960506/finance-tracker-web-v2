@@ -84,6 +84,16 @@ const mockEmptyIndependenceData: NetWorthIndependenceResponseDTO = {
   excludedCategories: [],
 };
 
+const mockPerpetualIndependenceData: NetWorthIndependenceResponseDTO = {
+  ...mockIndependenceData,
+  independence: {
+    netWorthMonths: null,
+    liquidCapitalMonths: null,
+    liquidCashMonths: null,
+    isPerpetual: true,
+  },
+};
+
 vi.mock('@features/net-worth/api', async () => {
   const actual = await vi.importActual('@features/net-worth/api');
   return {
@@ -122,6 +132,18 @@ describe('FinancialIndependencePage', () => {
         name: 'Financial Independence & Safety Runway',
       }),
     ).toBeInTheDocument();
+  });
+
+  it('renders perpetual infinity symbol when isPerpetual is true', async () => {
+    vi.mocked(netWorthApi.getNetWorthIndependence).mockResolvedValueOnce(
+      mockPerpetualIndependenceData,
+    );
+
+    renderWithProviders(<FinancialIndependencePage />);
+
+    expect(await screen.findByTestId('net-worth-independence-cards')).toBeInTheDocument();
+    const infinitySymbols = screen.getAllByText('∞');
+    expect(infinitySymbols.length).toBeGreaterThanOrEqual(1);
   });
 
   it('allows switching analysis period and uses base currency from settings store', async () => {

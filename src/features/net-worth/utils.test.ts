@@ -4,7 +4,8 @@ import {
   formatCurrencyAmount,
   formatDecimal,
   formatHorizonYearsAndMonths,
-  formatPercentage,
+  formatTruncatedDecimal,
+  truncateDecimal,
 } from './utils';
 
 describe('net-worth utils', () => {
@@ -52,10 +53,20 @@ describe('net-worth utils', () => {
     });
   });
 
-  describe('formatPercentage', () => {
-    it('formats percentage with minimum 1 fraction digit', () => {
-      expect(formatPercentage(50, 'en-US')).toBe('50.0');
-      expect(formatPercentage(50.25, 'en-US')).toBe('50.25');
+  describe('truncateDecimal', () => {
+    it('truncates decimal values to 2 decimal places without rounding up', () => {
+      expect(truncateDecimal(42.049)).toBe(42.04);
+      expect(truncateDecimal(16.581)).toBe(16.58);
+      expect(truncateDecimal(10.999)).toBe(10.99);
+      expect(truncateDecimal(5)).toBe(5);
+    });
+  });
+
+  describe('formatTruncatedDecimal', () => {
+    it('formats truncated decimal with minimum and maximum 2 fraction digits', () => {
+      expect(formatTruncatedDecimal(42.049, 'en-US')).toBe('42.04');
+      expect(formatTruncatedDecimal(16.5, 'en-US')).toBe('16.50');
+      expect(formatTruncatedDecimal(10, 'en-US')).toBe('10.00');
     });
   });
 });

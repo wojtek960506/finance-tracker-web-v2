@@ -1,8 +1,19 @@
+export const truncateDecimal = (value: number, decimals = 2): number => {
+  const factor = 10 ** decimals;
+  return Math.trunc(value * factor) / factor;
+};
+
 export const formatDecimal = (value: number, language: string): string =>
   new Intl.NumberFormat(language, {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   }).format(value);
+
+export const formatTruncatedDecimal = (
+  value: number,
+  language: string,
+  decimals = 2,
+): string => formatDecimal(truncateDecimal(value, decimals), language);
 
 export const formatCurrencyAmount = (
   value: number,

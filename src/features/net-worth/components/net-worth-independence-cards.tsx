@@ -1,9 +1,6 @@
-import clsx from 'clsx';
-import { Activity, Flame, ShieldCheck, Umbrella } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 import { useLanguage } from '@shared/hooks';
-import { Card } from '@shared/ui';
 
 import type {
   NetWorthIndependenceHorizonDTO,
@@ -12,9 +9,11 @@ import type {
 } from '../api';
 import {
   formatCurrencyAmount,
-  formatDecimal,
   formatHorizonYearsAndMonths,
+  formatTruncatedDecimal,
 } from '../utils';
+
+import { NetWorthIndependenceCard } from './net-worth-independence-card';
 
 type NetWorthIndependenceCardsProps = {
   independence: NetWorthIndependenceHorizonDTO;
@@ -23,8 +22,6 @@ type NetWorthIndependenceCardsProps = {
   baseCurrency?: string;
 };
 
-// TODO simplify this file as we have duplicated code
-// basically colors are the only differences in styling
 export const NetWorthIndependenceCards = ({
   independence,
   zeroIncomeBaseline,
@@ -41,148 +38,100 @@ export const NetWorthIndependenceCards = ({
 
   return (
     <div
-      className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4"
+      className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-4"
       data-testid="net-worth-independence-cards"
     >
       {/* 1. Financial Independence Horizon */}
-      <Card
-        className={clsx(
-          'flex flex-col justify-between gap-3 p-4',
-          'border-emerald-500/30 bg-emerald-500/[0.04]',
-          'dark:border-emerald-500/40 dark:bg-emerald-500/10',
-        )}
-      >
-        <div className="flex items-center justify-between text-text-muted">
-          <span className="text-xs font-semibold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
-            {t('financialIndependence')}
-          </span>
-          <ShieldCheck className="size-5 text-emerald-500" />
-        </div>
-
-        <div>
-          <div className="flex items-baseline gap-1.5">
-            <span className="text-2xl font-black tracking-tight text-foreground sm:text-3xl">
-              {isPerpetual
-                ? '∞'
-                : netWorthMonths !== null
-                  ? formatDecimal(netWorthMonths, language)
-                  : '—'}
-            </span>
-            {!isPerpetual && netWorthMonths !== null && (
-              <span className="text-sm sm:text-base font-normal text-text-muted">
-                {t('monthsUnit', { count: netWorthMonths })}
-              </span>
-            )}
-          </div>
-          <div className="mt-1 text-sm sm:text-base font-medium text-foreground/80">
-            {isPerpetual
-              ? t('perpetualHorizon')
-              : netWorthMonths !== null
-                ? formatHorizonYearsAndMonths(netWorthMonths, t)
-                : '—'}
-          </div>
-          <p className="mt-1.5 text-xs leading-relaxed text-text-muted">
-            {isPerpetual ? t('perpetualSubtitle') : t('financialIndependenceDescription')}
-          </p>
-        </div>
-      </Card>
+      <NetWorthIndependenceCard
+        variant="horizon"
+        title={t('financialIndependence')}
+        value={
+          isPerpetual
+            ? '∞'
+            : netWorthMonths !== null
+              ? formatTruncatedDecimal(netWorthMonths, language)
+              : '—'
+        }
+        unit={
+          !isPerpetual && netWorthMonths !== null
+            ? t('monthsUnit', { count: netWorthMonths })
+            : undefined
+        }
+        secondaryValue={
+          isPerpetual
+            ? t('perpetualHorizon')
+            : netWorthMonths !== null
+              ? formatHorizonYearsAndMonths(netWorthMonths, t)
+              : '—'
+        }
+        description={
+          isPerpetual ? t('perpetualSubtitle') : t('financialIndependenceDescription')
+        }
+      />
 
       {/* 2. Conservative 0-Income Baseline */}
-      <Card className="flex flex-col justify-between gap-3 p-4">
-        <div className="flex items-center justify-between text-text-muted">
-          <span className="text-xs font-semibold uppercase tracking-wider text-sky-600 dark:text-sky-400">
-            {t('zeroIncomeBaseline')}
-          </span>
-          <Activity className="size-5 text-sky-500" />
-        </div>
-
-        <div>
-          <div className="flex items-baseline gap-1.5">
-            <span className="text-2xl font-black tracking-tight text-foreground sm:text-3xl">
-              {zeroIncomeMonths !== null
-                ? formatDecimal(zeroIncomeMonths, language)
-                : '—'}
-            </span>
-            {zeroIncomeMonths !== null && (
-              <span className="text-sm font-normal text-text-muted">
-                {t('monthsUnit', { count: zeroIncomeMonths })}
-              </span>
-            )}
-          </div>
-          <div className="mt-1 text-xs font-medium text-foreground/80">
-            {zeroIncomeMonths !== null
-              ? formatHorizonYearsAndMonths(zeroIncomeMonths, t)
-              : '—'}
-          </div>
-          <p className="mt-1.5 text-xs leading-relaxed text-text-muted">
-            {t('zeroIncomeBaselineDescription')}
-          </p>
-        </div>
-      </Card>
+      <NetWorthIndependenceCard
+        variant="zeroIncome"
+        title={t('zeroIncomeBaseline')}
+        value={
+          zeroIncomeMonths !== null
+            ? formatTruncatedDecimal(zeroIncomeMonths, language)
+            : '—'
+        }
+        unit={
+          zeroIncomeMonths !== null
+            ? t('monthsUnit', { count: zeroIncomeMonths })
+            : undefined
+        }
+        secondaryValue={
+          zeroIncomeMonths !== null
+            ? formatHorizonYearsAndMonths(zeroIncomeMonths, t)
+            : '—'
+        }
+        description={t('zeroIncomeBaselineDescription')}
+      />
 
       {/* 3. Liquid Safety Buffer */}
-      <Card className="flex flex-col justify-between gap-3 p-4">
-        <div className="flex items-center justify-between text-text-muted">
-          <span className="text-xs font-semibold uppercase tracking-wider text-teal-600 dark:text-teal-400">
-            {t('liquidSafetyBuffer')}
-          </span>
-          <Umbrella className="size-5 text-teal-500" />
-        </div>
-
-        <div>
-          <div className="flex items-baseline gap-1.5">
-            <span className="text-2xl font-black tracking-tight text-foreground sm:text-3xl">
-              {isPerpetual
-                ? '∞'
-                : liquidCapitalMonths !== null
-                  ? formatDecimal(liquidCapitalMonths, language)
-                  : '—'}
-            </span>
-            {!isPerpetual && liquidCapitalMonths !== null && (
-              <span className="text-sm font-normal text-text-muted">
-                {t('monthsUnit', { count: liquidCapitalMonths })}
-              </span>
-            )}
-          </div>
-          <div className="mt-1 text-xs font-medium text-foreground/80">
-            {isPerpetual
-              ? t('perpetualHorizon')
-              : liquidCapitalMonths !== null
-                ? formatHorizonYearsAndMonths(liquidCapitalMonths, t)
-                : '—'}
-          </div>
-          <p className="mt-1.5 text-xs leading-relaxed text-text-muted">
-            {isPerpetual ? t('perpetualSubtitle') : t('liquidSafetyBufferDescription')}
-          </p>
-        </div>
-      </Card>
+      <NetWorthIndependenceCard
+        variant="liquidBuffer"
+        title={t('liquidSafetyBuffer')}
+        value={
+          isPerpetual
+            ? '∞'
+            : liquidCapitalMonths !== null
+              ? formatTruncatedDecimal(liquidCapitalMonths, language)
+              : '—'
+        }
+        unit={
+          !isPerpetual && liquidCapitalMonths !== null
+            ? t('monthsUnit', { count: liquidCapitalMonths })
+            : undefined
+        }
+        secondaryValue={
+          isPerpetual
+            ? t('perpetualHorizon')
+            : liquidCapitalMonths !== null
+              ? formatHorizonYearsAndMonths(liquidCapitalMonths, t)
+              : '—'
+        }
+        description={
+          isPerpetual ? t('perpetualSubtitle') : t('liquidSafetyBufferDescription')
+        }
+      />
 
       {/* 4. Net Burn Rate */}
-      <Card className="flex flex-col justify-between gap-3 p-4">
-        <div className="flex items-center justify-between text-text-muted">
-          <span className="text-xs font-semibold uppercase tracking-wider text-amber-600 dark:text-amber-400">
-            {t('netBurnRate')}
-          </span>
-          <Flame className="size-5 text-amber-500" />
-        </div>
-
-        <div>
-          <div className="text-xl font-bold tracking-tight text-foreground sm:text-2xl">
-            {formatCurrencyAmount(monthlyAverages.netBurnRate, baseCurrency, language)}
-            <span className="text-sm sm:text-base font-normal text-text-muted">
-              {' '}
-              / {t('perMonth')}
-            </span>
-          </div>
-          <div className="mt-1 text-xs font-medium text-foreground/80">
-            {t('grossExpenses')}:{' '}
-            {formatCurrencyAmount(monthlyAverages.grossExpenses, baseCurrency, language)}
-          </div>
-          <p className="mt-1.5 text-xs leading-relaxed text-text-muted">
-            {t('netBurnRateDescription')}
-          </p>
-        </div>
-      </Card>
+      <NetWorthIndependenceCard
+        variant="burnRate"
+        title={t('netBurnRate')}
+        value={formatCurrencyAmount(monthlyAverages.netBurnRate, baseCurrency, language)}
+        unit={`/ ${t('perMonth')}`}
+        secondaryValue={`${t('grossExpenses')}: ${formatCurrencyAmount(
+          monthlyAverages.grossExpenses,
+          baseCurrency,
+          language,
+        )}`}
+        description={t('netBurnRateDescription')}
+      />
     </div>
   );
 };

@@ -93,7 +93,7 @@ export const FinancialIndependencePage = () => {
               </div>
             </div>
 
-            <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-3">
               {/* Primary Metric Cards */}
               <NetWorthIndependenceCards
                 independence={independence}

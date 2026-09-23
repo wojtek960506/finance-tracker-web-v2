@@ -38,7 +38,7 @@ export const NetWorthIndependenceBreakdown = ({
 
   return (
     <div
-      className="grid grid-cols-1 gap-4 lg:grid-cols-2"
+      className="grid grid-cols-1 gap-3 lg:grid-cols-2"
       data-testid="net-worth-independence-breakdown"
     >
       {/* 1. Monthly Cashflow Dynamics */}
@@ -54,7 +54,7 @@ export const NetWorthIndependenceBreakdown = ({
               <ArrowDownRight className="size-4" />
               <span className="text-text-muted">{t('grossExpenses')}</span>
             </div>
-            <span className="font-semibold text-foreground">
+            <span className="font-semibold text-rose-600 dark:text-rose-400">
               {formatCurrencyAmount(
                 monthlyAverages.grossExpenses,
                 baseCurrency,
@@ -118,7 +118,7 @@ export const NetWorthIndependenceBreakdown = ({
         <div className="flex flex-col gap-3">
           {/* Bank Cash */}
           <div className="flex items-center justify-between border-b border-border/40 pb-2 text-sm">
-            <div className="flex items-center gap-2 text-emerald-500">
+            <div className="flex items-center gap-2 text-amber-500">
               <Landmark className="size-4" />
               <span className="text-text-muted">{t('bankCashOnly')}</span>
             </div>
@@ -162,11 +162,11 @@ export const NetWorthIndependenceBreakdown = ({
 
           {/* Total Net Worth */}
           <div className="flex items-center justify-between pt-0.5 text-sm">
-            <div className="flex items-center gap-2 text-primary">
+            <div className="flex items-center gap-2 text-emerald-500">
               <Wallet className="size-4" />
               <span className="font-semibold text-foreground">{t('totalNetWorth')}</span>
             </div>
-            <span className="text-base font-bold text-foreground">
+            <span className="text-base font-bold text-emerald-600 dark:text-emerald-400">
               {formatCurrencyAmount(netWorth.total, baseCurrency, language)}
             </span>
           </div>

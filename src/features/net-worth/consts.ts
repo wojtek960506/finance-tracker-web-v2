@@ -1,10 +1,14 @@
 import {
+  Activity,
   Coins,
+  Flame,
   Landmark,
   Layers,
   Lock,
   PiggyBank,
+  ShieldCheck,
   TrendingUp,
+  Umbrella,
   Wallet,
 } from 'lucide-react';
 import type { ElementType } from 'react';
@@ -95,3 +99,50 @@ export const NET_WORTH_SUMMARY_CARD_STYLES: Record<SummaryCardVariant, SummaryCa
       percentageClass: 'text-sky-600 dark:text-sky-400',
     },
   };
+
+export type IndependenceCardVariant =
+  | 'horizon'
+  | 'zeroIncome'
+  | 'liquidBuffer'
+  | 'burnRate';
+
+export type IndependenceCardStyle = {
+  icon: ElementType;
+  iconClass: string;
+  titleClass: string;
+  cardClass?: string;
+  valueClass?: string;
+  unitClass?: string;
+  secondaryValueClass?: string;
+};
+
+export const NET_WORTH_INDEPENDENCE_CARD_STYLES: Record<
+  IndependenceCardVariant,
+  IndependenceCardStyle
+> = {
+  horizon: {
+    icon: ShieldCheck,
+    iconClass: 'text-emerald-500',
+    titleClass: 'text-emerald-600 dark:text-emerald-400',
+    cardClass:
+      'border-emerald-500/30 bg-emerald-500/[0.04] dark:border-emerald-500/40 dark:bg-emerald-500/10',
+  },
+  zeroIncome: {
+    icon: Activity,
+    iconClass: 'text-rose-500',
+    titleClass: 'text-rose-600 dark:text-rose-400',
+  },
+  liquidBuffer: {
+    icon: Umbrella,
+    iconClass: 'text-sky-500',
+    titleClass: 'text-sky-600 dark:text-sky-400',
+  },
+  burnRate: {
+    icon: Flame,
+    iconClass: 'text-amber-500',
+    titleClass: 'text-amber-600 dark:text-amber-400',
+    valueClass: 'text-xl font-bold tracking-tight text-foreground sm:text-2xl',
+    unitClass: 'text-xs font-normal text-text-muted sm:text-sm',
+    secondaryValueClass: 'text-xs font-medium text-foreground/80 sm:text-sm',
+  },
+};
