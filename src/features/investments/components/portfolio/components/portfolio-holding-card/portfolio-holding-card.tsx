@@ -39,7 +39,8 @@ export const PortfolioHoldingCard = ({ instrument }: PortfolioHoldingCardProps) 
       key={instrument.id}
       testId="portfolio-holding-card"
       className={clsx(
-        'group cursor-pointer transition-colors',
+        'group row-span-3 grid w-full grid-cols-1 grid-rows-subgrid',
+        'cursor-pointer gap-2.5 transition-colors',
         isClosed
           ? 'opacity-80 hover:opacity-100 hover:border-fg/30'
           : clsx(
@@ -50,68 +51,65 @@ export const PortfolioHoldingCard = ({ instrument }: PortfolioHoldingCardProps) 
       )}
       onClick={() => navigate(`/investments/instruments/${instrument.id}`)}
     >
-      <div className="flex flex-col gap-3">
-        {/* Header: Name and Badges */}
-        <div className="flex items-start justify-between gap-2">
-          <div className="flex min-w-0 flex-1 flex-col gap-1">
-            <h3
+      {/* Row 1: Title and Chevron */}
+      <div className="flex w-full items-start justify-between gap-2">
+        <h3
+          className={clsx(
+            'text-base font-semibold tracking-tight text-foreground',
+            'break-words [overflow-wrap:anywhere]',
+          )}
+        >
+          <Link
+            to={`/investments/instruments/${instrument.id}`}
+            className="transition-colors group-hover:text-primary"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {instrument.name}
+          </Link>
+        </h3>
+
+        <ChevronRight
+          className={clsx(
+            'size-5 shrink-0 text-text-muted transition-transform',
+            'group-hover:translate-x-0.5 group-hover:text-foreground',
+          )}
+        />
+      </div>
+
+      {/* Row 2: Badges */}
+      <div className="flex w-full flex-wrap items-center gap-1.5">
+        <InstrumentStatusBadge isClosed={isClosed} />
+        <InstrumentKindBadge kind={instrument.kind} />
+      </div>
+
+      {/* Row 3: Metrics Grid */}
+      <div className="grid w-full grid-cols-2 gap-2 border-t border-fg/10 pt-2 text-xs">
+        <div className="col-span-2 flex items-center justify-between">
+          <span className="text-text-muted">{t('portfolio.result')}</span>
+          <div className="flex items-center gap-1 text-right">
+            {isPositive ? (
+              <ArrowUpRight className="size-3.5 text-emerald-500" />
+            ) : (
+              <ArrowDownRight className="size-3.5 text-rose-500" />
+            )}
+            <span
               className={clsx(
-                'text-base font-semibold tracking-tight text-foreground',
-                'break-words [overflow-wrap:anywhere]',
+                'font-bold',
+                isPositive
+                  ? 'text-emerald-600 dark:text-emerald-400'
+                  : 'text-rose-600 dark:text-rose-400',
               )}
             >
-              <Link
-                to={`/investments/instruments/${instrument.id}`}
-                className="transition-colors group-hover:text-primary"
-                onClick={(e) => e.stopPropagation()}
-              >
-                {instrument.name}
-              </Link>
-            </h3>
-
-            <div className="flex flex-wrap items-center gap-1.5">
-              <InstrumentStatusBadge isClosed={isClosed} />
-              <InstrumentKindBadge kind={instrument.kind} />
-            </div>
+              {formattedPnL} ({isPositive ? '+' : ''}
+              {instrument.roiPercentage.toFixed(2)}%)
+            </span>
           </div>
-
-          <ChevronRight
-            className={clsx(
-              'size-5 text-text-muted transition-transform',
-              'group-hover:translate-x-0.5 group-hover:text-foreground',
-            )}
-          />
         </div>
 
-        {/* Metrics Grid */}
-        <div className="grid grid-cols-2 gap-2 border-t border-fg/10 pt-2 text-xs">
-          <div className="col-span-2 flex items-center justify-between border-t border-fg/5 pt-1.5">
-            <span className="text-text-muted">{t('portfolio.result')}</span>
-            <div className="flex items-center gap-1 text-right">
-              {isPositive ? (
-                <ArrowUpRight className="size-3.5 text-emerald-500" />
-              ) : (
-                <ArrowDownRight className="size-3.5 text-rose-500" />
-              )}
-              <span
-                className={clsx(
-                  'font-bold',
-                  isPositive
-                    ? 'text-emerald-600 dark:text-emerald-400'
-                    : 'text-rose-600 dark:text-rose-400',
-                )}
-              >
-                {formattedPnL} ({isPositive ? '+' : ''}
-                {instrument.roiPercentage.toFixed(2)}%)
-              </span>
-            </div>
-          </div>
-
-          <span className="text-text-muted">{t('portfolio.invested')}</span>
-          <p className="text-right text-sm font-semibold text-text-muted">
-            {formattedInvested}
-          </p>
-        </div>
+        <span className="text-text-muted">{t('portfolio.invested')}</span>
+        <p className="text-right text-sm font-semibold text-text-muted">
+          {formattedInvested}
+        </p>
       </div>
     </InvestmentCard>
   );
