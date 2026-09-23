@@ -13,11 +13,17 @@ export const NewTransactionButton = () => {
   return (
     <Button
       variant="primary"
-      className={clsx(FORM_BUTTON_SIZE_CLASS, 'gap-2 font-semibold sm:font-bold')}
+      className={clsx(
+        FORM_BUTTON_SIZE_CLASS,
+        'col-span-3 gap-2 font-semibold sm:col-span-1 sm:font-bold',
+      )}
       aria-label={t('newTransaction')}
       onClick={handleNavigateToNewTransaction}
     >
       <Plus className="size-4 sm:size-5" aria-hidden="true" />
+      <span aria-hidden="true" className="sm:hidden">
+        {t('newTransaction')}
+      </span>
       <span aria-hidden="true" className="hidden sm:inline">
         {t('newButtonShort')}
       </span>
