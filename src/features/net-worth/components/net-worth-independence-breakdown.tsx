@@ -129,7 +129,7 @@ export const NetWorthIndependenceBreakdown = ({
 
           {/* Savings */}
           <div className="flex items-center justify-between border-b border-border/40 pb-2 text-sm">
-            <div className="flex items-center gap-2 text-teal-500">
+            <div className="flex items-center gap-2 text-pink-600">
               <PiggyBank className="size-4" />
               <span className="text-text-muted">{t('categories.savings')}</span>
             </div>
@@ -150,13 +150,24 @@ export const NetWorthIndependenceBreakdown = ({
           </div>
 
           {/* Locked Investments */}
-          <div className="flex items-center justify-between text-sm">
+          <div className="flex items-center justify-between border-b border-border/40 pb-2 text-sm">
             <div className="flex items-center gap-2 text-indigo-500">
               <Layers className="size-4" />
               <span className="text-text-muted">{t('lockedInvestments')}</span>
             </div>
-            <span className="font-medium text-foreground">
+            <span className="font-semibold text-foreground">
               {formatCurrencyAmount(netWorth.lockedInvestments, baseCurrency, language)}
+            </span>
+          </div>
+
+          {/* Total Net Worth */}
+          <div className="flex items-center justify-between pt-0.5 text-sm">
+            <div className="flex items-center gap-2 text-primary">
+              <Wallet className="size-4" />
+              <span className="font-semibold text-foreground">{t('totalNetWorth')}</span>
+            </div>
+            <span className="text-base font-bold text-foreground">
+              {formatCurrencyAmount(netWorth.total, baseCurrency, language)}
             </span>
           </div>
         </div>

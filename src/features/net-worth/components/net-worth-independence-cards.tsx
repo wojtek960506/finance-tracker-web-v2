@@ -36,8 +36,8 @@ export const NetWorthIndependenceCards = ({
 
   const isPerpetual = independence.isPerpetual;
   const netWorthMonths = independence.netWorthMonths;
-  const liquidCapitalMonths = independence.liquidCapitalMonths;
   const zeroIncomeMonths = zeroIncomeBaseline.netWorthMonths;
+  const liquidCapitalMonths = independence.liquidCapitalMonths;
 
   return (
     <div
@@ -60,31 +60,67 @@ export const NetWorthIndependenceCards = ({
         </div>
 
         <div>
-          <div className="flex items-baseline gap-2">
+          <div className="flex items-baseline gap-1.5">
             <span className="text-2xl font-black tracking-tight text-foreground sm:text-3xl">
               {isPerpetual
                 ? '∞'
                 : netWorthMonths !== null
-                  ? `${formatDecimal(netWorthMonths, language)}`
+                  ? formatDecimal(netWorthMonths, language)
                   : '—'}
             </span>
             {!isPerpetual && netWorthMonths !== null && (
-              <span className="text-sm font-medium text-text-muted">
-                {t('monthsUnitShort')}
+              <span className="text-sm sm:text-base font-normal text-text-muted">
+                {t('monthsUnit', { count: netWorthMonths })}
               </span>
             )}
           </div>
-          <p className="mt-1 text-xs text-text-muted">
+          <div className="mt-1 text-sm sm:text-base font-medium text-foreground/80">
             {isPerpetual
-              ? t('perpetualSubtitle')
+              ? t('perpetualHorizon')
               : netWorthMonths !== null
                 ? formatHorizonYearsAndMonths(netWorthMonths, t)
-                : t('financialIndependenceDescription')}
+                : '—'}
+          </div>
+          <p className="mt-1.5 text-xs leading-relaxed text-text-muted">
+            {isPerpetual ? t('perpetualSubtitle') : t('financialIndependenceDescription')}
           </p>
         </div>
       </Card>
 
-      {/* 2. Liquid Safety Buffer */}
+      {/* 2. Conservative 0-Income Baseline */}
+      <Card className="flex flex-col justify-between gap-3 p-4">
+        <div className="flex items-center justify-between text-text-muted">
+          <span className="text-xs font-semibold uppercase tracking-wider text-sky-600 dark:text-sky-400">
+            {t('zeroIncomeBaseline')}
+          </span>
+          <Activity className="size-5 text-sky-500" />
+        </div>
+
+        <div>
+          <div className="flex items-baseline gap-1.5">
+            <span className="text-2xl font-black tracking-tight text-foreground sm:text-3xl">
+              {zeroIncomeMonths !== null
+                ? formatDecimal(zeroIncomeMonths, language)
+                : '—'}
+            </span>
+            {zeroIncomeMonths !== null && (
+              <span className="text-sm font-normal text-text-muted">
+                {t('monthsUnit', { count: zeroIncomeMonths })}
+              </span>
+            )}
+          </div>
+          <div className="mt-1 text-xs font-medium text-foreground/80">
+            {zeroIncomeMonths !== null
+              ? formatHorizonYearsAndMonths(zeroIncomeMonths, t)
+              : '—'}
+          </div>
+          <p className="mt-1.5 text-xs leading-relaxed text-text-muted">
+            {t('zeroIncomeBaselineDescription')}
+          </p>
+        </div>
+      </Card>
+
+      {/* 3. Liquid Safety Buffer */}
       <Card className="flex flex-col justify-between gap-3 p-4">
         <div className="flex items-center justify-between text-text-muted">
           <span className="text-xs font-semibold uppercase tracking-wider text-teal-600 dark:text-teal-400">
@@ -94,31 +130,34 @@ export const NetWorthIndependenceCards = ({
         </div>
 
         <div>
-          <div className="flex items-baseline gap-2">
+          <div className="flex items-baseline gap-1.5">
             <span className="text-2xl font-black tracking-tight text-foreground sm:text-3xl">
               {isPerpetual
                 ? '∞'
                 : liquidCapitalMonths !== null
-                  ? `${formatDecimal(liquidCapitalMonths, language)}`
+                  ? formatDecimal(liquidCapitalMonths, language)
                   : '—'}
             </span>
             {!isPerpetual && liquidCapitalMonths !== null && (
-              <span className="text-sm font-medium text-text-muted">
-                {t('monthsUnitShort')}
+              <span className="text-sm font-normal text-text-muted">
+                {t('monthsUnit', { count: liquidCapitalMonths })}
               </span>
             )}
           </div>
-          <p className="mt-1 text-xs text-text-muted">
+          <div className="mt-1 text-xs font-medium text-foreground/80">
             {isPerpetual
-              ? t('perpetualSubtitle')
+              ? t('perpetualHorizon')
               : liquidCapitalMonths !== null
                 ? formatHorizonYearsAndMonths(liquidCapitalMonths, t)
-                : t('liquidSafetyBufferDescription')}
+                : '—'}
+          </div>
+          <p className="mt-1.5 text-xs leading-relaxed text-text-muted">
+            {isPerpetual ? t('perpetualSubtitle') : t('liquidSafetyBufferDescription')}
           </p>
         </div>
       </Card>
 
-      {/* 3. Net Burn Rate */}
+      {/* 4. Net Burn Rate */}
       <Card className="flex flex-col justify-between gap-3 p-4">
         <div className="flex items-center justify-between text-text-muted">
           <span className="text-xs font-semibold uppercase tracking-wider text-amber-600 dark:text-amber-400">
@@ -130,44 +169,17 @@ export const NetWorthIndependenceCards = ({
         <div>
           <div className="text-xl font-bold tracking-tight text-foreground sm:text-2xl">
             {formatCurrencyAmount(monthlyAverages.netBurnRate, baseCurrency, language)}
-            <span className="text-xs font-normal text-text-muted">
+            <span className="text-sm sm:text-base font-normal text-text-muted">
               {' '}
-              / {t('monthsUnitShort')}
+              / {t('perMonth')}
             </span>
           </div>
-          <p className="mt-1 text-xs text-text-muted">
+          <div className="mt-1 text-xs font-medium text-foreground/80">
             {t('grossExpenses')}:{' '}
             {formatCurrencyAmount(monthlyAverages.grossExpenses, baseCurrency, language)}
-          </p>
-        </div>
-      </Card>
-
-      {/* 4. Conservative 0-Income Baseline */}
-      <Card className="flex flex-col justify-between gap-3 p-4">
-        <div className="flex items-center justify-between text-text-muted">
-          <span className="text-xs font-semibold uppercase tracking-wider text-sky-600 dark:text-sky-400">
-            {t('zeroIncomeBaseline')}
-          </span>
-          <Activity className="size-5 text-sky-500" />
-        </div>
-
-        <div>
-          <div className="flex items-baseline gap-2">
-            <span className="text-2xl font-black tracking-tight text-foreground sm:text-3xl">
-              {zeroIncomeMonths !== null
-                ? `${formatDecimal(zeroIncomeMonths, language)}`
-                : '—'}
-            </span>
-            {zeroIncomeMonths !== null && (
-              <span className="text-sm font-medium text-text-muted">
-                {t('monthsUnitShort')}
-              </span>
-            )}
           </div>
-          <p className="mt-1 text-xs text-text-muted">
-            {zeroIncomeMonths !== null
-              ? formatHorizonYearsAndMonths(zeroIncomeMonths, t)
-              : t('zeroIncomeBaselineDescription')}
+          <p className="mt-1.5 text-xs leading-relaxed text-text-muted">
+            {t('netBurnRateDescription')}
           </p>
         </div>
       </Card>

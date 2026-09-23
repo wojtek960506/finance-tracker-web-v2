@@ -24,11 +24,14 @@ export const formatHorizonYearsAndMonths = (
   const years = Math.floor(roundedMonths / 12);
   const remMonths = roundedMonths % 12;
 
-  if (years > 0 && remMonths > 0) {
-    return t('horizonYearsAndMonths', { years, months: remMonths });
+  const yearsStr = years > 0 ? t('years', { count: years }) : '';
+  const monthsStr = remMonths > 0 ? t('months', { count: remMonths }) : '';
+
+  if (yearsStr && monthsStr) {
+    return `${yearsStr} ${monthsStr}`;
   }
-  if (years > 0) {
-    return t('horizonYearsOnly', { years });
+  if (yearsStr) {
+    return yearsStr;
   }
-  return t('horizonMonthsOnly', { months: roundedMonths });
+  return t('months', { count: roundedMonths });
 };
