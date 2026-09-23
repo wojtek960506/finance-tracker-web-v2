@@ -1,1 +1,1 @@
-export const NAMED_RESOURCES_PAGE_WIDTH_CLASS_NAME = 'max-w-100';
+export const NAMED_RESOURCES_PAGE_WIDTH_CLASS_NAME = 'max-w-[35rem]';
