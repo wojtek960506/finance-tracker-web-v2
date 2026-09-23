@@ -26,20 +26,16 @@ export const Topbar = ({
               'border-[#d9e5b8]/70 bg-white/55 backdrop-blur-xl shadow-[0_8px_30px_-18px_rgba(111,146,40,0.45)]',
               'dark:border-[#243118]/70 dark:bg-[#0d1306]/55 dark:shadow-[0_8px_30px_-18px_rgba(0,0,0,0.65)]',
             ].join(' '),
-        'grid grid-cols-[1fr_auto_1fr] items-center',
+        'flex items-center justify-between sm:grid sm:grid-cols-[1fr_auto_1fr]',
         'min-h-[var(--topbar-h)] sm:min-h-[var(--topbar-h-sm)]',
       )}
     >
       <div className="flex items-center justify-self-start">
         <NavButton ref={navButtonRef} />
-        <div className={clsx(isAuthenticated ? 'hidden md:flex' : 'flex')}>
-          <BrandLink logoClassName="h-7 sm:h-8" />
-        </div>
+        <BrandLink logoClassName="h-7 sm:h-8" />
       </div>
       <Title />
-      <div
-        className={clsx('justify-self-end', isAuthenticated ? 'hidden md:flex' : 'flex')}
-      >
+      <div className="flex items-center justify-self-end">
         <LanguageSwitcher />
         <ThemeButton />
       </div>

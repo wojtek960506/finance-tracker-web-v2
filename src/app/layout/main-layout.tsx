@@ -7,9 +7,6 @@ import { NavigationProvider } from '@context/navigation-context';
 import { useUIStore } from '@store/ui-store';
 import { Drawer, Toaster } from '@ui';
 
-import { BrandLink } from './topbar/brand-link';
-import { LanguageSwitcher } from './topbar/language-switcher';
-import { ThemeButton } from './topbar/theme-button';
 import { Topbar } from './topbar';
 
 import { getMe } from '@/features/auth/api';
@@ -41,13 +38,6 @@ export const MainLayout = ({ children }: { children: ReactNode }) => {
           isOpen={isNavOpen}
           fromLeft={isDrawerFromLeft}
           onClose={() => setIsNavOpen(false)}
-          headerLeft={
-            <div className="flex items-center md:hidden">
-              <BrandLink logoClassName="h-8" />
-              <LanguageSwitcher dropdownAlign="left" />
-              <ThemeButton />
-            </div>
-          }
           restoreFocusRef={navButtonRef}
           ariaLabel="Navigation menu"
           // Keep the nav drawer horizontally scrollable below its intended content width
