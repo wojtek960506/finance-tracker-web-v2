@@ -8,6 +8,7 @@ export type ButtonVariant =
   | 'primary'
   | 'secondary'
   | 'destructive'
+  | 'warning'
   | 'ghost'
   | 'outline';
 
@@ -39,6 +40,13 @@ export const getButtonClassName = ({
         'bg-bt-secondary text-bt-secondary-subtle border-bt-secondary-border',
         'hover:bg-bt-secondary-hover active:bg-bt-secondary-active',
         'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bt-secondary-ring',
+      );
+      break;
+    case 'warning':
+      variantClassName = clsx(
+        'bg-warning text-warning-foreground border-warning-border',
+        'hover:bg-warning-hover active:bg-warning-active',
+        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-warning-ring',
       );
       break;
     case 'ghost':
