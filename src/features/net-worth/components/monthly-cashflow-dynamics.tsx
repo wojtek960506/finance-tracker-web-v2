@@ -63,12 +63,11 @@ export const MonthlyCashflowDynamics = ({
           label={t('workIncomeExcluded')}
           value={formatCurrencyAmount(monthlyAverages.workIncome, baseCurrency, language)}
           valueClass="font-medium text-text-muted"
-          hasBorder={false}
         />
       </div>
 
       {excludedCategories.length > 0 && (
-        <div className="mt-2 flex flex-wrap items-center gap-1.5 pt-2">
+        <div className="border-t border-t-fg flex flex-wrap items-center gap-1.5 pt-1.5 mt-1">
           <span className="text-xs text-text-muted">{t('excludedCategoriesLabel')}:</span>
           {excludedCategories.map((cat) => (
             <span

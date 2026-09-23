@@ -56,8 +56,8 @@ export const FinancialIndependencePage = () => {
         zeroIncomeBaseline && (
           <>
             {/* Header & Controls */}
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-              <div>
+            <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+              <div className="self-start">
                 <h1 className="text-xl font-bold tracking-tight text-foreground sm:text-2xl">
                   {t('independenceSectionTitle')}
                 </h1>
@@ -67,7 +67,7 @@ export const FinancialIndependencePage = () => {
               </div>
 
               {/* Period Selector Toggle */}
-              <div className="flex items-center gap-1.5 self-start rounded-lg border border-border/60 bg-muted/30 p-1 sm:self-auto">
+              <div className="flex items-center gap-1.5 self-end rounded-lg border border-border/60 bg-muted/30 p-1  shrink-0">
                 <span className="px-2 text-xs font-medium text-text-muted">
                   {t('periodSelectorLabel')}:
                 </span>

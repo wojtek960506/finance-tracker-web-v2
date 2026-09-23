@@ -61,7 +61,6 @@ export const CapitalStructure = ({ netWorth, baseCurrency }: CapitalStructurePro
           labelClass="font-semibold text-foreground"
           value={formatCurrencyAmount(netWorth.total, baseCurrency, language)}
           valueClass="text-base font-bold text-emerald-600 dark:text-emerald-400"
-          hasBorder={false}
         />
       </div>
     </Card>
