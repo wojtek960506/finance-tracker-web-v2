@@ -11,7 +11,7 @@ export const InvestmentsLayout = ({ children }: InvestmentsLayoutProps) => {
   return (
     <div
       className={clsx(
-        'mx-auto flex h-full min-h-0 w-full max-w-6xl',
+        'mx-auto flex h-full min-h-0 w-full max-w-[120rem]',
         'flex-col gap-4 overflow-hidden',
       )}
     >
