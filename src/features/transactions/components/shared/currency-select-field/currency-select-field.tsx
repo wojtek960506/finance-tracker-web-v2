@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+import clsx from 'clsx';
 
 import { getCurrencies } from '@features/currencies/api';
 
@@ -23,6 +24,7 @@ type CurrencySelectFieldProps = {
   searchPlaceholder: string;
   emptyMessage: string;
   showClear?: boolean;
+  className?: string;
 };
 
 export const CurrencySelectField = ({
@@ -32,6 +34,7 @@ export const CurrencySelectField = ({
   searchPlaceholder,
   emptyMessage,
   showClear = true,
+  className,
 }: CurrencySelectFieldProps) => {
   const { data = [], isLoading } = useQuery({
     queryKey: ['currencies'],
@@ -51,7 +54,7 @@ export const CurrencySelectField = ({
       onValueChange={(currency) => onChange(currency?.code ?? '')}
     >
       <ComboboxInput
-        className="w-full"
+        className={clsx('w-full', className)}
         placeholder={isLoading ? 'Loading...' : searchPlaceholder || placeholder}
         disabled={isLoading}
         showClear={showClear}

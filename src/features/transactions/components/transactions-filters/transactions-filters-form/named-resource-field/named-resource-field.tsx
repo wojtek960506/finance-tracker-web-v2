@@ -57,6 +57,17 @@ export const NamedResourceFilterField = ({
     control: form.control,
     name: fieldNames.mode,
   });
+  const included = useWatch({
+    control: form.control,
+    name: fieldNames.include,
+  });
+  const excluded = useWatch({
+    control: form.control,
+    name: fieldNames.exclude,
+  });
+  const activeCount =
+    filterMode === 'include' ? (included?.length ?? 0) : (excluded?.length ?? 0);
+  const isActive = activeCount > 0;
   const collator = useMemo(
     () =>
       new Intl.Collator(i18n.language, {
@@ -163,7 +174,11 @@ export const NamedResourceFilterField = ({
   return (
     <FilterFieldLabel
       title={t(resourceKeyBase)}
-      className="gap-2 rounded-2xl border border-fg/15 bg-bg/60 p-3"
+      isActive={isActive}
+      className={clsx(
+        'gap-2 rounded-2xl border bg-bg/60 p-3',
+        isActive ? 'border-bt-primary/60 ring-1 ring-bt-primary/30' : 'border-fg/15',
+      )}
     >
       <Controller
         control={form.control}

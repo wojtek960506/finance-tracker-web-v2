@@ -1,11 +1,14 @@
 import clsx from 'clsx';
 import type { ReactNode } from 'react';
 
+import { ActiveFilterIndicator } from '../active-filter-indicator';
+
 type FilterFieldLabelProps = {
   title: ReactNode;
   children: ReactNode;
   className?: string;
   titleClassName?: string;
+  isActive?: boolean;
 };
 
 export const FilterFieldLabel = ({
@@ -13,6 +16,7 @@ export const FilterFieldLabel = ({
   children,
   className,
   titleClassName = 'font-semibold',
+  isActive = false,
 }: FilterFieldLabelProps) => {
   return (
     <div
@@ -21,7 +25,12 @@ export const FilterFieldLabel = ({
         className,
       )}
     >
-      <span className={titleClassName}>{title}</span>
+      <div className="flex items-center gap-1.5">
+        <span className={clsx(titleClassName, isActive && 'text-foreground font-bold')}>
+          {title}
+        </span>
+        {isActive && <ActiveFilterIndicator />}
+      </div>
       {children}
     </div>
   );

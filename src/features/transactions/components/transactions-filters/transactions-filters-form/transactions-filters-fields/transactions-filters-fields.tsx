@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import { Collapsible } from '@shared/ui';
 
+import { ActiveFilterIndicator } from '../active-filter-indicator';
 import { AmountRangeFields } from '../amount-range-fields';
 import { CurrencyField } from '../currency-field';
 import { DateRangeFields } from '../date-range-fields';
@@ -61,7 +62,10 @@ export const TransactionsFiltersFields = () => {
       <CurrencyField />
       <Collapsible
         header={
-          <span className="text-base font-medium sm:text-lg">{t('advancedFields')}</span>
+          <span className="flex items-center gap-1.5 text-base font-medium sm:text-lg">
+            <span>{t('advancedFields')}</span>
+            {shouldOpenAdvancedFields && <ActiveFilterIndicator />}
+          </span>
         }
         indicatorPosition="left"
         isInitiallyOpen={shouldOpenAdvancedFields}
