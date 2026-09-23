@@ -20,6 +20,8 @@
     "totalFees": "Łączne prowizje",
     "holdingsTitle": "Struktura aktywów",
     "holdingsDescription": "Zestawienie poszczególnych aktywów inwestycyjnych oraz ich ostatnich wyników.",
+    "result": "Wynik",
+    "invested": "Zainwestowano",
     "emptyTitle": "Brak aktywów w portfelu",
     "emptyDescription": "Dodaj instrumenty inwestycyjne i zarejestruj wyceny lub transakcje, aby zobaczyć podsumowanie portfela.",
     "loadingTitle": "Ładowanie podsumowania portfela",

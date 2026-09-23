@@ -20,6 +20,8 @@
     "totalFees": "Total Fees",
     "holdingsTitle": "Holdings Breakdown",
     "holdingsDescription": "Summary of individual investment assets and their latest recorded performance.",
+    "result": "Result",
+    "invested": "Invested",
     "emptyTitle": "No investment holdings yet",
     "emptyDescription": "Add investment instruments and record balance snapshots or transactions to see your portfolio summary.",
     "loadingTitle": "Loading portfolio summary",

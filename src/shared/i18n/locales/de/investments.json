@@ -20,6 +20,8 @@
     "totalFees": "Gesamtgebühren",
     "holdingsTitle": "Bestandsübersicht",
     "holdingsDescription": "Übersicht einzelner Anlageinstrumente und deren aktueller Performance.",
+    "result": "Ergebnis",
+    "invested": "Investiert",
     "emptyTitle": "Noch keine Anlagen vorhanden",
     "emptyDescription": "Fügen Sie Anlageinstrumente hinzu und erfassen Sie Bewertungen oder Transaktionen, um die Portfolioübersicht zu sehen.",
     "loadingTitle": "Portfolio-Zusammenfassung wird geladen",
