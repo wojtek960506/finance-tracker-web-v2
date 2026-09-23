@@ -17,7 +17,7 @@ export const DateRangeField = ({ name }: { name: 'startDate' | 'endDate' }) => {
       <Controller
         control={form.control}
         name={name}
-        render={({ field }) => <DateInput {...field} />}
+        render={({ field }) => <DateInput {...field} isClearable />}
       />
       <FieldError
         message={
