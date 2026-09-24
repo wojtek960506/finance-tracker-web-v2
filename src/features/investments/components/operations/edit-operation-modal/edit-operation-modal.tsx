@@ -74,7 +74,7 @@ export const EditOperationModal = ({
       amount: Number(values.amount),
       currency: values.currency,
       date: values.date,
-      note: values.note ? values.note.trim() : undefined,
+      note: values.note ? values.note.trim() : '',
     };
 
     await updateMutation.mutateAsync(payload);

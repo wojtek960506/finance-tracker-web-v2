@@ -61,7 +61,7 @@ export const OperationCard = ({
       <h3
         className={clsx(
           'text-sm font-semibold tracking-tight text-foreground sm:text-base',
-          'break-words [overflow-wrap:anywhere]',
+          'break-words [overflow-wrap:anywhere] pt-0 sm:pt-0.5',
         )}
       >
         {instrument?.name ?? t('unknownInstrument')}

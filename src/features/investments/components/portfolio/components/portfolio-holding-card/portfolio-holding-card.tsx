@@ -67,7 +67,7 @@ export const PortfolioHoldingCard = ({ instrument }: PortfolioHoldingCardProps) 
       </div>
 
       {/* Row 2: Title and Chevron */}
-      <div className="flex w-full items-start justify-between gap-2">
+      <div className="flex w-full items-start justify-between gap-2 pt-0 sm:pt-0.5">
         <h3
           className={clsx(
             'text-base font-semibold tracking-tight text-foreground',

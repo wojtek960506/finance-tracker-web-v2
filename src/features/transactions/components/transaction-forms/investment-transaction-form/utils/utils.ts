@@ -77,6 +77,6 @@ export const normalizeInvestmentTransactionFormValues = (
   investment: {
     operationKind: values.operationKind,
     instrumentId: values.instrumentId,
-    note: values.note ? values.note.trim() : undefined,
+    note: values.note ? values.note.trim() : '',
   },
 });
