@@ -93,9 +93,7 @@ describe('OperationsList', () => {
     expect(
       screen.getByRole('button', { name: /record first snapshot/i }),
     ).toBeInTheDocument();
-    expect(
-      screen.getByRole('link', { name: /new investment transaction/i }),
-    ).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /new investment/i })).toBeInTheDocument();
   });
 
   it('renders no results empty state with clear filters button when filters match nothing', async () => {
