@@ -2,5 +2,7 @@
   "title": "FinOnion",
   "cancel": "Anuluj",
   "saving": "Zapisywanie...",
-  "deleting": "Usuwanie..."
+  "deleting": "Usuwanie...",
+  "loading": "Ładowanie...",
+  "loadingDescription": "Proszę czekać, trwa przygotowywanie strony."
 }

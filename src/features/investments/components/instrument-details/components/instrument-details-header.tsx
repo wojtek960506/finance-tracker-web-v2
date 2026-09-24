@@ -24,7 +24,7 @@ export const InstrumentDetailsHeader = () => {
       {/* Back button */}
       <div>
         <Link
-          to="/investments/instruments"
+          to="/investments/portfolio"
           className="inline-flex items-center gap-1.5 text-xs font-medium text-text-muted hover:text-foreground transition-colors"
         >
           <ArrowLeft className="size-3.5" />

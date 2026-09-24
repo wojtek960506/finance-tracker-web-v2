@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 
 import { getMatchedRouteTitle } from '@app/routes';
 
-const BASE_TITLE_CLASS = 'px-2 text-[1.75rem] font-bold sm:text-[2rem]';
+const BASE_TITLE_CLASS = 'hidden sm:block px-2 font-bold text-[1.75rem] md:text-[2rem]';
 const AUTH_TITLE_CLASS = 'text-[#6f9228] dark:text-[#98bf41]';
 const DEFAULT_TITLE_CLASS = 'text-fg';
 

@@ -40,6 +40,12 @@ describe('Button', () => {
     );
   });
 
+  it('renders warning variant styles', () => {
+    render(<Button variant="warning">Warning</Button>);
+
+    expect(screen.getByRole('button', { name: 'Warning' })).toHaveClass('bg-warning');
+  });
+
   it('renders inverse variant styles', () => {
     render(<Button variant="inverse">Inverse</Button>);
 

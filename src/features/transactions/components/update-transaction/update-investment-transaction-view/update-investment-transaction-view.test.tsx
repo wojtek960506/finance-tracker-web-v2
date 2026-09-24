@@ -116,7 +116,7 @@ describe('UpdateInvestmentTransactionView', () => {
           investment: {
             operationKind: 'buy',
             instrumentId: 'inst-1',
-            note: undefined,
+            note: '',
           },
         }),
       );

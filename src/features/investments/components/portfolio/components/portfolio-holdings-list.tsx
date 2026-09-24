@@ -1,42 +1,56 @@
 import clsx from 'clsx';
-import { ArrowDownRight, ArrowUpRight, ChevronRight } from 'lucide-react';
+import { SlidersHorizontal } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useNavigate } from 'react-router-dom';
 
 import type { InvestmentInstrumentSummary } from '@features/investments/api';
-import {
-  InstrumentKindBadge,
-  InstrumentStatusBadge,
-} from '@features/investments/components/instruments';
-import { FilterPills, InvestmentCard } from '@features/investments/components/shared';
-import { formatCurrencyAmount } from '@features/investments/utils';
-import { useLanguage } from '@shared/hooks';
+import { Button, Collapsible } from '@shared/ui';
+
+import { PortfolioFilters, type PortfolioStatusFilter } from './portfolio-filters';
+import { PortfolioHoldingCard } from './portfolio-holding-card';
 
 type PortfolioHoldingsListProps = {
   instruments: InvestmentInstrumentSummary[];
 };
 
+// TODO split this file
 export const PortfolioHoldingsList = ({ instruments }: PortfolioHoldingsListProps) => {
   const { t } = useTranslation('investments');
-  const { language } = useLanguage();
-  const navigate = useNavigate();
-  const [statusFilter, setStatusFilter] = useState<'all' | 'active' | 'closed'>('all');
+  const [isSectionOpen, setIsSectionOpen] = useState(true);
+  const [isFiltersOpen, setIsFiltersOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [statusFilter, setStatusFilter] = useState<PortfolioStatusFilter>('all');
+  const [kindFilter, setKindFilter] = useState('all');
 
-  const statusItems = useMemo(
-    () => [
-      { key: 'active', label: t('status.active') },
-      { key: 'closed', label: t('status.closed') },
-    ],
-    [t],
-  );
+  const activeFilterCount = useMemo(() => {
+    let count = 0;
+    if (searchQuery.trim()) count += 1;
+    if (statusFilter !== 'all') count += 1;
+    if (kindFilter !== 'all') count += 1;
+    return count;
+  }, [searchQuery, statusFilter, kindFilter]);
+
+  const hasActiveFilters = activeFilterCount > 0;
+
+  const resetFilters = () => {
+    setSearchQuery('');
+    setStatusFilter('all');
+    setKindFilter('all');
+  };
 
   const filteredInstruments = useMemo(() => {
+    const query = searchQuery.trim().toLowerCase();
+
     return instruments
       .filter((inst) => {
         const isClosed = inst.currentValue === 0;
-        if (statusFilter === 'active') return !isClosed;
-        if (statusFilter === 'closed') return isClosed;
+        if (statusFilter === 'active' && isClosed) return false;
+        if (statusFilter === 'closed' && !isClosed) return false;
+
+        if (kindFilter !== 'all' && inst.kind !== kindFilter) return false;
+
+        if (query && !inst.name.toLowerCase().includes(query)) return false;
+
         return true;
       })
       .sort((a, b) => {
@@ -47,168 +61,106 @@ export const PortfolioHoldingsList = ({ instruments }: PortfolioHoldingsListProp
         }
         return b.currentValue - a.currentValue;
       });
-  }, [instruments, statusFilter]);
+  }, [instruments, statusFilter, kindFilter, searchQuery]);
 
   if (instruments.length === 0) return null;
 
-  return (
-    <div className="flex flex-col gap-3">
-      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <h2 className="text-base font-semibold tracking-tight sm:text-lg">
-            {t('portfolio.holdingsTitle')}
-          </h2>
-          <p className="text-xs text-text-muted sm:text-sm">
-            {t('portfolio.holdingsDescription')}
-          </p>
-        </div>
-
-        <FilterPills
-          selected={statusFilter}
-          onSelect={(key) => setStatusFilter(key as 'all' | 'active' | 'closed')}
-          allLabel={t('status.all')}
-          items={statusItems}
-        />
+  const headerContent = (
+    <div className="flex flex-1  gap-2 pr-2 flex-row items-center justify-between">
+      <div className="flex items-center gap-2">
+        <h2 className="text-base font-semibold tracking-tight text-foreground sm:text-lg">
+          {t('portfolio.holdingsTitle')}
+        </h2>
+        <span
+          className={clsx(
+            'inline-flex items-center rounded-full border border-fg/10 bg-muted/40',
+            'px-2 py-0.5 text-xs font-semibold text-text-muted',
+          )}
+        >
+          {filteredInstruments.length}
+        </span>
       </div>
 
-      {filteredInstruments.length === 0 ? (
-        <div className="flex flex-col items-center justify-center gap-2 p-8 text-center text-text-muted">
-          <p className="text-sm">{t('noResultsDescription')}</p>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {filteredInstruments.map((instrument) => {
-            const isClosed = instrument.currentValue === 0;
-            const isPositive = instrument.pnl >= 0;
-            const formattedCurrent = formatCurrencyAmount(
-              instrument.currentValue,
-              instrument.currency,
-              language,
-            );
-            const formattedInvested = formatCurrencyAmount(
-              instrument.netInvested,
-              instrument.currency,
-              language,
-            );
-            const formattedPnL = formatCurrencyAmount(
-              instrument.pnl,
-              instrument.currency,
-              language,
-            );
-
-            return (
-              <InvestmentCard
-                key={instrument.id}
-                testId="portfolio-holding-card"
+      {isSectionOpen && (
+        <div className="flex items-center gap-2">
+          <Button
+            type="button"
+            variant={isFiltersOpen || hasActiveFilters ? 'secondary' : 'ghost'}
+            className="gap-1.5 text-xs"
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsFiltersOpen((prev) => !prev);
+            }}
+            data-testid="toggle-filters-button"
+          >
+            <SlidersHorizontal className="size-3.5" />
+            <span className="hidden sm:block">{t('filters')}</span>
+            {hasActiveFilters && (
+              <span
                 className={clsx(
-                  'group cursor-pointer transition-colors',
-                  isClosed
-                    ? 'opacity-80 hover:opacity-100 hover:border-fg/30'
-                    : clsx(
-                        'border-emerald-500/20 bg-emerald-500/[0.02]',
-                        'dark:border-emerald-500/25 dark:bg-emerald-950/10',
-                        'hover:border-emerald-500/50',
-                      ),
+                  'flex size-4 items-center justify-center rounded-full',
+                  'bg-primary text-[10px] font-bold text-primary-fg',
                 )}
-                onClick={() => navigate(`/investments/instruments/${instrument.id}`)}
               >
-                <div className="flex flex-col gap-3">
-                  {/* Header: Name and Kind */}
-                  <div className="flex items-start justify-between gap-2">
-                    <div className="flex min-w-0 flex-1 flex-col gap-1">
-                      <h3
-                        className={clsx(
-                          'text-base font-semibold tracking-tight text-foreground',
-                          'break-words [overflow-wrap:anywhere]',
-                        )}
-                      >
-                        <Link
-                          to={`/investments/instruments/${instrument.id}`}
-                          className="transition-colors group-hover:text-primary"
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          {instrument.name}
-                        </Link>
-                      </h3>
-
-                      <div className="flex flex-wrap items-center gap-1.5">
-                        <InstrumentStatusBadge isClosed={isClosed} />
-                        <InstrumentKindBadge kind={instrument.kind} />
-                        <span
-                          className={clsx(
-                            'inline-flex items-center rounded-md border border-fg/10 bg-bg',
-                            'px-2 py-0.5 text-xs font-medium text-text-muted',
-                          )}
-                        >
-                          {instrument.currency}
-                        </span>
-                      </div>
-                    </div>
-
-                    <ChevronRight className="size-5 text-text-muted transition-transform group-hover:translate-x-0.5 group-hover:text-foreground" />
-                  </div>
-
-                  {/* Metrics Grid */}
-                  <div className="grid grid-cols-2 gap-2 border-t border-fg/10 pt-2 text-xs">
-                    <div>
-                      <span className="text-text-muted">
-                        {t('details.currentValuation')}
-                      </span>
-                      <p className="text-sm font-bold text-foreground">
-                        {formattedCurrent}
-                      </p>
-                    </div>
-
-                    <div>
-                      <span className="text-text-muted">{t('details.netInvested')}</span>
-                      <p className="text-sm font-semibold text-text-muted">
-                        {formattedInvested}
-                      </p>
-                    </div>
-
-                    <div className="col-span-2 flex items-center justify-between border-t border-fg/5 pt-1.5">
-                      <span className="text-text-muted">{t('details.totalProfit')}</span>
-                      <div className="flex items-center gap-1 text-right">
-                        {isPositive ? (
-                          <ArrowUpRight className="size-3.5 text-emerald-500" />
-                        ) : (
-                          <ArrowDownRight className="size-3.5 text-rose-500" />
-                        )}
-                        <span
-                          className={clsx(
-                            'font-bold',
-                            isPositive
-                              ? 'text-emerald-600 dark:text-emerald-400'
-                              : 'text-rose-600 dark:text-rose-400',
-                          )}
-                        >
-                          {formattedPnL} ({isPositive ? '+' : ''}
-                          {instrument.roiPercentage.toFixed(2)}%)
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Footer notes / snapshots */}
-                  <footer className="flex items-center justify-between border-t border-fg/10 pt-2 text-xs text-text-muted">
-                    <span>
-                      {instrument.lastSnapshotDate
-                        ? `${t('details.lastSnapshotOn')}: ${new Date(
-                            instrument.lastSnapshotDate,
-                          ).toLocaleDateString(language)}`
-                        : t('details.noValuationRecorded')}
-                    </span>
-                    <span>
-                      {instrument.operationsCount}{' '}
-                      {t('details.totalOperations').toLowerCase()}
-                    </span>
-                  </footer>
-                </div>
-              </InvestmentCard>
-            );
-          })}
+                {activeFilterCount}
+              </span>
+            )}
+          </Button>
         </div>
       )}
+    </div>
+  );
+
+  return (
+    <div className="flex flex-col gap-3" data-testid="portfolio-holdings-section">
+      <Collapsible
+        header={headerContent}
+        indicatorPosition="left"
+        isInitiallyOpen={true}
+        isOpen={isSectionOpen}
+        onOpenChange={setIsSectionOpen}
+        triggerMode="split"
+        contentInset="none"
+        contentClassName="pt-3"
+      >
+        <div className="flex flex-col gap-3">
+          {isFiltersOpen && (
+            <PortfolioFilters
+              searchQuery={searchQuery}
+              onSearchQueryChange={setSearchQuery}
+              selectedStatus={statusFilter}
+              onSelectStatus={setStatusFilter}
+              selectedKind={kindFilter}
+              onSelectKind={setKindFilter}
+              onResetFilters={resetFilters}
+              hasActiveFilters={hasActiveFilters}
+            />
+          )}
+
+          {filteredInstruments.length === 0 ? (
+            <div
+              className={clsx(
+                'flex flex-col items-center justify-center gap-2',
+                'rounded-lg border border-dashed border-fg/10 p-8 text-center text-text-muted',
+              )}
+            >
+              <p className="text-sm font-medium text-foreground">{t('noResultsTitle')}</p>
+              <p className="text-xs text-text-muted">{t('noResultsDescription')}</p>
+              {hasActiveFilters && (
+                <Button variant="outline" onClick={resetFilters} className="mt-2 text-xs">
+                  {t('clearFilters')}
+                </Button>
+              )}
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3 3xl:grid-cols-4">
+              {filteredInstruments.map((instrument) => (
+                <PortfolioHoldingCard key={instrument.id} instrument={instrument} />
+              ))}
+            </div>
+          )}
+        </div>
+      </Collapsible>
     </div>
   );
 };

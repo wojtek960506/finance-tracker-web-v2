@@ -1,5 +1,5 @@
 import { useQueryClient } from '@tanstack/react-query';
-import { useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Route, Routes } from 'react-router-dom';
 
@@ -32,7 +32,8 @@ import {
 //   because “row” is too tied to how it is currently presented.
 
 function App() {
-  const { t } = useTranslation('auth');
+  const { t: tAuth } = useTranslation('auth');
+  const { t: tCommon } = useTranslation('common');
   const queryClient = useQueryClient();
   const { isAuthenticated, isAuthResolved } = useAuthToken();
 
@@ -60,8 +61,8 @@ function App() {
       <MainLayout>
         <div className="flex h-full min-h-0 flex-1 flex-col p-3 sm:p-4">
           <LoadingCard
-            title={t('restoringSessionTitle')}
-            description={t('restoringSessionDescription')}
+            title={tAuth('restoringSessionTitle')}
+            description={tAuth('restoringSessionDescription')}
             widthClassName="max-w-[35rem]"
           />
         </div>
@@ -71,19 +72,31 @@ function App() {
 
   return (
     <MainLayout>
-      <Routes>
-        <Route element={<PublicLayout isAuthenticated={isAuthenticated} />}>
-          {PUBLIC_APP_ROUTES.map((route) => (
-            <Route key={route.path} path={route.path} element={route.element} />
-          ))}
-        </Route>
+      <Suspense
+        fallback={
+          <div className="flex h-full min-h-0 flex-1 flex-col p-3 sm:p-4">
+            <LoadingCard
+              title={tCommon('loading')}
+              description={tCommon('loadingDescription')}
+              widthClassName="max-w-[35rem]"
+            />
+          </div>
+        }
+      >
+        <Routes>
+          <Route element={<PublicLayout isAuthenticated={isAuthenticated} />}>
+            {PUBLIC_APP_ROUTES.map((route) => (
+              <Route key={route.path} path={route.path} element={route.element} />
+            ))}
+          </Route>
 
-        <Route element={<ProtectedLayout isAuthenticated={isAuthenticated} />}>
-          {PROTECTED_APP_ROUTES.map((route) => (
-            <Route key={route.path} path={route.path} element={route.element} />
-          ))}
-        </Route>
-      </Routes>
+          <Route element={<ProtectedLayout isAuthenticated={isAuthenticated} />}>
+            {PROTECTED_APP_ROUTES.map((route) => (
+              <Route key={route.path} path={route.path} element={route.element} />
+            ))}
+          </Route>
+        </Routes>
+      </Suspense>
     </MainLayout>
   );
 }

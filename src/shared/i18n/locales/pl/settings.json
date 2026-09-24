@@ -1,0 +1,10 @@
+{
+  "title": "Ustawienia",
+  "description": "Zarządzaj swoimi preferencjami i konfiguracją aplikacji.",
+  "generalPreferences": "Ogólne preferencje",
+  "generalPreferencesDescription": "Skonfiguruj walutę bazową i domyślne opcje wyświetlania.",
+  "baseCurrency": "Waluta bazowa",
+  "baseCurrencyDescription": "Główna waluta używana do przeliczania wartości majątku, wskaźnika niezależności finansowej oraz statystyk kont.",
+  "searchCurrencyPlaceholder": "Szukaj waluty...",
+  "noCurrenciesFound": "Nie znaleziono walut"
+}

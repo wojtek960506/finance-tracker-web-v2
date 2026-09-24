@@ -68,7 +68,7 @@ export const UpdateInstrumentModal = ({
       name: values.name.trim(),
       kind: values.kind,
       currency: values.currency ? values.currency : undefined,
-      notes: values.notes ? values.notes.trim() : undefined,
+      notes: values.notes ? values.notes.trim() : '',
     };
 
     await updateMutation.mutateAsync({ id: instrument.id, payload });

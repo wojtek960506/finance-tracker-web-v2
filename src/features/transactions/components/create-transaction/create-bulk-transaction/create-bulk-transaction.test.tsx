@@ -904,7 +904,7 @@ describe('CreateBulkTransaction', () => {
             investment: {
               operationKind: 'sell',
               instrumentId: 'inst-msft',
-              note: undefined,
+              note: '',
             },
           },
         ],

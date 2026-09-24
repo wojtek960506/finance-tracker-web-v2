@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { Controller, useFormContext } from 'react-hook-form';
+import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import { Button } from '@shared/ui';
@@ -16,9 +16,11 @@ const FILTER_TYPE_OPTIONS = ['expense', 'income'] as const;
 export const TransactionTypeField = () => {
   const { t } = useTranslation('transactions');
   const { control } = useFormContext<TransactionFiltersFormValues>();
+  const transactionType = useWatch({ control, name: 'transactionType' });
+  const isActive = Boolean(transactionType);
 
   return (
-    <FilterFieldLabel title={t('transactionType')}>
+    <FilterFieldLabel title={t('transactionType')} isActive={isActive}>
       <Controller
         control={control}
         name="transactionType"

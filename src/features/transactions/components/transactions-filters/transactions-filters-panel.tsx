@@ -43,7 +43,9 @@ export const TransactionsFiltersPanel = ({
   });
 
   const handleClear = () => {
-    form.reset(getTransactionFiltersFormDefaults({}));
+    const emptyDefaults = getTransactionFiltersFormDefaults({});
+    form.reset(emptyDefaults);
+    onApply(normalizeTransactionFiltersFormValues(emptyDefaults));
   };
 
   return (

@@ -4,14 +4,13 @@ import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router-dom';
 
+import { useSettingsStore } from '@store/settings-store';
 import { getAccountStatistics } from '@transactions/api';
 import { LoadingCard } from '@ui';
 
 import {
-  DEFAULT_BASE_CURRENCY,
   getNormalizedTotalAmount,
   getTransactionAccountStatisticsQuery,
-  setTransactionAccountStatisticsBaseCurrency,
   TRANSACTION_ACCOUNT_STATISTICS_MAX_WIDTH,
 } from './transaction-account-statistics.utils';
 import { TransactionAccountStatisticsCurrencyGroup } from './transaction-account-statistics-currency-group';
@@ -20,21 +19,18 @@ import { TransactionAccountStatisticsHeader } from './transaction-account-statis
 
 export const TransactionAccountStatistics = () => {
   const { t } = useTranslation('transactions');
-  const [searchParams, setSearchParams] = useSearchParams();
-  const accountStatisticsQuery = useMemo(
-    () => getTransactionAccountStatisticsQuery(searchParams),
-    [searchParams],
-  );
-  const baseCurrency = accountStatisticsQuery.baseCurrency ?? DEFAULT_BASE_CURRENCY;
+  const [searchParams] = useSearchParams();
+  const storeBaseCurrency = useSettingsStore((state) => state.baseCurrency);
 
-  const handleBaseCurrencyChange = (nextBaseCurrency: string) => {
-    setSearchParams((currentSearchParams) => {
-      return setTransactionAccountStatisticsBaseCurrency(
-        currentSearchParams,
-        nextBaseCurrency,
-      );
-    });
-  };
+  const accountStatisticsQuery = useMemo(() => {
+    const query = getTransactionAccountStatisticsQuery(searchParams);
+    return {
+      ...query,
+      baseCurrency: query.baseCurrency ?? storeBaseCurrency,
+    };
+  }, [searchParams, storeBaseCurrency]);
+
+  const baseCurrency = accountStatisticsQuery.baseCurrency ?? storeBaseCurrency;
 
   const { data, isLoading, error } = useQuery({
     queryKey: ['transaction-account-statistics', accountStatisticsQuery],
@@ -64,7 +60,6 @@ export const TransactionAccountStatistics = () => {
       <TransactionAccountStatisticsHeader
         baseCurrency={baseCurrency}
         normalizedTotalAmount={normalizedTotalAmount}
-        onBaseCurrencyChange={handleBaseCurrencyChange}
       />
 
       <div className="flex flex-col gap-4 sm:gap-6">

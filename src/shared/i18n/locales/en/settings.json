@@ -1,0 +1,10 @@
+{
+  "title": "Settings",
+  "description": "Manage your application preferences and configuration.",
+  "generalPreferences": "General Preferences",
+  "generalPreferencesDescription": "Configure your reference currency and default display options.",
+  "baseCurrency": "Base Currency",
+  "baseCurrencyDescription": "The primary currency used to calculate and normalize your Net Worth, Financial Independence runway, and Account Statistics.",
+  "searchCurrencyPlaceholder": "Search currency...",
+  "noCurrenciesFound": "No currencies found"
+}

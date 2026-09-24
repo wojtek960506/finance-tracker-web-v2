@@ -46,95 +46,41 @@ export const OperationCard = ({
   );
 
   return (
-    <InvestmentCard isSnapshot={isSnapshot} testId="operation-card">
-      <div className="flex flex-col gap-2">
-        <div className="flex items-start justify-between gap-2">
-          <div className="flex min-w-0 flex-1 flex-col gap-1">
-            <div className="flex flex-wrap items-center gap-1.5">
-              <OperationKindBadge kind={operation.kind} />
-              {instrument ? <InstrumentKindBadge kind={instrument.kind} /> : null}
-            </div>
+    <InvestmentCard
+      isSnapshot={isSnapshot}
+      testId="operation-card"
+      className="row-span-4 grid w-full grid-cols-1 grid-rows-subgrid gap-2"
+    >
+      {/* Row 1: Badges */}
+      <div className="flex w-full flex-wrap items-center gap-1.5">
+        <OperationKindBadge kind={operation.kind} />
+        {instrument && <InstrumentKindBadge kind={instrument.kind} />}
+      </div>
 
-            <h3
-              className={clsx(
-                'text-base font-semibold tracking-tight text-foreground sm:text-lg',
-                'break-words [overflow-wrap:anywhere]',
-              )}
-            >
-              {instrument?.name ?? t('unknownInstrument')}
-            </h3>
-          </div>
+      {/* Row 2: Instrument Name */}
+      <h3
+        className={clsx(
+          'text-sm font-semibold tracking-tight text-foreground sm:text-base',
+          'break-words [overflow-wrap:anywhere] pt-0 sm:pt-0.5',
+        )}
+      >
+        {instrument?.name ?? t('unknownInstrument')}
+      </h3>
 
-          <div className="flex shrink-0 items-center gap-1">
-            {isStandalone ? (
-              <>
-                {handleEdit ? (
-                  <Button
-                    variant="ghost"
-                    className="size-8 p-0 text-text-muted hover:text-foreground"
-                    onClick={() => handleEdit(operation)}
-                    title={
-                      isSnapshot ? t('actions.editSnapshot') : t('actions.editOperation')
-                    }
-                    aria-label={
-                      isSnapshot ? t('actions.editSnapshot') : t('actions.editOperation')
-                    }
-                  >
-                    <Pencil className="size-4" />
-                  </Button>
-                ) : null}
-
-                {handleDelete ? (
-                  <Button
-                    variant="ghost"
-                    className="size-8 p-0 text-text-muted hover:text-destructive"
-                    onClick={() => handleDelete(operation)}
-                    title={
-                      isSnapshot
-                        ? t('actions.deleteSnapshot')
-                        : t('actions.deleteOperation')
-                    }
-                    aria-label={
-                      isSnapshot
-                        ? t('actions.deleteSnapshot')
-                        : t('actions.deleteOperation')
-                    }
-                  >
-                    <Trash className="size-4" />
-                  </Button>
-                ) : null}
-              </>
-            ) : null}
-
-            {!isStandalone && 'transactionId' in operation && operation.transactionId ? (
-              <Link
-                to={`/transactions/${operation.transactionId}`}
-                className={clsx(
-                  'inline-flex items-center gap-1 rounded-md px-2.5 py-1.5',
-                  'text-xs font-medium text-primary hover:bg-primary/10',
-                  'transition-colors',
-                )}
-                title={t('actions.viewTransaction')}
-              >
-                <span>{t('actions.viewTransaction')}</span>
-                <ExternalLink className="size-3.5" />
-              </Link>
-            ) : null}
-          </div>
-        </div>
-
-        <div className="flex items-baseline gap-2">
-          {isSnapshot ? (
+      {/* Row 3: Amount & Optional Note */}
+      <div className="flex w-full flex-col gap-1">
+        <div className="flex w-full items-baseline justify-end gap-2">
+          {isSnapshot && (
             <span className="text-xs font-medium text-text-muted">
               {t('operations.snapshotBalance')}:
             </span>
-          ) : null}
+          )}
           <span className="text-lg font-bold tracking-tight text-foreground">
             {formattedAmount}
           </span>
         </div>
 
-        {operation.note ? (
+        {operation.note && (
           <p
             className={clsx(
               'text-xs text-text-muted sm:text-sm',
@@ -143,17 +89,75 @@ export const OperationCard = ({
           >
             {operation.note}
           </p>
-        ) : null}
+        )}
       </div>
 
+      {/* Row 4: Footer */}
       <footer
         className={clsx(
-          'flex items-center justify-between border-t pt-2',
-          'text-xs text-text-muted',
+          'flex w-full items-center justify-between border-t mt-0.5 pt-0.5',
+          'text-xs text-text-muted md:text-sm',
           isSnapshot ? 'border-purple-500/15' : 'border-fg/10',
         )}
       >
         <span>{new Date(operation.date).toLocaleDateString(language)}</span>
+
+        <div className="flex shrink-0 items-center gap-1">
+          {isStandalone ? (
+            <>
+              {handleEdit ? (
+                <Button
+                  variant="ghost"
+                  className="size-7 p-0 text-text-muted hover:text-foreground sm:size-8"
+                  onClick={() => handleEdit(operation)}
+                  title={
+                    isSnapshot ? t('actions.editSnapshot') : t('actions.editOperation')
+                  }
+                  aria-label={
+                    isSnapshot ? t('actions.editSnapshot') : t('actions.editOperation')
+                  }
+                >
+                  <Pencil className="size-3.5 sm:size-4" />
+                </Button>
+              ) : null}
+
+              {handleDelete ? (
+                <Button
+                  variant="ghost"
+                  className="size-7 p-0 text-text-muted hover:text-destructive sm:size-8"
+                  onClick={() => handleDelete(operation)}
+                  title={
+                    isSnapshot
+                      ? t('actions.deleteSnapshot')
+                      : t('actions.deleteOperation')
+                  }
+                  aria-label={
+                    isSnapshot
+                      ? t('actions.deleteSnapshot')
+                      : t('actions.deleteOperation')
+                  }
+                >
+                  <Trash className="size-3.5 sm:size-4" />
+                </Button>
+              ) : null}
+            </>
+          ) : null}
+
+          {!isStandalone && 'transactionId' in operation && operation.transactionId ? (
+            <Link
+              to={`/transactions/${operation.transactionId}`}
+              className={clsx(
+                'inline-flex h-7 items-center gap-1 rounded-md px-2 py-1 sm:h-8',
+                'text-xs font-medium text-primary hover:bg-primary/10 md:text-sm',
+                'transition-colors',
+              )}
+              title={t('actions.viewTransaction')}
+            >
+              <span>{t('actions.viewTransaction')}</span>
+              <ExternalLink className="size-3.5 sm:size-4" />
+            </Link>
+          ) : null}
+        </div>
       </footer>
     </InvestmentCard>
   );

@@ -314,4 +314,21 @@ describe('DateInput', () => {
 
     expect(onChange).toHaveBeenCalledWith('');
   });
+
+  it('renders a clear X button when isClearable is true and clears value when clicked', async () => {
+    const user = userEvent.setup();
+    const onChange = vi.fn();
+    const onClear = vi.fn();
+
+    render(
+      <DateInput value="2024-01-03" onChange={onChange} onClear={onClear} isClearable />,
+    );
+
+    const clearButton = screen.getByRole('button', { name: 'Clear date' });
+    expect(clearButton).toBeInTheDocument();
+
+    await user.click(clearButton);
+    expect(onChange).toHaveBeenCalledWith('');
+    expect(onClear).toHaveBeenCalled();
+  });
 });

@@ -66,7 +66,7 @@ describe('OperationsList', () => {
     expect(screen.getByRole('status')).toBeInTheDocument();
   });
 
-  it('renders operations and filters by search text', async () => {
+  it('renders operations and filters by operation kind', async () => {
     vi.mocked(investmentsApi.getInstruments).mockResolvedValue(mockInstruments);
     vi.mocked(investmentsApi.getOperations).mockResolvedValue(mockOperations);
 
@@ -75,8 +75,8 @@ describe('OperationsList', () => {
     expect(await screen.findByText('Q1 balance')).toBeInTheDocument();
     expect(screen.getByText('Bought 10 shares')).toBeInTheDocument();
 
-    const searchInput = screen.getByLabelText(/search operations/i);
-    fireEvent.change(searchInput, { target: { value: 'Q1' } });
+    const snapshotFilterBtn = screen.getByRole('button', { name: /^snapshot$/i });
+    fireEvent.click(snapshotFilterBtn);
 
     expect(screen.getByText('Q1 balance')).toBeInTheDocument();
     expect(screen.queryByText('Bought 10 shares')).not.toBeInTheDocument();
@@ -93,9 +93,7 @@ describe('OperationsList', () => {
     expect(
       screen.getByRole('button', { name: /record first snapshot/i }),
     ).toBeInTheDocument();
-    expect(
-      screen.getByRole('link', { name: /new investment transaction/i }),
-    ).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /new investment/i })).toBeInTheDocument();
   });
 
   it('renders no results empty state with clear filters button when filters match nothing', async () => {
@@ -106,18 +104,19 @@ describe('OperationsList', () => {
 
     expect(await screen.findByText('Q1 balance')).toBeInTheDocument();
 
-    const searchInput = screen.getByLabelText(/search operations/i);
-    fireEvent.change(searchInput, { target: { value: 'Nonexistent' } });
+    const interestFilterBtn = screen.getByRole('button', { name: /^interest$/i });
+    fireEvent.click(interestFilterBtn);
 
     expect(await screen.findByText(/no matching operations/i)).toBeInTheDocument();
     expect(
       screen.getByText(/try changing your search query or filters/i),
     ).toBeInTheDocument();
 
-    const clearBtn = screen.getByRole('button', { name: /clear filters/i });
-    fireEvent.click(clearBtn);
+    const clearBtns = screen.getAllByRole('button', { name: /clear filters/i });
+    fireEvent.click(clearBtns[0]);
 
     expect(await screen.findByText('Q1 balance')).toBeInTheDocument();
+    expect(screen.getByText('Bought 10 shares')).toBeInTheDocument();
   });
 
   it('opens create snapshot modal when record snapshot button is clicked', async () => {

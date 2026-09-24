@@ -112,8 +112,10 @@ describe('PortfolioPage', () => {
     expect(screen.getByText('PKO Lokata')).toBeInTheDocument();
 
     // Switch to USD
-    const usdButton = screen.getByRole('button', { name: 'USD' });
-    await user.click(usdButton);
+    const currencySelect = screen.getByTestId('portfolio-currency-select');
+    await user.click(currencySelect);
+    const usdOption = screen.getByRole('option', { name: /USD/i });
+    await user.click(usdOption);
 
     expect(screen.getByText('Apple Inc.')).toBeInTheDocument();
   });
@@ -184,6 +186,10 @@ describe('PortfolioPage', () => {
     const initialCards = screen.getAllByTestId('portfolio-holding-card');
     expect(initialCards[0]).toHaveTextContent('Apple Inc.');
     expect(initialCards[1]).toHaveTextContent('Closed Position Stock');
+
+    // Open filters panel
+    const filterToggle = screen.getByTestId('toggle-filters-button');
+    await user.click(filterToggle);
 
     // Filter Active
     const activeBtn = screen.getByRole('button', { name: /^active$/i });

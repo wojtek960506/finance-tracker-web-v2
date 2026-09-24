@@ -1,7 +1,7 @@
 import 'react-day-picker/style.css';
 
 import clsx from 'clsx';
-import { CalendarDays } from 'lucide-react';
+import { CalendarDays, X } from 'lucide-react';
 import {
   type ComponentPropsWithoutRef,
   forwardRef,
@@ -38,6 +38,8 @@ type DateInputProps = Omit<
   onChange?: (value: string) => void;
   onBlur?: () => void;
   name?: string;
+  isClearable?: boolean;
+  onClear?: () => void;
 };
 
 const FOCUSABLE_SELECTOR = [
@@ -63,7 +65,19 @@ const focusAfterClose = (element: HTMLElement | null | undefined) => {
 };
 
 export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
-  ({ className, value, onChange, onBlur, disabled, ...props }, ref) => {
+  (
+    {
+      className,
+      value,
+      onChange,
+      onBlur,
+      disabled,
+      isClearable = false,
+      onClear,
+      ...props
+    },
+    ref,
+  ) => {
     const { language } = useLanguage();
     const selectedDate = useMemo(() => parseDateValue(value), [value]);
     const [month, setMonth] = useState<Date>(selectedDate ?? new Date());
@@ -118,6 +132,7 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
       const firstFocusableElement = focusableElements[0];
       const lastFocusableElement = focusableElements[focusableElements.length - 1];
       const target = event.target;
+
       if (!(target instanceof HTMLElement)) return;
 
       if (event.shiftKey && target === firstFocusableElement) {
@@ -154,7 +169,7 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
           aria-haspopup="dialog"
           aria-expanded={isOpen}
           className={clsx(
-            'flex w-full cursor-pointer items-center justify-between gap-3 text-left outline-none',
+            'flex w-full cursor-pointer items-center justify-between gap-2 text-left outline-none',
             FORM_CONTROL_SIZE_CLASS,
             FORM_CONTROL_SURFACE_CLASS,
             !formattedValue && 'text-text-muted',
@@ -166,7 +181,37 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
           onBlur={onBlur}
         >
           <span className="truncate">{formattedValue || value || '\u00A0'}</span>
-          <CalendarDays className="size-4 shrink-0 text-text-muted" aria-hidden="true" />
+          <div className="flex items-center gap-1 shrink-0">
+            {isClearable && Boolean(value) && !disabled && (
+              <button
+                type="button"
+                aria-label="Clear date"
+                className={clsx(
+                  'cursor-pointer rounded p-0.5 text-text-muted transition-colors',
+                  'hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring',
+                )}
+                onClick={(event) => {
+                  event.stopPropagation();
+                  onChange?.('');
+                  onClear?.();
+                }}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter' || event.key === ' ') {
+                    event.stopPropagation();
+                    event.preventDefault();
+                    onChange?.('');
+                    onClear?.();
+                  }
+                }}
+              >
+                <X className="size-4" aria-hidden="true" />
+              </button>
+            )}
+            <CalendarDays
+              className="size-4 shrink-0 text-text-muted"
+              aria-hidden="true"
+            />
+          </div>
         </div>
 
         {isOpen && typeof document !== 'undefined'

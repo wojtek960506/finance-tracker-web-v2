@@ -35,8 +35,8 @@ export const PortfolioEmptyState = ({ onCreateInstrument }: PortfolioEmptyStateP
           <Plus className="size-4" />
           <span>{t('portfolio.addHolding')}</span>
         </Button>
-        <Button variant="outline" onClick={() => navigate('/investments/instruments')}>
-          {t('portfolio.goToInstruments')}
+        <Button variant="outline" onClick={() => navigate('/investments/operations')}>
+          {t('tabs.operations')}
         </Button>
       </div>
     </Card>

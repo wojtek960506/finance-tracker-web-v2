@@ -23,6 +23,7 @@ vi.mock('@named-resources/components', () => ({
 
 vi.mock('@net-worth/components', () => ({
   NetWorthPage: () => <div>net-worth</div>,
+  FinancialIndependencePage: () => <div>financial-independence</div>,
 }));
 
 vi.mock('@investments/components', () => ({
@@ -30,7 +31,6 @@ vi.mock('@investments/components', () => ({
     <div>{children}</div>
   ),
   PortfolioPage: () => <div>portfolio</div>,
-  InvestmentsPage: () => <div>investments</div>,
   OperationsPage: () => <div>operations</div>,
   InstrumentDetailsPage: () => <div>instrument-details</div>,
 }));
@@ -87,6 +87,19 @@ describe('Title', () => {
     expect(screen.queryByRole('link')).not.toBeInTheDocument();
   });
 
+  it('renders financial independence title on financial independence page', () => {
+    render(
+      <MemoryRouter initialEntries={['/financial-independence']}>
+        <Title />
+      </MemoryRouter>,
+    );
+
+    expect(
+      screen.getByRole('heading', { name: 'navigation:financialIndependence' }),
+    ).toBeInTheDocument();
+    expect(screen.queryByRole('link')).not.toBeInTheDocument();
+  });
+
   it('renders transactions title on transactions page', () => {
     render(
       <MemoryRouter initialEntries={['/transactions']}>
@@ -103,19 +116,6 @@ describe('Title', () => {
   it('renders investments title on investments portfolio page', () => {
     render(
       <MemoryRouter initialEntries={['/investments/portfolio']}>
-        <Title />
-      </MemoryRouter>,
-    );
-
-    expect(
-      screen.getByRole('heading', { name: 'navigation:investments' }),
-    ).toBeInTheDocument();
-    expect(screen.queryByRole('link')).not.toBeInTheDocument();
-  });
-
-  it('renders investments title on investments instruments page', () => {
-    render(
-      <MemoryRouter initialEntries={['/investments/instruments']}>
         <Title />
       </MemoryRouter>,
     );

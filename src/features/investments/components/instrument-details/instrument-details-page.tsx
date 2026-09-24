@@ -20,7 +20,7 @@ export const InstrumentDetailsPage = () => {
 
   if (isLoading) {
     return (
-      <div className="mx-auto flex h-full min-h-0 w-full max-w-6xl flex-col gap-4 p-2 sm:p-4">
+      <div className="mx-auto flex h-full min-h-0 w-full max-w-[120rem] flex-col gap-4 p-2 sm:p-4">
         <LoadingCard
           title={t('details.loadingTitle')}
           description={t('details.loadingDescription')}
@@ -32,7 +32,7 @@ export const InstrumentDetailsPage = () => {
 
   if (error || !instrument || !contextValue) {
     return (
-      <div className="mx-auto flex h-full min-h-0 w-full max-w-6xl flex-col gap-4 p-2 sm:p-4">
+      <div className="mx-auto flex h-full min-h-0 w-full max-w-[120rem] flex-col gap-4 p-2 sm:p-4">
         <Card className="flex flex-col items-center justify-center gap-3 p-8 text-center">
           <h2 className="text-lg font-semibold text-foreground">
             {t('details.notFoundTitle')}
@@ -41,7 +41,7 @@ export const InstrumentDetailsPage = () => {
             {t('details.notFoundDescription')}
           </p>
           <Link
-            to="/investments/instruments"
+            to="/investments/portfolio"
             className={clsx(
               'mt-2 inline-flex items-center gap-1.5 text-xs font-medium',
               'text-primary hover:underline',
@@ -58,7 +58,7 @@ export const InstrumentDetailsPage = () => {
   return (
     <InstrumentDetailsProvider value={contextValue}>
       <div
-        className="mx-auto flex h-full min-h-0 w-full max-w-6xl flex-col gap-6 p-2 sm:p-4"
+        className="mx-auto flex h-full min-h-0 w-full max-w-[120rem] flex-col gap-6 p-2 sm:p-4"
         data-testid="instrument-details-page"
       >
         <InstrumentDetailsHeader />

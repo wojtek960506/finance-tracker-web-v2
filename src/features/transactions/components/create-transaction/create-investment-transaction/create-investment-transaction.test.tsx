@@ -64,7 +64,7 @@ vi.mock('@transactions/components/transaction-forms', () => ({
     investment: {
       operationKind: values.operationKind,
       instrumentId: values.instrumentId,
-      note: values.note ? values.note.trim() : undefined,
+      note: values.note ? values.note.trim() : '',
     },
   }),
   InvestmentTransactionForm: ({
@@ -139,7 +139,7 @@ describe('CreateInvestmentTransaction', () => {
         investment: {
           operationKind: 'buy',
           instrumentId: 'inst-1',
-          note: undefined,
+          note: '',
         },
       });
       expect(mocks.pushToast).toHaveBeenCalledWith(
