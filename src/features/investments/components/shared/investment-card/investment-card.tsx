@@ -21,7 +21,7 @@ export const InvestmentCard = ({
   return (
     <Card
       className={clsx(
-        'flex w-full flex-col justify-between gap-3 p-4 sm:p-5',
+        'flex w-full flex-col justify-between sm:gap-1 p-4 sm:p-5',
         'transition-all hover:shadow-sm',
         isSnapshot
           ? clsx(

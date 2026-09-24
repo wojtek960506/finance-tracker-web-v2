@@ -51,7 +51,22 @@ export const PortfolioHoldingCard = ({ instrument }: PortfolioHoldingCardProps) 
       )}
       onClick={() => navigate(`/investments/instruments/${instrument.id}`)}
     >
-      {/* Row 1: Title and Chevron */}
+      {/* Row 1: Badges */}
+      <div className="flex w-full items-start justify-between gap-2 pb-0.5">
+        <div className="flex w-full flex-wrap items-center gap-1.5">
+          <InstrumentStatusBadge isClosed={isClosed} />
+          <InstrumentKindBadge kind={instrument.kind} />
+        </div>
+
+        <ChevronRight
+          className={clsx(
+            'size-5 shrink-0 text-text-muted transition-transform',
+            'group-hover:translate-x-0.5 group-hover:text-foreground',
+          )}
+        />
+      </div>
+
+      {/* Row 2: Title and Chevron */}
       <div className="flex w-full items-start justify-between gap-2">
         <h3
           className={clsx(
@@ -68,18 +83,12 @@ export const PortfolioHoldingCard = ({ instrument }: PortfolioHoldingCardProps) 
           </Link>
         </h3>
 
-        <ChevronRight
+        {/* <ChevronRight
           className={clsx(
             'size-5 shrink-0 text-text-muted transition-transform',
             'group-hover:translate-x-0.5 group-hover:text-foreground',
           )}
-        />
-      </div>
-
-      {/* Row 2: Badges */}
-      <div className="flex w-full flex-wrap items-center gap-1.5">
-        <InstrumentStatusBadge isClosed={isClosed} />
-        <InstrumentKindBadge kind={instrument.kind} />
+        /> */}
       </div>
 
       {/* Row 3: Metrics Grid */}
