@@ -8,7 +8,7 @@
   "transactionsTrash": "Transaction Trash",
   "newTransaction": "New Transaction",
   "newStandardTransaction": "New Regular Transaction",
-  "newInvestmentTransaction": "New Investment Transaction",
+  "newInvestmentTransaction": "New Investment",
   "newTransferTransaction": "New Transfer Transaction",
   "newExchangeTransaction": "New Exchange Transaction",
   "newBulkTransaction": "Batch transaction entry",

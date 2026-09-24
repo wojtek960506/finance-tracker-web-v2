@@ -7,7 +7,7 @@ import { InvestmentsLayout } from '@features/investments/components/investments-
 import { Button, LoadingCard } from '@shared/ui';
 
 import {
-  PortfolioCurrencyPills,
+  PortfolioCurrencySelect,
   PortfolioEmptyState,
   PortfolioHoldingsList,
   PortfolioSummaryMetrics,
@@ -48,35 +48,33 @@ export const PortfolioPage = () => {
 
         {!isLoading && !error && hasHoldings && (
           <>
-            {/* Header with Title and Quick Add Button */}
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-              <div>
-                <h1 className="text-xl font-bold tracking-tight text-foreground sm:text-2xl">
-                  {t('portfolio.title')}
-                </h1>
-                <p className="text-xs text-text-muted sm:text-sm">
-                  {t('portfolio.description')}
-                </p>
-              </div>
-
-              <div className="flex items-center gap-2">
-                <Button
-                  variant="primary"
-                  onClick={() => setIsCreateModalOpen(true)}
-                  className="gap-1.5 shrink-0 whitespace-nowrap"
-                >
-                  <Plus className="size-4" />
-                  <span>{t('newInstrument')}</span>
-                </Button>
-              </div>
+            {/* Header with Title */}
+            <div>
+              <h1 className="text-xl font-bold tracking-tight text-foreground sm:text-2xl">
+                {t('portfolio.title')}
+              </h1>
+              <p className="text-xs text-text-muted sm:text-sm">
+                {t('portfolio.description')}
+              </p>
             </div>
 
-            {/* Currency Filter / Selector */}
-            <PortfolioCurrencyPills
-              currencies={currencies}
-              activeCurrency={activeCurrency}
-              onSelectCurrency={setActiveCurrency}
-            />
+            {/* Toolbar: Currency Selector & New Instrument Button */}
+            <div className="flex items-stretch gap-2 sm:gap-3">
+              <PortfolioCurrencySelect
+                currencies={currencies}
+                activeCurrency={activeCurrency}
+                onSelectCurrency={setActiveCurrency}
+              />
+
+              <Button
+                variant="primary"
+                onClick={() => setIsCreateModalOpen(true)}
+                className="flex-1 gap-1.5 whitespace-nowrap"
+              >
+                <Plus className="size-4" />
+                <span>{t('newInstrument')}</span>
+              </Button>
+            </div>
 
             {/* Top Multi-Currency Summary Cards */}
             {currentCurrencySummary && (

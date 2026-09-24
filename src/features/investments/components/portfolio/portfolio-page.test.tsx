@@ -112,8 +112,10 @@ describe('PortfolioPage', () => {
     expect(screen.getByText('PKO Lokata')).toBeInTheDocument();
 
     // Switch to USD
-    const usdButton = screen.getByRole('button', { name: 'USD' });
-    await user.click(usdButton);
+    const currencySelect = screen.getByTestId('portfolio-currency-select');
+    await user.click(currencySelect);
+    const usdOption = screen.getByRole('option', { name: /USD/i });
+    await user.click(usdOption);
 
     expect(screen.getByText('Apple Inc.')).toBeInTheDocument();
   });
