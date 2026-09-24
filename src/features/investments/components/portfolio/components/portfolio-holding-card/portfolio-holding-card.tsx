@@ -83,9 +83,11 @@ export const PortfolioHoldingCard = ({ instrument }: PortfolioHoldingCardProps) 
       </div>
 
       {/* Row 3: Metrics Grid */}
-      <div className="grid w-full grid-cols-2 gap-2 border-t border-fg/10 pt-2 text-xs">
+      <div className="grid w-full grid-cols-2 gap-2 border-t border-fg/10 pt-2 text-sm">
         <div className="col-span-2 flex items-center justify-between">
-          <span className="text-text-muted">{t('portfolio.result')}</span>
+          <span className="text-text-muted text-xs sm:text-sm">
+            {t('portfolio.result')}
+          </span>
           <div className="flex items-center gap-1 text-right">
             {isPositive ? (
               <ArrowUpRight className="size-3.5 text-emerald-500" />
@@ -106,7 +108,9 @@ export const PortfolioHoldingCard = ({ instrument }: PortfolioHoldingCardProps) 
           </div>
         </div>
 
-        <span className="text-text-muted">{t('portfolio.invested')}</span>
+        <span className="text-text-muted text-xs sm:text-sm">
+          {t('portfolio.invested')}
+        </span>
         <p className="text-right text-sm font-semibold text-text-muted">
           {formattedInvested}
         </p>

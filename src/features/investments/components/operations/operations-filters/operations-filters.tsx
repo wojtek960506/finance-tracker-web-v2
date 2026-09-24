@@ -1,84 +1,60 @@
-import { useMemo } from 'react';
+import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 
-import type { InvestmentInstrument } from '@features/investments/api';
-import { FilterPills, SearchFilterInput } from '@features/investments/components/shared';
-import { OPERATION_KINDS } from '@features/investments/consts';
+import { InstrumentSelectField } from '@features/investments/components/instruments/instrument-select-field';
 
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { OperationKindFilter } from './operation-kind-filter';
 
 type OperationsFiltersProps = {
-  searchQuery: string;
-  onSearchQueryChange: (query: string) => void;
   selectedKind: string;
   onSelectedKindChange: (kind: string) => void;
   selectedInstrumentId: string;
   onSelectedInstrumentIdChange: (instrumentId: string) => void;
-  instruments: InvestmentInstrument[];
-  isFetching?: boolean;
+  className?: string;
 };
 
 export const OperationsFilters = ({
-  searchQuery,
-  onSearchQueryChange,
   selectedKind,
   onSelectedKindChange,
   selectedInstrumentId,
   onSelectedInstrumentIdChange,
-  instruments,
-  isFetching,
+  className,
 }: OperationsFiltersProps) => {
   const { t } = useTranslation('investments');
 
-  const kindItems = useMemo(
-    () =>
-      OPERATION_KINDS.map((kind) => ({
-        key: kind,
-        label: t(`operationKind.${kind}`),
-      })),
-    [t],
-  );
-
   return (
-    <div className="flex flex-col gap-3" data-testid="operations-filters">
-      {/* Instrument selector row */}
-      <div className="w-full">
-        <Select value={selectedInstrumentId} onValueChange={onSelectedInstrumentIdChange}>
-          <SelectTrigger className="w-full">
-            <SelectValue placeholder={t('operations.allInstruments')} />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">{t('operations.allInstruments')}</SelectItem>
-            {instruments.map((inst) => (
-              <SelectItem key={inst.id} value={inst.id}>
-                {inst.name}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
+    <div
+      className={clsx(
+        'flex flex-col gap-3 rounded-lg border border-fg/10 bg-muted/20 p-3 sm:p-4',
+        className,
+      )}
+      data-testid="operations-filters"
+    >
+      <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between md:gap-4">
+        {/* Operation Kind Filter Pills */}
+        <div className="flex flex-1 flex-col gap-1.5 self-center">
+          <span className="text-xs font-medium text-text-muted hidden lg:block">
+            {t('form.operationKind')}
+          </span>
+          <OperationKindFilter
+            selectedKind={selectedKind}
+            onSelectKind={onSelectedKindChange}
+          />
+        </div>
 
-      {/* Search & Kind filters row: separate below md, side-by-side on md and above */}
-      <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
-        <SearchFilterInput
-          value={searchQuery}
-          onChange={onSearchQueryChange}
-          placeholder={t('operations.searchPlaceholder')}
-          isFetching={isFetching}
-        />
+        <div className="hidden h-auto w-px self-stretch bg-fg/10 md:block" />
+        <div className="h-px w-full bg-fg/10 md:hidden" />
 
-        <FilterPills
-          selected={selectedKind}
-          onSelect={onSelectedKindChange}
-          allLabel={t('allKinds')}
-          items={kindItems}
-        />
+        {/* Instrument Combobox Filter */}
+        <div className="flex w-full shrink-0 flex-col gap-1.5 md:w-64 self-center">
+          <InstrumentSelectField
+            value={selectedInstrumentId === 'all' ? '' : selectedInstrumentId}
+            onChange={(id) => onSelectedInstrumentIdChange(id || 'all')}
+            placeholder={t('operations.allInstruments')}
+            searchPlaceholder={t('operations.allInstruments')}
+            showClear={true}
+          />
+        </div>
       </div>
     </div>
   );

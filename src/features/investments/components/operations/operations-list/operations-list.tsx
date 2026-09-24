@@ -13,8 +13,6 @@ export const OperationsList = () => {
   const { t } = useTranslation('investments');
 
   const {
-    searchQuery,
-    setSearchQuery,
     selectedKind,
     setSelectedKind,
     selectedInstrumentId,
@@ -26,12 +24,10 @@ export const OperationsList = () => {
     setEditingOperation,
     deletingOperation,
     setDeletingOperation,
-    instruments,
     instrumentsMap,
     operations,
     filteredOperations,
     isLoading,
-    isFetching,
     error,
   } = useOperationsList();
 
@@ -53,14 +49,10 @@ export const OperationsList = () => {
     <div className="flex flex-col gap-4 p-1" data-testid="operations-list">
       {operations.length > 0 && (
         <OperationsListHeader
-          searchQuery={searchQuery}
-          onSearchQueryChange={setSearchQuery}
           selectedKind={selectedKind}
           onSelectedKindChange={setSelectedKind}
           selectedInstrumentId={selectedInstrumentId}
           onSelectedInstrumentIdChange={setSelectedInstrumentId}
-          instruments={instruments}
-          isFetching={isFetching}
           onCreateOperation={() => setIsCreateOperationModalOpen(true)}
         />
       )}

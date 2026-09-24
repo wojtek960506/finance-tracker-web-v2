@@ -9,7 +9,6 @@ import {
 } from '@features/investments/api';
 
 export const useOperationsList = () => {
-  const [searchQuery, setSearchQuery] = useState('');
   const [selectedKind, setSelectedKind] = useState<string>('all');
   const [selectedInstrumentId, setSelectedInstrumentId] = useState<string>('all');
   const [isCreateOperationModalOpen, setIsCreateOperationModalOpen] = useState(false);
@@ -36,15 +35,11 @@ export const useOperationsList = () => {
   });
 
   const resetFilters = useCallback(() => {
-    setSearchQuery('');
     setSelectedKind('all');
     setSelectedInstrumentId('all');
   }, []);
 
-  const hasActiveFilters =
-    Boolean(searchQuery.trim()) ||
-    selectedKind !== 'all' ||
-    selectedInstrumentId !== 'all';
+  const hasActiveFilters = selectedKind !== 'all' || selectedInstrumentId !== 'all';
 
   const instrumentsMap = useMemo(() => {
     const map = new Map<string, InvestmentInstrument>();
@@ -65,22 +60,10 @@ export const useOperationsList = () => {
       result = result.filter((op) => op.kind === selectedKind);
     }
 
-    if (searchQuery.trim()) {
-      const query = searchQuery.trim().toLowerCase();
-      result = result.filter((op: InvestmentOperation) => {
-        const instrument = instrumentsMap.get(op.instrumentId);
-        const matchesInstrumentName = instrument?.name.toLowerCase().includes(query);
-        const matchesNote = op.note?.toLowerCase().includes(query);
-        return Boolean(matchesInstrumentName || matchesNote);
-      });
-    }
-
     return result.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-  }, [operations, instrumentsMap, searchQuery, selectedKind, selectedInstrumentId]);
+  }, [operations, selectedKind, selectedInstrumentId]);
 
   return {
-    searchQuery,
-    setSearchQuery,
     selectedKind,
     setSelectedKind,
     selectedInstrumentId,
