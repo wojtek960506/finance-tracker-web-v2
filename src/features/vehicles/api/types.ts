@@ -22,7 +22,9 @@ export type VehicleFuelEntryListResponse =
 
 export type CreateFuelEntryPayload = components['schemas']['VehicleFuelEntryCreateInput'];
 
-export type UpdateFuelEntryPayload = components['schemas']['VehicleFuelEntryUpdateInput'];
+export type UpdateFuelEntryPayload = Partial<
+  components['schemas']['VehicleFuelEntryUpdateInput']
+>;
 
 export type GetFuelEntriesQuery = NonNullable<
   paths['/api/vehicles/{vehicleId}/fuel']['get']['parameters']['query']
