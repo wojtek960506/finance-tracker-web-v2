@@ -106,6 +106,32 @@ const SettingsPage = lazy(() =>
   })),
 );
 
+const VehiclesPage = lazy(() =>
+  import('@vehicles/components').then((m) => ({
+    default: m.VehiclesPage,
+  })),
+);
+const VehiclesOverviewPage = lazy(() =>
+  import('@vehicles/components').then((m) => ({
+    default: m.VehiclesOverviewPage,
+  })),
+);
+const VehiclesFuelPage = lazy(() =>
+  import('@vehicles/components').then((m) => ({
+    default: m.VehiclesFuelPage,
+  })),
+);
+const VehiclesEquipmentPage = lazy(() =>
+  import('@vehicles/components').then((m) => ({
+    default: m.VehiclesEquipmentPage,
+  })),
+);
+const VehiclesMaintenancePage = lazy(() =>
+  import('@vehicles/components').then((m) => ({
+    default: m.VehiclesMaintenancePage,
+  })),
+);
+
 type RouteTitle = {
   key: string;
   namespace: 'common' | 'navigation';
@@ -256,7 +282,32 @@ export const PROTECTED_APP_ROUTES: AppRouteConfig[] = [
   },
   {
     path: '/vehicles',
-    element: <p>Vehicles will be there</p>,
+    element: <VehiclesPage />,
+    title: { namespace: 'navigation', key: 'vehicles' },
+  },
+  {
+    path: '/vehicles/overview',
+    element: <VehiclesOverviewPage />,
+    title: { namespace: 'navigation', key: 'vehicles' },
+  },
+  {
+    path: '/vehicles/:vehicleSlug/overview',
+    element: <VehiclesOverviewPage />,
+    title: { namespace: 'navigation', key: 'vehicles' },
+  },
+  {
+    path: '/vehicles/:vehicleSlug/fuel',
+    element: <VehiclesFuelPage />,
+    title: { namespace: 'navigation', key: 'vehicles' },
+  },
+  {
+    path: '/vehicles/:vehicleSlug/equipment',
+    element: <VehiclesEquipmentPage />,
+    title: { namespace: 'navigation', key: 'vehicles' },
+  },
+  {
+    path: '/vehicles/:vehicleSlug/maintenance',
+    element: <VehiclesMaintenancePage />,
     title: { namespace: 'navigation', key: 'vehicles' },
   },
   {
