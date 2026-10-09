@@ -286,12 +286,7 @@ export const PROTECTED_APP_ROUTES: AppRouteConfig[] = [
     title: { namespace: 'navigation', key: 'vehicles' },
   },
   {
-    path: '/vehicles/overview',
-    element: <VehiclesOverviewPage />,
-    title: { namespace: 'navigation', key: 'vehicles' },
-  },
-  {
-    path: '/vehicles/:vehicleSlug/overview',
+    path: '/vehicles/:vehicleSlug',
     element: <VehiclesOverviewPage />,
     title: { namespace: 'navigation', key: 'vehicles' },
   },
