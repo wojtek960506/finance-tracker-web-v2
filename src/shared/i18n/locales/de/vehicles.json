@@ -1,0 +1,40 @@
+{
+  "title": "Fahrzeuge",
+  "description": "Übersicht über Ihre Fahrzeuge, Gesamtausgaben und individuelle Fahrzeugkosten.",
+  "newVehicle": "Fahrzeug hinzufügen",
+  "summary": {
+    "title": "Fuhrpark-Übersicht",
+    "totalSpending": "Gesamtausgaben",
+    "fuelSpending": "Kraftstoff",
+    "maintenanceSpending": "Wartung",
+    "equipmentSpending": "Ausrüstung",
+    "totalVehicles": "Fahrzeuge gesamt"
+  },
+  "card": {
+    "totalSpent": "Ausgaben",
+    "odometer": "Kilometerstand",
+    "productionYear": "Baujahr",
+    "viewDetails": "Details anzeigen",
+    "entriesCount": "Einträge",
+    "fuel": "Kraftstoff",
+    "maintenance": "Wartung",
+    "equipment": "Ausrüstung"
+  },
+  "empty": {
+    "title": "Noch keine Fahrzeuge",
+    "description": "Fügen Sie Ihr Auto, Motorrad oder Nahverkehrskarte hinzu, um Kraftstoff-, Wartungs- und Ausrüstungskosten zu erfassen.",
+    "createFirst": "Erstes Fahrzeug hinzufügen"
+  },
+  "loading": {
+    "title": "Fahrzeuge werden geladen...",
+    "description": "Bitte warten, während Ihre Fahrzeugdaten geladen werden."
+  },
+  "types": {
+    "car": "Auto",
+    "motorcycle": "Motorrad",
+    "public_transport": "Öffentliche Verkehrsmittel"
+  },
+  "actions": {
+    "backToAll": "Zurück zu allen Fahrzeugen"
+  }
+}

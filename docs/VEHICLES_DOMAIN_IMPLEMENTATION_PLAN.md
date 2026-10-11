@@ -113,7 +113,7 @@ flowchart TD
 - [x] **Sub-phase 2.1: Route Registration & Page Entrypoints**
   - Register `/vehicles`, `/vehicles/:vehicleSlug`, `/vehicles/:vehicleSlug/{fuel,equipment,maintenance}` in `app-routes.tsx`.
   - Create lazy-loaded page entrypoints in `src/features/vehicles/components/`.
-- [ ] **Sub-phase 2.2: Global Spending Summary & Vehicle Cards Grid**
+- [x] **Sub-phase 2.2: Global Spending Summary & Vehicle Cards Grid**
   - Implement aggregated spending calculation across all user vehicles (Total PLN, Fuel PLN, Maintenance PLN, Equipment PLN).
   - `GlobalSpendingSummaryCards`: Metric cards showing fleet totals and category breakdowns.
   - `VehicleCard` & `VehicleCardsGrid`: Cards displaying vehicle name, type badge (`car`, `motorcycle`, `public_transport`), brand/model, individual total spent, last odometer, and quick navigation button to `/vehicles/:vehicleSlug`.

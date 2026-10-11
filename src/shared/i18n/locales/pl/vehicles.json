@@ -1,0 +1,40 @@
+{
+  "title": "Pojazdy",
+  "description": "Przegląd Twoich pojazdów, całkowitych wydatków oraz kosztów poszczególnych pojazdów.",
+  "newVehicle": "Dodaj pojazd",
+  "summary": {
+    "title": "Podsumowanie floty",
+    "totalSpending": "Łączne wydatki",
+    "fuelSpending": "Paliwo",
+    "maintenanceSpending": "Serwis i naprawy",
+    "equipmentSpending": "Wyposażenie",
+    "totalVehicles": "Liczba pojazdów"
+  },
+  "card": {
+    "totalSpent": "Wydano",
+    "odometer": "Przebieg",
+    "productionYear": "Rocznik",
+    "viewDetails": "Szczegóły",
+    "entriesCount": "Wpisy",
+    "fuel": "Paliwo",
+    "maintenance": "Serwis",
+    "equipment": "Wyposażenie"
+  },
+  "empty": {
+    "title": "Brak pojazdów",
+    "description": "Dodaj samochód, motocykl lub bilet komunikacji, aby zacząć śledzić koszty paliwa, serwisu i wyposażenia.",
+    "createFirst": "Dodaj swój pierwszy pojazd"
+  },
+  "loading": {
+    "title": "Ładowanie pojazdów...",
+    "description": "Proszę czekać, pobieramy dane pojazdów i wydatków."
+  },
+  "types": {
+    "car": "Samochód",
+    "motorcycle": "Motocykl",
+    "public_transport": "Komunikacja miejska"
+  },
+  "actions": {
+    "backToAll": "Powrót do pojazdów"
+  }
+}

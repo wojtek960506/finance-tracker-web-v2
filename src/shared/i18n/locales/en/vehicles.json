@@ -1,0 +1,40 @@
+{
+  "title": "Vehicles",
+  "description": "Overview of your fleet, total spending, and individual vehicle costs.",
+  "newVehicle": "Add Vehicle",
+  "summary": {
+    "title": "Fleet Summary",
+    "totalSpending": "Total Spent",
+    "fuelSpending": "Fuel",
+    "maintenanceSpending": "Maintenance",
+    "equipmentSpending": "Equipment",
+    "totalVehicles": "Total Vehicles"
+  },
+  "card": {
+    "totalSpent": "Total Spent",
+    "odometer": "Odometer",
+    "productionYear": "Year",
+    "viewDetails": "View Vehicle",
+    "entriesCount": "Entries",
+    "fuel": "Fuel",
+    "maintenance": "Maint.",
+    "equipment": "Equip."
+  },
+  "empty": {
+    "title": "No vehicles yet",
+    "description": "Add a car, motorcycle, or public transport card to start tracking fuel, maintenance, and equipment costs.",
+    "createFirst": "Add your first vehicle"
+  },
+  "loading": {
+    "title": "Loading vehicles...",
+    "description": "Please wait while we fetch your vehicle records and spendings."
+  },
+  "types": {
+    "car": "Car",
+    "motorcycle": "Motorcycle",
+    "public_transport": "Public Transport"
+  },
+  "actions": {
+    "backToAll": "Back to all vehicles"
+  }
+}
