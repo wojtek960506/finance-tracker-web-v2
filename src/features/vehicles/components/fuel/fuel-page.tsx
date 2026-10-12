@@ -1,3 +1,9 @@
+import { SingleVehicleLayout } from '../single-vehicle';
+
 export const VehiclesFuelPage = () => {
-  return <div>Vehicles Fuel</div>;
+  return (
+    <SingleVehicleLayout>
+      <div data-testid="vehicles-fuel-content">Vehicles Fuel</div>
+    </SingleVehicleLayout>
+  );
 };

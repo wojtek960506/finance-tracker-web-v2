@@ -42,6 +42,21 @@
     "save": "Zapisz",
     "cancel": "Anuluj"
   },
+  "tabs": {
+    "overview": "Przegląd",
+    "fuel": "Paliwo",
+    "equipment": "Wyposażenie",
+    "maintenance": "Serwis"
+  },
+  "singleVehicle": {
+    "loadingTitle": "Ładowanie pojazdu...",
+    "loadingDescription": "Proszę czekać, pobieramy dane pojazdu.",
+    "notFoundTitle": "Nie znaleziono pojazdu",
+    "notFoundDescription": "Nie znaleziono żądanego pojazdu. Być może został usunięty lub link jest niepoprawny.",
+    "backToVehicles": "Powrót do wszystkich pojazdów",
+    "editVehicle": "Edytuj pojazd",
+    "deleteVehicle": "Usuń pojazd"
+  },
   "modals": {
     "createTitle": "Dodaj pojazd",
     "createDescription": "Dodaj nowy pojazd, aby monitorować wydatki na paliwo, serwis i wyposażenie.",

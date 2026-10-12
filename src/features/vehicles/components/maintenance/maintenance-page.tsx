@@ -1,3 +1,9 @@
+import { SingleVehicleLayout } from '../single-vehicle';
+
 export const VehiclesMaintenancePage = () => {
-  return <div>Vehicles Maintenance</div>;
+  return (
+    <SingleVehicleLayout>
+      <div data-testid="vehicles-maintenance-content">Vehicles Maintenance</div>
+    </SingleVehicleLayout>
+  );
 };

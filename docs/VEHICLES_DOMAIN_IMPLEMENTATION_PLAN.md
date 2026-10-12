@@ -130,10 +130,11 @@ flowchart TD
 
 ### ⏳ Phase 3: Single-Vehicle Layout & Overview Dashboard (`/vehicles/:vehicleSlug`)
 
-- [ ] **Sub-phase 3.1: Single-Vehicle Layout & Navigation**
+- [x] **Sub-phase 3.1: Single-Vehicle Layout & Navigation**
   - Implement `SingleVehicleLayout` with vehicle header info (name, badge, brand/model, production year, edit/delete actions).
   - "Back to all vehicles" link leading back to `/vehicles`.
   - Sub-navigation tabs: **Overview** (`/vehicles/:vehicleSlug`), **Fuel** (`/vehicles/:vehicleSlug/fuel`), **Equipment** (`/vehicles/:vehicleSlug/equipment`), **Maintenance** (`/vehicles/:vehicleSlug/maintenance`).
+  - Vehicle data resolver hook `useVehicle` and `VehicleContext` for child view access.
 - [ ] **Sub-phase 3.2: Vehicle Overview Dashboard & Spending Breakdown**
   - `VehicleSpendingBreakdown`: Total spent on this vehicle with category split:
     - ⛽ **Fuel**: Total PLN spent, total liters, average consumption (L/100 km), cost per km.

@@ -42,6 +42,21 @@
     "save": "Speichern",
     "cancel": "Abbrechen"
   },
+  "tabs": {
+    "overview": "Übersicht",
+    "fuel": "Kraftstoff",
+    "equipment": "Ausrüstung",
+    "maintenance": "Wartung"
+  },
+  "singleVehicle": {
+    "loadingTitle": "Fahrzeug wird geladen...",
+    "loadingDescription": "Bitte warten, während die Fahrzeugdetails geladen werden.",
+    "notFoundTitle": "Fahrzeug nicht gefunden",
+    "notFoundDescription": "Das angeforderte Fahrzeug konnte nicht gefunden werden. Es wurde möglicherweise gelöscht oder der Link ist ungültig.",
+    "backToVehicles": "Zurück zu allen Fahrzeugen",
+    "editVehicle": "Fahrzeug bearbeiten",
+    "deleteVehicle": "Fahrzeug löschen"
+  },
   "modals": {
     "createTitle": "Fahrzeug hinzufügen",
     "createDescription": "Neues Fahrzeug anlegen, um Ausgaben für Kraftstoff, Wartung und Ausstattung zu überwachen.",

@@ -42,6 +42,21 @@
     "save": "Save",
     "cancel": "Cancel"
   },
+  "tabs": {
+    "overview": "Overview",
+    "fuel": "Fuel",
+    "equipment": "Equipment",
+    "maintenance": "Maintenance"
+  },
+  "singleVehicle": {
+    "loadingTitle": "Loading vehicle...",
+    "loadingDescription": "Please wait while we load vehicle details.",
+    "notFoundTitle": "Vehicle not found",
+    "notFoundDescription": "We could not find the requested vehicle. It may have been removed or the link is incorrect.",
+    "backToVehicles": "Back to all vehicles",
+    "editVehicle": "Edit Vehicle",
+    "deleteVehicle": "Delete Vehicle"
+  },
   "modals": {
     "createTitle": "Add Vehicle",
     "createDescription": "Add a new vehicle to track its fuel, maintenance, and equipment.",

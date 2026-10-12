@@ -3,5 +3,6 @@ export * from './equipment';
 export * from './fuel';
 export * from './maintenance';
 export * from './overview';
+export * from './single-vehicle';
 export * from './vehicle-modals';
 export * from './vehicles-page';
