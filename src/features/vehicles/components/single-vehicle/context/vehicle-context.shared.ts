@@ -1,6 +1,5 @@
+import type { Vehicle } from '@vehicles/types';
 import { createContext } from 'react';
-
-import type { Vehicle } from '../../../types';
 
 export type VehicleContextValue = {
   vehicle: Vehicle;

@@ -1,12 +1,11 @@
+import type { VehicleWithSpending } from '@vehicles/types';
+import { formatKm, formatPln } from '@vehicles/utils';
 import clsx from 'clsx';
 import { ChevronRight, Gauge, MoreVertical, Pencil, Trash2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 import { Button, Card, Dropdown } from '@shared/ui';
-
-import type { VehicleWithSpending } from '../../../types';
-import { formatKm, formatPln } from '../../../utils';
 
 import { VehicleTypeBadge } from './vehicle-type-badge';
 

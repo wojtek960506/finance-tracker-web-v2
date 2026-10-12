@@ -1,10 +1,10 @@
+import { useVehicle } from '@vehicles/hooks';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 import { Outlet } from 'react-router-dom';
 
 import { LoadingCard } from '@shared/ui';
 
-import { useVehicle } from '../../../hooks';
 import { VehicleProvider } from '../context';
 
 import { SingleVehicleHeader } from './single-vehicle-header';

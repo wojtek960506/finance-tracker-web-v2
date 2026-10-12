@@ -1,9 +1,8 @@
 import { fireEvent, screen } from '@testing-library/react';
+import type { VehicleWithSpending } from '@vehicles/types';
 import { describe, expect, it, vi } from 'vitest';
 
 import { renderWithProviders } from '@test-utils';
-
-import type { VehicleWithSpending } from '../../../types';
 
 import { VehicleCard } from './vehicle-card';
 

@@ -1,8 +1,7 @@
+import type { VehicleType } from '@vehicles/types';
 import clsx from 'clsx';
 import { Bike, Bus, Car } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-
-import type { VehicleType } from '../../../types';
 
 type VehicleTypeBadgeProps = {
   type: VehicleType;

@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { VehicleTypeBadge } from '@vehicles/components/all-vehicles';
 import { VEHICLE_TYPES } from '@vehicles/consts';
 import {
   type VehicleFormInput,
@@ -11,8 +12,6 @@ import { useTranslation } from 'react-i18next';
 
 import { Button, Input, Label } from '@shared/ui';
 import { preventImplicitFormSubmit } from '@shared/utils';
-
-import { VehicleTypeBadge } from '../../all-vehicles/vehicle-card/vehicle-type-badge';
 
 import type { VehicleFormProps, VehicleType } from './types';
 

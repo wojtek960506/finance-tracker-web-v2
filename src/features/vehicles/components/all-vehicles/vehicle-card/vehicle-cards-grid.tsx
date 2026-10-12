@@ -1,4 +1,4 @@
-import type { VehicleWithSpending } from '../../../types';
+import type { VehicleWithSpending } from '@vehicles/types';
 
 import { VehicleCard } from './vehicle-card';
 

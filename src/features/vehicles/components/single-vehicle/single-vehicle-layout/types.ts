@@ -1,6 +1,5 @@
+import type { Vehicle } from '@vehicles/types';
 import type { ReactNode } from 'react';
-
-import type { Vehicle } from '../../../types';
 
 export type SingleVehicleLayoutProps = {
   vehicleSlug?: string;

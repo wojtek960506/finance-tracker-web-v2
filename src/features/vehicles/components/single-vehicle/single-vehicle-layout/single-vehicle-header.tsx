@@ -1,3 +1,8 @@
+import { VehicleTypeBadge } from '@vehicles/components/all-vehicles';
+import {
+  DeleteVehicleModal,
+  UpdateVehicleModal,
+} from '@vehicles/components/vehicle-modals';
 import clsx from 'clsx';
 import { ArrowLeft, Pencil, Trash2 } from 'lucide-react';
 import { useState } from 'react';
@@ -5,9 +10,6 @@ import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { Button } from '@shared/ui';
-
-import { VehicleTypeBadge } from '../../all-vehicles/vehicle-card/vehicle-type-badge';
-import { DeleteVehicleModal, UpdateVehicleModal } from '../../vehicle-modals';
 
 import type { SingleVehicleHeaderProps } from './types';
 

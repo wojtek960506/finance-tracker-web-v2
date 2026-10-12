@@ -2,14 +2,13 @@ import '@shared/i18n';
 
 import { QueryClientProvider } from '@tanstack/react-query';
 import { fireEvent, render, screen } from '@testing-library/react';
+import * as vehiclesApi from '@vehicles/api';
+import type { Vehicle } from '@vehicles/types';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { describe, expect, it, vi } from 'vitest';
 
 import { ThemeProvider } from '@context/theme-context';
 import { createTestQueryClient } from '@test-utils/create-test-query-client';
-
-import * as vehiclesApi from '../../../api';
-import type { Vehicle } from '../../../types';
 
 import { SingleVehicleLayout } from './single-vehicle-layout';
 
