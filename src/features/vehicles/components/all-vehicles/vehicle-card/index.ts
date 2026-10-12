@@ -1,3 +1,2 @@
-export * from './vehicle-card';
-export * from './vehicle-cards-grid';
-export * from './vehicle-type-badge';
+export { VehicleCardsGrid } from './vehicle-cards-grid';
+export { VehicleTypeBadge } from './vehicle-type-badge';
