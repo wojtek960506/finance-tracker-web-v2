@@ -13,12 +13,13 @@ export const vehicleFormSchema = z.object({
   slug: z.string().trim().max(100).optional().or(z.literal('')),
   brand: z.string().trim().max(50).optional().or(z.literal('')),
   vehicleModel: z.string().trim().max(50).optional().or(z.literal('')),
-  type: z.enum(VEHICLE_TYPES as [string, ...string[]]).default(DEFAULT_VEHICLE_TYPE),
+  type: z.enum(VEHICLE_TYPES).default(DEFAULT_VEHICLE_TYPE),
   productionYear: z.number().int().min(1900).max(2100).optional().nullable(),
   notes: z.string().trim().max(1000).optional().or(z.literal('')),
 });
 
 export type VehicleFormValues = z.infer<typeof vehicleFormSchema>;
+export type VehicleFormInput = z.input<typeof vehicleFormSchema>;
 
 export const fuelEntryFormSchema = z.object({
   date: z.string().min(1, 'dateRequired'),
@@ -46,9 +47,7 @@ export const equipmentFormSchema = z.object({
 export type EquipmentFormValues = z.infer<typeof equipmentFormSchema>;
 
 export const maintenanceFormSchema = z.object({
-  section: z
-    .enum(MAINTENANCE_SECTIONS as [string, ...string[]])
-    .default(DEFAULT_MAINTENANCE_SECTION),
+  section: z.enum(MAINTENANCE_SECTIONS).default(DEFAULT_MAINTENANCE_SECTION),
   date: z.string().min(1, 'dateRequired'),
   costPln: z.number().positive('costPositive'),
   odometerKm: z.number().int().nonnegative().optional().nullable(),
@@ -64,7 +63,7 @@ export const linkSpendingsFormSchema = z.object({
   spendings: z
     .array(
       z.object({
-        spendingType: z.enum(SPENDING_TYPES as [string, ...string[]]),
+        spendingType: z.enum(SPENDING_TYPES),
         spendingId: z.string().trim().min(1),
       }),
     )

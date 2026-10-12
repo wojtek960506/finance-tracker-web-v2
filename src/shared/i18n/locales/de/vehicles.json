@@ -1,40 +1,84 @@
 {
   "title": "Fahrzeuge",
-  "description": "Übersicht über Ihre Fahrzeuge, Gesamtausgaben und individuelle Fahrzeugkosten.",
+  "description": "Übersicht über Ihre Flotte, Gesamtausgaben und Kosten einzelner Fahrzeuge.",
   "newVehicle": "Fahrzeug hinzufügen",
   "summary": {
-    "title": "Fuhrpark-Übersicht",
+    "title": "Flottenübersicht",
     "totalSpending": "Gesamtausgaben",
     "fuelSpending": "Kraftstoff",
     "maintenanceSpending": "Wartung",
-    "equipmentSpending": "Ausrüstung",
+    "equipmentSpending": "Ausstattung",
     "totalVehicles": "Fahrzeuge gesamt"
   },
   "card": {
-    "totalSpent": "Ausgaben",
+    "totalSpent": "Gesamt ausgegeben",
     "odometer": "Kilometerstand",
     "productionYear": "Baujahr",
     "viewDetails": "Details anzeigen",
     "entriesCount": "Einträge",
     "fuel": "Kraftstoff",
     "maintenance": "Wartung",
-    "equipment": "Ausrüstung"
+    "equipment": "Ausst.",
+    "actionsMenu": "Fahrzeugaktionen"
   },
   "empty": {
     "title": "Noch keine Fahrzeuge",
-    "description": "Fügen Sie Ihr Auto, Motorrad oder Nahverkehrskarte hinzu, um Kraftstoff-, Wartungs- und Ausrüstungskosten zu erfassen.",
+    "description": "Fügen Sie ein Auto, Motorrad oder Nahverkehrsticket hinzu, um Kosten für Kraftstoff, Wartung und Ausstattung zu erfassen.",
     "createFirst": "Erstes Fahrzeug hinzufügen"
   },
   "loading": {
     "title": "Fahrzeuge werden geladen...",
-    "description": "Bitte warten, während Ihre Fahrzeugdaten geladen werden."
+    "description": "Bitte warten Sie, während Ihre Fahrzeugdaten und Ausgaben geladen werden."
   },
   "types": {
     "car": "Auto",
     "motorcycle": "Motorrad",
-    "public_transport": "Öffentliche Verkehrsmittel"
+    "public_transport": "Öffentlicher Verkehr"
   },
   "actions": {
-    "backToAll": "Zurück zu allen Fahrzeugen"
+    "backToAll": "Zurück zu allen Fahrzeugen",
+    "edit": "Bearbeiten",
+    "delete": "Löschen",
+    "save": "Speichern",
+    "cancel": "Abbrechen"
+  },
+  "modals": {
+    "createTitle": "Fahrzeug hinzufügen",
+    "createDescription": "Neues Fahrzeug anlegen, um Ausgaben für Kraftstoff, Wartung und Ausstattung zu überwachen.",
+    "updateTitle": "Fahrzeug bearbeiten",
+    "updateDescription": "Details für {{name}} aktualisieren.",
+    "deleteTitle": "Fahrzeug löschen",
+    "deletePrompt": "Möchten Sie {{name}} wirklich löschen?",
+    "deleteHint": "Dieses Fahrzeug und alle zugehörigen Einträge werden dauerhaft gelöscht. Diese Aktion kann nicht rückgängig gemacht werden.",
+    "deleteConfirm": "Fahrzeug löschen"
+  },
+  "form": {
+    "name": "Fahrzeugname",
+    "namePlaceholder": "z. B. Alltagsauto, Wochenend-Motorrad",
+    "type": "Fahrzeugtyp",
+    "brand": "Marke",
+    "brandPlaceholder": "z. B. Toyota, Honda, Suzuki",
+    "model": "Modell",
+    "modelPlaceholder": "z. B. Corolla, Civic, SV650",
+    "productionYear": "Baujahr",
+    "yearPlaceholder": "z. B. 2018",
+    "slug": "Benutzerdefinierter Slug",
+    "slugPlaceholder": "z. B. alltagsauto (optional)",
+    "notes": "Notizen",
+    "notesPlaceholder": "Zusätzliche Notizen zum Fahrzeug...",
+    "createSubmit": "Fahrzeug erstellen",
+    "updateSubmit": "Änderungen speichern",
+    "errors": {
+      "nameRequired": "Fahrzeugname ist erforderlich",
+      "yearInvalid": "Baujahr muss zwischen 1900 und 2100 liegen"
+    }
+  },
+  "toasts": {
+    "createdTitle": "{{name}} erfolgreich erstellt",
+    "createErrorTitle": "Fehler beim Erstellen des Fahrzeugs",
+    "updatedTitle": "{{name}} erfolgreich aktualisiert",
+    "updateErrorTitle": "Fehler beim Aktualisieren des Fahrzeugs",
+    "deletedTitle": "{{name}} erfolgreich gelöscht",
+    "deleteErrorTitle": "Fehler beim Löschen des Fahrzeugs"
   }
 }

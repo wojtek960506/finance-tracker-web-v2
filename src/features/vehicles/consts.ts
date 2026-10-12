@@ -2,32 +2,21 @@ import type {
   GetEquipmentQuery,
   GetFuelEntriesQuery,
   GetMaintenanceQuery,
-  MaintenanceSection,
-  SpendingType,
-  VehicleType,
 } from './api/types';
 
-export const VEHICLE_TYPES: VehicleType[] = [
-  'motorcycle',
-  'car',
-  'public_transport',
-] as const;
+export const VEHICLE_TYPES = ['motorcycle', 'car', 'public_transport'] as const;
 
-export const DEFAULT_VEHICLE_TYPE: VehicleType = 'car';
+export const DEFAULT_VEHICLE_TYPE = 'car' as const;
 
-export const MAINTENANCE_SECTIONS: MaintenanceSection[] = [
+export const MAINTENANCE_SECTIONS = [
   'own_maintenance',
   'previous_owner_services',
   'driving_licence_costs',
 ] as const;
 
-export const DEFAULT_MAINTENANCE_SECTION: MaintenanceSection = 'own_maintenance';
+export const DEFAULT_MAINTENANCE_SECTION = 'own_maintenance' as const;
 
-export const SPENDING_TYPES: SpendingType[] = [
-  'fuel',
-  'equipment',
-  'maintenance',
-] as const;
+export const SPENDING_TYPES = ['fuel', 'equipment', 'maintenance'] as const;
 
 export const vehiclesQueryKeys = {
   all: ['vehicles'] as const,

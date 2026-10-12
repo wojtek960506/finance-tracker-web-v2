@@ -24,7 +24,7 @@ export const GlobalSummaryCards = ({ summary }: GlobalSummaryCardsProps) => {
         value={formatPln(summary.totalSpentPln, lang)}
         subtext={`${summary.totalVehicles} ${t('summary.totalVehicles').toLowerCase()}`}
         Icon={Banknote}
-        iconClassName="text-accent"
+        iconClassName="text-active-nav"
         data-testid="summary-card-total"
       />
 

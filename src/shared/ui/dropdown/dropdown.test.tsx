@@ -66,4 +66,26 @@ describe('Dropdown', () => {
 
     expect(screen.getByText('Icon')).toBeInTheDocument();
   });
+
+  it('applies custom className and variant to dropdown item button', async () => {
+    const user = userEvent.setup();
+
+    render(
+      <Dropdown
+        trigger={<button type="button">Open</button>}
+        items={[
+          {
+            label: 'Delete',
+            className: 'text-destructive',
+            onSelect: () => {},
+          },
+        ]}
+      />,
+    );
+
+    await user.click(screen.getByRole('button', { name: 'Open' }));
+
+    const deleteBtn = screen.getByRole('button', { name: 'Delete' });
+    expect(deleteBtn).toHaveClass('text-destructive');
+  });
 });

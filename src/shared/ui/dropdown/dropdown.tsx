@@ -1,15 +1,17 @@
 import clsx from 'clsx';
-import { type ReactNode, useEffect, useRef, useState } from 'react';
+import { type ComponentProps, type ReactNode, useEffect, useRef, useState } from 'react';
 
 import { Button } from '@ui';
 
-type DropdownItem = {
+export type DropdownItem = {
   label: string;
   icon?: ReactNode;
   onSelect: () => void;
+  className?: string;
+  variant?: ComponentProps<typeof Button>['variant'];
 };
 
-type DropdownProps = {
+export type DropdownProps = {
   trigger: ReactNode;
   items: DropdownItem[];
   align?: 'left' | 'right';
@@ -54,8 +56,8 @@ export const Dropdown = ({ trigger, items, align = 'right' }: DropdownProps) => 
           {items.map((item, idx) => (
             <Button
               key={idx}
-              variant="ghost"
-              className="w-full justify-start gap-2"
+              variant={item.variant ?? 'ghost'}
+              className={clsx('w-full justify-start gap-2', item.className)}
               onClick={() => {
                 item.onSelect();
                 setIsOpen(false);

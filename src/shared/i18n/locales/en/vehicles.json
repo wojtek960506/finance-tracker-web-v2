@@ -18,7 +18,8 @@
     "entriesCount": "Entries",
     "fuel": "Fuel",
     "maintenance": "Maint.",
-    "equipment": "Equip."
+    "equipment": "Equip.",
+    "actionsMenu": "Vehicle actions"
   },
   "empty": {
     "title": "No vehicles yet",
@@ -35,6 +36,49 @@
     "public_transport": "Public Transport"
   },
   "actions": {
-    "backToAll": "Back to all vehicles"
+    "backToAll": "Back to all vehicles",
+    "edit": "Edit",
+    "delete": "Delete",
+    "save": "Save",
+    "cancel": "Cancel"
+  },
+  "modals": {
+    "createTitle": "Add Vehicle",
+    "createDescription": "Add a new vehicle to track its fuel, maintenance, and equipment.",
+    "updateTitle": "Edit Vehicle",
+    "updateDescription": "Update details for {{name}}.",
+    "deleteTitle": "Delete Vehicle",
+    "deletePrompt": "Are you sure you want to delete {{name}}?",
+    "deleteHint": "This vehicle and its associated records will be permanently removed. This action cannot be undone.",
+    "deleteConfirm": "Delete Vehicle"
+  },
+  "form": {
+    "name": "Vehicle Name",
+    "namePlaceholder": "e.g. Daily Car, Weekend Motorcycle",
+    "type": "Vehicle Type",
+    "brand": "Brand",
+    "brandPlaceholder": "e.g. Toyota, Honda, Suzuki",
+    "model": "Model",
+    "modelPlaceholder": "e.g. Corolla, Civic, SV650",
+    "productionYear": "Production Year",
+    "yearPlaceholder": "e.g. 2018",
+    "slug": "Custom Slug",
+    "slugPlaceholder": "e.g. daily-car (optional)",
+    "notes": "Notes",
+    "notesPlaceholder": "Any notes or details about this vehicle...",
+    "createSubmit": "Create Vehicle",
+    "updateSubmit": "Save Changes",
+    "errors": {
+      "nameRequired": "Vehicle name is required",
+      "yearInvalid": "Year must be between 1900 and 2100"
+    }
+  },
+  "toasts": {
+    "createdTitle": "{{name}} created successfully",
+    "createErrorTitle": "Failed to create vehicle",
+    "updatedTitle": "{{name}} updated successfully",
+    "updateErrorTitle": "Failed to update vehicle",
+    "deletedTitle": "{{name}} deleted successfully",
+    "deleteErrorTitle": "Failed to delete vehicle"
   }
 }

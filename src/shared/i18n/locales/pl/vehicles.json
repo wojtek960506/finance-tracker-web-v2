@@ -1,33 +1,34 @@
 {
   "title": "Pojazdy",
-  "description": "Przegląd Twoich pojazdów, całkowitych wydatków oraz kosztów poszczególnych pojazdów.",
+  "description": "Przegląd Twojej floty, całkowitych wydatków oraz kosztów poszczególnych pojazdów.",
   "newVehicle": "Dodaj pojazd",
   "summary": {
     "title": "Podsumowanie floty",
     "totalSpending": "Łączne wydatki",
     "fuelSpending": "Paliwo",
-    "maintenanceSpending": "Serwis i naprawy",
+    "maintenanceSpending": "Serwis",
     "equipmentSpending": "Wyposażenie",
     "totalVehicles": "Liczba pojazdów"
   },
   "card": {
-    "totalSpent": "Wydano",
+    "totalSpent": "Wydano łącznie",
     "odometer": "Przebieg",
-    "productionYear": "Rocznik",
+    "productionYear": "Rok",
     "viewDetails": "Szczegóły",
     "entriesCount": "Wpisy",
     "fuel": "Paliwo",
     "maintenance": "Serwis",
-    "equipment": "Wyposażenie"
+    "equipment": "Wypos.",
+    "actionsMenu": "Opcje pojazdu"
   },
   "empty": {
     "title": "Brak pojazdów",
-    "description": "Dodaj samochód, motocykl lub bilet komunikacji, aby zacząć śledzić koszty paliwa, serwisu i wyposażenia.",
+    "description": "Dodaj samochód, motocykl lub bilet komunikacji miejskiej, aby śledzić koszty paliwa, serwisu i wyposażenia.",
     "createFirst": "Dodaj swój pierwszy pojazd"
   },
   "loading": {
     "title": "Ładowanie pojazdów...",
-    "description": "Proszę czekać, pobieramy dane pojazdów i wydatków."
+    "description": "Pobieranie listy pojazdów i wydatków."
   },
   "types": {
     "car": "Samochód",
@@ -35,6 +36,49 @@
     "public_transport": "Komunikacja miejska"
   },
   "actions": {
-    "backToAll": "Powrót do pojazdów"
+    "backToAll": "Wróć do wszystkich pojazdów",
+    "edit": "Edytuj",
+    "delete": "Usuń",
+    "save": "Zapisz",
+    "cancel": "Anuluj"
+  },
+  "modals": {
+    "createTitle": "Dodaj pojazd",
+    "createDescription": "Dodaj nowy pojazd, aby monitorować wydatki na paliwo, serwis i wyposażenie.",
+    "updateTitle": "Edytuj pojazd",
+    "updateDescription": "Zaktualizuj dane pojazdu {{name}}.",
+    "deleteTitle": "Usuń pojazd",
+    "deletePrompt": "Czy na pewno chcesz usunąć {{name}}?",
+    "deleteHint": "Ten pojazd oraz wszystkie powiązane z nim wpisy zostaną trwale usunięte. Tej operacji nie można cofnąć.",
+    "deleteConfirm": "Usuń pojazd"
+  },
+  "form": {
+    "name": "Nazwa pojazdu",
+    "namePlaceholder": "np. Samochód na co dzień, Weekendowy motocykl",
+    "type": "Typ pojazdu",
+    "brand": "Marka",
+    "brandPlaceholder": "np. Toyota, Honda, Suzuki",
+    "model": "Model",
+    "modelPlaceholder": "np. Corolla, Civic, SV650",
+    "productionYear": "Rok produkcji",
+    "yearPlaceholder": "np. 2018",
+    "slug": "Własny identyfikator (slug)",
+    "slugPlaceholder": "np. moj-samochod (opcjonalnie)",
+    "notes": "Notatki",
+    "notesPlaceholder": "Dodatkowe informacje o pojeździe...",
+    "createSubmit": "Dodaj pojazd",
+    "updateSubmit": "Zapisz zmiany",
+    "errors": {
+      "nameRequired": "Nazwa pojazdu jest wymagana",
+      "yearInvalid": "Rok musi mieścić się w przedziale 1900 - 2100"
+    }
+  },
+  "toasts": {
+    "createdTitle": "Pojazd {{name}} został pomyślnie dodany",
+    "createErrorTitle": "Nie udało się dodać pojazdu",
+    "updatedTitle": "Pojazd {{name}} został zaktualizowany",
+    "updateErrorTitle": "Nie udało się zaktualizować pojazdu",
+    "deletedTitle": "Pojazd {{name}} został usunięty",
+    "deleteErrorTitle": "Nie udało się usunąć pojazdu"
   }
 }

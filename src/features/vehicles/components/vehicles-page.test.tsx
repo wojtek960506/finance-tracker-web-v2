@@ -1,4 +1,4 @@
-import { screen } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { renderWithProviders } from '@test-utils';
@@ -127,5 +127,30 @@ describe('VehiclesPage', () => {
     expect(screen.getByTestId('global-spending-summary-cards')).toBeInTheDocument();
     expect(screen.getByTestId('vehicle-cards-grid')).toBeInTheDocument();
     expect(screen.getByText('Work Car')).toBeInTheDocument();
+  });
+
+  it('opens CreateVehicleModal when Add Vehicle button is clicked', () => {
+    vi.mocked(hooks.useAllVehiclesSummary).mockReturnValue({
+      vehicles: [],
+      summary: {
+        totalVehicles: 0,
+        totalSpentPln: 0,
+        totalFuelSpentPln: 0,
+        totalMaintenanceSpentPln: 0,
+        totalEquipmentSpentPln: 0,
+      },
+      hasVehicles: false,
+      isLoading: false,
+      isFetching: false,
+      error: null,
+      refetch: vi.fn(),
+    });
+
+    renderWithProviders(<VehiclesPage />);
+
+    const addBtn = screen.getByRole('button', { name: /add your first vehicle/i });
+    fireEvent.click(addBtn);
+
+    expect(screen.getByTestId('vehicle-form')).toBeInTheDocument();
   });
 });

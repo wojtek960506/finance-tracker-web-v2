@@ -5,21 +5,37 @@ import { useTranslation } from 'react-i18next';
 import { Button, LoadingCard } from '@shared/ui';
 
 import { useAllVehiclesSummary } from '../hooks';
+import type { Vehicle, VehicleWithSpending } from '../types';
 
 import {
   AllVehiclesEmptyState,
   GlobalSummaryCards,
   VehicleCardsGrid,
 } from './all-vehicles';
+import {
+  CreateVehicleModal,
+  DeleteVehicleModal,
+  UpdateVehicleModal,
+} from './vehicle-modals';
 
 export const VehiclesPage = () => {
   const { t } = useTranslation('vehicles');
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [vehicleToEdit, setVehicleToEdit] = useState<Vehicle | null>(null);
+  const [vehicleToDelete, setVehicleToDelete] = useState<Vehicle | null>(null);
 
   const { vehicles, summary, hasVehicles, isLoading, error } = useAllVehiclesSummary();
 
   const handleCreateVehicle = () => {
     setIsCreateModalOpen(true);
+  };
+
+  const handleEditVehicle = (vehicle: VehicleWithSpending) => {
+    setVehicleToEdit(vehicle);
+  };
+
+  const handleDeleteVehicle = (vehicle: VehicleWithSpending) => {
+    setVehicleToDelete(vehicle);
   };
 
   return (
@@ -69,9 +85,31 @@ export const VehiclesPage = () => {
       {!isLoading && !error && hasVehicles && (
         <div className="flex flex-col gap-4">
           <GlobalSummaryCards summary={summary} />
-          <VehicleCardsGrid vehicles={vehicles} />
+          <VehicleCardsGrid
+            vehicles={vehicles}
+            onEdit={handleEditVehicle}
+            onDelete={handleDeleteVehicle}
+          />
         </div>
       )}
+
+      {/* CRUD Modals */}
+      <CreateVehicleModal
+        isOpen={isCreateModalOpen}
+        onClose={() => setIsCreateModalOpen(false)}
+      />
+
+      <UpdateVehicleModal
+        vehicle={vehicleToEdit}
+        isOpen={Boolean(vehicleToEdit)}
+        onClose={() => setVehicleToEdit(null)}
+      />
+
+      <DeleteVehicleModal
+        vehicle={vehicleToDelete}
+        isOpen={Boolean(vehicleToDelete)}
+        onClose={() => setVehicleToDelete(null)}
+      />
     </div>
   );
 };

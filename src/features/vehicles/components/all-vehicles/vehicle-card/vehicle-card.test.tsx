@@ -1,5 +1,5 @@
-import { screen } from '@testing-library/react';
-import { describe, expect, it } from 'vitest';
+import { fireEvent, screen } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
 
 import { renderWithProviders } from '@test-utils';
 
@@ -55,5 +55,27 @@ describe('VehicleCard', () => {
 
     const link = screen.getByRole('link', { name: /view vehicle daily driver/i });
     expect(link).toHaveAttribute('href', '/vehicles/fallback-id');
+  });
+
+  it('triggers onEdit and onDelete callbacks when selected from menu', () => {
+    const onEdit = vi.fn();
+    const onDelete = vi.fn();
+
+    renderWithProviders(
+      <VehicleCard vehicle={mockVehicle} onEdit={onEdit} onDelete={onDelete} />,
+    );
+
+    const menuTrigger = screen.getByRole('button', { name: /vehicle actions/i });
+    fireEvent.click(menuTrigger);
+
+    const editBtn = screen.getByRole('button', { name: /edit/i });
+    fireEvent.click(editBtn);
+    expect(onEdit).toHaveBeenCalledWith(mockVehicle);
+
+    fireEvent.click(menuTrigger);
+    const deleteBtn = screen.getByRole('button', { name: /delete/i });
+    expect(deleteBtn).toHaveClass('text-destructive');
+    fireEvent.click(deleteBtn);
+    expect(onDelete).toHaveBeenCalledWith(mockVehicle);
   });
 });

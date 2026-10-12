@@ -108,7 +108,7 @@ flowchart TD
 
 ---
 
-### 🚧 Phase 2: Global All-Vehicles Hub & Vehicle Management (`/vehicles`)
+### ✅ Phase 2: Global All-Vehicles Hub & Vehicle Management (`/vehicles`) (Completed)
 
 - [x] **Sub-phase 2.1: Route Registration & Page Entrypoints**
   - Register `/vehicles`, `/vehicles/:vehicleSlug`, `/vehicles/:vehicleSlug/{fuel,equipment,maintenance}` in `app-routes.tsx`.
@@ -118,11 +118,11 @@ flowchart TD
   - `GlobalSpendingSummaryCards`: Metric cards showing fleet totals and category breakdowns.
   - `VehicleCard` & `VehicleCardsGrid`: Cards displaying vehicle name, type badge (`car`, `motorcycle`, `public_transport`), brand/model, individual total spent, last odometer, and quick navigation button to `/vehicles/:vehicleSlug`.
   - Empty state component when user has 0 vehicles with a "Create First Vehicle" call to action.
-- [ ] **Sub-phase 2.3: Vehicle CRUD Modals**
+- [x] **Sub-phase 2.3: Vehicle CRUD Modals**
   - `CreateVehicleModal`: Modal form with type selector (motorcycle, car, public transport), name, slug, brand, model, year, and notes.
   - `UpdateVehicleModal`: Modal dialog to edit vehicle metadata and notes.
   - `DeleteVehicleModal`: Confirmation dialog with safety warnings and cache invalidation.
-- [ ] **Sub-phase 2.4: Phase 2 Localization & Layout Tests**
+- [x] **Sub-phase 2.4: Phase 2 Localization & Layout Tests**
   - Add vehicle hub, cards, and modal translations in `vehicles.json` across `en`, `pl`, `de`, `ru`.
   - Write component unit tests for `VehiclesPage`, `VehicleCard`, and vehicle modals.
 
