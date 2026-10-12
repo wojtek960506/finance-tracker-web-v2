@@ -1,9 +1,8 @@
+import type { NetWorthCurrencyBreakdownDTO } from '@net-worth/api';
+import { formatCurrencyAmount } from '@net-worth/utils';
 import clsx from 'clsx';
 import { Landmark, TrendingUp } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-
-import type { NetWorthCurrencyBreakdownDTO } from '../api';
-import { formatCurrencyAmount } from '../utils';
 
 export type NetWorthCurrencyCardProps = {
   item: NetWorthCurrencyBreakdownDTO;

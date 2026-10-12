@@ -1,14 +1,13 @@
+import type {
+  ExcludedCategoryItemDTO,
+  NetWorthIndependenceMonthlyAveragesDTO,
+} from '@net-worth/api';
+import { formatCurrencyAmount } from '@net-worth/utils';
 import { ArrowDownRight, ArrowUpRight, Ban } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 import { useLanguage } from '@shared/hooks';
 import { Card } from '@shared/ui';
-
-import type {
-  ExcludedCategoryItemDTO,
-  NetWorthIndependenceMonthlyAveragesDTO,
-} from '../api';
-import { formatCurrencyAmount } from '../utils';
 
 import { NetWorthBreakdownRow } from './net-worth-breakdown-row';
 

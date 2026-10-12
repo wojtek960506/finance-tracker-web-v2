@@ -2,7 +2,7 @@ import type {
   ExcludedCategoryItemDTO,
   NetWorthIndependenceCapitalDTO,
   NetWorthIndependenceMonthlyAveragesDTO,
-} from '../api';
+} from '@net-worth/api';
 
 import { CapitalStructure } from './capital-structure';
 import { MonthlyCashflowDynamics } from './monthly-cashflow-dynamics';

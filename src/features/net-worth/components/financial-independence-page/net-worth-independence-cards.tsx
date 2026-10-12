@@ -1,17 +1,16 @@
-import { useTranslation } from 'react-i18next';
-
-import { useLanguage } from '@shared/hooks';
-
 import type {
   NetWorthIndependenceHorizonDTO,
   NetWorthIndependenceMonthlyAveragesDTO,
   NetWorthZeroIncomeBaselineDTO,
-} from '../api';
+} from '@net-worth/api';
 import {
   formatCurrencyAmount,
   formatHorizonYearsAndMonths,
   formatTruncatedDecimal,
-} from '../utils';
+} from '@net-worth/utils';
+import { useTranslation } from 'react-i18next';
+
+import { useLanguage } from '@shared/hooks';
 
 import { NetWorthIndependenceCard } from './net-worth-independence-card';
 

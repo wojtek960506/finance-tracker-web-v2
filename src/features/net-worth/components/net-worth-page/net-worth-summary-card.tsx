@@ -1,9 +1,11 @@
+import {
+  NET_WORTH_SUMMARY_CARD_STYLES,
+  type SummaryCardVariant,
+} from '@net-worth/consts';
+import { formatCurrencyAmount, formatPercentage } from '@net-worth/utils';
 import clsx from 'clsx';
 
 import { Card } from '@shared/ui';
-
-import { NET_WORTH_SUMMARY_CARD_STYLES, type SummaryCardVariant } from '../consts';
-import { formatCurrencyAmount, formatPercentage } from '../utils';
 
 export type NetWorthSummaryCardProps = {
   title: string;

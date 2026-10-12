@@ -1,12 +1,12 @@
+import { INDEPENDENCE_PERIOD_OPTIONS } from '@net-worth/consts';
+import { useNetWorthIndependence } from '@net-worth/hooks';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 
 import { LoadingCard } from '@shared/ui';
 
-import { INDEPENDENCE_PERIOD_OPTIONS } from '../consts';
-import { useNetWorthIndependence } from '../hooks';
+import { NetWorthEmptyState } from '../shared';
 
-import { NetWorthEmptyState } from './net-worth-empty-state';
 import { NetWorthIndependenceBreakdown } from './net-worth-independence-breakdown';
 import { NetWorthIndependenceCards } from './net-worth-independence-cards';
 

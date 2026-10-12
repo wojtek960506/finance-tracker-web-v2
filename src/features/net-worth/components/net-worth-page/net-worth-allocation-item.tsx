@@ -1,9 +1,8 @@
+import type { NetWorthAllocationItemDTO, NetWorthCategory } from '@net-worth/api';
+import { FALLBACK_CATEGORY_STYLE, NET_WORTH_CATEGORY_STYLES } from '@net-worth/consts';
+import { formatCurrencyAmount, formatPercentage } from '@net-worth/utils';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
-
-import type { NetWorthAllocationItemDTO, NetWorthCategory } from '../api';
-import { FALLBACK_CATEGORY_STYLE, NET_WORTH_CATEGORY_STYLES } from '../consts';
-import { formatCurrencyAmount, formatPercentage } from '../utils';
 
 export type NetWorthAllocationItemProps = {
   item: NetWorthAllocationItemDTO;

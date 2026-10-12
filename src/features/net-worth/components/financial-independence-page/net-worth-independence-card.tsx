@@ -1,12 +1,11 @@
+import {
+  type IndependenceCardVariant,
+  NET_WORTH_INDEPENDENCE_CARD_STYLES,
+} from '@net-worth/consts';
 import clsx from 'clsx';
 import type { ReactNode } from 'react';
 
 import { Card } from '@shared/ui';
-
-import {
-  type IndependenceCardVariant,
-  NET_WORTH_INDEPENDENCE_CARD_STYLES,
-} from '../consts';
 
 export type NetWorthIndependenceCardProps = {
   variant: IndependenceCardVariant;

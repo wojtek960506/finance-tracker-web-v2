@@ -1,12 +1,12 @@
+import { useNetWorth } from '@net-worth/hooks';
 import { useTranslation } from 'react-i18next';
 
 import { LoadingCard } from '@shared/ui';
 
-import { useNetWorth } from '../hooks';
+import { NetWorthEmptyState } from '../shared';
 
 import { NetWorthAllocationBreakdown } from './net-worth-allocation-breakdown';
 import { NetWorthCurrencyBreakdown } from './net-worth-currency-breakdown';
-import { NetWorthEmptyState } from './net-worth-empty-state';
 import { NetWorthSummaryCards } from './net-worth-summary-cards';
 
 export const NetWorthPage = () => {

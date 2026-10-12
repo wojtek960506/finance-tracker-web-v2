@@ -1,8 +1,7 @@
+import type { NetWorthTotalsDTO } from '@net-worth/api';
 import { useTranslation } from 'react-i18next';
 
 import { useLanguage } from '@shared/hooks';
-
-import type { NetWorthTotalsDTO } from '../api';
 
 import { NetWorthSummaryCard } from './net-worth-summary-card';
 

@@ -1,9 +1,8 @@
+import type { NetWorthAllocationItemDTO } from '@net-worth/api';
 import { useTranslation } from 'react-i18next';
 
 import { useLanguage } from '@shared/hooks';
 import { Card } from '@shared/ui';
-
-import type { NetWorthAllocationItemDTO } from '../api';
 
 import { NetWorthAllocationItem } from './net-worth-allocation-item';
 import { NetWorthAllocationProgressBar } from './net-worth-allocation-progress-bar';

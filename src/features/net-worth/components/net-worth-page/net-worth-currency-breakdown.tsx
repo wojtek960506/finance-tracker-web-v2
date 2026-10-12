@@ -1,10 +1,9 @@
+import type { NetWorthCurrencyBreakdownDTO } from '@net-worth/api';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { useLanguage } from '@shared/hooks';
 import { Card } from '@shared/ui';
-
-import type { NetWorthCurrencyBreakdownDTO } from '../api';
 
 import { NetWorthCurrencyCard } from './net-worth-currency-card';
 
