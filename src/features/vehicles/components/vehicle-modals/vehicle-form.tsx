@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import type { Vehicle, VehicleType } from '@vehicles/api';
+import type { VehicleType } from '@vehicles/api';
 import { VehicleTypeBadge } from '@vehicles/components/all-vehicles';
 import { DEFAULT_VEHICLE_TYPE, VEHICLE_TYPES } from '@vehicles/consts';
 import {

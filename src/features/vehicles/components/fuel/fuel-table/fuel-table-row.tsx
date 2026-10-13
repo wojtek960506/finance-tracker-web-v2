@@ -1,3 +1,4 @@
+import { VehicleItemActions } from '@vehicles/components/common';
 import {
   formatConsumption,
   formatCostPerKm,
@@ -10,8 +11,6 @@ import {
 } from '@vehicles/utils';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
-
-import { VehicleItemActions } from '../../common';
 
 import type { FuelTableRowProps } from './types';
 

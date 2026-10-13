@@ -1,10 +1,9 @@
+import { VehicleItemActions } from '@vehicles/components/common';
 import { formatDate, formatPln } from '@vehicles/utils';
 import { Package } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 import { Card } from '@shared/ui';
-
-import { VehicleItemActions } from '../../common';
 
 import type { EquipmentMobileCardProps } from './types';
 

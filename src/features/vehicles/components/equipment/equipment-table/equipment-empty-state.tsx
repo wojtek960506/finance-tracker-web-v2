@@ -1,7 +1,6 @@
+import { VehicleDomainEmptyState } from '@vehicles/components/common';
 import { Package } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-
-import { VehicleDomainEmptyState } from '../../common';
 
 import type { EquipmentEmptyStateProps } from './types';
 

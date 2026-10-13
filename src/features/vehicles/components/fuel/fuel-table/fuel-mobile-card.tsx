@@ -1,3 +1,4 @@
+import { VehicleItemActions } from '@vehicles/components/common';
 import {
   formatConsumption,
   formatCostPerKm,
@@ -13,8 +14,6 @@ import { Fuel } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 import { Card } from '@shared/ui';
-
-import { VehicleItemActions } from '../../common';
 
 import type { FuelMobileCardProps } from './types';
 

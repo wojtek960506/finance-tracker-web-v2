@@ -1,7 +1,6 @@
+import { VehicleItemActions } from '@vehicles/components/common';
 import { formatDate, formatPln } from '@vehicles/utils';
 import { useTranslation } from 'react-i18next';
-
-import { VehicleItemActions } from '../../common';
 
 import type { EquipmentTableRowProps } from './types';
 

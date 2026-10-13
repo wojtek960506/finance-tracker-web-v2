@@ -1,11 +1,11 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteFuelEntry } from '@vehicles/api';
+import { DeleteVehicleRecordModal } from '@vehicles/components/common';
 import { vehiclesQueryKeys } from '@vehicles/consts';
 import type { VehicleFuelEntryEnriched } from '@vehicles/types';
 import { useTranslation } from 'react-i18next';
 
 import { normalizeApiError } from '@shared/api/api-error';
-import { Button, Modal } from '@shared/ui';
 import { useToastStore } from '@store/toast-store';
 
 export type DeleteFuelEntryModalProps = {
@@ -24,7 +24,6 @@ export const DeleteFuelEntryModal = ({
   onSuccess,
 }: DeleteFuelEntryModalProps) => {
   const { t } = useTranslation('vehicles');
-  const { t: tCommon } = useTranslation('common');
   const queryClient = useQueryClient();
   const pushToast = useToastStore((state) => state.pushToast);
 
@@ -55,37 +54,16 @@ export const DeleteFuelEntryModal = ({
   if (!entry) return null;
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} ariaLabel={t('fuelPage.modals.deleteTitle')}>
-      <div className="flex flex-col gap-4" data-testid="delete-fuel-modal">
-        <header className="space-y-1">
-          <h2 className="text-xl font-semibold tracking-tight text-foreground">
-            {t('fuelPage.modals.deleteTitle')}
-          </h2>
-        </header>
-
-        <p className="text-sm text-fg">{t('fuelPage.modals.deletePrompt')}</p>
-        <p className="text-xs text-text-muted">{t('fuelPage.modals.deleteHint')}</p>
-
-        <div className="flex items-center justify-end gap-2 border-t border-card-border/40 pt-3">
-          <Button
-            variant="secondary"
-            onClick={onClose}
-            disabled={deleteMutation.isPending}
-          >
-            {tCommon('cancel')}
-          </Button>
-          <Button
-            variant="destructive"
-            onClick={() => void deleteMutation.mutateAsync()}
-            disabled={deleteMutation.isPending}
-            data-testid="confirm-delete-fuel-button"
-          >
-            {deleteMutation.isPending
-              ? tCommon('loading')
-              : t('fuelPage.modals.deleteConfirm')}
-          </Button>
-        </div>
-      </div>
-    </Modal>
+    <DeleteVehicleRecordModal
+      isOpen={isOpen}
+      onClose={onClose}
+      onConfirm={() => deleteMutation.mutateAsync()}
+      isPending={deleteMutation.isPending}
+      title={t('fuelPage.modals.deleteTitle')}
+      prompt={t('fuelPage.modals.deletePrompt')}
+      hint={t('fuelPage.modals.deleteHint')}
+      confirmLabel={t('fuelPage.modals.deleteConfirm')}
+      testIdPrefix="fuel"
+    />
   );
 };
