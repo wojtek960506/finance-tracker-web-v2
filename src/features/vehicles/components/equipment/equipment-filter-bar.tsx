@@ -4,7 +4,17 @@ import { useTranslation } from 'react-i18next';
 
 import { Button, DateInput, SearchFilterInput } from '@shared/ui';
 
-import type { EquipmentFilterBarProps } from './types';
+export type EquipmentFilters = {
+  search?: string;
+  startDate?: string;
+  endDate?: string;
+};
+
+export type EquipmentFilterBarProps = {
+  filters: EquipmentFilters;
+  onFiltersChange: (filters: EquipmentFilters) => void;
+  onAddEquipment: () => void;
+};
 
 export const EquipmentFilterBar = ({
   filters,

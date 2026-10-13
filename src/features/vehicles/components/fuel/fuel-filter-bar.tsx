@@ -4,7 +4,17 @@ import { useTranslation } from 'react-i18next';
 
 import { Button, DateInput, FilterPills } from '@shared/ui';
 
-import type { FuelFilterBarProps } from './types';
+export type FuelFilters = {
+  startDate?: string;
+  endDate?: string;
+  isFullTank?: boolean;
+};
+
+export type FuelFilterBarProps = {
+  filters: FuelFilters;
+  onFiltersChange: (filters: FuelFilters) => void;
+  onAddEntry: () => void;
+};
 
 export const FuelFilterBar = ({
   filters,
