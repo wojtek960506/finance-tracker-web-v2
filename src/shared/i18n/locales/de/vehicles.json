@@ -95,5 +95,44 @@
     "updateErrorTitle": "Fehler beim Aktualisieren des Fahrzeugs",
     "deletedTitle": "{{name}} erfolgreich gelöscht",
     "deleteErrorTitle": "Fehler beim Löschen des Fahrzeugs"
+  },
+  "overview": {
+    "totalSpentTitle": "Gesamtausgaben",
+    "viewAll": "Alle anzeigen",
+    "stats": {
+      "currentOdometer": "Aktueller Kilometerstand",
+      "distanceLogged": "Erfasste Distanz",
+      "refuelingSessions": "Tankvorgänge",
+      "maintenanceEvents": "Wartungseinträge"
+    },
+    "breakdown": {
+      "title": "Kostenaufschlüsselung",
+      "subtitle": "Detaillierte Kosten für Kraftstoff, Wartung und Ausstattung",
+      "fuelTitle": "Kraftstoff",
+      "totalFuel": "Kraftstoff gesamt",
+      "avgConsumption": "Ø Verbrauch",
+      "costPerKm": "Kosten pro km",
+      "maintenanceTitle": "Wartung & Reparatur",
+      "equipmentTitle": "Ausstattung",
+      "totalItems": "Artikel gesamt",
+      "viewSection": "Zu {{section}} wechseln"
+    },
+    "activity": {
+      "title": "Letzte Aktivitäten",
+      "subtitle": "Chronologischer Verlauf von Tankungen, Wartungen und Käufen",
+      "emptyTitle": "Noch keine Aktivitäten",
+      "emptyDescription": "Erfasste Tankungen, Wartungen und Ausstattungsgegenstände erscheinen hier.",
+      "fuelBadge": "Kraftstoff",
+      "maintenanceBadge": "Wartung",
+      "equipmentBadge": "Ausstattung",
+      "fullTank": "Vollgetankt",
+      "partialTank": "Teilbetankung",
+      "linkedTransaction": "Verknüpft"
+    },
+    "maintenanceSections": {
+      "own_maintenance": "Eigene Wartung",
+      "previous_owner_services": "Wartung Vorbesitzer",
+      "driving_licence_costs": "Führerscheinkosten"
+    }
   }
 }

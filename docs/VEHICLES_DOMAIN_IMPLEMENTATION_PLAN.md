@@ -76,8 +76,8 @@ src/features/vehicles/
 
 ```mermaid
 flowchart TD
-    P1["Phase 1: Foundation, Types & API Client Layer ✅"] --> P2["Phase 2: Global All-Vehicles Hub & Vehicle Management"]
-    P2 --> P3["Phase 3: Single-Vehicle Layout & Overview Dashboard"]
+    P1["Phase 1: Foundation, Types & API Client Layer ✅"] --> P2["Phase 2: Global All-Vehicles Hub & Vehicle Management ✅"]
+    P2 --> P3["Phase 3: Single-Vehicle Layout & Overview Dashboard ✅"]
     P3 --> P4["Phase 4: Fuel Refueling History & Consumption Metrics"]
     P4 --> P5["Phase 5: Maintenance & Equipment Domain Views"]
     P5 --> P6["Phase 6: Financial Transaction Linking UI"]
@@ -128,21 +128,21 @@ flowchart TD
 
 ---
 
-### ⏳ Phase 3: Single-Vehicle Layout & Overview Dashboard (`/vehicles/:vehicleSlug`)
+### ✅ Phase 3: Single-Vehicle Layout & Overview Dashboard (`/vehicles/:vehicleSlug`) (Completed)
 
 - [x] **Sub-phase 3.1: Single-Vehicle Layout & Navigation**
   - Implement `SingleVehicleLayout` with vehicle header info (name, badge, brand/model, production year, edit/delete actions).
   - "Back to all vehicles" link leading back to `/vehicles`.
   - Sub-navigation tabs: **Overview** (`/vehicles/:vehicleSlug`), **Fuel** (`/vehicles/:vehicleSlug/fuel`), **Equipment** (`/vehicles/:vehicleSlug/equipment`), **Maintenance** (`/vehicles/:vehicleSlug/maintenance`).
   - Vehicle data resolver hook `useVehicle` and `VehicleContext` for child view access.
-- [ ] **Sub-phase 3.2: Vehicle Overview Dashboard & Spending Breakdown**
+- [x] **Sub-phase 3.2: Vehicle Overview Dashboard & Spending Breakdown**
   - `VehicleSpendingBreakdown`: Total spent on this vehicle with category split:
     - ⛽ **Fuel**: Total PLN spent, total liters, average consumption (L/100 km), cost per km.
     - 🔧 **Maintenance**: Total PLN spent, broken down by section (`own_maintenance`, `previous_owner_services`, `driving_licence_costs`).
     - 🧰 **Equipment**: Total PLN spent, item count.
   - `VehicleStatsCards`: Current odometer, total distance logged, total refueling sessions, total maintenance events.
   - `RecentActivityFeed`: Combined chronological stream of recent fuel entries, maintenance, and equipment purchases.
-- [ ] **Sub-phase 3.3: Phase 3 Tests & Localization**
+- [x] **Sub-phase 3.3: Phase 3 Tests & Localization**
   - Add vehicle overview dashboard translations in `vehicles.json`.
   - Write unit tests for spending aggregations and overview dashboard components.
 

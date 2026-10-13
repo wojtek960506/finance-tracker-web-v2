@@ -95,5 +95,44 @@
     "updateErrorTitle": "Failed to update vehicle",
     "deletedTitle": "{{name}} deleted successfully",
     "deleteErrorTitle": "Failed to delete vehicle"
+  },
+  "overview": {
+    "totalSpentTitle": "Total Spent",
+    "viewAll": "View all",
+    "stats": {
+      "currentOdometer": "Current Odometer",
+      "distanceLogged": "Distance Logged",
+      "refuelingSessions": "Refueling Sessions",
+      "maintenanceEvents": "Maintenance Events"
+    },
+    "breakdown": {
+      "title": "Spending Breakdown",
+      "subtitle": "Detailed costs across fuel, maintenance, and equipment",
+      "fuelTitle": "Fuel",
+      "totalFuel": "Total Fuel",
+      "avgConsumption": "Avg Consumption",
+      "costPerKm": "Cost per km",
+      "maintenanceTitle": "Maintenance",
+      "equipmentTitle": "Equipment",
+      "totalItems": "Total Items",
+      "viewSection": "View {{section}}"
+    },
+    "activity": {
+      "title": "Recent Activity",
+      "subtitle": "Latest chronological records across all categories",
+      "emptyTitle": "No activity yet",
+      "emptyDescription": "Logged refueling sessions, maintenance repairs, and equipment purchases will appear here.",
+      "fuelBadge": "Fuel",
+      "maintenanceBadge": "Maintenance",
+      "equipmentBadge": "Equipment",
+      "fullTank": "Full tank",
+      "partialTank": "Partial tank",
+      "linkedTransaction": "Linked"
+    },
+    "maintenanceSections": {
+      "own_maintenance": "Own Maintenance",
+      "previous_owner_services": "Previous Owner Services",
+      "driving_licence_costs": "Driving Licence Costs"
+    }
   }
 }

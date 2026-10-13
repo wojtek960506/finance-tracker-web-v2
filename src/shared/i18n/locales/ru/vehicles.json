@@ -95,5 +95,44 @@
     "updateErrorTitle": "Не удалось обновить транспорт",
     "deletedTitle": "{{name}} успешно удален",
     "deleteErrorTitle": "Не удалось удалить транспорт"
+  },
+  "overview": {
+    "totalSpentTitle": "Всего потрачено",
+    "viewAll": "Показать все",
+    "stats": {
+      "currentOdometer": "Текущий пробег",
+      "distanceLogged": "Учтенное расстояние",
+      "refuelingSessions": "Заправки",
+      "maintenanceEvents": "Сервисные события"
+    },
+    "breakdown": {
+      "title": "Структура расходов",
+      "subtitle": "Детализация затрат на топливо, сервис и оснащение",
+      "fuelTitle": "Топливо",
+      "totalFuel": "Всего топлива",
+      "avgConsumption": "Средний расход",
+      "costPerKm": "Стоимость за км",
+      "maintenanceTitle": "Обслуживание и ремонт",
+      "equipmentTitle": "Оснащение",
+      "totalItems": "Всего предметов",
+      "viewSection": "Перейти в: {{section}}"
+    },
+    "activity": {
+      "title": "Недавняя активность",
+      "subtitle": "Хронологическая история заправок, сервиса и покупок",
+      "emptyTitle": "Нет активности",
+      "emptyDescription": "Здесь появятся зарегистрированные заправки, ремонты и покупки оснащения.",
+      "fuelBadge": "Топливо",
+      "maintenanceBadge": "Сервис",
+      "equipmentBadge": "Оснащение",
+      "fullTank": "Полный бак",
+      "partialTank": "Частично",
+      "linkedTransaction": "Связана"
+    },
+    "maintenanceSections": {
+      "own_maintenance": "Собственное ТО",
+      "previous_owner_services": "ТО прошлого владельца",
+      "driving_licence_costs": "Расходы на права"
+    }
   }
 }

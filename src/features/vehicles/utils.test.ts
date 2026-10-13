@@ -8,8 +8,10 @@ import type {
 } from './types';
 import {
   calculateGlobalSummary,
+  calculateVehicleOverviewData,
   calculateVehicleSpending,
-  formatConsumption,
+  formatCostPerKm,
+  formatDate,
   formatKm,
   formatLiters,
   formatPln,
@@ -168,9 +170,117 @@ describe('vehicles utils', () => {
       expect(formatLiters(45.678, 'en')).toBe('45.68 L');
     });
 
-    it('formats consumption', () => {
-      expect(formatConsumption(6.543, 'en')).toBe('6.54 L/100km');
-      expect(formatConsumption(null)).toBe('-');
+    it('formats cost per km', () => {
+      expect(formatCostPerKm(0.456, 'en')).toBe('0.46 PLN/km');
+      expect(formatCostPerKm(null)).toBe('-');
+    });
+
+    it('formats dates', () => {
+      expect(formatDate('2026-05-15T12:00:00Z', 'en')).toBe('May 15, 2026');
+      expect(formatDate('')).toBe('-');
+    });
+  });
+
+  describe('calculateVehicleOverviewData', () => {
+    it('aggregates fuel, maintenance, equipment and recent activity', () => {
+      const fuel = [
+        {
+          id: 'f1',
+          ownerId: 'u1',
+          vehicleId: 'v1',
+          date: '2026-03-01T10:00:00Z',
+          fuelLiters: 50,
+          isFullTank: true,
+          unitPricePln: 6.0,
+          costPln: 300,
+          odometerKm: 120000,
+          stationBrand: 'Shell',
+          stationAddress: 'Main St 1',
+          consumptionLPer100Km: 7.5,
+          costPerKmPln: 0.45,
+          distanceSincePreviousKm: 600,
+          distanceSincePreviousFullKm: 600,
+          fuelLitersToFull: 50,
+          costToFullPln: 300,
+          kmPerLiter: 13.33,
+          createdAt: '',
+          updatedAt: '',
+        },
+      ];
+
+      const maintenance = [
+        {
+          id: 'm1',
+          ownerId: 'u1',
+          vehicleId: 'v1',
+          section: 'own_maintenance' as const,
+          date: '2026-03-05T12:00:00Z',
+          costPln: 450,
+          odometerKm: 120200,
+          serviceProvider: 'Brake Specialist',
+          description: 'Replaced front pads',
+          createdAt: '',
+          updatedAt: '',
+        },
+      ];
+
+      const equipment = [
+        {
+          id: 'e1',
+          ownerId: 'u1',
+          vehicleId: 'v1',
+          itemName: 'Phone mount',
+          costPln: 100,
+          date: '2026-03-10T15:00:00Z',
+          description: 'Magnetic mount',
+          createdAt: '',
+          updatedAt: '',
+        },
+      ];
+
+      const result = calculateVehicleOverviewData(fuel, maintenance, equipment);
+
+      expect(result.totalSpentPln).toBe(850);
+      expect(result.fuel.totalSpentPln).toBe(300);
+      expect(result.fuel.totalLiters).toBe(50);
+      expect(result.fuel.avgConsumptionLPer100Km).toBe(7.5);
+      expect(result.fuel.costPerKmPln).toBe(0.45);
+      expect(result.fuel.entriesCount).toBe(1);
+
+      expect(result.maintenance.totalSpentPln).toBe(450);
+      expect(result.maintenance.entriesCount).toBe(1);
+      expect(result.maintenance.bySection.own_maintenance.costPln).toBe(450);
+      expect(result.maintenance.bySection.own_maintenance.count).toBe(1);
+      expect(result.maintenance.bySection.previous_owner_services.costPln).toBe(0);
+
+      expect(result.equipment.totalSpentPln).toBe(100);
+      expect(result.equipment.entriesCount).toBe(1);
+
+      expect(result.stats.currentOdometerKm).toBe(120200);
+      expect(result.stats.minOdometerKm).toBe(120000);
+      expect(result.stats.totalDistanceKm).toBe(200);
+      expect(result.stats.refuelingCount).toBe(1);
+      expect(result.stats.maintenanceCount).toBe(1);
+      expect(result.stats.equipmentCount).toBe(1);
+
+      expect(result.recentActivity).toHaveLength(3);
+      // Newest date first: e1 (March 10), m1 (March 5), f1 (March 1)
+      expect(result.recentActivity[0]?.id).toBe('e1');
+      expect(result.recentActivity[0]?.type).toBe('equipment');
+      expect(result.recentActivity[1]?.id).toBe('m1');
+      expect(result.recentActivity[1]?.type).toBe('maintenance');
+      expect(result.recentActivity[2]?.id).toBe('f1');
+      expect(result.recentActivity[2]?.type).toBe('fuel');
+    });
+
+    it('handles empty entries safely', () => {
+      const result = calculateVehicleOverviewData([], [], []);
+      expect(result.totalSpentPln).toBe(0);
+      expect(result.fuel.avgConsumptionLPer100Km).toBeNull();
+      expect(result.fuel.costPerKmPln).toBeNull();
+      expect(result.stats.currentOdometerKm).toBeNull();
+      expect(result.stats.totalDistanceKm).toBeNull();
+      expect(result.recentActivity).toEqual([]);
     });
   });
 });

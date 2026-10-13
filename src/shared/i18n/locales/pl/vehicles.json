@@ -95,5 +95,44 @@
     "updateErrorTitle": "Nie udało się zaktualizować pojazdu",
     "deletedTitle": "Pojazd {{name}} został usunięty",
     "deleteErrorTitle": "Nie udało się usunąć pojazdu"
+  },
+  "overview": {
+    "totalSpentTitle": "Łączne wydatki",
+    "viewAll": "Zobacz wszystkie",
+    "stats": {
+      "currentOdometer": "Aktualny przebieg",
+      "distanceLogged": "Zarejestrowany dystans",
+      "refuelingSessions": "Sesje tankowania",
+      "maintenanceEvents": "Wpisy serwisowe"
+    },
+    "breakdown": {
+      "title": "Rozbicie wydatków",
+      "subtitle": "Szczegółowe koszty paliwa, serwisu i wyposażenia",
+      "fuelTitle": "Paliwo",
+      "totalFuel": "Łącznie zatankowano",
+      "avgConsumption": "Średnie spalanie",
+      "costPerKm": "Koszt za kilometr",
+      "maintenanceTitle": "Serwis i naprawy",
+      "equipmentTitle": "Wyposażenie",
+      "totalItems": "Liczba elementów",
+      "viewSection": "Przejdź do: {{section}}"
+    },
+    "activity": {
+      "title": "Ostatnia aktywność",
+      "subtitle": "Chronologiczna historia tankowań, serwisu i zakupów",
+      "emptyTitle": "Brak aktywności",
+      "emptyDescription": "Zarejestrowane tankowania, wpisy serwisowe i zakupy wyposażenia pojawią się tutaj.",
+      "fuelBadge": "Paliwo",
+      "maintenanceBadge": "Serwis",
+      "equipmentBadge": "Wyposażenie",
+      "fullTank": "Do pełna",
+      "partialTank": "Częściowe",
+      "linkedTransaction": "Powiązana"
+    },
+    "maintenanceSections": {
+      "own_maintenance": "Własny serwis",
+      "previous_owner_services": "Serwis poprzedniego właściciela",
+      "driving_licence_costs": "Koszty prawa jazdy"
+    }
   }
 }
