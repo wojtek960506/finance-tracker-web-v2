@@ -12,4 +12,5 @@ export * from './loading-card';
 export * from './loading-state';
 export * from './modal';
 export * from './number-input';
+export * from './search-filter-input';
 export * from './toast';

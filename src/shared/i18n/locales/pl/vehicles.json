@@ -216,5 +216,67 @@
       "deletedTitle": "Tankowanie usunięte pomyślnie",
       "deleteErrorTitle": "Nie udało się usunąć tankowania"
     }
+  },
+  "equipmentPage": {
+    "title": "Wyposażenie i akcesoria",
+    "description": "Rejestruj i śledź akcesoria, wyposażenie oraz części kupione do pojazdu.",
+    "addEquipment": "Dodaj wyposażenie",
+    "summary": {
+      "totalSpending": "Łączny koszt wyposażenia",
+      "totalItems": "Liczba elementów"
+    },
+    "filter": {
+      "search": "Szukaj wyposażenia...",
+      "startDate": "Od daty",
+      "endDate": "Do daty",
+      "reset": "Wyczyść filtry"
+    },
+    "table": {
+      "date": "Data",
+      "itemName": "Nazwa przedmiotu",
+      "cost": "Koszt",
+      "description": "Opis",
+      "actions": "Akcje"
+    },
+    "empty": {
+      "title": "Brak wyposażenia",
+      "description": "Zapisuj akcesoria, części, narzędzia lub sprzęt zakupiony do tego pojazdu.",
+      "createFirst": "Dodaj pierwszy element",
+      "noMatching": "Brak wpisów spełniających wybrane filtry."
+    },
+    "modals": {
+      "createTitle": "Dodaj wyposażenie",
+      "createDescription": "Zapisz nowy element wyposażenia dla pojazdu {{name}}.",
+      "updateTitle": "Edytuj wyposażenie",
+      "updateDescription": "Zaktualizuj szczegóły elementu wyposażenia.",
+      "deleteTitle": "Usuń wyposażenie",
+      "deletePrompt": "Czy na pewno chcesz usunąć ten element wyposażenia?",
+      "deleteHint": "Ten wpis wyposażenia zostanie trwale usunięty.",
+      "deleteConfirm": "Usuń wyposażenie"
+    },
+    "form": {
+      "date": "Data",
+      "itemName": "Nazwa przedmiotu",
+      "itemNamePlaceholder": "np. Opony zimowe, Wideorejestrator, Bagażnik dachowy",
+      "cost": "Koszt (PLN)",
+      "costPlaceholder": "np. 450.00",
+      "description": "Opis",
+      "descriptionPlaceholder": "np. Model, numer seryjny, uwagi...",
+      "createSubmit": "Zapisz wyposażenie",
+      "updateSubmit": "Zapisz zmiany",
+      "errors": {
+        "dateRequired": "Data jest wymagana",
+        "itemNameRequired": "Nazwa przedmiotu jest wymagana",
+        "costPositive": "Koszt musi być większy od zera"
+      }
+    },
+    "toasts": {
+      "createdTitle": "Wyposażenie zostało pomyślnie dodane",
+      "createErrorTitle": "Nie udało się dodać wyposażenia",
+      "updatedTitle": "Wyposażenie zostało pomyślnie zaktualizowane",
+      "updateErrorTitle": "Nie udało się zaktualizować wyposażenia",
+      "deletedTitle": "Wyposażenie zostało pomyślnie usunięte",
+      "deleteErrorTitle": "Nie udało się usunąć wyposażenia"
+    }
   }
 }

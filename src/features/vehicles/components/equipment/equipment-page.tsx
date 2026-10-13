@@ -1,9 +1,137 @@
-import { SingleVehicleLayout } from '../single-vehicle';
+import { useEquipment } from '@vehicles/hooks';
+import type { VehicleEquipment } from '@vehicles/types';
+import { AlertCircle } from 'lucide-react';
+import { useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+
+import { Button, LoadingCard } from '@shared/ui';
+
+import { SingleVehicleLayout, useVehicleContext } from '../single-vehicle';
+
+import { EquipmentFilterBar, type EquipmentFilters } from './equipment-filter-bar';
+import {
+  CreateEquipmentModal,
+  DeleteEquipmentModal,
+  UpdateEquipmentModal,
+} from './equipment-modals';
+import { EquipmentSummaryCards } from './equipment-summary-cards';
+import { EquipmentTable } from './equipment-table';
+
+export const VehiclesEquipmentContent = () => {
+  const { t } = useTranslation('vehicles');
+  const { vehicle } = useVehicleContext();
+
+  const [filters, setFilters] = useState<EquipmentFilters>({});
+  const [isCreateOpen, setIsCreateOpen] = useState(false);
+  const [editingItem, setEditingItem] = useState<VehicleEquipment | null>(null);
+  const [deletingItem, setDeletingItem] = useState<VehicleEquipment | null>(null);
+
+  const queryParams = useMemo(() => {
+    const q: { startDate?: string; endDate?: string } = {};
+    if (filters.startDate) q.startDate = filters.startDate;
+    if (filters.endDate) q.endDate = filters.endDate;
+    return Object.keys(q).length > 0 ? q : undefined;
+  }, [filters.startDate, filters.endDate]);
+
+  const {
+    data: items = [],
+    isLoading,
+    isError,
+    error,
+    refetch,
+  } = useEquipment(vehicle.id, queryParams);
+
+  const filteredItems = useMemo(() => {
+    if (!filters.search) return items;
+    const query = filters.search.toLowerCase().trim();
+    return items.filter(
+      (item) =>
+        item.itemName.toLowerCase().includes(query) ||
+        (item.description && item.description.toLowerCase().includes(query)),
+    );
+  }, [items, filters.search]);
+
+  const hasFilters = Boolean(filters.search || filters.startDate || filters.endDate);
+
+  if (isLoading) {
+    return (
+      <div className="flex h-64 items-center justify-center p-4">
+        <LoadingCard
+          title={t('singleVehicle.loadingTitle')}
+          description={t('singleVehicle.loadingDescription')}
+          widthClassName="max-w-[35rem]"
+        />
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div
+        className="flex flex-col items-center justify-center gap-3 rounded-2xl border border-destructive/20 bg-destructive/5 p-8 text-center"
+        data-testid="vehicles-equipment-error"
+      >
+        <AlertCircle className="size-8 text-destructive" />
+        <p className="text-sm font-semibold text-fg">
+          {error?.message || t('toasts.updateErrorTitle')}
+        </p>
+        <Button variant="secondary" onClick={() => void refetch()}>
+          Retry
+        </Button>
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex flex-col gap-4 pb-6" data-testid="vehicles-equipment-content">
+      {/* Summary Cards */}
+      <EquipmentSummaryCards items={items} />
+
+      {/* Filter Bar & Action */}
+      <EquipmentFilterBar
+        filters={filters}
+        onFiltersChange={setFilters}
+        onAddEquipment={() => setIsCreateOpen(true)}
+      />
+
+      {/* Table / Mobile Cards */}
+      <EquipmentTable
+        items={filteredItems}
+        hasFilters={hasFilters}
+        onEditItem={(item) => setEditingItem(item)}
+        onDeleteItem={(item) => setDeletingItem(item)}
+        onAddFirstItem={() => setIsCreateOpen(true)}
+      />
+
+      {/* CRUD Modals */}
+      <CreateEquipmentModal
+        vehicleId={vehicle.id}
+        vehicleName={vehicle.name}
+        isOpen={isCreateOpen}
+        onClose={() => setIsCreateOpen(false)}
+      />
+
+      <UpdateEquipmentModal
+        vehicleId={vehicle.id}
+        item={editingItem}
+        isOpen={Boolean(editingItem)}
+        onClose={() => setEditingItem(null)}
+      />
+
+      <DeleteEquipmentModal
+        vehicleId={vehicle.id}
+        item={deletingItem}
+        isOpen={Boolean(deletingItem)}
+        onClose={() => setDeletingItem(null)}
+      />
+    </div>
+  );
+};
 
 export const VehiclesEquipmentPage = () => {
   return (
     <SingleVehicleLayout>
-      <div data-testid="vehicles-equipment-content">Vehicles Equipment</div>
+      <VehiclesEquipmentContent />
     </SingleVehicleLayout>
   );
 };

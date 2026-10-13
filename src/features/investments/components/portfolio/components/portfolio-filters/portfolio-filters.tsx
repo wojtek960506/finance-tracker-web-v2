@@ -2,8 +2,7 @@ import clsx from 'clsx';
 import { RotateCcw } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
-import { SearchFilterInput } from '@features/investments/components/shared';
-import { Button } from '@shared/ui';
+import { Button, SearchFilterInput } from '@shared/ui';
 
 import { PortfolioKindFilter } from './portfolio-kind-filter';
 import {

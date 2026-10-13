@@ -179,7 +179,7 @@ flowchart TD
   - `MaintenanceTable`: Date, Section, Service Provider, Odometer, Cost PLN, Description, linked transaction status.
   - `CreateMaintenanceModal` & `UpdateMaintenanceModal`.
   - `DeleteMaintenanceModal` confirmation dialog.
-- [ ] **Sub-phase 5.2: Equipment Domain View (`equipment/`)**
+- [x] **Sub-phase 5.2: Equipment Domain View (`equipment/`)**
   - `VehicleEquipmentPage`: Table/grid displaying equipment items (Item Name, Date, Cost PLN, Description, linked transaction status).
   - `CreateEquipmentModal` & `UpdateEquipmentModal`.
   - `DeleteEquipmentModal` confirmation dialog.

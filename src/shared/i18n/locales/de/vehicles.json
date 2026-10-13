@@ -216,5 +216,67 @@
       "deletedTitle": "Tankung erfolgreich gelöscht",
       "deleteErrorTitle": "Fehler beim Löschen der Tankung"
     }
+  },
+  "equipmentPage": {
+    "title": "Ausrüstung & Zubehör",
+    "description": "Erfassen und verfolgen Sie Zubehör, Teile und Ausrüstung für dieses Fahrzeug.",
+    "addEquipment": "Ausrüstung hinzufügen",
+    "summary": {
+      "totalSpending": "Gesamtausgaben für Ausrüstung",
+      "totalItems": "Gesamtzahl der Artikel"
+    },
+    "filter": {
+      "search": "Ausrüstung suchen...",
+      "startDate": "Von Datum",
+      "endDate": "Bis Datum",
+      "reset": "Filter zurücksetzen"
+    },
+    "table": {
+      "date": "Datum",
+      "itemName": "Artikelname",
+      "cost": "Kosten",
+      "description": "Beschreibung",
+      "actions": "Aktionen"
+    },
+    "empty": {
+      "title": "Keine Ausrüstung vorhanden",
+      "description": "Erfassen Sie Zubehör, Ersatzteile oder Werkzeuge für dieses Fahrzeug.",
+      "createFirst": "Erste Ausrüstung hinzufügen",
+      "noMatching": "Keine Einträge entsprechen den ausgewählten Filtern."
+    },
+    "modals": {
+      "createTitle": "Ausrüstung hinzufügen",
+      "createDescription": "Neuen Ausrüstungsgegenstand für {{name}} erfassen.",
+      "updateTitle": "Ausrüstung bearbeiten",
+      "updateDescription": "Details des Ausrüstungsgegenstands bearbeiten.",
+      "deleteTitle": "Ausrüstung löschen",
+      "deletePrompt": "Möchten Sie diesen Ausrüstungsgegenstand wirklich löschen?",
+      "deleteHint": "Dieser Eintrag wird dauerhaft gelöscht.",
+      "deleteConfirm": "Ausrüstung löschen"
+    },
+    "form": {
+      "date": "Datum",
+      "itemName": "Artikelname",
+      "itemNamePlaceholder": "z.B. Winterreifen, Dashcam, Dachträger",
+      "cost": "Kosten (PLN)",
+      "costPlaceholder": "z.B. 450.00",
+      "description": "Beschreibung",
+      "descriptionPlaceholder": "z.B. Modell, Seriennummer, Notizen...",
+      "createSubmit": "Ausrüstung speichern",
+      "updateSubmit": "Änderungen speichern",
+      "errors": {
+        "dateRequired": "Datum ist erforderlich",
+        "itemNameRequired": "Artikelname ist erforderlich",
+        "costPositive": "Kosten müssen positiv sein"
+      }
+    },
+    "toasts": {
+      "createdTitle": "Ausrüstung erfolgreich hinzugefügt",
+      "createErrorTitle": "Ausrüstung konnte nicht hinzugefügt werden",
+      "updatedTitle": "Ausrüstung erfolgreich aktualisiert",
+      "updateErrorTitle": "Ausrüstung konnte nicht aktualisiert werden",
+      "deletedTitle": "Ausrüstung erfolgreich gelöscht",
+      "deleteErrorTitle": "Ausrüstung konnte nicht gelöscht werden"
+    }
   }
 }
