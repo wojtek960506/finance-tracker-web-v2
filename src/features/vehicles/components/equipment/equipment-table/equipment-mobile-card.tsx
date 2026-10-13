@@ -1,5 +1,6 @@
 import { VehicleItemActions } from '@vehicles/components/common';
 import { formatDate, formatPln } from '@vehicles/utils';
+import clsx from 'clsx';
 import { Package } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
@@ -22,7 +23,12 @@ export const EquipmentMobileCard = ({
     >
       <div className="flex items-center justify-between gap-2 border-b border-border pb-2">
         <div className="flex items-center gap-2">
-          <div className="flex size-7 items-center justify-center rounded-lg bg-purple-500/10 text-purple-500">
+          <div
+            className={clsx(
+              'flex size-7 items-center justify-center rounded-lg',
+              'bg-purple-500/10 text-purple-500',
+            )}
+          >
             <Package className="size-3.5" />
           </div>
           <div>

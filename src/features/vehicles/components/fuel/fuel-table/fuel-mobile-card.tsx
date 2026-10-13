@@ -25,7 +25,12 @@ export const FuelMobileCard = ({ entry, onEdit, onDelete }: FuelMobileCardProps)
     <Card className="flex flex-col gap-2.5 p-3.5" data-testid={`fuel-card-${entry.id}`}>
       <div className="flex items-center justify-between gap-2 border-b border-border pb-2">
         <div className="flex items-center gap-2">
-          <div className="flex size-7 items-center justify-center rounded-lg bg-amber-500/10 text-amber-500">
+          <div
+            className={clsx(
+              'flex size-7 items-center justify-center rounded-lg',
+              'bg-amber-500/10 text-amber-500',
+            )}
+          >
             <Fuel className="size-3.5" />
           </div>
           <div>
@@ -42,7 +47,12 @@ export const FuelMobileCard = ({ entry, onEdit, onDelete }: FuelMobileCardProps)
 
         <div className="flex items-center gap-1">
           {entry.isFullTank && (
-            <span className="rounded bg-amber-500/10 px-1.5 py-0.5 text-[10px] font-semibold text-amber-500">
+            <span
+              className={clsx(
+                'rounded bg-amber-500/10 px-1.5 py-0.5 text-[10px]',
+                'font-semibold text-amber-500',
+              )}
+            >
               Full
             </span>
           )}

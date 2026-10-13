@@ -77,7 +77,12 @@ export const ActivityItemRow = ({ item }: ActivityItemRowProps) => {
             )}
           </div>
 
-          <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[11px] text-text-muted">
+          <div
+            className={clsx(
+              'flex flex-wrap items-center gap-x-2 gap-y-0.5',
+              'text-[11px] text-text-muted',
+            )}
+          >
             <span>{formatDate(item.date, lang)}</span>
 
             {typeof item.odometerKm === 'number' && (

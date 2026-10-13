@@ -46,7 +46,12 @@ export const RecentActivityFeed = ({ items }: RecentActivityFeedProps) => {
           className="flex flex-col items-center justify-center py-8 text-center"
           data-testid="activity-empty-state"
         >
-          <div className="flex size-10 items-center justify-center rounded-full bg-card-border/20 text-text-muted">
+          <div
+            className={clsx(
+              'flex size-10 items-center justify-center rounded-full',
+              'bg-card-border/20 text-text-muted',
+            )}
+          >
             <Inbox className="size-5" />
           </div>
           <p className="mt-2 text-xs font-semibold text-fg sm:text-sm">
@@ -59,7 +64,12 @@ export const RecentActivityFeed = ({ items }: RecentActivityFeedProps) => {
       )}
 
       {hasItems && (
-        <div className="flex flex-col divide-y divide-card-border/20 overflow-hidden rounded-xl border border-card-border/30">
+        <div
+          className={clsx(
+            'flex flex-col divide-y divide-card-border/20 overflow-hidden',
+            'rounded-xl border border-card-border/30',
+          )}
+        >
           {items.map((item) => (
             <ActivityItemRow key={`${item.type}-${item.id}`} item={item} />
           ))}

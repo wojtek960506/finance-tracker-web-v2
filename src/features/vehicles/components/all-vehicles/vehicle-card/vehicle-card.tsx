@@ -117,7 +117,12 @@ export const VehicleCard = ({ vehicle, onEdit, onDelete }: VehicleCardProps) => 
       </div>
 
       {/* Spending Breakdown Quick Stats */}
-      <div className="flex items-center justify-between border-t border-border/60 pt-2 text-xs text-text-muted">
+      <div
+        className={clsx(
+          'flex items-center justify-between border-t border-border/60 pt-2',
+          'text-xs text-text-muted',
+        )}
+      >
         <div className="flex items-center gap-3">
           <span>
             {t('card.fuel')}:{' '}

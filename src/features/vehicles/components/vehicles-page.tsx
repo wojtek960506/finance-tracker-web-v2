@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { Plus } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -40,7 +41,10 @@ export const VehiclesPage = () => {
 
   return (
     <div
-      className="mx-auto flex h-full min-h-0 w-full max-w-[120rem] flex-col gap-4 overflow-y-auto p-1 sm:p-2"
+      className={clsx(
+        'mx-auto flex h-full min-h-0 w-full max-w-[120rem] flex-col gap-4',
+        'overflow-y-auto p-1 sm:p-2',
+      )}
       data-testid="vehicles-page"
     >
       {/* Header & New Vehicle Action */}

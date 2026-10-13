@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { AlertCircle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
@@ -20,7 +21,10 @@ export const VehiclePageError = ({
 
   return (
     <div
-      className="flex flex-col items-center justify-center gap-3 rounded-2xl border border-destructive/20 bg-destructive/5 p-8 text-center"
+      className={clsx(
+        'flex flex-col items-center justify-center gap-3 rounded-2xl',
+        'border border-destructive/20 bg-destructive/5 p-8 text-center',
+      )}
       data-testid={testId}
     >
       <AlertCircle className="size-8 text-destructive" />
