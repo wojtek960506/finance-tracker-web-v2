@@ -1,10 +1,8 @@
+import { VehiclePageError, VehiclePageLoading } from '@vehicles/components/common';
 import { useEquipment } from '@vehicles/hooks';
 import type { VehicleEquipment } from '@vehicles/types';
-import { AlertCircle } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-
-import { Button, LoadingCard } from '@shared/ui';
 
 import { SingleVehicleLayout, useVehicleContext } from '../single-vehicle';
 
@@ -54,31 +52,17 @@ export const VehiclesEquipmentContent = () => {
   const hasFilters = Boolean(filters.search || filters.startDate || filters.endDate);
 
   if (isLoading) {
-    return (
-      <div className="flex h-64 items-center justify-center p-4">
-        <LoadingCard
-          title={t('singleVehicle.loadingTitle')}
-          description={t('singleVehicle.loadingDescription')}
-          widthClassName="max-w-[35rem]"
-        />
-      </div>
-    );
+    return <VehiclePageLoading />;
   }
 
   if (isError) {
     return (
-      <div
-        className="flex flex-col items-center justify-center gap-3 rounded-2xl border border-destructive/20 bg-destructive/5 p-8 text-center"
-        data-testid="vehicles-equipment-error"
-      >
-        <AlertCircle className="size-8 text-destructive" />
-        <p className="text-sm font-semibold text-fg">
-          {error?.message || t('toasts.updateErrorTitle')}
-        </p>
-        <Button variant="secondary" onClick={() => void refetch()}>
-          Retry
-        </Button>
-      </div>
+      <VehiclePageError
+        error={error}
+        fallbackMessage={t('toasts.updateErrorTitle')}
+        onRetry={() => void refetch()}
+        testId="vehicles-equipment-error"
+      />
     );
   }
 
