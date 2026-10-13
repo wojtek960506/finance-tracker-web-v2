@@ -9,30 +9,18 @@ import {
   formatUnitPrice,
 } from '@vehicles/utils';
 import clsx from 'clsx';
-import { Fuel, MoreVertical, Pencil, Trash2 } from 'lucide-react';
+import { Fuel } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
-import { Button, Card, Dropdown } from '@shared/ui';
+import { Card } from '@shared/ui';
+
+import { VehicleItemActions } from '../../common';
 
 import type { FuelMobileCardProps } from './types';
 
 export const FuelMobileCard = ({ entry, onEdit, onDelete }: FuelMobileCardProps) => {
   const { t, i18n } = useTranslation('vehicles');
   const lang = i18n.language;
-
-  const dropdownItems = [
-    {
-      label: t('actions.edit'),
-      icon: <Pencil className="size-3.5" />,
-      onSelect: onEdit,
-    },
-    {
-      label: t('actions.delete'),
-      icon: <Trash2 className="size-3.5" />,
-      onSelect: onDelete,
-      isDestructive: true,
-    },
-  ];
 
   return (
     <Card className="flex flex-col gap-2.5 p-3.5" data-testid={`fuel-card-${entry.id}`}>
@@ -59,19 +47,7 @@ export const FuelMobileCard = ({ entry, onEdit, onDelete }: FuelMobileCardProps)
               Full
             </span>
           )}
-          <Dropdown
-            trigger={
-              <Button
-                variant="ghost"
-                size="icon"
-                className="size-7"
-                aria-label={t('card.actionsMenu')}
-              >
-                <MoreVertical className="size-3.5" />
-              </Button>
-            }
-            items={dropdownItems}
-          />
+          <VehicleItemActions mode="dropdown" onEdit={onEdit} onDelete={onDelete} />
         </div>
       </div>
 

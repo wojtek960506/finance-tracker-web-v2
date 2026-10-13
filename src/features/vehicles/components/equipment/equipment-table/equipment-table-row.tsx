@@ -1,13 +1,12 @@
 import { formatDate, formatPln } from '@vehicles/utils';
-import { Pencil, Trash } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
-import { Button } from '@shared/ui';
+import { VehicleItemActions } from '../../common';
 
 import type { EquipmentTableRowProps } from './types';
 
 export const EquipmentTableRow = ({ item, onEdit, onDelete }: EquipmentTableRowProps) => {
-  const { t, i18n } = useTranslation('vehicles');
+  const { i18n } = useTranslation('vehicles');
   const lang = i18n.language;
 
   return (
@@ -32,28 +31,7 @@ export const EquipmentTableRow = ({ item, onEdit, onDelete }: EquipmentTableRowP
       </td>
 
       <td className="px-3 py-3 text-right">
-        <div className="flex items-center justify-end gap-1">
-          <Button
-            type="button"
-            variant="secondary"
-            size="icon"
-            onClick={onEdit}
-            title={t('actions.edit')}
-            aria-label={t('actions.edit')}
-          >
-            <Pencil />
-          </Button>
-          <Button
-            type="button"
-            variant="destructive"
-            size="icon"
-            onClick={onDelete}
-            title={t('actions.delete')}
-            aria-label={t('actions.delete')}
-          >
-            <Trash />
-          </Button>
-        </div>
+        <VehicleItemActions onEdit={onEdit} onDelete={onDelete} className="justify-end" />
       </td>
     </tr>
   );

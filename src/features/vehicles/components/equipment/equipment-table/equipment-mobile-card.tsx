@@ -1,8 +1,10 @@
 import { formatDate, formatPln } from '@vehicles/utils';
-import { Package, Pencil, Trash } from 'lucide-react';
+import { Package } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
-import { Button, Card } from '@shared/ui';
+import { Card } from '@shared/ui';
+
+import { VehicleItemActions } from '../../common';
 
 import type { EquipmentMobileCardProps } from './types';
 
@@ -32,28 +34,7 @@ export const EquipmentMobileCard = ({
           </div>
         </div>
 
-        <div className="flex items-center gap-1">
-          <Button
-            type="button"
-            variant="secondary"
-            size="icon"
-            onClick={onEdit}
-            title={t('actions.edit')}
-            aria-label={t('actions.edit')}
-          >
-            <Pencil />
-          </Button>
-          <Button
-            type="button"
-            variant="destructive"
-            size="icon"
-            onClick={onDelete}
-            title={t('actions.delete')}
-            aria-label={t('actions.delete')}
-          >
-            <Trash />
-          </Button>
-        </div>
+        <VehicleItemActions onEdit={onEdit} onDelete={onDelete} />
       </div>
 
       <div className="flex items-baseline justify-between text-xs">
