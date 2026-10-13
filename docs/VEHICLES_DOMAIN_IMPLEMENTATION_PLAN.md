@@ -148,24 +148,24 @@ flowchart TD
 
 ---
 
-### ⏳ Phase 4: Fuel Refueling History & Dynamic Metrics UI (`/vehicles/:vehicleSlug/fuel`)
+### ✅ Phase 4: Fuel Refueling History & Dynamic Metrics UI (`/vehicles/:vehicleSlug/fuel`) (Completed)
 
-- [ ] **Sub-phase 4.1: Fuel Calculation Helpers & UI Formatters**
-  - Implement pure utility formatters in `src/features/vehicles/utils.ts` for consumption (`L/100km`), cost per km (`PLN/km`), efficiency (`km/L`), and delta distances.
-- [ ] **Sub-phase 4.2: Fuel Filter Bar & Summary Header**
+- [x] **Sub-phase 4.1: Fuel Calculation Helpers & UI Formatters**
+  - Implement pure utility formatters in `src/features/vehicles/utils.ts` for consumption (`L/100km`), cost per km (`PLN/km`), efficiency (`km/L`), unit price (`PLN/L`), and delta distances (`+XXX km`).
+- [x] **Sub-phase 4.2: Fuel Filter Bar & Summary Header**
   - Date range picker (`startDate`, `endDate`).
   - Full-tank only toggle (`isFullTank`).
-  - Quick summary header (total fuel volume pumped, total cost PLN, recent average consumption).
-- [ ] **Sub-phase 4.3: Fuel Entries Table & Mobile Card List**
+  - Quick summary header (total fuel volume pumped, total cost PLN, recent average consumption, average unit price).
+- [x] **Sub-phase 4.3: Fuel Entries Table & Mobile Card List**
   - Columns: Date, Odometer reading (`km`), Delta distance (`+km`), Liters, Unit Price (`PLN/L`), Cost (`PLN`), Gas Station brand & address, Full Tank badge.
   - Dynamic metric badge: Consumption `L/100km` and Cost/km for consecutive full-tank fill-ups.
-- [ ] **Sub-phase 4.4: Fuel Entry CRUD Modals**
+- [x] **Sub-phase 4.4: Fuel Entry CRUD Modals**
   - `CreateFuelEntryModal`: Form with auto-calculation helper between liters, unit price, and total cost.
   - `UpdateFuelEntryModal`: Form to adjust existing fuel log records.
   - `DeleteFuelEntryModal`: Confirmation dialog.
-- [ ] **Sub-phase 4.5: Phase 4 Tests & Localization**
-  - Add fuel table and form translations.
-  - Unit tests for fuel formatters and table component rendering.
+- [x] **Sub-phase 4.5: Phase 4 Tests & Localization**
+  - Add fuel table, summary, filters, and form translations across all 4 locales (`en`, `pl`, `de`, `ru`).
+  - Unit tests for fuel formatters and fuel page component rendering.
 
 ---
 

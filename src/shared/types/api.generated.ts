@@ -3926,7 +3926,6 @@ export interface components {
             id: string;
             ownerId: string;
             vehicleId: string;
-            sourceRow?: number;
             date: unknown;
             itemName: string;
             costPln: number;
@@ -3966,7 +3965,6 @@ export interface components {
             id: string;
             ownerId: string;
             vehicleId: string;
-            sourceRow?: number;
             date: unknown;
             fuelLiters: number;
             isFullTank: boolean;
@@ -3984,7 +3982,6 @@ export interface components {
             id: string;
             ownerId: string;
             vehicleId: string;
-            sourceRow?: number;
             date: unknown;
             fuelLiters: number;
             isFullTank: boolean;
@@ -4030,7 +4027,6 @@ export interface components {
             id: string;
             ownerId: string;
             vehicleId: string;
-            sourceRow?: number;
             /** @enum {string} */
             section: "own_maintenance" | "previous_owner_services" | "driving_licence_costs";
             date: unknown;
@@ -5037,7 +5033,6 @@ export interface components {
             id: string;
             ownerId: string;
             vehicleId: string;
-            sourceRow?: number;
             /** Format: date-time */
             date: string;
             itemName: string;
@@ -5082,7 +5077,6 @@ export interface components {
             id: string;
             ownerId: string;
             vehicleId: string;
-            sourceRow?: number;
             /** Format: date-time */
             date: string;
             fuelLiters: number;
@@ -5103,7 +5097,6 @@ export interface components {
             id: string;
             ownerId: string;
             vehicleId: string;
-            sourceRow?: number;
             /** Format: date-time */
             date: string;
             fuelLiters: number;
@@ -5154,7 +5147,6 @@ export interface components {
             id: string;
             ownerId: string;
             vehicleId: string;
-            sourceRow?: number;
             /** @enum {string} */
             section: "own_maintenance" | "previous_owner_services" | "driving_licence_costs";
             /** Format: date-time */

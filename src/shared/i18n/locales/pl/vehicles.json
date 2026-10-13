@@ -134,5 +134,87 @@
       "previous_owner_services": "Serwis poprzedniego właściciela",
       "driving_licence_costs": "Koszty prawa jazdy"
     }
+  },
+  "fuelPage": {
+    "title": "Historia tankowań",
+    "description": "Historia tankowań, statystyki spalania oraz dane stacji paliw.",
+    "newEntry": "Dodaj tankowanie",
+    "summary": {
+      "totalVolume": "Zatankowane paliwo",
+      "totalCost": "Wydano łącznie",
+      "avgConsumption": "Średnie spalanie",
+      "avgUnitPrice": "Średnia cena/L"
+    },
+    "filters": {
+      "startDate": "Data od",
+      "endDate": "Data do",
+      "all": "Wszystkie",
+      "fullTankOnly": "Tylko do pełna",
+      "reset": "Wyczyść filtry"
+    },
+    "table": {
+      "date": "Data",
+      "odometer": "Przebieg",
+      "distance": "Dystans",
+      "volume": "Paliwo",
+      "unitPrice": "Cena/L",
+      "cost": "Koszt",
+      "consumption": "Spalanie",
+      "costPerKm": "Koszt/km",
+      "station": "Stacja paliw",
+      "actions": "Opcje"
+    },
+    "empty": {
+      "title": "Brak wpisów tankowania",
+      "description": "Zapisuj tankowania, aby monitorować ilość paliwa, spalanie (L/100 km) i koszty.",
+      "createFirst": "Dodaj pierwsze tankowanie",
+      "noMatching": "Brak wpisów spełniających wybrane kryteria filtrów."
+    },
+    "modals": {
+      "createTitle": "Dodaj tankowanie",
+      "createDescription": "Zarejestruj nowe tankowanie dla {{name}}.",
+      "updateTitle": "Edytuj tankowanie",
+      "updateDescription": "Zaktualizuj szczegóły wpisu tankowania.",
+      "deleteTitle": "Usuń tankowanie",
+      "deletePrompt": "Czy na pewno chcesz usunąć ten wpis tankowania?",
+      "deleteHint": "Ten wpis oraz powiązane z nim obliczenia zostaną trwale usunięte.",
+      "deleteConfirm": "Usuń tankowanie"
+    },
+    "form": {
+      "date": "Data",
+      "odometer": "Przebieg (km)",
+      "odometerPlaceholder": "np. 154200",
+      "fuelLiters": "Paliwo (L)",
+      "fuelLitersPlaceholder": "np. 45.50",
+      "unitPrice": "Cena jednostkowa (PLN/L)",
+      "unitPricePlaceholder": "np. 6.45",
+      "cost": "Koszt całkowity (PLN)",
+      "costPlaceholder": "np. 293.48",
+      "isFullTank": "Tankowanie do pełna",
+      "isFullTankHint": "Zaznacz, jeśli zatankowano do pełna (wymagane do obliczenia spalania)",
+      "stationBrand": "Marka stacji",
+      "stationBrandPlaceholder": "np. Orlen, Shell, BP",
+      "stationAddress": "Adres stacji",
+      "stationAddressPlaceholder": "np. ul. Główna 12",
+      "description": "Notatki",
+      "descriptionPlaceholder": "Dodatkowe informacje...",
+      "createSubmit": "Zapisz tankowanie",
+      "updateSubmit": "Zapisz zmiany",
+      "errors": {
+        "dateRequired": "Data jest wymagana",
+        "fuelLitersPositive": "Ilość paliwa musi być większa od zera",
+        "unitPricePositive": "Cena za litr musi być większa od zera",
+        "costPositive": "Koszt musi być większy od zera",
+        "odometerNonNegative": "Przebieg nie może być ujemny"
+      }
+    },
+    "toasts": {
+      "createdTitle": "Tankowanie dodane pomyślnie",
+      "createErrorTitle": "Nie udało się dodać tankowania",
+      "updatedTitle": "Tankowanie zaktualizowane pomyślnie",
+      "updateErrorTitle": "Nie udało się zaktualizować tankowania",
+      "deletedTitle": "Tankowanie usunięte pomyślnie",
+      "deleteErrorTitle": "Nie udało się usunąć tankowania"
+    }
   }
 }

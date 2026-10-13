@@ -134,5 +134,87 @@
       "previous_owner_services": "Wartung Vorbesitzer",
       "driving_licence_costs": "Führerscheinkosten"
     }
+  },
+  "fuelPage": {
+    "title": "Tankprotokoll",
+    "description": "Verlauf der Tankungen, Verbrauchsstatistiken und Tankstellendetails.",
+    "newEntry": "Tankung hinzufügen",
+    "summary": {
+      "totalVolume": "Kraftstoff gesamt",
+      "totalCost": "Gesamt ausgegeben",
+      "avgConsumption": "Ø Verbrauch",
+      "avgUnitPrice": "Ø Preis/L"
+    },
+    "filters": {
+      "startDate": "Datum von",
+      "endDate": "Datum bis",
+      "all": "Alle",
+      "fullTankOnly": "Nur Vollbetankung",
+      "reset": "Filter zurücksetzen"
+    },
+    "table": {
+      "date": "Datum",
+      "odometer": "Kilometerstand",
+      "distance": "Distanz",
+      "volume": "Menge",
+      "unitPrice": "Preis/L",
+      "cost": "Kosten",
+      "consumption": "Verbrauch",
+      "costPerKm": "Kosten/km",
+      "station": "Tankstelle",
+      "actions": "Aktionen"
+    },
+    "empty": {
+      "title": "Keine Tankeinträge vorhanden",
+      "description": "Erfassen Sie Tankvorgänge, um Kraftstoffmenge, Verbrauch (L/100 km) und Kosten zu überwachen.",
+      "createFirst": "Erste Tankung hinzufügen",
+      "noMatching": "Keine Einträge entsprechen den ausgewählten Filtern."
+    },
+    "modals": {
+      "createTitle": "Tankung hinzufügen",
+      "createDescription": "Neuen Tankeintrag für {{name}} erfassen.",
+      "updateTitle": "Tankung bearbeiten",
+      "updateDescription": "Details des Tankeintrags aktualisieren.",
+      "deleteTitle": "Tankung löschen",
+      "deletePrompt": "Möchten Sie diesen Tankeintrag wirklich löschen?",
+      "deleteHint": "Dieser Eintrag und die zugehörigen Berechnungen werden dauerhaft gelöscht.",
+      "deleteConfirm": "Tankung löschen"
+    },
+    "form": {
+      "date": "Datum",
+      "odometer": "Kilometerstand (km)",
+      "odometerPlaceholder": "z. B. 154200",
+      "fuelLiters": "Kraftstoffmenge (L)",
+      "fuelLitersPlaceholder": "z. B. 45.50",
+      "unitPrice": "Einzelpreis (PLN/L)",
+      "unitPricePlaceholder": "z. B. 6.45",
+      "cost": "Gesamtkosten (PLN)",
+      "costPlaceholder": "z. B. 293.48",
+      "isFullTank": "Vollbetankung",
+      "isFullTankHint": "Als vollgetankt markieren, um den Verbrauch zu berechnen",
+      "stationBrand": "Tankstellenmarke",
+      "stationBrandPlaceholder": "z. B. Orlen, Shell, BP",
+      "stationAddress": "Tankstellenadresse",
+      "stationAddressPlaceholder": "z. B. Hauptstraße 12",
+      "description": "Notizen",
+      "descriptionPlaceholder": "Zusätzliche Notizen...",
+      "createSubmit": "Tankung speichern",
+      "updateSubmit": "Änderungen speichern",
+      "errors": {
+        "dateRequired": "Datum ist erforderlich",
+        "fuelLitersPositive": "Kraftstoffmenge muss positiv sein",
+        "unitPricePositive": "Einzelpreis muss positiv sein",
+        "costPositive": "Gesamtkosten müssen positiv sein",
+        "odometerNonNegative": "Kilometerstand darf nicht negativ sein"
+      }
+    },
+    "toasts": {
+      "createdTitle": "Tankung erfolgreich hinzugefügt",
+      "createErrorTitle": "Fehler beim Hinzufügen der Tankung",
+      "updatedTitle": "Tankung erfolgreich aktualisiert",
+      "updateErrorTitle": "Fehler beim Aktualisieren der Tankung",
+      "deletedTitle": "Tankung erfolgreich gelöscht",
+      "deleteErrorTitle": "Fehler beim Löschen der Tankung"
+    }
   }
 }

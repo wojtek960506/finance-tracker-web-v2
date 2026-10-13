@@ -134,5 +134,87 @@
       "previous_owner_services": "Previous Owner Services",
       "driving_licence_costs": "Driving Licence Costs"
     }
+  },
+  "fuelPage": {
+    "title": "Fuel Logs",
+    "description": "Refueling history, consumption statistics, and station details.",
+    "newEntry": "Add Refueling",
+    "summary": {
+      "totalVolume": "Total Volume",
+      "totalCost": "Total Spent",
+      "avgConsumption": "Avg Consumption",
+      "avgUnitPrice": "Avg Unit Price"
+    },
+    "filters": {
+      "startDate": "From Date",
+      "endDate": "To Date",
+      "all": "All",
+      "fullTankOnly": "Full tank only",
+      "reset": "Reset Filters"
+    },
+    "table": {
+      "date": "Date",
+      "odometer": "Odometer",
+      "distance": "Distance",
+      "volume": "Volume",
+      "unitPrice": "Unit Price",
+      "cost": "Cost",
+      "consumption": "Consumption",
+      "costPerKm": "Cost/km",
+      "station": "Gas Station",
+      "actions": "Actions"
+    },
+    "empty": {
+      "title": "No refueling entries",
+      "description": "Log your fill-ups to monitor fuel volume, consumption (L/100 km), and running costs.",
+      "createFirst": "Add first refueling",
+      "noMatching": "No refueling records match the selected filters."
+    },
+    "modals": {
+      "createTitle": "Add Refueling",
+      "createDescription": "Record a new fuel log entry for {{name}}.",
+      "updateTitle": "Edit Refueling",
+      "updateDescription": "Update refueling record details.",
+      "deleteTitle": "Delete Refueling",
+      "deletePrompt": "Are you sure you want to delete this refueling record?",
+      "deleteHint": "This fuel entry and its calculations will be permanently deleted.",
+      "deleteConfirm": "Delete Refueling"
+    },
+    "form": {
+      "date": "Date",
+      "odometer": "Odometer (km)",
+      "odometerPlaceholder": "e.g. 154200",
+      "fuelLiters": "Fuel Liters (L)",
+      "fuelLitersPlaceholder": "e.g. 45.50",
+      "unitPrice": "Unit Price (PLN/L)",
+      "unitPricePlaceholder": "e.g. 6.45",
+      "cost": "Total Cost (PLN)",
+      "costPlaceholder": "e.g. 293.48",
+      "isFullTank": "Full tank fill-up",
+      "isFullTankHint": "Mark as full tank to calculate consumption",
+      "stationBrand": "Gas Station Brand",
+      "stationBrandPlaceholder": "e.g. Orlen, Shell, BP",
+      "stationAddress": "Station Address",
+      "stationAddressPlaceholder": "e.g. Main St. 12",
+      "description": "Notes",
+      "descriptionPlaceholder": "Additional notes...",
+      "createSubmit": "Save Refueling",
+      "updateSubmit": "Save Changes",
+      "errors": {
+        "dateRequired": "Date is required",
+        "fuelLitersPositive": "Fuel liters must be positive",
+        "unitPricePositive": "Unit price must be positive",
+        "costPositive": "Total cost must be positive",
+        "odometerNonNegative": "Odometer reading cannot be negative"
+      }
+    },
+    "toasts": {
+      "createdTitle": "Refueling added successfully",
+      "createErrorTitle": "Failed to add refueling",
+      "updatedTitle": "Refueling updated successfully",
+      "updateErrorTitle": "Failed to update refueling",
+      "deletedTitle": "Refueling deleted successfully",
+      "deleteErrorTitle": "Failed to delete refueling"
+    }
   }
 }

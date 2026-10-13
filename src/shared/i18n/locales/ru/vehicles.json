@@ -134,5 +134,87 @@
       "previous_owner_services": "ТО прошлого владельца",
       "driving_licence_costs": "Расходы на права"
     }
+  },
+  "fuelPage": {
+    "title": "История заправок",
+    "description": "История заправок, статистика расхода топлива и данные АЗС.",
+    "newEntry": "Добавить заправку",
+    "summary": {
+      "totalVolume": "Всего топлива",
+      "totalCost": "Всего потрачено",
+      "avgConsumption": "Средний расход",
+      "avgUnitPrice": "Средняя цена/L"
+    },
+    "filters": {
+      "startDate": "Дата от",
+      "endDate": "Дата до",
+      "all": "Все",
+      "fullTankOnly": "Только полный бак",
+      "reset": "Сбросить фильтры"
+    },
+    "table": {
+      "date": "Дата",
+      "odometer": "Пробег",
+      "distance": "Расстояние",
+      "volume": "Объем",
+      "unitPrice": "Цена/L",
+      "cost": "Стоимость",
+      "consumption": "Расход",
+      "costPerKm": "Стоимость/км",
+      "station": "АЗС",
+      "actions": "Действия"
+    },
+    "empty": {
+      "title": "Нет записей о заправках",
+      "description": "Учитывайте заправки, чтобы отслеживать объем топлива, расход (L/100 км) и затраты.",
+      "createFirst": "Добавить первую заправку",
+      "noMatching": "Нет записей, соответствующих выбранным фильтрам."
+    },
+    "modals": {
+      "createTitle": "Добавить заправку",
+      "createDescription": "Зафиксируйте новую запись о заправке для {{name}}.",
+      "updateTitle": "Редактировать заправку",
+      "updateDescription": "Обновите сведения о заправке.",
+      "deleteTitle": "Удалить заправку",
+      "deletePrompt": "Вы уверены, что хотите удалить эту запись о заправке?",
+      "deleteHint": "Эта запись и связанные с ней расчеты будут удалены безвозвратно.",
+      "deleteConfirm": "Удалить заправку"
+    },
+    "form": {
+      "date": "Дата",
+      "odometer": "Пробег (км)",
+      "odometerPlaceholder": "например, 154200",
+      "fuelLiters": "Объем топлива (L)",
+      "fuelLitersPlaceholder": "например, 45.50",
+      "unitPrice": "Цена за литр (PLN/L)",
+      "unitPricePlaceholder": "например, 6.45",
+      "cost": "Общая стоимость (PLN)",
+      "costPlaceholder": "например, 293.48",
+      "isFullTank": "Заправка до полного бака",
+      "isFullTankHint": "Отметьте, если бак был заправлен полностью (требуется для расчета расхода)",
+      "stationBrand": "Бренд АЗС",
+      "stationBrandPlaceholder": "например, Orlen, Shell, BP",
+      "stationAddress": "Адрес АЗС",
+      "stationAddressPlaceholder": "например, ул. Главная 12",
+      "description": "Заметки",
+      "descriptionPlaceholder": "Дополнительные сведения...",
+      "createSubmit": "Сохранить заправку",
+      "updateSubmit": "Сохранить изменения",
+      "errors": {
+        "dateRequired": "Дата обязательна",
+        "fuelLitersPositive": "Объем топлива должен быть больше нуля",
+        "unitPricePositive": "Цена за литр должна быть больше нуля",
+        "costPositive": "Стоимость должна быть больше нуля",
+        "odometerNonNegative": "Пробег не может быть отрицательным"
+      }
+    },
+    "toasts": {
+      "createdTitle": "Заправка успешно добавлена",
+      "createErrorTitle": "Не удалось добавить заправку",
+      "updatedTitle": "Заправка успешно обновлена",
+      "updateErrorTitle": "Не удалось обновить заправку",
+      "deletedTitle": "Заправка успешно удалена",
+      "deleteErrorTitle": "Не удалось удалить заправку"
+    }
   }
 }

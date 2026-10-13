@@ -4,6 +4,7 @@ export * from './collapsible';
 export * from './date-input';
 export * from './drawer';
 export * from './dropdown';
+export * from './filter-pills';
 export * from './input';
 export * from './label';
 export * from './link';

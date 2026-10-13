@@ -12,9 +12,11 @@ import {
   calculateVehicleSpending,
   formatCostPerKm,
   formatDate,
+  formatDeltaKm,
   formatKm,
   formatLiters,
   formatPln,
+  formatUnitPrice,
 } from './utils';
 
 describe('vehicles utils', () => {
@@ -178,6 +180,16 @@ describe('vehicles utils', () => {
     it('formats dates', () => {
       expect(formatDate('2026-05-15T12:00:00Z', 'en')).toBe('May 15, 2026');
       expect(formatDate('')).toBe('-');
+    });
+
+    it('formats unit price', () => {
+      expect(formatUnitPrice(6.456, 'en')).toBe('6.46 PLN/L');
+      expect(formatUnitPrice(null)).toBe('-');
+    });
+
+    it('formats delta km', () => {
+      expect(formatDeltaKm(650, 'en')).toBe('+650 km');
+      expect(formatDeltaKm(null)).toBe('-');
     });
   });
 

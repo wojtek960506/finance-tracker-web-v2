@@ -35,6 +35,7 @@ export const fuelEntryFormSchema = z.object({
 });
 
 export type FuelEntryFormValues = z.infer<typeof fuelEntryFormSchema>;
+export type FuelEntryFormInput = z.input<typeof fuelEntryFormSchema>;
 
 export const equipmentFormSchema = z.object({
   date: z.string().min(1, 'dateRequired'),
@@ -45,6 +46,7 @@ export const equipmentFormSchema = z.object({
 });
 
 export type EquipmentFormValues = z.infer<typeof equipmentFormSchema>;
+export type EquipmentFormInput = z.input<typeof equipmentFormSchema>;
 
 export const maintenanceFormSchema = z.object({
   section: z.enum(MAINTENANCE_SECTIONS).default(DEFAULT_MAINTENANCE_SECTION),
@@ -57,6 +59,7 @@ export const maintenanceFormSchema = z.object({
 });
 
 export type MaintenanceFormValues = z.infer<typeof maintenanceFormSchema>;
+export type MaintenanceFormInput = z.input<typeof maintenanceFormSchema>;
 
 export const linkSpendingsFormSchema = z.object({
   transactionId: z.string().trim().min(1, 'transactionRequired'),
