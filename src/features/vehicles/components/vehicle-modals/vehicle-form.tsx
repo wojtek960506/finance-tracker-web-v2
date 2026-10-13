@@ -1,6 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import type { Vehicle, VehicleType } from '@vehicles/api';
 import { VehicleTypeBadge } from '@vehicles/components/all-vehicles';
-import { VEHICLE_TYPES } from '@vehicles/consts';
+import { DEFAULT_VEHICLE_TYPE, VEHICLE_TYPES } from '@vehicles/consts';
 import {
   type VehicleFormInput,
   vehicleFormSchema,
@@ -13,7 +14,27 @@ import { useTranslation } from 'react-i18next';
 import { Button, Input, Label } from '@shared/ui';
 import { preventImplicitFormSubmit } from '@shared/utils';
 
-import type { VehicleFormProps, VehicleType } from './types';
+export type VehicleFormProps = {
+  defaultValues?: Partial<VehicleFormValues>;
+  isPending: boolean;
+  mode: 'create' | 'update';
+  onSubmit: (values: VehicleFormValues) => Promise<void> | void;
+  onCancel: () => void;
+};
+
+const getDefaultVehicleFormValues = (
+  vehicle?: Partial<VehicleFormValues> | null,
+): VehicleFormValues => ({
+  name: vehicle?.name ?? '',
+  slug: vehicle?.slug ?? '',
+  brand: vehicle?.brand ?? '',
+  vehicleModel: vehicle?.vehicleModel ?? '',
+  type: vehicle?.type ?? DEFAULT_VEHICLE_TYPE,
+  productionYear: vehicle?.productionYear ?? null,
+  notes: vehicle?.notes ?? '',
+});
+
+export type { VehicleFormInput, VehicleFormValues, VehicleType };
 
 // TODO split into few components
 export const VehicleForm = ({
@@ -28,7 +49,7 @@ export const VehicleForm = ({
 
   const form = useForm<VehicleFormInput, unknown, VehicleFormValues>({
     resolver: zodResolver(vehicleFormSchema),
-    defaultValues,
+    defaultValues: getDefaultVehicleFormValues(defaultValues),
   });
 
   const selectedType = useWatch({

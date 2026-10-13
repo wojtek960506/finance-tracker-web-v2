@@ -1,7 +1,6 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
-import { getDefaultVehicleFormValues } from './consts';
 import { VehicleForm } from './vehicle-form';
 
 vi.mock('react-i18next', () => ({
@@ -15,7 +14,6 @@ describe('VehicleForm', () => {
 
     render(
       <VehicleForm
-        defaultValues={getDefaultVehicleFormValues()}
         isPending={false}
         mode="create"
         onSubmit={onSubmit}
@@ -38,7 +36,6 @@ describe('VehicleForm', () => {
 
     render(
       <VehicleForm
-        defaultValues={getDefaultVehicleFormValues()}
         isPending={false}
         mode="create"
         onSubmit={onSubmit}
@@ -86,7 +83,6 @@ describe('VehicleForm', () => {
 
     render(
       <VehicleForm
-        defaultValues={getDefaultVehicleFormValues()}
         isPending={false}
         mode="create"
         onSubmit={onSubmit}
@@ -106,7 +102,6 @@ describe('VehicleForm', () => {
 
     render(
       <VehicleForm
-        defaultValues={getDefaultVehicleFormValues()}
         isPending={false}
         mode="create"
         onSubmit={onSubmit}

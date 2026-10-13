@@ -8,11 +8,7 @@ import { normalizeApiError } from '@shared/api/api-error';
 import { Modal } from '@shared/ui';
 import { useToastStore } from '@store/toast-store';
 
-import {
-  getDefaultVehicleFormValues,
-  VehicleForm,
-  type VehicleFormValues,
-} from '../vehicle-form';
+import { VehicleForm, type VehicleFormValues } from './vehicle-form';
 
 type CreateVehicleModalProps = {
   isOpen: boolean;
@@ -77,7 +73,6 @@ export const CreateVehicleModal = ({
         </header>
 
         <VehicleForm
-          defaultValues={getDefaultVehicleFormValues()}
           isPending={createMutation.isPending}
           mode="create"
           onSubmit={handleSubmit}

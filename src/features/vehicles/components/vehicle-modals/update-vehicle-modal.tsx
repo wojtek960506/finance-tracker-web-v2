@@ -8,11 +8,7 @@ import { normalizeApiError } from '@shared/api/api-error';
 import { Modal } from '@shared/ui';
 import { useToastStore } from '@store/toast-store';
 
-import {
-  getDefaultVehicleFormValues,
-  VehicleForm,
-  type VehicleFormValues,
-} from '../vehicle-form';
+import { VehicleForm, type VehicleFormValues } from './vehicle-form';
 
 type UpdateVehicleModalProps = {
   vehicle: Vehicle | null;
@@ -86,7 +82,7 @@ export const UpdateVehicleModal = ({
         </header>
 
         <VehicleForm
-          defaultValues={getDefaultVehicleFormValues(vehicle)}
+          defaultValues={vehicle}
           isPending={updateMutation.isPending}
           mode="update"
           onSubmit={handleSubmit}
