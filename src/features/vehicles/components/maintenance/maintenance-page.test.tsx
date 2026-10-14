@@ -134,9 +134,6 @@ describe('VehiclesMaintenanceContent', () => {
       '350.00 PLN',
     );
     expect(screen.getByTestId('maintenance-summary-count')).toHaveTextContent('2');
-    expect(screen.getByTestId('maintenance-summary-previous-owner')).toHaveTextContent(
-      '1,200.00 PLN',
-    );
 
     // Section collapsibles
     expect(

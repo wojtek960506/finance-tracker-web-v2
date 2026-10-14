@@ -6,6 +6,7 @@ import { SingleVehicleLayout, useVehicleContext } from '../single-vehicle';
 
 import { RecentActivityFeed } from './recent-activity';
 import { SpendingBreakdown } from './spending-breakdown';
+import { VehicleOverviewDetails } from './vehicle-overview-details';
 import { VehicleStatsCards } from './vehicle-stats';
 
 export const VehiclesOverviewContent = () => {
@@ -34,6 +35,8 @@ export const VehiclesOverviewContent = () => {
 
   return (
     <div className="flex flex-col gap-4 pb-6" data-testid="vehicles-overview-content">
+      <VehicleOverviewDetails />
+
       <VehicleStatsCards stats={overviewData.stats} />
 
       <SpendingBreakdown

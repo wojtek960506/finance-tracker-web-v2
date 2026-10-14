@@ -1,7 +1,8 @@
 import { useVehicle } from '@vehicles/hooks';
 import clsx from 'clsx';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 
 import { LoadingCard } from '@shared/ui';
 
@@ -17,11 +18,25 @@ export const SingleVehicleLayout = ({
   children,
 }: SingleVehicleLayoutProps) => {
   const { t } = useTranslation('vehicles');
+  const location = useLocation();
   const { vehicle, isLoading, isError, refetch } = useVehicle(vehicleSlug);
+
+  const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
+  const [prevPathname, setPrevPathname] = useState(location.pathname);
+
+  if (prevPathname !== location.pathname) {
+    setPrevPathname(location.pathname);
+    setIsMobileNavOpen(false);
+  }
 
   if (isLoading) {
     return (
-      <div className="mx-auto flex h-full min-h-0 w-full max-w-[120rem] flex-col gap-4 p-2 sm:p-4">
+      <div
+        className={clsx(
+          'mx-auto flex h-full min-h-0 w-full max-w-[120rem]',
+          'flex-col gap-4 p-2 sm:p-4',
+        )}
+      >
         <LoadingCard
           title={t('singleVehicle.loadingTitle')}
           description={t('singleVehicle.loadingDescription')}
@@ -42,18 +57,21 @@ export const SingleVehicleLayout = ({
       <div
         className={clsx(
           'mx-auto flex h-full min-h-0 w-full max-w-[120rem]',
-          'flex-col gap-4 overflow-hidden p-2 sm:p-4',
+          'flex-col gap-3.5 overflow-hidden p-2 sm:p-4 sm:gap-4',
         )}
         data-testid="single-vehicle-layout"
       >
         <SingleVehicleHeader
           vehicle={vehicle}
-          onVehicleUpdated={() => {
-            void refetch();
-          }}
+          isMobileNavOpen={isMobileNavOpen}
+          onToggleMobileNav={() => setIsMobileNavOpen((prev) => !prev)}
         />
 
-        <SingleVehicleTabs vehicleSlug={activeSlug} />
+        <SingleVehicleTabs
+          vehicleSlug={activeSlug}
+          isMobileNavOpen={isMobileNavOpen}
+          onCloseMobileNav={() => setIsMobileNavOpen(false)}
+        />
 
         <div className="min-h-0 flex-1 overflow-y-auto pt-1">
           {children ?? <Outlet />}

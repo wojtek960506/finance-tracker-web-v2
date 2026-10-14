@@ -1,13 +1,8 @@
 import { VehicleTypeBadge } from '@vehicles/components/all-vehicles';
-import {
-  DeleteVehicleModal,
-  UpdateVehicleModal,
-} from '@vehicles/components/vehicle-modals';
 import clsx from 'clsx';
-import { ArrowLeft, Pencil, Trash2 } from 'lucide-react';
-import { useState } from 'react';
+import { ArrowLeft, Menu, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { Button } from '@shared/ui';
 
@@ -15,103 +10,67 @@ import type { SingleVehicleHeaderProps } from './types';
 
 export const SingleVehicleHeader = ({
   vehicle,
-  onVehicleUpdated,
+  isMobileNavOpen,
+  onToggleMobileNav,
 }: SingleVehicleHeaderProps) => {
   const { t } = useTranslation('vehicles');
-  const navigate = useNavigate();
-
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-
-  const brandModel = [vehicle.brand, vehicle.vehicleModel].filter(Boolean).join(' ');
-  const subtitle = [brandModel, vehicle.productionYear].filter(Boolean).join(' • ');
 
   return (
     <header
-      className="flex flex-col gap-2.5 sm:gap-3"
+      className="flex items-center justify-between gap-3 min-w-0"
       data-testid="single-vehicle-header"
     >
-      {/* Top back navigation */}
-      <div>
+      {/* Title & Badge */}
+      <div className="flex items-center gap-2 min-w-0 sm:gap-3">
+        <h1 className="truncate text-lg font-bold tracking-tight text-fg sm:text-2xl">
+          {vehicle.name}
+        </h1>
+        <VehicleTypeBadge type={vehicle.type} />
+      </div>
+
+      {/* Desktop Navigation / Back button */}
+      <div className="hidden sm:flex items-center gap-2 shrink-0">
         <Link
           to="/vehicles"
           className={clsx(
-            'inline-flex items-center gap-1.5 text-xs font-medium text-text-muted',
-            'transition-colors hover:text-active-nav',
+            'inline-flex items-center gap-1.5 rounded-lg border border-border',
+            'bg-card-bg px-3 py-1.5 text-xs font-semibold text-text-muted',
+            'transition-colors hover:bg-bt-ghost-hover hover:text-fg shadow-xs',
           )}
           aria-label={t('singleVehicle.backToVehicles')}
+          data-testid="single-vehicle-back-button-desktop"
         >
           <ArrowLeft className="size-3.5" />
           <span>{t('singleVehicle.backToVehicles')}</span>
         </Link>
       </div>
 
-      {/* Main title & action buttons */}
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div className="flex items-center gap-2 sm:gap-3">
-          <h1 className="text-xl font-bold tracking-tight text-fg sm:text-2xl">
-            {vehicle.name}
-          </h1>
-          <VehicleTypeBadge type={vehicle.type} />
-        </div>
+      {/* Mobile Controls (Hamburger + Back icon) */}
+      <div className="flex sm:hidden items-center gap-1.5 shrink-0">
+        <Button
+          type="button"
+          variant="ghost"
+          onClick={onToggleMobileNav}
+          className="p-1.5 text-text-muted hover:text-fg"
+          aria-label={isMobileNavOpen ? 'Close navigation' : 'Open navigation'}
+          data-testid="single-vehicle-mobile-nav-toggle"
+        >
+          {isMobileNavOpen ? <X className="size-5" /> : <Menu className="size-5" />}
+        </Button>
 
-        <div className="flex items-center gap-2">
-          <Button
-            type="button"
-            variant="secondary"
-            onClick={() => setIsEditModalOpen(true)}
-            className="gap-1.5 px-2.5 py-1 text-xs font-semibold"
-            aria-label={t('actions.edit')}
-          >
-            <Pencil className="size-3.5" />
-            <span>{t('actions.edit')}</span>
-          </Button>
-
-          <Button
-            type="button"
-            variant="destructive"
-            onClick={() => setIsDeleteModalOpen(true)}
-            className="gap-1.5 px-2.5 py-1 text-xs font-semibold"
-            aria-label={t('actions.delete')}
-          >
-            <Trash2 className="size-3.5" />
-            <span>{t('actions.delete')}</span>
-          </Button>
-        </div>
+        <Link
+          to="/vehicles"
+          className={clsx(
+            'flex items-center justify-center rounded-lg border border-border',
+            'bg-card-bg p-1.5 text-text-muted shadow-xs',
+            'transition-colors hover:bg-bt-ghost-hover hover:text-fg',
+          )}
+          aria-label={t('singleVehicle.backToVehicles')}
+          data-testid="single-vehicle-back-button-mobile"
+        >
+          <ArrowLeft className="size-4" />
+        </Link>
       </div>
-
-      {/* Subtitle / specs & optional notes */}
-      {subtitle && (
-        <p className="text-xs font-medium text-text-muted sm:text-sm">{subtitle}</p>
-      )}
-      {vehicle.notes && <p className="text-xs text-text-muted italic">{vehicle.notes}</p>}
-
-      {/* Edit Vehicle Modal */}
-      {isEditModalOpen && (
-        <UpdateVehicleModal
-          vehicle={vehicle}
-          isOpen={isEditModalOpen}
-          onClose={() => setIsEditModalOpen(false)}
-          onSuccess={(updated) => {
-            onVehicleUpdated?.(updated);
-            if (updated.slug && updated.slug !== vehicle.slug) {
-              navigate(`/vehicles/${updated.slug}`, { replace: true });
-            }
-          }}
-        />
-      )}
-
-      {/* Delete Vehicle Modal */}
-      {isDeleteModalOpen && (
-        <DeleteVehicleModal
-          vehicle={vehicle}
-          isOpen={isDeleteModalOpen}
-          onClose={() => setIsDeleteModalOpen(false)}
-          onSuccess={() => {
-            navigate('/vehicles');
-          }}
-        />
-      )}
     </header>
   );
 };

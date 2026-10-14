@@ -8,9 +8,12 @@ export type SingleVehicleLayoutProps = {
 
 export type SingleVehicleHeaderProps = {
   vehicle: Vehicle;
-  onVehicleUpdated?: (updated: Vehicle) => void;
+  isMobileNavOpen: boolean;
+  onToggleMobileNav: () => void;
 };
 
 export type SingleVehicleTabsProps = {
   vehicleSlug: string;
+  isMobileNavOpen: boolean;
+  onCloseMobileNav: () => void;
 };

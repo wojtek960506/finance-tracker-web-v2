@@ -84,15 +84,16 @@ describe('SingleVehicleLayout', () => {
 
     await screen.findByTestId('single-vehicle-layout');
 
-    // Header info
+    // Header info (Name and Badge)
     expect(screen.getByText('Commuter Car')).toBeInTheDocument();
     expect(screen.getByText('Car')).toBeInTheDocument();
-    expect(screen.getByText('Honda Civic • 2019')).toBeInTheDocument();
-    expect(screen.getByText('Reliable daily runner')).toBeInTheDocument();
 
-    // Back link
-    const backLink = screen.getByRole('link', { name: /back to all vehicles/i });
-    expect(backLink).toHaveAttribute('href', '/vehicles');
+    // Back link (desktop and mobile)
+    const desktopBackLink = screen.getByTestId('single-vehicle-back-button-desktop');
+    expect(desktopBackLink).toHaveAttribute('href', '/vehicles');
+
+    const mobileBackLink = screen.getByTestId('single-vehicle-back-button-mobile');
+    expect(mobileBackLink).toHaveAttribute('href', '/vehicles');
 
     // Navigation tabs
     const overviewTab = screen.getByRole('link', { name: /overview/i });
@@ -111,34 +112,24 @@ describe('SingleVehicleLayout', () => {
     expect(screen.getByTestId('test-content')).toBeInTheDocument();
   });
 
-  it('opens edit vehicle modal when clicking Edit button', async () => {
+  it('toggles mobile navigation collapsible when clicking hamburger button', async () => {
     vi.spyOn(vehiclesApi, 'getVehicle').mockResolvedValueOnce(mockVehicle);
 
     renderLayout();
 
     await screen.findByTestId('single-vehicle-layout');
 
-    const editBtn = screen.getByRole('button', { name: /edit/i });
-    fireEvent.click(editBtn);
+    expect(screen.queryByTestId('single-vehicle-mobile-nav')).not.toBeInTheDocument();
 
-    expect(
-      await screen.findByRole('heading', { name: /edit vehicle/i }),
-    ).toBeInTheDocument();
-  });
+    const toggleBtn = screen.getByTestId('single-vehicle-mobile-nav-toggle');
+    fireEvent.click(toggleBtn);
 
-  it('opens delete vehicle modal when clicking Delete button', async () => {
-    vi.spyOn(vehiclesApi, 'getVehicle').mockResolvedValueOnce(mockVehicle);
+    const mobileNav = screen.getByTestId('single-vehicle-mobile-nav');
+    expect(mobileNav).toBeInTheDocument();
 
-    renderLayout();
-
-    await screen.findByTestId('single-vehicle-layout');
-
-    const deleteBtn = screen.getByRole('button', { name: /delete/i });
-    fireEvent.click(deleteBtn);
-
-    expect(
-      await screen.findByText(/are you sure you want to delete commuter car/i),
-    ).toBeInTheDocument();
+    // Clicking toggle again closes it
+    fireEvent.click(toggleBtn);
+    expect(screen.queryByTestId('single-vehicle-mobile-nav')).not.toBeInTheDocument();
   });
 
   it('falls back to vehicle id when vehicle has no slug', async () => {

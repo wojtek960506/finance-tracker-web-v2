@@ -284,4 +284,25 @@ describe('VehiclesOverviewContent', () => {
     renderOverview();
     expect(screen.getByTestId('activity-empty-state')).toBeInTheDocument();
   });
+
+  it('renders vehicle details card with specs and edit/delete buttons', () => {
+    vi.spyOn(vehiclesHooks, 'useVehicleOverview').mockReturnValue({
+      overviewData: mockOverviewData,
+      fuelEntries: [],
+      maintenanceEntries: [],
+      equipmentEntries: [],
+      isLoading: false,
+      isFetching: false,
+      isError: false,
+      error: null,
+      refetch: vi.fn(),
+    });
+
+    renderOverview();
+
+    expect(screen.getByTestId('vehicle-overview-details')).toBeInTheDocument();
+    expect(screen.getByText('Toyota Corolla • 2020')).toBeInTheDocument();
+    expect(screen.getByTestId('edit-vehicle-button')).toBeInTheDocument();
+    expect(screen.getByTestId('delete-vehicle-button')).toBeInTheDocument();
+  });
 });
