@@ -17,7 +17,10 @@ export const calculateVehicleSpending = (
   equipmentEntries: VehicleEquipment[] = [],
 ): VehicleSpendingSummary => {
   const fuelTotalPln = fuelEntries.reduce((acc, curr) => acc + (curr.costPln || 0), 0);
-  const maintenanceTotalPln = maintenanceEntries.reduce(
+  const ownMaintenanceEntries = maintenanceEntries.filter(
+    (m) => m.section === 'own_maintenance',
+  );
+  const maintenanceTotalPln = ownMaintenanceEntries.reduce(
     (acc, curr) => acc + (curr.costPln || 0),
     0,
   );
@@ -30,10 +33,10 @@ export const calculateVehicleSpending = (
 
   const odometers = [
     ...fuelEntries.map((e) => e.odometerKm),
-    ...maintenanceEntries
+    ...ownMaintenanceEntries
       .map((m) => m.odometerKm)
       .filter((km): km is number => typeof km === 'number'),
-  ];
+  ].filter((km): km is number => typeof km === 'number');
 
   const lastOdometerKm = odometers.length > 0 ? Math.max(...odometers) : null;
 
@@ -180,7 +183,10 @@ export const calculateVehicleOverviewData = (
       ? costsPerKm.reduce((a, b) => a + b, 0) / costsPerKm.length
       : null;
 
-  const maintenanceTotalSpentPln = maintenanceEntries.reduce(
+  const ownMaintenanceEntries = maintenanceEntries.filter(
+    (m) => m.section === 'own_maintenance',
+  );
+  const maintenanceTotalSpentPln = ownMaintenanceEntries.reduce(
     (acc, curr) => acc + (curr.costPln || 0),
     0,
   );
@@ -188,7 +194,6 @@ export const calculateVehicleOverviewData = (
   const bySection: Record<MaintenanceSection, { costPln: number; count: number }> = {
     own_maintenance: { costPln: 0, count: 0 },
     previous_owner_services: { costPln: 0, count: 0 },
-    driving_licence_costs: { costPln: 0, count: 0 },
   };
 
   for (const m of maintenanceEntries) {
@@ -208,7 +213,7 @@ export const calculateVehicleOverviewData = (
 
   const odometers = [
     ...fuelEntries.map((e) => e.odometerKm),
-    ...maintenanceEntries
+    ...ownMaintenanceEntries
       .map((m) => m.odometerKm)
       .filter((km): km is number => typeof km === 'number'),
   ].filter((km): km is number => typeof km === 'number');

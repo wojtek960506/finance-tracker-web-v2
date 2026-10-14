@@ -28,7 +28,7 @@ const mockVehicle: Vehicle = {
 };
 
 const mockOverviewData: VehicleOverviewData = {
-  totalSpentPln: 1450,
+  totalSpentPln: 1200,
   fuel: {
     totalSpentPln: 600,
     totalLiters: 100,
@@ -37,12 +37,11 @@ const mockOverviewData: VehicleOverviewData = {
     entriesCount: 3,
   },
   maintenance: {
-    totalSpentPln: 650,
+    totalSpentPln: 400,
     entriesCount: 2,
     bySection: {
       own_maintenance: { costPln: 400, count: 1 },
       previous_owner_services: { costPln: 250, count: 1 },
-      driving_licence_costs: { costPln: 0, count: 0 },
     },
   },
   equipment: {
@@ -132,7 +131,6 @@ describe('VehiclesOverviewContent', () => {
           bySection: {
             own_maintenance: { costPln: 0, count: 0 },
             previous_owner_services: { costPln: 0, count: 0 },
-            driving_licence_costs: { costPln: 0, count: 0 },
           },
         },
         equipment: { totalSpentPln: 0, entriesCount: 0 },
@@ -178,7 +176,6 @@ describe('VehiclesOverviewContent', () => {
           bySection: {
             own_maintenance: { costPln: 0, count: 0 },
             previous_owner_services: { costPln: 0, count: 0 },
-            driving_licence_costs: { costPln: 0, count: 0 },
           },
         },
         equipment: { totalSpentPln: 0, entriesCount: 0 },
@@ -232,7 +229,7 @@ describe('VehiclesOverviewContent', () => {
     expect(screen.getByTestId('breakdown-card-fuel')).toBeInTheDocument();
     expect(screen.getByTestId('breakdown-card-maintenance')).toBeInTheDocument();
     expect(screen.getByTestId('breakdown-card-equipment')).toBeInTheDocument();
-    expect(screen.getByText('1,450.00 PLN')).toBeInTheDocument();
+    expect(screen.getByText('1,200.00 PLN')).toBeInTheDocument();
 
     // Recent activity feed
     expect(screen.getByTestId('recent-activity-feed')).toBeInTheDocument();
@@ -261,7 +258,6 @@ describe('VehiclesOverviewContent', () => {
           bySection: {
             own_maintenance: { costPln: 0, count: 0 },
             previous_owner_services: { costPln: 0, count: 0 },
-            driving_licence_costs: { costPln: 0, count: 0 },
           },
         },
         equipment: { totalSpentPln: 0, entriesCount: 0 },

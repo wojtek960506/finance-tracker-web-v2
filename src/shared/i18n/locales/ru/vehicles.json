@@ -131,8 +131,7 @@
     },
     "maintenanceSections": {
       "own_maintenance": "Собственное ТО",
-      "previous_owner_services": "ТО прошлого владельца",
-      "driving_licence_costs": "Расходы на права"
+      "previous_owner_services": "ТО прошлого владельца"
     }
   },
   "fuelPage": {
@@ -277,6 +276,81 @@
       "updateErrorTitle": "Не удалось обновить оборудование",
       "deletedTitle": "Оборудование успешно удалено",
       "deleteErrorTitle": "Не удалось удалить оборудование"
+    }
+  },
+  "maintenancePage": {
+    "title": "Обслуживание и ремонт",
+    "description": "Учет техобслуживания, ремонтов, замены деталей и расходов на содержание автомобиля.",
+    "addMaintenance": "Добавить запись",
+    "sections": {
+      "all": "Все записи",
+      "own_maintenance": "Собственное ТО",
+      "previous_owner_services": "Сервис прошлого владельца"
+    },
+    "summary": {
+      "totalSpending": "Всего на обслуживание",
+      "totalRecords": "Количество записей ТО",
+      "previousOwner": "Прошлый владелец"
+    },
+    "filter": {
+      "search": "Поиск по сервису, автосервису...",
+      "startDate": "С даты",
+      "endDate": "По дату",
+      "section": "Секция",
+      "reset": "Сбросить фильтры"
+    },
+    "table": {
+      "date": "Дата",
+      "section": "Секция",
+      "serviceProvider": "Автосервис / Мастер",
+      "odometer": "Пробег",
+      "cost": "Стоимость",
+      "description": "Описание",
+      "linked": "Связана",
+      "actions": "Действия"
+    },
+    "empty": {
+      "title": "Нет записей обслуживания",
+      "description": "Ведите сервисную книжку по замене масла, ремонту и техосмотру автомобиля.",
+      "createFirst": "Добавить первую запись ТО",
+      "noMatching": "Записи обслуживания не найдены по выбранным фильтрам."
+    },
+    "modals": {
+      "createTitle": "Добавить запись ТО",
+      "createDescription": "Запишите проведенное обслуживание для {{name}}.",
+      "updateTitle": "Редактировать запись ТО",
+      "updateDescription": "Обновите сведения о записи обслуживания.",
+      "deleteTitle": "Удалить запись ТО",
+      "deletePrompt": "Вы уверены, что хотите удалить эту запись ТО?",
+      "deleteHint": "Эта запись обслуживания будет безвозвратно удалена.",
+      "deleteConfirm": "Удалить запись"
+    },
+    "form": {
+      "section": "Категория ТО",
+      "date": "Дата",
+      "cost": "Стоимость (PLN)",
+      "costPlaceholder": "напр. 350.00",
+      "odometer": "Пробег (км)",
+      "odometerPlaceholder": "напр. 154200",
+      "serviceProvider": "Автосервис / Мастер",
+      "serviceProviderPlaceholder": "напр. Auto Serwis Kowalski",
+      "description": "Описание",
+      "descriptionPlaceholder": "напр. Замена масла 5W-30 + масляный фильтр",
+      "createSubmit": "Сохранить запись",
+      "updateSubmit": "Сохранить изменения",
+      "errors": {
+        "dateRequired": "Дата обязательна",
+        "costPositive": "Стоимость должна быть положительной",
+        "odometerNonNegative": "Пробег не может быть отрицательным"
+      }
+    },
+    "toasts": {
+      "createdTitle": "Запись ТО успешно добавлена",
+      "createErrorTitle": "Ошибка при добавлении записи ТО",
+      "updatedTitle": "Запись ТО успешно обновлена",
+      "updateErrorTitle": "Ошибка при обновлении записи ТО",
+      "deletedTitle": "Запись ТО успешно удалена",
+      "deleteErrorTitle": "Ошибка при удалении записи ТО"
     }
   }
 }

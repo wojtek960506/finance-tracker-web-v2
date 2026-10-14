@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest';
 import type {
   VehicleEquipment,
   VehicleFuelEntry,
+  VehicleFuelEntryEnriched,
   VehicleMaintenance,
   VehicleWithSpending,
 } from './types';
@@ -293,6 +294,70 @@ describe('vehicles utils', () => {
       expect(result.stats.currentOdometerKm).toBeNull();
       expect(result.stats.totalDistanceKm).toBeNull();
       expect(result.recentActivity).toEqual([]);
+    });
+
+    it('excludes previous_owner_services from financial totals and odometer calculations', () => {
+      const fuel: VehicleFuelEntryEnriched[] = [
+        {
+          id: 'f1',
+          ownerId: 'u1',
+          vehicleId: 'v1',
+          date: '2026-03-01T10:00:00Z',
+          fuelLiters: 40,
+          isFullTank: true,
+          unitPricePln: 6.0,
+          costPln: 240,
+          odometerKm: 150000,
+          consumptionLPer100Km: 8.0,
+          costPerKmPln: 0.48,
+          distanceSincePreviousKm: null,
+          distanceSincePreviousFullKm: null,
+          fuelLitersToFull: null,
+          costToFullPln: null,
+          kmPerLiter: null,
+          createdAt: '',
+          updatedAt: '',
+        },
+      ];
+
+      const maintenance = [
+        {
+          id: 'm-own',
+          ownerId: 'u1',
+          vehicleId: 'v1',
+          section: 'own_maintenance' as const,
+          date: '2026-03-05T12:00:00Z',
+          costPln: 300,
+          odometerKm: 150500,
+          description: 'Oil service',
+          createdAt: '',
+          updatedAt: '',
+        },
+        {
+          id: 'm-prev',
+          ownerId: 'u1',
+          vehicleId: 'v1',
+          section: 'previous_owner_services' as const,
+          date: '2025-01-01T10:00:00Z',
+          costPln: 5000,
+          odometerKm: 999999,
+          description: 'Historical service',
+          createdAt: '',
+          updatedAt: '',
+        },
+      ];
+
+      const overview = calculateVehicleOverviewData(fuel, maintenance, []);
+      expect(overview.totalSpentPln).toBe(540);
+      expect(overview.maintenance.totalSpentPln).toBe(300);
+      expect(overview.maintenance.bySection.own_maintenance.costPln).toBe(300);
+      expect(overview.maintenance.bySection.previous_owner_services.costPln).toBe(5000);
+      expect(overview.stats.currentOdometerKm).toBe(150500);
+
+      const spending = calculateVehicleSpending(fuel, maintenance, []);
+      expect(spending.maintenanceTotalPln).toBe(300);
+      expect(spending.totalSpentPln).toBe(540);
+      expect(spending.lastOdometerKm).toBe(150500);
     });
   });
 });

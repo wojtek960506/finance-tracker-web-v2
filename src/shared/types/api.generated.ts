@@ -3419,7 +3419,7 @@ export interface paths {
         get: {
             parameters: {
                 query?: {
-                    section?: "own_maintenance" | "previous_owner_services" | "driving_licence_costs";
+                    section?: "own_maintenance" | "previous_owner_services";
                     startDate?: unknown;
                     endDate?: unknown;
                     page?: number;
@@ -3447,7 +3447,7 @@ export interface paths {
         put?: never;
         /**
          * Create maintenance record
-         * @description Create a new maintenance, service, or licensing expense record for a vehicle.
+         * @description Create a new maintenance or service expense record for a vehicle.
          */
         post: {
             parameters: {
@@ -4005,7 +4005,7 @@ export interface components {
         VehicleFuelEntryListResponseInput: components["schemas"]["VehicleFuelEntryEnrichedResponseInput"][];
         VehicleMaintenanceCreateInput: {
             /** @enum {string} */
-            section: "own_maintenance" | "previous_owner_services" | "driving_licence_costs";
+            section: "own_maintenance" | "previous_owner_services";
             date: unknown;
             costPln: number;
             odometerKm?: number;
@@ -4015,7 +4015,7 @@ export interface components {
         };
         VehicleMaintenanceUpdateInput: {
             /** @enum {string} */
-            section?: "own_maintenance" | "previous_owner_services" | "driving_licence_costs";
+            section?: "own_maintenance" | "previous_owner_services";
             date?: unknown;
             costPln?: number;
             odometerKm?: number;
@@ -4028,7 +4028,7 @@ export interface components {
             ownerId: string;
             vehicleId: string;
             /** @enum {string} */
-            section: "own_maintenance" | "previous_owner_services" | "driving_licence_costs";
+            section: "own_maintenance" | "previous_owner_services";
             date: unknown;
             costPln: number;
             odometerKm?: number;
@@ -5123,7 +5123,7 @@ export interface components {
         VehicleFuelEntryListResponse: components["schemas"]["VehicleFuelEntryEnrichedResponse"][];
         VehicleMaintenanceCreate: {
             /** @enum {string} */
-            section: "own_maintenance" | "previous_owner_services" | "driving_licence_costs";
+            section: "own_maintenance" | "previous_owner_services";
             /** Format: date-time */
             date: string;
             costPln: number;
@@ -5134,7 +5134,7 @@ export interface components {
         };
         VehicleMaintenanceUpdate: {
             /** @enum {string} */
-            section?: "own_maintenance" | "previous_owner_services" | "driving_licence_costs";
+            section?: "own_maintenance" | "previous_owner_services";
             /** Format: date-time */
             date?: string;
             costPln?: number;
@@ -5148,7 +5148,7 @@ export interface components {
             ownerId: string;
             vehicleId: string;
             /** @enum {string} */
-            section: "own_maintenance" | "previous_owner_services" | "driving_licence_costs";
+            section: "own_maintenance" | "previous_owner_services";
             /** Format: date-time */
             date: string;
             costPln: number;

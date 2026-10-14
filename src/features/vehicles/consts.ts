@@ -11,7 +11,6 @@ export const DEFAULT_VEHICLE_TYPE = 'car' as const;
 export const MAINTENANCE_SECTIONS = [
   'own_maintenance',
   'previous_owner_services',
-  'driving_licence_costs',
 ] as const;
 
 export const DEFAULT_MAINTENANCE_SECTION = 'own_maintenance' as const;

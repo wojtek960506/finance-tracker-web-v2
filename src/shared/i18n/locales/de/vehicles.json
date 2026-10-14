@@ -131,8 +131,7 @@
     },
     "maintenanceSections": {
       "own_maintenance": "Eigene Wartung",
-      "previous_owner_services": "Wartung Vorbesitzer",
-      "driving_licence_costs": "Führerscheinkosten"
+      "previous_owner_services": "Wartung Vorbesitzer"
     }
   },
   "fuelPage": {
@@ -277,6 +276,81 @@
       "updateErrorTitle": "Ausrüstung konnte nicht aktualisiert werden",
       "deletedTitle": "Ausrüstung erfolgreich gelöscht",
       "deleteErrorTitle": "Ausrüstung konnte nicht gelöscht werden"
+    }
+  },
+  "maintenancePage": {
+    "title": "Wartung & Service",
+    "description": "Erfassen Sie Fahrzeuginspektionen, Reparaturen und laufende Wartungskosten.",
+    "addMaintenance": "Wartung hinzufügen",
+    "sections": {
+      "all": "Alle Einträge",
+      "own_maintenance": "Eigene Wartung",
+      "previous_owner_services": "Wartung Vorbesitzer"
+    },
+    "summary": {
+      "totalSpending": "Gesamtausgaben Wartung",
+      "totalRecords": "Wartungseinträge",
+      "previousOwner": "Vorbesitzer"
+    },
+    "filter": {
+      "search": "Wartung, Werkstatt suchen...",
+      "startDate": "Von Datum",
+      "endDate": "Bis Datum",
+      "section": "Kategorie",
+      "reset": "Filter zurücksetzen"
+    },
+    "table": {
+      "date": "Datum",
+      "section": "Kategorie",
+      "serviceProvider": "Werkstatt / Dienstleister",
+      "odometer": "Kilometerstand",
+      "cost": "Kosten",
+      "description": "Beschreibung",
+      "linked": "Verknüpft",
+      "actions": "Aktionen"
+    },
+    "empty": {
+      "title": "Keine Wartungseinträge",
+      "description": "Führen Sie ein vollständiges Serviceheft für Ölwechsel, Reparaturen und Inspektionen.",
+      "createFirst": "Ersten Wartungseintrag hinzufügen",
+      "noMatching": "Keine Wartungseinträge entsprechen den ausgewählten Filtern."
+    },
+    "modals": {
+      "createTitle": "Wartungseintrag hinzufügen",
+      "createDescription": "Erfassen Sie einen neuen Wartungseintrag für {{name}}.",
+      "updateTitle": "Wartungseintrag bearbeiten",
+      "updateDescription": "Details des Wartungseintrags bearbeiten.",
+      "deleteTitle": "Wartungseintrag löschen",
+      "deletePrompt": "Möchten Sie diesen Wartungseintrag wirklich löschen?",
+      "deleteHint": "Dieser Wartungseintrag wird unwiderruflich gelöscht.",
+      "deleteConfirm": "Eintrag löschen"
+    },
+    "form": {
+      "section": "Wartungskategorie",
+      "date": "Datum",
+      "cost": "Kosten (PLN)",
+      "costPlaceholder": "z.B. 350.00",
+      "odometer": "Kilometerstand (km)",
+      "odometerPlaceholder": "z.B. 154200",
+      "serviceProvider": "Werkstatt / Dienstleister",
+      "serviceProviderPlaceholder": "z.B. Auto Service Kowalski",
+      "description": "Beschreibung",
+      "descriptionPlaceholder": "z.B. Motorölwechsel 5W-30 + Ölfilter",
+      "createSubmit": "Wartung speichern",
+      "updateSubmit": "Änderungen speichern",
+      "errors": {
+        "dateRequired": "Datum ist erforderlich",
+        "costPositive": "Kosten müssen positiv sein",
+        "odometerNonNegative": "Kilometerstand darf nicht negativ sein"
+      }
+    },
+    "toasts": {
+      "createdTitle": "Wartungseintrag erfolgreich hinzugefügt",
+      "createErrorTitle": "Fehler beim Hinzufügen des Wartungseintrags",
+      "updatedTitle": "Wartungseintrag erfolgreich aktualisiert",
+      "updateErrorTitle": "Fehler beim Aktualisieren des Wartungseintrags",
+      "deletedTitle": "Wartungseintrag erfolgreich gelöscht",
+      "deleteErrorTitle": "Fehler beim Löschen des Wartungseintrags"
     }
   }
 }

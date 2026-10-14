@@ -23,11 +23,6 @@ export const MaintenanceBreakdownCard = ({
       label: t('overview.maintenanceSections.previous_owner_services'),
       data: maintenance.bySection.previous_owner_services,
     },
-    {
-      key: 'driving_licence_costs' as const,
-      label: t('overview.maintenanceSections.driving_licence_costs'),
-      data: maintenance.bySection.driving_licence_costs,
-    },
   ];
 
   return (

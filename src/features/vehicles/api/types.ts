@@ -45,23 +45,39 @@ export type GetEquipmentQuery = NonNullable<
 >;
 
 // Maintenance types
-export type MaintenanceSection =
-  components['schemas']['VehicleMaintenanceResponse']['section'];
+export type MaintenanceSection = 'own_maintenance' | 'previous_owner_services';
 
-export type VehicleMaintenance = components['schemas']['VehicleMaintenanceResponse'];
+export type VehicleMaintenance = Omit<
+  components['schemas']['VehicleMaintenanceResponse'],
+  'section'
+> & {
+  section: MaintenanceSection;
+};
 
-export type VehicleMaintenanceListResponse =
-  components['schemas']['VehicleMaintenanceListResponse'];
+export type VehicleMaintenanceListResponse = VehicleMaintenance[];
 
-export type CreateMaintenancePayload =
-  components['schemas']['VehicleMaintenanceCreateInput'];
+export type CreateMaintenancePayload = Omit<
+  components['schemas']['VehicleMaintenanceCreateInput'],
+  'section'
+> & {
+  section: MaintenanceSection;
+};
 
-export type UpdateMaintenancePayload =
-  components['schemas']['VehicleMaintenanceUpdateInput'];
+export type UpdateMaintenancePayload = Omit<
+  components['schemas']['VehicleMaintenanceUpdateInput'],
+  'section'
+> & {
+  section?: MaintenanceSection;
+};
 
-export type GetMaintenanceQuery = NonNullable<
-  paths['/api/vehicles/{vehicleId}/maintenance']['get']['parameters']['query']
->;
+export type GetMaintenanceQuery = Omit<
+  NonNullable<
+    paths['/api/vehicles/{vehicleId}/maintenance']['get']['parameters']['query']
+  >,
+  'section'
+> & {
+  section?: MaintenanceSection;
+};
 
 // Spending Linking types
 export type SpendingType = components['schemas']['SpendingLinkItem']['spendingType'];

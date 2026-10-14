@@ -131,8 +131,7 @@
     },
     "maintenanceSections": {
       "own_maintenance": "Własny serwis",
-      "previous_owner_services": "Serwis poprzedniego właściciela",
-      "driving_licence_costs": "Koszty prawa jazdy"
+      "previous_owner_services": "Serwis poprzedniego właściciela"
     }
   },
   "fuelPage": {
@@ -277,6 +276,81 @@
       "updateErrorTitle": "Nie udało się zaktualizować wyposażenia",
       "deletedTitle": "Wyposażenie zostało pomyślnie usunięte",
       "deleteErrorTitle": "Nie udało się usunąć wyposażenia"
+    }
+  },
+  "maintenancePage": {
+    "title": "Historia serwisu i napraw",
+    "description": "Rejestruj przeglądy techniczne, naprawy, wymiany części i koszty bieżącej eksploatacji.",
+    "addMaintenance": "Dodaj serwis",
+    "sections": {
+      "all": "Wszystkie wpisy",
+      "own_maintenance": "Własny serwis",
+      "previous_owner_services": "Serwis poprzedniego właściciela"
+    },
+    "summary": {
+      "totalSpending": "Łączne wydatki na serwis",
+      "totalRecords": "Liczba wpisów serwisowych",
+      "previousOwner": "Poprzedni właściciel"
+    },
+    "filter": {
+      "search": "Szukaj serwisu, warsztatu...",
+      "startDate": "Od daty",
+      "endDate": "Do daty",
+      "section": "Sekcja",
+      "reset": "Wyczyść filtry"
+    },
+    "table": {
+      "date": "Data",
+      "section": "Sekcja",
+      "serviceProvider": "Warsztat / Wykonawca",
+      "odometer": "Przebieg",
+      "cost": "Koszt",
+      "description": "Opis",
+      "linked": "Powiązana",
+      "actions": "Akcje"
+    },
+    "empty": {
+      "title": "Brak wpisów serwisowych",
+      "description": "Prowadź kompletną książkę serwisową wymian oleju, filtrów, napraw i badań technicznych.",
+      "createFirst": "Dodaj pierwszy wpis serwisowy",
+      "noMatching": "Brak wpisów serwisowych dla wybranych filtrów."
+    },
+    "modals": {
+      "createTitle": "Dodaj wpis serwisowy",
+      "createDescription": "Zarejestruj wykonany serwis lub naprawę dla pojazdu {{name}}.",
+      "updateTitle": "Edytuj wpis serwisowy",
+      "updateDescription": "Zaktualizuj szczegóły wpisu serwisowego.",
+      "deleteTitle": "Usuń wpis serwisowy",
+      "deletePrompt": "Czy na pewno chcesz usunąć ten wpis serwisowy?",
+      "deleteHint": "Ten wpis serwisowy zostanie bezpowrotnie usunięty.",
+      "deleteConfirm": "Usuń wpis"
+    },
+    "form": {
+      "section": "Sekcja serwisu",
+      "date": "Data",
+      "cost": "Koszt (PLN)",
+      "costPlaceholder": "np. 350.00",
+      "odometer": "Przebieg (km)",
+      "odometerPlaceholder": "np. 154200",
+      "serviceProvider": "Warsztat / Wykonawca",
+      "serviceProviderPlaceholder": "np. Auto Serwis Kowalski, ASO Toyota",
+      "description": "Opis",
+      "descriptionPlaceholder": "np. Wymiana oleju 5W-30 + filtr oleju + filtr kabinowy",
+      "createSubmit": "Zapisz serwis",
+      "updateSubmit": "Zapisz zmiany",
+      "errors": {
+        "dateRequired": "Data jest wymagana",
+        "costPositive": "Koszt musi być dodatni",
+        "odometerNonNegative": "Przebieg nie może być ujemny"
+      }
+    },
+    "toasts": {
+      "createdTitle": "Wpis serwisowy dodany pomyślnie",
+      "createErrorTitle": "Nie udało się dodać wpisu serwisowego",
+      "updatedTitle": "Wpis serwisowy zaktualizowany pomyślnie",
+      "updateErrorTitle": "Nie udało się zaktualizować wpisu serwisowego",
+      "deletedTitle": "Wpis serwisowy usunięty pomyślnie",
+      "deleteErrorTitle": "Nie udało się usunąć wpisu serwisowego"
     }
   }
 }

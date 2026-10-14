@@ -78,8 +78,8 @@ src/features/vehicles/
 flowchart TD
     P1["Phase 1: Foundation, Types & API Client Layer ✅"] --> P2["Phase 2: Global All-Vehicles Hub & Vehicle Management ✅"]
     P2 --> P3["Phase 3: Single-Vehicle Layout & Overview Dashboard ✅"]
-    P3 --> P4["Phase 4: Fuel Refueling History & Consumption Metrics"]
-    P4 --> P5["Phase 5: Maintenance & Equipment Domain Views"]
+    P3 --> P4["Phase 4: Fuel Refueling History & Consumption Metrics ✅"]
+    P4 --> P5["Phase 5: Maintenance & Equipment Domain Views ✅"]
     P5 --> P6["Phase 6: Financial Transaction Linking UI"]
     P6 --> P7["Phase 7: Full Localization (4 Locales) & Final Verification"]
 ```
@@ -138,7 +138,7 @@ flowchart TD
 - [x] **Sub-phase 3.2: Vehicle Overview Dashboard & Spending Breakdown**
   - `VehicleSpendingBreakdown`: Total spent on this vehicle with category split:
     - ⛽ **Fuel**: Total PLN spent, total liters, average consumption (L/100 km), cost per km.
-    - 🔧 **Maintenance**: Total PLN spent, broken down by section (`own_maintenance`, `previous_owner_services`, `driving_licence_costs`).
+    - 🔧 **Maintenance**: Total PLN spent, broken down by section (`own_maintenance`, `previous_owner_services` as informational reference).
     - 🧰 **Equipment**: Total PLN spent, item count.
   - `VehicleStatsCards`: Current odometer, total distance logged, total refueling sessions, total maintenance events.
   - `RecentActivityFeed`: Combined chronological stream of recent fuel entries, maintenance, and equipment purchases.
@@ -169,13 +169,12 @@ flowchart TD
 
 ---
 
-### ⏳ Phase 5: Maintenance & Equipment Domain Views (`/vehicles/:vehicleSlug/{maintenance,equipment}`)
+### ✅ Phase 5: Maintenance & Equipment Domain Views (`/vehicles/:vehicleSlug/{maintenance,equipment}`) (Completed)
 
-- [ ] **Sub-phase 5.1: Maintenance Domain View (`maintenance/`)**
+- [x] **Sub-phase 5.1: Maintenance Domain View (`maintenance/`)**
   - Section switcher pills / tabs:
     - 🔧 _Own Maintenance_ (`own_maintenance`)
     - 📋 _Previous Owner Services_ (`previous_owner_services`)
-    - 🪪 _Driving Licence Costs_ (`driving_licence_costs`)
   - `MaintenanceTable`: Date, Section, Service Provider, Odometer, Cost PLN, Description, linked transaction status.
   - `CreateMaintenanceModal` & `UpdateMaintenanceModal`.
   - `DeleteMaintenanceModal` confirmation dialog.
@@ -183,7 +182,7 @@ flowchart TD
   - `VehicleEquipmentPage`: Table/grid displaying equipment items (Item Name, Date, Cost PLN, Description, linked transaction status).
   - `CreateEquipmentModal` & `UpdateEquipmentModal`.
   - `DeleteEquipmentModal` confirmation dialog.
-- [ ] **Sub-phase 5.3: Phase 5 Tests & Localization**
+- [x] **Sub-phase 5.3: Phase 5 Tests & Localization**
   - Add equipment and maintenance translation keys across `en`, `pl`, `de`, `ru`.
   - Write component unit tests for equipment and maintenance views.
 

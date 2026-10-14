@@ -131,8 +131,7 @@
     },
     "maintenanceSections": {
       "own_maintenance": "Own Maintenance",
-      "previous_owner_services": "Previous Owner Services",
-      "driving_licence_costs": "Driving Licence Costs"
+      "previous_owner_services": "Previous Owner Services"
     }
   },
   "fuelPage": {
@@ -277,6 +276,81 @@
       "updateErrorTitle": "Failed to update equipment",
       "deletedTitle": "Equipment deleted successfully",
       "deleteErrorTitle": "Failed to delete equipment"
+    }
+  },
+  "maintenancePage": {
+    "title": "Maintenance & Services",
+    "description": "Log vehicle services, repairs, technical inspections, and running maintenance costs.",
+    "addMaintenance": "Add Maintenance",
+    "sections": {
+      "all": "All Records",
+      "own_maintenance": "Own Maintenance",
+      "previous_owner_services": "Previous Owner Services"
+    },
+    "summary": {
+      "totalSpending": "Total Maintenance Spent",
+      "totalRecords": "Total Service Records",
+      "previousOwner": "Previous Owner Services"
+    },
+    "filter": {
+      "search": "Search services, providers...",
+      "startDate": "From Date",
+      "endDate": "To Date",
+      "section": "Section",
+      "reset": "Reset Filters"
+    },
+    "table": {
+      "date": "Date",
+      "section": "Section",
+      "serviceProvider": "Service Provider",
+      "odometer": "Odometer",
+      "cost": "Cost",
+      "description": "Description",
+      "linked": "Linked",
+      "actions": "Actions"
+    },
+    "empty": {
+      "title": "No maintenance records",
+      "description": "Keep a complete history of services, oil changes, repairs, and technical checkups.",
+      "createFirst": "Add first maintenance record",
+      "noMatching": "No maintenance records match the selected filters."
+    },
+    "modals": {
+      "createTitle": "Add Maintenance Record",
+      "createDescription": "Record a new service or maintenance event for {{name}}.",
+      "updateTitle": "Edit Maintenance Record",
+      "updateDescription": "Update maintenance record details.",
+      "deleteTitle": "Delete Maintenance Record",
+      "deletePrompt": "Are you sure you want to delete this maintenance record?",
+      "deleteHint": "This maintenance log entry will be permanently removed.",
+      "deleteConfirm": "Delete Record"
+    },
+    "form": {
+      "section": "Maintenance Section",
+      "date": "Date",
+      "cost": "Cost (PLN)",
+      "costPlaceholder": "e.g. 350.00",
+      "odometer": "Odometer (km)",
+      "odometerPlaceholder": "e.g. 154200",
+      "serviceProvider": "Service Provider / Workshop",
+      "serviceProviderPlaceholder": "e.g. Auto Serwis Kowalski, ASO Toyota",
+      "description": "Description",
+      "descriptionPlaceholder": "e.g. Engine oil replacement 5W-30 + oil filter + cabin filter",
+      "createSubmit": "Save Maintenance",
+      "updateSubmit": "Save Changes",
+      "errors": {
+        "dateRequired": "Date is required",
+        "costPositive": "Cost must be positive",
+        "odometerNonNegative": "Odometer cannot be negative"
+      }
+    },
+    "toasts": {
+      "createdTitle": "Maintenance record added successfully",
+      "createErrorTitle": "Failed to add maintenance record",
+      "updatedTitle": "Maintenance record updated successfully",
+      "updateErrorTitle": "Failed to update maintenance record",
+      "deletedTitle": "Maintenance record deleted successfully",
+      "deleteErrorTitle": "Failed to delete maintenance record"
     }
   }
 }
