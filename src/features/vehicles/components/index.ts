@@ -1,9 +1,9 @@
-export * from './all-vehicles';
+export { VehicleTypeBadge } from './all-vehicles';
 export * from './common';
-export * from './equipment';
-export * from './fuel';
-export * from './maintenance';
-export * from './overview';
+export { VehiclesEquipmentContent, VehiclesEquipmentPage } from './equipment';
+export { VehiclesFuelContent, VehiclesFuelPage } from './fuel';
+export { VehiclesMaintenancePage } from './maintenance';
+export { VehiclesOverviewContent, VehiclesOverviewPage } from './overview';
 export * from './single-vehicle';
 export * from './vehicle-modals';
-export * from './vehicles-page';
+export { VehiclesPage } from './vehicles-page';
