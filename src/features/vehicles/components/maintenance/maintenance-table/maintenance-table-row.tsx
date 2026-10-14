@@ -10,6 +10,7 @@ export const MaintenanceTableRow = ({
   item,
   onEdit,
   onDelete,
+  showSectionBadge = true,
 }: MaintenanceTableRowProps) => {
   const { t, i18n } = useTranslation('vehicles');
   const lang = i18n.language;
@@ -23,9 +24,11 @@ export const MaintenanceTableRow = ({
         {formatDate(item.date, lang)}
       </td>
 
-      <td className="px-3 py-3 text-xs">
-        <MaintenanceSectionBadge section={item.section} />
-      </td>
+      {showSectionBadge && (
+        <td className="px-3 py-3 text-xs">
+          <MaintenanceSectionBadge section={item.section} />
+        </td>
+      )}
 
       <td className="px-3 py-3 text-xs text-text-muted">
         <span className="font-medium text-fg">{item.serviceProvider || '-'}</span>

@@ -1,10 +1,6 @@
 import { VehiclePageError, VehiclePageLoading } from '@vehicles/components/common';
 import { useMaintenance } from '@vehicles/hooks';
-import type {
-  GetMaintenanceQuery,
-  MaintenanceSection,
-  VehicleMaintenance,
-} from '@vehicles/types';
+import type { GetMaintenanceQuery, VehicleMaintenance } from '@vehicles/types';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -16,16 +12,15 @@ import {
   DeleteMaintenanceModal,
   UpdateMaintenanceModal,
 } from './maintenance-modals';
-import { MaintenanceSectionSwitcher } from './maintenance-section-switcher';
 import { MaintenanceSummaryCards } from './maintenance-summary-cards';
 import { MaintenanceTable } from './maintenance-table';
-import type { MaintenanceFilters, MaintenanceSectionFilter } from './types';
+import type { MaintenanceFilters } from './types';
 
 export const VehiclesMaintenanceContent = () => {
   const { t } = useTranslation('vehicles');
   const { vehicle } = useVehicleContext();
 
-  const [filters, setFilters] = useState<MaintenanceFilters>({ section: 'all' });
+  const [filters, setFilters] = useState<MaintenanceFilters>({});
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<VehicleMaintenance | null>(null);
   const [deletingItem, setDeletingItem] = useState<VehicleMaintenance | null>(null);
@@ -34,11 +29,8 @@ export const VehiclesMaintenanceContent = () => {
     const q: GetMaintenanceQuery = {};
     if (filters.startDate) q.startDate = filters.startDate;
     if (filters.endDate) q.endDate = filters.endDate;
-    if (filters.section && filters.section !== 'all') {
-      q.section = filters.section;
-    }
     return Object.keys(q).length > 0 ? q : undefined;
-  }, [filters.startDate, filters.endDate, filters.section]);
+  }, [filters.startDate, filters.endDate]);
 
   const {
     data: items = [],
@@ -59,27 +51,7 @@ export const VehiclesMaintenanceContent = () => {
     );
   }, [items, filters.search]);
 
-  // Section counts across current items
-  const sectionCounts = useMemo(() => {
-    const counts: Record<MaintenanceSectionFilter, number> = {
-      all: items.length,
-      own_maintenance: 0,
-      previous_owner_services: 0,
-    };
-    for (const item of items) {
-      if (item.section in counts) {
-        counts[item.section as MaintenanceSection]++;
-      }
-    }
-    return counts;
-  }, [items]);
-
-  const hasFilters = Boolean(
-    filters.search ||
-    filters.startDate ||
-    filters.endDate ||
-    (filters.section && filters.section !== 'all'),
-  );
+  const hasFilters = Boolean(filters.search || filters.startDate || filters.endDate);
 
   if (isLoading) {
     return <VehiclePageLoading />;
@@ -100,13 +72,6 @@ export const VehiclesMaintenanceContent = () => {
     <div className="flex flex-col gap-4 pb-6" data-testid="vehicles-maintenance-content">
       {/* Summary Cards */}
       <MaintenanceSummaryCards items={items} />
-
-      {/* Section Switcher Pills / Tabs */}
-      <MaintenanceSectionSwitcher
-        selectedSection={filters.section ?? 'all'}
-        onSectionChange={(section) => setFilters({ ...filters, section })}
-        sectionCounts={filters.section === 'all' ? sectionCounts : undefined}
-      />
 
       {/* Filter Bar & Action */}
       <MaintenanceFilterBar

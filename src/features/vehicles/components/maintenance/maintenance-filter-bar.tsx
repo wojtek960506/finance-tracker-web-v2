@@ -20,14 +20,11 @@ export const MaintenanceFilterBar = ({
   const { t } = useTranslation('vehicles');
 
   const hasActiveFilters = Boolean(
-    filters.search ||
-    filters.startDate ||
-    filters.endDate ||
-    (filters.section && filters.section !== 'all'),
+    filters.search || filters.startDate || filters.endDate,
   );
 
   const handleReset = () => {
-    onFiltersChange({ section: 'all' });
+    onFiltersChange({});
   };
 
   return (

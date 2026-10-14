@@ -138,17 +138,13 @@ describe('VehiclesMaintenanceContent', () => {
       '1,200.00 PLN',
     );
 
-    // Section switcher
-    expect(screen.getByTestId('maintenance-section-switcher')).toBeInTheDocument();
+    // Section collapsibles
     expect(
-      screen.getByTestId('maintenance-section-tab-own_maintenance'),
+      screen.getByTestId('maintenance-section-collapsible-own_maintenance'),
     ).toBeInTheDocument();
     expect(
-      screen.getByTestId('maintenance-section-tab-previous_owner_services'),
+      screen.getByTestId('maintenance-section-collapsible-previous_owner_services'),
     ).toBeInTheDocument();
-    expect(
-      screen.queryByTestId('maintenance-section-tab-driving_licence_costs'),
-    ).not.toBeInTheDocument();
 
     // Filter bar
     expect(screen.getByTestId('maintenance-filter-bar')).toBeInTheDocument();
@@ -183,10 +179,9 @@ describe('VehiclesMaintenanceContent', () => {
     expect(screen.queryByTestId('maintenance-row-maint-1')).not.toBeInTheDocument();
   });
 
-  it('changes selected section when clicking section tab', () => {
-    const useMaintenanceSpy = vi.spyOn(vehiclesHooks, 'useMaintenance');
-    useMaintenanceSpy.mockReturnValue({
-      data: mockMaintenanceItems,
+  it('only renders collapsibles for sections that have data', () => {
+    vi.spyOn(vehiclesHooks, 'useMaintenance').mockReturnValue({
+      data: [mockMaintenanceItems[0]!], // only own_maintenance
       isLoading: false,
       isFetching: false,
       isError: false,
@@ -196,14 +191,12 @@ describe('VehiclesMaintenanceContent', () => {
 
     renderMaintenancePage();
 
-    const ownTab = screen.getByTestId('maintenance-section-tab-own_maintenance');
-    fireEvent.click(ownTab);
-
-    // useMaintenance should be called with section = 'own_maintenance'
-    expect(useMaintenanceSpy).toHaveBeenCalledWith(
-      'veh-123',
-      expect.objectContaining({ section: 'own_maintenance' }),
-    );
+    expect(
+      screen.getByTestId('maintenance-section-collapsible-own_maintenance'),
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByTestId('maintenance-section-collapsible-previous_owner_services'),
+    ).not.toBeInTheDocument();
   });
 
   it('renders empty state when there are no maintenance items', () => {

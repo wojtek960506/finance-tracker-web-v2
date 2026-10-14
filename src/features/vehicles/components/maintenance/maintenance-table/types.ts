@@ -1,4 +1,4 @@
-import type { VehicleMaintenance } from '@vehicles/types';
+import type { MaintenanceSection, VehicleMaintenance } from '@vehicles/types';
 
 export type MaintenanceTableProps = {
   items: VehicleMaintenance[];
@@ -8,10 +8,19 @@ export type MaintenanceTableProps = {
   onAddFirstItem: () => void;
 };
 
+export type MaintenanceSectionCollapsibleProps = {
+  section: MaintenanceSection;
+  items: VehicleMaintenance[];
+  onEditItem: (item: VehicleMaintenance) => void;
+  onDeleteItem: (item: VehicleMaintenance) => void;
+  isInitiallyOpen?: boolean;
+};
+
 export type MaintenanceTableRowProps = {
   item: VehicleMaintenance;
   onEdit: () => void;
   onDelete: () => void;
+  showSectionBadge?: boolean;
 };
 
 export type MaintenanceMobileCardProps = {
