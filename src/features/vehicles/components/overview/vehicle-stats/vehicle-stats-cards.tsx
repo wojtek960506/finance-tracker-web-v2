@@ -1,9 +1,9 @@
+import { VehicleStatsCard } from '@vehicles/components/common';
 import { formatKm } from '@vehicles/utils';
 import { Fuel, Gauge, Milestone, Wrench } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 import type { VehicleStatsCardsProps } from './types';
-import { VehicleStatsCard } from './vehicle-stats-card';
 
 export const VehicleStatsCards = ({ stats }: VehicleStatsCardsProps) => {
   const { t, i18n } = useTranslation('vehicles');

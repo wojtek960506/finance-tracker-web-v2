@@ -3,7 +3,7 @@ import type { LucideIcon } from 'lucide-react';
 
 import { Card } from '@shared/ui';
 
-type VehicleStatsCardProps = {
+export type VehicleStatsCardProps = {
   title: string;
   value: string;
   subtext?: string;

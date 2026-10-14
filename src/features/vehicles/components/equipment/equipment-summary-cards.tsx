@@ -1,10 +1,9 @@
+import { VehicleStatsCard } from '@vehicles/components/common';
 import type { VehicleEquipment } from '@vehicles/types';
 import { formatPln } from '@vehicles/utils';
 import { Banknote, Package } from 'lucide-react';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-
-import { VehicleStatsCard } from '../overview/vehicle-stats';
 
 export type EquipmentSummaryCardsProps = {
   items: VehicleEquipment[];

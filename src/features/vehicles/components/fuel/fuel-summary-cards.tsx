@@ -1,3 +1,4 @@
+import { VehicleStatsCard } from '@vehicles/components/common';
 import type { VehicleFuelEntryEnriched } from '@vehicles/types';
 import {
   formatConsumption,
@@ -8,8 +9,6 @@ import {
 import { Banknote, Fuel, Gauge, TrendingUp } from 'lucide-react';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-
-import { VehicleStatsCard } from '../overview/vehicle-stats';
 
 export type FuelSummaryCardsProps = {
   entries: VehicleFuelEntryEnriched[];
