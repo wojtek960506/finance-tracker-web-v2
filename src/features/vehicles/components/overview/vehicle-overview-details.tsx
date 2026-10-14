@@ -26,43 +26,57 @@ export const VehicleOverviewDetails = () => {
   return (
     <Card
       className={clsx(
-        'flex flex-col gap-3 rounded-2xl border-border bg-card-bg p-4',
-        'sm:flex-row sm:items-center sm:justify-between',
+        'flex-row items-center justify-between gap-4 rounded-2xl',
+        'border-border bg-card-bg p-3.5 sm:p-4',
       )}
       data-testid="vehicle-overview-details"
     >
-      <div className="flex flex-col gap-1 min-w-0">
+      {/* Details (brand, model, production year, notes) */}
+      <div className="flex flex-col justify-center gap-0.5 min-w-0 self-center">
         {subtitle && (
-          <p className="text-sm font-semibold text-fg sm:text-base">{subtitle}</p>
+          <p className="truncate text-sm font-semibold text-fg sm:text-base">
+            {subtitle}
+          </p>
         )}
         {vehicle.notes && (
-          <p className="text-xs text-text-muted italic">{vehicle.notes}</p>
+          <p className="line-clamp-1 text-xs text-text-muted italic sm:text-sm">
+            {vehicle.notes}
+          </p>
         )}
       </div>
 
-      <div className="flex items-center gap-2 shrink-0">
+      {/* Actions (icons on mobile, icon + label on larger screens) */}
+      <div className="my-auto flex items-center gap-1.5 shrink-0 self-center sm:gap-2">
         <Button
           type="button"
           variant="secondary"
+          size="icon"
           onClick={() => setIsEditModalOpen(true)}
-          className="gap-1.5 px-3 py-1.5 text-xs font-semibold"
+          className="self-center sm:aspect-auto sm:gap-2 sm:px-3"
+          title={t('actions.edit')}
           aria-label={t('actions.edit')}
           data-testid="edit-vehicle-button"
         >
-          <Pencil className="size-3.5" />
-          <span>{t('actions.edit')}</span>
+          <Pencil className="shrink-0" />
+          <span className="hidden font-semibold leading-none sm:inline">
+            {t('actions.edit')}
+          </span>
         </Button>
 
         <Button
           type="button"
           variant="destructive"
+          size="icon"
           onClick={() => setIsDeleteModalOpen(true)}
-          className="gap-1.5 px-3 py-1.5 text-xs font-semibold"
+          className="self-center sm:aspect-auto sm:gap-2 sm:px-3"
+          title={t('actions.delete')}
           aria-label={t('actions.delete')}
           data-testid="delete-vehicle-button"
         >
-          <Trash2 className="size-3.5" />
-          <span>{t('actions.delete')}</span>
+          <Trash2 className="shrink-0" />
+          <span className="hidden font-semibold leading-none sm:inline">
+            {t('actions.delete')}
+          </span>
         </Button>
       </div>
 
