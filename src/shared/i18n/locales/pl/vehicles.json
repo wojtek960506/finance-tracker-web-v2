@@ -40,7 +40,8 @@
     "edit": "Edytuj",
     "delete": "Usuń",
     "save": "Zapisz",
-    "cancel": "Anuluj"
+    "cancel": "Anuluj",
+    "filterTitle": "Filtry"
   },
   "tabs": {
     "overview": "Przegląd",

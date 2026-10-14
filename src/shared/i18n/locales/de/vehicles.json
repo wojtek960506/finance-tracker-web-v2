@@ -40,7 +40,8 @@
     "edit": "Bearbeiten",
     "delete": "Löschen",
     "save": "Speichern",
-    "cancel": "Abbrechen"
+    "cancel": "Abbrechen",
+    "filterTitle": "Filter"
   },
   "tabs": {
     "overview": "Übersicht",

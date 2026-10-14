@@ -13,6 +13,7 @@ type FilterPillsProps = {
   allTestId?: string;
   items: FilterPillItem[];
   className?: string;
+  itemClassName?: string;
   capitalize?: boolean;
 };
 
@@ -23,19 +24,22 @@ export const FilterPills = ({
   allTestId,
   items,
   className,
+  itemClassName,
   capitalize = false,
 }: FilterPillsProps) => {
   return (
-    <div className={clsx('flex flex-wrap items-center gap-1', className)}>
+    <div className={clsx('flex flex-wrap items-center gap-1.5', className)}>
       {allLabel ? (
         <button
           type="button"
           data-testid={allTestId}
           className={clsx(
-            'rounded-full px-3 py-1 text-xs font-semibold transition-colors',
+            'rounded-full px-3.5 py-1.5 text-sm font-semibold transition-colors',
+            'sm:px-4 sm:text-base',
             selected === 'all'
-              ? 'bg-bt-primary text-bt-primary-fg shadow-sm'
+              ? 'bg-bt-primary text-bt-primary-subtle shadow-sm'
               : 'bg-muted/50 text-text-muted hover:bg-muted hover:text-foreground',
+            itemClassName,
           )}
           onClick={() => onSelect('all')}
         >
@@ -48,11 +52,13 @@ export const FilterPills = ({
           type="button"
           data-testid={item.testId}
           className={clsx(
-            'rounded-full px-3 py-1 text-xs font-semibold transition-colors',
+            'rounded-full px-3.5 py-1.5 text-sm font-semibold transition-colors',
+            'sm:px-4 sm:text-base',
             capitalize && 'capitalize',
             selected === item.key
-              ? 'bg-bt-primary text-bt-primary-fg shadow-sm'
+              ? 'bg-bt-primary text-bt-primary-subtle shadow-sm'
               : 'bg-muted/50 text-text-muted hover:bg-muted hover:text-foreground',
+            itemClassName,
           )}
           onClick={() => onSelect(item.key)}
         >
