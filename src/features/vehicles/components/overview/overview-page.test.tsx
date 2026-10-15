@@ -40,8 +40,8 @@ const mockOverviewData: VehicleOverviewData = {
     totalSpentPln: 400,
     entriesCount: 2,
     bySection: {
-      own_maintenance: { costPln: 400, count: 1 },
-      previous_owner_services: { costPln: 250, count: 1 },
+      ownMaintenance: { costPln: 400, count: 1 },
+      previousOwnerServices: { costPln: 250, count: 1 },
     },
   },
   equipment: {
@@ -71,7 +71,7 @@ const mockOverviewData: VehicleOverviewData = {
       date: '2026-03-05T12:00:00Z',
       costPln: 400,
       title: 'Oil & Filter Replacement',
-      maintenanceSection: 'own_maintenance',
+      maintenanceSection: 'ownMaintenance',
       odometerKm: 84800,
     },
     {
@@ -129,8 +129,8 @@ describe('VehiclesOverviewContent', () => {
           totalSpentPln: 0,
           entriesCount: 0,
           bySection: {
-            own_maintenance: { costPln: 0, count: 0 },
-            previous_owner_services: { costPln: 0, count: 0 },
+            ownMaintenance: { costPln: 0, count: 0 },
+            previousOwnerServices: { costPln: 0, count: 0 },
           },
         },
         equipment: { totalSpentPln: 0, entriesCount: 0 },
@@ -174,8 +174,8 @@ describe('VehiclesOverviewContent', () => {
           totalSpentPln: 0,
           entriesCount: 0,
           bySection: {
-            own_maintenance: { costPln: 0, count: 0 },
-            previous_owner_services: { costPln: 0, count: 0 },
+            ownMaintenance: { costPln: 0, count: 0 },
+            previousOwnerServices: { costPln: 0, count: 0 },
           },
         },
         equipment: { totalSpentPln: 0, entriesCount: 0 },
@@ -256,8 +256,8 @@ describe('VehiclesOverviewContent', () => {
           totalSpentPln: 0,
           entriesCount: 0,
           bySection: {
-            own_maintenance: { costPln: 0, count: 0 },
-            previous_owner_services: { costPln: 0, count: 0 },
+            ownMaintenance: { costPln: 0, count: 0 },
+            previousOwnerServices: { costPln: 0, count: 0 },
           },
         },
         equipment: { totalSpentPln: 0, entriesCount: 0 },

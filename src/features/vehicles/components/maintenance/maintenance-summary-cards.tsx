@@ -17,7 +17,7 @@ export const MaintenanceSummaryCards = ({ items }: MaintenanceSummaryCardsProps)
     let ownCost = 0;
 
     for (const item of items) {
-      if (item.section === 'own_maintenance') {
+      if (item.section === 'ownMaintenance') {
         ownCost += item.costPln || 0;
       }
     }

@@ -13,12 +13,12 @@ const SECTION_CONFIG: Record<
   MaintenanceSection,
   { icon: ReactNode; bgClass: string; textClass: string }
 > = {
-  own_maintenance: {
+  ownMaintenance: {
     icon: <Wrench className="size-3" />,
     bgClass: 'bg-blue-500/10',
     textClass: 'text-blue-500',
   },
-  previous_owner_services: {
+  previousOwnerServices: {
     icon: <ClipboardList className="size-3" />,
     bgClass: 'bg-purple-500/10',
     textClass: 'text-purple-500',
@@ -30,7 +30,7 @@ export const MaintenanceSectionBadge = ({
   className,
 }: MaintenanceSectionBadgeProps) => {
   const { t } = useTranslation('vehicles');
-  const config = SECTION_CONFIG[section] ?? SECTION_CONFIG.own_maintenance;
+  const config = SECTION_CONFIG[section] ?? SECTION_CONFIG.ownMaintenance;
 
   return (
     <span

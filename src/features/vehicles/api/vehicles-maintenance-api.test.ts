@@ -24,7 +24,7 @@ const mockMaintenance: VehicleMaintenance = {
   id: 'maint-1',
   ownerId: 'user-1',
   vehicleId: 'veh-1',
-  section: 'own_maintenance',
+  section: 'ownMaintenance',
   date: '2026-01-03T09:00:00.000Z',
   costPln: 350,
   odometerKm: 35000,
@@ -39,7 +39,7 @@ describe('Vehicles Maintenance API', () => {
   it('getMaintenance fetches maintenance records with section filter', async () => {
     vi.mocked(api.get).mockResolvedValueOnce({ data: [mockMaintenance] });
 
-    const query = { section: 'own_maintenance' as const };
+    const query = { section: 'ownMaintenance' as const };
     const result = await getMaintenance('veh-1', query);
 
     expect(api.get).toHaveBeenCalledWith('/vehicles/veh-1/maintenance', {
@@ -59,7 +59,7 @@ describe('Vehicles Maintenance API', () => {
 
   it('createMaintenance posts maintenance record', async () => {
     const payload = {
-      section: 'own_maintenance' as const,
+      section: 'ownMaintenance' as const,
       date: '2026-01-03T09:00:00.000Z',
       costPln: 350,
     };

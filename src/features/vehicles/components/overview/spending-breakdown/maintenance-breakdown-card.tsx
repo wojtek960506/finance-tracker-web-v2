@@ -14,14 +14,14 @@ export const MaintenanceBreakdownCard = ({
 
   const sections = [
     {
-      key: 'own_maintenance' as const,
-      label: t('overview.maintenanceSections.own_maintenance'),
-      data: maintenance.bySection.own_maintenance,
+      key: 'ownMaintenance' as const,
+      label: t('overview.maintenanceSections.ownMaintenance'),
+      data: maintenance.bySection.ownMaintenance,
     },
     {
-      key: 'previous_owner_services' as const,
-      label: t('overview.maintenanceSections.previous_owner_services'),
-      data: maintenance.bySection.previous_owner_services,
+      key: 'previousOwnerServices' as const,
+      label: t('overview.maintenanceSections.previousOwnerServices'),
+      data: maintenance.bySection.previousOwnerServices,
     },
   ];
 

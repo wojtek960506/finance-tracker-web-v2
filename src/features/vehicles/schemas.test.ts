@@ -97,7 +97,7 @@ describe('Vehicles Form Schemas', () => {
   describe('maintenanceFormSchema', () => {
     it('validates valid maintenance payload', () => {
       const valid = {
-        section: 'own_maintenance',
+        section: 'ownMaintenance',
         date: '2026-01-03',
         costPln: 150,
         odometerKm: 35000,
@@ -114,7 +114,7 @@ describe('Vehicles Form Schemas', () => {
       });
       expect(parsed.success).toBe(true);
       if (parsed.success) {
-        expect(parsed.data.section).toBe('own_maintenance');
+        expect(parsed.data.section).toBe('ownMaintenance');
       }
     });
   });

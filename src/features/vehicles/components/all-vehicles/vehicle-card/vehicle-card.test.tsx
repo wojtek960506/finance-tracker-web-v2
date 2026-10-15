@@ -24,6 +24,7 @@ describe('VehicleCard', () => {
       maintenanceTotalPln: 800,
       equipmentTotalPln: 250,
       lastOdometerKm: 45200,
+      totalDistanceKm: 1200,
       fuelEntriesCount: 8,
       maintenanceCount: 2,
       equipmentCount: 1,

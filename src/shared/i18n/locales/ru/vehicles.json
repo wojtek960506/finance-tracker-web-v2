@@ -131,8 +131,8 @@
       "linkedTransaction": "Связана"
     },
     "maintenanceSections": {
-      "own_maintenance": "Собственное ТО",
-      "previous_owner_services": "ТО прошлого владельца"
+      "ownMaintenance": "Собственное ТО",
+      "previousOwnerServices": "ТО прошлого владельца"
     }
   },
   "fuelPage": {
@@ -285,8 +285,8 @@
     "addMaintenance": "Добавить запись",
     "sections": {
       "all": "Все записи",
-      "own_maintenance": "Собственное ТО",
-      "previous_owner_services": "Сервис прошлого владельца"
+      "ownMaintenance": "Собственное ТО",
+      "previousOwnerServices": "Сервис прошлого владельца"
     },
     "summary": {
       "totalSpending": "Всего на обслуживание",

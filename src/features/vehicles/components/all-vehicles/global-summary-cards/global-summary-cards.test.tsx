@@ -13,6 +13,10 @@ describe('GlobalSummaryCards', () => {
     totalFuelSpentPln: 8200.0,
     totalMaintenanceSpentPln: 5300.5,
     totalEquipmentSpentPln: 1900.0,
+    totalFuelEntriesCount: 10,
+    totalMaintenanceCount: 5,
+    totalEquipmentCount: 2,
+    totalDistanceKm: 12000,
   };
 
   it('renders all four summary cards with formatted amounts', () => {

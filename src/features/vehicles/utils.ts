@@ -1,11 +1,11 @@
 import type {
   GlobalVehiclesSummary,
   MaintenanceSection,
-  VehicleActivityItem,
   VehicleEquipment,
   VehicleFuelEntry,
   VehicleFuelEntryEnriched,
   VehicleMaintenance,
+  VehicleOverviewActivityItem,
   VehicleOverviewData,
   VehicleSpendingSummary,
   VehicleWithSpending,
@@ -18,7 +18,7 @@ export const calculateVehicleSpending = (
 ): VehicleSpendingSummary => {
   const fuelTotalPln = fuelEntries.reduce((acc, curr) => acc + (curr.costPln || 0), 0);
   const ownMaintenanceEntries = maintenanceEntries.filter(
-    (m) => m.section === 'own_maintenance',
+    (m) => m.section === 'ownMaintenance',
   );
   const maintenanceTotalPln = ownMaintenanceEntries.reduce(
     (acc, curr) => acc + (curr.costPln || 0),
@@ -39,6 +39,11 @@ export const calculateVehicleSpending = (
   ].filter((km): km is number => typeof km === 'number');
 
   const lastOdometerKm = odometers.length > 0 ? Math.max(...odometers) : null;
+  const minOdometerKm = odometers.length > 0 ? Math.min(...odometers) : null;
+  const totalDistanceKm =
+    lastOdometerKm !== null && minOdometerKm !== null && lastOdometerKm > minOdometerKm
+      ? lastOdometerKm - minOdometerKm
+      : null;
 
   return {
     fuelTotalPln,
@@ -46,6 +51,7 @@ export const calculateVehicleSpending = (
     equipmentTotalPln,
     totalSpentPln,
     lastOdometerKm,
+    totalDistanceKm,
     fuelEntriesCount: fuelEntries.length,
     maintenanceCount: maintenanceEntries.length,
     equipmentCount: equipmentEntries.length,
@@ -64,6 +70,12 @@ export const calculateGlobalSummary = (
         acc.totalMaintenanceSpentPln + vehicle.spending.maintenanceTotalPln,
       totalEquipmentSpentPln:
         acc.totalEquipmentSpentPln + vehicle.spending.equipmentTotalPln,
+      totalFuelEntriesCount:
+        acc.totalFuelEntriesCount + vehicle.spending.fuelEntriesCount,
+      totalMaintenanceCount:
+        acc.totalMaintenanceCount + vehicle.spending.maintenanceCount,
+      totalEquipmentCount: acc.totalEquipmentCount + vehicle.spending.equipmentCount,
+      totalDistanceKm: acc.totalDistanceKm + (vehicle.spending.totalDistanceKm ?? 0),
     }),
     {
       totalVehicles: 0,
@@ -71,6 +83,10 @@ export const calculateGlobalSummary = (
       totalFuelSpentPln: 0,
       totalMaintenanceSpentPln: 0,
       totalEquipmentSpentPln: 0,
+      totalFuelEntriesCount: 0,
+      totalMaintenanceCount: 0,
+      totalEquipmentCount: 0,
+      totalDistanceKm: 0,
     },
   );
 };
@@ -184,7 +200,7 @@ export const calculateVehicleOverviewData = (
       : null;
 
   const ownMaintenanceEntries = maintenanceEntries.filter(
-    (m) => m.section === 'own_maintenance',
+    (m) => m.section === 'ownMaintenance',
   );
   const maintenanceTotalSpentPln = ownMaintenanceEntries.reduce(
     (acc, curr) => acc + (curr.costPln || 0),
@@ -192,8 +208,8 @@ export const calculateVehicleOverviewData = (
   );
 
   const bySection: Record<MaintenanceSection, { costPln: number; count: number }> = {
-    own_maintenance: { costPln: 0, count: 0 },
-    previous_owner_services: { costPln: 0, count: 0 },
+    ownMaintenance: { costPln: 0, count: 0 },
+    previousOwnerServices: { costPln: 0, count: 0 },
   };
 
   for (const m of maintenanceEntries) {
@@ -227,7 +243,7 @@ export const calculateVehicleOverviewData = (
       ? currentOdometerKm - minOdometerKm
       : null;
 
-  const fuelActivity: VehicleActivityItem[] = fuelEntries.map((e) => ({
+  const fuelActivity: VehicleOverviewActivityItem[] = fuelEntries.map((e) => ({
     id: e.id,
     type: 'fuel',
     date: e.date,
@@ -241,20 +257,22 @@ export const calculateVehicleOverviewData = (
     consumptionLPer100Km: e.consumptionLPer100Km,
   }));
 
-  const maintenanceActivity: VehicleActivityItem[] = maintenanceEntries.map((m) => ({
-    id: m.id,
-    type: 'maintenance',
-    date: m.date,
-    costPln: m.costPln,
-    title: m.serviceProvider || m.description || m.section,
-    description: m.description,
-    odometerKm: m.odometerKm,
-    transactionId: m.transactionId,
-    maintenanceSection: m.section,
-    serviceProvider: m.serviceProvider,
-  }));
+  const maintenanceActivity: VehicleOverviewActivityItem[] = maintenanceEntries.map(
+    (m) => ({
+      id: m.id,
+      type: 'maintenance',
+      date: m.date,
+      costPln: m.costPln,
+      title: m.serviceProvider || m.description || m.section,
+      description: m.description,
+      odometerKm: m.odometerKm,
+      transactionId: m.transactionId,
+      maintenanceSection: m.section,
+      serviceProvider: m.serviceProvider,
+    }),
+  );
 
-  const equipmentActivity: VehicleActivityItem[] = equipmentEntries.map((eq) => ({
+  const equipmentActivity: VehicleOverviewActivityItem[] = equipmentEntries.map((eq) => ({
     id: eq.id,
     type: 'equipment',
     date: eq.date,

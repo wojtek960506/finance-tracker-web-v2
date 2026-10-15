@@ -1,4 +1,4 @@
-import type { VehicleActivityType } from '@vehicles/types';
+import type { VehicleOverviewActivityItem } from '@vehicles/api';
 import {
   formatConsumption,
   formatDate,
@@ -14,7 +14,7 @@ import { useTranslation } from 'react-i18next';
 import type { ActivityItemRowProps } from './types';
 
 const getActivityIconConfig = (
-  type: VehicleActivityType,
+  type: VehicleOverviewActivityItem['type'],
 ): { icon: ReactNode; bgClass: string; textClass: string } => {
   switch (type) {
     case 'fuel':

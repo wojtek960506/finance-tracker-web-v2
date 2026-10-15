@@ -131,8 +131,8 @@
       "linkedTransaction": "Powiązana"
     },
     "maintenanceSections": {
-      "own_maintenance": "Własny serwis",
-      "previous_owner_services": "Serwis poprzedniego właściciela"
+      "ownMaintenance": "Własny serwis",
+      "previousOwnerServices": "Serwis poprzedniego właściciela"
     }
   },
   "fuelPage": {
@@ -285,8 +285,8 @@
     "addMaintenance": "Dodaj serwis",
     "sections": {
       "all": "Wszystkie wpisy",
-      "own_maintenance": "Własny serwis",
-      "previous_owner_services": "Serwis poprzedniego właściciela"
+      "ownMaintenance": "Własny serwis",
+      "previousOwnerServices": "Serwis poprzedniego właściciela"
     },
     "summary": {
       "totalSpending": "Łączne wydatki na serwis",

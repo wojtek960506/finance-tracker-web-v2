@@ -1,5 +1,5 @@
-import type { VehicleStats } from '@vehicles/types';
+import type { VehicleOverviewStats } from '@vehicles/api';
 
 export type VehicleStatsCardsProps = {
-  stats: VehicleStats;
+  stats: VehicleOverviewStats;
 };

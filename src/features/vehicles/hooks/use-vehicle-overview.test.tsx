@@ -54,7 +54,7 @@ describe('Vehicle Overview Hooks', () => {
           id: 'm-1',
           ownerId: 'u-1',
           vehicleId: 'v-1',
-          section: 'own_maintenance',
+          section: 'ownMaintenance',
           date: '2026-02-10T11:00:00Z',
           costPln: 350,
           odometerKm: 100800,

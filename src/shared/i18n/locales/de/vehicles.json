@@ -131,8 +131,8 @@
       "linkedTransaction": "Verknüpft"
     },
     "maintenanceSections": {
-      "own_maintenance": "Eigene Wartung",
-      "previous_owner_services": "Wartung Vorbesitzer"
+      "ownMaintenance": "Eigene Wartung",
+      "previousOwnerServices": "Wartung Vorbesitzer"
     }
   },
   "fuelPage": {
@@ -285,8 +285,8 @@
     "addMaintenance": "Wartung hinzufügen",
     "sections": {
       "all": "Alle Einträge",
-      "own_maintenance": "Eigene Wartung",
-      "previous_owner_services": "Wartung Vorbesitzer"
+      "ownMaintenance": "Eigene Wartung",
+      "previousOwnerServices": "Wartung Vorbesitzer"
     },
     "summary": {
       "totalSpending": "Gesamtausgaben Wartung",

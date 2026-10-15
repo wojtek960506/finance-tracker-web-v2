@@ -57,7 +57,7 @@ describe('vehicles utils', () => {
           id: 'm1',
           ownerId: 'u1',
           vehicleId: 'v1',
-          section: 'own_maintenance',
+          section: 'ownMaintenance',
           date: '2026-01-10',
           costPln: 500,
           odometerKm: 150300,
@@ -86,6 +86,7 @@ describe('vehicles utils', () => {
       expect(spending.equipmentTotalPln).toBe(150);
       expect(spending.totalSpentPln).toBe(1141);
       expect(spending.lastOdometerKm).toBe(150500);
+      expect(spending.totalDistanceKm).toBe(500);
       expect(spending.fuelEntriesCount).toBe(2);
       expect(spending.maintenanceCount).toBe(1);
       expect(spending.equipmentCount).toBe(1);
@@ -99,6 +100,7 @@ describe('vehicles utils', () => {
       expect(spending.equipmentTotalPln).toBe(0);
       expect(spending.totalSpentPln).toBe(0);
       expect(spending.lastOdometerKm).toBeNull();
+      expect(spending.totalDistanceKm).toBeNull();
       expect(spending.fuelEntriesCount).toBe(0);
       expect(spending.maintenanceCount).toBe(0);
       expect(spending.equipmentCount).toBe(0);
@@ -122,6 +124,7 @@ describe('vehicles utils', () => {
             equipmentTotalPln: 100,
             totalSpentPln: 600,
             lastOdometerKm: 100000,
+            totalDistanceKm: 500,
             fuelEntriesCount: 2,
             maintenanceCount: 1,
             equipmentCount: 1,
@@ -141,6 +144,7 @@ describe('vehicles utils', () => {
             equipmentTotalPln: 250,
             totalSpentPln: 450,
             lastOdometerKm: 25000,
+            totalDistanceKm: 300,
             fuelEntriesCount: 3,
             maintenanceCount: 1,
             equipmentCount: 2,
@@ -155,6 +159,10 @@ describe('vehicles utils', () => {
       expect(global.totalFuelSpentPln).toBe(450);
       expect(global.totalMaintenanceSpentPln).toBe(250);
       expect(global.totalEquipmentSpentPln).toBe(350);
+      expect(global.totalFuelEntriesCount).toBe(5);
+      expect(global.totalMaintenanceCount).toBe(2);
+      expect(global.totalEquipmentCount).toBe(3);
+      expect(global.totalDistanceKm).toBe(800);
     });
   });
 
@@ -226,7 +234,7 @@ describe('vehicles utils', () => {
           id: 'm1',
           ownerId: 'u1',
           vehicleId: 'v1',
-          section: 'own_maintenance' as const,
+          section: 'ownMaintenance' as const,
           date: '2026-03-05T12:00:00Z',
           costPln: 450,
           odometerKm: 120200,
@@ -262,9 +270,9 @@ describe('vehicles utils', () => {
 
       expect(result.maintenance.totalSpentPln).toBe(450);
       expect(result.maintenance.entriesCount).toBe(1);
-      expect(result.maintenance.bySection.own_maintenance.costPln).toBe(450);
-      expect(result.maintenance.bySection.own_maintenance.count).toBe(1);
-      expect(result.maintenance.bySection.previous_owner_services.costPln).toBe(0);
+      expect(result.maintenance.bySection.ownMaintenance.costPln).toBe(450);
+      expect(result.maintenance.bySection.ownMaintenance.count).toBe(1);
+      expect(result.maintenance.bySection.previousOwnerServices.costPln).toBe(0);
 
       expect(result.equipment.totalSpentPln).toBe(100);
       expect(result.equipment.entriesCount).toBe(1);
@@ -296,7 +304,7 @@ describe('vehicles utils', () => {
       expect(result.recentActivity).toEqual([]);
     });
 
-    it('excludes previous_owner_services from financial totals and odometer calculations', () => {
+    it('excludes previousOwnerServices from financial totals and odometer calculations', () => {
       const fuel: VehicleFuelEntryEnriched[] = [
         {
           id: 'f1',
@@ -325,7 +333,7 @@ describe('vehicles utils', () => {
           id: 'm-own',
           ownerId: 'u1',
           vehicleId: 'v1',
-          section: 'own_maintenance' as const,
+          section: 'ownMaintenance' as const,
           date: '2026-03-05T12:00:00Z',
           costPln: 300,
           odometerKm: 150500,
@@ -337,7 +345,7 @@ describe('vehicles utils', () => {
           id: 'm-prev',
           ownerId: 'u1',
           vehicleId: 'v1',
-          section: 'previous_owner_services' as const,
+          section: 'previousOwnerServices' as const,
           date: '2025-01-01T10:00:00Z',
           costPln: 5000,
           odometerKm: 999999,
@@ -350,8 +358,8 @@ describe('vehicles utils', () => {
       const overview = calculateVehicleOverviewData(fuel, maintenance, []);
       expect(overview.totalSpentPln).toBe(540);
       expect(overview.maintenance.totalSpentPln).toBe(300);
-      expect(overview.maintenance.bySection.own_maintenance.costPln).toBe(300);
-      expect(overview.maintenance.bySection.previous_owner_services.costPln).toBe(5000);
+      expect(overview.maintenance.bySection.ownMaintenance.costPln).toBe(300);
+      expect(overview.maintenance.bySection.previousOwnerServices.costPln).toBe(5000);
       expect(overview.stats.currentOdometerKm).toBe(150500);
 
       const spending = calculateVehicleSpending(fuel, maintenance, []);

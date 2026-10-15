@@ -1,10 +1,10 @@
-import type { VehicleActivityItem } from '@vehicles/types';
+import type { VehicleOverviewActivityItem } from '@vehicles/api';
 
 export type RecentActivityFeedProps = {
-  items: VehicleActivityItem[];
+  items: VehicleOverviewActivityItem[];
   vehicleSlug: string;
 };
 
 export type ActivityItemRowProps = {
-  item: VehicleActivityItem;
+  item: VehicleOverviewActivityItem;
 };

@@ -32,7 +32,7 @@ const mockMaintenanceItems: VehicleMaintenance[] = [
     id: 'maint-1',
     ownerId: 'u-1',
     vehicleId: 'veh-123',
-    section: 'own_maintenance',
+    section: 'ownMaintenance',
     date: '2026-02-15T10:00:00Z',
     costPln: 350,
     odometerKm: 145000,
@@ -46,7 +46,7 @@ const mockMaintenanceItems: VehicleMaintenance[] = [
     id: 'maint-2',
     ownerId: 'u-1',
     vehicleId: 'veh-123',
-    section: 'previous_owner_services',
+    section: 'previousOwnerServices',
     date: '2025-11-01T12:00:00Z',
     costPln: 1200,
     odometerKm: 130000,
@@ -137,10 +137,10 @@ describe('VehiclesMaintenanceContent', () => {
 
     // Section collapsibles
     expect(
-      screen.getByTestId('maintenance-section-collapsible-own_maintenance'),
+      screen.getByTestId('maintenance-section-collapsible-ownMaintenance'),
     ).toBeInTheDocument();
     expect(
-      screen.getByTestId('maintenance-section-collapsible-previous_owner_services'),
+      screen.getByTestId('maintenance-section-collapsible-previousOwnerServices'),
     ).toBeInTheDocument();
 
     // Filter bar
@@ -178,7 +178,7 @@ describe('VehiclesMaintenanceContent', () => {
 
   it('only renders collapsibles for sections that have data', () => {
     vi.spyOn(vehiclesHooks, 'useMaintenance').mockReturnValue({
-      data: [mockMaintenanceItems[0]!], // only own_maintenance
+      data: [mockMaintenanceItems[0]!], // only ownMaintenance
       isLoading: false,
       isFetching: false,
       isError: false,
@@ -189,10 +189,10 @@ describe('VehiclesMaintenanceContent', () => {
     renderMaintenancePage();
 
     expect(
-      screen.getByTestId('maintenance-section-collapsible-own_maintenance'),
+      screen.getByTestId('maintenance-section-collapsible-ownMaintenance'),
     ).toBeInTheDocument();
     expect(
-      screen.queryByTestId('maintenance-section-collapsible-previous_owner_services'),
+      screen.queryByTestId('maintenance-section-collapsible-previousOwnerServices'),
     ).not.toBeInTheDocument();
   });
 

@@ -131,8 +131,8 @@
       "linkedTransaction": "Linked"
     },
     "maintenanceSections": {
-      "own_maintenance": "Own Maintenance",
-      "previous_owner_services": "Previous Owner Services"
+      "ownMaintenance": "Own Maintenance",
+      "previousOwnerServices": "Previous Owner Services"
     }
   },
   "fuelPage": {
@@ -285,8 +285,8 @@
     "addMaintenance": "Add Maintenance",
     "sections": {
       "all": "All Records",
-      "own_maintenance": "Own Maintenance",
-      "previous_owner_services": "Previous Owner Services"
+      "ownMaintenance": "Own Maintenance",
+      "previousOwnerServices": "Previous Owner Services"
     },
     "summary": {
       "totalSpending": "Total Maintenance Spent",

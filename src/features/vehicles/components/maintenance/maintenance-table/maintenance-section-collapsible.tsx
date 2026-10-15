@@ -18,10 +18,10 @@ const SECTION_CONFIG: Record<
     icon: ReactNode;
   }
 > = {
-  own_maintenance: {
+  ownMaintenance: {
     icon: <Wrench className="size-4 text-bt-primary" />,
   },
-  previous_owner_services: {
+  previousOwnerServices: {
     icon: <ClipboardList className="size-4 text-amber-500" />,
   },
 };
