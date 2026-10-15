@@ -1,9 +1,9 @@
 import type { MaintenanceSection } from '@vehicles/api';
-import { VehicleFilterBar } from '@vehicles/components/common';
+import { VehicleDateRangeFilter, VehicleFilterBar } from '@vehicles/components/common';
 import { Plus } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
-import { ButtonWithIcon, DateInput, SearchFilterInput } from '@shared/ui';
+import { ButtonWithIcon, SearchFilterInput } from '@shared/ui';
 
 import type { MaintenanceFilters } from './types';
 
@@ -65,31 +65,14 @@ export const MaintenanceFilterBar = ({
       </div>
 
       {/* Date range pickers */}
-      <div className="flex w-full items-center gap-2 xl:w-auto">
-        <div className="flex-1 min-w-0 xl:w-52">
-          <DateInput
-            value={filters.startDate ?? ''}
-            onChange={(val) =>
-              onFiltersChange({ ...filters, startDate: val || undefined })
-            }
-            onClear={() => onFiltersChange({ ...filters, startDate: undefined })}
-            isClearable
-            aria-label={t('maintenancePage.filter.startDate')}
-          />
-        </div>
-
-        <span className="text-xs text-text-muted shrink-0">—</span>
-
-        <div className="flex-1 min-w-0 xl:w-52">
-          <DateInput
-            value={filters.endDate ?? ''}
-            onChange={(val) => onFiltersChange({ ...filters, endDate: val || undefined })}
-            onClear={() => onFiltersChange({ ...filters, endDate: undefined })}
-            isClearable
-            aria-label={t('maintenancePage.filter.endDate')}
-          />
-        </div>
-      </div>
+      <VehicleDateRangeFilter
+        startDate={filters.startDate}
+        endDate={filters.endDate}
+        onStartDateChange={(startDate) => onFiltersChange({ ...filters, startDate })}
+        onEndDateChange={(endDate) => onFiltersChange({ ...filters, endDate })}
+        startDateLabel={t('maintenancePage.filter.startDate')}
+        endDateLabel={t('maintenancePage.filter.endDate')}
+      />
     </VehicleFilterBar>
   );
 };

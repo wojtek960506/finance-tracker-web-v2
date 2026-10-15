@@ -1,8 +1,8 @@
-import { VehicleFilterBar } from '@vehicles/components/common';
+import { VehicleDateRangeFilter, VehicleFilterBar } from '@vehicles/components/common';
 import { Plus } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
-import { ButtonWithIcon, DateInput, FilterPills } from '@shared/ui';
+import { ButtonWithIcon, FilterPills } from '@shared/ui';
 
 export type FuelFilters = {
   startDate?: string;
@@ -43,32 +43,14 @@ export const FuelFilterBar = ({
         />
       }
     >
-      {/* Date range pickers */}
-      <div className="flex w-full items-center gap-2 xl:w-auto">
-        <div className="flex-1 min-w-0 xl:w-52">
-          <DateInput
-            value={filters.startDate ?? ''}
-            onChange={(val) =>
-              onFiltersChange({ ...filters, startDate: val || undefined })
-            }
-            onClear={() => onFiltersChange({ ...filters, startDate: undefined })}
-            isClearable
-            aria-label={t('fuelPage.filters.startDate')}
-          />
-        </div>
-
-        <span className="text-xs text-text-muted shrink-0">—</span>
-
-        <div className="flex-1 min-w-0 xl:w-52">
-          <DateInput
-            value={filters.endDate ?? ''}
-            onChange={(val) => onFiltersChange({ ...filters, endDate: val || undefined })}
-            onClear={() => onFiltersChange({ ...filters, endDate: undefined })}
-            isClearable
-            aria-label={t('fuelPage.filters.endDate')}
-          />
-        </div>
-      </div>
+      <VehicleDateRangeFilter
+        startDate={filters.startDate}
+        endDate={filters.endDate}
+        onStartDateChange={(startDate) => onFiltersChange({ ...filters, startDate })}
+        onEndDateChange={(endDate) => onFiltersChange({ ...filters, endDate })}
+        startDateLabel={t('fuelPage.filters.startDate')}
+        endDateLabel={t('fuelPage.filters.endDate')}
+      />
 
       {/* Filter Pills */}
       <div className="flex items-center gap-2">

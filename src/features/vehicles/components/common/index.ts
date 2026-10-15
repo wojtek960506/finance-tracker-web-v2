@@ -3,6 +3,10 @@ export {
   type DeleteVehicleRecordModalProps,
 } from './delete-vehicle-record-modal';
 export {
+  VehicleDateRangeFilter,
+  type VehicleDateRangeFilterProps,
+} from './vehicle-date-range-filter';
+export {
   VehicleDomainEmptyState,
   type VehicleDomainEmptyStateProps,
 } from './vehicle-domain-empty-state';
