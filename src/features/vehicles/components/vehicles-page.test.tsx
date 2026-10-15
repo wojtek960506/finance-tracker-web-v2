@@ -4,13 +4,25 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { renderWithProviders } from '@test-utils';
 
 import * as hooks from '../hooks';
-import type { VehicleWithSpending } from '../types';
+import type { GlobalVehiclesSummary, VehicleWithSpending } from '../types';
 
 import { VehiclesPage } from './vehicles-page';
 
 vi.mock('../hooks', () => ({
   useAllVehiclesSummary: vi.fn(),
 }));
+
+const defaultMockSummary: GlobalVehiclesSummary = {
+  totalVehicles: 0,
+  totalSpentPln: 0,
+  totalFuelSpentPln: 0,
+  totalMaintenanceSpentPln: 0,
+  totalEquipmentSpentPln: 0,
+  totalFuelEntriesCount: 0,
+  totalMaintenanceCount: 0,
+  totalEquipmentCount: 0,
+  totalDistanceKm: 0,
+};
 
 describe('VehiclesPage', () => {
   beforeEach(() => {
@@ -20,13 +32,7 @@ describe('VehiclesPage', () => {
   it('renders loading state when data is loading', () => {
     vi.mocked(hooks.useAllVehiclesSummary).mockReturnValue({
       vehicles: [],
-      summary: {
-        totalVehicles: 0,
-        totalSpentPln: 0,
-        totalFuelSpentPln: 0,
-        totalMaintenanceSpentPln: 0,
-        totalEquipmentSpentPln: 0,
-      },
+      summary: defaultMockSummary,
       hasVehicles: false,
       isLoading: true,
       isFetching: true,
@@ -42,13 +48,7 @@ describe('VehiclesPage', () => {
   it('renders error state when fetch fails', () => {
     vi.mocked(hooks.useAllVehiclesSummary).mockReturnValue({
       vehicles: [],
-      summary: {
-        totalVehicles: 0,
-        totalSpentPln: 0,
-        totalFuelSpentPln: 0,
-        totalMaintenanceSpentPln: 0,
-        totalEquipmentSpentPln: 0,
-      },
+      summary: defaultMockSummary,
       hasVehicles: false,
       isLoading: false,
       isFetching: false,
@@ -64,13 +64,7 @@ describe('VehiclesPage', () => {
   it('renders empty state when user has no vehicles', () => {
     vi.mocked(hooks.useAllVehiclesSummary).mockReturnValue({
       vehicles: [],
-      summary: {
-        totalVehicles: 0,
-        totalSpentPln: 0,
-        totalFuelSpentPln: 0,
-        totalMaintenanceSpentPln: 0,
-        totalEquipmentSpentPln: 0,
-      },
+      summary: defaultMockSummary,
       hasVehicles: false,
       isLoading: false,
       isFetching: false,
@@ -99,6 +93,7 @@ describe('VehiclesPage', () => {
           maintenanceTotalPln: 400,
           equipmentTotalPln: 0,
           lastOdometerKm: 85000,
+          totalDistanceKm: 1200,
           fuelEntriesCount: 3,
           maintenanceCount: 1,
           equipmentCount: 0,
@@ -109,11 +104,15 @@ describe('VehiclesPage', () => {
     vi.mocked(hooks.useAllVehiclesSummary).mockReturnValue({
       vehicles: mockVehicles,
       summary: {
+        ...defaultMockSummary,
         totalVehicles: 1,
         totalSpentPln: 1200,
         totalFuelSpentPln: 800,
         totalMaintenanceSpentPln: 400,
         totalEquipmentSpentPln: 0,
+        totalDistanceKm: 1200,
+        totalFuelEntriesCount: 3,
+        totalMaintenanceCount: 1,
       },
       hasVehicles: true,
       isLoading: false,
@@ -132,13 +131,7 @@ describe('VehiclesPage', () => {
   it('opens CreateVehicleModal when Add Vehicle button is clicked', () => {
     vi.mocked(hooks.useAllVehiclesSummary).mockReturnValue({
       vehicles: [],
-      summary: {
-        totalVehicles: 0,
-        totalSpentPln: 0,
-        totalFuelSpentPln: 0,
-        totalMaintenanceSpentPln: 0,
-        totalEquipmentSpentPln: 0,
-      },
+      summary: defaultMockSummary,
       hasVehicles: false,
       isLoading: false,
       isFetching: false,

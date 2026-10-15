@@ -6,9 +6,13 @@ import {
   createVehicle,
   deleteVehicle,
   getVehicle,
+  getVehicleOverview,
   getVehicles,
+  getVehiclesSummary,
   updateVehicle,
   type Vehicle,
+  type VehicleOverviewResponse,
+  type VehiclesSummaryResponse,
 } from './index';
 
 vi.mock('@shared/api', () => ({
@@ -84,5 +88,93 @@ describe('Vehicles CRUD API', () => {
     await deleteVehicle('veh-1');
 
     expect(api.delete).toHaveBeenCalledWith('/vehicles/veh-1');
+  });
+
+  it('getVehiclesSummary fetches global and per-vehicle spending summary', async () => {
+    const mockSummary: VehiclesSummaryResponse = {
+      summary: {
+        totalVehicles: 1,
+        totalSpentPln: 1500,
+        totalFuelSpentPln: 800,
+        totalMaintenanceSpentPln: 500,
+        totalEquipmentSpentPln: 200,
+        totalFuelEntriesCount: 5,
+        totalMaintenanceCount: 2,
+        totalEquipmentCount: 1,
+        totalDistanceKm: 1200,
+      },
+      vehicles: [
+        {
+          ...mockVehicle,
+          spending: {
+            fuelTotalPln: 800,
+            maintenanceTotalPln: 500,
+            equipmentTotalPln: 200,
+            totalSpentPln: 1500,
+            lastOdometerKm: 151200,
+            totalDistanceKm: 1200,
+            fuelEntriesCount: 5,
+            maintenanceCount: 2,
+            equipmentCount: 1,
+          },
+        },
+      ],
+    };
+
+    vi.mocked(api.get).mockResolvedValueOnce({ data: mockSummary });
+
+    const result = await getVehiclesSummary();
+
+    expect(api.get).toHaveBeenCalledWith('/vehicles/summary');
+    expect(result).toEqual(mockSummary);
+  });
+
+  it('getVehicleOverview fetches vehicle overview data with optional query params', async () => {
+    const mockOverview: VehicleOverviewResponse = {
+      vehicleId: 'veh-1',
+      totalSpentPln: 1500,
+      stats: {
+        currentOdometerKm: 151200,
+        minOdometerKm: 150000,
+        totalDistanceKm: 1200,
+        refuelingCount: 5,
+        maintenanceCount: 2,
+        equipmentCount: 1,
+      },
+      fuel: {
+        totalSpentPln: 800,
+        totalLiters: 150,
+        avgConsumptionLPer100Km: 5.5,
+        costPerKmPln: 0.67,
+        entriesCount: 5,
+      },
+      maintenance: {
+        totalSpentPln: 500,
+        entriesCount: 2,
+      },
+      equipment: {
+        totalSpentPln: 200,
+        entriesCount: 1,
+      },
+      recentActivity: [
+        {
+          id: 'act-1',
+          type: 'fuel',
+          date: '2026-03-01T10:00:00Z',
+          costPln: 150,
+          title: 'Orlen',
+          odometerKm: 151200,
+        },
+      ],
+    };
+
+    vi.mocked(api.get).mockResolvedValueOnce({ data: mockOverview });
+
+    const result = await getVehicleOverview('veh-1', { activityLimit: 10 });
+
+    expect(api.get).toHaveBeenCalledWith('/vehicles/veh-1/overview', {
+      params: { activityLimit: 10 },
+    });
+    expect(result).toEqual(mockOverview);
   });
 });
