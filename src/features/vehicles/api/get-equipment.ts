@@ -1,12 +1,12 @@
 import { api } from '@shared/api';
 
-import type { GetEquipmentQuery, VehicleEquipmentListResponse } from './types';
+import type { GetEquipmentQuery, VehicleEquipmentWithSummaryResponse } from './types';
 
 export const getEquipment = async (
   vehicleId: string,
   query?: GetEquipmentQuery,
-): Promise<VehicleEquipmentListResponse> => {
-  const res = await api.get<VehicleEquipmentListResponse>(
+): Promise<VehicleEquipmentWithSummaryResponse> => {
+  const res = await api.get<VehicleEquipmentWithSummaryResponse>(
     `/vehicles/${vehicleId}/equipment`,
     { params: query },
   );

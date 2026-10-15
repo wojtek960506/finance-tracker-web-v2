@@ -26,13 +26,13 @@ export const VehiclesFuelContent = () => {
     null,
   );
 
-  const {
-    data: entries = [],
-    isLoading,
-    isError,
-    error,
-    refetch,
-  } = useFuelEntries(vehicle.id, filters);
+  const { data, isLoading, isError, error, refetch } = useFuelEntries(
+    vehicle.id,
+    filters,
+  );
+
+  const entries = data?.items ?? [];
+  const summary = data?.summary;
 
   const hasFilters = Boolean(filters.startDate || filters.endDate || filters.isFullTank);
 
@@ -54,7 +54,7 @@ export const VehiclesFuelContent = () => {
   return (
     <div className="flex flex-col gap-4 pb-6" data-testid="vehicles-fuel-content">
       {/* Summary Cards */}
-      <FuelSummaryCards entries={entries} />
+      <FuelSummaryCards summary={summary} />
 
       {/* Filter Bar & Action */}
       <FuelFilterBar

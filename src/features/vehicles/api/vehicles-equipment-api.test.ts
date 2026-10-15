@@ -35,14 +35,19 @@ const mockEquipment: VehicleEquipment = {
 
 describe('Vehicles Equipment API', () => {
   it('getEquipment fetches equipment items', async () => {
-    vi.mocked(api.get).mockResolvedValueOnce({ data: [mockEquipment] });
+    const mockEnvelope = {
+      items: [mockEquipment],
+      summary: { totalCostPln: 1200, totalItems: 1 },
+      pagination: { nextCursor: null, hasMore: false, total: 1 },
+    };
+    vi.mocked(api.get).mockResolvedValueOnce({ data: mockEnvelope });
 
     const result = await getEquipment('veh-1');
 
     expect(api.get).toHaveBeenCalledWith('/vehicles/veh-1/equipment', {
       params: undefined,
     });
-    expect(result).toEqual([mockEquipment]);
+    expect(result).toEqual(mockEnvelope);
   });
 
   it('getEquipmentItem fetches single item', async () => {

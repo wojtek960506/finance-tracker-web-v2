@@ -40,7 +40,18 @@ const mockFuelEntry: VehicleFuelEntry = {
 
 describe('Vehicles Fuel API', () => {
   it('getFuelEntries fetches fuel logs with query params', async () => {
-    vi.mocked(api.get).mockResolvedValueOnce({ data: [mockFuelEntry] });
+    const mockEnvelope = {
+      items: [mockFuelEntry],
+      summary: {
+        totalVolume: 14.5,
+        totalCostPln: 93.53,
+        avgConsumptionLPer100Km: 6.5,
+        avgUnitPricePln: 6.45,
+        totalCount: 1,
+      },
+      pagination: { nextCursor: null, hasMore: false, total: 1 },
+    };
+    vi.mocked(api.get).mockResolvedValueOnce({ data: mockEnvelope });
 
     const query = { isFullTank: true, limit: 10 };
     const result = await getFuelEntries('veh-1', query);
@@ -48,7 +59,7 @@ describe('Vehicles Fuel API', () => {
     expect(api.get).toHaveBeenCalledWith('/vehicles/veh-1/fuel', {
       params: query,
     });
-    expect(result).toEqual([mockFuelEntry]);
+    expect(result).toEqual(mockEnvelope);
   });
 
   it('getFuelEntry fetches single entry', async () => {

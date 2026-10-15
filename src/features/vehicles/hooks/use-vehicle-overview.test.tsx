@@ -101,7 +101,17 @@ describe('Vehicle Overview Hooks', () => {
 
   describe('useFuelEntries', () => {
     it('fetches fuel entries for vehicle', async () => {
-      vi.spyOn(vehiclesApi, 'getFuelEntries').mockResolvedValueOnce([]);
+      vi.spyOn(vehiclesApi, 'getFuelEntries').mockResolvedValueOnce({
+        items: [],
+        summary: {
+          totalVolume: 0,
+          totalCostPln: 0,
+          avgConsumptionLPer100Km: null,
+          avgUnitPricePln: null,
+          totalCount: 0,
+        },
+        pagination: { nextCursor: null, hasMore: false, total: 0 },
+      });
 
       const { result } = renderHook(() => useFuelEntries('v-1'), {
         wrapper: createWrapper(),
@@ -117,7 +127,11 @@ describe('Vehicle Overview Hooks', () => {
 
   describe('useMaintenance', () => {
     it('fetches maintenance records for vehicle', async () => {
-      vi.spyOn(vehiclesApi, 'getMaintenance').mockResolvedValueOnce([]);
+      vi.spyOn(vehiclesApi, 'getMaintenance').mockResolvedValueOnce({
+        items: [],
+        summary: { totalCostPln: 0, totalRecords: 0 },
+        pagination: { nextCursor: null, hasMore: false, total: 0 },
+      });
 
       const { result } = renderHook(() => useMaintenance('v-1'), {
         wrapper: createWrapper(),
@@ -133,7 +147,11 @@ describe('Vehicle Overview Hooks', () => {
 
   describe('useEquipment', () => {
     it('fetches equipment items for vehicle', async () => {
-      vi.spyOn(vehiclesApi, 'getEquipment').mockResolvedValueOnce([]);
+      vi.spyOn(vehiclesApi, 'getEquipment').mockResolvedValueOnce({
+        items: [],
+        summary: { totalCostPln: 0, totalItems: 0 },
+        pagination: { nextCursor: null, hasMore: false, total: 0 },
+      });
 
       const { result } = renderHook(() => useEquipment('v-1'), {
         wrapper: createWrapper(),

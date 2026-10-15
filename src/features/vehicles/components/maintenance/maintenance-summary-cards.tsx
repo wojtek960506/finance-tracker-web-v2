@@ -1,32 +1,19 @@
-import type { VehicleMaintenance } from '@vehicles/api';
+import type { VehicleMaintenanceSummary } from '@vehicles/api';
 import { VehicleStatsCard } from '@vehicles/components/common';
 import { formatPln } from '@vehicles/utils';
 import { Banknote, Wrench } from 'lucide-react';
-import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 export type MaintenanceSummaryCardsProps = {
-  items: VehicleMaintenance[];
+  summary?: VehicleMaintenanceSummary;
 };
 
-export const MaintenanceSummaryCards = ({ items }: MaintenanceSummaryCardsProps) => {
+export const MaintenanceSummaryCards = ({ summary }: MaintenanceSummaryCardsProps) => {
   const { t, i18n } = useTranslation('vehicles');
   const lang = i18n.language;
 
-  const { totalCount, ownCost } = useMemo(() => {
-    let ownCost = 0;
-
-    for (const item of items) {
-      if (item.section === 'ownMaintenance') {
-        ownCost += item.costPln || 0;
-      }
-    }
-
-    return {
-      totalCount: items.length,
-      ownCost,
-    };
-  }, [items]);
+  const totalCost = summary?.totalCostPln ?? 0;
+  const totalCount = summary?.totalRecords ?? 0;
 
   return (
     <div
@@ -35,7 +22,7 @@ export const MaintenanceSummaryCards = ({ items }: MaintenanceSummaryCardsProps)
     >
       <VehicleStatsCard
         title={t('maintenancePage.summary.totalSpending')}
-        value={formatPln(ownCost, lang)}
+        value={formatPln(totalCost, lang)}
         Icon={Banknote}
         iconClassName="text-emerald-500"
         data-testid="maintenance-summary-cost"

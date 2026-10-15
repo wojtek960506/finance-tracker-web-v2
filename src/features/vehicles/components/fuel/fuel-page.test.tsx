@@ -2,7 +2,11 @@ import '@shared/i18n';
 
 import { QueryClientProvider } from '@tanstack/react-query';
 import { fireEvent, render, screen } from '@testing-library/react';
-import type { Vehicle, VehicleFuelEntryEnriched } from '@vehicles/api';
+import type {
+  Vehicle,
+  VehicleFuelEntryEnriched,
+  VehicleFuelWithSummaryResponse,
+} from '@vehicles/api';
 import * as vehiclesHooks from '@vehicles/hooks';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
@@ -74,6 +78,22 @@ const mockFuelEntries: VehicleFuelEntryEnriched[] = [
   },
 ];
 
+const mockFuelResponse: VehicleFuelWithSummaryResponse = {
+  items: mockFuelEntries,
+  summary: {
+    totalVolume: 85,
+    totalCostPln: 556.5,
+    avgConsumptionLPer100Km: 6.67,
+    avgUnitPricePln: 6.55,
+    totalCount: 2,
+  },
+  pagination: {
+    nextCursor: null,
+    hasMore: false,
+    total: 2,
+  },
+};
+
 const renderFuelPage = () => {
   const queryClient = createTestQueryClient();
   return render(
@@ -134,7 +154,7 @@ describe('VehiclesFuelContent', () => {
 
   it('renders summary cards, filter bar, and entries table with data', () => {
     vi.spyOn(vehiclesHooks, 'useFuelEntries').mockReturnValue({
-      data: mockFuelEntries,
+      data: mockFuelResponse,
       isLoading: false,
       isFetching: false,
       isError: false,
@@ -162,7 +182,17 @@ describe('VehiclesFuelContent', () => {
 
   it('renders empty state when there are no fuel entries', () => {
     vi.spyOn(vehiclesHooks, 'useFuelEntries').mockReturnValue({
-      data: [],
+      data: {
+        items: [],
+        summary: {
+          totalVolume: 0,
+          totalCostPln: 0,
+          avgConsumptionLPer100Km: null,
+          avgUnitPricePln: null,
+          totalCount: 0,
+        },
+        pagination: { nextCursor: null, hasMore: false, total: 0 },
+      },
       isLoading: false,
       isFetching: false,
       isError: false,
@@ -180,7 +210,7 @@ describe('VehiclesFuelContent', () => {
 
   it('opens create modal when clicking Add Refueling button', () => {
     vi.spyOn(vehiclesHooks, 'useFuelEntries').mockReturnValue({
-      data: mockFuelEntries,
+      data: mockFuelResponse,
       isLoading: false,
       isFetching: false,
       isError: false,

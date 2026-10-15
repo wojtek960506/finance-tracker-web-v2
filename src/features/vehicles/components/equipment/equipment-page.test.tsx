@@ -2,7 +2,11 @@ import '@shared/i18n';
 
 import { QueryClientProvider } from '@tanstack/react-query';
 import { fireEvent, render, screen } from '@testing-library/react';
-import type { Vehicle, VehicleEquipment } from '@vehicles/api';
+import type {
+  Vehicle,
+  VehicleEquipment,
+  VehicleEquipmentWithSummaryResponse,
+} from '@vehicles/api';
 import * as vehiclesHooks from '@vehicles/hooks';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
@@ -53,6 +57,19 @@ const mockEquipmentItems: VehicleEquipment[] = [
     updatedAt: '2026-03-01T12:00:00Z',
   },
 ];
+
+const mockEquipmentResponse: VehicleEquipmentWithSummaryResponse = {
+  items: mockEquipmentItems,
+  summary: {
+    totalCostPln: 2250,
+    totalItems: 2,
+  },
+  pagination: {
+    nextCursor: null,
+    hasMore: false,
+    total: 2,
+  },
+};
 
 const renderEquipmentPage = () => {
   const queryClient = createTestQueryClient();
@@ -114,7 +131,7 @@ describe('VehiclesEquipmentContent', () => {
 
   it('renders summary cards, filter bar, and entries table with data', () => {
     vi.spyOn(vehiclesHooks, 'useEquipment').mockReturnValue({
-      data: mockEquipmentItems,
+      data: mockEquipmentResponse,
       isLoading: false,
       isFetching: false,
       isError: false,
@@ -144,7 +161,7 @@ describe('VehiclesEquipmentContent', () => {
 
   it('filters equipment items by search term', () => {
     vi.spyOn(vehiclesHooks, 'useEquipment').mockReturnValue({
-      data: mockEquipmentItems,
+      data: mockEquipmentResponse,
       isLoading: false,
       isFetching: false,
       isError: false,
@@ -163,7 +180,11 @@ describe('VehiclesEquipmentContent', () => {
 
   it('renders empty state when there are no equipment items', () => {
     vi.spyOn(vehiclesHooks, 'useEquipment').mockReturnValue({
-      data: [],
+      data: {
+        items: [],
+        summary: { totalCostPln: 0, totalItems: 0 },
+        pagination: { nextCursor: null, hasMore: false, total: 0 },
+      },
       isLoading: false,
       isFetching: false,
       isError: false,
@@ -181,7 +202,7 @@ describe('VehiclesEquipmentContent', () => {
 
   it('opens create modal when clicking Add Equipment button', () => {
     vi.spyOn(vehiclesHooks, 'useEquipment').mockReturnValue({
-      data: mockEquipmentItems,
+      data: mockEquipmentResponse,
       isLoading: false,
       isFetching: false,
       isError: false,
@@ -196,7 +217,7 @@ describe('VehiclesEquipmentContent', () => {
 
   it('opens update modal when clicking Edit button on a row', () => {
     vi.spyOn(vehiclesHooks, 'useEquipment').mockReturnValue({
-      data: mockEquipmentItems,
+      data: mockEquipmentResponse,
       isLoading: false,
       isFetching: false,
       isError: false,
@@ -215,7 +236,7 @@ describe('VehiclesEquipmentContent', () => {
 
   it('opens delete modal when clicking Delete button on a row', () => {
     vi.spyOn(vehiclesHooks, 'useEquipment').mockReturnValue({
-      data: mockEquipmentItems,
+      data: mockEquipmentResponse,
       isLoading: false,
       isFetching: false,
       isError: false,

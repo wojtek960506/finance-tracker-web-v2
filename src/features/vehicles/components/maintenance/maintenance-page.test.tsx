@@ -2,7 +2,11 @@ import '@shared/i18n';
 
 import { QueryClientProvider } from '@tanstack/react-query';
 import { fireEvent, render, screen } from '@testing-library/react';
-import type { Vehicle, VehicleMaintenance } from '@vehicles/api';
+import type {
+  Vehicle,
+  VehicleMaintenance,
+  VehicleMaintenanceWithSummaryResponse,
+} from '@vehicles/api';
 import * as vehiclesHooks from '@vehicles/hooks';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
@@ -57,6 +61,19 @@ const mockMaintenanceItems: VehicleMaintenance[] = [
     updatedAt: '2025-11-01T12:00:00Z',
   },
 ];
+
+const mockMaintenanceResponse: VehicleMaintenanceWithSummaryResponse = {
+  items: mockMaintenanceItems,
+  summary: {
+    totalCostPln: 350,
+    totalRecords: 2,
+  },
+  pagination: {
+    nextCursor: null,
+    hasMore: false,
+    total: 2,
+  },
+};
 
 const renderMaintenancePage = () => {
   const queryClient = createTestQueryClient();
@@ -118,7 +135,7 @@ describe('VehiclesMaintenanceContent', () => {
 
   it('renders summary cards, section tabs, filter bar, and entries table with data', () => {
     vi.spyOn(vehiclesHooks, 'useMaintenance').mockReturnValue({
-      data: mockMaintenanceItems,
+      data: mockMaintenanceResponse,
       isLoading: false,
       isFetching: false,
       isError: false,
@@ -135,12 +152,13 @@ describe('VehiclesMaintenanceContent', () => {
     );
     expect(screen.getByTestId('maintenance-summary-count')).toHaveTextContent('2');
 
-    // Section collapsibles
+    // Section switcher
+    expect(screen.getByTestId('maintenance-section-switcher')).toBeInTheDocument();
     expect(
-      screen.getByTestId('maintenance-section-collapsible-ownMaintenance'),
+      screen.getByTestId('maintenance-section-tab-ownMaintenance'),
     ).toBeInTheDocument();
     expect(
-      screen.getByTestId('maintenance-section-collapsible-previousOwnerServices'),
+      screen.getByTestId('maintenance-section-tab-previousOwnerServices'),
     ).toBeInTheDocument();
 
     // Filter bar
@@ -159,7 +177,7 @@ describe('VehiclesMaintenanceContent', () => {
 
   it('filters maintenance items by search term', () => {
     vi.spyOn(vehiclesHooks, 'useMaintenance').mockReturnValue({
-      data: mockMaintenanceItems,
+      data: mockMaintenanceResponse,
       isLoading: false,
       isFetching: false,
       isError: false,
@@ -176,9 +194,9 @@ describe('VehiclesMaintenanceContent', () => {
     expect(screen.queryByTestId('maintenance-row-maint-1')).not.toBeInTheDocument();
   });
 
-  it('only renders collapsibles for sections that have data', () => {
-    vi.spyOn(vehiclesHooks, 'useMaintenance').mockReturnValue({
-      data: [mockMaintenanceItems[0]!], // only ownMaintenance
+  it('switches section tab and updates query', () => {
+    const useMaintenanceSpy = vi.spyOn(vehiclesHooks, 'useMaintenance').mockReturnValue({
+      data: mockMaintenanceResponse,
       isLoading: false,
       isFetching: false,
       isError: false,
@@ -188,17 +206,23 @@ describe('VehiclesMaintenanceContent', () => {
 
     renderMaintenancePage();
 
-    expect(
-      screen.getByTestId('maintenance-section-collapsible-ownMaintenance'),
-    ).toBeInTheDocument();
-    expect(
-      screen.queryByTestId('maintenance-section-collapsible-previousOwnerServices'),
-    ).not.toBeInTheDocument();
+    expect(screen.getByTestId('maintenance-summary-cards')).toBeInTheDocument();
+
+    fireEvent.click(screen.getByTestId('maintenance-section-tab-previousOwnerServices'));
+    expect(useMaintenanceSpy).toHaveBeenCalledWith(
+      'veh-123',
+      expect.objectContaining({ section: 'previousOwnerServices' }),
+    );
+    expect(screen.queryByTestId('maintenance-summary-cards')).not.toBeInTheDocument();
   });
 
   it('renders empty state when there are no maintenance items', () => {
     vi.spyOn(vehiclesHooks, 'useMaintenance').mockReturnValue({
-      data: [],
+      data: {
+        items: [],
+        summary: { totalCostPln: 0, totalRecords: 0 },
+        pagination: { nextCursor: null, hasMore: false, total: 0 },
+      },
       isLoading: false,
       isFetching: false,
       isError: false,
@@ -216,7 +240,7 @@ describe('VehiclesMaintenanceContent', () => {
 
   it('opens create modal when clicking Add Maintenance button', () => {
     vi.spyOn(vehiclesHooks, 'useMaintenance').mockReturnValue({
-      data: mockMaintenanceItems,
+      data: mockMaintenanceResponse,
       isLoading: false,
       isFetching: false,
       isError: false,
@@ -231,7 +255,7 @@ describe('VehiclesMaintenanceContent', () => {
 
   it('opens update modal when clicking Edit button on a row', () => {
     vi.spyOn(vehiclesHooks, 'useMaintenance').mockReturnValue({
-      data: mockMaintenanceItems,
+      data: mockMaintenanceResponse,
       isLoading: false,
       isFetching: false,
       isError: false,
@@ -250,7 +274,7 @@ describe('VehiclesMaintenanceContent', () => {
 
   it('opens delete modal when clicking Delete button on a row', () => {
     vi.spyOn(vehiclesHooks, 'useMaintenance').mockReturnValue({
-      data: mockMaintenanceItems,
+      data: mockMaintenanceResponse,
       isLoading: false,
       isFetching: false,
       isError: false,

@@ -31,13 +31,13 @@ export const VehiclesEquipmentContent = () => {
     return Object.keys(q).length > 0 ? q : undefined;
   }, [filters.startDate, filters.endDate]);
 
-  const {
-    data: items = [],
-    isLoading,
-    isError,
-    error,
-    refetch,
-  } = useEquipment(vehicle.id, queryParams);
+  const { data, isLoading, isError, error, refetch } = useEquipment(
+    vehicle.id,
+    queryParams,
+  );
+
+  const items = data?.items ?? [];
+  const summary = data?.summary;
 
   const filteredItems = useMemo(() => {
     if (!filters.search) return items;
@@ -69,7 +69,7 @@ export const VehiclesEquipmentContent = () => {
   return (
     <div className="flex flex-col gap-4 pb-6" data-testid="vehicles-equipment-content">
       {/* Summary Cards */}
-      <EquipmentSummaryCards items={items} />
+      <EquipmentSummaryCards summary={summary} />
 
       {/* Filter Bar & Action */}
       <EquipmentFilterBar

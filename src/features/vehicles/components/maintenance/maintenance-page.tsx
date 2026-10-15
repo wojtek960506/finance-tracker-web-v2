@@ -1,4 +1,8 @@
-import type { GetMaintenanceQuery, VehicleMaintenance } from '@vehicles/api';
+import type {
+  GetMaintenanceQuery,
+  MaintenanceSection,
+  VehicleMaintenance,
+} from '@vehicles/api';
 import { VehiclePageError, VehiclePageLoading } from '@vehicles/components/common';
 import { useMaintenance } from '@vehicles/hooks';
 import { useMemo, useState } from 'react';
@@ -12,6 +16,7 @@ import {
   DeleteMaintenanceModal,
   UpdateMaintenanceModal,
 } from './maintenance-modals';
+import { MaintenanceSectionSwitcher } from './maintenance-section-switcher';
 import { MaintenanceSummaryCards } from './maintenance-summary-cards';
 import { MaintenanceTable } from './maintenance-table';
 import type { MaintenanceFilters } from './types';
@@ -20,25 +25,29 @@ export const VehiclesMaintenanceContent = () => {
   const { t } = useTranslation('vehicles');
   const { vehicle } = useVehicleContext();
 
+  const [activeSection, setActiveSection] =
+    useState<MaintenanceSection>('ownMaintenance');
   const [filters, setFilters] = useState<MaintenanceFilters>({});
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<VehicleMaintenance | null>(null);
   const [deletingItem, setDeletingItem] = useState<VehicleMaintenance | null>(null);
 
   const queryParams = useMemo(() => {
-    const q: GetMaintenanceQuery = {};
+    const q: GetMaintenanceQuery = {
+      section: activeSection,
+    };
     if (filters.startDate) q.startDate = filters.startDate;
     if (filters.endDate) q.endDate = filters.endDate;
-    return Object.keys(q).length > 0 ? q : undefined;
-  }, [filters.startDate, filters.endDate]);
+    return q;
+  }, [activeSection, filters.startDate, filters.endDate]);
 
-  const {
-    data: items = [],
-    isLoading,
-    isError,
-    error,
-    refetch,
-  } = useMaintenance(vehicle.id, queryParams);
+  const { data, isLoading, isError, error, refetch } = useMaintenance(
+    vehicle.id,
+    queryParams,
+  );
+
+  const items = data?.items ?? [];
+  const summary = data?.summary;
 
   // Client-side search filtering
   const filteredItems = useMemo(() => {
@@ -70,8 +79,16 @@ export const VehiclesMaintenanceContent = () => {
 
   return (
     <div className="flex flex-col gap-4 pb-6" data-testid="vehicles-maintenance-content">
-      {/* Summary Cards */}
-      <MaintenanceSummaryCards items={items} />
+      {/* Section Switcher: Own Maintenance vs Previous Owner Services */}
+      <MaintenanceSectionSwitcher
+        activeSection={activeSection}
+        onSectionChange={setActiveSection}
+      />
+
+      {/* Summary Cards (only relevant for own maintenance) */}
+      {activeSection === 'ownMaintenance' && (
+        <MaintenanceSummaryCards summary={summary} />
+      )}
 
       {/* Filter Bar & Action */}
       <MaintenanceFilterBar

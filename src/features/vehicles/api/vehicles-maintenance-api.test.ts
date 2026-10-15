@@ -37,7 +37,12 @@ const mockMaintenance: VehicleMaintenance = {
 
 describe('Vehicles Maintenance API', () => {
   it('getMaintenance fetches maintenance records with section filter', async () => {
-    vi.mocked(api.get).mockResolvedValueOnce({ data: [mockMaintenance] });
+    const mockEnvelope = {
+      items: [mockMaintenance],
+      summary: { totalCostPln: 350, totalRecords: 1 },
+      pagination: { nextCursor: null, hasMore: false, total: 1 },
+    };
+    vi.mocked(api.get).mockResolvedValueOnce({ data: mockEnvelope });
 
     const query = { section: 'ownMaintenance' as const };
     const result = await getMaintenance('veh-1', query);
@@ -45,7 +50,7 @@ describe('Vehicles Maintenance API', () => {
     expect(api.get).toHaveBeenCalledWith('/vehicles/veh-1/maintenance', {
       params: query,
     });
-    expect(result).toEqual([mockMaintenance]);
+    expect(result).toEqual(mockEnvelope);
   });
 
   it('getMaintenanceItem fetches single record', async () => {

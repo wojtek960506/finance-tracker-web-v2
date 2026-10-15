@@ -1,22 +1,19 @@
-import type { VehicleEquipment } from '@vehicles/api';
+import type { VehicleEquipmentSummary } from '@vehicles/api';
 import { VehicleStatsCard } from '@vehicles/components/common';
 import { formatPln } from '@vehicles/utils';
 import { Banknote, Package } from 'lucide-react';
-import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 export type EquipmentSummaryCardsProps = {
-  items: VehicleEquipment[];
+  summary?: VehicleEquipmentSummary;
 };
 
-export const EquipmentSummaryCards = ({ items }: EquipmentSummaryCardsProps) => {
+export const EquipmentSummaryCards = ({ summary }: EquipmentSummaryCardsProps) => {
   const { t, i18n } = useTranslation('vehicles');
   const lang = i18n.language;
 
-  const { totalCost, totalCount } = useMemo(() => {
-    const totalCost = items.reduce((acc, curr) => acc + (curr.costPln || 0), 0);
-    return { totalCost, totalCount: items.length };
-  }, [items]);
+  const totalCost = summary?.totalCostPln ?? 0;
+  const totalItems = summary?.totalItems ?? 0;
 
   return (
     <div
@@ -33,7 +30,7 @@ export const EquipmentSummaryCards = ({ items }: EquipmentSummaryCardsProps) => 
 
       <VehicleStatsCard
         title={t('equipmentPage.summary.totalItems')}
-        value={String(totalCount)}
+        value={String(totalItems)}
         Icon={Package}
         iconClassName="text-purple-500"
         data-testid="equipment-summary-count"

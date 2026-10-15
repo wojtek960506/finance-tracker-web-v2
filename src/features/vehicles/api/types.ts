@@ -68,11 +68,8 @@ export type VehicleMaintenanceListResponse = VehicleMaintenance[];
 export type VehicleMaintenanceSummary =
   components['schemas']['VehicleMaintenanceSummary'];
 
-export type VehicleMaintenanceWithSummaryResponse = {
-  items: VehicleMaintenance[];
-  summary: VehicleMaintenanceSummary;
-  pagination: VehiclePagination;
-};
+export type VehicleMaintenanceWithSummaryResponse =
+  components['schemas']['VehicleMaintenanceWithSummaryResponse'];
 
 export type CreateMaintenancePayload =
   components['schemas']['VehicleMaintenanceCreateInput'];

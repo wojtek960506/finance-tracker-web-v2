@@ -1,4 +1,4 @@
-import type { VehicleFuelEntryEnriched } from '@vehicles/api';
+import type { VehicleFuelSummary } from '@vehicles/api';
 import { VehicleStatsCard } from '@vehicles/components/common';
 import {
   formatConsumption,
@@ -7,33 +7,20 @@ import {
   formatUnitPrice,
 } from '@vehicles/utils';
 import { Banknote, Fuel, Gauge, TrendingUp } from 'lucide-react';
-import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 export type FuelSummaryCardsProps = {
-  entries: VehicleFuelEntryEnriched[];
+  summary?: VehicleFuelSummary;
 };
 
-export const FuelSummaryCards = ({ entries }: FuelSummaryCardsProps) => {
+export const FuelSummaryCards = ({ summary }: FuelSummaryCardsProps) => {
   const { t, i18n } = useTranslation('vehicles');
   const lang = i18n.language;
 
-  const { totalVolume, totalCost, avgConsumption, avgUnitPrice } = useMemo(() => {
-    const totalVolume = entries.reduce((acc, curr) => acc + (curr.fuelLiters || 0), 0);
-    const totalCost = entries.reduce((acc, curr) => acc + (curr.costPln || 0), 0);
-
-    const validConsumptions = entries
-      .map((e) => e.consumptionLPer100Km)
-      .filter((c): c is number => typeof c === 'number' && c > 0);
-    const avgConsumption =
-      validConsumptions.length > 0
-        ? validConsumptions.reduce((a, b) => a + b, 0) / validConsumptions.length
-        : null;
-
-    const avgUnitPrice = totalVolume > 0 ? totalCost / totalVolume : null;
-
-    return { totalVolume, totalCost, avgConsumption, avgUnitPrice };
-  }, [entries]);
+  const totalVolume = summary?.totalVolume ?? 0;
+  const totalCost = summary?.totalCostPln ?? 0;
+  const avgConsumption = summary?.avgConsumptionLPer100Km ?? null;
+  const avgUnitPrice = summary?.avgUnitPricePln ?? null;
 
   return (
     <div
