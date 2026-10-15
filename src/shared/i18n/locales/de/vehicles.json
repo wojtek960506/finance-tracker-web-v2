@@ -42,7 +42,8 @@
     "save": "Speichern",
     "cancel": "Abbrechen",
     "filterTitle": "Filter",
-    "add": "Hinzufügen"
+    "add": "Hinzufügen",
+    "resetFilters": "Filter zurücksetzen"
   },
   "tabs": {
     "overview": "Übersicht",

@@ -42,7 +42,8 @@
     "save": "Zapisz",
     "cancel": "Anuluj",
     "filterTitle": "Filtry",
-    "add": "Dodaj"
+    "add": "Dodaj",
+    "resetFilters": "Zresetuj filtry"
   },
   "tabs": {
     "overview": "Przegląd",
