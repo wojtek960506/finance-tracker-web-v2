@@ -1,6 +1,6 @@
+import type { VehicleEquipment } from '@vehicles/api';
 import { VehiclePageError, VehiclePageLoading } from '@vehicles/components/common';
 import { useEquipment } from '@vehicles/hooks';
-import type { VehicleEquipment } from '@vehicles/types';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 

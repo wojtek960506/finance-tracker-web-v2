@@ -114,6 +114,7 @@
       "avgConsumption": "Średnie spalanie",
       "costPerKm": "Koszt za kilometr",
       "maintenanceTitle": "Serwis i naprawy",
+      "totalRecords": "Liczba wpisów",
       "equipmentTitle": "Wyposażenie",
       "totalItems": "Liczba elementów",
       "viewSection": "Przejdź do: {{section}}"

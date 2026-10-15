@@ -114,6 +114,7 @@
       "avgConsumption": "Avg Consumption",
       "costPerKm": "Cost per km",
       "maintenanceTitle": "Maintenance",
+      "totalRecords": "Total Records",
       "equipmentTitle": "Equipment",
       "totalItems": "Total Items",
       "viewSection": "View {{section}}"

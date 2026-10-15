@@ -1,5 +1,5 @@
+import type { VehicleFuelEntryEnriched } from '@vehicles/api';
 import { VehicleStatsCard } from '@vehicles/components/common';
-import type { VehicleFuelEntryEnriched } from '@vehicles/types';
 import {
   formatConsumption,
   formatLiters,

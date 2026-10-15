@@ -1,4 +1,4 @@
-import type { MaintenanceSection, VehicleMaintenance } from '@vehicles/types';
+import type { MaintenanceSection, VehicleMaintenance } from '@vehicles/api';
 
 export type MaintenanceTableProps = {
   items: VehicleMaintenance[];

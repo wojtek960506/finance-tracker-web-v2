@@ -1,4 +1,4 @@
-import type { VehicleFuelEntryEnriched } from '@vehicles/types';
+import type { VehicleFuelEntryEnriched } from '@vehicles/api';
 
 export type FuelTableProps = {
   entries: VehicleFuelEntryEnriched[];

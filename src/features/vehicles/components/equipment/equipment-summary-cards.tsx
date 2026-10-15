@@ -1,5 +1,5 @@
+import type { VehicleEquipment } from '@vehicles/api';
 import { VehicleStatsCard } from '@vehicles/components/common';
-import type { VehicleEquipment } from '@vehicles/types';
 import { formatPln } from '@vehicles/utils';
 import { Banknote, Package } from 'lucide-react';
 import { useMemo } from 'react';

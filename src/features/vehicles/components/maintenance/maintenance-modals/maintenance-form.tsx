@@ -1,11 +1,11 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import type { MaintenanceSection } from '@vehicles/api';
 import { DEFAULT_MAINTENANCE_SECTION, MAINTENANCE_SECTIONS } from '@vehicles/consts';
 import {
   type MaintenanceFormInput,
   maintenanceFormSchema,
   type MaintenanceFormValues,
 } from '@vehicles/schemas';
-import type { MaintenanceSection } from '@vehicles/types';
 import clsx from 'clsx';
 import { Controller, type SubmitHandler, useForm, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';

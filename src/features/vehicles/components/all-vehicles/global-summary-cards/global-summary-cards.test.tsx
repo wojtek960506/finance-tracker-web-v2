@@ -1,5 +1,5 @@
 import { screen } from '@testing-library/react';
-import type { GlobalVehiclesSummary } from '@vehicles/types';
+import type { GlobalVehiclesSummary } from '@vehicles/api';
 import { describe, expect, it } from 'vitest';
 
 import { renderWithProviders } from '@test-utils';

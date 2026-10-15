@@ -25,57 +25,59 @@ describe('Vehicle Overview Hooks', () => {
   });
 
   describe('useVehicleOverview', () => {
-    it('fetches fuel, maintenance, equipment and aggregates overview data', async () => {
-      vi.spyOn(vehiclesApi, 'getFuelEntries').mockResolvedValueOnce([
-        {
-          id: 'f-1',
-          ownerId: 'u-1',
-          vehicleId: 'v-1',
-          date: '2026-02-01T10:00:00Z',
-          fuelLiters: 45,
-          isFullTank: true,
-          unitPricePln: 6.5,
-          costPln: 292.5,
-          odometerKm: 100500,
-          consumptionLPer100Km: 7.2,
+    it('fetches overview data from getVehicleOverview endpoint', async () => {
+      const mockOverviewData = {
+        vehicleId: 'v-1',
+        totalSpentPln: 692.5,
+        fuel: {
+          totalSpentPln: 292.5,
+          totalLiters: 45,
+          avgConsumptionLPer100Km: 7.2,
           costPerKmPln: 0.47,
-          distanceSincePreviousKm: 625,
-          distanceSincePreviousFullKm: 625,
-          fuelLitersToFull: 45,
-          costToFullPln: 292.5,
-          kmPerLiter: 13.89,
-          createdAt: '',
-          updatedAt: '',
+          entriesCount: 1,
         },
-      ]);
+        maintenance: {
+          totalSpentPln: 350,
+          entriesCount: 1,
+        },
+        equipment: {
+          totalSpentPln: 50,
+          entriesCount: 1,
+        },
+        stats: {
+          currentOdometerKm: 100800,
+          minOdometerKm: 100500,
+          totalDistanceKm: 300,
+          refuelingCount: 1,
+          maintenanceCount: 1,
+          equipmentCount: 1,
+        },
+        recentActivity: [
+          {
+            id: 'f-1',
+            type: 'fuel' as const,
+            date: '2026-02-01T10:00:00Z',
+            costPln: 292.5,
+            title: 'Refueling',
+          },
+          {
+            id: 'm-1',
+            type: 'maintenance' as const,
+            date: '2026-02-10T11:00:00Z',
+            costPln: 350,
+            title: 'Garage A',
+          },
+          {
+            id: 'e-1',
+            type: 'equipment' as const,
+            date: '2026-02-15T12:00:00Z',
+            costPln: 50,
+            title: 'First Aid Kit',
+          },
+        ],
+      };
 
-      vi.spyOn(vehiclesApi, 'getMaintenance').mockResolvedValueOnce([
-        {
-          id: 'm-1',
-          ownerId: 'u-1',
-          vehicleId: 'v-1',
-          section: 'ownMaintenance',
-          date: '2026-02-10T11:00:00Z',
-          costPln: 350,
-          odometerKm: 100800,
-          serviceProvider: 'Garage A',
-          createdAt: '',
-          updatedAt: '',
-        },
-      ]);
-
-      vi.spyOn(vehiclesApi, 'getEquipment').mockResolvedValueOnce([
-        {
-          id: 'e-1',
-          ownerId: 'u-1',
-          vehicleId: 'v-1',
-          itemName: 'First Aid Kit',
-          costPln: 50,
-          date: '2026-02-15T12:00:00Z',
-          createdAt: '',
-          updatedAt: '',
-        },
-      ]);
+      vi.spyOn(vehiclesApi, 'getVehicleOverview').mockResolvedValueOnce(mockOverviewData);
 
       const { result } = renderHook(() => useVehicleOverview('v-1'), {
         wrapper: createWrapper(),
@@ -85,6 +87,7 @@ describe('Vehicle Overview Hooks', () => {
         expect(result.current.isLoading).toBe(false);
       });
 
+      expect(vehiclesApi.getVehicleOverview).toHaveBeenCalledWith('v-1', undefined);
       expect(result.current.overviewData.totalSpentPln).toBe(692.5);
       expect(result.current.overviewData.fuel.totalSpentPln).toBe(292.5);
       expect(result.current.overviewData.fuel.avgConsumptionLPer100Km).toBe(7.2);

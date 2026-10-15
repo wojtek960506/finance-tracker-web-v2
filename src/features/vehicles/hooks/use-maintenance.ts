@@ -1,8 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { getMaintenance } from '../api';
+import {
+  getMaintenance,
+  type GetMaintenanceQuery,
+  type VehicleMaintenanceListResponse,
+} from '../api';
 import { vehiclesQueryKeys } from '../consts';
-import type { GetMaintenanceQuery, VehicleMaintenanceListResponse } from '../types';
 
 export const useMaintenance = (vehicleId: string, query?: GetMaintenanceQuery) => {
   return useQuery<VehicleMaintenanceListResponse, Error>({

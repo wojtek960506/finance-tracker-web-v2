@@ -1,4 +1,4 @@
-import type { MaintenanceSection } from '@vehicles/types';
+import type { MaintenanceSection } from '@vehicles/api';
 import { formatPln } from '@vehicles/utils';
 import clsx from 'clsx';
 import { ClipboardList, Wrench } from 'lucide-react';

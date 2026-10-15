@@ -3,8 +3,8 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { renderWithProviders } from '@test-utils';
 
+import type { GlobalVehiclesSummary, VehicleWithSpending } from '../api';
 import * as hooks from '../hooks';
-import type { GlobalVehiclesSummary, VehicleWithSpending } from '../types';
 
 import { VehiclesPage } from './vehicles-page';
 

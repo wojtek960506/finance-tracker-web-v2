@@ -2,8 +2,8 @@ import '@shared/i18n';
 
 import { QueryClientProvider } from '@tanstack/react-query';
 import { fireEvent, render, screen } from '@testing-library/react';
+import type { Vehicle, VehicleMaintenance } from '@vehicles/api';
 import * as vehiclesHooks from '@vehicles/hooks';
-import type { Vehicle, VehicleMaintenance } from '@vehicles/types';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 

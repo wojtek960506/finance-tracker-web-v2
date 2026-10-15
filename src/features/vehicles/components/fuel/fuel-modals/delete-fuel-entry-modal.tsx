@@ -1,8 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { deleteFuelEntry } from '@vehicles/api';
+import { deleteFuelEntry, type VehicleFuelEntryEnriched } from '@vehicles/api';
 import { DeleteVehicleRecordModal } from '@vehicles/components/common';
 import { vehiclesQueryKeys } from '@vehicles/consts';
-import type { VehicleFuelEntryEnriched } from '@vehicles/types';
 import { useTranslation } from 'react-i18next';
 
 import { normalizeApiError } from '@shared/api/api-error';

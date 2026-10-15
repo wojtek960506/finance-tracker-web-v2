@@ -1,4 +1,4 @@
-import type { MaintenanceSection } from '@vehicles/types';
+import type { MaintenanceSection } from '@vehicles/api';
 
 export type MaintenanceSectionFilter = 'all' | MaintenanceSection;
 

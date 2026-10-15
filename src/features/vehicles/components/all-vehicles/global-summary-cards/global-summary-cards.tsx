@@ -1,4 +1,4 @@
-import type { GlobalVehiclesSummary } from '@vehicles/types';
+import type { GlobalVehiclesSummary } from '@vehicles/api';
 import { formatPln } from '@vehicles/utils';
 import { Banknote, Fuel, Package, Wrench } from 'lucide-react';
 import { useTranslation } from 'react-i18next';

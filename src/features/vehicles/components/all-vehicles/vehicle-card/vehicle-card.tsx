@@ -1,4 +1,4 @@
-import type { VehicleWithSpending } from '@vehicles/types';
+import type { VehicleWithSpending } from '@vehicles/api';
 import { formatKm, formatPln } from '@vehicles/utils';
 import clsx from 'clsx';
 import { ChevronRight, Gauge, MoreVertical, Pencil, Trash2 } from 'lucide-react';

@@ -2,8 +2,8 @@ import '@shared/i18n';
 
 import { QueryClientProvider } from '@tanstack/react-query';
 import { render, screen } from '@testing-library/react';
+import type { Vehicle, VehicleOverviewResponse } from '@vehicles/api';
 import * as vehiclesHooks from '@vehicles/hooks';
-import type { Vehicle, VehicleOverviewData } from '@vehicles/types';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
@@ -27,7 +27,8 @@ const mockVehicle: Vehicle = {
   updatedAt: '2026-01-01T00:00:00Z',
 };
 
-const mockOverviewData: VehicleOverviewData = {
+const mockOverviewData: VehicleOverviewResponse = {
+  vehicleId: 'veh-123',
   totalSpentPln: 1200,
   fuel: {
     totalSpentPln: 600,
@@ -39,10 +40,6 @@ const mockOverviewData: VehicleOverviewData = {
   maintenance: {
     totalSpentPln: 400,
     entriesCount: 2,
-    bySection: {
-      ownMaintenance: { costPln: 400, count: 1 },
-      previousOwnerServices: { costPln: 250, count: 1 },
-    },
   },
   equipment: {
     totalSpentPln: 200,
@@ -89,6 +86,32 @@ const mockOverviewData: VehicleOverviewData = {
   ],
 };
 
+const defaultMockOverviewData: VehicleOverviewResponse = {
+  vehicleId: 'veh-123',
+  totalSpentPln: 0,
+  fuel: {
+    totalSpentPln: 0,
+    totalLiters: 0,
+    avgConsumptionLPer100Km: null,
+    costPerKmPln: null,
+    entriesCount: 0,
+  },
+  maintenance: {
+    totalSpentPln: 0,
+    entriesCount: 0,
+  },
+  equipment: { totalSpentPln: 0, entriesCount: 0 },
+  stats: {
+    currentOdometerKm: null,
+    minOdometerKm: null,
+    totalDistanceKm: null,
+    refuelingCount: 0,
+    maintenanceCount: 0,
+    equipmentCount: 0,
+  },
+  recentActivity: [],
+};
+
 const renderOverview = () => {
   const queryClient = createTestQueryClient();
   return render(
@@ -116,37 +139,7 @@ describe('VehiclesOverviewContent', () => {
 
   it('renders loading state when overview data is fetching', () => {
     vi.spyOn(vehiclesHooks, 'useVehicleOverview').mockReturnValue({
-      overviewData: {
-        totalSpentPln: 0,
-        fuel: {
-          totalSpentPln: 0,
-          totalLiters: 0,
-          avgConsumptionLPer100Km: null,
-          costPerKmPln: null,
-          entriesCount: 0,
-        },
-        maintenance: {
-          totalSpentPln: 0,
-          entriesCount: 0,
-          bySection: {
-            ownMaintenance: { costPln: 0, count: 0 },
-            previousOwnerServices: { costPln: 0, count: 0 },
-          },
-        },
-        equipment: { totalSpentPln: 0, entriesCount: 0 },
-        stats: {
-          currentOdometerKm: null,
-          minOdometerKm: null,
-          totalDistanceKm: null,
-          refuelingCount: 0,
-          maintenanceCount: 0,
-          equipmentCount: 0,
-        },
-        recentActivity: [],
-      },
-      fuelEntries: [],
-      maintenanceEntries: [],
-      equipmentEntries: [],
+      overviewData: defaultMockOverviewData,
       isLoading: true,
       isFetching: false,
       isError: false,
@@ -161,37 +154,7 @@ describe('VehiclesOverviewContent', () => {
   it('renders error state with retry button', () => {
     const mockRefetch = vi.fn();
     vi.spyOn(vehiclesHooks, 'useVehicleOverview').mockReturnValue({
-      overviewData: {
-        totalSpentPln: 0,
-        fuel: {
-          totalSpentPln: 0,
-          totalLiters: 0,
-          avgConsumptionLPer100Km: null,
-          costPerKmPln: null,
-          entriesCount: 0,
-        },
-        maintenance: {
-          totalSpentPln: 0,
-          entriesCount: 0,
-          bySection: {
-            ownMaintenance: { costPln: 0, count: 0 },
-            previousOwnerServices: { costPln: 0, count: 0 },
-          },
-        },
-        equipment: { totalSpentPln: 0, entriesCount: 0 },
-        stats: {
-          currentOdometerKm: null,
-          minOdometerKm: null,
-          totalDistanceKm: null,
-          refuelingCount: 0,
-          maintenanceCount: 0,
-          equipmentCount: 0,
-        },
-        recentActivity: [],
-      },
-      fuelEntries: [],
-      maintenanceEntries: [],
-      equipmentEntries: [],
+      overviewData: defaultMockOverviewData,
       isLoading: false,
       isFetching: false,
       isError: true,
@@ -207,9 +170,6 @@ describe('VehiclesOverviewContent', () => {
   it('renders vehicle stats cards, spending breakdown, and recent activity', () => {
     vi.spyOn(vehiclesHooks, 'useVehicleOverview').mockReturnValue({
       overviewData: mockOverviewData,
-      fuelEntries: [],
-      maintenanceEntries: [],
-      equipmentEntries: [],
       isLoading: false,
       isFetching: false,
       isError: false,
@@ -243,37 +203,7 @@ describe('VehiclesOverviewContent', () => {
 
   it('renders empty activity state when no entries exist', () => {
     vi.spyOn(vehiclesHooks, 'useVehicleOverview').mockReturnValue({
-      overviewData: {
-        totalSpentPln: 0,
-        fuel: {
-          totalSpentPln: 0,
-          totalLiters: 0,
-          avgConsumptionLPer100Km: null,
-          costPerKmPln: null,
-          entriesCount: 0,
-        },
-        maintenance: {
-          totalSpentPln: 0,
-          entriesCount: 0,
-          bySection: {
-            ownMaintenance: { costPln: 0, count: 0 },
-            previousOwnerServices: { costPln: 0, count: 0 },
-          },
-        },
-        equipment: { totalSpentPln: 0, entriesCount: 0 },
-        stats: {
-          currentOdometerKm: null,
-          minOdometerKm: null,
-          totalDistanceKm: null,
-          refuelingCount: 0,
-          maintenanceCount: 0,
-          equipmentCount: 0,
-        },
-        recentActivity: [],
-      },
-      fuelEntries: [],
-      maintenanceEntries: [],
-      equipmentEntries: [],
+      overviewData: defaultMockOverviewData,
       isLoading: false,
       isFetching: false,
       isError: false,
@@ -288,9 +218,6 @@ describe('VehiclesOverviewContent', () => {
   it('renders vehicle details card with specs and edit/delete buttons', () => {
     vi.spyOn(vehiclesHooks, 'useVehicleOverview').mockReturnValue({
       overviewData: mockOverviewData,
-      fuelEntries: [],
-      maintenanceEntries: [],
-      equipmentEntries: [],
       isLoading: false,
       isFetching: false,
       isError: false,

@@ -1,4 +1,4 @@
-import type { VehicleType } from '@vehicles/types';
+import type { VehicleType } from '@vehicles/api';
 import clsx from 'clsx';
 import { Bike, Bus, Car } from 'lucide-react';
 import { useTranslation } from 'react-i18next';

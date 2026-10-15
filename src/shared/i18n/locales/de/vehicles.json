@@ -114,6 +114,7 @@
       "avgConsumption": "Ø Verbrauch",
       "costPerKm": "Kosten pro km",
       "maintenanceTitle": "Wartung & Reparatur",
+      "totalRecords": "Gesamte Einträge",
       "equipmentTitle": "Ausstattung",
       "totalItems": "Artikel gesamt",
       "viewSection": "Zu {{section}} wechseln"

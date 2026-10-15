@@ -1,8 +1,11 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { updateFuelEntry, type UpdateFuelEntryPayload } from '@vehicles/api';
+import {
+  updateFuelEntry,
+  type UpdateFuelEntryPayload,
+  type VehicleFuelEntryEnriched,
+} from '@vehicles/api';
 import { vehiclesQueryKeys } from '@vehicles/consts';
 import type { FuelEntryFormValues } from '@vehicles/schemas';
-import type { VehicleFuelEntryEnriched } from '@vehicles/types';
 import { useTranslation } from 'react-i18next';
 
 import { normalizeApiError } from '@shared/api/api-error';

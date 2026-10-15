@@ -1,4 +1,4 @@
-import type { MaintenanceSection } from '@vehicles/types';
+import type { MaintenanceSection } from '@vehicles/api';
 import clsx from 'clsx';
 import { ClipboardList, Wrench } from 'lucide-react';
 import type { ReactNode } from 'react';

@@ -114,6 +114,7 @@
       "avgConsumption": "Средний расход",
       "costPerKm": "Стоимость за км",
       "maintenanceTitle": "Обслуживание и ремонт",
+      "totalRecords": "Всего записей",
       "equipmentTitle": "Оснащение",
       "totalItems": "Всего предметов",
       "viewSection": "Перейти в: {{section}}"

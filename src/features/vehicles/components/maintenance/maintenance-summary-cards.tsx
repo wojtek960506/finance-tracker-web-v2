@@ -1,5 +1,5 @@
+import type { VehicleMaintenance } from '@vehicles/api';
 import { VehicleStatsCard } from '@vehicles/components/common';
-import type { VehicleMaintenance } from '@vehicles/types';
 import { formatPln } from '@vehicles/utils';
 import { Banknote, Wrench } from 'lucide-react';
 import { useMemo } from 'react';

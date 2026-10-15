@@ -1,8 +1,11 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { updateEquipment, type UpdateEquipmentPayload } from '@vehicles/api';
+import {
+  updateEquipment,
+  type UpdateEquipmentPayload,
+  type VehicleEquipment,
+} from '@vehicles/api';
 import { vehiclesQueryKeys } from '@vehicles/consts';
 import type { EquipmentFormValues } from '@vehicles/schemas';
-import type { VehicleEquipment } from '@vehicles/types';
 import { useTranslation } from 'react-i18next';
 
 import { normalizeApiError } from '@shared/api/api-error';

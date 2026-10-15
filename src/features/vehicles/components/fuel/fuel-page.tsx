@@ -1,6 +1,6 @@
+import type { VehicleFuelEntryEnriched } from '@vehicles/api';
 import { VehiclePageError, VehiclePageLoading } from '@vehicles/components/common';
 import { useFuelEntries } from '@vehicles/hooks';
-import type { VehicleFuelEntryEnriched } from '@vehicles/types';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 

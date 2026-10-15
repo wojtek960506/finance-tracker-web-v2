@@ -5,8 +5,8 @@ import { useTranslation } from 'react-i18next';
 
 import { Button, LoadingCard } from '@shared/ui';
 
+import type { Vehicle, VehicleWithSpending } from '../api';
 import { useAllVehiclesSummary } from '../hooks';
-import type { Vehicle, VehicleWithSpending } from '../types';
 
 import {
   AllVehiclesEmptyState,

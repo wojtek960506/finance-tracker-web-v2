@@ -1,8 +1,8 @@
 import type {
   VehicleOverviewEquipmentStats,
   VehicleOverviewFuelStats,
+  VehicleOverviewMaintenanceStats,
 } from '@vehicles/api';
-import type { VehicleOverviewMaintenanceStatsWithSection } from '@vehicles/types';
 import type { LucideIcon } from 'lucide-react';
 import type { ReactNode } from 'react';
 
@@ -21,7 +21,7 @@ export type SpendingBreakdownProps = {
   vehicleSlug: string;
   totalSpentPln: number;
   fuel: VehicleOverviewFuelStats;
-  maintenance: VehicleOverviewMaintenanceStatsWithSection;
+  maintenance: VehicleOverviewMaintenanceStats;
   equipment: VehicleOverviewEquipmentStats;
 };
 
@@ -32,7 +32,7 @@ export type FuelBreakdownCardProps = {
 
 export type MaintenanceBreakdownCardProps = {
   vehicleSlug: string;
-  maintenance: VehicleOverviewMaintenanceStatsWithSection;
+  maintenance: VehicleOverviewMaintenanceStats;
 };
 
 export type EquipmentBreakdownCardProps = {

@@ -1,4 +1,4 @@
-import type { VehicleEquipment } from '@vehicles/types';
+import type { VehicleEquipment } from '@vehicles/api';
 
 export type EquipmentTableProps = {
   items: VehicleEquipment[];

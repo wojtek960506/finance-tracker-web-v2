@@ -1,58 +1,56 @@
 import { useQuery } from '@tanstack/react-query';
-import { useMemo } from 'react';
 
-import { getEquipment, getFuelEntries, getMaintenance } from '../api';
+import {
+  getVehicleOverview,
+  type GetVehicleOverviewQuery,
+  type VehicleOverviewResponse,
+} from '../api';
 import { vehiclesQueryKeys } from '../consts';
-import type { VehicleOverviewData } from '../types';
-import { calculateVehicleOverviewData } from '../utils';
 
-export const useVehicleOverview = (vehicleId: string) => {
-  const fuelQuery = useQuery({
-    queryKey: vehiclesQueryKeys.fuel(vehicleId),
-    queryFn: () => getFuelEntries(vehicleId),
+export const defaultOverviewData: VehicleOverviewResponse = {
+  vehicleId: '',
+  totalSpentPln: 0,
+  fuel: {
+    totalSpentPln: 0,
+    totalLiters: 0,
+    avgConsumptionLPer100Km: null,
+    costPerKmPln: null,
+    entriesCount: 0,
+  },
+  maintenance: {
+    totalSpentPln: 0,
+    entriesCount: 0,
+  },
+  equipment: {
+    totalSpentPln: 0,
+    entriesCount: 0,
+  },
+  stats: {
+    currentOdometerKm: null,
+    minOdometerKm: null,
+    totalDistanceKm: null,
+    refuelingCount: 0,
+    maintenanceCount: 0,
+    equipmentCount: 0,
+  },
+  recentActivity: [],
+};
+
+export const useVehicleOverview = (
+  vehicleId: string,
+  query?: GetVehicleOverviewQuery,
+) => {
+  const { data, isLoading, isFetching, isError, error, refetch } = useQuery<
+    VehicleOverviewResponse,
+    Error
+  >({
+    queryKey: vehiclesQueryKeys.overview(vehicleId, query),
+    queryFn: () => getVehicleOverview(vehicleId, query),
     enabled: Boolean(vehicleId),
   });
-
-  const maintenanceQuery = useQuery({
-    queryKey: vehiclesQueryKeys.maintenance(vehicleId),
-    queryFn: () => getMaintenance(vehicleId),
-    enabled: Boolean(vehicleId),
-  });
-
-  const equipmentQuery = useQuery({
-    queryKey: vehiclesQueryKeys.equipment(vehicleId),
-    queryFn: () => getEquipment(vehicleId),
-    enabled: Boolean(vehicleId),
-  });
-
-  const isLoading =
-    fuelQuery.isLoading || maintenanceQuery.isLoading || equipmentQuery.isLoading;
-  const isFetching =
-    fuelQuery.isFetching || maintenanceQuery.isFetching || equipmentQuery.isFetching;
-  const isError = fuelQuery.isError || maintenanceQuery.isError || equipmentQuery.isError;
-  const error = fuelQuery.error || maintenanceQuery.error || equipmentQuery.error;
-
-  const overviewData: VehicleOverviewData = useMemo(() => {
-    return calculateVehicleOverviewData(
-      fuelQuery.data ?? [],
-      maintenanceQuery.data ?? [],
-      equipmentQuery.data ?? [],
-    );
-  }, [fuelQuery.data, maintenanceQuery.data, equipmentQuery.data]);
-
-  const refetch = async () => {
-    await Promise.all([
-      fuelQuery.refetch(),
-      maintenanceQuery.refetch(),
-      equipmentQuery.refetch(),
-    ]);
-  };
 
   return {
-    overviewData,
-    fuelEntries: fuelQuery.data ?? [],
-    maintenanceEntries: maintenanceQuery.data ?? [],
-    equipmentEntries: equipmentQuery.data ?? [],
+    overviewData: data ?? defaultOverviewData,
     isLoading,
     isFetching,
     isError,

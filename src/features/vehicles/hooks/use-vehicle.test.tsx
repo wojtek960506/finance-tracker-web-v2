@@ -6,8 +6,8 @@ import { describe, expect, it, vi } from 'vitest';
 
 import { createTestQueryClient } from '@test-utils/create-test-query-client';
 
+import type { Vehicle } from '../api';
 import * as vehiclesApi from '../api';
-import type { Vehicle } from '../types';
 
 import { useVehicle } from './use-vehicle';
 

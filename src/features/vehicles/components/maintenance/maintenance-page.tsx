@@ -1,6 +1,6 @@
+import type { GetMaintenanceQuery, VehicleMaintenance } from '@vehicles/api';
 import { VehiclePageError, VehiclePageLoading } from '@vehicles/components/common';
 import { useMaintenance } from '@vehicles/hooks';
-import type { GetMaintenanceQuery, VehicleMaintenance } from '@vehicles/types';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
