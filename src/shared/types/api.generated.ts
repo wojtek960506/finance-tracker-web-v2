@@ -2902,6 +2902,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/vehicles/summary": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get fleet summary and vehicles spending aggregations
+         * @description Return aggregated fleet totals and each vehicle with calculated spending totals, counts, and last odometer.
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["VehiclesSummaryResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/vehicles/": {
         parameters: {
             query?: never;
@@ -2962,6 +3001,49 @@ export interface paths {
                 };
             };
         };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/vehicles/{vehicleId}/overview": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get vehicle overview and recent activity
+         * @description Return aggregated spending, fuel efficiency, maintenance breakdown, odometer stats, and unified recent activity feed for a vehicle.
+         */
+        get: {
+            parameters: {
+                query?: {
+                    activityLimit?: number;
+                };
+                header?: never;
+                path: {
+                    vehicleId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["VehicleOverviewResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -3079,7 +3161,7 @@ export interface paths {
                     endDate?: unknown;
                     isFullTank?: boolean;
                     enriched?: boolean;
-                    page?: number;
+                    cursor?: string;
                     limit?: number;
                 };
                 header?: never;
@@ -3096,7 +3178,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["VehicleFuelEntryListResponse"];
+                        "application/json": components["schemas"]["VehicleFuelWithSummaryResponse"];
                     };
                 };
             };
@@ -3250,7 +3332,7 @@ export interface paths {
                 query?: {
                     startDate?: unknown;
                     endDate?: unknown;
-                    page?: number;
+                    cursor?: string;
                     limit?: number;
                 };
                 header?: never;
@@ -3267,7 +3349,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["VehicleEquipmentListResponse"];
+                        "application/json": components["schemas"]["VehicleEquipmentWithSummaryResponse"];
                     };
                 };
             };
@@ -3419,10 +3501,10 @@ export interface paths {
         get: {
             parameters: {
                 query?: {
-                    section?: "own_maintenance" | "previous_owner_services";
+                    section?: "ownMaintenance" | "previousOwnerServices";
                     startDate?: unknown;
                     endDate?: unknown;
-                    page?: number;
+                    cursor?: string;
                     limit?: number;
                 };
                 header?: never;
@@ -3439,7 +3521,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["VehicleMaintenanceListResponse"];
+                        "application/json": components["schemas"]["VehicleMaintenanceWithSummaryResponse"];
                     };
                 };
             };
@@ -3908,6 +3990,11 @@ export interface components {
             zeroIncomeBaseline: components["schemas"]["NetWorthZeroIncomeBaselineInput"];
             excludedCategories: components["schemas"]["ExcludedCategoryItemInput"][];
         };
+        VehiclePaginationInput: {
+            nextCursor: string | null;
+            hasMore: boolean;
+            total: number;
+        };
         VehicleEquipmentCreateInput: {
             date: unknown;
             itemName: string;
@@ -3934,7 +4021,16 @@ export interface components {
             createdAt: unknown;
             updatedAt: unknown;
         };
+        VehicleEquipmentSummaryInput: {
+            totalCostPln: number;
+            totalItems: number;
+        };
         VehicleEquipmentListResponseInput: components["schemas"]["VehicleEquipmentResponseInput"][];
+        VehicleEquipmentWithSummaryResponseInput: {
+            items: components["schemas"]["VehicleEquipmentResponseInput"][];
+            summary: components["schemas"]["VehicleEquipmentSummaryInput"];
+            pagination: components["schemas"]["VehiclePaginationInput"];
+        };
         VehicleFuelEntryCreateInput: {
             date: unknown;
             fuelLiters: number;
@@ -4002,10 +4098,22 @@ export interface components {
             costPerKmPln: number | null;
             kmPerLiter: number | null;
         };
+        VehicleFuelSummaryInput: {
+            totalVolume: number;
+            totalCostPln: number;
+            avgConsumptionLPer100Km: number | null;
+            avgUnitPricePln: number | null;
+            totalCount: number;
+        };
         VehicleFuelEntryListResponseInput: components["schemas"]["VehicleFuelEntryEnrichedResponseInput"][];
+        VehicleFuelWithSummaryResponseInput: {
+            items: components["schemas"]["VehicleFuelEntryEnrichedResponseInput"][];
+            summary: components["schemas"]["VehicleFuelSummaryInput"];
+            pagination: components["schemas"]["VehiclePaginationInput"];
+        };
         VehicleMaintenanceCreateInput: {
             /** @enum {string} */
-            section: "own_maintenance" | "previous_owner_services";
+            section: "ownMaintenance" | "previousOwnerServices";
             date: unknown;
             costPln: number;
             odometerKm?: number;
@@ -4015,7 +4123,7 @@ export interface components {
         };
         VehicleMaintenanceUpdateInput: {
             /** @enum {string} */
-            section?: "own_maintenance" | "previous_owner_services";
+            section?: "ownMaintenance" | "previousOwnerServices";
             date?: unknown;
             costPln?: number;
             odometerKm?: number;
@@ -4028,7 +4136,7 @@ export interface components {
             ownerId: string;
             vehicleId: string;
             /** @enum {string} */
-            section: "own_maintenance" | "previous_owner_services";
+            section: "ownMaintenance" | "previousOwnerServices";
             date: unknown;
             costPln: number;
             odometerKm?: number;
@@ -4038,7 +4146,65 @@ export interface components {
             createdAt: unknown;
             updatedAt: unknown;
         };
+        VehicleMaintenanceSummaryInput: {
+            totalCostPln: number;
+            totalRecords: number;
+        };
         VehicleMaintenanceListResponseInput: components["schemas"]["VehicleMaintenanceResponseInput"][];
+        VehicleMaintenanceWithSummaryResponseInput: {
+            items: components["schemas"]["VehicleMaintenanceResponseInput"][];
+            summary: components["schemas"]["VehicleMaintenanceSummaryInput"];
+            pagination: components["schemas"]["VehiclePaginationInput"];
+        };
+        VehicleOverviewFuelStatsInput: {
+            totalSpentPln: number;
+            totalLiters: number;
+            avgConsumptionLPer100Km: number | null;
+            costPerKmPln: number | null;
+            entriesCount: number;
+        };
+        VehicleOverviewMaintenanceStatsInput: {
+            totalSpentPln: number;
+            entriesCount: number;
+        };
+        VehicleOverviewEquipmentStatsInput: {
+            totalSpentPln: number;
+            entriesCount: number;
+        };
+        VehicleOverviewStatsInput: {
+            currentOdometerKm: number | null;
+            minOdometerKm: number | null;
+            totalDistanceKm: number | null;
+            refuelingCount: number;
+            maintenanceCount: number;
+            equipmentCount: number;
+        };
+        VehicleOverviewActivityItemInput: {
+            id: string;
+            /** @enum {string} */
+            type: "fuel" | "maintenance" | "equipment";
+            date: unknown;
+            costPln: number;
+            title: string;
+            description?: string;
+            odometerKm?: number | null;
+            transactionId?: string | null;
+            fuelLiters?: number;
+            isFullTank?: boolean;
+            consumptionLPer100Km?: number | null;
+            /** @enum {string} */
+            maintenanceSection?: "ownMaintenance" | "previousOwnerServices";
+            serviceProvider?: string;
+        };
+        VehicleOverviewResponseInput: {
+            vehicleId: string;
+            totalSpentPln: number;
+            fuel: components["schemas"]["VehicleOverviewFuelStatsInput"];
+            maintenance: components["schemas"]["VehicleOverviewMaintenanceStatsInput"];
+            equipment: components["schemas"]["VehicleOverviewEquipmentStatsInput"];
+            stats: components["schemas"]["VehicleOverviewStatsInput"];
+            recentActivity: components["schemas"]["VehicleOverviewActivityItemInput"][];
+        };
         VehicleCreateInput: {
             name: string;
             slug?: string;
@@ -4091,6 +4257,47 @@ export interface components {
         SpendingLinkResponseInput: {
             acknowledged: boolean;
             modifiedCount: number;
+        };
+        VehicleSpendingSummaryInput: {
+            fuelTotalPln: number;
+            maintenanceTotalPln: number;
+            equipmentTotalPln: number;
+            totalSpentPln: number;
+            lastOdometerKm: number | null;
+            totalDistanceKm: number | null;
+            fuelEntriesCount: number;
+            maintenanceCount: number;
+            equipmentCount: number;
+        };
+        VehicleWithSpendingInput: {
+            id: string;
+            ownerId: string;
+            slug: string;
+            name: string;
+            brand?: string;
+            vehicleModel?: string;
+            /** @enum {string} */
+            type: "motorcycle" | "car" | "public_transport";
+            productionYear?: number;
+            notes?: string;
+            createdAt: unknown;
+            updatedAt: unknown;
+            spending: components["schemas"]["VehicleSpendingSummaryInput"];
+        };
+        GlobalVehiclesSummaryInput: {
+            totalVehicles: number;
+            totalSpentPln: number;
+            totalFuelSpentPln: number;
+            totalMaintenanceSpentPln: number;
+            totalEquipmentSpentPln: number;
+            totalFuelEntriesCount: number;
+            totalMaintenanceCount: number;
+            totalEquipmentCount: number;
+            totalDistanceKm: number;
+        };
+        VehiclesSummaryResponseInput: {
+            summary: components["schemas"]["GlobalVehiclesSummaryInput"];
+            vehicles: components["schemas"]["VehicleWithSpendingInput"][];
         };
         WelcomeResponseInput: {
             message: string;
@@ -5013,6 +5220,11 @@ export interface components {
             zeroIncomeBaseline: components["schemas"]["NetWorthZeroIncomeBaseline"];
             excludedCategories: components["schemas"]["ExcludedCategoryItem"][];
         };
+        VehiclePagination: {
+            nextCursor: string | null;
+            hasMore: boolean;
+            total: number;
+        };
         VehicleEquipmentCreate: {
             /** Format: date-time */
             date: string;
@@ -5044,7 +5256,16 @@ export interface components {
             /** Format: date-time */
             updatedAt: string;
         };
+        VehicleEquipmentSummary: {
+            totalCostPln: number;
+            totalItems: number;
+        };
         VehicleEquipmentListResponse: components["schemas"]["VehicleEquipmentResponse"][];
+        VehicleEquipmentWithSummaryResponse: {
+            items: components["schemas"]["VehicleEquipmentResponse"][];
+            summary: components["schemas"]["VehicleEquipmentSummary"];
+            pagination: components["schemas"]["VehiclePagination"];
+        };
         VehicleFuelEntryCreate: {
             /** Format: date-time */
             date: string;
@@ -5120,10 +5341,22 @@ export interface components {
             costPerKmPln: number | null;
             kmPerLiter: number | null;
         };
+        VehicleFuelSummary: {
+            totalVolume: number;
+            totalCostPln: number;
+            avgConsumptionLPer100Km: number | null;
+            avgUnitPricePln: number | null;
+            totalCount: number;
+        };
         VehicleFuelEntryListResponse: components["schemas"]["VehicleFuelEntryEnrichedResponse"][];
+        VehicleFuelWithSummaryResponse: {
+            items: components["schemas"]["VehicleFuelEntryEnrichedResponse"][];
+            summary: components["schemas"]["VehicleFuelSummary"];
+            pagination: components["schemas"]["VehiclePagination"];
+        };
         VehicleMaintenanceCreate: {
             /** @enum {string} */
-            section: "own_maintenance" | "previous_owner_services";
+            section: "ownMaintenance" | "previousOwnerServices";
             /** Format: date-time */
             date: string;
             costPln: number;
@@ -5134,7 +5367,7 @@ export interface components {
         };
         VehicleMaintenanceUpdate: {
             /** @enum {string} */
-            section?: "own_maintenance" | "previous_owner_services";
+            section?: "ownMaintenance" | "previousOwnerServices";
             /** Format: date-time */
             date?: string;
             costPln?: number;
@@ -5148,7 +5381,7 @@ export interface components {
             ownerId: string;
             vehicleId: string;
             /** @enum {string} */
-            section: "own_maintenance" | "previous_owner_services";
+            section: "ownMaintenance" | "previousOwnerServices";
             /** Format: date-time */
             date: string;
             costPln: number;
@@ -5161,7 +5394,66 @@ export interface components {
             /** Format: date-time */
             updatedAt: string;
         };
+        VehicleMaintenanceSummary: {
+            totalCostPln: number;
+            totalRecords: number;
+        };
         VehicleMaintenanceListResponse: components["schemas"]["VehicleMaintenanceResponse"][];
+        VehicleMaintenanceWithSummaryResponse: {
+            items: components["schemas"]["VehicleMaintenanceResponse"][];
+            summary: components["schemas"]["VehicleMaintenanceSummary"];
+            pagination: components["schemas"]["VehiclePagination"];
+        };
+        VehicleOverviewFuelStats: {
+            totalSpentPln: number;
+            totalLiters: number;
+            avgConsumptionLPer100Km: number | null;
+            costPerKmPln: number | null;
+            entriesCount: number;
+        };
+        VehicleOverviewMaintenanceStats: {
+            totalSpentPln: number;
+            entriesCount: number;
+        };
+        VehicleOverviewEquipmentStats: {
+            totalSpentPln: number;
+            entriesCount: number;
+        };
+        VehicleOverviewStats: {
+            currentOdometerKm: number | null;
+            minOdometerKm: number | null;
+            totalDistanceKm: number | null;
+            refuelingCount: number;
+            maintenanceCount: number;
+            equipmentCount: number;
+        };
+        VehicleOverviewActivityItem: {
+            id: string;
+            /** @enum {string} */
+            type: "fuel" | "maintenance" | "equipment";
+            /** Format: date-time */
+            date: string;
+            costPln: number;
+            title: string;
+            description?: string;
+            odometerKm?: number | null;
+            transactionId?: string | null;
+            fuelLiters?: number;
+            isFullTank?: boolean;
+            consumptionLPer100Km?: number | null;
+            /** @enum {string} */
+            maintenanceSection?: "ownMaintenance" | "previousOwnerServices";
+            serviceProvider?: string;
+        };
+        VehicleOverviewResponse: {
+            vehicleId: string;
+            totalSpentPln: number;
+            fuel: components["schemas"]["VehicleOverviewFuelStats"];
+            maintenance: components["schemas"]["VehicleOverviewMaintenanceStats"];
+            equipment: components["schemas"]["VehicleOverviewEquipmentStats"];
+            stats: components["schemas"]["VehicleOverviewStats"];
+            recentActivity: components["schemas"]["VehicleOverviewActivityItem"][];
+        };
         VehicleCreate: {
             name: string;
             slug?: string;
@@ -5216,6 +5508,49 @@ export interface components {
         SpendingLinkResponse: {
             acknowledged: boolean;
             modifiedCount: number;
+        };
+        VehicleSpendingSummary: {
+            fuelTotalPln: number;
+            maintenanceTotalPln: number;
+            equipmentTotalPln: number;
+            totalSpentPln: number;
+            lastOdometerKm: number | null;
+            totalDistanceKm: number | null;
+            fuelEntriesCount: number;
+            maintenanceCount: number;
+            equipmentCount: number;
+        };
+        VehicleWithSpending: {
+            id: string;
+            ownerId: string;
+            slug: string;
+            name: string;
+            brand?: string;
+            vehicleModel?: string;
+            /** @enum {string} */
+            type: "motorcycle" | "car" | "public_transport";
+            productionYear?: number;
+            notes?: string;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            updatedAt: string;
+            spending: components["schemas"]["VehicleSpendingSummary"];
+        };
+        GlobalVehiclesSummary: {
+            totalVehicles: number;
+            totalSpentPln: number;
+            totalFuelSpentPln: number;
+            totalMaintenanceSpentPln: number;
+            totalEquipmentSpentPln: number;
+            totalFuelEntriesCount: number;
+            totalMaintenanceCount: number;
+            totalEquipmentCount: number;
+            totalDistanceKm: number;
+        };
+        VehiclesSummaryResponse: {
+            summary: components["schemas"]["GlobalVehiclesSummary"];
+            vehicles: components["schemas"]["VehicleWithSpending"][];
         };
         WelcomeResponse: {
             message: string;
