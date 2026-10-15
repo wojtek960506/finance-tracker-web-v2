@@ -92,6 +92,7 @@ export const VehiclesMaintenanceContent = () => {
 
       {/* Filter Bar & Action */}
       <MaintenanceFilterBar
+        activeSection={activeSection}
         filters={filters}
         onFiltersChange={setFilters}
         onAddMaintenance={() => setIsCreateOpen(true)}
@@ -99,6 +100,7 @@ export const VehiclesMaintenanceContent = () => {
 
       {/* Table / Mobile Cards */}
       <MaintenanceTable
+        activeSection={activeSection}
         items={filteredItems}
         hasFilters={hasFilters}
         onEditItem={(item) => setEditingItem(item)}
@@ -110,6 +112,7 @@ export const VehiclesMaintenanceContent = () => {
       <CreateMaintenanceModal
         vehicleId={vehicle.id}
         vehicleName={vehicle.name}
+        section={activeSection}
         isOpen={isCreateOpen}
         onClose={() => setIsCreateOpen(false)}
       />

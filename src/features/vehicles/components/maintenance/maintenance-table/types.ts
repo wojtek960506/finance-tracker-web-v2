@@ -1,6 +1,7 @@
-import type { VehicleMaintenance } from '@vehicles/api';
+import type { MaintenanceSection, VehicleMaintenance } from '@vehicles/api';
 
 export type MaintenanceTableProps = {
+  activeSection?: MaintenanceSection;
   items: VehicleMaintenance[];
   hasFilters: boolean;
   onEditItem: (item: VehicleMaintenance) => void;
@@ -22,6 +23,7 @@ export type MaintenanceMobileCardProps = {
 };
 
 export type MaintenanceEmptyStateProps = {
+  activeSection?: MaintenanceSection;
   hasFilters: boolean;
   onAddFirstItem: () => void;
 };

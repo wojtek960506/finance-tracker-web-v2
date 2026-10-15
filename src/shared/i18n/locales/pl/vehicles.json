@@ -284,6 +284,7 @@
     "title": "Historia serwisu i napraw",
     "description": "Rejestruj przeglądy techniczne, naprawy, wymiany części i koszty bieżącej eksploatacji.",
     "addMaintenance": "Dodaj serwis",
+    "addPreviousOwnerService": "Dodaj wpis poprzednika",
     "sections": {
       "all": "Wszystkie wpisy",
       "ownMaintenance": "Własny serwis",
@@ -315,11 +316,16 @@
       "title": "Brak wpisów serwisowych",
       "description": "Prowadź kompletną książkę serwisową wymian oleju, filtrów, napraw i badań technicznych.",
       "createFirst": "Dodaj pierwszy wpis serwisowy",
+      "previousOwnerTitle": "Brak wpisów poprzedniego właściciela",
+      "previousOwnerDescription": "Rejestruj wcześniejsze naprawy, wymiany rozrządu i serwisy wykonane przed Twoim zakupem.",
+      "previousOwnerCreateFirst": "Dodaj pierwszy wpis poprzednika",
       "noMatching": "Brak wpisów serwisowych dla wybranych filtrów."
     },
     "modals": {
       "createTitle": "Dodaj wpis serwisowy",
       "createDescription": "Zarejestruj wykonany serwis lub naprawę dla pojazdu {{name}}.",
+      "createPreviousOwnerTitle": "Dodaj wpis poprzedniego właściciela",
+      "createPreviousOwnerDescription": "Zarejestruj wcześniejszą naprawę lub serwis wykonany przed Twoim zakupem dla {{name}}.",
       "updateTitle": "Edytuj wpis serwisowy",
       "updateDescription": "Zaktualizuj szczegóły wpisu serwisowego.",
       "deleteTitle": "Usuń wpis serwisowy",

@@ -207,6 +207,9 @@ describe('VehiclesMaintenanceContent', () => {
     renderMaintenancePage();
 
     expect(screen.getByTestId('maintenance-summary-cards')).toBeInTheDocument();
+    expect(screen.getByTestId('add-maintenance-button')).toHaveTextContent(
+      'Add Maintenance',
+    );
 
     fireEvent.click(screen.getByTestId('maintenance-section-tab-previousOwnerServices'));
     expect(useMaintenanceSpy).toHaveBeenCalledWith(
@@ -214,9 +217,20 @@ describe('VehiclesMaintenanceContent', () => {
       expect.objectContaining({ section: 'previousOwnerServices' }),
     );
     expect(screen.queryByTestId('maintenance-summary-cards')).not.toBeInTheDocument();
+    expect(screen.getByTestId('add-maintenance-button')).toHaveTextContent(
+      'Add Previous Service',
+    );
+
+    fireEvent.click(screen.getByTestId('add-maintenance-button'));
+    expect(screen.getByTestId('create-maintenance-modal')).toBeInTheDocument();
+    expect(screen.getByText('Add Previous Owner Service')).toBeInTheDocument();
+    expect(screen.getByTestId('maintenance-form-fixed-section')).toBeInTheDocument();
+    expect(
+      screen.queryByTestId('maintenance-section-option-ownMaintenance'),
+    ).not.toBeInTheDocument();
   });
 
-  it('renders empty state when there are no maintenance items', () => {
+  it('renders empty state when there are no maintenance items and adapts to section', () => {
     vi.spyOn(vehiclesHooks, 'useMaintenance').mockReturnValue({
       data: {
         items: [],
@@ -232,10 +246,20 @@ describe('VehiclesMaintenanceContent', () => {
 
     renderMaintenancePage();
     expect(screen.getByTestId('maintenance-empty-state')).toBeInTheDocument();
-    expect(screen.getByTestId('maintenance-empty-create-button')).toBeInTheDocument();
+    expect(screen.getByText('No maintenance records')).toBeInTheDocument();
+    expect(screen.getByTestId('maintenance-empty-create-button')).toHaveTextContent(
+      'Add first maintenance record',
+    );
+
+    fireEvent.click(screen.getByTestId('maintenance-section-tab-previousOwnerServices'));
+    expect(screen.getByText('No previous owner service records')).toBeInTheDocument();
+    expect(screen.getByTestId('maintenance-empty-create-button')).toHaveTextContent(
+      'Add first previous service',
+    );
 
     fireEvent.click(screen.getByTestId('maintenance-empty-create-button'));
     expect(screen.getByTestId('create-maintenance-modal')).toBeInTheDocument();
+    expect(screen.getByText('Add Previous Owner Service')).toBeInTheDocument();
   });
 
   it('opens create modal when clicking Add Maintenance button', () => {

@@ -284,6 +284,7 @@
     "title": "Maintenance & Services",
     "description": "Log vehicle services, repairs, technical inspections, and running maintenance costs.",
     "addMaintenance": "Add Maintenance",
+    "addPreviousOwnerService": "Add Previous Service",
     "sections": {
       "all": "All Records",
       "ownMaintenance": "Own Maintenance",
@@ -315,11 +316,16 @@
       "title": "No maintenance records",
       "description": "Keep a complete history of services, oil changes, repairs, and technical checkups.",
       "createFirst": "Add first maintenance record",
+      "previousOwnerTitle": "No previous owner service records",
+      "previousOwnerDescription": "Log historical services, timing belt changes, or inspections performed prior to your ownership.",
+      "previousOwnerCreateFirst": "Add first previous service",
       "noMatching": "No maintenance records match the selected filters."
     },
     "modals": {
       "createTitle": "Add Maintenance Record",
       "createDescription": "Record a new service or maintenance event for {{name}}.",
+      "createPreviousOwnerTitle": "Add Previous Owner Service",
+      "createPreviousOwnerDescription": "Record a historical service or repair performed prior to your ownership for {{name}}.",
       "updateTitle": "Edit Maintenance Record",
       "updateDescription": "Update maintenance record details.",
       "deleteTitle": "Delete Maintenance Record",

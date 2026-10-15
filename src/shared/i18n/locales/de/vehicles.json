@@ -284,6 +284,7 @@
     "title": "Wartung & Service",
     "description": "Erfassen Sie Fahrzeuginspektionen, Reparaturen und laufende Wartungskosten.",
     "addMaintenance": "Wartung hinzufügen",
+    "addPreviousOwnerService": "Vorbesitzer-Eintrag hinzufügen",
     "sections": {
       "all": "Alle Einträge",
       "ownMaintenance": "Eigene Wartung",
@@ -315,11 +316,16 @@
       "title": "Keine Wartungseinträge",
       "description": "Führen Sie ein vollständiges Serviceheft für Ölwechsel, Reparaturen und Inspektionen.",
       "createFirst": "Ersten Wartungseintrag hinzufügen",
+      "previousOwnerTitle": "Keine Wartungseinträge des Vorbesitzers",
+      "previousOwnerDescription": "Erfassen Sie frühere Reparaturen, Zahnriemenwechsel und Wartungen vor Ihrem Kauf.",
+      "previousOwnerCreateFirst": "Ersten Eintrag des Vorbesitzers hinzufügen",
       "noMatching": "Keine Wartungseinträge entsprechen den ausgewählten Filtern."
     },
     "modals": {
       "createTitle": "Wartungseintrag hinzufügen",
       "createDescription": "Erfassen Sie einen neuen Wartungseintrag für {{name}}.",
+      "createPreviousOwnerTitle": "Eintrag des Vorbesitzers hinzufügen",
+      "createPreviousOwnerDescription": "Erfassen Sie eine frühere Wartung vor Ihrem Kauf für {{name}}.",
       "updateTitle": "Wartungseintrag bearbeiten",
       "updateDescription": "Details des Wartungseintrags bearbeiten.",
       "deleteTitle": "Wartungseintrag löschen",

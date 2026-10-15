@@ -17,6 +17,7 @@ import { MaintenanceSectionBadge } from '../maintenance-table/maintenance-sectio
 
 export type MaintenanceFormProps = {
   defaultValues?: Partial<MaintenanceFormValues>;
+  fixedSection?: MaintenanceSection;
   isPending?: boolean;
   mode: 'create' | 'update';
   onSubmit: (values: MaintenanceFormValues) => Promise<void> | void;
@@ -27,8 +28,10 @@ const REQUIRED_LABEL_CLASS_NAME =
   "after:ml-0.5 after:text-destructive after:content-['*']";
 const FIELD_ERROR_CLASS_NAME = 'text-xs text-destructive';
 
+// TODO split this file into smaller components
 export const MaintenanceForm = ({
   defaultValues,
+  fixedSection,
   isPending,
   mode,
   onSubmit,
@@ -42,7 +45,7 @@ export const MaintenanceForm = ({
   const form = useForm<MaintenanceFormInput, unknown, MaintenanceFormValues>({
     resolver: zodResolver(maintenanceFormSchema),
     defaultValues: {
-      section: defaultValues?.section ?? DEFAULT_MAINTENANCE_SECTION,
+      section: fixedSection ?? defaultValues?.section ?? DEFAULT_MAINTENANCE_SECTION,
       date: defaultValues?.date ? defaultValues.date.split('T')[0] : todayStr,
       costPln: defaultValues?.costPln ?? ('' as unknown as number),
       odometerKm: defaultValues?.odometerKm ?? null,
@@ -79,28 +82,37 @@ export const MaintenanceForm = ({
             {t('maintenancePage.form.section')}
           </span>
         </Label>
-        <div className="flex flex-wrap gap-2">
-          {MAINTENANCE_SECTIONS.map((sec) => {
-            const isSelected = selectedSection === sec;
-            return (
-              <button
-                key={sec}
-                type="button"
-                className={clsx(
-                  'rounded-lg border p-1 transition-all',
-                  isSelected
-                    ? 'border-transparent ring-2 ring-bt-primary ring-offset-1'
-                    : 'opacity-60 hover:opacity-100',
-                )}
-                onClick={() => form.setValue('section', sec as MaintenanceSection)}
-                disabled={isPending}
-                data-testid={`maintenance-section-option-${sec}`}
-              >
-                <MaintenanceSectionBadge section={sec} />
-              </button>
-            );
-          })}
-        </div>
+        {fixedSection ? (
+          <div
+            className="inline-flex items-center"
+            data-testid="maintenance-form-fixed-section"
+          >
+            <MaintenanceSectionBadge section={fixedSection} />
+          </div>
+        ) : (
+          <div className="flex flex-wrap gap-2">
+            {MAINTENANCE_SECTIONS.map((sec) => {
+              const isSelected = selectedSection === sec;
+              return (
+                <button
+                  key={sec}
+                  type="button"
+                  className={clsx(
+                    'rounded-lg border p-1 transition-all',
+                    isSelected
+                      ? 'border-transparent ring-2 ring-bt-primary ring-offset-1'
+                      : 'opacity-60 hover:opacity-100',
+                  )}
+                  onClick={() => form.setValue('section', sec as MaintenanceSection)}
+                  disabled={isPending}
+                  data-testid={`maintenance-section-option-${sec}`}
+                >
+                  <MaintenanceSectionBadge section={sec} />
+                </button>
+              );
+            })}
+          </div>
+        )}
       </div>
 
       {/* Date & Cost Row */}

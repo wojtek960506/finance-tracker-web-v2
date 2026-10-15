@@ -8,6 +8,7 @@ import { MaintenanceTableRow } from './maintenance-table-row';
 import type { MaintenanceTableProps } from './types';
 
 export const MaintenanceTable = ({
+  activeSection,
   items,
   hasFilters,
   onEditItem,
@@ -18,7 +19,11 @@ export const MaintenanceTable = ({
 
   if (items.length === 0) {
     return (
-      <MaintenanceEmptyState hasFilters={hasFilters} onAddFirstItem={onAddFirstItem} />
+      <MaintenanceEmptyState
+        activeSection={activeSection}
+        hasFilters={hasFilters}
+        onAddFirstItem={onAddFirstItem}
+      />
     );
   }
 

@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import {
   createMaintenance,
   type CreateMaintenancePayload,
+  type MaintenanceSection,
   type VehicleMaintenance,
 } from '@vehicles/api';
 import { vehiclesQueryKeys } from '@vehicles/consts';
@@ -17,6 +18,7 @@ import { MaintenanceForm } from './maintenance-form';
 export type CreateMaintenanceModalProps = {
   vehicleId: string;
   vehicleName: string;
+  section?: MaintenanceSection;
   isOpen: boolean;
   onClose: () => void;
   onSuccess?: (item: VehicleMaintenance) => void;
@@ -25,6 +27,7 @@ export type CreateMaintenanceModalProps = {
 export const CreateMaintenanceModal = ({
   vehicleId,
   vehicleName,
+  section = 'ownMaintenance',
   isOpen,
   onClose,
   onSuccess,
@@ -68,24 +71,25 @@ export const CreateMaintenanceModal = ({
     await createMutation.mutateAsync(payload);
   };
 
+  const isPreviousOwner = section === 'previousOwnerServices';
+  const title = isPreviousOwner
+    ? t('maintenancePage.modals.createPreviousOwnerTitle')
+    : t('maintenancePage.modals.createTitle');
+  const description = isPreviousOwner
+    ? t('maintenancePage.modals.createPreviousOwnerDescription', { name: vehicleName })
+    : t('maintenancePage.modals.createDescription', { name: vehicleName });
+
   return (
-    <Modal
-      isOpen={isOpen}
-      onClose={onClose}
-      ariaLabel={t('maintenancePage.modals.createTitle')}
-    >
+    <Modal isOpen={isOpen} onClose={onClose} ariaLabel={title}>
       <div className="flex flex-col gap-3" data-testid="create-maintenance-modal">
         <div className="flex flex-col gap-0.5">
-          <h2 className="text-base font-bold text-fg sm:text-lg">
-            {t('maintenancePage.modals.createTitle')}
-          </h2>
-          <p className="text-xs text-text-muted">
-            {t('maintenancePage.modals.createDescription', { name: vehicleName })}
-          </p>
+          <h2 className="text-base font-bold text-fg sm:text-lg">{title}</h2>
+          <p className="text-xs text-text-muted">{description}</p>
         </div>
 
         <MaintenanceForm
           mode="create"
+          fixedSection={section}
           isPending={createMutation.isPending}
           onSubmit={handleSubmit}
           onCancel={onClose}

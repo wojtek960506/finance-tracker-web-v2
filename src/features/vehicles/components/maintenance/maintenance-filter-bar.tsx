@@ -1,3 +1,4 @@
+import type { MaintenanceSection } from '@vehicles/api';
 import clsx from 'clsx';
 import { Filter, Plus, RotateCcw } from 'lucide-react';
 import { useState } from 'react';
@@ -8,6 +9,7 @@ import { Button, DateInput, SearchFilterInput } from '@shared/ui';
 import type { MaintenanceFilters } from './types';
 
 export type MaintenanceFilterBarProps = {
+  activeSection?: MaintenanceSection;
   filters: MaintenanceFilters;
   onFiltersChange: (filters: MaintenanceFilters) => void;
   onAddMaintenance: () => void;
@@ -16,6 +18,7 @@ export type MaintenanceFilterBarProps = {
 // TODO: Extract common vehicle filter bar component with cleaner distinction
 // between mobile expandable panel and desktop inline layout.
 export const MaintenanceFilterBar = ({
+  activeSection = 'ownMaintenance',
   filters,
   onFiltersChange,
   onAddMaintenance,
@@ -79,7 +82,11 @@ export const MaintenanceFilterBar = ({
           data-testid="add-maintenance-button"
         >
           <Plus className="size-5 shrink-0" />
-          <span>{t('maintenancePage.addMaintenance')}</span>
+          <span>
+            {activeSection === 'previousOwnerServices'
+              ? t('maintenancePage.addPreviousOwnerService')
+              : t('maintenancePage.addMaintenance')}
+          </span>
         </Button>
       </div>
 
