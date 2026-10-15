@@ -3,7 +3,7 @@ import { Filter, Plus, RotateCcw } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Button, DateInput, FilterPills } from '@shared/ui';
+import { Button, ButtonWithIcon, DateInput, FilterPills } from '@shared/ui';
 
 export type FuelFilters = {
   startDate?: string;
@@ -72,19 +72,13 @@ export const FuelFilterBar = ({
           {hasActiveFilters && <span className="size-2 rounded-full bg-bt-primary" />}
         </Button>
 
-        <Button
-          variant="primary"
+        <ButtonWithIcon
+          icon={Plus}
+          label={t('fuelPage.newEntry')}
           onClick={onAddEntry}
-          className={clsx(
-            'flex h-10 items-center gap-1 rounded-xl px-3 text-sm font-semibold',
-            'sm:h-11 sm:px-5 sm:text-base shrink-0',
-            'xl:order-last',
-          )}
+          className="xl:order-last"
           data-testid="add-fuel-entry-button"
-        >
-          <Plus className="size-5 shrink-0" />
-          <span>{t('fuelPage.newEntry')}</span>
-        </Button>
+        />
       </div>
 
       {/* Filter items: collapsible on mobile, always visible on desktop */}

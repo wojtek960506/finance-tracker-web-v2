@@ -1,7 +1,7 @@
 import { Car, Plus } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
-import { Button, Card } from '@shared/ui';
+import { ButtonWithIcon, Card } from '@shared/ui';
 
 type AllVehiclesEmptyStateProps = {
   onCreateVehicle: () => void;
@@ -31,14 +31,11 @@ export const AllVehiclesEmptyState = ({
       </div>
 
       <div className="mt-2 flex items-center justify-center">
-        <Button
-          variant="primary"
+        <ButtonWithIcon
+          icon={Plus}
+          label={t('empty.createFirst')}
           onClick={onCreateVehicle}
-          className="flex h-10 items-center gap-2 rounded-xl px-3.5 text-sm font-semibold sm:h-11 sm:px-5 sm:text-base"
-        >
-          <Plus className="size-5 shrink-0" />
-          <span>{t('empty.createFirst')}</span>
-        </Button>
+        />
       </div>
     </Card>
   );

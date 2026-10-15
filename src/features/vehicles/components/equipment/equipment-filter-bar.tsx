@@ -3,7 +3,7 @@ import { Filter, Plus, RotateCcw } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Button, DateInput, SearchFilterInput } from '@shared/ui';
+import { Button, ButtonWithIcon, DateInput, SearchFilterInput } from '@shared/ui';
 
 export type EquipmentFilters = {
   search?: string;
@@ -72,19 +72,13 @@ export const EquipmentFilterBar = ({
           {hasActiveFilters && <span className="size-2 rounded-full bg-bt-primary" />}
         </Button>
 
-        <Button
-          variant="primary"
+        <ButtonWithIcon
+          icon={Plus}
+          label={t('equipmentPage.addEquipment')}
           onClick={onAddEquipment}
-          className={clsx(
-            'flex h-10 items-center gap-1 rounded-xl px-3 text-sm font-semibold',
-            'sm:h-11 sm:px-5 sm:text-base shrink-0',
-            'xl:order-last',
-          )}
+          className="xl:order-last"
           data-testid="add-equipment-button"
-        >
-          <Plus className="size-5 shrink-0" />
-          <span>{t('equipmentPage.addEquipment')}</span>
-        </Button>
+        />
       </div>
 
       {/* Filter items: collapsible on mobile, always visible on desktop */}

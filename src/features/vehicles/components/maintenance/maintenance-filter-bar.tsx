@@ -4,7 +4,7 @@ import { Filter, Plus, RotateCcw } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Button, DateInput, SearchFilterInput } from '@shared/ui';
+import { Button, ButtonWithIcon, DateInput, SearchFilterInput } from '@shared/ui';
 
 import type { MaintenanceFilters } from './types';
 
@@ -71,23 +71,17 @@ export const MaintenanceFilterBar = ({
           {hasActiveFilters && <span className="size-2 rounded-full bg-bt-primary" />}
         </Button>
 
-        <Button
-          variant="primary"
-          onClick={onAddMaintenance}
-          className={clsx(
-            'flex h-10 items-center gap-1 rounded-xl px-3 text-sm font-semibold',
-            'sm:h-11 sm:px-5 sm:text-base shrink-0',
-            'xl:order-last',
-          )}
-          data-testid="add-maintenance-button"
-        >
-          <Plus className="size-5 shrink-0" />
-          <span>
-            {activeSection === 'previousOwnerServices'
+        <ButtonWithIcon
+          icon={Plus}
+          label={
+            activeSection === 'previousOwnerServices'
               ? t('maintenancePage.addPreviousOwnerService')
-              : t('maintenancePage.addMaintenance')}
-          </span>
-        </Button>
+              : t('maintenancePage.addMaintenance')
+          }
+          onClick={onAddMaintenance}
+          className="xl:order-last"
+          data-testid="add-maintenance-button"
+        />
       </div>
 
       {/* Filter items: collapsible on mobile, always visible on desktop */}

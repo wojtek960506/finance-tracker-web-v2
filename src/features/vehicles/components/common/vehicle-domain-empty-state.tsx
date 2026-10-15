@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import type { LucideIcon } from 'lucide-react';
 import { Plus, SearchX } from 'lucide-react';
 
-import { Button, Card } from '@shared/ui';
+import { ButtonWithIcon, Card } from '@shared/ui';
 
 export type VehicleDomainEmptyStateProps = {
   hasFilters: boolean;
@@ -61,18 +61,13 @@ export const VehicleDomainEmptyState = ({
       </div>
       <h3 className="mt-3 text-base font-semibold text-fg">{title}</h3>
       <p className="mt-1 max-w-sm text-xs text-text-muted">{description}</p>
-      <Button
-        variant="primary"
-        className={clsx(
-          'mt-4 flex h-10 items-center gap-2 rounded-xl px-3.5 text-sm font-semibold',
-          'sm:h-11 sm:px-5 sm:text-base',
-        )}
+      <ButtonWithIcon
+        icon={Plus}
+        label={createButtonLabel}
+        className="mt-4"
         onClick={onCreateFirst}
         data-testid={`${testIdPrefix}-empty-create-button`}
-      >
-        <Plus className="size-5 shrink-0" />
-        <span>{createButtonLabel}</span>
-      </Button>
+      />
     </Card>
   );
 };

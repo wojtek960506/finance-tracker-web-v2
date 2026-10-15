@@ -3,7 +3,7 @@ import { Plus } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Button, LoadingCard } from '@shared/ui';
+import { ButtonWithIcon, LoadingCard } from '@shared/ui';
 
 import type { Vehicle, VehicleWithSpending } from '../api';
 import { useAllVehiclesSummary } from '../hooks';
@@ -57,14 +57,12 @@ export const VehiclesPage = () => {
         </div>
 
         {hasVehicles && (
-          <Button
-            variant="primary"
+          <ButtonWithIcon
+            icon={Plus}
+            label={t('newVehicle')}
             onClick={handleCreateVehicle}
-            className="w-full gap-1.5 whitespace-nowrap sm:w-auto"
-          >
-            <Plus className="size-4" />
-            <span>{t('newVehicle')}</span>
-          </Button>
+            className="w-full whitespace-nowrap sm:w-auto"
+          />
         )}
       </div>
 

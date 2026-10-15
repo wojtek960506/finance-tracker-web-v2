@@ -1,4 +1,5 @@
 export * from './button';
+export * from './button-with-icon';
 export * from './card';
 export * from './collapsible';
 export * from './date-input';
