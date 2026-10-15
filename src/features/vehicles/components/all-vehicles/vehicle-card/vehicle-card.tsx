@@ -1,12 +1,12 @@
 import type { VehicleWithSpending } from '@vehicles/api';
-import { VehicleTypeBadge } from '@vehicles/components/common';
+import { VehicleItemActions, VehicleTypeBadge } from '@vehicles/components/common';
 import { formatKm, formatPln } from '@vehicles/utils';
 import clsx from 'clsx';
-import { ChevronRight, Gauge, MoreVertical, Pencil, Trash2 } from 'lucide-react';
+import { ChevronRight, Gauge } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
-import { Button, Card, Dropdown } from '@shared/ui';
+import { Card } from '@shared/ui';
 
 type VehicleCardProps = {
   vehicle: VehicleWithSpending;
@@ -24,31 +24,6 @@ export const VehicleCard = ({ vehicle, onEdit, onDelete }: VehicleCardProps) => 
 
   const { spending } = vehicle;
   const hasActions = Boolean(onEdit || onDelete);
-
-  const dropdownItems = [
-    ...(onEdit
-      ? [
-          {
-            label: t('actions.edit'),
-            icon: <Pencil className="size-3.5" />,
-            onSelect: () => onEdit(vehicle),
-          },
-        ]
-      : []),
-    ...(onDelete
-      ? [
-          {
-            label: t('actions.delete'),
-            icon: <Trash2 className="size-3.5 text-destructive" />,
-            className: clsx(
-              'text-destructive hover:text-destructive',
-              'hover:bg-destructive/10 dark:hover:bg-destructive/20',
-            ),
-            onSelect: () => onDelete(vehicle),
-          },
-        ]
-      : []),
-  ];
 
   return (
     <Card
@@ -72,17 +47,10 @@ export const VehicleCard = ({ vehicle, onEdit, onDelete }: VehicleCardProps) => 
           <div className="flex items-center gap-1.5">
             <VehicleTypeBadge type={vehicle.type} />
             {hasActions && (
-              <Dropdown
-                trigger={
-                  <Button
-                    variant="ghost"
-                    className="size-7 p-0 text-text-muted hover:text-fg"
-                    aria-label={t('card.actionsMenu')}
-                  >
-                    <MoreVertical className="size-4" />
-                  </Button>
-                }
-                items={dropdownItems}
+              <VehicleItemActions
+                mode="dropdown"
+                onEdit={onEdit ? () => onEdit(vehicle) : undefined}
+                onDelete={onDelete ? () => onDelete(vehicle) : undefined}
               />
             )}
           </div>
