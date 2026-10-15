@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import type { LucideIcon } from 'lucide-react';
+import type { ReactNode } from 'react';
 
 import { Card } from '@shared/ui';
 
@@ -9,6 +10,7 @@ export type VehicleStatsCardProps = {
   subtext?: string;
   Icon: LucideIcon;
   iconClassName?: string;
+  badge?: ReactNode;
   'data-testid'?: string;
 };
 
@@ -18,6 +20,7 @@ export const VehicleStatsCard = ({
   subtext,
   Icon,
   iconClassName,
+  badge,
   'data-testid': dataTestId,
 }: VehicleStatsCardProps) => {
   return (
@@ -44,6 +47,8 @@ export const VehicleStatsCard = ({
         </span>
         {subtext && <span className="text-xs text-text-muted">{subtext}</span>}
       </div>
+
+      {badge && <div className="mt-2">{badge}</div>}
     </Card>
   );
 };
