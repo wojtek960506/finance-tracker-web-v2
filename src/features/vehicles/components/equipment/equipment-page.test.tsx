@@ -193,6 +193,8 @@ describe('VehiclesEquipmentContent', () => {
     } as unknown as ReturnType<typeof vehiclesHooks.useEquipment>);
 
     renderEquipmentPage();
+    expect(screen.queryByTestId('equipment-summary-cards')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('equipment-filter-bar')).not.toBeInTheDocument();
     expect(screen.getByTestId('equipment-empty-state')).toBeInTheDocument();
     expect(screen.getByTestId('equipment-empty-create-button')).toBeInTheDocument();
 

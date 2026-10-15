@@ -245,6 +245,8 @@ describe('VehiclesMaintenanceContent', () => {
     } as unknown as ReturnType<typeof vehiclesHooks.useMaintenance>);
 
     renderMaintenancePage();
+    expect(screen.queryByTestId('maintenance-summary-cards')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('maintenance-filter-bar')).not.toBeInTheDocument();
     expect(screen.getByTestId('maintenance-empty-state')).toBeInTheDocument();
     expect(screen.getByText('No maintenance records')).toBeInTheDocument();
     expect(screen.getByTestId('maintenance-empty-create-button')).toHaveTextContent(

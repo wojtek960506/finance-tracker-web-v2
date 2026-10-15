@@ -85,18 +85,20 @@ export const VehiclesMaintenanceContent = () => {
         onSectionChange={setActiveSection}
       />
 
-      {/* Summary Cards (only relevant for own maintenance) */}
-      {activeSection === 'ownMaintenance' && (
+      {/* Summary Cards (only for own maintenance and when data exists) */}
+      {activeSection === 'ownMaintenance' && items.length > 0 && (
         <MaintenanceSummaryCards summary={summary} />
       )}
 
       {/* Filter Bar & Action */}
-      <MaintenanceFilterBar
-        activeSection={activeSection}
-        filters={filters}
-        onFiltersChange={setFilters}
-        onAddMaintenance={() => setIsCreateOpen(true)}
-      />
+      {(items.length > 0 || hasFilters) && (
+        <MaintenanceFilterBar
+          activeSection={activeSection}
+          filters={filters}
+          onFiltersChange={setFilters}
+          onAddMaintenance={() => setIsCreateOpen(true)}
+        />
+      )}
 
       {/* Table / Mobile Cards */}
       <MaintenanceTable

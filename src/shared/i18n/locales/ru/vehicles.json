@@ -41,7 +41,8 @@
     "delete": "Удалить",
     "save": "Сохранить",
     "cancel": "Отмена",
-    "filterTitle": "Фильтры"
+    "filterTitle": "Фильтры",
+    "add": "Добавить"
   },
   "tabs": {
     "overview": "Обзор",

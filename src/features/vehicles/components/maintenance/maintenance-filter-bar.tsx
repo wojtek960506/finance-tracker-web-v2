@@ -65,7 +65,7 @@ export const MaintenanceFilterBar = ({
               hasActiveFilters ? 'text-bt-primary' : 'text-text-muted',
             )}
           />
-          <span className="text-xs font-semibold sm:text-sm">
+          <span className="hidden sm:inline text-xs font-semibold sm:text-sm">
             {t('actions.filterTitle')}
           </span>
           {hasActiveFilters && <span className="size-2 rounded-full bg-bt-primary" />}
@@ -75,7 +75,7 @@ export const MaintenanceFilterBar = ({
           variant="primary"
           onClick={onAddMaintenance}
           className={clsx(
-            'flex h-10 items-center gap-2 rounded-xl px-3.5 text-sm font-semibold',
+            'flex h-10 items-center gap-1 rounded-xl px-3 text-sm font-semibold',
             'sm:h-11 sm:px-5 sm:text-base shrink-0',
             'xl:order-last',
           )}

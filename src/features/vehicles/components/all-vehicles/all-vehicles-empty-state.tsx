@@ -31,8 +31,12 @@ export const AllVehiclesEmptyState = ({
       </div>
 
       <div className="mt-2 flex items-center justify-center">
-        <Button variant="primary" onClick={onCreateVehicle} className="gap-1.5">
-          <Plus className="size-4" />
+        <Button
+          variant="primary"
+          onClick={onCreateVehicle}
+          className="flex h-10 items-center gap-2 rounded-xl px-3.5 text-sm font-semibold sm:h-11 sm:px-5 sm:text-base"
+        >
+          <Plus className="size-5 shrink-0" />
           <span>{t('empty.createFirst')}</span>
         </Button>
       </div>

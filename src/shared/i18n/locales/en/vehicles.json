@@ -41,7 +41,8 @@
     "delete": "Delete",
     "save": "Save",
     "cancel": "Cancel",
-    "filterTitle": "Filters"
+    "filterTitle": "Filters",
+    "add": "Add"
   },
   "tabs": {
     "overview": "Overview",

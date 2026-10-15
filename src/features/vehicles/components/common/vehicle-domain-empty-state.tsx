@@ -63,11 +63,14 @@ export const VehicleDomainEmptyState = ({
       <p className="mt-1 max-w-sm text-xs text-text-muted">{description}</p>
       <Button
         variant="primary"
-        className="mt-4"
+        className={clsx(
+          'mt-4 flex h-10 items-center gap-2 rounded-xl px-3.5 text-sm font-semibold',
+          'sm:h-11 sm:px-5 sm:text-base',
+        )}
         onClick={onCreateFirst}
         data-testid={`${testIdPrefix}-empty-create-button`}
       >
-        <Plus className="size-4" />
+        <Plus className="size-5 shrink-0" />
         <span>{createButtonLabel}</span>
       </Button>
     </Card>

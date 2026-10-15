@@ -69,14 +69,16 @@ export const VehiclesEquipmentContent = () => {
   return (
     <div className="flex flex-col gap-4 pb-6" data-testid="vehicles-equipment-content">
       {/* Summary Cards */}
-      <EquipmentSummaryCards summary={summary} />
+      {items.length > 0 && <EquipmentSummaryCards summary={summary} />}
 
       {/* Filter Bar & Action */}
-      <EquipmentFilterBar
-        filters={filters}
-        onFiltersChange={setFilters}
-        onAddEquipment={() => setIsCreateOpen(true)}
-      />
+      {(items.length > 0 || hasFilters) && (
+        <EquipmentFilterBar
+          filters={filters}
+          onFiltersChange={setFilters}
+          onAddEquipment={() => setIsCreateOpen(true)}
+        />
+      )}
 
       {/* Table / Mobile Cards */}
       <EquipmentTable

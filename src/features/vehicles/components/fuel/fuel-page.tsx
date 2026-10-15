@@ -54,14 +54,16 @@ export const VehiclesFuelContent = () => {
   return (
     <div className="flex flex-col gap-4 pb-6" data-testid="vehicles-fuel-content">
       {/* Summary Cards */}
-      <FuelSummaryCards summary={summary} />
+      {entries.length > 0 && <FuelSummaryCards summary={summary} />}
 
       {/* Filter Bar & Action */}
-      <FuelFilterBar
-        filters={filters}
-        onFiltersChange={setFilters}
-        onAddEntry={() => setIsCreateOpen(true)}
-      />
+      {(entries.length > 0 || hasFilters) && (
+        <FuelFilterBar
+          filters={filters}
+          onFiltersChange={setFilters}
+          onAddEntry={() => setIsCreateOpen(true)}
+        />
+      )}
 
       {/* Table / Mobile Cards */}
       <FuelTable

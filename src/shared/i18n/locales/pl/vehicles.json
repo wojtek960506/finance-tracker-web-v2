@@ -41,7 +41,8 @@
     "delete": "Usuń",
     "save": "Zapisz",
     "cancel": "Anuluj",
-    "filterTitle": "Filtry"
+    "filterTitle": "Filtry",
+    "add": "Dodaj"
   },
   "tabs": {
     "overview": "Przegląd",

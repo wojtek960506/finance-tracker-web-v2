@@ -201,6 +201,8 @@ describe('VehiclesFuelContent', () => {
     } as unknown as ReturnType<typeof vehiclesHooks.useFuelEntries>);
 
     renderFuelPage();
+    expect(screen.queryByTestId('fuel-summary-cards')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('fuel-filter-bar')).not.toBeInTheDocument();
     expect(screen.getByTestId('fuel-empty-state')).toBeInTheDocument();
     expect(screen.getByTestId('fuel-empty-create-button')).toBeInTheDocument();
 
