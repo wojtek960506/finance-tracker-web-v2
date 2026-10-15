@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import { Bike, Bus, Car } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
-type VehicleTypeBadgeProps = {
+export type VehicleTypeBadgeProps = {
   type: VehicleType;
   className?: string;
 };

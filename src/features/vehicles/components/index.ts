@@ -1,4 +1,3 @@
-export { VehicleTypeBadge } from './all-vehicles';
 export * from './common';
 export { VehiclesEquipmentContent, VehiclesEquipmentPage } from './equipment';
 export { VehiclesFuelContent, VehiclesFuelPage } from './fuel';

@@ -1,4 +1,4 @@
-import { VehicleTypeBadge } from '@vehicles/components/all-vehicles';
+import { VehicleTypeBadge } from '@vehicles/components/common';
 import clsx from 'clsx';
 import { ArrowLeft, Menu, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';

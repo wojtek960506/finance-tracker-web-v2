@@ -15,3 +15,4 @@ export { VehicleItemActions, type VehicleItemActionsProps } from './vehicle-item
 export { VehiclePageError, type VehiclePageErrorProps } from './vehicle-page-error';
 export { VehiclePageLoading, type VehiclePageLoadingProps } from './vehicle-page-loading';
 export { VehicleStatsCard, type VehicleStatsCardProps } from './vehicle-stats-card';
+export { VehicleTypeBadge, type VehicleTypeBadgeProps } from './vehicle-type-badge';

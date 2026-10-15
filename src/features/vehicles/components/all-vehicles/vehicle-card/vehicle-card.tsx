@@ -1,4 +1,5 @@
 import type { VehicleWithSpending } from '@vehicles/api';
+import { VehicleTypeBadge } from '@vehicles/components/common';
 import { formatKm, formatPln } from '@vehicles/utils';
 import clsx from 'clsx';
 import { ChevronRight, Gauge, MoreVertical, Pencil, Trash2 } from 'lucide-react';
@@ -6,8 +7,6 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 import { Button, Card, Dropdown } from '@shared/ui';
-
-import { VehicleTypeBadge } from './vehicle-type-badge';
 
 type VehicleCardProps = {
   vehicle: VehicleWithSpending;
