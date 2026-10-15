@@ -1,6 +1,2 @@
-export * from './maintenance-empty-state';
-export * from './maintenance-mobile-card';
-export * from './maintenance-section-badge';
-export * from './maintenance-table';
-export * from './maintenance-table-row';
-export * from './types';
+export { MaintenanceTable } from './maintenance-table';
+export type { MaintenanceTableProps } from './types';

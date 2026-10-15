@@ -3,7 +3,8 @@ import { formatDate, formatKm, formatPln } from '@vehicles/utils';
 import { Link2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
-import { MaintenanceSectionBadge } from './maintenance-section-badge';
+import { MaintenanceSectionBadge } from '../maintenance-section-badge';
+
 import type { MaintenanceTableRowProps } from './types';
 
 export const MaintenanceTableRow = ({

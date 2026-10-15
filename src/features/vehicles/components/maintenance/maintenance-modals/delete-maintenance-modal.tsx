@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { normalizeApiError } from '@shared/api/api-error';
 import { useToastStore } from '@store/toast-store';
 
-import { MaintenanceSectionBadge } from '../maintenance-table/maintenance-section-badge';
+import { MaintenanceSectionBadge } from '../maintenance-section-badge';
 
 export type DeleteMaintenanceModalProps = {
   vehicleId: string;

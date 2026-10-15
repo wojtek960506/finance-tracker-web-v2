@@ -5,7 +5,8 @@ import { useTranslation } from 'react-i18next';
 
 import { Card } from '@shared/ui';
 
-import { MaintenanceSectionBadge } from './maintenance-section-badge';
+import { MaintenanceSectionBadge } from '../maintenance-section-badge';
+
 import type { MaintenanceMobileCardProps } from './types';
 
 export const MaintenanceMobileCard = ({

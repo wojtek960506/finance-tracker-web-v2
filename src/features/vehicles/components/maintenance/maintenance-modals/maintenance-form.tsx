@@ -13,7 +13,7 @@ import { useTranslation } from 'react-i18next';
 import { Button, DateInput, Input, Label } from '@shared/ui';
 import { preventImplicitFormSubmit } from '@shared/utils';
 
-import { MaintenanceSectionBadge } from '../maintenance-table/maintenance-section-badge';
+import { MaintenanceSectionBadge } from '../maintenance-section-badge';
 
 export type MaintenanceFormProps = {
   defaultValues?: Partial<MaintenanceFormValues>;
