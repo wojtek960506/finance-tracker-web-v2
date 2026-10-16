@@ -4,12 +4,12 @@ import {
   type UpdateFuelEntryPayload,
   type VehicleFuelEntryEnriched,
 } from '@vehicles/api';
+import { VehicleModalShell } from '@vehicles/components/common';
 import { vehiclesQueryKeys } from '@vehicles/consts';
 import type { FuelEntryFormValues } from '@vehicles/schemas';
 import { useTranslation } from 'react-i18next';
 
 import { normalizeApiError } from '@shared/api/api-error';
-import { Modal } from '@shared/ui';
 import { useToastStore } from '@store/toast-store';
 
 import { FuelForm } from './fuel-form';
@@ -87,25 +87,20 @@ export const UpdateFuelEntryModal = ({
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} ariaLabel={t('fuelPage.modals.updateTitle')}>
-      <div className="flex flex-col gap-4" data-testid="update-fuel-modal">
-        <header className="space-y-1">
-          <h2 className="text-xl font-semibold tracking-tight text-foreground">
-            {t('fuelPage.modals.updateTitle')}
-          </h2>
-          <p className="text-sm text-text-muted">
-            {t('fuelPage.modals.updateDescription')}
-          </p>
-        </header>
-
-        <FuelForm
-          mode="update"
-          defaultValues={defaultValues}
-          isPending={updateMutation.isPending}
-          onSubmit={handleSubmit}
-          onCancel={onClose}
-        />
-      </div>
-    </Modal>
+    <VehicleModalShell
+      isOpen={isOpen}
+      onClose={onClose}
+      title={t('fuelPage.modals.updateTitle')}
+      description={t('fuelPage.modals.updateDescription')}
+      testId="update-fuel-modal"
+    >
+      <FuelForm
+        mode="update"
+        defaultValues={defaultValues}
+        isPending={updateMutation.isPending}
+        onSubmit={handleSubmit}
+        onCancel={onClose}
+      />
+    </VehicleModalShell>
   );
 };

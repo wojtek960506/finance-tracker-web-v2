@@ -4,12 +4,12 @@ import {
   type CreateFuelEntryPayload,
   type VehicleFuelEntry,
 } from '@vehicles/api';
+import { VehicleModalShell } from '@vehicles/components/common';
 import { vehiclesQueryKeys } from '@vehicles/consts';
 import type { FuelEntryFormValues } from '@vehicles/schemas';
 import { useTranslation } from 'react-i18next';
 
 import { normalizeApiError } from '@shared/api/api-error';
-import { Modal } from '@shared/ui';
 import { useToastStore } from '@store/toast-store';
 
 import { FuelForm } from './fuel-form';
@@ -71,24 +71,19 @@ export const CreateFuelEntryModal = ({
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} ariaLabel={t('fuelPage.modals.createTitle')}>
-      <div className="flex flex-col gap-4" data-testid="create-fuel-modal">
-        <header className="space-y-1">
-          <h2 className="text-xl font-semibold tracking-tight text-foreground">
-            {t('fuelPage.modals.createTitle')}
-          </h2>
-          <p className="text-sm text-text-muted">
-            {t('fuelPage.modals.createDescription', { name: vehicleName })}
-          </p>
-        </header>
-
-        <FuelForm
-          mode="create"
-          isPending={createMutation.isPending}
-          onSubmit={handleSubmit}
-          onCancel={onClose}
-        />
-      </div>
-    </Modal>
+    <VehicleModalShell
+      isOpen={isOpen}
+      onClose={onClose}
+      title={t('fuelPage.modals.createTitle')}
+      description={t('fuelPage.modals.createDescription', { name: vehicleName })}
+      testId="create-fuel-modal"
+    >
+      <FuelForm
+        mode="create"
+        isPending={createMutation.isPending}
+        onSubmit={handleSubmit}
+        onCancel={onClose}
+      />
+    </VehicleModalShell>
   );
 };

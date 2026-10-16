@@ -4,12 +4,12 @@ import {
   type CreateEquipmentPayload,
   type VehicleEquipment,
 } from '@vehicles/api';
+import { VehicleModalShell } from '@vehicles/components/common';
 import { vehiclesQueryKeys } from '@vehicles/consts';
 import type { EquipmentFormValues } from '@vehicles/schemas';
 import { useTranslation } from 'react-i18next';
 
 import { normalizeApiError } from '@shared/api/api-error';
-import { Modal } from '@shared/ui';
 import { useToastStore } from '@store/toast-store';
 
 import { EquipmentForm } from './equipment-form';
@@ -67,28 +67,19 @@ export const CreateEquipmentModal = ({
   };
 
   return (
-    <Modal
+    <VehicleModalShell
       isOpen={isOpen}
       onClose={onClose}
-      ariaLabel={t('equipmentPage.modals.createTitle')}
+      title={t('equipmentPage.modals.createTitle')}
+      description={t('equipmentPage.modals.createDescription', { name: vehicleName })}
+      testId="create-equipment-modal"
     >
-      <div className="flex flex-col gap-3" data-testid="create-equipment-modal">
-        <div className="flex flex-col gap-0.5">
-          <h2 className="text-base font-bold text-fg sm:text-lg">
-            {t('equipmentPage.modals.createTitle')}
-          </h2>
-          <p className="text-xs text-text-muted">
-            {t('equipmentPage.modals.createDescription', { name: vehicleName })}
-          </p>
-        </div>
-
-        <EquipmentForm
-          mode="create"
-          isPending={createMutation.isPending}
-          onSubmit={handleSubmit}
-          onCancel={onClose}
-        />
-      </div>
-    </Modal>
+      <EquipmentForm
+        mode="create"
+        isPending={createMutation.isPending}
+        onSubmit={handleSubmit}
+        onCancel={onClose}
+      />
+    </VehicleModalShell>
   );
 };

@@ -4,12 +4,12 @@ import {
   type UpdateEquipmentPayload,
   type VehicleEquipment,
 } from '@vehicles/api';
+import { VehicleModalShell } from '@vehicles/components/common';
 import { vehiclesQueryKeys } from '@vehicles/consts';
 import type { EquipmentFormValues } from '@vehicles/schemas';
 import { useTranslation } from 'react-i18next';
 
 import { normalizeApiError } from '@shared/api/api-error';
-import { Modal } from '@shared/ui';
 import { useToastStore } from '@store/toast-store';
 
 import { EquipmentForm } from './equipment-form';
@@ -71,35 +71,26 @@ export const UpdateEquipmentModal = ({
   };
 
   return (
-    <Modal
+    <VehicleModalShell
       isOpen={isOpen}
       onClose={onClose}
-      ariaLabel={t('equipmentPage.modals.updateTitle')}
+      title={t('equipmentPage.modals.updateTitle')}
+      description={t('equipmentPage.modals.updateDescription')}
+      testId="update-equipment-modal"
     >
-      <div className="flex flex-col gap-3" data-testid="update-equipment-modal">
-        <div className="flex flex-col gap-0.5">
-          <h2 className="text-base font-bold text-fg sm:text-lg">
-            {t('equipmentPage.modals.updateTitle')}
-          </h2>
-          <p className="text-xs text-text-muted">
-            {t('equipmentPage.modals.updateDescription')}
-          </p>
-        </div>
-
-        <EquipmentForm
-          mode="update"
-          defaultValues={{
-            date: item.date ? item.date.split('T')[0] : '',
-            itemName: item.itemName,
-            costPln: item.costPln,
-            description: item.description ?? '',
-            transactionId: item.transactionId,
-          }}
-          isPending={updateMutation.isPending}
-          onSubmit={handleSubmit}
-          onCancel={onClose}
-        />
-      </div>
-    </Modal>
+      <EquipmentForm
+        mode="update"
+        defaultValues={{
+          date: item.date ? item.date.split('T')[0] : '',
+          itemName: item.itemName,
+          costPln: item.costPln,
+          description: item.description ?? '',
+          transactionId: item.transactionId,
+        }}
+        isPending={updateMutation.isPending}
+        onSubmit={handleSubmit}
+        onCancel={onClose}
+      />
+    </VehicleModalShell>
   );
 };

@@ -4,12 +4,12 @@ import {
   type UpdateMaintenancePayload,
   type VehicleMaintenance,
 } from '@vehicles/api';
+import { VehicleModalShell } from '@vehicles/components/common';
 import { vehiclesQueryKeys } from '@vehicles/consts';
 import type { MaintenanceFormValues } from '@vehicles/schemas';
 import { useTranslation } from 'react-i18next';
 
 import { normalizeApiError } from '@shared/api/api-error';
-import { Modal } from '@shared/ui';
 import { useToastStore } from '@store/toast-store';
 
 import { MaintenanceForm } from './maintenance-form';
@@ -74,38 +74,29 @@ export const UpdateMaintenanceModal = ({
   };
 
   return (
-    <Modal
+    <VehicleModalShell
       isOpen={isOpen}
       onClose={onClose}
-      ariaLabel={t('maintenancePage.modals.updateTitle')}
+      title={t('maintenancePage.modals.updateTitle')}
+      description={t('maintenancePage.modals.updateDescription')}
+      testId="update-maintenance-modal"
     >
-      <div className="flex flex-col gap-3" data-testid="update-maintenance-modal">
-        <div className="flex flex-col gap-0.5">
-          <h2 className="text-base font-bold text-fg sm:text-lg">
-            {t('maintenancePage.modals.updateTitle')}
-          </h2>
-          <p className="text-xs text-text-muted">
-            {t('maintenancePage.modals.updateDescription')}
-          </p>
-        </div>
-
-        <MaintenanceForm
-          mode="update"
-          defaultValues={{
-            section: item.section,
-            date: item.date,
-            costPln: item.costPln,
-            odometerKm: item.odometerKm ?? null,
-            serviceProvider: item.serviceProvider ?? '',
-            serviceAddress: item.serviceAddress ?? '',
-            description: item.description ?? '',
-            transactionId: item.transactionId ?? null,
-          }}
-          isPending={updateMutation.isPending}
-          onSubmit={handleSubmit}
-          onCancel={onClose}
-        />
-      </div>
-    </Modal>
+      <MaintenanceForm
+        mode="update"
+        defaultValues={{
+          section: item.section,
+          date: item.date,
+          costPln: item.costPln,
+          odometerKm: item.odometerKm ?? null,
+          serviceProvider: item.serviceProvider ?? '',
+          serviceAddress: item.serviceAddress ?? '',
+          description: item.description ?? '',
+          transactionId: item.transactionId ?? null,
+        }}
+        isPending={updateMutation.isPending}
+        onSubmit={handleSubmit}
+        onCancel={onClose}
+      />
+    </VehicleModalShell>
   );
 };
