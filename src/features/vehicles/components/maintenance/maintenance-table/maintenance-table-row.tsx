@@ -32,7 +32,14 @@ export const MaintenanceTableRow = ({
       )}
 
       <td className="px-3 py-3 text-xs text-text-muted">
-        <span className="font-medium text-fg">{item.serviceProvider || '-'}</span>
+        <div className="flex flex-col">
+          <span className="font-medium text-fg">{item.serviceProvider || '-'}</span>
+          {item.serviceAddress && (
+            <span className="truncate text-[10px] text-text-muted max-w-[12rem]">
+              {item.serviceAddress}
+            </span>
+          )}
+        </div>
       </td>
 
       <td className="px-3 py-3 text-xs text-text-muted">

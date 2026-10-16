@@ -344,6 +344,8 @@
       "odometerPlaceholder": "напр. 154200",
       "serviceProvider": "Автосервис / Мастер",
       "serviceProviderPlaceholder": "напр. Auto Serwis Kowalski",
+      "serviceAddress": "Адрес автосервиса",
+      "serviceAddressPlaceholder": "напр. ул. Опольска 12, Краков",
       "description": "Описание",
       "descriptionPlaceholder": "напр. Замена масла 5W-30 + масляный фильтр",
       "createSubmit": "Сохранить запись",

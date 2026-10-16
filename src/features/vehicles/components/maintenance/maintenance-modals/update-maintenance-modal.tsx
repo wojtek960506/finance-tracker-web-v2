@@ -66,6 +66,7 @@ export const UpdateMaintenanceModal = ({
       costPln: values.costPln,
       odometerKm: typeof values.odometerKm === 'number' ? values.odometerKm : undefined,
       serviceProvider: values.serviceProvider || undefined,
+      serviceAddress: values.serviceAddress || undefined,
       description: values.description || undefined,
       transactionId: values.transactionId,
     };
@@ -96,6 +97,7 @@ export const UpdateMaintenanceModal = ({
             costPln: item.costPln,
             odometerKm: item.odometerKm ?? null,
             serviceProvider: item.serviceProvider ?? '',
+            serviceAddress: item.serviceAddress ?? '',
             description: item.description ?? '',
             transactionId: item.transactionId ?? null,
           }}

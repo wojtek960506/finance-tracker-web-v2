@@ -37,12 +37,19 @@ export const MaintenanceMobileCard = ({
       </div>
 
       <div className="grid grid-cols-2 gap-2 text-xs">
-        {item.serviceProvider && (
+        {(item.serviceProvider || item.serviceAddress) && (
           <div className="flex flex-col">
             <span className="text-[11px] text-text-muted">
               {t('maintenancePage.table.serviceProvider')}
             </span>
-            <span className="font-medium text-fg">{item.serviceProvider}</span>
+            {item.serviceProvider && (
+              <span className="font-medium text-fg">{item.serviceProvider}</span>
+            )}
+            {item.serviceAddress && (
+              <span className="truncate text-[10px] text-text-muted">
+                {item.serviceAddress}
+              </span>
+            )}
           </div>
         )}
 

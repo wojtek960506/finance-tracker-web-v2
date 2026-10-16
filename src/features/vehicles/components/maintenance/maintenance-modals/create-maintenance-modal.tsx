@@ -65,6 +65,7 @@ export const CreateMaintenanceModal = ({
       costPln: values.costPln,
       ...(typeof values.odometerKm === 'number' ? { odometerKm: values.odometerKm } : {}),
       ...(values.serviceProvider ? { serviceProvider: values.serviceProvider } : {}),
+      ...(values.serviceAddress ? { serviceAddress: values.serviceAddress } : {}),
       ...(values.description ? { description: values.description } : {}),
       ...(values.transactionId ? { transactionId: values.transactionId } : {}),
     };

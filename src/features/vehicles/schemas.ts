@@ -54,6 +54,7 @@ export const maintenanceFormSchema = z.object({
   costPln: z.number().positive('costPositive'),
   odometerKm: z.number().int().nonnegative().optional().nullable(),
   serviceProvider: z.string().trim().max(100).optional().or(z.literal('')),
+  serviceAddress: z.string().trim().max(200).optional().or(z.literal('')),
   description: z.string().trim().max(500).optional().or(z.literal('')),
   transactionId: z.string().trim().optional().nullable(),
 });

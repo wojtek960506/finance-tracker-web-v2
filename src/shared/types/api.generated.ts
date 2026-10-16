@@ -4119,6 +4119,7 @@ export interface components {
             odometerKm?: number;
             description?: string;
             serviceProvider?: string;
+            serviceAddress?: string;
             transactionId?: string | null;
         };
         VehicleMaintenanceUpdateInput: {
@@ -4129,6 +4130,7 @@ export interface components {
             odometerKm?: number;
             description?: string;
             serviceProvider?: string;
+            serviceAddress?: string;
             transactionId?: string | null;
         };
         VehicleMaintenanceResponseInput: {
@@ -4142,6 +4144,7 @@ export interface components {
             odometerKm?: number;
             description?: string;
             serviceProvider?: string;
+            serviceAddress?: string;
             transactionId?: string | null;
             createdAt: unknown;
             updatedAt: unknown;
@@ -5363,6 +5366,7 @@ export interface components {
             odometerKm?: number;
             description?: string;
             serviceProvider?: string;
+            serviceAddress?: string;
             transactionId?: string | null;
         };
         VehicleMaintenanceUpdate: {
@@ -5374,6 +5378,7 @@ export interface components {
             odometerKm?: number;
             description?: string;
             serviceProvider?: string;
+            serviceAddress?: string;
             transactionId?: string | null;
         };
         VehicleMaintenanceResponse: {
@@ -5388,6 +5393,7 @@ export interface components {
             odometerKm?: number;
             description?: string;
             serviceProvider?: string;
+            serviceAddress?: string;
             transactionId?: string | null;
             /** Format: date-time */
             createdAt: string;

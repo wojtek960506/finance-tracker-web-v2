@@ -344,6 +344,8 @@
       "odometerPlaceholder": "z.B. 154200",
       "serviceProvider": "Werkstatt / Dienstleister",
       "serviceProviderPlaceholder": "z.B. Auto Service Kowalski",
+      "serviceAddress": "Adresse der Werkstatt",
+      "serviceAddressPlaceholder": "z.B. Musterstraße 12, Berlin",
       "description": "Beschreibung",
       "descriptionPlaceholder": "z.B. Motorölwechsel 5W-30 + Ölfilter",
       "createSubmit": "Wartung speichern",

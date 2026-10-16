@@ -344,6 +344,8 @@
       "odometerPlaceholder": "np. 154200",
       "serviceProvider": "Warsztat / Wykonawca",
       "serviceProviderPlaceholder": "np. Auto Serwis Kowalski, ASO Toyota",
+      "serviceAddress": "Adres warsztatu",
+      "serviceAddressPlaceholder": "np. ul. Opolska 12, Kraków",
       "description": "Opis",
       "descriptionPlaceholder": "np. Wymiana oleju 5W-30 + filtr oleju + filtr kabinowy",
       "createSubmit": "Zapisz serwis",

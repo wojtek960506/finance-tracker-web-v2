@@ -102,6 +102,7 @@ describe('Vehicles Form Schemas', () => {
         costPln: 150,
         odometerKm: 35000,
         serviceProvider: 'Self',
+        serviceAddress: 'ul. Opolska 12, Kraków',
       };
       const parsed = maintenanceFormSchema.safeParse(valid);
       expect(parsed.success).toBe(true);
@@ -116,6 +117,15 @@ describe('Vehicles Form Schemas', () => {
       if (parsed.success) {
         expect(parsed.data.section).toBe('ownMaintenance');
       }
+    });
+
+    it('rejects serviceAddress exceeding 200 characters', () => {
+      const parsed = maintenanceFormSchema.safeParse({
+        date: '2026-01-03',
+        costPln: 150,
+        serviceAddress: 'a'.repeat(201),
+      });
+      expect(parsed.success).toBe(false);
     });
   });
 

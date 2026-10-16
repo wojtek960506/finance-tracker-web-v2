@@ -344,6 +344,8 @@
       "odometerPlaceholder": "e.g. 154200",
       "serviceProvider": "Service Provider / Workshop",
       "serviceProviderPlaceholder": "e.g. Auto Serwis Kowalski, ASO Toyota",
+      "serviceAddress": "Workshop Address",
+      "serviceAddressPlaceholder": "e.g. ul. Opolska 12, Kraków",
       "description": "Description",
       "descriptionPlaceholder": "e.g. Engine oil replacement 5W-30 + oil filter + cabin filter",
       "createSubmit": "Save Maintenance",

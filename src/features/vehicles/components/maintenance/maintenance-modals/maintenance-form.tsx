@@ -49,6 +49,7 @@ export const MaintenanceForm = ({
       costPln: defaultValues?.costPln ?? ('' as unknown as number),
       odometerKm: defaultValues?.odometerKm ?? null,
       serviceProvider: defaultValues?.serviceProvider ?? '',
+      serviceAddress: defaultValues?.serviceAddress ?? '',
       description: defaultValues?.description ?? '',
       transactionId: defaultValues?.transactionId ?? null,
     },
@@ -164,7 +165,7 @@ export const MaintenanceForm = ({
         </div>
       </div>
 
-      {/* Odometer & Service Provider Row */}
+      {/* Odometer Row */}
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
         <div className="flex flex-col gap-1">
           <Label htmlFor="maintenance-odometer">
@@ -187,7 +188,10 @@ export const MaintenanceForm = ({
             </span>
           )}
         </div>
+      </div>
 
+      {/* Service Provider & Service Address Row */}
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
         <div className="flex flex-col gap-1">
           <Label htmlFor="maintenance-provider">
             {t('maintenancePage.form.serviceProvider')}
@@ -197,6 +201,19 @@ export const MaintenanceForm = ({
             type="text"
             placeholder={t('maintenancePage.form.serviceProviderPlaceholder')}
             {...form.register('serviceProvider')}
+            disabled={isPending}
+          />
+        </div>
+
+        <div className="flex flex-col gap-1">
+          <Label htmlFor="maintenance-address">
+            {t('maintenancePage.form.serviceAddress')}
+          </Label>
+          <Input
+            id="maintenance-address"
+            type="text"
+            placeholder={t('maintenancePage.form.serviceAddressPlaceholder')}
+            {...form.register('serviceAddress')}
             disabled={isPending}
           />
         </div>
