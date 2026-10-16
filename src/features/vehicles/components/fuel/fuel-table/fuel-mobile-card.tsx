@@ -1,5 +1,5 @@
 import { VehicleItemActions } from '@vehicles/components/common';
-import { SpendingTransactionBadge } from '@vehicles/components/spendings';
+import { SpendingCostDisplay } from '@vehicles/components/spendings';
 import {
   formatConsumption,
   formatCostPerKm,
@@ -7,7 +7,6 @@ import {
   formatDeltaKm,
   formatKm,
   formatLiters,
-  formatPln,
   formatUnitPrice,
 } from '@vehicles/utils';
 import clsx from 'clsx';
@@ -76,12 +75,10 @@ export const FuelMobileCard = ({
       <div className="grid grid-cols-2 gap-2 text-xs">
         <div className="flex flex-col">
           <span className="text-[11px] text-text-muted">{t('fuelPage.table.cost')}</span>
-          <div className="flex items-center gap-1.5">
-            <span className="text-sm font-bold text-fg">
-              {formatPln(entry.costPln, lang)}
-            </span>
-            <SpendingTransactionBadge transactionId={entry.transactionId} size="sm" />
-          </div>
+          <SpendingCostDisplay
+            costPln={entry.costPln}
+            transactionId={entry.transactionId}
+          />
         </div>
 
         <div className="flex flex-col">

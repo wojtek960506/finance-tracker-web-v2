@@ -1,9 +1,8 @@
 import type { VehicleEquipment } from '@vehicles/api';
 import { VehiclePageError, VehiclePageLoading } from '@vehicles/components/common';
 import {
-  LinkSpendingModal,
+  SpendingModals,
   type SpendingTarget,
-  UnlinkSpendingModal,
   useSpendingModalState,
 } from '@vehicles/components/spendings';
 import { useEquipment, useVehicleRecordModals } from '@vehicles/hooks';
@@ -141,18 +140,12 @@ export const VehiclesEquipmentContent = () => {
       />
 
       {/* Spending Linking Modals */}
-      <LinkSpendingModal
-        isOpen={Boolean(linkingTarget)}
-        target={linkingTarget}
-        onClose={closeLink}
-        onSuccess={() => void refetch()}
-      />
-
-      <UnlinkSpendingModal
-        isOpen={Boolean(unlinkingTarget)}
-        target={unlinkingTarget}
-        onClose={closeUnlink}
-        onSuccess={() => void refetch()}
+      <SpendingModals
+        linkingTarget={linkingTarget}
+        unlinkingTarget={unlinkingTarget}
+        onCloseLink={closeLink}
+        onCloseUnlink={closeUnlink}
+        onRefresh={() => void refetch()}
       />
     </div>
   );

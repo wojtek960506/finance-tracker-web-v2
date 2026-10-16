@@ -1,4 +1,6 @@
 export * from './link-spending-modal';
+export * from './spending-cost-cell';
+export * from './spending-modals';
 export * from './spending-transaction-badge';
 export * from './transaction-combobox';
 export * from './types';

@@ -1,6 +1,6 @@
 import { VehicleItemActions } from '@vehicles/components/common';
-import { SpendingTransactionBadge } from '@vehicles/components/spendings';
-import { formatDate, formatPln } from '@vehicles/utils';
+import { SpendingCostCell } from '@vehicles/components/spendings';
+import { formatDate } from '@vehicles/utils';
 import { useTranslation } from 'react-i18next';
 
 import type { EquipmentTableRowProps } from './types';
@@ -28,12 +28,7 @@ export const EquipmentTableRow = ({
         {item.itemName}
       </td>
 
-      <td className="px-3 py-3 text-xs font-bold text-fg sm:text-sm">
-        <div className="flex flex-col items-start gap-1">
-          <span>{formatPln(item.costPln, lang)}</span>
-          <SpendingTransactionBadge transactionId={item.transactionId} size="sm" />
-        </div>
-      </td>
+      <SpendingCostCell costPln={item.costPln} transactionId={item.transactionId} />
 
       <td className="px-3 py-3 text-xs text-text-muted">
         <span className="line-clamp-2 max-w-md">{item.description || '-'}</span>

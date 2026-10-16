@@ -1,6 +1,6 @@
 import { VehicleItemActions } from '@vehicles/components/common';
-import { SpendingTransactionBadge } from '@vehicles/components/spendings';
-import { formatDate, formatPln } from '@vehicles/utils';
+import { SpendingCostRow } from '@vehicles/components/spendings';
+import { formatDate } from '@vehicles/utils';
 import clsx from 'clsx';
 import { Package } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
@@ -50,15 +50,11 @@ export const EquipmentMobileCard = ({
         />
       </div>
 
-      <div className="flex items-baseline justify-between text-xs">
-        <span className="text-text-muted">{t('equipmentPage.table.cost')}</span>
-        <div className="flex items-center gap-1.5">
-          <span className="text-sm font-bold text-fg">
-            {formatPln(item.costPln, lang)}
-          </span>
-          <SpendingTransactionBadge transactionId={item.transactionId} size="sm" />
-        </div>
-      </div>
+      <SpendingCostRow
+        label={t('equipmentPage.table.cost')}
+        costPln={item.costPln}
+        transactionId={item.transactionId}
+      />
 
       {item.description && (
         <p className="line-clamp-2 text-xs text-text-muted">{item.description}</p>

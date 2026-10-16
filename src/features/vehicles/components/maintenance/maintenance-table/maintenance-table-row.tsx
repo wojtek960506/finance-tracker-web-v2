@@ -1,6 +1,6 @@
 import { VehicleItemActions } from '@vehicles/components/common';
-import { SpendingTransactionBadge } from '@vehicles/components/spendings';
-import { formatDate, formatKm, formatPln } from '@vehicles/utils';
+import { SpendingCostCell } from '@vehicles/components/spendings';
+import { formatDate, formatKm } from '@vehicles/utils';
 import { useTranslation } from 'react-i18next';
 
 import { MaintenanceSectionBadge } from '../maintenance-section-badge';
@@ -48,12 +48,7 @@ export const MaintenanceTableRow = ({
         {typeof item.odometerKm === 'number' ? formatKm(item.odometerKm, lang) : '-'}
       </td>
 
-      <td className="px-3 py-3 text-xs font-bold text-fg sm:text-sm">
-        <div className="flex flex-col items-start gap-1">
-          <span>{formatPln(item.costPln, lang)}</span>
-          <SpendingTransactionBadge transactionId={item.transactionId} size="sm" />
-        </div>
-      </td>
+      <SpendingCostCell costPln={item.costPln} transactionId={item.transactionId} />
 
       <td className="px-3 py-3 text-xs text-text-muted">
         <span className="line-clamp-2 max-w-xs">{item.description || '-'}</span>

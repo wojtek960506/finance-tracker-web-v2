@@ -5,9 +5,8 @@ import type {
 } from '@vehicles/api';
 import { VehiclePageError, VehiclePageLoading } from '@vehicles/components/common';
 import {
-  LinkSpendingModal,
+  SpendingModals,
   type SpendingTarget,
-  UnlinkSpendingModal,
   useSpendingModalState,
 } from '@vehicles/components/spendings';
 import { useMaintenance, useVehicleRecordModals } from '@vehicles/hooks';
@@ -163,18 +162,12 @@ export const VehiclesMaintenanceContent = () => {
       />
 
       {/* Spending Linking Modals */}
-      <LinkSpendingModal
-        isOpen={Boolean(linkingTarget)}
-        target={linkingTarget}
-        onClose={closeLink}
-        onSuccess={() => void refetch()}
-      />
-
-      <UnlinkSpendingModal
-        isOpen={Boolean(unlinkingTarget)}
-        target={unlinkingTarget}
-        onClose={closeUnlink}
-        onSuccess={() => void refetch()}
+      <SpendingModals
+        linkingTarget={linkingTarget}
+        unlinkingTarget={unlinkingTarget}
+        onCloseLink={closeLink}
+        onCloseUnlink={closeUnlink}
+        onRefresh={() => void refetch()}
       />
     </div>
   );

@@ -1,5 +1,5 @@
 import { VehicleItemActions } from '@vehicles/components/common';
-import { SpendingTransactionBadge } from '@vehicles/components/spendings';
+import { SpendingCostCell } from '@vehicles/components/spendings';
 import {
   formatConsumption,
   formatCostPerKm,
@@ -7,7 +7,6 @@ import {
   formatDeltaKm,
   formatKm,
   formatLiters,
-  formatPln,
   formatUnitPrice,
 } from '@vehicles/utils';
 import clsx from 'clsx';
@@ -62,12 +61,7 @@ export const FuelTableRow = ({
         {formatUnitPrice(entry.unitPricePln, lang)}
       </td>
 
-      <td className="px-3 py-3 text-xs font-bold text-fg sm:text-sm">
-        <div className="flex flex-col items-start gap-1">
-          <span>{formatPln(entry.costPln, lang)}</span>
-          <SpendingTransactionBadge transactionId={entry.transactionId} size="sm" />
-        </div>
-      </td>
+      <SpendingCostCell costPln={entry.costPln} transactionId={entry.transactionId} />
 
       <td className="px-3 py-3 text-xs text-text-muted">
         {entry.consumptionLPer100Km ? (

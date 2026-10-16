@@ -1,6 +1,6 @@
 import { VehicleItemActions } from '@vehicles/components/common';
-import { SpendingTransactionBadge } from '@vehicles/components/spendings';
-import { formatDate, formatKm, formatPln } from '@vehicles/utils';
+import { SpendingCostRow } from '@vehicles/components/spendings';
+import { formatDate, formatKm } from '@vehicles/utils';
 import { useTranslation } from 'react-i18next';
 
 import { Card } from '@shared/ui';
@@ -38,15 +38,11 @@ export const MaintenanceMobileCard = ({
         />
       </div>
 
-      <div className="flex items-baseline justify-between text-xs">
-        <span className="text-text-muted">{t('maintenancePage.table.cost')}</span>
-        <div className="flex items-center gap-1.5">
-          <span className="text-sm font-bold text-fg">
-            {formatPln(item.costPln, lang)}
-          </span>
-          <SpendingTransactionBadge transactionId={item.transactionId} size="sm" />
-        </div>
-      </div>
+      <SpendingCostRow
+        label={t('maintenancePage.table.cost')}
+        costPln={item.costPln}
+        transactionId={item.transactionId}
+      />
 
       <div className="grid grid-cols-2 gap-2 text-xs">
         {(item.serviceProvider || item.serviceAddress) && (

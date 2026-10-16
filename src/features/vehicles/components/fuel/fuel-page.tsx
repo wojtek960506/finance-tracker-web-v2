@@ -1,9 +1,8 @@
 import type { VehicleFuelEntryEnriched } from '@vehicles/api';
 import { VehiclePageError, VehiclePageLoading } from '@vehicles/components/common';
 import {
-  LinkSpendingModal,
+  SpendingModals,
   type SpendingTarget,
-  UnlinkSpendingModal,
   useSpendingModalState,
 } from '@vehicles/components/spendings';
 import { useFuelEntries, useVehicleRecordModals } from '@vehicles/hooks';
@@ -126,18 +125,12 @@ export const VehiclesFuelContent = () => {
       />
 
       {/* Spending Linking Modals */}
-      <LinkSpendingModal
-        target={linkingTarget}
-        isOpen={Boolean(linkingTarget)}
-        onClose={closeLink}
-        onSuccess={() => void refetch()}
-      />
-
-      <UnlinkSpendingModal
-        target={unlinkingTarget}
-        isOpen={Boolean(unlinkingTarget)}
-        onClose={closeUnlink}
-        onSuccess={() => void refetch()}
+      <SpendingModals
+        linkingTarget={linkingTarget}
+        unlinkingTarget={unlinkingTarget}
+        onCloseLink={closeLink}
+        onCloseUnlink={closeUnlink}
+        onRefresh={() => void refetch()}
       />
     </div>
   );
