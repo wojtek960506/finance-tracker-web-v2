@@ -6,6 +6,8 @@ export type MaintenanceTableProps = {
   hasFilters: boolean;
   onEditItem: (item: VehicleMaintenance) => void;
   onDeleteItem: (item: VehicleMaintenance) => void;
+  onLinkItem?: (item: VehicleMaintenance) => void;
+  onUnlinkItem?: (item: VehicleMaintenance) => void;
   onAddFirstItem: () => void;
 };
 
@@ -13,6 +15,8 @@ export type MaintenanceTableRowProps = {
   item: VehicleMaintenance;
   onEdit: () => void;
   onDelete: () => void;
+  onLink?: () => void;
+  onUnlink?: () => void;
   showSectionBadge?: boolean;
 };
 
@@ -20,6 +24,8 @@ export type MaintenanceMobileCardProps = {
   item: VehicleMaintenance;
   onEdit: () => void;
   onDelete: () => void;
+  onLink?: () => void;
+  onUnlink?: () => void;
 };
 
 export type MaintenanceEmptyStateProps = {

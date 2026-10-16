@@ -172,7 +172,7 @@ describe('VehiclesMaintenanceContent', () => {
       'Auto Serwis Kowalski',
     );
     expect(screen.getByTestId('maintenance-row-maint-2')).toHaveTextContent('ASO Toyota');
-    expect(screen.getByTestId('maintenance-linked-badge-maint-2')).toBeInTheDocument();
+    expect(screen.getAllByTestId('linked-transaction-badge').length).toBeGreaterThan(0);
   });
 
   it('filters maintenance items by search term', () => {
@@ -315,5 +315,45 @@ describe('VehiclesMaintenanceContent', () => {
     if (deleteBtn) fireEvent.click(deleteBtn);
 
     expect(screen.getByTestId('delete-maintenance-modal')).toBeInTheDocument();
+  });
+
+  it('opens LinkSpendingModal when clicking link action button on an unlinked row', () => {
+    vi.spyOn(vehiclesHooks, 'useMaintenance').mockReturnValue({
+      data: mockMaintenanceResponse,
+      isLoading: false,
+      isFetching: false,
+      isError: false,
+      error: null,
+      refetch: vi.fn(),
+    } as unknown as ReturnType<typeof vehiclesHooks.useMaintenance>);
+
+    renderMaintenancePage();
+    const linkBtns = screen.getAllByTitle('Link to transaction');
+    expect(linkBtns.length).toBeGreaterThan(0);
+    fireEvent.click(linkBtns[0]);
+
+    expect(screen.getByTestId('link-spending-modal')).toBeInTheDocument();
+  });
+
+  it('renders linked transaction badge and opens UnlinkSpendingModal', () => {
+    vi.spyOn(vehiclesHooks, 'useMaintenance').mockReturnValue({
+      data: mockMaintenanceResponse,
+      isLoading: false,
+      isFetching: false,
+      isError: false,
+      error: null,
+      refetch: vi.fn(),
+    } as unknown as ReturnType<typeof vehiclesHooks.useMaintenance>);
+
+    renderMaintenancePage();
+    const linkedBadges = screen.getAllByTestId('linked-transaction-badge');
+    expect(linkedBadges.length).toBeGreaterThan(0);
+    expect(linkedBadges[0]).toHaveAttribute('href', '/transactions/tx-999');
+
+    const unlinkBtns = screen.getAllByTitle('Unlink from transaction');
+    expect(unlinkBtns.length).toBeGreaterThan(0);
+    fireEvent.click(unlinkBtns[0]);
+
+    expect(screen.getByTestId('delete-unlink-spending-modal')).toBeInTheDocument();
   });
 });

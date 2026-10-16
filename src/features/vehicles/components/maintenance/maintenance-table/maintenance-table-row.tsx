@@ -1,6 +1,6 @@
 import { VehicleItemActions } from '@vehicles/components/common';
+import { SpendingTransactionBadge } from '@vehicles/components/spendings';
 import { formatDate, formatKm, formatPln } from '@vehicles/utils';
-import { Link2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 import { MaintenanceSectionBadge } from '../maintenance-section-badge';
@@ -11,9 +11,11 @@ export const MaintenanceTableRow = ({
   item,
   onEdit,
   onDelete,
+  onLink,
+  onUnlink,
   showSectionBadge = true,
 }: MaintenanceTableRowProps) => {
-  const { t, i18n } = useTranslation('vehicles');
+  const { i18n } = useTranslation('vehicles');
   const lang = i18n.language;
 
   return (
@@ -47,29 +49,24 @@ export const MaintenanceTableRow = ({
       </td>
 
       <td className="px-3 py-3 text-xs font-bold text-fg sm:text-sm">
-        {formatPln(item.costPln, lang)}
+        <div className="flex flex-col items-start gap-1">
+          <span>{formatPln(item.costPln, lang)}</span>
+          <SpendingTransactionBadge transactionId={item.transactionId} size="sm" />
+        </div>
       </td>
 
       <td className="px-3 py-3 text-xs text-text-muted">
         <span className="line-clamp-2 max-w-xs">{item.description || '-'}</span>
       </td>
 
-      <td className="px-3 py-3 text-xs">
-        {item.transactionId ? (
-          <span
-            className="inline-flex items-center gap-1 text-[11px] font-medium text-active-nav"
-            data-testid={`maintenance-linked-badge-${item.id}`}
-          >
-            <Link2 className="size-3" />
-            {t('maintenancePage.table.linked')}
-          </span>
-        ) : (
-          <span className="text-text-muted">-</span>
-        )}
-      </td>
-
       <td className="px-3 py-3 text-right">
-        <VehicleItemActions onEdit={onEdit} onDelete={onDelete} className="justify-end" />
+        <VehicleItemActions
+          onEdit={onEdit}
+          onDelete={onDelete}
+          onLink={onLink}
+          onUnlink={onUnlink}
+          className="justify-end"
+        />
       </td>
     </tr>
   );
