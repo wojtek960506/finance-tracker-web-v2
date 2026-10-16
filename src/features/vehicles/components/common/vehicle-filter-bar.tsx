@@ -44,7 +44,8 @@ export const VehicleFilterBar = ({
           variant="ghost"
           onClick={() => setIsExpanded((prev) => !prev)}
           className={clsx(
-            'flex h-10 items-center gap-2 rounded-xl border px-3 text-sm font-medium transition-colors',
+            'flex h-10 items-center gap-2 rounded-xl border px-3',
+            'text-sm font-medium transition-colors',
             'sm:h-11 sm:px-3.5 xl:hidden',
             hasActiveFilters
               ? 'border-bt-primary/50 bg-bt-primary/10 text-bt-primary hover:bg-bt-primary/20'
