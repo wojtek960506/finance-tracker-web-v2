@@ -1,6 +1,6 @@
 import type { VehicleFuelEntryEnriched } from '@vehicles/api';
 import { VehiclePageError, VehiclePageLoading } from '@vehicles/components/common';
-import { useFuelEntries } from '@vehicles/hooks';
+import { useFuelEntries, useVehicleRecordModals } from '@vehicles/hooks';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -20,11 +20,17 @@ export const VehiclesFuelContent = () => {
   const { vehicle } = useVehicleContext();
 
   const [filters, setFilters] = useState<FuelFilters>({});
-  const [isCreateOpen, setIsCreateOpen] = useState(false);
-  const [editingEntry, setEditingEntry] = useState<VehicleFuelEntryEnriched | null>(null);
-  const [deletingEntry, setDeletingEntry] = useState<VehicleFuelEntryEnriched | null>(
-    null,
-  );
+  const {
+    isCreateOpen,
+    openCreate,
+    closeCreate,
+    editingItem: editingEntry,
+    openEdit: setEditingEntry,
+    closeEdit: closeEditingEntry,
+    deletingItem: deletingEntry,
+    openDelete: setDeletingEntry,
+    closeDelete: closeDeletingEntry,
+  } = useVehicleRecordModals<VehicleFuelEntryEnriched>();
 
   const { data, isLoading, isError, error, refetch } = useFuelEntries(
     vehicle.id,
@@ -61,7 +67,7 @@ export const VehiclesFuelContent = () => {
         <FuelFilterBar
           filters={filters}
           onFiltersChange={setFilters}
-          onAddEntry={() => setIsCreateOpen(true)}
+          onAddEntry={openCreate}
         />
       )}
 
@@ -69,9 +75,9 @@ export const VehiclesFuelContent = () => {
       <FuelTable
         entries={entries}
         hasFilters={hasFilters}
-        onEditEntry={(entry) => setEditingEntry(entry)}
-        onDeleteEntry={(entry) => setDeletingEntry(entry)}
-        onAddFirstEntry={() => setIsCreateOpen(true)}
+        onEditEntry={setEditingEntry}
+        onDeleteEntry={setDeletingEntry}
+        onAddFirstEntry={openCreate}
       />
 
       {/* CRUD Modals */}
@@ -79,21 +85,21 @@ export const VehiclesFuelContent = () => {
         vehicleId={vehicle.id}
         vehicleName={vehicle.name}
         isOpen={isCreateOpen}
-        onClose={() => setIsCreateOpen(false)}
+        onClose={closeCreate}
       />
 
       <UpdateFuelEntryModal
         vehicleId={vehicle.id}
         entry={editingEntry}
         isOpen={Boolean(editingEntry)}
-        onClose={() => setEditingEntry(null)}
+        onClose={closeEditingEntry}
       />
 
       <DeleteFuelEntryModal
         vehicleId={vehicle.id}
         entry={deletingEntry}
         isOpen={Boolean(deletingEntry)}
-        onClose={() => setDeletingEntry(null)}
+        onClose={closeDeletingEntry}
       />
     </div>
   );

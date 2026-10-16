@@ -16,6 +16,7 @@ import type {
   GetMaintenanceQuery,
   GetVehicleOverviewQuery,
   MaintenanceSection,
+  SpendingType,
 } from './api/types';
 
 export const VEHICLE_TYPES = ['motorcycle', 'car', 'public_transport'] as const;
@@ -27,8 +28,6 @@ export const MAINTENANCE_SECTIONS = ['ownMaintenance', 'previousOwnerServices'] 
 export const DEFAULT_MAINTENANCE_SECTION = 'ownMaintenance' as const;
 
 export const SPENDING_TYPES = ['fuel', 'equipment', 'maintenance'] as const;
-
-export type SpendingType = (typeof SPENDING_TYPES)[number];
 
 export type SpendingTypeConfig = {
   icon: LucideIcon;

@@ -1,12 +1,11 @@
 import clsx from 'clsx';
 import { Plus } from 'lucide-react';
-import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { ButtonWithIcon, LoadingCard } from '@shared/ui';
 
-import type { Vehicle, VehicleWithSpending } from '../api';
-import { useAllVehiclesSummary } from '../hooks';
+import type { VehicleWithSpending } from '../api';
+import { useAllVehiclesSummary, useVehicleRecordModals } from '../hooks';
 
 import {
   AllVehiclesEmptyState,
@@ -21,23 +20,19 @@ import {
 
 export const VehiclesPage = () => {
   const { t } = useTranslation('vehicles');
-  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
-  const [vehicleToEdit, setVehicleToEdit] = useState<Vehicle | null>(null);
-  const [vehicleToDelete, setVehicleToDelete] = useState<Vehicle | null>(null);
+  const {
+    isCreateOpen,
+    openCreate,
+    closeCreate,
+    editingItem: vehicleToEdit,
+    openEdit: handleEditVehicle,
+    closeEdit,
+    deletingItem: vehicleToDelete,
+    openDelete: handleDeleteVehicle,
+    closeDelete,
+  } = useVehicleRecordModals<VehicleWithSpending>();
 
   const { vehicles, summary, hasVehicles, isLoading, error } = useAllVehiclesSummary();
-
-  const handleCreateVehicle = () => {
-    setIsCreateModalOpen(true);
-  };
-
-  const handleEditVehicle = (vehicle: VehicleWithSpending) => {
-    setVehicleToEdit(vehicle);
-  };
-
-  const handleDeleteVehicle = (vehicle: VehicleWithSpending) => {
-    setVehicleToDelete(vehicle);
-  };
 
   return (
     <div
@@ -60,7 +55,7 @@ export const VehiclesPage = () => {
           <ButtonWithIcon
             icon={Plus}
             label={t('newVehicle')}
-            onClick={handleCreateVehicle}
+            onClick={openCreate}
             className="w-full whitespace-nowrap sm:w-auto"
           />
         )}
@@ -80,7 +75,7 @@ export const VehiclesPage = () => {
 
       {/* Empty State */}
       {!isLoading && !error && !hasVehicles && (
-        <AllVehiclesEmptyState onCreateVehicle={handleCreateVehicle} />
+        <AllVehiclesEmptyState onCreateVehicle={openCreate} />
       )}
 
       {/* Main Content: Global Summary + Vehicle Cards Grid */}
@@ -96,21 +91,18 @@ export const VehiclesPage = () => {
       )}
 
       {/* CRUD Modals */}
-      <CreateVehicleModal
-        isOpen={isCreateModalOpen}
-        onClose={() => setIsCreateModalOpen(false)}
-      />
+      <CreateVehicleModal isOpen={isCreateOpen} onClose={closeCreate} />
 
       <UpdateVehicleModal
         vehicle={vehicleToEdit}
         isOpen={Boolean(vehicleToEdit)}
-        onClose={() => setVehicleToEdit(null)}
+        onClose={closeEdit}
       />
 
       <DeleteVehicleModal
         vehicle={vehicleToDelete}
         isOpen={Boolean(vehicleToDelete)}
-        onClose={() => setVehicleToDelete(null)}
+        onClose={closeDelete}
       />
     </div>
   );

@@ -1,6 +1,6 @@
 import type { VehicleEquipment } from '@vehicles/api';
 import { VehiclePageError, VehiclePageLoading } from '@vehicles/components/common';
-import { useEquipment } from '@vehicles/hooks';
+import { useEquipment, useVehicleRecordModals } from '@vehicles/hooks';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -20,9 +20,17 @@ export const VehiclesEquipmentContent = () => {
   const { vehicle } = useVehicleContext();
 
   const [filters, setFilters] = useState<EquipmentFilters>({});
-  const [isCreateOpen, setIsCreateOpen] = useState(false);
-  const [editingItem, setEditingItem] = useState<VehicleEquipment | null>(null);
-  const [deletingItem, setDeletingItem] = useState<VehicleEquipment | null>(null);
+  const {
+    isCreateOpen,
+    openCreate,
+    closeCreate,
+    editingItem,
+    openEdit: setEditingItem,
+    closeEdit: closeEditingItem,
+    deletingItem,
+    openDelete: setDeletingItem,
+    closeDelete: closeDeletingItem,
+  } = useVehicleRecordModals<VehicleEquipment>();
 
   const queryParams = useMemo(() => {
     const q: { startDate?: string; endDate?: string } = {};
@@ -76,7 +84,7 @@ export const VehiclesEquipmentContent = () => {
         <EquipmentFilterBar
           filters={filters}
           onFiltersChange={setFilters}
-          onAddEquipment={() => setIsCreateOpen(true)}
+          onAddEquipment={openCreate}
         />
       )}
 
@@ -84,9 +92,9 @@ export const VehiclesEquipmentContent = () => {
       <EquipmentTable
         items={filteredItems}
         hasFilters={hasFilters}
-        onEditItem={(item) => setEditingItem(item)}
-        onDeleteItem={(item) => setDeletingItem(item)}
-        onAddFirstItem={() => setIsCreateOpen(true)}
+        onEditItem={setEditingItem}
+        onDeleteItem={setDeletingItem}
+        onAddFirstItem={openCreate}
       />
 
       {/* CRUD Modals */}
@@ -94,21 +102,21 @@ export const VehiclesEquipmentContent = () => {
         vehicleId={vehicle.id}
         vehicleName={vehicle.name}
         isOpen={isCreateOpen}
-        onClose={() => setIsCreateOpen(false)}
+        onClose={closeCreate}
       />
 
       <UpdateEquipmentModal
         vehicleId={vehicle.id}
         item={editingItem}
         isOpen={Boolean(editingItem)}
-        onClose={() => setEditingItem(null)}
+        onClose={closeEditingItem}
       />
 
       <DeleteEquipmentModal
         vehicleId={vehicle.id}
         item={deletingItem}
         isOpen={Boolean(deletingItem)}
-        onClose={() => setDeletingItem(null)}
+        onClose={closeDeletingItem}
       />
     </div>
   );

@@ -4,7 +4,7 @@ import type {
   VehicleMaintenance,
 } from '@vehicles/api';
 import { VehiclePageError, VehiclePageLoading } from '@vehicles/components/common';
-import { useMaintenance } from '@vehicles/hooks';
+import { useMaintenance, useVehicleRecordModals } from '@vehicles/hooks';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -28,9 +28,17 @@ export const VehiclesMaintenanceContent = () => {
   const [activeSection, setActiveSection] =
     useState<MaintenanceSection>('ownMaintenance');
   const [filters, setFilters] = useState<MaintenanceFilters>({});
-  const [isCreateOpen, setIsCreateOpen] = useState(false);
-  const [editingItem, setEditingItem] = useState<VehicleMaintenance | null>(null);
-  const [deletingItem, setDeletingItem] = useState<VehicleMaintenance | null>(null);
+  const {
+    isCreateOpen,
+    openCreate,
+    closeCreate,
+    editingItem,
+    openEdit,
+    closeEdit,
+    deletingItem,
+    openDelete,
+    closeDelete,
+  } = useVehicleRecordModals<VehicleMaintenance>();
 
   const queryParams = useMemo(() => {
     const q: GetMaintenanceQuery = {
@@ -96,7 +104,7 @@ export const VehiclesMaintenanceContent = () => {
           activeSection={activeSection}
           filters={filters}
           onFiltersChange={setFilters}
-          onAddMaintenance={() => setIsCreateOpen(true)}
+          onAddMaintenance={openCreate}
         />
       )}
 
@@ -105,9 +113,9 @@ export const VehiclesMaintenanceContent = () => {
         activeSection={activeSection}
         items={filteredItems}
         hasFilters={hasFilters}
-        onEditItem={(item) => setEditingItem(item)}
-        onDeleteItem={(item) => setDeletingItem(item)}
-        onAddFirstItem={() => setIsCreateOpen(true)}
+        onEditItem={openEdit}
+        onDeleteItem={openDelete}
+        onAddFirstItem={openCreate}
       />
 
       {/* CRUD Modals */}
@@ -116,21 +124,21 @@ export const VehiclesMaintenanceContent = () => {
         vehicleName={vehicle.name}
         section={activeSection}
         isOpen={isCreateOpen}
-        onClose={() => setIsCreateOpen(false)}
+        onClose={closeCreate}
       />
 
       <UpdateMaintenanceModal
         vehicleId={vehicle.id}
         item={editingItem}
         isOpen={Boolean(editingItem)}
-        onClose={() => setEditingItem(null)}
+        onClose={closeEdit}
       />
 
       <DeleteMaintenanceModal
         vehicleId={vehicle.id}
         item={deletingItem}
         isOpen={Boolean(deletingItem)}
-        onClose={() => setDeletingItem(null)}
+        onClose={closeDelete}
       />
     </div>
   );
