@@ -43,7 +43,9 @@
     "cancel": "Отмена",
     "filterTitle": "Фильтры",
     "add": "Добавить",
-    "resetFilters": "Сбросить фильтры"
+    "resetFilters": "Сбросить фильтры",
+    "linkTransaction": "Связать с транзакцией",
+    "unlinkTransaction": "Отвязать от транзакции"
   },
   "tabs": {
     "overview": "Обзор",
@@ -394,6 +396,11 @@
       "linkError": "Ошибка при связывании расхода с транзакцией",
       "unlinkedSuccess": "Расход успешно отвязан от транзакции",
       "unlinkError": "Ошибка при отвязывании расхода"
+    },
+    "badge": {
+      "linked": "Связана",
+      "unlinked": "Не связана",
+      "viewTransaction": "Просмотреть транзакцию"
     }
   }
 }

@@ -43,7 +43,9 @@
     "cancel": "Cancel",
     "filterTitle": "Filters",
     "add": "Add",
-    "resetFilters": "Reset Filters"
+    "resetFilters": "Reset Filters",
+    "linkTransaction": "Link to transaction",
+    "unlinkTransaction": "Unlink from transaction"
   },
   "tabs": {
     "overview": "Overview",
@@ -394,6 +396,11 @@
       "linkError": "Failed to link spending to transaction",
       "unlinkedSuccess": "Vehicle spending unlinked from transaction successfully",
       "unlinkError": "Failed to unlink spending from transaction"
+    },
+    "badge": {
+      "linked": "Linked",
+      "unlinked": "Unlinked",
+      "viewTransaction": "View transaction"
     }
   }
 }

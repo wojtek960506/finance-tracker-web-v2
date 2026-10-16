@@ -43,7 +43,9 @@
     "cancel": "Abbrechen",
     "filterTitle": "Filter",
     "add": "Hinzufügen",
-    "resetFilters": "Filter zurücksetzen"
+    "resetFilters": "Filter zurücksetzen",
+    "linkTransaction": "Mit Transaktion verknüpfen",
+    "unlinkTransaction": "Von Transaktion trennen"
   },
   "tabs": {
     "overview": "Übersicht",
@@ -394,6 +396,11 @@
       "linkError": "Fehler beim Verknüpfen der Ausgabe",
       "unlinkedSuccess": "Verknüpfung mit Transaktion erfolgreich aufgehoben",
       "unlinkError": "Fehler beim Trennen der Ausgabe"
+    },
+    "badge": {
+      "linked": "Verknüpft",
+      "unlinked": "Nicht verknüpft",
+      "viewTransaction": "Transaktion anzeigen"
     }
   }
 }

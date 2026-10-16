@@ -35,17 +35,75 @@ describe('VehicleItemActions', () => {
   it('renders dropdown menu in dropdown mode', () => {
     const onEdit = vi.fn();
     const onDelete = vi.fn();
+    const onLink = vi.fn();
 
     render(
       <VehicleItemActions
         mode="dropdown"
         onEdit={onEdit}
         onDelete={onDelete}
+        onLink={onLink}
         menuAriaLabel="Row options"
       />,
     );
 
     const menuTrigger = screen.getByRole('button', { name: 'Row options' });
     expect(menuTrigger).toBeInTheDocument();
+
+    fireEvent.click(menuTrigger);
+    const linkOption = screen.getByText('Link to transaction');
+    expect(linkOption).toBeInTheDocument();
+
+    fireEvent.click(linkOption);
+    expect(onLink).toHaveBeenCalledTimes(1);
+  });
+
+  it('renders unlink option in dropdown menu when onUnlink is provided', () => {
+    const onUnlink = vi.fn();
+
+    render(
+      <VehicleItemActions
+        mode="dropdown"
+        onUnlink={onUnlink}
+        menuAriaLabel="Row options"
+      />,
+    );
+
+    const menuTrigger = screen.getByRole('button', { name: 'Row options' });
+    fireEvent.click(menuTrigger);
+
+    const unlinkOption = screen.getByText('Unlink from transaction');
+    expect(unlinkOption).toBeInTheDocument();
+
+    fireEvent.click(unlinkOption);
+    expect(onUnlink).toHaveBeenCalledTimes(1);
+  });
+
+  it('renders link and unlink buttons in buttons mode', () => {
+    const onLink = vi.fn();
+    const onUnlink = vi.fn();
+
+    render(
+      <VehicleItemActions
+        onLink={onLink}
+        onUnlink={onUnlink}
+        linkTestId="link-btn"
+        unlinkTestId="unlink-btn"
+      />,
+    );
+
+    const linkBtn = screen.getByTestId('link-btn');
+    const unlinkBtn = screen.getByTestId('unlink-btn');
+
+    fireEvent.click(linkBtn);
+    expect(onLink).toHaveBeenCalledTimes(1);
+
+    fireEvent.click(unlinkBtn);
+    expect(onUnlink).toHaveBeenCalledTimes(1);
+  });
+
+  it('returns null when no action callbacks are provided', () => {
+    const { container } = render(<VehicleItemActions />);
+    expect(container.firstChild).toBeNull();
   });
 });

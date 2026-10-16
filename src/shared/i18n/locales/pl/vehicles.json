@@ -43,7 +43,9 @@
     "cancel": "Anuluj",
     "filterTitle": "Filtry",
     "add": "Dodaj",
-    "resetFilters": "Zresetuj filtry"
+    "resetFilters": "Zresetuj filtry",
+    "linkTransaction": "Połącz z transakcją",
+    "unlinkTransaction": "Odłącz transakcję"
   },
   "tabs": {
     "overview": "Przegląd",
@@ -394,6 +396,11 @@
       "linkError": "Nie udało się powiązać wydatku z transakcją",
       "unlinkedSuccess": "Pomyślnie odłączono wydatek od transakcji",
       "unlinkError": "Nie udało się odłączyć wydatku od transakcji"
+    },
+    "badge": {
+      "linked": "Połączona",
+      "unlinked": "Niepołączona",
+      "viewTransaction": "Zobacz transakcję"
     }
   }
 }
