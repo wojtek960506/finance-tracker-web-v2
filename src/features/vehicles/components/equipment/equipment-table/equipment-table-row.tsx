@@ -1,10 +1,17 @@
 import { VehicleItemActions } from '@vehicles/components/common';
+import { SpendingTransactionBadge } from '@vehicles/components/spendings';
 import { formatDate, formatPln } from '@vehicles/utils';
 import { useTranslation } from 'react-i18next';
 
 import type { EquipmentTableRowProps } from './types';
 
-export const EquipmentTableRow = ({ item, onEdit, onDelete }: EquipmentTableRowProps) => {
+export const EquipmentTableRow = ({
+  item,
+  onEdit,
+  onDelete,
+  onLink,
+  onUnlink,
+}: EquipmentTableRowProps) => {
   const { i18n } = useTranslation('vehicles');
   const lang = i18n.language;
 
@@ -22,7 +29,10 @@ export const EquipmentTableRow = ({ item, onEdit, onDelete }: EquipmentTableRowP
       </td>
 
       <td className="px-3 py-3 text-xs font-bold text-fg sm:text-sm">
-        {formatPln(item.costPln, lang)}
+        <div className="flex flex-col items-start gap-1">
+          <span>{formatPln(item.costPln, lang)}</span>
+          <SpendingTransactionBadge transactionId={item.transactionId} size="sm" />
+        </div>
       </td>
 
       <td className="px-3 py-3 text-xs text-text-muted">
@@ -30,7 +40,13 @@ export const EquipmentTableRow = ({ item, onEdit, onDelete }: EquipmentTableRowP
       </td>
 
       <td className="px-3 py-3 text-right">
-        <VehicleItemActions onEdit={onEdit} onDelete={onDelete} className="justify-end" />
+        <VehicleItemActions
+          onEdit={onEdit}
+          onDelete={onDelete}
+          onLink={onLink}
+          onUnlink={onUnlink}
+          className="justify-end"
+        />
       </td>
     </tr>
   );

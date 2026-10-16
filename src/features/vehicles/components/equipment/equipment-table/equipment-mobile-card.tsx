@@ -1,4 +1,5 @@
 import { VehicleItemActions } from '@vehicles/components/common';
+import { SpendingTransactionBadge } from '@vehicles/components/spendings';
 import { formatDate, formatPln } from '@vehicles/utils';
 import clsx from 'clsx';
 import { Package } from 'lucide-react';
@@ -12,6 +13,8 @@ export const EquipmentMobileCard = ({
   item,
   onEdit,
   onDelete,
+  onLink,
+  onUnlink,
 }: EquipmentMobileCardProps) => {
   const { t, i18n } = useTranslation('vehicles');
   const lang = i18n.language;
@@ -39,12 +42,22 @@ export const EquipmentMobileCard = ({
           </div>
         </div>
 
-        <VehicleItemActions onEdit={onEdit} onDelete={onDelete} />
+        <VehicleItemActions
+          onEdit={onEdit}
+          onDelete={onDelete}
+          onLink={onLink}
+          onUnlink={onUnlink}
+        />
       </div>
 
       <div className="flex items-baseline justify-between text-xs">
         <span className="text-text-muted">{t('equipmentPage.table.cost')}</span>
-        <span className="text-sm font-bold text-fg">{formatPln(item.costPln, lang)}</span>
+        <div className="flex items-center gap-1.5">
+          <span className="text-sm font-bold text-fg">
+            {formatPln(item.costPln, lang)}
+          </span>
+          <SpendingTransactionBadge transactionId={item.transactionId} size="sm" />
+        </div>
       </div>
 
       {item.description && (

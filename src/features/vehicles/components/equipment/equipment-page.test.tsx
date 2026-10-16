@@ -52,7 +52,7 @@ const mockEquipmentItems: VehicleEquipment[] = [
     itemName: 'Dashcam',
     costPln: 450,
     description: '70mai A800S 4K front and rear',
-    transactionId: null,
+    transactionId: 'tx-888',
     createdAt: '2026-03-01T12:00:00Z',
     updatedAt: '2026-03-01T12:00:00Z',
   },
@@ -253,5 +253,45 @@ describe('VehiclesEquipmentContent', () => {
     if (deleteBtn) fireEvent.click(deleteBtn);
 
     expect(screen.getByTestId('delete-equipment-modal')).toBeInTheDocument();
+  });
+
+  it('opens LinkSpendingModal when clicking link action button on an unlinked row', () => {
+    vi.spyOn(vehiclesHooks, 'useEquipment').mockReturnValue({
+      data: mockEquipmentResponse,
+      isLoading: false,
+      isFetching: false,
+      isError: false,
+      error: null,
+      refetch: vi.fn(),
+    } as unknown as ReturnType<typeof vehiclesHooks.useEquipment>);
+
+    renderEquipmentPage();
+    const linkBtns = screen.getAllByTitle('Link to transaction');
+    expect(linkBtns.length).toBeGreaterThan(0);
+    fireEvent.click(linkBtns[0]);
+
+    expect(screen.getByTestId('link-spending-modal')).toBeInTheDocument();
+  });
+
+  it('renders linked transaction badge and opens UnlinkSpendingModal', () => {
+    vi.spyOn(vehiclesHooks, 'useEquipment').mockReturnValue({
+      data: mockEquipmentResponse,
+      isLoading: false,
+      isFetching: false,
+      isError: false,
+      error: null,
+      refetch: vi.fn(),
+    } as unknown as ReturnType<typeof vehiclesHooks.useEquipment>);
+
+    renderEquipmentPage();
+    const linkedBadges = screen.getAllByTestId('linked-transaction-badge');
+    expect(linkedBadges.length).toBeGreaterThan(0);
+    expect(linkedBadges[0]).toHaveAttribute('href', '/transactions/tx-888');
+
+    const unlinkBtns = screen.getAllByTitle('Unlink from transaction');
+    expect(unlinkBtns.length).toBeGreaterThan(0);
+    fireEvent.click(unlinkBtns[0]);
+
+    expect(screen.getByTestId('delete-unlink-spending-modal')).toBeInTheDocument();
   });
 });

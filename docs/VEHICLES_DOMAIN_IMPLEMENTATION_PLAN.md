@@ -188,15 +188,15 @@ flowchart TD
 
 ---
 
-### ⏳ Phase 6: Financial Transaction Linking UI (`spendings/`)
+### ✅ Phase 6: Financial Transaction Linking UI (`spendings/`) (Completed)
 
 - [x] **Sub-phase 6.1: Spending Link / Unlink Modals**
   - `LinkSpendingModal`: Search & link an unlinked vehicle spending item (fuel, maintenance, equipment) to an existing financial `Transaction`.
   - `UnlinkSpendingModal`: Modal confirmation dialog for removing a transaction association.
-- [ ] **Sub-phase 6.2: Table Row Integrations & Transaction Navigation**
+- [x] **Sub-phase 6.2: Table Row Integrations & Transaction Navigation**
   - Visual indicator badge showing linked transaction status in Fuel, Maintenance, and Equipment tables.
   - Direct navigation link to transaction details (`/transactions/:transactionId`).
-- [ ] **Sub-phase 6.3: Phase 6 Tests & Localization**
+- [x] **Sub-phase 6.3: Phase 6 Tests & Localization**
   - Unit tests for spending linking hooks and modal flows.
 
 ---

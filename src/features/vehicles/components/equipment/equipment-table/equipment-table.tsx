@@ -12,6 +12,8 @@ export const EquipmentTable = ({
   hasFilters,
   onEditItem,
   onDeleteItem,
+  onLinkItem,
+  onUnlinkItem,
   onAddFirstItem,
 }: EquipmentTableProps) => {
   const { t } = useTranslation('vehicles');
@@ -54,6 +56,14 @@ export const EquipmentTable = ({
                   item={item}
                   onEdit={() => onEditItem(item)}
                   onDelete={() => onDeleteItem(item)}
+                  onLink={
+                    !item.transactionId && onLinkItem ? () => onLinkItem(item) : undefined
+                  }
+                  onUnlink={
+                    item.transactionId && onUnlinkItem
+                      ? () => onUnlinkItem(item)
+                      : undefined
+                  }
                 />
               ))}
             </tbody>
@@ -69,6 +79,12 @@ export const EquipmentTable = ({
             item={item}
             onEdit={() => onEditItem(item)}
             onDelete={() => onDeleteItem(item)}
+            onLink={
+              !item.transactionId && onLinkItem ? () => onLinkItem(item) : undefined
+            }
+            onUnlink={
+              item.transactionId && onUnlinkItem ? () => onUnlinkItem(item) : undefined
+            }
           />
         ))}
       </div>

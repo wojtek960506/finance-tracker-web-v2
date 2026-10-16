@@ -1,5 +1,11 @@
 import type { VehicleEquipment } from '@vehicles/api';
 import { VehiclePageError, VehiclePageLoading } from '@vehicles/components/common';
+import {
+  LinkSpendingModal,
+  type SpendingTarget,
+  UnlinkSpendingModal,
+  useSpendingModalState,
+} from '@vehicles/components/spendings';
 import { useEquipment, useVehicleRecordModals } from '@vehicles/hooks';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -31,6 +37,19 @@ export const VehiclesEquipmentContent = () => {
     openDelete: setDeletingItem,
     closeDelete: closeDeletingItem,
   } = useVehicleRecordModals<VehicleEquipment>();
+
+  const equipmentToSpendingTarget = (item: VehicleEquipment): SpendingTarget => ({
+    id: item.id,
+    type: 'equipment',
+    costPln: item.costPln,
+    date: item.date,
+    title: item.itemName,
+    vehicleId: vehicle.id,
+    vehicleName: vehicle.name,
+  });
+
+  const { linkingTarget, unlinkingTarget, openLink, closeLink, openUnlink, closeUnlink } =
+    useSpendingModalState();
 
   const queryParams = useMemo(() => {
     const q: { startDate?: string; endDate?: string } = {};
@@ -94,6 +113,8 @@ export const VehiclesEquipmentContent = () => {
         hasFilters={hasFilters}
         onEditItem={setEditingItem}
         onDeleteItem={setDeletingItem}
+        onLinkItem={(item) => openLink(equipmentToSpendingTarget(item))}
+        onUnlinkItem={(item) => openUnlink(equipmentToSpendingTarget(item))}
         onAddFirstItem={openCreate}
       />
 
@@ -117,6 +138,21 @@ export const VehiclesEquipmentContent = () => {
         item={deletingItem}
         isOpen={Boolean(deletingItem)}
         onClose={closeDeletingItem}
+      />
+
+      {/* Spending Linking Modals */}
+      <LinkSpendingModal
+        isOpen={Boolean(linkingTarget)}
+        target={linkingTarget}
+        onClose={closeLink}
+        onSuccess={() => void refetch()}
+      />
+
+      <UnlinkSpendingModal
+        isOpen={Boolean(unlinkingTarget)}
+        target={unlinkingTarget}
+        onClose={closeUnlink}
+        onSuccess={() => void refetch()}
       />
     </div>
   );
