@@ -61,7 +61,7 @@ export const VehicleItemActions = ({
         ? [
             {
               label: t('actions.unlinkTransaction'),
-              icon: <Unlink className="size-3.5 text-warning" />,
+              icon: <Unlink className="size-3.5" />,
               onSelect: onUnlink,
             },
           ]
@@ -118,7 +118,7 @@ export const VehicleItemActions = ({
       {onLink && (
         <Button
           type="button"
-          variant="secondary"
+          variant="primary"
           size="icon"
           onClick={onLink}
           title={t('actions.linkTransaction')}
@@ -131,7 +131,7 @@ export const VehicleItemActions = ({
       {onUnlink && (
         <Button
           type="button"
-          variant="secondary"
+          variant="warning"
           size="icon"
           onClick={onUnlink}
           title={t('actions.unlinkTransaction')}

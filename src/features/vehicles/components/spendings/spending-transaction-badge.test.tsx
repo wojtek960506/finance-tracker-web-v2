@@ -1,8 +1,8 @@
 import '@shared/i18n';
 
-import { fireEvent, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
 import { SpendingTransactionBadge } from './spending-transaction-badge';
 
@@ -17,34 +17,21 @@ describe('SpendingTransactionBadge', () => {
     const badge = screen.getByTestId('linked-transaction-badge');
     expect(badge).toBeInTheDocument();
     expect(badge).toHaveAttribute('href', '/transactions/tx-123');
+    expect(badge).toHaveClass('text-bt-primary');
     expect(screen.getByText('Linked')).toBeInTheDocument();
   });
 
-  it('renders interactive unlinked badge and triggers onLink on click', () => {
-    const onLink = vi.fn();
-    render(
-      <MemoryRouter>
-        <SpendingTransactionBadge onLink={onLink} />
-      </MemoryRouter>,
-    );
-
-    const unlinkedBtn = screen.getByTestId('unlinked-transaction-badge');
-    expect(unlinkedBtn).toBeInTheDocument();
-    expect(screen.getByText('Unlinked')).toBeInTheDocument();
-
-    fireEvent.click(unlinkedBtn);
-    expect(onLink).toHaveBeenCalledTimes(1);
-  });
-
-  it('renders non-interactive unlinked indicator when onLink is omitted', () => {
+  it('renders informational unlinked badge with warning color and not a button', () => {
     render(
       <MemoryRouter>
         <SpendingTransactionBadge />
       </MemoryRouter>,
     );
 
-    const unlinkedSpan = screen.getByTestId('unlinked-transaction-badge');
-    expect(unlinkedSpan.tagName).toBe('SPAN');
+    const unlinkedBadge = screen.getByTestId('unlinked-transaction-badge');
+    expect(unlinkedBadge).toBeInTheDocument();
+    expect(unlinkedBadge.tagName).toBe('SPAN');
+    expect(unlinkedBadge).toHaveClass('text-warning');
     expect(screen.getByText('Unlinked')).toBeInTheDocument();
   });
 

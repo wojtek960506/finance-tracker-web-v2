@@ -8,11 +8,7 @@ import { Button, Modal } from '@shared/ui';
 import type { Transaction } from '@transactions/api';
 
 import { TransactionCombobox } from './transaction-combobox';
-import type {
-  CategoryFilterOption,
-  DateFilterOption,
-  LinkSpendingModalProps,
-} from './types';
+import type { DateFilterOption, LinkSpendingModalProps } from './types';
 import { useSpendingLinking } from './use-spending-linking';
 import { formatDateOnly } from './utils';
 
@@ -29,7 +25,6 @@ export const LinkSpendingModal = ({
     null,
   );
   const [dateFilter, setDateFilter] = useState<DateFilterOption>('exact');
-  const [categoryFilter, setCategoryFilter] = useState<CategoryFilterOption>('transport');
 
   const { linkSpendings, isLinking } = useSpendingLinking({
     onSuccess: () => {
@@ -113,83 +108,45 @@ export const LinkSpendingModal = ({
           </span>
         </div>
 
-        {/* Filter Chips */}
-        <div className="flex flex-col gap-2">
-          {/* Date Chips */}
-          <div className="flex flex-wrap items-center gap-1.5">
-            <button
-              type="button"
-              className={clsx(
-                'rounded-lg px-2.5 py-1 text-xs font-medium transition-colors',
-                dateFilter === 'exact'
-                  ? 'bg-bt-primary text-bt-primary-foreground font-semibold'
-                  : 'bg-muted text-text-muted hover:text-fg',
-              )}
-              onClick={() => setDateFilter('exact')}
-              data-testid="filter-chip-exact"
-            >
-              {t('spendings.linkModal.exactDateChip', { date: targetDateOnly })}
-            </button>
+        {/* Filter Chips: Date Window & Fixed Transport Category */}
+        <div className="flex flex-wrap items-center gap-1.5">
+          <button
+            type="button"
+            className={clsx(
+              'rounded-lg px-2.5 py-1 text-xs font-medium transition-colors',
+              dateFilter === 'exact'
+                ? 'bg-bt-primary text-bt-primary-foreground font-semibold'
+                : 'bg-muted text-text-muted hover:text-fg',
+            )}
+            onClick={() => setDateFilter('exact')}
+            data-testid="filter-chip-exact"
+          >
+            {t('spendings.linkModal.exactDateChip', { date: targetDateOnly })}
+          </button>
 
-            <button
-              type="button"
-              className={clsx(
-                'rounded-lg px-2.5 py-1 text-xs font-medium transition-colors',
-                dateFilter === 'window'
-                  ? 'bg-bt-primary text-bt-primary-foreground font-semibold'
-                  : 'bg-muted text-text-muted hover:text-fg',
-              )}
-              onClick={() => setDateFilter('window')}
-              data-testid="filter-chip-window"
-            >
-              {t('spendings.linkModal.windowChip')}
-            </button>
+          <button
+            type="button"
+            className={clsx(
+              'rounded-lg px-2.5 py-1 text-xs font-medium transition-colors',
+              dateFilter === 'window'
+                ? 'bg-bt-primary text-bt-primary-foreground font-semibold'
+                : 'bg-muted text-text-muted hover:text-fg',
+            )}
+            onClick={() => setDateFilter('window')}
+            data-testid="filter-chip-window"
+          >
+            {t('spendings.linkModal.windowChip')}
+          </button>
 
-            <button
-              type="button"
-              className={clsx(
-                'rounded-lg px-2.5 py-1 text-xs font-medium transition-colors',
-                dateFilter === 'all'
-                  ? 'bg-bt-primary text-bt-primary-foreground font-semibold'
-                  : 'bg-muted text-text-muted hover:text-fg',
-              )}
-              onClick={() => setDateFilter('all')}
-              data-testid="filter-chip-all-dates"
-            >
-              {t('spendings.linkModal.allDatesChip')}
-            </button>
-          </div>
-
-          {/* Category Chips */}
-          <div className="flex flex-wrap items-center gap-1.5">
-            <button
-              type="button"
-              className={clsx(
-                'rounded-lg px-2.5 py-1 text-xs font-medium transition-colors',
-                categoryFilter === 'transport'
-                  ? 'bg-bt-primary text-bt-primary-foreground font-semibold'
-                  : 'bg-muted text-text-muted hover:text-fg',
-              )}
-              onClick={() => setCategoryFilter('transport')}
-              data-testid="filter-chip-transport-category"
-            >
-              {t('spendings.linkModal.transportOnlyChip')}
-            </button>
-
-            <button
-              type="button"
-              className={clsx(
-                'rounded-lg px-2.5 py-1 text-xs font-medium transition-colors',
-                categoryFilter === 'all'
-                  ? 'bg-bt-primary text-bt-primary-foreground font-semibold'
-                  : 'bg-muted text-text-muted hover:text-fg',
-              )}
-              onClick={() => setCategoryFilter('all')}
-              data-testid="filter-chip-all-categories"
-            >
-              {t('spendings.linkModal.allCategoriesChip')}
-            </button>
-          </div>
+          <span
+            className={clsx(
+              'rounded-lg border border-primary/20 bg-primary/10 px-2.5 py-1',
+              'text-xs font-semibold text-primary',
+            )}
+            data-testid="filter-chip-transport-category"
+          >
+            {t('spendings.linkModal.transportOnlyChip')}
+          </span>
         </div>
 
         {/* Transaction Selector Combobox */}
@@ -199,7 +156,7 @@ export const LinkSpendingModal = ({
           targetDate={target.date}
           targetAmount={target.costPln}
           dateFilter={dateFilter}
-          categoryFilter={categoryFilter}
+          categoryFilter="transport"
           disabled={isLinking}
         />
 

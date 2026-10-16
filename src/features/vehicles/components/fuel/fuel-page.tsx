@@ -1,5 +1,11 @@
 import type { VehicleFuelEntryEnriched } from '@vehicles/api';
 import { VehiclePageError, VehiclePageLoading } from '@vehicles/components/common';
+import {
+  LinkSpendingModal,
+  type SpendingTarget,
+  UnlinkSpendingModal,
+  useSpendingModalState,
+} from '@vehicles/components/spendings';
 import { useFuelEntries, useVehicleRecordModals } from '@vehicles/hooks';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -31,6 +37,21 @@ export const VehiclesFuelContent = () => {
     openDelete: setDeletingEntry,
     closeDelete: closeDeletingEntry,
   } = useVehicleRecordModals<VehicleFuelEntryEnriched>();
+
+  const { linkingTarget, unlinkingTarget, openLink, closeLink, openUnlink, closeUnlink } =
+    useSpendingModalState();
+
+  const fuelToSpendingTarget = (entry: VehicleFuelEntryEnriched): SpendingTarget => ({
+    id: entry.id,
+    type: 'fuel',
+    costPln: entry.costPln,
+    date: entry.date,
+    title: entry.stationBrand
+      ? `${entry.stationBrand} (${entry.fuelLiters} L)`
+      : undefined,
+    vehicleId: vehicle.id,
+    vehicleName: vehicle.name,
+  });
 
   const { data, isLoading, isError, error, refetch } = useFuelEntries(
     vehicle.id,
@@ -77,6 +98,8 @@ export const VehiclesFuelContent = () => {
         hasFilters={hasFilters}
         onEditEntry={setEditingEntry}
         onDeleteEntry={setDeletingEntry}
+        onLinkEntry={(entry) => openLink(fuelToSpendingTarget(entry))}
+        onUnlinkEntry={(entry) => openUnlink(fuelToSpendingTarget(entry))}
         onAddFirstEntry={openCreate}
       />
 
@@ -100,6 +123,21 @@ export const VehiclesFuelContent = () => {
         entry={deletingEntry}
         isOpen={Boolean(deletingEntry)}
         onClose={closeDeletingEntry}
+      />
+
+      {/* Spending Linking Modals */}
+      <LinkSpendingModal
+        target={linkingTarget}
+        isOpen={Boolean(linkingTarget)}
+        onClose={closeLink}
+        onSuccess={() => void refetch()}
+      />
+
+      <UnlinkSpendingModal
+        target={unlinkingTarget}
+        isOpen={Boolean(unlinkingTarget)}
+        onClose={closeUnlink}
+        onSuccess={() => void refetch()}
       />
     </div>
   );

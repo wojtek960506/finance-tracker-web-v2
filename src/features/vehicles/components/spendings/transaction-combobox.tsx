@@ -29,7 +29,7 @@ export type TransactionComboboxProps = {
   targetDate: string;
   targetAmount: number;
   dateFilter: DateFilterOption;
-  categoryFilter: CategoryFilterOption;
+  categoryFilter?: CategoryFilterOption;
   disabled?: boolean;
 };
 
@@ -39,7 +39,7 @@ export const TransactionCombobox = ({
   targetDate,
   targetAmount,
   dateFilter,
-  categoryFilter,
+  categoryFilter: _categoryFilter = 'transport',
   disabled = false,
 }: TransactionComboboxProps) => {
   const { t, i18n } = useTranslation('vehicles');
@@ -71,12 +71,9 @@ export const TransactionCombobox = ({
 
   const filteredAndSortedTransactions = useMemo(() => {
     const items = rawTransactions.filter((tx) => {
-      // Exclude transfers / exchanges that do not have standard expense category
-      if (categoryFilter === 'transport') {
-        const catName = 'category' in tx ? tx.category?.name : undefined;
-        return isTransportCategory(catName);
-      }
-      return true;
+      // Exclude transactions that do not have standard expense category in Transport
+      const catName = 'category' in tx ? tx.category?.name : undefined;
+      return isTransportCategory(catName);
     });
 
     return items.sort((a, b) => {
@@ -94,7 +91,7 @@ export const TransactionCombobox = ({
 
       return new Date(b.date).getTime() - new Date(a.date).getTime();
     });
-  }, [rawTransactions, categoryFilter, targetAmount]);
+  }, [rawTransactions, targetAmount]);
 
   const formatTransactionLabel = (tx: Transaction) => {
     const desc = tx.description || 'Expense';

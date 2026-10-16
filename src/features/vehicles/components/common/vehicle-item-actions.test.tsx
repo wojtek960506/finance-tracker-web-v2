@@ -95,6 +95,9 @@ describe('VehicleItemActions', () => {
     const linkBtn = screen.getByTestId('link-btn');
     const unlinkBtn = screen.getByTestId('unlink-btn');
 
+    expect(linkBtn).toHaveClass('bg-bt-primary');
+    expect(unlinkBtn).toHaveClass('bg-warning');
+
     fireEvent.click(linkBtn);
     expect(onLink).toHaveBeenCalledTimes(1);
 

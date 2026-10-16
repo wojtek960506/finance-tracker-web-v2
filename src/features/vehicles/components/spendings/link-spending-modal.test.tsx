@@ -148,9 +148,9 @@ describe('LinkSpendingModal', () => {
     expect(screen.getByText(/Toyota Corolla/)).toBeInTheDocument();
     expect(screen.getByTestId('filter-chip-exact')).toBeInTheDocument();
     expect(screen.getByTestId('filter-chip-window')).toBeInTheDocument();
-    expect(screen.getByTestId('filter-chip-all-dates')).toBeInTheDocument();
+    expect(screen.queryByTestId('filter-chip-all-dates')).not.toBeInTheDocument();
     expect(screen.getByTestId('filter-chip-transport-category')).toBeInTheDocument();
-    expect(screen.getByTestId('filter-chip-all-categories')).toBeInTheDocument();
+    expect(screen.queryByTestId('filter-chip-all-categories')).not.toBeInTheDocument();
   });
 
   it('switches filter chips and updates active state', () => {
@@ -163,9 +163,9 @@ describe('LinkSpendingModal', () => {
     fireEvent.click(windowChip);
     expect(windowChip).toHaveClass('font-semibold');
 
-    const allCategoriesChip = screen.getByTestId('filter-chip-all-categories');
-    fireEvent.click(allCategoriesChip);
-    expect(allCategoriesChip).toHaveClass('font-semibold');
+    const exactChip = screen.getByTestId('filter-chip-exact');
+    fireEvent.click(exactChip);
+    expect(exactChip).toHaveClass('font-semibold');
   });
 
   it('calls onClose when cancel is clicked', () => {

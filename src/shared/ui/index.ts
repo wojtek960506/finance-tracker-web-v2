@@ -1,3 +1,4 @@
+export * from './badge';
 export * from './button';
 export * from './button-with-icon';
 export * from './card';

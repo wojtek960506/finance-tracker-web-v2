@@ -12,6 +12,8 @@ export const FuelTable = ({
   hasFilters,
   onEditEntry,
   onDeleteEntry,
+  onLinkEntry,
+  onUnlinkEntry,
   onAddFirstEntry,
 }: FuelTableProps) => {
   const { t } = useTranslation('vehicles');
@@ -59,6 +61,16 @@ export const FuelTable = ({
                   entry={entry}
                   onEdit={() => onEditEntry(entry)}
                   onDelete={() => onDeleteEntry(entry)}
+                  onLink={
+                    !entry.transactionId && onLinkEntry
+                      ? () => onLinkEntry(entry)
+                      : undefined
+                  }
+                  onUnlink={
+                    entry.transactionId && onUnlinkEntry
+                      ? () => onUnlinkEntry(entry)
+                      : undefined
+                  }
                 />
               ))}
             </tbody>
@@ -74,6 +86,14 @@ export const FuelTable = ({
             entry={entry}
             onEdit={() => onEditEntry(entry)}
             onDelete={() => onDeleteEntry(entry)}
+            onLink={
+              !entry.transactionId && onLinkEntry ? () => onLinkEntry(entry) : undefined
+            }
+            onUnlink={
+              entry.transactionId && onUnlinkEntry
+                ? () => onUnlinkEntry(entry)
+                : undefined
+            }
           />
         ))}
       </div>

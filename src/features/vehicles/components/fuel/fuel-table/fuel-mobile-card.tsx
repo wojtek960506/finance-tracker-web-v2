@@ -1,4 +1,5 @@
 import { VehicleItemActions } from '@vehicles/components/common';
+import { SpendingTransactionBadge } from '@vehicles/components/spendings';
 import {
   formatConsumption,
   formatCostPerKm,
@@ -17,7 +18,13 @@ import { Card } from '@shared/ui';
 
 import type { FuelMobileCardProps } from './types';
 
-export const FuelMobileCard = ({ entry, onEdit, onDelete }: FuelMobileCardProps) => {
+export const FuelMobileCard = ({
+  entry,
+  onEdit,
+  onDelete,
+  onLink,
+  onUnlink,
+}: FuelMobileCardProps) => {
   const { t, i18n } = useTranslation('vehicles');
   const lang = i18n.language;
 
@@ -56,16 +63,25 @@ export const FuelMobileCard = ({ entry, onEdit, onDelete }: FuelMobileCardProps)
               Full
             </span>
           )}
-          <VehicleItemActions mode="dropdown" onEdit={onEdit} onDelete={onDelete} />
+          <VehicleItemActions
+            mode="dropdown"
+            onEdit={onEdit}
+            onDelete={onDelete}
+            onLink={onLink}
+            onUnlink={onUnlink}
+          />
         </div>
       </div>
 
       <div className="grid grid-cols-2 gap-2 text-xs">
         <div className="flex flex-col">
           <span className="text-[11px] text-text-muted">{t('fuelPage.table.cost')}</span>
-          <span className="text-sm font-bold text-fg">
-            {formatPln(entry.costPln, lang)}
-          </span>
+          <div className="flex items-center gap-1.5">
+            <span className="text-sm font-bold text-fg">
+              {formatPln(entry.costPln, lang)}
+            </span>
+            <SpendingTransactionBadge transactionId={entry.transactionId} size="sm" />
+          </div>
         </div>
 
         <div className="flex flex-col">

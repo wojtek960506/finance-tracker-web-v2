@@ -1,4 +1,5 @@
 import { VehicleItemActions } from '@vehicles/components/common';
+import { SpendingTransactionBadge } from '@vehicles/components/spendings';
 import {
   formatConsumption,
   formatCostPerKm,
@@ -14,7 +15,13 @@ import { useTranslation } from 'react-i18next';
 
 import type { FuelTableRowProps } from './types';
 
-export const FuelTableRow = ({ entry, onEdit, onDelete }: FuelTableRowProps) => {
+export const FuelTableRow = ({
+  entry,
+  onEdit,
+  onDelete,
+  onLink,
+  onUnlink,
+}: FuelTableRowProps) => {
   const { i18n } = useTranslation('vehicles');
   const lang = i18n.language;
 
@@ -56,7 +63,10 @@ export const FuelTableRow = ({ entry, onEdit, onDelete }: FuelTableRowProps) => 
       </td>
 
       <td className="px-3 py-3 text-xs font-bold text-fg sm:text-sm">
-        {formatPln(entry.costPln, lang)}
+        <div className="flex flex-col items-start gap-1">
+          <span>{formatPln(entry.costPln, lang)}</span>
+          <SpendingTransactionBadge transactionId={entry.transactionId} size="sm" />
+        </div>
       </td>
 
       <td className="px-3 py-3 text-xs text-text-muted">
@@ -90,7 +100,13 @@ export const FuelTableRow = ({ entry, onEdit, onDelete }: FuelTableRowProps) => 
       </td>
 
       <td className="px-3 py-3 text-right">
-        <VehicleItemActions onEdit={onEdit} onDelete={onDelete} className="justify-end" />
+        <VehicleItemActions
+          onEdit={onEdit}
+          onDelete={onDelete}
+          onLink={onLink}
+          onUnlink={onUnlink}
+          className="justify-end"
+        />
       </td>
     </tr>
   );

@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Button, Modal } from '@shared/ui';
+import { Button, type ButtonVariant, Modal } from '@shared/ui';
 
 export type DeleteVehicleRecordModalProps = {
   isOpen: boolean;
@@ -15,6 +15,7 @@ export type DeleteVehicleRecordModalProps = {
   confirmLabel: string;
   cancelLabel?: string;
   testIdPrefix: string;
+  confirmVariant?: ButtonVariant;
   children?: ReactNode;
 };
 
@@ -30,6 +31,7 @@ export const DeleteVehicleRecordModal = ({
   confirmLabel,
   cancelLabel,
   testIdPrefix,
+  confirmVariant = 'destructive',
   children,
 }: DeleteVehicleRecordModalProps) => {
   const { t: tCommon } = useTranslation('common');
@@ -59,7 +61,7 @@ export const DeleteVehicleRecordModal = ({
 
           <Button
             type="button"
-            variant="destructive"
+            variant={confirmVariant}
             onClick={() => void onConfirm()}
             disabled={isPending}
             data-testid={`confirm-delete-${testIdPrefix}-button`}

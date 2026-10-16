@@ -224,4 +224,49 @@ describe('VehiclesFuelContent', () => {
     fireEvent.click(screen.getByTestId('add-fuel-entry-button'));
     expect(screen.getByTestId('create-fuel-modal')).toBeInTheDocument();
   });
+
+  it('opens LinkSpendingModal when clicking link action button', () => {
+    vi.spyOn(vehiclesHooks, 'useFuelEntries').mockReturnValue({
+      data: mockFuelResponse,
+      isLoading: false,
+      isFetching: false,
+      isError: false,
+      error: null,
+      refetch: vi.fn(),
+    } as unknown as ReturnType<typeof vehiclesHooks.useFuelEntries>);
+
+    renderFuelPage();
+    const linkBtns = screen.getAllByTitle('Link to transaction');
+    expect(linkBtns.length).toBeGreaterThan(0);
+
+    fireEvent.click(linkBtns[0]);
+    expect(screen.getByTestId('link-spending-modal')).toBeInTheDocument();
+  });
+
+  it('renders linked transaction badge and opens UnlinkSpendingModal', () => {
+    const entryWithTx: VehicleFuelEntryEnriched = {
+      ...mockFuelEntries[0],
+      transactionId: 'tx-123',
+    };
+    vi.spyOn(vehiclesHooks, 'useFuelEntries').mockReturnValue({
+      data: {
+        ...mockFuelResponse,
+        items: [entryWithTx],
+      },
+      isLoading: false,
+      isFetching: false,
+      isError: false,
+      error: null,
+      refetch: vi.fn(),
+    } as unknown as ReturnType<typeof vehiclesHooks.useFuelEntries>);
+
+    renderFuelPage();
+    const linkedBadges = screen.getAllByTestId('linked-transaction-badge');
+    expect(linkedBadges.length).toBeGreaterThan(0);
+    expect(linkedBadges[0]).toHaveAttribute('href', '/transactions/tx-123');
+
+    const unlinkBtn = screen.getByTitle('Unlink from transaction');
+    fireEvent.click(unlinkBtn);
+    expect(screen.getByTestId('delete-unlink-spending-modal')).toBeInTheDocument();
+  });
 });

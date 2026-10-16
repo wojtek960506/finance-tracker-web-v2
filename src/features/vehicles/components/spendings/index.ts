@@ -4,4 +4,5 @@ export * from './transaction-combobox';
 export * from './types';
 export * from './unlink-spending-modal';
 export * from './use-spending-linking';
+export * from './use-spending-modal-state';
 export * from './utils';

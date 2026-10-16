@@ -44,7 +44,9 @@ export const UnlinkSpendingModal = ({
       title={t('spendings.unlinkModal.title')}
       prompt={t('spendings.unlinkModal.prompt')}
       hint={t('spendings.unlinkModal.hint')}
+      hintClassName="text-xs text-warning"
       confirmLabel={t('spendings.unlinkModal.confirm')}
+      confirmVariant="warning"
       testIdPrefix="unlink-spending"
     >
       <div className="flex items-center justify-between gap-3 rounded-xl border border-border bg-card p-3">

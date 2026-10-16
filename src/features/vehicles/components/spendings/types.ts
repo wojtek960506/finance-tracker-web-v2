@@ -10,9 +10,9 @@ export type SpendingTarget = {
   vehicleName?: string;
 };
 
-export type DateFilterOption = 'exact' | 'window' | 'all';
+export type DateFilterOption = 'exact' | 'window';
 
-export type CategoryFilterOption = 'transport' | 'all';
+export type CategoryFilterOption = 'transport';
 
 export type LinkSpendingModalProps = {
   isOpen: boolean;
