@@ -364,5 +364,36 @@
       "deletedTitle": "Wpis serwisowy usunięty pomyślnie",
       "deleteErrorTitle": "Nie udało się usunąć wpisu serwisowego"
     }
+  },
+  "spendings": {
+    "linkModal": {
+      "title": "Powiąż z transakcją",
+      "description": "Powiąż ten wydatek pojazdu z istniejącą transakcją bankową lub kartową.",
+      "spendingDetails": "Szczegóły wydatku",
+      "selectTransaction": "Wybierz transakcję",
+      "searchPlaceholder": "Szukaj po nazwie, kategorii lub kwocie...",
+      "exactDateChip": "Dokładna data ({{date}})",
+      "windowChip": "±3 Dni",
+      "allDatesChip": "Wszystkie daty",
+      "transportOnlyChip": "Kategoria Transport",
+      "allCategoriesChip": "Wszystkie kategorie",
+      "exactMatchBadge": "Zgodna kwota",
+      "noTransactionsFound": "Nie znaleziono wydatków spełniających kryteria.",
+      "linkSubmit": "Powiąż transakcję",
+      "linking": "Wiązanie..."
+    },
+    "unlinkModal": {
+      "title": "Odłącz od transakcji",
+      "prompt": "Czy na pewno chcesz odłączyć ten wydatek od powiązanej transakcji?",
+      "hint": "Transakcja finansowa nie zostanie usunięta, usunięte zostanie jedynie powiązanie z tym wpisem pojazdu.",
+      "confirm": "Odłącz transakcję",
+      "unlinking": "Odłączanie..."
+    },
+    "toasts": {
+      "linkedSuccess": "Pomyślnie powiązano wydatek pojazdu z transakcją",
+      "linkError": "Nie udało się powiązać wydatku z transakcją",
+      "unlinkedSuccess": "Pomyślnie odłączono wydatek od transakcji",
+      "unlinkError": "Nie udało się odłączyć wydatku od transakcji"
+    }
   }
 }

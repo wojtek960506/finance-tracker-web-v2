@@ -22,9 +22,9 @@ describe('Vehicles Spendings API', () => {
     const response = { acknowledged: true, modifiedCount: 1 };
     vi.mocked(api.post).mockResolvedValueOnce({ data: response });
 
-    const result = await linkSpendings('veh-1', payload);
+    const result = await linkSpendings(payload);
 
-    expect(api.post).toHaveBeenCalledWith('/vehicles/veh-1/spendings/link', payload);
+    expect(api.post).toHaveBeenCalledWith('/vehicles/spendings/link', payload);
     expect(result).toEqual(response);
   });
 
@@ -36,9 +36,9 @@ describe('Vehicles Spendings API', () => {
     const response = { acknowledged: true, modifiedCount: 1 };
     vi.mocked(api.post).mockResolvedValueOnce({ data: response });
 
-    const result = await unlinkSpending('veh-1', payload);
+    const result = await unlinkSpending(payload);
 
-    expect(api.post).toHaveBeenCalledWith('/vehicles/veh-1/spendings/unlink', payload);
+    expect(api.post).toHaveBeenCalledWith('/vehicles/spendings/unlink', payload);
     expect(result).toEqual(response);
   });
 });

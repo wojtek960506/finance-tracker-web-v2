@@ -3999,14 +3999,14 @@ export interface components {
             date: unknown;
             itemName: string;
             costPln: number;
-            description?: string;
+            description?: string | null;
             transactionId?: string | null;
         };
         VehicleEquipmentUpdateInput: {
             date?: unknown;
             itemName?: string;
             costPln?: number;
-            description?: string;
+            description?: string | null;
             transactionId?: string | null;
         };
         VehicleEquipmentResponseInput: {
@@ -4016,7 +4016,7 @@ export interface components {
             date: unknown;
             itemName: string;
             costPln: number;
-            description?: string;
+            description?: string | null;
             transactionId?: string | null;
             createdAt: unknown;
             updatedAt: unknown;
@@ -4039,9 +4039,9 @@ export interface components {
             unitPricePln: number;
             costPln: number;
             odometerKm: number;
-            stationBrand?: string;
-            stationAddress?: string;
-            description?: string;
+            stationBrand?: string | null;
+            stationAddress?: string | null;
+            description?: string | null;
             transactionId?: string | null;
         };
         VehicleFuelEntryUpdateInput: {
@@ -4052,9 +4052,9 @@ export interface components {
             unitPricePln?: number;
             costPln?: number;
             odometerKm?: number;
-            stationBrand?: string;
-            stationAddress?: string;
-            description?: string;
+            stationBrand?: string | null;
+            stationAddress?: string | null;
+            description?: string | null;
             transactionId?: string | null;
         };
         VehicleFuelEntryResponseInput: {
@@ -4067,9 +4067,9 @@ export interface components {
             unitPricePln: number;
             costPln: number;
             odometerKm: number;
-            stationBrand?: string;
-            stationAddress?: string;
-            description?: string;
+            stationBrand?: string | null;
+            stationAddress?: string | null;
+            description?: string | null;
             transactionId?: string | null;
             createdAt: unknown;
             updatedAt: unknown;
@@ -4084,9 +4084,9 @@ export interface components {
             unitPricePln: number;
             costPln: number;
             odometerKm: number;
-            stationBrand?: string;
-            stationAddress?: string;
-            description?: string;
+            stationBrand?: string | null;
+            stationAddress?: string | null;
+            description?: string | null;
             transactionId?: string | null;
             createdAt: unknown;
             updatedAt: unknown;
@@ -4116,10 +4116,10 @@ export interface components {
             section: "ownMaintenance" | "previousOwnerServices";
             date: unknown;
             costPln: number;
-            odometerKm?: number;
-            description?: string;
-            serviceProvider?: string;
-            serviceAddress?: string;
+            odometerKm?: number | null;
+            description?: string | null;
+            serviceProvider?: string | null;
+            serviceAddress?: string | null;
             transactionId?: string | null;
         };
         VehicleMaintenanceUpdateInput: {
@@ -4127,10 +4127,10 @@ export interface components {
             section?: "ownMaintenance" | "previousOwnerServices";
             date?: unknown;
             costPln?: number;
-            odometerKm?: number;
-            description?: string;
-            serviceProvider?: string;
-            serviceAddress?: string;
+            odometerKm?: number | null;
+            description?: string | null;
+            serviceProvider?: string | null;
+            serviceAddress?: string | null;
             transactionId?: string | null;
         };
         VehicleMaintenanceResponseInput: {
@@ -4141,10 +4141,10 @@ export interface components {
             section: "ownMaintenance" | "previousOwnerServices";
             date: unknown;
             costPln: number;
-            odometerKm?: number;
-            description?: string;
-            serviceProvider?: string;
-            serviceAddress?: string;
+            odometerKm?: number | null;
+            description?: string | null;
+            serviceProvider?: string | null;
+            serviceAddress?: string | null;
             transactionId?: string | null;
             createdAt: unknown;
             updatedAt: unknown;
@@ -4189,7 +4189,7 @@ export interface components {
             date: unknown;
             costPln: number;
             title: string;
-            description?: string;
+            description?: string | null;
             odometerKm?: number | null;
             transactionId?: string | null;
             fuelLiters?: number;
@@ -4197,7 +4197,7 @@ export interface components {
             consumptionLPer100Km?: number | null;
             /** @enum {string} */
             maintenanceSection?: "ownMaintenance" | "previousOwnerServices";
-            serviceProvider?: string;
+            serviceProvider?: string | null;
         };
         VehicleOverviewResponseInput: {
             vehicleId: string;
@@ -5233,7 +5233,7 @@ export interface components {
             date: string;
             itemName: string;
             costPln: number;
-            description?: string;
+            description?: string | null;
             transactionId?: string | null;
         };
         VehicleEquipmentUpdate: {
@@ -5241,7 +5241,7 @@ export interface components {
             date?: string;
             itemName?: string;
             costPln?: number;
-            description?: string;
+            description?: string | null;
             transactionId?: string | null;
         };
         VehicleEquipmentResponse: {
@@ -5252,7 +5252,7 @@ export interface components {
             date: string;
             itemName: string;
             costPln: number;
-            description?: string;
+            description?: string | null;
             transactionId?: string | null;
             /** Format: date-time */
             createdAt: string;
@@ -5278,9 +5278,9 @@ export interface components {
             unitPricePln: number;
             costPln: number;
             odometerKm: number;
-            stationBrand?: string;
-            stationAddress?: string;
-            description?: string;
+            stationBrand?: string | null;
+            stationAddress?: string | null;
+            description?: string | null;
             transactionId?: string | null;
         };
         VehicleFuelEntryUpdate: {
@@ -5292,9 +5292,9 @@ export interface components {
             unitPricePln?: number;
             costPln?: number;
             odometerKm?: number;
-            stationBrand?: string;
-            stationAddress?: string;
-            description?: string;
+            stationBrand?: string | null;
+            stationAddress?: string | null;
+            description?: string | null;
             transactionId?: string | null;
         };
         VehicleFuelEntryResponse: {
@@ -5308,9 +5308,9 @@ export interface components {
             unitPricePln: number;
             costPln: number;
             odometerKm: number;
-            stationBrand?: string;
-            stationAddress?: string;
-            description?: string;
+            stationBrand?: string | null;
+            stationAddress?: string | null;
+            description?: string | null;
             transactionId?: string | null;
             /** Format: date-time */
             createdAt: string;
@@ -5328,9 +5328,9 @@ export interface components {
             unitPricePln: number;
             costPln: number;
             odometerKm: number;
-            stationBrand?: string;
-            stationAddress?: string;
-            description?: string;
+            stationBrand?: string | null;
+            stationAddress?: string | null;
+            description?: string | null;
             transactionId?: string | null;
             /** Format: date-time */
             createdAt: string;
@@ -5363,10 +5363,10 @@ export interface components {
             /** Format: date-time */
             date: string;
             costPln: number;
-            odometerKm?: number;
-            description?: string;
-            serviceProvider?: string;
-            serviceAddress?: string;
+            odometerKm?: number | null;
+            description?: string | null;
+            serviceProvider?: string | null;
+            serviceAddress?: string | null;
             transactionId?: string | null;
         };
         VehicleMaintenanceUpdate: {
@@ -5375,10 +5375,10 @@ export interface components {
             /** Format: date-time */
             date?: string;
             costPln?: number;
-            odometerKm?: number;
-            description?: string;
-            serviceProvider?: string;
-            serviceAddress?: string;
+            odometerKm?: number | null;
+            description?: string | null;
+            serviceProvider?: string | null;
+            serviceAddress?: string | null;
             transactionId?: string | null;
         };
         VehicleMaintenanceResponse: {
@@ -5390,10 +5390,10 @@ export interface components {
             /** Format: date-time */
             date: string;
             costPln: number;
-            odometerKm?: number;
-            description?: string;
-            serviceProvider?: string;
-            serviceAddress?: string;
+            odometerKm?: number | null;
+            description?: string | null;
+            serviceProvider?: string | null;
+            serviceAddress?: string | null;
             transactionId?: string | null;
             /** Format: date-time */
             createdAt: string;
@@ -5441,7 +5441,7 @@ export interface components {
             date: string;
             costPln: number;
             title: string;
-            description?: string;
+            description?: string | null;
             odometerKm?: number | null;
             transactionId?: string | null;
             fuelLiters?: number;
@@ -5449,7 +5449,7 @@ export interface components {
             consumptionLPer100Km?: number | null;
             /** @enum {string} */
             maintenanceSection?: "ownMaintenance" | "previousOwnerServices";
-            serviceProvider?: string;
+            serviceProvider?: string | null;
         };
         VehicleOverviewResponse: {
             vehicleId: string;

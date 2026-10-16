@@ -364,5 +364,36 @@
       "deletedTitle": "Maintenance record deleted successfully",
       "deleteErrorTitle": "Failed to delete maintenance record"
     }
+  },
+  "spendings": {
+    "linkModal": {
+      "title": "Link to Transaction",
+      "description": "Associate this vehicle expense with an existing bank or card transaction.",
+      "spendingDetails": "Spending Details",
+      "selectTransaction": "Select Transaction",
+      "searchPlaceholder": "Search by title, category, or amount...",
+      "exactDateChip": "Exact Date ({{date}})",
+      "windowChip": "±3 Days",
+      "allDatesChip": "All Dates",
+      "transportOnlyChip": "Transport Category",
+      "allCategoriesChip": "All Categories",
+      "exactMatchBadge": "Exact Amount",
+      "noTransactionsFound": "No expense transactions found matching criteria.",
+      "linkSubmit": "Link Transaction",
+      "linking": "Linking..."
+    },
+    "unlinkModal": {
+      "title": "Unlink from Transaction",
+      "prompt": "Are you sure you want to decouple this spending from its linked transaction?",
+      "hint": "The financial transaction will not be deleted, only the association with this vehicle record will be removed.",
+      "confirm": "Unlink Transaction",
+      "unlinking": "Unlinking..."
+    },
+    "toasts": {
+      "linkedSuccess": "Vehicle spending linked to transaction successfully",
+      "linkError": "Failed to link spending to transaction",
+      "unlinkedSuccess": "Vehicle spending unlinked from transaction successfully",
+      "unlinkError": "Failed to unlink spending from transaction"
+    }
   }
 }

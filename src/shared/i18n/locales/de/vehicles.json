@@ -364,5 +364,36 @@
       "deletedTitle": "Wartungseintrag erfolgreich gelöscht",
       "deleteErrorTitle": "Fehler beim Löschen des Wartungseintrags"
     }
+  },
+  "spendings": {
+    "linkModal": {
+      "title": "Mit Transaktion verknüpfen",
+      "description": "Verknüpfen Sie diese Fahrzeugausgabe mit einer bestehenden Bank- oder Kartentransaktion.",
+      "spendingDetails": "Ausgabendetails",
+      "selectTransaction": "Transaktion auswählen",
+      "searchPlaceholder": "Nach Name, Kategorie oder Betrag suchen...",
+      "exactDateChip": "Gleiches Datum ({{date}})",
+      "windowChip": "±3 Tage",
+      "allDatesChip": "Alle Daten",
+      "transportOnlyChip": "Kategorie Transport",
+      "allCategoriesChip": "Alle Kategorien",
+      "exactMatchBadge": "Exakter Betrag",
+      "noTransactionsFound": "Keine passenden Ausgaben gefunden.",
+      "linkSubmit": "Transaktion verknüpfen",
+      "linking": "Verknüpfen..."
+    },
+    "unlinkModal": {
+      "title": "Von Transaktion trennen",
+      "prompt": "Möchten Sie diese Ausgabe wirklich von der verknüpften Transaktion trennen?",
+      "hint": "Die Finanztransaktion wird nicht gelöscht, nur die Verknüpfung mit diesem Fahrzeugeintrag wird entfernt.",
+      "confirm": "Verknüpfung aufheben",
+      "unlinking": "Trennen..."
+    },
+    "toasts": {
+      "linkedSuccess": "Fahrzeugausgabe erfolgreich verknüpft",
+      "linkError": "Fehler beim Verknüpfen der Ausgabe",
+      "unlinkedSuccess": "Verknüpfung mit Transaktion erfolgreich aufgehoben",
+      "unlinkError": "Fehler beim Trennen der Ausgabe"
+    }
   }
 }

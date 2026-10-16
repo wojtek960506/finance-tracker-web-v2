@@ -3,12 +3,14 @@ import { api } from '@shared/api';
 import type { LinkSpendingsToTransactionPayload, SpendingLinkResponse } from './types';
 
 export const linkSpendings = async (
-  vehicleId: string,
-  payload: LinkSpendingsToTransactionPayload,
+  vehicleIdOrPayload: string | LinkSpendingsToTransactionPayload,
+  maybePayload?: LinkSpendingsToTransactionPayload,
 ): Promise<SpendingLinkResponse> => {
-  const res = await api.post<SpendingLinkResponse>(
-    `/vehicles/${vehicleId}/spendings/link`,
-    payload,
-  );
+  const payload =
+    typeof vehicleIdOrPayload === 'string'
+      ? (maybePayload as LinkSpendingsToTransactionPayload)
+      : vehicleIdOrPayload;
+
+  const res = await api.post<SpendingLinkResponse>('/vehicles/spendings/link', payload);
   return res.data;
 };
