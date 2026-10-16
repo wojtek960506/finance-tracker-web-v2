@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import type { MaintenanceSection } from '@vehicles/api';
+import { VehicleFormActions } from '@vehicles/components/common';
 import { DEFAULT_MAINTENANCE_SECTION, MAINTENANCE_SECTIONS } from '@vehicles/consts';
 import {
   type MaintenanceFormInput,
@@ -10,7 +11,7 @@ import clsx from 'clsx';
 import { Controller, type SubmitHandler, useForm, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { Button, DateInput, Input, Label } from '@shared/ui';
+import { DateInput, Input, Label } from '@shared/ui';
 import { preventImplicitFormSubmit } from '@shared/utils';
 
 import { MaintenanceSectionBadge } from '../maintenance-section-badge';
@@ -28,17 +29,15 @@ const REQUIRED_LABEL_CLASS_NAME =
   "after:ml-0.5 after:text-destructive after:content-['*']";
 const FIELD_ERROR_CLASS_NAME = 'text-xs text-destructive';
 
-// TODO split this file into smaller components
 export const MaintenanceForm = ({
   defaultValues,
   fixedSection,
-  isPending,
+  isPending = false,
   mode,
   onSubmit,
   onCancel,
 }: MaintenanceFormProps) => {
   const { t } = useTranslation('vehicles');
-  const { t: tCommon } = useTranslation('common');
 
   const todayStr = new Date().toISOString().split('T')[0] ?? '';
 
@@ -217,29 +216,17 @@ export const MaintenanceForm = ({
         />
       </div>
 
-      {/* Form Action Buttons */}
-      <div className="mt-2 flex items-center justify-end gap-2 border-t border-border pt-3">
-        <Button
-          type="button"
-          variant="secondary"
-          onClick={onCancel}
-          disabled={isPending}
-          data-testid="maintenance-form-cancel"
-        >
-          {tCommon('cancel')}
-        </Button>
-
-        <Button
-          type="submit"
-          variant="primary"
-          disabled={isPending}
-          data-testid="maintenance-form-submit"
-        >
-          {mode === 'create'
+      <VehicleFormActions
+        isPending={isPending}
+        onCancel={onCancel}
+        submitLabel={
+          mode === 'create'
             ? t('maintenancePage.form.createSubmit')
-            : t('maintenancePage.form.updateSubmit')}
-        </Button>
-      </div>
+            : t('maintenancePage.form.updateSubmit')
+        }
+        submitTestId="maintenance-form-submit"
+        cancelTestId="maintenance-form-cancel"
+      />
     </form>
   );
 };

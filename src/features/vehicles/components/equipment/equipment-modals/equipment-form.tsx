@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { VehicleFormActions } from '@vehicles/components/common';
 import {
   type EquipmentFormInput,
   equipmentFormSchema,
@@ -7,7 +8,7 @@ import {
 import { Controller, type SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { Button, DateInput, Input, Label } from '@shared/ui';
+import { DateInput, Input, Label } from '@shared/ui';
 import { preventImplicitFormSubmit } from '@shared/utils';
 
 export type EquipmentFormProps = {
@@ -24,13 +25,12 @@ const FIELD_ERROR_CLASS_NAME = 'text-xs text-destructive';
 
 export const EquipmentForm = ({
   defaultValues,
-  isPending,
+  isPending = false,
   mode,
   onSubmit,
   onCancel,
 }: EquipmentFormProps) => {
   const { t } = useTranslation('vehicles');
-  const { t: tCommon } = useTranslation('common');
 
   const todayStr = new Date().toISOString().split('T')[0] ?? '';
 
@@ -142,29 +142,17 @@ export const EquipmentForm = ({
         />
       </div>
 
-      {/* Form Action Buttons */}
-      <div className="mt-2 flex items-center justify-end gap-2 border-t border-border pt-3">
-        <Button
-          type="button"
-          variant="secondary"
-          onClick={onCancel}
-          disabled={isPending}
-          data-testid="equipment-form-cancel"
-        >
-          {tCommon('cancel')}
-        </Button>
-
-        <Button
-          type="submit"
-          variant="primary"
-          disabled={isPending}
-          data-testid="equipment-form-submit"
-        >
-          {mode === 'create'
+      <VehicleFormActions
+        isPending={isPending}
+        onCancel={onCancel}
+        submitLabel={
+          mode === 'create'
             ? t('equipmentPage.form.createSubmit')
-            : t('equipmentPage.form.updateSubmit')}
-        </Button>
-      </div>
+            : t('equipmentPage.form.updateSubmit')
+        }
+        submitTestId="equipment-form-submit"
+        cancelTestId="equipment-form-cancel"
+      />
     </form>
   );
 };
