@@ -1,4 +1,4 @@
-import { Package } from 'lucide-react';
+import { SPENDING_TYPE_CONFIG } from '@vehicles/consts';
 import { useTranslation } from 'react-i18next';
 
 import { BreakdownCard } from './breakdown-card';
@@ -15,8 +15,8 @@ export const EquipmentBreakdownCard = ({
       title={t('overview.breakdown.equipmentTitle')}
       entriesCount={equipment.entriesCount}
       totalSpentPln={equipment.totalSpentPln}
-      Icon={Package}
-      iconClassName="bg-emerald-500/10 text-emerald-500"
+      Icon={SPENDING_TYPE_CONFIG.equipment.icon}
+      iconClassName={SPENDING_TYPE_CONFIG.equipment.badgeClass}
       linkTo={`/vehicles/${vehicleSlug}/equipment`}
       data-testid="breakdown-card-equipment"
     >

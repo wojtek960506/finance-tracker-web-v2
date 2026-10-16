@@ -1,6 +1,6 @@
 import { VehicleStatsCard } from '@vehicles/components/common';
+import { VEHICLE_OVERVIEW_STATS_CONFIG } from '@vehicles/consts';
 import { formatKm } from '@vehicles/utils';
-import { Fuel, Gauge, Milestone, Wrench } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 import type { VehicleStatsCardsProps } from './types';
@@ -20,32 +20,32 @@ export const VehicleStatsCards = ({ stats }: VehicleStatsCardsProps) => {
       <VehicleStatsCard
         title={t('overview.stats.currentOdometer')}
         value={formatKm(stats.currentOdometerKm, lang)}
-        Icon={Gauge}
-        iconClassName="text-orange-500"
+        Icon={VEHICLE_OVERVIEW_STATS_CONFIG.odometer.icon}
+        iconClassName={VEHICLE_OVERVIEW_STATS_CONFIG.odometer.colorClass}
         data-testid="stats-card-odometer"
       />
 
       <VehicleStatsCard
         title={t('overview.stats.distanceLogged')}
         value={distanceLoggedText}
-        Icon={Milestone}
-        iconClassName="text-indigo-500"
+        Icon={VEHICLE_OVERVIEW_STATS_CONFIG.distance.icon}
+        iconClassName={VEHICLE_OVERVIEW_STATS_CONFIG.distance.colorClass}
         data-testid="stats-card-distance"
       />
 
       <VehicleStatsCard
         title={t('overview.stats.refuelingSessions')}
         value={String(stats.refuelingCount)}
-        Icon={Fuel}
-        iconClassName="text-yellow-500"
+        Icon={VEHICLE_OVERVIEW_STATS_CONFIG.fuel.icon}
+        iconClassName={VEHICLE_OVERVIEW_STATS_CONFIG.fuel.colorClass}
         data-testid="stats-card-fuel"
       />
 
       <VehicleStatsCard
         title={t('overview.stats.maintenanceEvents')}
         value={String(stats.maintenanceCount)}
-        Icon={Wrench}
-        iconClassName="text-sky-500"
+        Icon={VEHICLE_OVERVIEW_STATS_CONFIG.maintenance.icon}
+        iconClassName={VEHICLE_OVERVIEW_STATS_CONFIG.maintenance.colorClass}
         data-testid="stats-card-maintenance"
       />
     </div>

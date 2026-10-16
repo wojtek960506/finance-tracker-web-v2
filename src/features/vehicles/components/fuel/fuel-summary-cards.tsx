@@ -1,12 +1,16 @@
 import type { VehicleFuelSummary } from '@vehicles/api';
 import { VehicleStatsCard } from '@vehicles/components/common';
 import {
+  FUEL_METRICS_CONFIG,
+  SPENDING_TYPE_CONFIG,
+  TOTAL_SPENDING_CONFIG,
+} from '@vehicles/consts';
+import {
   formatConsumption,
   formatLiters,
   formatPln,
   formatUnitPrice,
 } from '@vehicles/utils';
-import { Banknote, Fuel, Gauge, TrendingUp } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 export type FuelSummaryCardsProps = {
@@ -30,32 +34,32 @@ export const FuelSummaryCards = ({ summary }: FuelSummaryCardsProps) => {
       <VehicleStatsCard
         title={t('fuelPage.summary.totalVolume')}
         value={formatLiters(totalVolume, lang)}
-        Icon={Fuel}
-        iconClassName="text-amber-500"
+        Icon={SPENDING_TYPE_CONFIG.fuel.icon}
+        iconClassName={SPENDING_TYPE_CONFIG.fuel.colorClass}
         data-testid="fuel-summary-volume"
       />
 
       <VehicleStatsCard
         title={t('fuelPage.summary.totalCost')}
         value={formatPln(totalCost, lang)}
-        Icon={Banknote}
-        iconClassName="text-emerald-500"
+        Icon={TOTAL_SPENDING_CONFIG.icon}
+        iconClassName={TOTAL_SPENDING_CONFIG.colorClass}
         data-testid="fuel-summary-cost"
       />
 
       <VehicleStatsCard
         title={t('fuelPage.summary.avgConsumption')}
         value={formatConsumption(avgConsumption, lang)}
-        Icon={Gauge}
-        iconClassName="text-sky-500"
+        Icon={FUEL_METRICS_CONFIG.avgConsumption.icon}
+        iconClassName={FUEL_METRICS_CONFIG.avgConsumption.colorClass}
         data-testid="fuel-summary-consumption"
       />
 
       <VehicleStatsCard
         title={t('fuelPage.summary.avgUnitPrice')}
         value={formatUnitPrice(avgUnitPrice, lang)}
-        Icon={TrendingUp}
-        iconClassName="text-indigo-500"
+        Icon={FUEL_METRICS_CONFIG.avgUnitPrice.icon}
+        iconClassName={FUEL_METRICS_CONFIG.avgUnitPrice.colorClass}
         data-testid="fuel-summary-unit-price"
       />
     </div>

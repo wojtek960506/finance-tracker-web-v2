@@ -1,7 +1,7 @@
 import type { VehicleEquipmentSummary } from '@vehicles/api';
 import { VehicleStatsCard } from '@vehicles/components/common';
+import { SPENDING_TYPE_CONFIG, TOTAL_SPENDING_CONFIG } from '@vehicles/consts';
 import { formatPln } from '@vehicles/utils';
-import { Banknote, Package } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 export type EquipmentSummaryCardsProps = {
@@ -23,16 +23,16 @@ export const EquipmentSummaryCards = ({ summary }: EquipmentSummaryCardsProps) =
       <VehicleStatsCard
         title={t('equipmentPage.summary.totalSpending')}
         value={formatPln(totalCost, lang)}
-        Icon={Banknote}
-        iconClassName="text-emerald-500"
+        Icon={TOTAL_SPENDING_CONFIG.icon}
+        iconClassName={TOTAL_SPENDING_CONFIG.colorClass}
         data-testid="equipment-summary-cost"
       />
 
       <VehicleStatsCard
         title={t('equipmentPage.summary.totalItems')}
         value={String(totalItems)}
-        Icon={Package}
-        iconClassName="text-purple-500"
+        Icon={SPENDING_TYPE_CONFIG.equipment.icon}
+        iconClassName={SPENDING_TYPE_CONFIG.equipment.colorClass}
         data-testid="equipment-summary-count"
       />
     </div>

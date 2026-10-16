@@ -1,4 +1,4 @@
-import { Wrench } from 'lucide-react';
+import { SPENDING_TYPE_CONFIG } from '@vehicles/consts';
 import { useTranslation } from 'react-i18next';
 
 import { BreakdownCard } from './breakdown-card';
@@ -15,8 +15,8 @@ export const MaintenanceBreakdownCard = ({
       title={t('overview.breakdown.maintenanceTitle')}
       entriesCount={maintenance.entriesCount}
       totalSpentPln={maintenance.totalSpentPln}
-      Icon={Wrench}
-      iconClassName="bg-blue-500/10 text-blue-500"
+      Icon={SPENDING_TYPE_CONFIG.maintenance.icon}
+      iconClassName={SPENDING_TYPE_CONFIG.maintenance.badgeClass}
       linkTo={`/vehicles/${vehicleSlug}/maintenance`}
       data-testid="breakdown-card-maintenance"
     >

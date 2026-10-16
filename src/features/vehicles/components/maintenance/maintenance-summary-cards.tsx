@@ -1,7 +1,7 @@
 import type { VehicleMaintenanceSummary } from '@vehicles/api';
 import { VehicleStatsCard } from '@vehicles/components/common';
+import { SPENDING_TYPE_CONFIG, TOTAL_SPENDING_CONFIG } from '@vehicles/consts';
 import { formatPln } from '@vehicles/utils';
-import { Banknote, Wrench } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 export type MaintenanceSummaryCardsProps = {
@@ -23,16 +23,16 @@ export const MaintenanceSummaryCards = ({ summary }: MaintenanceSummaryCardsProp
       <VehicleStatsCard
         title={t('maintenancePage.summary.totalSpending')}
         value={formatPln(totalCost, lang)}
-        Icon={Banknote}
-        iconClassName="text-emerald-500"
+        Icon={TOTAL_SPENDING_CONFIG.icon}
+        iconClassName={TOTAL_SPENDING_CONFIG.colorClass}
         data-testid="maintenance-summary-cost"
       />
 
       <VehicleStatsCard
         title={t('maintenancePage.summary.totalRecords')}
         value={String(totalCount)}
-        Icon={Wrench}
-        iconClassName="text-blue-500"
+        Icon={SPENDING_TYPE_CONFIG.maintenance.icon}
+        iconClassName={SPENDING_TYPE_CONFIG.maintenance.colorClass}
         data-testid="maintenance-summary-count"
       />
     </div>

@@ -1,4 +1,4 @@
-import type { VehicleOverviewActivityItem } from '@vehicles/api';
+import { SPENDING_TYPE_CONFIG } from '@vehicles/consts';
 import {
   formatConsumption,
   formatDate,
@@ -7,42 +7,17 @@ import {
   formatPln,
 } from '@vehicles/utils';
 import clsx from 'clsx';
-import { Fuel, Link2, Package, Wrench } from 'lucide-react';
-import type { ReactNode } from 'react';
+import { Link2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 import type { ActivityItemRowProps } from './types';
-
-const getActivityIconConfig = (
-  type: VehicleOverviewActivityItem['type'],
-): { icon: ReactNode; bgClass: string; textClass: string } => {
-  switch (type) {
-    case 'fuel':
-      return {
-        icon: <Fuel className="size-4" />,
-        bgClass: 'bg-amber-500/10',
-        textClass: 'text-amber-500',
-      };
-    case 'maintenance':
-      return {
-        icon: <Wrench className="size-4" />,
-        bgClass: 'bg-blue-500/10',
-        textClass: 'text-blue-500',
-      };
-    case 'equipment':
-      return {
-        icon: <Package className="size-4" />,
-        bgClass: 'bg-emerald-500/10',
-        textClass: 'text-emerald-500',
-      };
-  }
-};
 
 export const ActivityItemRow = ({ item }: ActivityItemRowProps) => {
   const { t, i18n } = useTranslation('vehicles');
   const lang = i18n.language;
 
-  const { icon, bgClass, textClass } = getActivityIconConfig(item.type);
+  const config = SPENDING_TYPE_CONFIG[item.type];
+  const Icon = config.icon;
 
   return (
     <div
@@ -56,11 +31,10 @@ export const ActivityItemRow = ({ item }: ActivityItemRowProps) => {
         <div
           className={clsx(
             'flex size-8 shrink-0 items-center justify-center rounded-lg',
-            bgClass,
-            textClass,
+            config.badgeClass,
           )}
         >
-          {icon}
+          <Icon className="size-4" />
         </div>
 
         <div className="flex min-w-0 flex-col gap-0.5">

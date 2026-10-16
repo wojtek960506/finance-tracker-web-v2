@@ -1,5 +1,5 @@
+import { SPENDING_TYPE_CONFIG } from '@vehicles/consts';
 import { formatConsumption, formatCostPerKm, formatLiters } from '@vehicles/utils';
-import { Fuel } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 import { BreakdownCard } from './breakdown-card';
@@ -14,8 +14,8 @@ export const FuelBreakdownCard = ({ vehicleSlug, fuel }: FuelBreakdownCardProps)
       title={t('overview.breakdown.fuelTitle')}
       entriesCount={fuel.entriesCount}
       totalSpentPln={fuel.totalSpentPln}
-      Icon={Fuel}
-      iconClassName="bg-amber-500/10 text-amber-500"
+      Icon={SPENDING_TYPE_CONFIG.fuel.icon}
+      iconClassName={SPENDING_TYPE_CONFIG.fuel.badgeClass}
       linkTo={`/vehicles/${vehicleSlug}/fuel`}
       data-testid="breakdown-card-fuel"
     >

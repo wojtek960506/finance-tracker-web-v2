@@ -1,5 +1,5 @@
 import { VehicleDomainEmptyState } from '@vehicles/components/common';
-import { Fuel } from 'lucide-react';
+import { SPENDING_TYPE_CONFIG } from '@vehicles/consts';
 import { useTranslation } from 'react-i18next';
 
 type FuelEmptyStateProps = {
@@ -14,8 +14,8 @@ export const FuelEmptyState = ({ hasFilters, onAddFirstEntry }: FuelEmptyStatePr
     <VehicleDomainEmptyState
       hasFilters={hasFilters}
       noMatchingText={t('fuelPage.empty.noMatching')}
-      icon={Fuel}
-      iconColorClassName="bg-amber-500/10 text-amber-500"
+      icon={SPENDING_TYPE_CONFIG.fuel.icon}
+      iconColorClassName={SPENDING_TYPE_CONFIG.fuel.badgeClass}
       title={t('fuelPage.empty.title')}
       description={t('fuelPage.empty.description')}
       createButtonLabel={t('fuelPage.empty.createFirst')}

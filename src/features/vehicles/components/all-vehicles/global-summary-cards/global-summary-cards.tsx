@@ -1,7 +1,7 @@
 import type { GlobalVehiclesSummary } from '@vehicles/api';
 import { VehicleStatsCard } from '@vehicles/components/common';
+import { SPENDING_TYPE_CONFIG, TOTAL_SPENDING_CONFIG } from '@vehicles/consts';
 import { formatPln } from '@vehicles/utils';
-import { Banknote, Fuel, Package, Wrench } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 type GlobalSummaryCardsProps = {
@@ -21,32 +21,32 @@ export const GlobalSummaryCards = ({ summary }: GlobalSummaryCardsProps) => {
         title={t('summary.totalSpending')}
         value={formatPln(summary.totalSpentPln, lang)}
         subtext={`${summary.totalVehicles} ${t('summary.totalVehicles').toLowerCase()}`}
-        Icon={Banknote}
-        iconClassName="text-active-nav"
+        Icon={TOTAL_SPENDING_CONFIG.icon}
+        iconClassName={TOTAL_SPENDING_CONFIG.colorClass}
         data-testid="summary-card-total"
       />
 
       <VehicleStatsCard
         title={t('summary.fuelSpending')}
         value={formatPln(summary.totalFuelSpentPln, lang)}
-        Icon={Fuel}
-        iconClassName="text-amber-500"
+        Icon={SPENDING_TYPE_CONFIG.fuel.icon}
+        iconClassName={SPENDING_TYPE_CONFIG.fuel.colorClass}
         data-testid="summary-card-fuel"
       />
 
       <VehicleStatsCard
         title={t('summary.maintenanceSpending')}
         value={formatPln(summary.totalMaintenanceSpentPln, lang)}
-        Icon={Wrench}
-        iconClassName="text-blue-500"
+        Icon={SPENDING_TYPE_CONFIG.maintenance.icon}
+        iconClassName={SPENDING_TYPE_CONFIG.maintenance.colorClass}
         data-testid="summary-card-maintenance"
       />
 
       <VehicleStatsCard
         title={t('summary.equipmentSpending')}
         value={formatPln(summary.totalEquipmentSpentPln, lang)}
-        Icon={Package}
-        iconClassName="text-emerald-500"
+        Icon={SPENDING_TYPE_CONFIG.equipment.icon}
+        iconClassName={SPENDING_TYPE_CONFIG.equipment.colorClass}
         data-testid="summary-card-equipment"
       />
     </div>

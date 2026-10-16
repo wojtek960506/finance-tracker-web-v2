@@ -33,11 +33,11 @@ export const VehicleStatsCard = ({
         <div
           className={clsx(
             'flex size-7 items-center justify-center rounded-lg sm:size-8',
-            'bg-card-border/30 text-fg',
-            iconClassName,
+            'bg-card-border/30',
+            !iconClassName && 'text-fg',
           )}
         >
-          <Icon className="size-3.5 sm:size-4" />
+          <Icon className={clsx('size-3.5 sm:size-4', iconClassName)} />
         </div>
       </div>
 
