@@ -1,6 +1,7 @@
 import { VehicleItemActions } from '@vehicles/components/common';
 import { SpendingCostCell } from '@vehicles/components/spendings';
 import { formatDate } from '@vehicles/utils';
+import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 
 import type { EquipmentTableRowProps } from './types';
@@ -17,7 +18,10 @@ export const EquipmentTableRow = ({
 
   return (
     <tr
-      className="border-b border-border transition-colors hover:bg-muted/40 last:border-b-0"
+      className={clsx(
+        'border-b border-border transition-colors hover:bg-muted/40 last:border-b-0',
+        '[content-visibility:auto] [contain-intrinsic-size:0px_45px]',
+      )}
       data-testid={`equipment-row-${item.id}`}
     >
       <td className="px-3 py-3 text-xs font-medium text-fg sm:text-sm">

@@ -21,7 +21,10 @@ export const EquipmentMobileCard = ({
 
   return (
     <Card
-      className="flex flex-col gap-2.5 p-3.5"
+      className={clsx(
+        'flex flex-col gap-2.5 p-3.5',
+        '[content-visibility:auto] [contain-intrinsic-size:0px_140px]',
+      )}
       data-testid={`equipment-card-${item.id}`}
     >
       <div className="flex items-center justify-between gap-2 border-b border-border pb-2">

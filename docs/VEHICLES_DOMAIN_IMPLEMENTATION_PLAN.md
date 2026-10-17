@@ -217,7 +217,7 @@ flowchart TD
 
 ---
 
-### ⏳ Phase 8: Cursor-Based Infinite Loading & Rendering Optimization (In Progress)
+### ✅ Phase 8: Cursor-Based Infinite Loading & Rendering Optimization (Completed)
 
 - [x] **Step 1A: Pagination Constants & Localization (Completed)**
   - Configured `DEFAULT_PAGE_LIMIT = 50` in `src/features/vehicles/consts.ts`.
@@ -233,5 +233,5 @@ flowchart TD
 - [x] **Step 1D: Wire Cursor Props to Table Views & Pages (Completed)**
   - Connected `hasNextPage`, `isFetchingNextPage`, `fetchNextPage`, `totalCount`, and `loadedCount` through `FuelTable`, `EquipmentTable`, and `MaintenanceTable` to `VehicleTableShell`.
   - Added unit test coverage for pagination footer rendering and `fetchNextPage` click triggers across all three page suites.
-- [ ] **Step 2: DOM & Rendering Virtualization / Optimization**
-  - Apply `content-visibility: auto` and `contain-intrinsic-size` to table rows and mobile card containers.
+- [x] **Step 2: DOM & Rendering Virtualization / Optimization (Completed)**
+  - Applied `content-visibility: auto` and `contain-intrinsic-size` to table rows (`0px 45px`) and mobile card containers (`0px 140px`) across Fuel, Equipment, and Maintenance.

@@ -26,7 +26,10 @@ export const FuelTableRow = ({
 
   return (
     <tr
-      className="border-b border-border transition-colors hover:bg-muted/40 last:border-b-0"
+      className={clsx(
+        'border-b border-border transition-colors hover:bg-muted/40 last:border-b-0',
+        '[content-visibility:auto] [contain-intrinsic-size:0px_45px]',
+      )}
       data-testid={`fuel-row-${entry.id}`}
     >
       <td className="px-3 py-3 text-xs font-medium text-fg sm:text-sm">
