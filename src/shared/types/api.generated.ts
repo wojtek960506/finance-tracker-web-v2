@@ -3745,6 +3745,313 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/sports/categories/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List sport categories
+         * @description Return all sport categories for the authenticated user, including system categories.
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["NamedResourcesResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        /**
+         * Create sport category
+         * @description Create a new custom sport category for the authenticated user.
+         */
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["NamedResourceInput"];
+                };
+            };
+            responses: {
+                /** @description Default Response */
+                201: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["NamedResourceResponse"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/sports/categories/favorites": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List favorite sport categories
+         * @description Return all favorite sport categories for the authenticated user.
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["NamedResourcesResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/sports/categories/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get sport category by id
+         * @description Return a single sport category by id.
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description Resource id */
+                    id: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["NamedResourceResponse"];
+                    };
+                };
+            };
+        };
+        /**
+         * Update sport category (PUT)
+         * @description Update a custom sport category by id.
+         */
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description Resource id */
+                    id: string;
+                };
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["NamedResourceInput"];
+                };
+            };
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["NamedResourceResponse"];
+                    };
+                };
+            };
+        };
+        post?: never;
+        /**
+         * Delete sport category
+         * @description Delete a custom sport category by id.
+         */
+        delete: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description Resource id */
+                    id: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            acknowledged: boolean;
+                            deletedCount: number;
+                        };
+                    };
+                };
+            };
+        };
+        options?: never;
+        head?: never;
+        /**
+         * Update sport category (PATCH)
+         * @description Update a custom sport category by id.
+         */
+        patch: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description Resource id */
+                    id: string;
+                };
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["NamedResourceInput"];
+                };
+            };
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["NamedResourceResponse"];
+                    };
+                };
+            };
+        };
+        trace?: never;
+    };
+    "/api/sports/categories/{id}/favorite": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Favorite sport category
+         * @description Mark sport category as favorite for the authenticated user.
+         */
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description Resource id */
+                    id: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["NamedResourceResponse"];
+                    };
+                };
+            };
+        };
+        /**
+         * Unfavorite sport category
+         * @description Remove sport category from favorites for the authenticated user.
+         */
+        delete: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description Resource id */
+                    id: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            acknowledged: boolean;
+                            deletedCount: number;
+                        };
+                    };
+                };
+            };
+        };
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -3990,6 +4297,19 @@ export interface components {
             zeroIncomeBaseline: components["schemas"]["NetWorthZeroIncomeBaselineInput"];
             excludedCategories: components["schemas"]["ExcludedCategoryItemInput"][];
         };
+        NamedResourceInput: {
+            name: string;
+        };
+        NamedResourceResponseInput: {
+            name: string;
+            id: string;
+            ownerId?: string;
+            /** @enum {string} */
+            type: "user" | "system";
+            nameNormalized: string;
+            isFavorite: boolean;
+        };
+        NamedResourcesResponseInput: components["schemas"]["NamedResourceResponseInput"][];
         VehiclePaginationInput: {
             nextCursor: string | null;
             hasMore: boolean;
@@ -4305,19 +4625,6 @@ export interface components {
         WelcomeResponseInput: {
             message: string;
         };
-        NamedResourceInput: {
-            name: string;
-        };
-        NamedResourceResponseInput: {
-            name: string;
-            id: string;
-            ownerId?: string;
-            /** @enum {string} */
-            type: "user" | "system";
-            nameNormalized: string;
-            isFavorite: boolean;
-        };
-        NamedResourcesResponseInput: components["schemas"]["NamedResourceResponseInput"][];
         LoginInput: {
             /** Format: email */
             email: string;
@@ -5223,6 +5530,19 @@ export interface components {
             zeroIncomeBaseline: components["schemas"]["NetWorthZeroIncomeBaseline"];
             excludedCategories: components["schemas"]["ExcludedCategoryItem"][];
         };
+        NamedResource: {
+            name: string;
+        };
+        NamedResourceResponse: {
+            name: string;
+            id: string;
+            ownerId?: string;
+            /** @enum {string} */
+            type: "user" | "system";
+            nameNormalized: string;
+            isFavorite: boolean;
+        };
+        NamedResourcesResponse: components["schemas"]["NamedResourceResponse"][];
         VehiclePagination: {
             nextCursor: string | null;
             hasMore: boolean;
@@ -5561,19 +5881,6 @@ export interface components {
         WelcomeResponse: {
             message: string;
         };
-        NamedResource: {
-            name: string;
-        };
-        NamedResourceResponse: {
-            name: string;
-            id: string;
-            ownerId?: string;
-            /** @enum {string} */
-            type: "user" | "system";
-            nameNormalized: string;
-            isFavorite: boolean;
-        };
-        NamedResourcesResponse: components["schemas"]["NamedResourceResponse"][];
         Login: {
             /** Format: email */
             email: string;
