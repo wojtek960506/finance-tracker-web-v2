@@ -40,10 +40,10 @@ export const LinkSpendingModal = ({
   const typeConfig = SPENDING_TYPE_CONFIG[target.type];
   const TypeIcon = typeConfig.icon;
 
-  const handleLink = async () => {
+  const handleLink = () => {
     if (!selectedTransaction) return;
 
-    await linkSpendings({
+    void linkSpendings({
       transactionId: selectedTransaction.id,
       spendings: [
         {
@@ -51,6 +51,8 @@ export const LinkSpendingModal = ({
           spendingId: target.id,
         },
       ],
+    }).catch(() => {
+      // Error handled by useSpendingLinking onError toast
     });
   };
 
@@ -169,13 +171,13 @@ export const LinkSpendingModal = ({
             disabled={isLinking}
             data-testid="cancel-link-spending-button"
           >
-            {t('common:cancel', { defaultValue: 'Cancel' })}
+            {t('actions.cancel')}
           </Button>
 
           <Button
             type="button"
             variant="primary"
-            onClick={() => void handleLink()}
+            onClick={handleLink}
             disabled={!selectedTransaction || isLinking}
             data-testid="confirm-link-spending-button"
           >

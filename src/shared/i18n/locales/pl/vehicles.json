@@ -45,7 +45,14 @@
     "add": "Dodaj",
     "resetFilters": "Zresetuj filtry",
     "linkTransaction": "Połącz z transakcją",
-    "unlinkTransaction": "Odłącz transakcję"
+    "unlinkTransaction": "Odłącz transakcję",
+    "filterStartDate": "Data od",
+    "filterEndDate": "Data do"
+  },
+  "spendingTypes": {
+    "fuel": "Paliwo",
+    "equipment": "Wyposażenie",
+    "maintenance": "Serwis"
   },
   "tabs": {
     "overview": "Przegląd",

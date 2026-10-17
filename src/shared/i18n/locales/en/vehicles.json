@@ -45,7 +45,14 @@
     "add": "Add",
     "resetFilters": "Reset Filters",
     "linkTransaction": "Link to transaction",
-    "unlinkTransaction": "Unlink from transaction"
+    "unlinkTransaction": "Unlink from transaction",
+    "filterStartDate": "From Date",
+    "filterEndDate": "To Date"
+  },
+  "spendingTypes": {
+    "fuel": "Fuel",
+    "equipment": "Equipment",
+    "maintenance": "Maintenance"
   },
   "tabs": {
     "overview": "Overview",

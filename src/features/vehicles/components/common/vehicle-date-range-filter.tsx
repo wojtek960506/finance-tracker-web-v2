@@ -26,8 +26,8 @@ export const VehicleDateRangeFilter = ({
 }: VehicleDateRangeFilterProps) => {
   const { t } = useTranslation('vehicles');
 
-  const defaultStartLabel = t('actions.filterStartDate', { defaultValue: 'From Date' });
-  const defaultEndLabel = t('actions.filterEndDate', { defaultValue: 'To Date' });
+  const defaultStartLabel = t('actions.filterStartDate');
+  const defaultEndLabel = t('actions.filterEndDate');
 
   return (
     <div className={clsx('flex w-full items-center gap-2 xl:w-auto', className)}>

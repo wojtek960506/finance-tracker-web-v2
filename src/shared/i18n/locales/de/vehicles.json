@@ -45,7 +45,14 @@
     "add": "Hinzufügen",
     "resetFilters": "Filter zurücksetzen",
     "linkTransaction": "Mit Transaktion verknüpfen",
-    "unlinkTransaction": "Von Transaktion trennen"
+    "unlinkTransaction": "Von Transaktion trennen",
+    "filterStartDate": "Datum von",
+    "filterEndDate": "Datum bis"
+  },
+  "spendingTypes": {
+    "fuel": "Kraftstoff",
+    "equipment": "Ausrüstung",
+    "maintenance": "Wartung"
   },
   "tabs": {
     "overview": "Übersicht",

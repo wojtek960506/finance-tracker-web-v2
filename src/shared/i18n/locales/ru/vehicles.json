@@ -45,7 +45,14 @@
     "add": "Добавить",
     "resetFilters": "Сбросить фильтры",
     "linkTransaction": "Связать с транзакцией",
-    "unlinkTransaction": "Отвязать от транзакции"
+    "unlinkTransaction": "Отвязать от транзакции",
+    "filterStartDate": "Дата с",
+    "filterEndDate": "Дата по"
+  },
+  "spendingTypes": {
+    "fuel": "Топливо",
+    "equipment": "Оснащение",
+    "maintenance": "Обслуживание"
   },
   "tabs": {
     "overview": "Обзор",
