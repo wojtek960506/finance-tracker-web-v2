@@ -225,6 +225,7 @@ flowchart TD
 - [x] **Step 1B: Reusable Table Shell Cursor Pagination (Completed)**
   - Extended `VehicleTableShell` with responsive hybrid footer: separate counter and action on mobile to avoid line-wrapping, unified centered `sm:max-w-sm` button on desktop (`actions.loadMoreWithCount`).
   - Added instant 0ms optimistic loading feedback on click with animated spinner and `try...finally` promise resolution.
+  - Extracted pagination UI and state into standalone modular `VehiclePaginationFooter` component with full unit test coverage.
   - Added unit test suite covering footer display, counter rendering, optimistic feedback, and all-loaded states.
 - [x] **Step 1C: Infinite Query Hooks (Completed)**
   - Migrated `useFuelEntries`, `useEquipment`, and `useMaintenance` to `useInfiniteQuery` without backward-compatibility shims.
