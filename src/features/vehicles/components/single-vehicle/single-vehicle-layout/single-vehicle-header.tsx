@@ -52,7 +52,11 @@ export const SingleVehicleHeader = ({
           variant="ghost"
           onClick={onToggleMobileNav}
           className="p-1.5 text-text-muted hover:text-fg"
-          aria-label={isMobileNavOpen ? 'Close navigation' : 'Open navigation'}
+          aria-label={
+            isMobileNavOpen
+              ? t('singleVehicle.closeNavigation')
+              : t('singleVehicle.openNavigation')
+          }
           data-testid="single-vehicle-mobile-nav-toggle"
         >
           {isMobileNavOpen ? <X className="size-5" /> : <Menu className="size-5" />}

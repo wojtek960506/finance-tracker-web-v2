@@ -59,7 +59,7 @@ export const FuelMobileCard = ({
                 'font-semibold text-amber-500',
               )}
             >
-              Full
+              {t('fuelPage.table.fullTankBadge')}
             </span>
           )}
           <VehicleItemActions

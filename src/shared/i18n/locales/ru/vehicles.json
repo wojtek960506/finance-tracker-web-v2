@@ -67,7 +67,9 @@
     "notFoundDescription": "Не удалось найти запрашиваемое транспортное средство. Возможно, оно было удалено или ссылка неверна.",
     "backToVehicles": "Назад ко всем автомобилям",
     "editVehicle": "Редактировать транспорт",
-    "deleteVehicle": "Удалить транспорт"
+    "deleteVehicle": "Удалить транспорт",
+    "openNavigation": "Открыть навигацию",
+    "closeNavigation": "Закрыть навигацию"
   },
   "modals": {
     "createTitle": "Добавить транспорт",
@@ -174,7 +176,8 @@
       "consumption": "Расход",
       "costPerKm": "Стоимость/км",
       "station": "АЗС",
-      "actions": "Действия"
+      "actions": "Действия",
+      "fullTankBadge": "Полный"
     },
     "empty": {
       "title": "Нет записей о заправках",

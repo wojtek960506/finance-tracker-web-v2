@@ -67,7 +67,9 @@
     "notFoundDescription": "Nie znaleziono żądanego pojazdu. Być może został usunięty lub link jest niepoprawny.",
     "backToVehicles": "Powrót do wszystkich pojazdów",
     "editVehicle": "Edytuj pojazd",
-    "deleteVehicle": "Usuń pojazd"
+    "deleteVehicle": "Usuń pojazd",
+    "openNavigation": "Otwórz nawigację",
+    "closeNavigation": "Zamknij nawigację"
   },
   "modals": {
     "createTitle": "Dodaj pojazd",
@@ -174,7 +176,8 @@
       "consumption": "Spalanie",
       "costPerKm": "Koszt/km",
       "station": "Stacja paliw",
-      "actions": "Opcje"
+      "actions": "Opcje",
+      "fullTankBadge": "Do pełna"
     },
     "empty": {
       "title": "Brak wpisów tankowania",

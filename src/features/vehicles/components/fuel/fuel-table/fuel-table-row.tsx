@@ -21,7 +21,7 @@ export const FuelTableRow = ({
   onLink,
   onUnlink,
 }: FuelTableRowProps) => {
-  const { i18n } = useTranslation('vehicles');
+  const { t, i18n } = useTranslation('vehicles');
   const lang = i18n.language;
 
   return (
@@ -51,7 +51,7 @@ export const FuelTableRow = ({
                 'font-semibold text-amber-500',
               )}
             >
-              Full
+              {t('fuelPage.table.fullTankBadge')}
             </span>
           )}
         </div>

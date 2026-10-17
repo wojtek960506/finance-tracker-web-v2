@@ -67,7 +67,9 @@
     "notFoundDescription": "We could not find the requested vehicle. It may have been removed or the link is incorrect.",
     "backToVehicles": "Back to all vehicles",
     "editVehicle": "Edit Vehicle",
-    "deleteVehicle": "Delete Vehicle"
+    "deleteVehicle": "Delete Vehicle",
+    "openNavigation": "Open navigation",
+    "closeNavigation": "Close navigation"
   },
   "modals": {
     "createTitle": "Add Vehicle",
@@ -174,7 +176,8 @@
       "consumption": "Consumption",
       "costPerKm": "Cost/km",
       "station": "Gas Station",
-      "actions": "Actions"
+      "actions": "Actions",
+      "fullTankBadge": "Full"
     },
     "empty": {
       "title": "No refueling entries",

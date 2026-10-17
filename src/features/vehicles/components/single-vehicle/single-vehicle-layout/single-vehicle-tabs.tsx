@@ -73,8 +73,8 @@ export const SingleVehicleTabs = ({
         <nav
           aria-label="Vehicle mobile sub-navigation"
           className={clsx(
-            'flex flex-col gap-1 rounded-2xl border border-border bg-card-bg p-2',
-            'shadow-sm sm:hidden',
+            'flex flex-col gap-1 rounded-2xl border border-border bg-card-bg/95 p-2',
+            'backdrop-blur-md shadow-sm sm:hidden',
           )}
           data-testid="single-vehicle-mobile-nav"
         >

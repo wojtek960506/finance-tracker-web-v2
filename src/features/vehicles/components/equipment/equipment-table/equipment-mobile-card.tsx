@@ -43,6 +43,7 @@ export const EquipmentMobileCard = ({
         </div>
 
         <VehicleItemActions
+          mode="dropdown"
           onEdit={onEdit}
           onDelete={onDelete}
           onLink={onLink}

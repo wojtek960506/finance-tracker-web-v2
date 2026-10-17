@@ -67,7 +67,9 @@
     "notFoundDescription": "Das angeforderte Fahrzeug konnte nicht gefunden werden. Es wurde möglicherweise gelöscht oder der Link ist ungültig.",
     "backToVehicles": "Zurück zu allen Fahrzeugen",
     "editVehicle": "Fahrzeug bearbeiten",
-    "deleteVehicle": "Fahrzeug löschen"
+    "deleteVehicle": "Fahrzeug löschen",
+    "openNavigation": "Navigation öffnen",
+    "closeNavigation": "Navigation schließen"
   },
   "modals": {
     "createTitle": "Fahrzeug hinzufügen",
@@ -174,7 +176,8 @@
       "consumption": "Verbrauch",
       "costPerKm": "Kosten/km",
       "station": "Tankstelle",
-      "actions": "Aktionen"
+      "actions": "Aktionen",
+      "fullTankBadge": "Voll"
     },
     "empty": {
       "title": "Keine Tankeinträge vorhanden",
