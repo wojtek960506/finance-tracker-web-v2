@@ -1,11 +1,7 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteMaintenance, type VehicleMaintenance } from '@vehicles/api';
 import { DeleteVehicleRecordModal } from '@vehicles/components/common';
-import { vehiclesQueryKeys } from '@vehicles/consts';
+import { useDeleteVehicleRecordMutation } from '@vehicles/hooks';
 import { useTranslation } from 'react-i18next';
-
-import { normalizeApiError } from '@shared/api/api-error';
-import { useToastStore } from '@store/toast-store';
 
 import { MaintenanceSectionBadge } from '../maintenance-section-badge';
 
@@ -25,31 +21,16 @@ export const DeleteMaintenanceModal = ({
   onSuccess,
 }: DeleteMaintenanceModalProps) => {
   const { t } = useTranslation('vehicles');
-  const queryClient = useQueryClient();
-  const pushToast = useToastStore((state) => state.pushToast);
 
-  const deleteMutation = useMutation({
+  const deleteMutation = useDeleteVehicleRecordMutation({
     mutationFn: async () => {
       if (!item) throw new Error('No item selected');
       return await deleteMaintenance(vehicleId, item.id);
     },
-    onSuccess: () => {
-      void queryClient.invalidateQueries({ queryKey: vehiclesQueryKeys.all });
-      pushToast({
-        variant: 'success',
-        title: t('maintenancePage.toasts.deletedTitle'),
-      });
-      onClose();
-      onSuccess?.();
-    },
-    onError: (error) => {
-      const apiError = normalizeApiError(error);
-      pushToast({
-        variant: 'error',
-        title: t('maintenancePage.toasts.deleteErrorTitle'),
-        message: apiError.message,
-      });
-    },
+    successTitle: t('maintenancePage.toasts.deletedTitle'),
+    errorTitle: t('maintenancePage.toasts.deleteErrorTitle'),
+    onClose,
+    onSuccess,
   });
 
   if (!item) return null;
@@ -58,7 +39,7 @@ export const DeleteMaintenanceModal = ({
     <DeleteVehicleRecordModal
       isOpen={isOpen}
       onClose={onClose}
-      onConfirm={() => deleteMutation.mutateAsync()}
+      onConfirm={() => deleteMutation.mutate()}
       isPending={deleteMutation.isPending}
       title={t('maintenancePage.modals.deleteTitle')}
       prompt={t('maintenancePage.modals.deletePrompt')}

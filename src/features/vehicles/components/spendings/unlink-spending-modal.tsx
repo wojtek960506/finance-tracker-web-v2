@@ -28,10 +28,12 @@ export const UnlinkSpendingModal = ({
   const typeConfig = SPENDING_TYPE_CONFIG[target.type];
   const TypeIcon = typeConfig.icon;
 
-  const handleConfirm = async () => {
-    await unlinkSpending({
+  const handleConfirm = () => {
+    void unlinkSpending({
       spendingType: target.type,
       spendingId: target.id,
+    }).catch(() => {
+      // Error handled by useSpendingLinking toast
     });
   };
 

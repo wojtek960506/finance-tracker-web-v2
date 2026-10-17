@@ -1,11 +1,7 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteFuelEntry, type VehicleFuelEntryEnriched } from '@vehicles/api';
 import { DeleteVehicleRecordModal } from '@vehicles/components/common';
-import { vehiclesQueryKeys } from '@vehicles/consts';
+import { useDeleteVehicleRecordMutation } from '@vehicles/hooks';
 import { useTranslation } from 'react-i18next';
-
-import { normalizeApiError } from '@shared/api/api-error';
-import { useToastStore } from '@store/toast-store';
 
 export type DeleteFuelEntryModalProps = {
   vehicleId: string;
@@ -23,31 +19,16 @@ export const DeleteFuelEntryModal = ({
   onSuccess,
 }: DeleteFuelEntryModalProps) => {
   const { t } = useTranslation('vehicles');
-  const queryClient = useQueryClient();
-  const pushToast = useToastStore((state) => state.pushToast);
 
-  const deleteMutation = useMutation({
+  const deleteMutation = useDeleteVehicleRecordMutation({
     mutationFn: async () => {
       if (!entry) throw new Error('No entry selected');
       return await deleteFuelEntry(vehicleId, entry.id);
     },
-    onSuccess: () => {
-      void queryClient.invalidateQueries({ queryKey: vehiclesQueryKeys.all });
-      pushToast({
-        variant: 'success',
-        title: t('fuelPage.toasts.deletedTitle'),
-      });
-      onClose();
-      onSuccess?.();
-    },
-    onError: (error) => {
-      const apiError = normalizeApiError(error);
-      pushToast({
-        variant: 'error',
-        title: t('fuelPage.toasts.deleteErrorTitle'),
-        message: apiError.message,
-      });
-    },
+    successTitle: t('fuelPage.toasts.deletedTitle'),
+    errorTitle: t('fuelPage.toasts.deleteErrorTitle'),
+    onClose,
+    onSuccess,
   });
 
   if (!entry) return null;
@@ -56,7 +37,7 @@ export const DeleteFuelEntryModal = ({
     <DeleteVehicleRecordModal
       isOpen={isOpen}
       onClose={onClose}
-      onConfirm={() => deleteMutation.mutateAsync()}
+      onConfirm={() => deleteMutation.mutate()}
       isPending={deleteMutation.isPending}
       title={t('fuelPage.modals.deleteTitle')}
       prompt={t('fuelPage.modals.deletePrompt')}

@@ -1,11 +1,7 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteEquipment, type VehicleEquipment } from '@vehicles/api';
 import { DeleteVehicleRecordModal } from '@vehicles/components/common';
-import { vehiclesQueryKeys } from '@vehicles/consts';
+import { useDeleteVehicleRecordMutation } from '@vehicles/hooks';
 import { useTranslation } from 'react-i18next';
-
-import { normalizeApiError } from '@shared/api/api-error';
-import { useToastStore } from '@store/toast-store';
 
 export type DeleteEquipmentModalProps = {
   vehicleId: string;
@@ -23,31 +19,16 @@ export const DeleteEquipmentModal = ({
   onSuccess,
 }: DeleteEquipmentModalProps) => {
   const { t } = useTranslation('vehicles');
-  const queryClient = useQueryClient();
-  const pushToast = useToastStore((state) => state.pushToast);
 
-  const deleteMutation = useMutation({
+  const deleteMutation = useDeleteVehicleRecordMutation({
     mutationFn: async () => {
       if (!item) throw new Error('No item selected');
       return await deleteEquipment(vehicleId, item.id);
     },
-    onSuccess: () => {
-      void queryClient.invalidateQueries({ queryKey: vehiclesQueryKeys.all });
-      pushToast({
-        variant: 'success',
-        title: t('equipmentPage.toasts.deletedTitle'),
-      });
-      onClose();
-      onSuccess?.();
-    },
-    onError: (error) => {
-      const apiError = normalizeApiError(error);
-      pushToast({
-        variant: 'error',
-        title: t('equipmentPage.toasts.deleteErrorTitle'),
-        message: apiError.message,
-      });
-    },
+    successTitle: t('equipmentPage.toasts.deletedTitle'),
+    errorTitle: t('equipmentPage.toasts.deleteErrorTitle'),
+    onClose,
+    onSuccess,
   });
 
   if (!item) return null;
@@ -56,7 +37,7 @@ export const DeleteEquipmentModal = ({
     <DeleteVehicleRecordModal
       isOpen={isOpen}
       onClose={onClose}
-      onConfirm={() => deleteMutation.mutateAsync()}
+      onConfirm={() => deleteMutation.mutate()}
       isPending={deleteMutation.isPending}
       title={t('equipmentPage.modals.deleteTitle')}
       prompt={t('equipmentPage.modals.deletePrompt')}

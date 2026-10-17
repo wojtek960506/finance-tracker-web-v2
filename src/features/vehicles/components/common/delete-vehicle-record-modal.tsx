@@ -6,7 +6,7 @@ import { Button, type ButtonVariant, Modal } from '@shared/ui';
 export type DeleteVehicleRecordModalProps = {
   isOpen: boolean;
   onClose: () => void;
-  onConfirm: () => Promise<void> | void;
+  onConfirm: () => void;
   isPending: boolean;
   title: string;
   prompt: string;
@@ -62,7 +62,7 @@ export const DeleteVehicleRecordModal = ({
           <Button
             type="button"
             variant={confirmVariant}
-            onClick={() => void onConfirm()}
+            onClick={onConfirm}
             disabled={isPending}
             data-testid={`confirm-delete-${testIdPrefix}-button`}
           >
