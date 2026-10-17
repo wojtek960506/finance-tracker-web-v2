@@ -49,8 +49,10 @@
     "filterStartDate": "Дата с",
     "filterEndDate": "Дата по",
     "loadMore": "Загрузить еще",
+    "loadMoreWithCount": "Загрузить еще ({{loaded}} из {{total}})",
     "loadingMore": "Загрузка...",
-    "showingCount": "Показано {{loaded}} из {{total}} записей"
+    "showingCount": "Показано {{loaded}} из {{total}} записей",
+    "showingAll": "Показаны все {{total}} записей"
   },
   "spendingTypes": {
     "fuel": "Топливо",

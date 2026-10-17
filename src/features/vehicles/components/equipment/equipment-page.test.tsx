@@ -299,4 +299,28 @@ describe('VehiclesEquipmentContent', () => {
 
     expect(screen.getByTestId('delete-unlink-spending-modal')).toBeInTheDocument();
   });
+
+  it('renders pagination footer and calls fetchNextPage on load more click', () => {
+    const fetchNextPage = vi.fn();
+    vi.spyOn(vehiclesHooks, 'useEquipment').mockReturnValue({
+      data: createMockInfiniteData({
+        ...mockEquipmentResponse,
+        pagination: { nextCursor: 'c-eq-2', hasMore: true, total: 60 },
+      }),
+      isLoading: false,
+      isFetching: false,
+      isError: false,
+      error: null,
+      refetch: vi.fn(),
+      hasNextPage: true,
+      isFetchingNextPage: false,
+      fetchNextPage,
+    } as unknown as ReturnType<typeof vehiclesHooks.useEquipment>);
+
+    renderEquipmentPage();
+    const loadMoreBtn = screen.getByTestId('equipment-entries-list-load-more-button');
+    expect(loadMoreBtn).toBeInTheDocument();
+    fireEvent.click(loadMoreBtn);
+    expect(fetchNextPage).toHaveBeenCalledTimes(1);
+  });
 });

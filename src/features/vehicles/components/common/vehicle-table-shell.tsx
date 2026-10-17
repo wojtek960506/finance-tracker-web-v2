@@ -1,4 +1,5 @@
-import type { ReactNode } from 'react';
+import { Loader2 } from 'lucide-react';
+import { type ReactNode, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { Button, Card } from '@shared/ui';
@@ -12,7 +13,7 @@ export type VehicleTableShellProps = {
   mobileCards: ReactNode;
   hasNextPage?: boolean;
   isFetchingNextPage?: boolean;
-  fetchNextPage?: () => void;
+  fetchNextPage?: () => void | Promise<unknown>;
   totalCount?: number;
   loadedCount?: number;
 };
@@ -31,7 +32,8 @@ export const VehicleTableShell = ({
   loadedCount,
 }: VehicleTableShellProps) => {
   const { t } = useTranslation('vehicles');
-  const { t: tCommon } = useTranslation('common');
+
+  const [isOptimisticLoading, setIsOptimisticLoading] = useState(false);
 
   if (isEmpty) {
     return <>{emptyState}</>;
@@ -41,6 +43,17 @@ export const VehicleTableShell = ({
     hasNextPage ||
     (totalCount !== undefined && loadedCount !== undefined && totalCount > 0),
   );
+
+  const isLoadingMore = Boolean(isFetchingNextPage || isOptimisticLoading);
+
+  const handleLoadMore = async () => {
+    setIsOptimisticLoading(true);
+    try {
+      await fetchNextPage?.();
+    } finally {
+      setIsOptimisticLoading(false);
+    }
+  };
 
   return (
     <div className="flex flex-col gap-3" data-testid={testId}>
@@ -62,14 +75,11 @@ export const VehicleTableShell = ({
       {/* Pagination / Cursor Load More Footer */}
       {showFooter && (
         <div
-          className={
-            'flex flex-col items-center justify-between gap-3 pt-1 ' +
-            'sm:flex-row text-xs text-text-muted'
-          }
+          className="flex flex-col items-center justify-center gap-2 pt-1 text-xs text-text-muted"
           data-testid={`${testId}-pagination-footer`}
         >
-          {totalCount !== undefined && loadedCount !== undefined && (
-            <span data-testid={`${testId}-counter`}>
+          {hasNextPage && totalCount !== undefined && loadedCount !== undefined && (
+            <span className="sm:hidden" data-testid={`${testId}-counter`}>
               {t('actions.showingCount', {
                 loaded: loadedCount,
                 total: totalCount,
@@ -81,13 +91,41 @@ export const VehicleTableShell = ({
             <Button
               type="button"
               variant="secondary"
-              onClick={fetchNextPage}
-              disabled={isFetchingNextPage}
-              className="w-full sm:w-auto"
+              onClick={handleLoadMore}
+              disabled={isLoadingMore}
+              className="w-full sm:max-w-sm sm:mx-auto"
               data-testid={`${testId}-load-more-button`}
             >
-              {isFetchingNextPage ? tCommon('loading') : t('actions.loadMore')}
+              {isLoadingMore && (
+                <Loader2
+                  className="mr-2 h-3.5 w-3.5 animate-spin"
+                  data-testid={`${testId}-load-more-spinner`}
+                />
+              )}
+              {isLoadingMore ? (
+                t('actions.loadingMore')
+              ) : (
+                <>
+                  <span className="sm:hidden">{t('actions.loadMore')}</span>
+                  <span className="hidden sm:inline">
+                    {totalCount !== undefined && loadedCount !== undefined
+                      ? t('actions.loadMoreWithCount', {
+                          loaded: loadedCount,
+                          total: totalCount,
+                        })
+                      : t('actions.loadMore')}
+                  </span>
+                </>
+              )}
             </Button>
+          )}
+
+          {!hasNextPage && totalCount !== undefined && loadedCount !== undefined && (
+            <span data-testid={`${testId}-counter`}>
+              {t('actions.showingAll', {
+                total: totalCount,
+              })}
+            </span>
           )}
         </div>
       )}

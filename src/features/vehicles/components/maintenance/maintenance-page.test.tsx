@@ -361,4 +361,28 @@ describe('VehiclesMaintenanceContent', () => {
 
     expect(screen.getByTestId('delete-unlink-spending-modal')).toBeInTheDocument();
   });
+
+  it('renders pagination footer and calls fetchNextPage on load more click', () => {
+    const fetchNextPage = vi.fn();
+    vi.spyOn(vehiclesHooks, 'useMaintenance').mockReturnValue({
+      data: createMockInfiniteData({
+        ...mockMaintenanceResponse,
+        pagination: { nextCursor: 'c-m-2', hasMore: true, total: 80 },
+      }),
+      isLoading: false,
+      isFetching: false,
+      isError: false,
+      error: null,
+      refetch: vi.fn(),
+      hasNextPage: true,
+      isFetchingNextPage: false,
+      fetchNextPage,
+    } as unknown as ReturnType<typeof vehiclesHooks.useMaintenance>);
+
+    renderMaintenancePage();
+    const loadMoreBtn = screen.getByTestId('maintenance-entries-list-load-more-button');
+    expect(loadMoreBtn).toBeInTheDocument();
+    fireEvent.click(loadMoreBtn);
+    expect(fetchNextPage).toHaveBeenCalledTimes(1);
+  });
 });

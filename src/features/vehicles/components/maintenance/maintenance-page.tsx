@@ -67,10 +67,16 @@ export const VehiclesMaintenanceContent = () => {
     return q;
   }, [activeSection, filters.startDate, filters.endDate]);
 
-  const { data, isLoading, isError, error, refetch } = useMaintenance(
-    vehicle.id,
-    queryParams,
-  );
+  const {
+    data,
+    isLoading,
+    isError,
+    error,
+    refetch,
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage,
+  } = useMaintenance(vehicle.id, queryParams);
 
   const items = useMemo(() => data?.pages.flatMap((page) => page.items) ?? [], [data]);
   const summary = data?.pages[0]?.summary;
@@ -136,6 +142,11 @@ export const VehiclesMaintenanceContent = () => {
         onLinkItem={(item) => openLink(maintenanceToSpendingTarget(item))}
         onUnlinkItem={(item) => openUnlink(maintenanceToSpendingTarget(item))}
         onAddFirstItem={openCreate}
+        hasNextPage={hasNextPage}
+        isFetchingNextPage={isFetchingNextPage}
+        fetchNextPage={fetchNextPage}
+        totalCount={data?.pages[0]?.pagination.total}
+        loadedCount={items.length}
       />
 
       {/* CRUD Modals */}

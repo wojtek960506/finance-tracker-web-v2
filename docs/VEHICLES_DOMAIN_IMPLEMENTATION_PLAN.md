@@ -223,12 +223,14 @@ flowchart TD
   - Configured `DEFAULT_PAGE_LIMIT = 50` in `src/features/vehicles/consts.ts`.
   - Added `loadMore`, `loadingMore`, and `showingCount` keys across all 4 locales (`en`, `pl`, `de`, `ru`).
 - [x] **Step 1B: Reusable Table Shell Cursor Pagination (Completed)**
-  - Extended `VehicleTableShell` with progress counter and "Load More" action button.
-  - Added unit test suite covering footer display, counter rendering, and load more button interactions.
+  - Extended `VehicleTableShell` with responsive hybrid footer: separate counter and action on mobile to avoid line-wrapping, unified centered `sm:max-w-sm` button on desktop (`actions.loadMoreWithCount`).
+  - Added instant 0ms optimistic loading feedback on click with animated spinner and `try...finally` promise resolution.
+  - Added unit test suite covering footer display, counter rendering, optimistic feedback, and all-loaded states.
 - [x] **Step 1C: Infinite Query Hooks (Completed)**
   - Migrated `useFuelEntries`, `useEquipment`, and `useMaintenance` to `useInfiniteQuery` without backward-compatibility shims.
   - Flattened pages in feature views (`data?.pages.flatMap(...)`).
-- [ ] **Step 1D: Wire Cursor Props to Table Views & Pages**
-  - Pass infinite pagination props to Fuel, Equipment, and Maintenance table components and pages.
+- [x] **Step 1D: Wire Cursor Props to Table Views & Pages (Completed)**
+  - Connected `hasNextPage`, `isFetchingNextPage`, `fetchNextPage`, `totalCount`, and `loadedCount` through `FuelTable`, `EquipmentTable`, and `MaintenanceTable` to `VehicleTableShell`.
+  - Added unit test coverage for pagination footer rendering and `fetchNextPage` click triggers across all three page suites.
 - [ ] **Step 2: DOM & Rendering Virtualization / Optimization**
   - Apply `content-visibility: auto` and `contain-intrinsic-size` to table rows and mobile card containers.

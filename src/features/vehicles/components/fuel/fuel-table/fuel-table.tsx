@@ -14,6 +14,11 @@ export const FuelTable = ({
   onLinkEntry,
   onUnlinkEntry,
   onAddFirstEntry,
+  hasNextPage,
+  isFetchingNextPage,
+  fetchNextPage,
+  totalCount,
+  loadedCount,
 }: FuelTableProps) => {
   const { t } = useTranslation('vehicles');
 
@@ -24,6 +29,11 @@ export const FuelTable = ({
         <FuelEmptyState hasFilters={hasFilters} onAddFirstEntry={onAddFirstEntry} />
       }
       testId="fuel-entries-list"
+      hasNextPage={hasNextPage}
+      isFetchingNextPage={isFetchingNextPage}
+      fetchNextPage={fetchNextPage}
+      totalCount={totalCount}
+      loadedCount={loadedCount}
       headers={
         <>
           <th className="px-3 py-2.5 font-medium">{t('fuelPage.table.date')}</th>

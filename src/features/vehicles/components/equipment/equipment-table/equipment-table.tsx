@@ -14,6 +14,11 @@ export const EquipmentTable = ({
   onLinkItem,
   onUnlinkItem,
   onAddFirstItem,
+  hasNextPage,
+  isFetchingNextPage,
+  fetchNextPage,
+  totalCount,
+  loadedCount,
 }: EquipmentTableProps) => {
   const { t } = useTranslation('vehicles');
 
@@ -24,6 +29,11 @@ export const EquipmentTable = ({
         <EquipmentEmptyState hasFilters={hasFilters} onAddFirstItem={onAddFirstItem} />
       }
       testId="equipment-entries-list"
+      hasNextPage={hasNextPage}
+      isFetchingNextPage={isFetchingNextPage}
+      fetchNextPage={fetchNextPage}
+      totalCount={totalCount}
+      loadedCount={loadedCount}
       headers={
         <>
           <th className="px-3 py-2.5 font-medium">{t('equipmentPage.table.date')}</th>

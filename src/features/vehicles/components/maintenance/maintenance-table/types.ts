@@ -9,6 +9,11 @@ export type MaintenanceTableProps = {
   onLinkItem?: (item: VehicleMaintenance) => void;
   onUnlinkItem?: (item: VehicleMaintenance) => void;
   onAddFirstItem: () => void;
+  hasNextPage?: boolean;
+  isFetchingNextPage?: boolean;
+  fetchNextPage?: () => void | Promise<unknown>;
+  totalCount?: number;
+  loadedCount?: number;
 };
 
 export type MaintenanceTableRowProps = {

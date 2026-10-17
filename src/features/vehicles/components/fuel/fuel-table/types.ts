@@ -8,6 +8,11 @@ export type FuelTableProps = {
   onLinkEntry?: (entry: VehicleFuelEntryEnriched) => void;
   onUnlinkEntry?: (entry: VehicleFuelEntryEnriched) => void;
   onAddFirstEntry: () => void;
+  hasNextPage?: boolean;
+  isFetchingNextPage?: boolean;
+  fetchNextPage?: () => void | Promise<unknown>;
+  totalCount?: number;
+  loadedCount?: number;
 };
 
 export type FuelTableRowProps = {

@@ -57,10 +57,16 @@ export const VehiclesEquipmentContent = () => {
     return Object.keys(q).length > 0 ? q : undefined;
   }, [filters.startDate, filters.endDate]);
 
-  const { data, isLoading, isError, error, refetch } = useEquipment(
-    vehicle.id,
-    queryParams,
-  );
+  const {
+    data,
+    isLoading,
+    isError,
+    error,
+    refetch,
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage,
+  } = useEquipment(vehicle.id, queryParams);
 
   const items = useMemo(() => data?.pages.flatMap((page) => page.items) ?? [], [data]);
   const summary = data?.pages[0]?.summary;
@@ -115,6 +121,11 @@ export const VehiclesEquipmentContent = () => {
         onLinkItem={(item) => openLink(equipmentToSpendingTarget(item))}
         onUnlinkItem={(item) => openUnlink(equipmentToSpendingTarget(item))}
         onAddFirstItem={openCreate}
+        hasNextPage={hasNextPage}
+        isFetchingNextPage={isFetchingNextPage}
+        fetchNextPage={fetchNextPage}
+        totalCount={data?.pages[0]?.pagination.total}
+        loadedCount={items.length}
       />
 
       {/* CRUD Modals */}

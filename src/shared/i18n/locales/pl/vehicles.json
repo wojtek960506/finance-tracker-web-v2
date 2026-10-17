@@ -49,8 +49,10 @@
     "filterStartDate": "Data od",
     "filterEndDate": "Data do",
     "loadMore": "Załaduj więcej",
+    "loadMoreWithCount": "Załaduj więcej ({{loaded}} z {{total}})",
     "loadingMore": "Ładowanie...",
-    "showingCount": "Wyświetlono {{loaded}} z {{total}} wpisów"
+    "showingCount": "Wyświetlono {{loaded}} z {{total}} wpisów",
+    "showingAll": "Wyświetlono wszystkie {{total}} wpisów"
   },
   "spendingTypes": {
     "fuel": "Paliwo",

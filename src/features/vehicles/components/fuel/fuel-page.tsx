@@ -52,10 +52,16 @@ export const VehiclesFuelContent = () => {
     vehicleName: vehicle.name,
   });
 
-  const { data, isLoading, isError, error, refetch } = useFuelEntries(
-    vehicle.id,
-    filters,
-  );
+  const {
+    data,
+    isLoading,
+    isError,
+    error,
+    refetch,
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage,
+  } = useFuelEntries(vehicle.id, filters);
 
   const entries = useMemo(() => data?.pages.flatMap((page) => page.items) ?? [], [data]);
   const summary = data?.pages[0]?.summary;
@@ -100,6 +106,11 @@ export const VehiclesFuelContent = () => {
         onLinkEntry={(entry) => openLink(fuelToSpendingTarget(entry))}
         onUnlinkEntry={(entry) => openUnlink(fuelToSpendingTarget(entry))}
         onAddFirstEntry={openCreate}
+        hasNextPage={hasNextPage}
+        isFetchingNextPage={isFetchingNextPage}
+        fetchNextPage={fetchNextPage}
+        totalCount={data?.pages[0]?.pagination.total}
+        loadedCount={entries.length}
       />
 
       {/* CRUD Modals */}

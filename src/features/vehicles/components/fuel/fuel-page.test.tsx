@@ -274,4 +274,28 @@ describe('VehiclesFuelContent', () => {
     fireEvent.click(unlinkBtn);
     expect(screen.getByTestId('delete-unlink-spending-modal')).toBeInTheDocument();
   });
+
+  it('renders pagination footer and calls fetchNextPage on load more click', () => {
+    const fetchNextPage = vi.fn();
+    vi.spyOn(vehiclesHooks, 'useFuelEntries').mockReturnValue({
+      data: createMockInfiniteData({
+        ...mockFuelResponse,
+        pagination: { nextCursor: 'c-2', hasMore: true, total: 100 },
+      }),
+      isLoading: false,
+      isFetching: false,
+      isError: false,
+      error: null,
+      refetch: vi.fn(),
+      hasNextPage: true,
+      isFetchingNextPage: false,
+      fetchNextPage,
+    } as unknown as ReturnType<typeof vehiclesHooks.useFuelEntries>);
+
+    renderFuelPage();
+    const loadMoreBtn = screen.getByTestId('fuel-entries-list-load-more-button');
+    expect(loadMoreBtn).toBeInTheDocument();
+    fireEvent.click(loadMoreBtn);
+    expect(fetchNextPage).toHaveBeenCalledTimes(1);
+  });
 });

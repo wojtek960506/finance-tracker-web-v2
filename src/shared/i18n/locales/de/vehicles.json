@@ -49,8 +49,10 @@
     "filterStartDate": "Datum von",
     "filterEndDate": "Datum bis",
     "loadMore": "Mehr laden",
+    "loadMoreWithCount": "Mehr laden ({{loaded}} von {{total}})",
     "loadingMore": "Wird geladen...",
-    "showingCount": "Zeigt {{loaded}} von {{total}} Einträgen"
+    "showingCount": "Zeigt {{loaded}} von {{total}} Einträgen",
+    "showingAll": "Alle {{total}} Einträge angezeigt"
   },
   "spendingTypes": {
     "fuel": "Kraftstoff",

@@ -49,8 +49,10 @@
     "filterStartDate": "From Date",
     "filterEndDate": "To Date",
     "loadMore": "Load More",
+    "loadMoreWithCount": "Load more ({{loaded}} of {{total}})",
     "loadingMore": "Loading more...",
-    "showingCount": "Showing {{loaded}} of {{total}} records"
+    "showingCount": "Showing {{loaded}} of {{total}} records",
+    "showingAll": "Showing all {{total}} records"
   },
   "spendingTypes": {
     "fuel": "Fuel",

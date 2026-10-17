@@ -15,6 +15,11 @@ export const MaintenanceTable = ({
   onLinkItem,
   onUnlinkItem,
   onAddFirstItem,
+  hasNextPage,
+  isFetchingNextPage,
+  fetchNextPage,
+  totalCount,
+  loadedCount,
 }: MaintenanceTableProps) => {
   const { t } = useTranslation('vehicles');
 
@@ -29,6 +34,11 @@ export const MaintenanceTable = ({
         />
       }
       testId="maintenance-entries-list"
+      hasNextPage={hasNextPage}
+      isFetchingNextPage={isFetchingNextPage}
+      fetchNextPage={fetchNextPage}
+      totalCount={totalCount}
+      loadedCount={loadedCount}
       headers={
         <>
           <th className="px-3 py-2.5 font-medium">{t('maintenancePage.table.date')}</th>

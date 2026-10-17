@@ -8,6 +8,11 @@ export type EquipmentTableProps = {
   onLinkItem?: (item: VehicleEquipment) => void;
   onUnlinkItem?: (item: VehicleEquipment) => void;
   onAddFirstItem: () => void;
+  hasNextPage?: boolean;
+  isFetchingNextPage?: boolean;
+  fetchNextPage?: () => void | Promise<unknown>;
+  totalCount?: number;
+  loadedCount?: number;
 };
 
 export type EquipmentTableRowProps = {
