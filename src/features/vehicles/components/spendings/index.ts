@@ -1,10 +1,19 @@
-export * from './link-spending-modal';
-export * from './spending-cost-cell';
-export * from './spending-modals';
-export * from './spending-transaction-badge';
-export * from './transaction-combobox';
-export * from './types';
-export * from './unlink-spending-modal';
-export * from './use-spending-linking';
-export * from './use-spending-modal-state';
-export * from './utils';
+export {
+  SpendingCostCell,
+  type SpendingCostCellProps,
+  SpendingCostDisplay,
+  type SpendingCostDisplayProps,
+  SpendingCostRow,
+  type SpendingCostRowProps,
+} from './spending-cost-cell';
+export { SpendingModals, type SpendingModalsProps } from './spending-modals';
+export {
+  SpendingTransactionBadge,
+  type SpendingTransactionBadgeProps,
+} from './spending-transaction-badge';
+export type { CategoryFilterOption, DateFilterOption, SpendingTarget } from './types';
+export {
+  useSpendingModalState,
+  type UseSpendingModalStateReturn,
+} from './use-spending-modal-state';
+export { formatDateOnly, getDateWindow, isTransportCategory } from './utils';
