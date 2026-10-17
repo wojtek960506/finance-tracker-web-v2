@@ -1,0 +1,388 @@
+import '@shared/i18n';
+
+import { QueryClientProvider } from '@tanstack/react-query';
+import { fireEvent, render, screen } from '@testing-library/react';
+import type {
+  Vehicle,
+  VehicleMaintenance,
+  VehicleMaintenanceWithSummaryResponse,
+} from '@vehicles/api';
+import * as vehiclesHooks from '@vehicles/hooks';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+
+import { ThemeProvider } from '@context/theme-context';
+import { createTestQueryClient } from '@test-utils/create-test-query-client';
+
+import { VehicleProvider } from '../single-vehicle/context';
+
+import { VehiclesMaintenanceContent } from './maintenance-page';
+
+const mockVehicle: Vehicle = {
+  id: 'veh-123',
+  ownerId: 'u-1',
+  name: 'Commuter Car',
+  slug: 'commuter-car',
+  brand: 'Toyota',
+  vehicleModel: 'Corolla',
+  productionYear: 2020,
+  type: 'car',
+  createdAt: '2026-01-01T00:00:00Z',
+  updatedAt: '2026-01-01T00:00:00Z',
+};
+
+const mockMaintenanceItems: VehicleMaintenance[] = [
+  {
+    id: 'maint-1',
+    ownerId: 'u-1',
+    vehicleId: 'veh-123',
+    section: 'ownMaintenance',
+    date: '2026-02-15T10:00:00Z',
+    costPln: 350,
+    odometerKm: 145000,
+    serviceProvider: 'Auto Serwis Kowalski',
+    description: 'Oil and oil filter replacement',
+    transactionId: null,
+    createdAt: '2026-02-15T10:00:00Z',
+    updatedAt: '2026-02-15T10:00:00Z',
+  },
+  {
+    id: 'maint-2',
+    ownerId: 'u-1',
+    vehicleId: 'veh-123',
+    section: 'previousOwnerServices',
+    date: '2025-11-01T12:00:00Z',
+    costPln: 1200,
+    odometerKm: 130000,
+    serviceProvider: 'ASO Toyota',
+    description: 'Timing belt kit replacement',
+    transactionId: 'tx-999',
+    createdAt: '2025-11-01T12:00:00Z',
+    updatedAt: '2025-11-01T12:00:00Z',
+  },
+];
+
+const mockMaintenanceResponse: VehicleMaintenanceWithSummaryResponse = {
+  items: mockMaintenanceItems,
+  summary: {
+    totalCostPln: 350,
+    totalRecords: 2,
+  },
+  pagination: {
+    nextCursor: null,
+    hasMore: false,
+    total: 2,
+  },
+};
+
+const createMockInfiniteData = (response: VehicleMaintenanceWithSummaryResponse) => ({
+  pages: [response],
+  pageParams: [undefined],
+});
+
+const renderMaintenancePage = () => {
+  const queryClient = createTestQueryClient();
+  return render(
+    <QueryClientProvider client={queryClient}>
+      <MemoryRouter initialEntries={['/vehicles/commuter-car/maintenance']}>
+        <ThemeProvider>
+          <VehicleProvider value={{ vehicle: mockVehicle }}>
+            <Routes>
+              <Route
+                path="/vehicles/:vehicleSlug/maintenance"
+                element={<VehiclesMaintenanceContent />}
+              />
+            </Routes>
+          </VehicleProvider>
+        </ThemeProvider>
+      </MemoryRouter>
+    </QueryClientProvider>,
+  );
+};
+
+describe('VehiclesMaintenanceContent', () => {
+  beforeEach(() => {
+    vi.restoreAllMocks();
+  });
+
+  it('renders loading state when maintenance items are fetching', () => {
+    vi.spyOn(vehiclesHooks, 'useMaintenance').mockReturnValue({
+      data: undefined,
+      isLoading: true,
+      isFetching: true,
+      isError: false,
+      error: null,
+      refetch: vi.fn(),
+    } as unknown as ReturnType<typeof vehiclesHooks.useMaintenance>);
+
+    renderMaintenancePage();
+    expect(screen.getByText(/loading vehicle/i)).toBeInTheDocument();
+  });
+
+  it('renders error state with retry button', () => {
+    const mockRefetch = vi.fn();
+    vi.spyOn(vehiclesHooks, 'useMaintenance').mockReturnValue({
+      data: undefined,
+      isLoading: false,
+      isFetching: false,
+      isError: true,
+      error: new Error('Failed to load maintenance records'),
+      refetch: mockRefetch,
+    } as unknown as ReturnType<typeof vehiclesHooks.useMaintenance>);
+
+    renderMaintenancePage();
+    expect(screen.getByTestId('vehicles-maintenance-error')).toBeInTheDocument();
+    expect(screen.getByText('Failed to load maintenance records')).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole('button', { name: /retry/i }));
+    expect(mockRefetch).toHaveBeenCalled();
+  });
+
+  it('renders summary cards, section tabs, filter bar, and entries table with data', () => {
+    vi.spyOn(vehiclesHooks, 'useMaintenance').mockReturnValue({
+      data: createMockInfiniteData(mockMaintenanceResponse),
+      isLoading: false,
+      isFetching: false,
+      isError: false,
+      error: null,
+      refetch: vi.fn(),
+    } as unknown as ReturnType<typeof vehiclesHooks.useMaintenance>);
+
+    renderMaintenancePage();
+
+    // Summary cards
+    expect(screen.getByTestId('maintenance-summary-cards')).toBeInTheDocument();
+    expect(screen.getByTestId('maintenance-summary-cost')).toHaveTextContent(
+      '350.00 PLN',
+    );
+    expect(screen.getByTestId('maintenance-summary-count')).toHaveTextContent('2');
+
+    // Section switcher
+    expect(screen.getByTestId('maintenance-section-switcher')).toBeInTheDocument();
+    expect(
+      screen.getByTestId('maintenance-section-tab-ownMaintenance'),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByTestId('maintenance-section-tab-previousOwnerServices'),
+    ).toBeInTheDocument();
+
+    // Filter bar
+    expect(screen.getByTestId('maintenance-filter-bar')).toBeInTheDocument();
+    expect(screen.getByTestId('add-maintenance-button')).toBeInTheDocument();
+
+    // Table rows
+    expect(screen.getByTestId('maintenance-row-maint-1')).toBeInTheDocument();
+    expect(screen.getByTestId('maintenance-row-maint-2')).toBeInTheDocument();
+    expect(screen.getByTestId('maintenance-row-maint-1')).toHaveTextContent(
+      'Auto Serwis Kowalski',
+    );
+    expect(screen.getByTestId('maintenance-row-maint-2')).toHaveTextContent('ASO Toyota');
+    expect(screen.getAllByTestId('linked-transaction-badge').length).toBeGreaterThan(0);
+  });
+
+  it('filters maintenance items by search term', () => {
+    vi.spyOn(vehiclesHooks, 'useMaintenance').mockReturnValue({
+      data: createMockInfiniteData(mockMaintenanceResponse),
+      isLoading: false,
+      isFetching: false,
+      isError: false,
+      error: null,
+      refetch: vi.fn(),
+    } as unknown as ReturnType<typeof vehiclesHooks.useMaintenance>);
+
+    renderMaintenancePage();
+
+    const searchInput = screen.getByTestId('maintenance-search-input');
+    fireEvent.change(searchInput, { target: { value: 'Timing belt' } });
+
+    expect(screen.getByTestId('maintenance-row-maint-2')).toBeInTheDocument();
+    expect(screen.queryByTestId('maintenance-row-maint-1')).not.toBeInTheDocument();
+  });
+
+  it('switches section tab and updates query', () => {
+    const useMaintenanceSpy = vi.spyOn(vehiclesHooks, 'useMaintenance').mockReturnValue({
+      data: createMockInfiniteData(mockMaintenanceResponse),
+      isLoading: false,
+      isFetching: false,
+      isError: false,
+      error: null,
+      refetch: vi.fn(),
+    } as unknown as ReturnType<typeof vehiclesHooks.useMaintenance>);
+
+    renderMaintenancePage();
+
+    expect(screen.getByTestId('maintenance-summary-cards')).toBeInTheDocument();
+    expect(screen.getByTestId('add-maintenance-button')).toHaveTextContent(
+      'Add Maintenance',
+    );
+
+    fireEvent.click(screen.getByTestId('maintenance-section-tab-previousOwnerServices'));
+    expect(useMaintenanceSpy).toHaveBeenCalledWith(
+      'veh-123',
+      expect.objectContaining({ section: 'previousOwnerServices' }),
+    );
+    expect(screen.queryByTestId('maintenance-summary-cards')).not.toBeInTheDocument();
+    expect(screen.getByTestId('add-maintenance-button')).toHaveTextContent(
+      'Add Previous Service',
+    );
+
+    fireEvent.click(screen.getByTestId('add-maintenance-button'));
+    expect(screen.getByTestId('create-maintenance-modal')).toBeInTheDocument();
+    expect(screen.getByText('Add Previous Owner Service')).toBeInTheDocument();
+    expect(screen.getByTestId('maintenance-form-fixed-section')).toBeInTheDocument();
+    expect(
+      screen.queryByTestId('maintenance-section-option-ownMaintenance'),
+    ).not.toBeInTheDocument();
+  });
+
+  it('renders empty state when there are no maintenance items and adapts to section', () => {
+    vi.spyOn(vehiclesHooks, 'useMaintenance').mockReturnValue({
+      data: createMockInfiniteData({
+        items: [],
+        summary: { totalCostPln: 0, totalRecords: 0 },
+        pagination: { nextCursor: null, hasMore: false, total: 0 },
+      }),
+      isLoading: false,
+      isFetching: false,
+      isError: false,
+      error: null,
+      refetch: vi.fn(),
+    } as unknown as ReturnType<typeof vehiclesHooks.useMaintenance>);
+
+    renderMaintenancePage();
+    expect(screen.queryByTestId('maintenance-summary-cards')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('maintenance-filter-bar')).not.toBeInTheDocument();
+    expect(screen.getByTestId('maintenance-empty-state')).toBeInTheDocument();
+    expect(screen.getByText('No maintenance records')).toBeInTheDocument();
+    expect(screen.getByTestId('maintenance-empty-create-button')).toHaveTextContent(
+      'Add first maintenance record',
+    );
+
+    fireEvent.click(screen.getByTestId('maintenance-section-tab-previousOwnerServices'));
+    expect(screen.getByText('No previous owner service records')).toBeInTheDocument();
+    expect(screen.getByTestId('maintenance-empty-create-button')).toHaveTextContent(
+      'Add first previous service',
+    );
+
+    fireEvent.click(screen.getByTestId('maintenance-empty-create-button'));
+    expect(screen.getByTestId('create-maintenance-modal')).toBeInTheDocument();
+    expect(screen.getByText('Add Previous Owner Service')).toBeInTheDocument();
+  });
+
+  it('opens create modal when clicking Add Maintenance button', () => {
+    vi.spyOn(vehiclesHooks, 'useMaintenance').mockReturnValue({
+      data: createMockInfiniteData(mockMaintenanceResponse),
+      isLoading: false,
+      isFetching: false,
+      isError: false,
+      error: null,
+      refetch: vi.fn(),
+    } as unknown as ReturnType<typeof vehiclesHooks.useMaintenance>);
+
+    renderMaintenancePage();
+    fireEvent.click(screen.getByTestId('add-maintenance-button'));
+    expect(screen.getByTestId('create-maintenance-modal')).toBeInTheDocument();
+  });
+
+  it('opens update modal when clicking Edit button on a row', () => {
+    vi.spyOn(vehiclesHooks, 'useMaintenance').mockReturnValue({
+      data: createMockInfiniteData(mockMaintenanceResponse),
+      isLoading: false,
+      isFetching: false,
+      isError: false,
+      error: null,
+      refetch: vi.fn(),
+    } as unknown as ReturnType<typeof vehiclesHooks.useMaintenance>);
+
+    renderMaintenancePage();
+    const row = screen.getByTestId('maintenance-row-maint-1');
+    const editBtn = row.querySelector('button[aria-label="Edit"]');
+    expect(editBtn).toBeInTheDocument();
+    if (editBtn) fireEvent.click(editBtn);
+
+    expect(screen.getByTestId('update-maintenance-modal')).toBeInTheDocument();
+  });
+
+  it('opens delete modal when clicking Delete button on a row', () => {
+    vi.spyOn(vehiclesHooks, 'useMaintenance').mockReturnValue({
+      data: createMockInfiniteData(mockMaintenanceResponse),
+      isLoading: false,
+      isFetching: false,
+      isError: false,
+      error: null,
+      refetch: vi.fn(),
+    } as unknown as ReturnType<typeof vehiclesHooks.useMaintenance>);
+
+    renderMaintenancePage();
+    const row = screen.getByTestId('maintenance-row-maint-1');
+    const deleteBtn = row.querySelector('button[aria-label="Delete"]');
+    expect(deleteBtn).toBeInTheDocument();
+    if (deleteBtn) fireEvent.click(deleteBtn);
+
+    expect(screen.getByTestId('delete-maintenance-modal')).toBeInTheDocument();
+  });
+
+  it('opens LinkSpendingModal when clicking link action button on an unlinked row', () => {
+    vi.spyOn(vehiclesHooks, 'useMaintenance').mockReturnValue({
+      data: createMockInfiniteData(mockMaintenanceResponse),
+      isLoading: false,
+      isFetching: false,
+      isError: false,
+      error: null,
+      refetch: vi.fn(),
+    } as unknown as ReturnType<typeof vehiclesHooks.useMaintenance>);
+
+    renderMaintenancePage();
+    const linkBtns = screen.getAllByTitle('Link to transaction');
+    expect(linkBtns.length).toBeGreaterThan(0);
+    fireEvent.click(linkBtns[0]);
+
+    expect(screen.getByTestId('link-spending-modal')).toBeInTheDocument();
+  });
+
+  it('renders linked transaction badge and opens UnlinkSpendingModal', () => {
+    vi.spyOn(vehiclesHooks, 'useMaintenance').mockReturnValue({
+      data: createMockInfiniteData(mockMaintenanceResponse),
+      isLoading: false,
+      isFetching: false,
+      isError: false,
+      error: null,
+      refetch: vi.fn(),
+    } as unknown as ReturnType<typeof vehiclesHooks.useMaintenance>);
+
+    renderMaintenancePage();
+    const linkedBadges = screen.getAllByTestId('linked-transaction-badge');
+    expect(linkedBadges.length).toBeGreaterThan(0);
+    expect(linkedBadges[0]).toHaveAttribute('href', '/transactions/tx-999');
+
+    const unlinkBtns = screen.getAllByTitle('Unlink from transaction');
+    expect(unlinkBtns.length).toBeGreaterThan(0);
+    fireEvent.click(unlinkBtns[0]);
+
+    expect(screen.getByTestId('delete-unlink-spending-modal')).toBeInTheDocument();
+  });
+
+  it('renders pagination footer and calls fetchNextPage on load more click', () => {
+    const fetchNextPage = vi.fn();
+    vi.spyOn(vehiclesHooks, 'useMaintenance').mockReturnValue({
+      data: createMockInfiniteData({
+        ...mockMaintenanceResponse,
+        pagination: { nextCursor: 'c-m-2', hasMore: true, total: 80 },
+      }),
+      isLoading: false,
+      isFetching: false,
+      isError: false,
+      error: null,
+      refetch: vi.fn(),
+      hasNextPage: true,
+      isFetchingNextPage: false,
+      fetchNextPage,
+    } as unknown as ReturnType<typeof vehiclesHooks.useMaintenance>);
+
+    renderMaintenancePage();
+    const loadMoreBtn = screen.getByTestId('maintenance-entries-list-load-more-button');
+    expect(loadMoreBtn).toBeInTheDocument();
+    fireEvent.click(loadMoreBtn);
+    expect(fetchNextPage).toHaveBeenCalledTimes(1);
+  });
+});

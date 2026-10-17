@@ -1,0 +1,421 @@
+{
+  "title": "Транспорт",
+  "description": "Обзор вашего автопарка, общих расходов и затрат на каждое транспортное средство.",
+  "newVehicle": "Добавить транспорт",
+  "summary": {
+    "title": "Сводка автопарка",
+    "totalSpending": "Всего потрачено",
+    "fuelSpending": "Топливо",
+    "maintenanceSpending": "Обслуживание",
+    "equipmentSpending": "Оснащение",
+    "totalVehicles": "Всего транспорта"
+  },
+  "card": {
+    "totalSpent": "Всего потрачено",
+    "odometer": "Пробег",
+    "productionYear": "Год",
+    "viewDetails": "Подробнее",
+    "entriesCount": "Записи",
+    "fuel": "Топливо",
+    "maintenance": "Сервис",
+    "equipment": "Оснащ.",
+    "actionsMenu": "Действия с транспортом"
+  },
+  "empty": {
+    "title": "Нет транспорта",
+    "description": "Добавьте автомобиль, мотоцикл или проездной, чтобы отслеживать расходы на топливо, обслуживание и оснащение.",
+    "createFirst": "Добавить первый транспорт"
+  },
+  "loading": {
+    "title": "Загрузка транспорта...",
+    "description": "Пожалуйста, подождите, пока загружаются данные и расходы."
+  },
+  "types": {
+    "car": "Автомобиль",
+    "motorcycle": "Мотоцикл",
+    "public_transport": "Общественный транспорт"
+  },
+  "actions": {
+    "backToAll": "Назад ко всему транспорту",
+    "edit": "Редактировать",
+    "delete": "Удалить",
+    "save": "Сохранить",
+    "cancel": "Отмена",
+    "filterTitle": "Фильтры",
+    "add": "Добавить",
+    "resetFilters": "Сбросить фильтры",
+    "linkTransaction": "Связать с транзакцией",
+    "unlinkTransaction": "Отвязать от транзакции",
+    "filterStartDate": "Дата с",
+    "filterEndDate": "Дата по",
+    "loadMore": "Загрузить еще",
+    "loadMoreWithCount": "Загрузить еще ({{loaded}} из {{total}})",
+    "loadingMore": "Загрузка...",
+    "showingCount": "Показано {{loaded}} из {{total}} записей",
+    "showingAll": "Показаны все {{total}} записей"
+  },
+  "spendingTypes": {
+    "fuel": "Топливо",
+    "equipment": "Оснащение",
+    "maintenance": "Обслуживание"
+  },
+  "tabs": {
+    "overview": "Обзор",
+    "fuel": "Топливо",
+    "equipment": "Оснащение",
+    "maintenance": "Обслуживание"
+  },
+  "singleVehicle": {
+    "loadingTitle": "Загрузка автомобиля...",
+    "loadingDescription": "Пожалуйста, подождите, пока загружаются данные автомобиля.",
+    "notFoundTitle": "Транспорт не найден",
+    "notFoundDescription": "Не удалось найти запрашиваемое транспортное средство. Возможно, оно было удалено или ссылка неверна.",
+    "backToVehicles": "Назад ко всем автомобилям",
+    "editVehicle": "Редактировать транспорт",
+    "deleteVehicle": "Удалить транспорт",
+    "openNavigation": "Открыть навигацию",
+    "closeNavigation": "Закрыть навигацию"
+  },
+  "modals": {
+    "createTitle": "Добавить транспорт",
+    "createDescription": "Добавьте новое транспортное средство для учета топлива, сервиса и оснащения.",
+    "updateTitle": "Редактировать транспорт",
+    "updateDescription": "Обновите данные для {{name}}.",
+    "deleteTitle": "Удалить транспорт",
+    "deletePrompt": "Вы уверены, что хотите удалить {{name}}?",
+    "deleteHint": "Это транспортное средство и все связанные записи будут удалены безвозвратно. Это действие нельзя отменить.",
+    "deleteConfirm": "Удалить транспорт"
+  },
+  "form": {
+    "name": "Название транспорта",
+    "namePlaceholder": "например, Основная машина, Мотоцикл",
+    "type": "Тип транспорта",
+    "brand": "Марка",
+    "brandPlaceholder": "например, Toyota, Honda, Suzuki",
+    "model": "Модель",
+    "modelPlaceholder": "например, Corolla, Civic, SV650",
+    "productionYear": "Год выпуска",
+    "yearPlaceholder": "например, 2018",
+    "slug": "Собственный слаг",
+    "slugPlaceholder": "например, daily-car (необязательно)",
+    "notes": "Заметки",
+    "notesPlaceholder": "Дополнительные сведения о транспорте...",
+    "createSubmit": "Создать транспорт",
+    "updateSubmit": "Сохранить изменения",
+    "errors": {
+      "nameRequired": "Название транспорта обязательно",
+      "yearInvalid": "Год выпуска должен быть в диапазоне от 1900 до 2100"
+    }
+  },
+  "toasts": {
+    "createdTitle": "{{name}} успешно добавлен",
+    "createErrorTitle": "Не удалось добавить транспорт",
+    "updatedTitle": "{{name}} успешно обновлен",
+    "updateErrorTitle": "Не удалось обновить транспорт",
+    "deletedTitle": "{{name}} успешно удален",
+    "deleteErrorTitle": "Не удалось удалить транспорт"
+  },
+  "overview": {
+    "totalSpentTitle": "Всего потрачено",
+    "viewAll": "Показать все",
+    "stats": {
+      "currentOdometer": "Текущий пробег",
+      "distanceLogged": "Учтенное расстояние",
+      "refuelingSessions": "Заправки",
+      "maintenanceEvents": "Сервисные события"
+    },
+    "breakdown": {
+      "title": "Структура расходов",
+      "subtitle": "Детализация затрат на топливо, сервис и оснащение",
+      "fuelTitle": "Топливо",
+      "totalFuel": "Всего топлива",
+      "avgConsumption": "Средний расход",
+      "costPerKm": "Стоимость за км",
+      "maintenanceTitle": "Обслуживание и ремонт",
+      "totalRecords": "Всего записей",
+      "equipmentTitle": "Оснащение",
+      "totalItems": "Всего предметов",
+      "viewSection": "Перейти в: {{section}}"
+    },
+    "activity": {
+      "title": "Недавняя активность",
+      "subtitle": "Хронологическая история заправок, сервиса и покупок",
+      "emptyTitle": "Нет активности",
+      "emptyDescription": "Здесь появятся зарегистрированные заправки, ремонты и покупки оснащения.",
+      "fuelBadge": "Топливо",
+      "maintenanceBadge": "Сервис",
+      "equipmentBadge": "Оснащение",
+      "fullTank": "Полный бак",
+      "partialTank": "Частично",
+      "linkedTransaction": "Связана"
+    },
+    "maintenanceSections": {
+      "ownMaintenance": "Собственное ТО",
+      "previousOwnerServices": "ТО прошлого владельца"
+    }
+  },
+  "fuelPage": {
+    "title": "История заправок",
+    "description": "История заправок, статистика расхода топлива и данные АЗС.",
+    "newEntry": "Добавить заправку",
+    "summary": {
+      "totalVolume": "Всего топлива",
+      "totalCost": "Всего потрачено",
+      "avgConsumption": "Средний расход",
+      "avgUnitPrice": "Средняя цена/L"
+    },
+    "filters": {
+      "startDate": "Дата от",
+      "endDate": "Дата до",
+      "all": "Все",
+      "fullTankOnly": "Только полный бак",
+      "reset": "Сбросить фильтры"
+    },
+    "table": {
+      "date": "Дата",
+      "odometer": "Пробег",
+      "distance": "Расстояние",
+      "volume": "Объем",
+      "unitPrice": "Цена/L",
+      "cost": "Стоимость",
+      "consumption": "Расход",
+      "costPerKm": "Стоимость/км",
+      "station": "АЗС",
+      "actions": "Действия",
+      "fullTankBadge": "Полный"
+    },
+    "empty": {
+      "title": "Нет записей о заправках",
+      "description": "Учитывайте заправки, чтобы отслеживать объем топлива, расход (L/100 км) и затраты.",
+      "createFirst": "Добавить первую заправку",
+      "noMatching": "Нет записей, соответствующих выбранным фильтрам."
+    },
+    "modals": {
+      "createTitle": "Добавить заправку",
+      "createDescription": "Зафиксируйте новую запись о заправке для {{name}}.",
+      "updateTitle": "Редактировать заправку",
+      "updateDescription": "Обновите сведения о заправке.",
+      "deleteTitle": "Удалить заправку",
+      "deletePrompt": "Вы уверены, что хотите удалить эту запись о заправке?",
+      "deleteHint": "Эта запись и связанные с ней расчеты будут удалены безвозвратно.",
+      "deleteConfirm": "Удалить заправку"
+    },
+    "form": {
+      "date": "Дата",
+      "odometer": "Пробег (км)",
+      "odometerPlaceholder": "например, 154200",
+      "fuelLiters": "Объем топлива (L)",
+      "fuelLitersPlaceholder": "например, 45.50",
+      "unitPrice": "Цена за литр (PLN/L)",
+      "unitPricePlaceholder": "например, 6.45",
+      "cost": "Общая стоимость (PLN)",
+      "costPlaceholder": "например, 293.48",
+      "isFullTank": "Заправка до полного бака",
+      "isFullTankHint": "Отметьте, если бак был заправлен полностью (требуется для расчета расхода)",
+      "stationBrand": "Бренд АЗС",
+      "stationBrandPlaceholder": "например, Orlen, Shell, BP",
+      "stationAddress": "Адрес АЗС",
+      "stationAddressPlaceholder": "например, ул. Главная 12",
+      "description": "Заметки",
+      "descriptionPlaceholder": "Дополнительные сведения...",
+      "createSubmit": "Сохранить заправку",
+      "updateSubmit": "Сохранить изменения",
+      "errors": {
+        "dateRequired": "Дата обязательна",
+        "fuelLitersPositive": "Объем топлива должен быть больше нуля",
+        "unitPricePositive": "Цена за литр должна быть больше нуля",
+        "costPositive": "Стоимость должна быть больше нуля",
+        "odometerNonNegative": "Пробег не может быть отрицательным"
+      }
+    },
+    "toasts": {
+      "createdTitle": "Заправка успешно добавлена",
+      "createErrorTitle": "Не удалось добавить заправку",
+      "updatedTitle": "Заправка успешно обновлена",
+      "updateErrorTitle": "Не удалось обновить заправку",
+      "deletedTitle": "Заправка успешно удалена",
+      "deleteErrorTitle": "Не удалось удалить заправку"
+    }
+  },
+  "equipmentPage": {
+    "title": "Оборудование и аксессуары",
+    "description": "Учет оборудования, аксессуаров и запчастей для этого автомобиля.",
+    "addEquipment": "Добавить оборудование",
+    "summary": {
+      "totalSpending": "Всего потрачено на оборудование",
+      "totalItems": "Всего предметов"
+    },
+    "filter": {
+      "search": "Поиск оборудования...",
+      "startDate": "С даты",
+      "endDate": "По дату",
+      "reset": "Сбросить фильтры"
+    },
+    "table": {
+      "date": "Дата",
+      "itemName": "Название",
+      "cost": "Стоимость",
+      "description": "Описание",
+      "actions": "Действия"
+    },
+    "empty": {
+      "title": "Нет оборудования",
+      "description": "Записывайте аксессуары, инструменты и оборудование для этого автомобиля.",
+      "createFirst": "Добавить первое оборудование",
+      "noMatching": "Нет записей, соответствующих выбранным фильтрам."
+    },
+    "modals": {
+      "createTitle": "Добавить оборудование",
+      "createDescription": "Записать новое оборудование для {{name}}.",
+      "updateTitle": "Редактировать оборудование",
+      "updateDescription": "Обновить данные оборудования.",
+      "deleteTitle": "Удалить оборудование",
+      "deletePrompt": "Вы уверены, что хотите удалить эту запись оборудования?",
+      "deleteHint": "Эта запись будет безвозвратно удалена.",
+      "deleteConfirm": "Удалить оборудование"
+    },
+    "form": {
+      "date": "Дата",
+      "itemName": "Название",
+      "itemNamePlaceholder": "например, Зимняя резина, Видеорегистратор",
+      "cost": "Стоимость (PLN)",
+      "costPlaceholder": "например, 450.00",
+      "description": "Описание",
+      "descriptionPlaceholder": "например, Модель, заметки...",
+      "createSubmit": "Сохранить оборудование",
+      "updateSubmit": "Сохранить изменения",
+      "errors": {
+        "dateRequired": "Дата обязательна",
+        "itemNameRequired": "Название обязательно",
+        "costPositive": "Стоимость должна быть положительной"
+      }
+    },
+    "toasts": {
+      "createdTitle": "Оборудование успешно добавлено",
+      "createErrorTitle": "Не удалось добавить оборудование",
+      "updatedTitle": "Оборудование успешно обновлено",
+      "updateErrorTitle": "Не удалось обновить оборудование",
+      "deletedTitle": "Оборудование успешно удалено",
+      "deleteErrorTitle": "Не удалось удалить оборудование"
+    }
+  },
+  "maintenancePage": {
+    "title": "Обслуживание и ремонт",
+    "description": "Учет техобслуживания, ремонтов, замены деталей и расходов на содержание автомобиля.",
+    "addMaintenance": "Добавить запись",
+    "addPreviousOwnerService": "Добавить запись прошлого владельца",
+    "sections": {
+      "all": "Все записи",
+      "ownMaintenance": "Собственное ТО",
+      "previousOwnerServices": "Сервис прошлого владельца"
+    },
+    "summary": {
+      "totalSpending": "Всего на обслуживание",
+      "totalRecords": "Количество записей ТО",
+      "previousOwner": "Прошлый владелец"
+    },
+    "filter": {
+      "search": "Поиск по сервису, автосервису...",
+      "startDate": "С даты",
+      "endDate": "По дату",
+      "section": "Секция",
+      "reset": "Сбросить фильтры"
+    },
+    "table": {
+      "date": "Дата",
+      "section": "Секция",
+      "serviceProvider": "Автосервис / Мастер",
+      "odometer": "Пробег",
+      "cost": "Стоимость",
+      "description": "Описание",
+      "linked": "Связана",
+      "actions": "Действия"
+    },
+    "empty": {
+      "title": "Нет записей обслуживания",
+      "description": "Ведите сервисную книжку по замене масла, ремонту и техосмотру автомобиля.",
+      "createFirst": "Добавить первую запись ТО",
+      "previousOwnerTitle": "Нет записей прошлого владельца",
+      "previousOwnerDescription": "Вносите историю ремонтов, замены ГРМ и техобслуживания, выполненных до вашей покупки.",
+      "previousOwnerCreateFirst": "Добавить первую запись прошлого владельца",
+      "noMatching": "Записи обслуживания не найдены по выбранным фильтрам."
+    },
+    "modals": {
+      "createTitle": "Добавить запись ТО",
+      "createDescription": "Запишите проведенное обслуживание для {{name}}.",
+      "createPreviousOwnerTitle": "Добавить запись прошлого владельца",
+      "createPreviousOwnerDescription": "Запишите сервис или ремонт, выполненный до вашей покупки для {{name}}.",
+      "updateTitle": "Редактировать запись ТО",
+      "updateDescription": "Обновите сведения о записи обслуживания.",
+      "deleteTitle": "Удалить запись ТО",
+      "deletePrompt": "Вы уверены, что хотите удалить эту запись ТО?",
+      "deleteHint": "Эта запись обслуживания будет безвозвратно удалена.",
+      "deleteConfirm": "Удалить запись"
+    },
+    "form": {
+      "section": "Категория ТО",
+      "date": "Дата",
+      "cost": "Стоимость (PLN)",
+      "costPlaceholder": "напр. 350.00",
+      "odometer": "Пробег (км)",
+      "odometerPlaceholder": "напр. 154200",
+      "serviceProvider": "Автосервис / Мастер",
+      "serviceProviderPlaceholder": "напр. Auto Serwis Kowalski",
+      "serviceAddress": "Адрес автосервиса",
+      "serviceAddressPlaceholder": "напр. ул. Опольска 12, Краков",
+      "description": "Описание",
+      "descriptionPlaceholder": "напр. Замена масла 5W-30 + масляный фильтр",
+      "createSubmit": "Сохранить запись",
+      "updateSubmit": "Сохранить изменения",
+      "errors": {
+        "dateRequired": "Дата обязательна",
+        "costPositive": "Стоимость должна быть положительной",
+        "odometerNonNegative": "Пробег не может быть отрицательным"
+      }
+    },
+    "toasts": {
+      "createdTitle": "Запись ТО успешно добавлена",
+      "createErrorTitle": "Ошибка при добавлении записи ТО",
+      "updatedTitle": "Запись ТО успешно обновлена",
+      "updateErrorTitle": "Ошибка при обновлении записи ТО",
+      "deletedTitle": "Запись ТО успешно удалена",
+      "deleteErrorTitle": "Ошибка при удалении записи ТО"
+    }
+  },
+  "spendings": {
+    "linkModal": {
+      "title": "Связать с транзакцией",
+      "description": "Свяжите этот расход по транспорту с существующей банковской или карточной транзакцией.",
+      "spendingDetails": "Детали расхода",
+      "selectTransaction": "Выберите транзакцию",
+      "searchPlaceholder": "Поиск по названию, категории или сумме...",
+      "exactDateChip": "Та же дата ({{date}})",
+      "windowChip": "±3 дня",
+      "allDatesChip": "Все даты",
+      "transportOnlyChip": "Категория Транспорт",
+      "allCategoriesChip": "Все категории",
+      "exactMatchBadge": "Точная сумма",
+      "noTransactionsFound": "Транзакции расходов не найдены.",
+      "linkSubmit": "Связать транзакцию",
+      "linking": "Связывание..."
+    },
+    "unlinkModal": {
+      "title": "Отвязать от транзакции",
+      "prompt": "Вы уверены, что хотите отвязать этот расход от транзакции?",
+      "hint": "Финансовая транзакция не будет удалена, будет удалена лишь связь с этой записью транспорта.",
+      "confirm": "Отвязать",
+      "unlinking": "Отвязывание..."
+    },
+    "toasts": {
+      "linkedSuccess": "Расход успешно связан с транзакцией",
+      "linkError": "Ошибка при связывании расхода с транзакцией",
+      "unlinkedSuccess": "Расход успешно отвязан от транзакции",
+      "unlinkError": "Ошибка при отвязывании расхода"
+    },
+    "badge": {
+      "linked": "Связана",
+      "unlinked": "Не связана",
+      "viewTransaction": "Просмотреть транзакцию"
+    }
+  }
+}

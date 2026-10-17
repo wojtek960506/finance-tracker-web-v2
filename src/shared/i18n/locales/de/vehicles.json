@@ -1,0 +1,421 @@
+{
+  "title": "Fahrzeuge",
+  "description": "Übersicht über Ihre Flotte, Gesamtausgaben und Kosten einzelner Fahrzeuge.",
+  "newVehicle": "Fahrzeug hinzufügen",
+  "summary": {
+    "title": "Flottenübersicht",
+    "totalSpending": "Gesamtausgaben",
+    "fuelSpending": "Kraftstoff",
+    "maintenanceSpending": "Wartung",
+    "equipmentSpending": "Ausstattung",
+    "totalVehicles": "Fahrzeuge gesamt"
+  },
+  "card": {
+    "totalSpent": "Gesamt ausgegeben",
+    "odometer": "Kilometerstand",
+    "productionYear": "Baujahr",
+    "viewDetails": "Details anzeigen",
+    "entriesCount": "Einträge",
+    "fuel": "Kraftstoff",
+    "maintenance": "Wartung",
+    "equipment": "Ausst.",
+    "actionsMenu": "Fahrzeugaktionen"
+  },
+  "empty": {
+    "title": "Noch keine Fahrzeuge",
+    "description": "Fügen Sie ein Auto, Motorrad oder Nahverkehrsticket hinzu, um Kosten für Kraftstoff, Wartung und Ausstattung zu erfassen.",
+    "createFirst": "Erstes Fahrzeug hinzufügen"
+  },
+  "loading": {
+    "title": "Fahrzeuge werden geladen...",
+    "description": "Bitte warten Sie, während Ihre Fahrzeugdaten und Ausgaben geladen werden."
+  },
+  "types": {
+    "car": "Auto",
+    "motorcycle": "Motorrad",
+    "public_transport": "Öffentlicher Verkehr"
+  },
+  "actions": {
+    "backToAll": "Zurück zu allen Fahrzeugen",
+    "edit": "Bearbeiten",
+    "delete": "Löschen",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "filterTitle": "Filter",
+    "add": "Hinzufügen",
+    "resetFilters": "Filter zurücksetzen",
+    "linkTransaction": "Mit Transaktion verknüpfen",
+    "unlinkTransaction": "Von Transaktion trennen",
+    "filterStartDate": "Datum von",
+    "filterEndDate": "Datum bis",
+    "loadMore": "Mehr laden",
+    "loadMoreWithCount": "Mehr laden ({{loaded}} von {{total}})",
+    "loadingMore": "Wird geladen...",
+    "showingCount": "Zeigt {{loaded}} von {{total}} Einträgen",
+    "showingAll": "Alle {{total}} Einträge angezeigt"
+  },
+  "spendingTypes": {
+    "fuel": "Kraftstoff",
+    "equipment": "Ausrüstung",
+    "maintenance": "Wartung"
+  },
+  "tabs": {
+    "overview": "Übersicht",
+    "fuel": "Kraftstoff",
+    "equipment": "Ausrüstung",
+    "maintenance": "Wartung"
+  },
+  "singleVehicle": {
+    "loadingTitle": "Fahrzeug wird geladen...",
+    "loadingDescription": "Bitte warten, während die Fahrzeugdetails geladen werden.",
+    "notFoundTitle": "Fahrzeug nicht gefunden",
+    "notFoundDescription": "Das angeforderte Fahrzeug konnte nicht gefunden werden. Es wurde möglicherweise gelöscht oder der Link ist ungültig.",
+    "backToVehicles": "Zurück zu allen Fahrzeugen",
+    "editVehicle": "Fahrzeug bearbeiten",
+    "deleteVehicle": "Fahrzeug löschen",
+    "openNavigation": "Navigation öffnen",
+    "closeNavigation": "Navigation schließen"
+  },
+  "modals": {
+    "createTitle": "Fahrzeug hinzufügen",
+    "createDescription": "Neues Fahrzeug anlegen, um Ausgaben für Kraftstoff, Wartung und Ausstattung zu überwachen.",
+    "updateTitle": "Fahrzeug bearbeiten",
+    "updateDescription": "Details für {{name}} aktualisieren.",
+    "deleteTitle": "Fahrzeug löschen",
+    "deletePrompt": "Möchten Sie {{name}} wirklich löschen?",
+    "deleteHint": "Dieses Fahrzeug und alle zugehörigen Einträge werden dauerhaft gelöscht. Diese Aktion kann nicht rückgängig gemacht werden.",
+    "deleteConfirm": "Fahrzeug löschen"
+  },
+  "form": {
+    "name": "Fahrzeugname",
+    "namePlaceholder": "z. B. Alltagsauto, Wochenend-Motorrad",
+    "type": "Fahrzeugtyp",
+    "brand": "Marke",
+    "brandPlaceholder": "z. B. Toyota, Honda, Suzuki",
+    "model": "Modell",
+    "modelPlaceholder": "z. B. Corolla, Civic, SV650",
+    "productionYear": "Baujahr",
+    "yearPlaceholder": "z. B. 2018",
+    "slug": "Benutzerdefinierter Slug",
+    "slugPlaceholder": "z. B. alltagsauto (optional)",
+    "notes": "Notizen",
+    "notesPlaceholder": "Zusätzliche Notizen zum Fahrzeug...",
+    "createSubmit": "Fahrzeug erstellen",
+    "updateSubmit": "Änderungen speichern",
+    "errors": {
+      "nameRequired": "Fahrzeugname ist erforderlich",
+      "yearInvalid": "Baujahr muss zwischen 1900 und 2100 liegen"
+    }
+  },
+  "toasts": {
+    "createdTitle": "{{name}} erfolgreich erstellt",
+    "createErrorTitle": "Fehler beim Erstellen des Fahrzeugs",
+    "updatedTitle": "{{name}} erfolgreich aktualisiert",
+    "updateErrorTitle": "Fehler beim Aktualisieren des Fahrzeugs",
+    "deletedTitle": "{{name}} erfolgreich gelöscht",
+    "deleteErrorTitle": "Fehler beim Löschen des Fahrzeugs"
+  },
+  "overview": {
+    "totalSpentTitle": "Gesamtausgaben",
+    "viewAll": "Alle anzeigen",
+    "stats": {
+      "currentOdometer": "Aktueller Kilometerstand",
+      "distanceLogged": "Erfasste Distanz",
+      "refuelingSessions": "Tankvorgänge",
+      "maintenanceEvents": "Wartungseinträge"
+    },
+    "breakdown": {
+      "title": "Kostenaufschlüsselung",
+      "subtitle": "Detaillierte Kosten für Kraftstoff, Wartung und Ausstattung",
+      "fuelTitle": "Kraftstoff",
+      "totalFuel": "Kraftstoff gesamt",
+      "avgConsumption": "Ø Verbrauch",
+      "costPerKm": "Kosten pro km",
+      "maintenanceTitle": "Wartung & Reparatur",
+      "totalRecords": "Gesamte Einträge",
+      "equipmentTitle": "Ausstattung",
+      "totalItems": "Artikel gesamt",
+      "viewSection": "Zu {{section}} wechseln"
+    },
+    "activity": {
+      "title": "Letzte Aktivitäten",
+      "subtitle": "Chronologischer Verlauf von Tankungen, Wartungen und Käufen",
+      "emptyTitle": "Noch keine Aktivitäten",
+      "emptyDescription": "Erfasste Tankungen, Wartungen und Ausstattungsgegenstände erscheinen hier.",
+      "fuelBadge": "Kraftstoff",
+      "maintenanceBadge": "Wartung",
+      "equipmentBadge": "Ausstattung",
+      "fullTank": "Vollgetankt",
+      "partialTank": "Teilbetankung",
+      "linkedTransaction": "Verknüpft"
+    },
+    "maintenanceSections": {
+      "ownMaintenance": "Eigene Wartung",
+      "previousOwnerServices": "Wartung Vorbesitzer"
+    }
+  },
+  "fuelPage": {
+    "title": "Tankprotokoll",
+    "description": "Verlauf der Tankungen, Verbrauchsstatistiken und Tankstellendetails.",
+    "newEntry": "Tankung hinzufügen",
+    "summary": {
+      "totalVolume": "Kraftstoff gesamt",
+      "totalCost": "Gesamt ausgegeben",
+      "avgConsumption": "Ø Verbrauch",
+      "avgUnitPrice": "Ø Preis/L"
+    },
+    "filters": {
+      "startDate": "Datum von",
+      "endDate": "Datum bis",
+      "all": "Alle",
+      "fullTankOnly": "Nur Vollbetankung",
+      "reset": "Filter zurücksetzen"
+    },
+    "table": {
+      "date": "Datum",
+      "odometer": "Kilometerstand",
+      "distance": "Distanz",
+      "volume": "Menge",
+      "unitPrice": "Preis/L",
+      "cost": "Kosten",
+      "consumption": "Verbrauch",
+      "costPerKm": "Kosten/km",
+      "station": "Tankstelle",
+      "actions": "Aktionen",
+      "fullTankBadge": "Voll"
+    },
+    "empty": {
+      "title": "Keine Tankeinträge vorhanden",
+      "description": "Erfassen Sie Tankvorgänge, um Kraftstoffmenge, Verbrauch (L/100 km) und Kosten zu überwachen.",
+      "createFirst": "Erste Tankung hinzufügen",
+      "noMatching": "Keine Einträge entsprechen den ausgewählten Filtern."
+    },
+    "modals": {
+      "createTitle": "Tankung hinzufügen",
+      "createDescription": "Neuen Tankeintrag für {{name}} erfassen.",
+      "updateTitle": "Tankung bearbeiten",
+      "updateDescription": "Details des Tankeintrags aktualisieren.",
+      "deleteTitle": "Tankung löschen",
+      "deletePrompt": "Möchten Sie diesen Tankeintrag wirklich löschen?",
+      "deleteHint": "Dieser Eintrag und die zugehörigen Berechnungen werden dauerhaft gelöscht.",
+      "deleteConfirm": "Tankung löschen"
+    },
+    "form": {
+      "date": "Datum",
+      "odometer": "Kilometerstand (km)",
+      "odometerPlaceholder": "z. B. 154200",
+      "fuelLiters": "Kraftstoffmenge (L)",
+      "fuelLitersPlaceholder": "z. B. 45.50",
+      "unitPrice": "Einzelpreis (PLN/L)",
+      "unitPricePlaceholder": "z. B. 6.45",
+      "cost": "Gesamtkosten (PLN)",
+      "costPlaceholder": "z. B. 293.48",
+      "isFullTank": "Vollbetankung",
+      "isFullTankHint": "Als vollgetankt markieren, um den Verbrauch zu berechnen",
+      "stationBrand": "Tankstellenmarke",
+      "stationBrandPlaceholder": "z. B. Orlen, Shell, BP",
+      "stationAddress": "Tankstellenadresse",
+      "stationAddressPlaceholder": "z. B. Hauptstraße 12",
+      "description": "Notizen",
+      "descriptionPlaceholder": "Zusätzliche Notizen...",
+      "createSubmit": "Tankung speichern",
+      "updateSubmit": "Änderungen speichern",
+      "errors": {
+        "dateRequired": "Datum ist erforderlich",
+        "fuelLitersPositive": "Kraftstoffmenge muss positiv sein",
+        "unitPricePositive": "Einzelpreis muss positiv sein",
+        "costPositive": "Gesamtkosten müssen positiv sein",
+        "odometerNonNegative": "Kilometerstand darf nicht negativ sein"
+      }
+    },
+    "toasts": {
+      "createdTitle": "Tankung erfolgreich hinzugefügt",
+      "createErrorTitle": "Fehler beim Hinzufügen der Tankung",
+      "updatedTitle": "Tankung erfolgreich aktualisiert",
+      "updateErrorTitle": "Fehler beim Aktualisieren der Tankung",
+      "deletedTitle": "Tankung erfolgreich gelöscht",
+      "deleteErrorTitle": "Fehler beim Löschen der Tankung"
+    }
+  },
+  "equipmentPage": {
+    "title": "Ausrüstung & Zubehör",
+    "description": "Erfassen und verfolgen Sie Zubehör, Teile und Ausrüstung für dieses Fahrzeug.",
+    "addEquipment": "Ausrüstung hinzufügen",
+    "summary": {
+      "totalSpending": "Gesamtausgaben für Ausrüstung",
+      "totalItems": "Gesamtzahl der Artikel"
+    },
+    "filter": {
+      "search": "Ausrüstung suchen...",
+      "startDate": "Von Datum",
+      "endDate": "Bis Datum",
+      "reset": "Filter zurücksetzen"
+    },
+    "table": {
+      "date": "Datum",
+      "itemName": "Artikelname",
+      "cost": "Kosten",
+      "description": "Beschreibung",
+      "actions": "Aktionen"
+    },
+    "empty": {
+      "title": "Keine Ausrüstung vorhanden",
+      "description": "Erfassen Sie Zubehör, Ersatzteile oder Werkzeuge für dieses Fahrzeug.",
+      "createFirst": "Erste Ausrüstung hinzufügen",
+      "noMatching": "Keine Einträge entsprechen den ausgewählten Filtern."
+    },
+    "modals": {
+      "createTitle": "Ausrüstung hinzufügen",
+      "createDescription": "Neuen Ausrüstungsgegenstand für {{name}} erfassen.",
+      "updateTitle": "Ausrüstung bearbeiten",
+      "updateDescription": "Details des Ausrüstungsgegenstands bearbeiten.",
+      "deleteTitle": "Ausrüstung löschen",
+      "deletePrompt": "Möchten Sie diesen Ausrüstungsgegenstand wirklich löschen?",
+      "deleteHint": "Dieser Eintrag wird dauerhaft gelöscht.",
+      "deleteConfirm": "Ausrüstung löschen"
+    },
+    "form": {
+      "date": "Datum",
+      "itemName": "Artikelname",
+      "itemNamePlaceholder": "z.B. Winterreifen, Dashcam, Dachträger",
+      "cost": "Kosten (PLN)",
+      "costPlaceholder": "z.B. 450.00",
+      "description": "Beschreibung",
+      "descriptionPlaceholder": "z.B. Modell, Seriennummer, Notizen...",
+      "createSubmit": "Ausrüstung speichern",
+      "updateSubmit": "Änderungen speichern",
+      "errors": {
+        "dateRequired": "Datum ist erforderlich",
+        "itemNameRequired": "Artikelname ist erforderlich",
+        "costPositive": "Kosten müssen positiv sein"
+      }
+    },
+    "toasts": {
+      "createdTitle": "Ausrüstung erfolgreich hinzugefügt",
+      "createErrorTitle": "Ausrüstung konnte nicht hinzugefügt werden",
+      "updatedTitle": "Ausrüstung erfolgreich aktualisiert",
+      "updateErrorTitle": "Ausrüstung konnte nicht aktualisiert werden",
+      "deletedTitle": "Ausrüstung erfolgreich gelöscht",
+      "deleteErrorTitle": "Ausrüstung konnte nicht gelöscht werden"
+    }
+  },
+  "maintenancePage": {
+    "title": "Wartung & Service",
+    "description": "Erfassen Sie Fahrzeuginspektionen, Reparaturen und laufende Wartungskosten.",
+    "addMaintenance": "Wartung hinzufügen",
+    "addPreviousOwnerService": "Vorbesitzer-Eintrag hinzufügen",
+    "sections": {
+      "all": "Alle Einträge",
+      "ownMaintenance": "Eigene Wartung",
+      "previousOwnerServices": "Wartung Vorbesitzer"
+    },
+    "summary": {
+      "totalSpending": "Gesamtausgaben Wartung",
+      "totalRecords": "Wartungseinträge",
+      "previousOwner": "Vorbesitzer"
+    },
+    "filter": {
+      "search": "Wartung, Werkstatt suchen...",
+      "startDate": "Von Datum",
+      "endDate": "Bis Datum",
+      "section": "Kategorie",
+      "reset": "Filter zurücksetzen"
+    },
+    "table": {
+      "date": "Datum",
+      "section": "Kategorie",
+      "serviceProvider": "Werkstatt / Dienstleister",
+      "odometer": "Kilometerstand",
+      "cost": "Kosten",
+      "description": "Beschreibung",
+      "linked": "Verknüpft",
+      "actions": "Aktionen"
+    },
+    "empty": {
+      "title": "Keine Wartungseinträge",
+      "description": "Führen Sie ein vollständiges Serviceheft für Ölwechsel, Reparaturen und Inspektionen.",
+      "createFirst": "Ersten Wartungseintrag hinzufügen",
+      "previousOwnerTitle": "Keine Wartungseinträge des Vorbesitzers",
+      "previousOwnerDescription": "Erfassen Sie frühere Reparaturen, Zahnriemenwechsel und Wartungen vor Ihrem Kauf.",
+      "previousOwnerCreateFirst": "Ersten Eintrag des Vorbesitzers hinzufügen",
+      "noMatching": "Keine Wartungseinträge entsprechen den ausgewählten Filtern."
+    },
+    "modals": {
+      "createTitle": "Wartungseintrag hinzufügen",
+      "createDescription": "Erfassen Sie einen neuen Wartungseintrag für {{name}}.",
+      "createPreviousOwnerTitle": "Eintrag des Vorbesitzers hinzufügen",
+      "createPreviousOwnerDescription": "Erfassen Sie eine frühere Wartung vor Ihrem Kauf für {{name}}.",
+      "updateTitle": "Wartungseintrag bearbeiten",
+      "updateDescription": "Details des Wartungseintrags bearbeiten.",
+      "deleteTitle": "Wartungseintrag löschen",
+      "deletePrompt": "Möchten Sie diesen Wartungseintrag wirklich löschen?",
+      "deleteHint": "Dieser Wartungseintrag wird unwiderruflich gelöscht.",
+      "deleteConfirm": "Eintrag löschen"
+    },
+    "form": {
+      "section": "Wartungskategorie",
+      "date": "Datum",
+      "cost": "Kosten (PLN)",
+      "costPlaceholder": "z.B. 350.00",
+      "odometer": "Kilometerstand (km)",
+      "odometerPlaceholder": "z.B. 154200",
+      "serviceProvider": "Werkstatt / Dienstleister",
+      "serviceProviderPlaceholder": "z.B. Auto Service Kowalski",
+      "serviceAddress": "Adresse der Werkstatt",
+      "serviceAddressPlaceholder": "z.B. Musterstraße 12, Berlin",
+      "description": "Beschreibung",
+      "descriptionPlaceholder": "z.B. Motorölwechsel 5W-30 + Ölfilter",
+      "createSubmit": "Wartung speichern",
+      "updateSubmit": "Änderungen speichern",
+      "errors": {
+        "dateRequired": "Datum ist erforderlich",
+        "costPositive": "Kosten müssen positiv sein",
+        "odometerNonNegative": "Kilometerstand darf nicht negativ sein"
+      }
+    },
+    "toasts": {
+      "createdTitle": "Wartungseintrag erfolgreich hinzugefügt",
+      "createErrorTitle": "Fehler beim Hinzufügen des Wartungseintrags",
+      "updatedTitle": "Wartungseintrag erfolgreich aktualisiert",
+      "updateErrorTitle": "Fehler beim Aktualisieren des Wartungseintrags",
+      "deletedTitle": "Wartungseintrag erfolgreich gelöscht",
+      "deleteErrorTitle": "Fehler beim Löschen des Wartungseintrags"
+    }
+  },
+  "spendings": {
+    "linkModal": {
+      "title": "Mit Transaktion verknüpfen",
+      "description": "Verknüpfen Sie diese Fahrzeugausgabe mit einer bestehenden Bank- oder Kartentransaktion.",
+      "spendingDetails": "Ausgabendetails",
+      "selectTransaction": "Transaktion auswählen",
+      "searchPlaceholder": "Nach Name, Kategorie oder Betrag suchen...",
+      "exactDateChip": "Gleiches Datum ({{date}})",
+      "windowChip": "±3 Tage",
+      "allDatesChip": "Alle Daten",
+      "transportOnlyChip": "Kategorie Transport",
+      "allCategoriesChip": "Alle Kategorien",
+      "exactMatchBadge": "Exakter Betrag",
+      "noTransactionsFound": "Keine passenden Ausgaben gefunden.",
+      "linkSubmit": "Transaktion verknüpfen",
+      "linking": "Verknüpfen..."
+    },
+    "unlinkModal": {
+      "title": "Von Transaktion trennen",
+      "prompt": "Möchten Sie diese Ausgabe wirklich von der verknüpften Transaktion trennen?",
+      "hint": "Die Finanztransaktion wird nicht gelöscht, nur die Verknüpfung mit diesem Fahrzeugeintrag wird entfernt.",
+      "confirm": "Verknüpfung aufheben",
+      "unlinking": "Trennen..."
+    },
+    "toasts": {
+      "linkedSuccess": "Fahrzeugausgabe erfolgreich verknüpft",
+      "linkError": "Fehler beim Verknüpfen der Ausgabe",
+      "unlinkedSuccess": "Verknüpfung mit Transaktion erfolgreich aufgehoben",
+      "unlinkError": "Fehler beim Trennen der Ausgabe"
+    },
+    "badge": {
+      "linked": "Verknüpft",
+      "unlinked": "Nicht verknüpft",
+      "viewTransaction": "Transaktion anzeigen"
+    }
+  }
+}

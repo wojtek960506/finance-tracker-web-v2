@@ -1,0 +1,421 @@
+{
+  "title": "Pojazdy",
+  "description": "Przegląd Twojej floty, całkowitych wydatków oraz kosztów poszczególnych pojazdów.",
+  "newVehicle": "Dodaj pojazd",
+  "summary": {
+    "title": "Podsumowanie floty",
+    "totalSpending": "Łączne wydatki",
+    "fuelSpending": "Paliwo",
+    "maintenanceSpending": "Serwis",
+    "equipmentSpending": "Wyposażenie",
+    "totalVehicles": "Liczba pojazdów"
+  },
+  "card": {
+    "totalSpent": "Wydano łącznie",
+    "odometer": "Przebieg",
+    "productionYear": "Rok",
+    "viewDetails": "Szczegóły",
+    "entriesCount": "Wpisy",
+    "fuel": "Paliwo",
+    "maintenance": "Serwis",
+    "equipment": "Wypos.",
+    "actionsMenu": "Opcje pojazdu"
+  },
+  "empty": {
+    "title": "Brak pojazdów",
+    "description": "Dodaj samochód, motocykl lub bilet komunikacji miejskiej, aby śledzić koszty paliwa, serwisu i wyposażenia.",
+    "createFirst": "Dodaj swój pierwszy pojazd"
+  },
+  "loading": {
+    "title": "Ładowanie pojazdów...",
+    "description": "Pobieranie listy pojazdów i wydatków."
+  },
+  "types": {
+    "car": "Samochód",
+    "motorcycle": "Motocykl",
+    "public_transport": "Komunikacja miejska"
+  },
+  "actions": {
+    "backToAll": "Wróć do wszystkich pojazdów",
+    "edit": "Edytuj",
+    "delete": "Usuń",
+    "save": "Zapisz",
+    "cancel": "Anuluj",
+    "filterTitle": "Filtry",
+    "add": "Dodaj",
+    "resetFilters": "Zresetuj filtry",
+    "linkTransaction": "Połącz z transakcją",
+    "unlinkTransaction": "Odłącz transakcję",
+    "filterStartDate": "Data od",
+    "filterEndDate": "Data do",
+    "loadMore": "Załaduj więcej",
+    "loadMoreWithCount": "Załaduj więcej ({{loaded}} z {{total}})",
+    "loadingMore": "Ładowanie...",
+    "showingCount": "Wyświetlono {{loaded}} z {{total}} wpisów",
+    "showingAll": "Wyświetlono wszystkie {{total}} wpisów"
+  },
+  "spendingTypes": {
+    "fuel": "Paliwo",
+    "equipment": "Wyposażenie",
+    "maintenance": "Serwis"
+  },
+  "tabs": {
+    "overview": "Przegląd",
+    "fuel": "Paliwo",
+    "equipment": "Wyposażenie",
+    "maintenance": "Serwis"
+  },
+  "singleVehicle": {
+    "loadingTitle": "Ładowanie pojazdu...",
+    "loadingDescription": "Proszę czekać, pobieramy dane pojazdu.",
+    "notFoundTitle": "Nie znaleziono pojazdu",
+    "notFoundDescription": "Nie znaleziono żądanego pojazdu. Być może został usunięty lub link jest niepoprawny.",
+    "backToVehicles": "Powrót do wszystkich pojazdów",
+    "editVehicle": "Edytuj pojazd",
+    "deleteVehicle": "Usuń pojazd",
+    "openNavigation": "Otwórz nawigację",
+    "closeNavigation": "Zamknij nawigację"
+  },
+  "modals": {
+    "createTitle": "Dodaj pojazd",
+    "createDescription": "Dodaj nowy pojazd, aby monitorować wydatki na paliwo, serwis i wyposażenie.",
+    "updateTitle": "Edytuj pojazd",
+    "updateDescription": "Zaktualizuj dane pojazdu {{name}}.",
+    "deleteTitle": "Usuń pojazd",
+    "deletePrompt": "Czy na pewno chcesz usunąć {{name}}?",
+    "deleteHint": "Ten pojazd oraz wszystkie powiązane z nim wpisy zostaną trwale usunięte. Tej operacji nie można cofnąć.",
+    "deleteConfirm": "Usuń pojazd"
+  },
+  "form": {
+    "name": "Nazwa pojazdu",
+    "namePlaceholder": "np. Samochód na co dzień, Weekendowy motocykl",
+    "type": "Typ pojazdu",
+    "brand": "Marka",
+    "brandPlaceholder": "np. Toyota, Honda, Suzuki",
+    "model": "Model",
+    "modelPlaceholder": "np. Corolla, Civic, SV650",
+    "productionYear": "Rok produkcji",
+    "yearPlaceholder": "np. 2018",
+    "slug": "Własny identyfikator (slug)",
+    "slugPlaceholder": "np. moj-samochod (opcjonalnie)",
+    "notes": "Notatki",
+    "notesPlaceholder": "Dodatkowe informacje o pojeździe...",
+    "createSubmit": "Dodaj pojazd",
+    "updateSubmit": "Zapisz zmiany",
+    "errors": {
+      "nameRequired": "Nazwa pojazdu jest wymagana",
+      "yearInvalid": "Rok musi mieścić się w przedziale 1900 - 2100"
+    }
+  },
+  "toasts": {
+    "createdTitle": "Pojazd {{name}} został pomyślnie dodany",
+    "createErrorTitle": "Nie udało się dodać pojazdu",
+    "updatedTitle": "Pojazd {{name}} został zaktualizowany",
+    "updateErrorTitle": "Nie udało się zaktualizować pojazdu",
+    "deletedTitle": "Pojazd {{name}} został usunięty",
+    "deleteErrorTitle": "Nie udało się usunąć pojazdu"
+  },
+  "overview": {
+    "totalSpentTitle": "Łączne wydatki",
+    "viewAll": "Zobacz wszystkie",
+    "stats": {
+      "currentOdometer": "Aktualny przebieg",
+      "distanceLogged": "Zarejestrowany dystans",
+      "refuelingSessions": "Sesje tankowania",
+      "maintenanceEvents": "Wpisy serwisowe"
+    },
+    "breakdown": {
+      "title": "Rozbicie wydatków",
+      "subtitle": "Szczegółowe koszty paliwa, serwisu i wyposażenia",
+      "fuelTitle": "Paliwo",
+      "totalFuel": "Łącznie zatankowano",
+      "avgConsumption": "Średnie spalanie",
+      "costPerKm": "Koszt za kilometr",
+      "maintenanceTitle": "Serwis i naprawy",
+      "totalRecords": "Liczba wpisów",
+      "equipmentTitle": "Wyposażenie",
+      "totalItems": "Liczba elementów",
+      "viewSection": "Przejdź do: {{section}}"
+    },
+    "activity": {
+      "title": "Ostatnia aktywność",
+      "subtitle": "Chronologiczna historia tankowań, serwisu i zakupów",
+      "emptyTitle": "Brak aktywności",
+      "emptyDescription": "Zarejestrowane tankowania, wpisy serwisowe i zakupy wyposażenia pojawią się tutaj.",
+      "fuelBadge": "Paliwo",
+      "maintenanceBadge": "Serwis",
+      "equipmentBadge": "Wyposażenie",
+      "fullTank": "Do pełna",
+      "partialTank": "Częściowe",
+      "linkedTransaction": "Powiązana"
+    },
+    "maintenanceSections": {
+      "ownMaintenance": "Własny serwis",
+      "previousOwnerServices": "Serwis poprzedniego właściciela"
+    }
+  },
+  "fuelPage": {
+    "title": "Historia tankowań",
+    "description": "Historia tankowań, statystyki spalania oraz dane stacji paliw.",
+    "newEntry": "Dodaj tankowanie",
+    "summary": {
+      "totalVolume": "Zatankowane paliwo",
+      "totalCost": "Wydano łącznie",
+      "avgConsumption": "Średnie spalanie",
+      "avgUnitPrice": "Średnia cena/L"
+    },
+    "filters": {
+      "startDate": "Data od",
+      "endDate": "Data do",
+      "all": "Wszystkie",
+      "fullTankOnly": "Tylko do pełna",
+      "reset": "Wyczyść filtry"
+    },
+    "table": {
+      "date": "Data",
+      "odometer": "Przebieg",
+      "distance": "Dystans",
+      "volume": "Paliwo",
+      "unitPrice": "Cena/L",
+      "cost": "Koszt",
+      "consumption": "Spalanie",
+      "costPerKm": "Koszt/km",
+      "station": "Stacja paliw",
+      "actions": "Opcje",
+      "fullTankBadge": "Do pełna"
+    },
+    "empty": {
+      "title": "Brak wpisów tankowania",
+      "description": "Zapisuj tankowania, aby monitorować ilość paliwa, spalanie (L/100 km) i koszty.",
+      "createFirst": "Dodaj pierwsze tankowanie",
+      "noMatching": "Brak wpisów spełniających wybrane kryteria filtrów."
+    },
+    "modals": {
+      "createTitle": "Dodaj tankowanie",
+      "createDescription": "Zarejestruj nowe tankowanie dla {{name}}.",
+      "updateTitle": "Edytuj tankowanie",
+      "updateDescription": "Zaktualizuj szczegóły wpisu tankowania.",
+      "deleteTitle": "Usuń tankowanie",
+      "deletePrompt": "Czy na pewno chcesz usunąć ten wpis tankowania?",
+      "deleteHint": "Ten wpis oraz powiązane z nim obliczenia zostaną trwale usunięte.",
+      "deleteConfirm": "Usuń tankowanie"
+    },
+    "form": {
+      "date": "Data",
+      "odometer": "Przebieg (km)",
+      "odometerPlaceholder": "np. 154200",
+      "fuelLiters": "Paliwo (L)",
+      "fuelLitersPlaceholder": "np. 45.50",
+      "unitPrice": "Cena jednostkowa (PLN/L)",
+      "unitPricePlaceholder": "np. 6.45",
+      "cost": "Koszt całkowity (PLN)",
+      "costPlaceholder": "np. 293.48",
+      "isFullTank": "Tankowanie do pełna",
+      "isFullTankHint": "Zaznacz, jeśli zatankowano do pełna (wymagane do obliczenia spalania)",
+      "stationBrand": "Marka stacji",
+      "stationBrandPlaceholder": "np. Orlen, Shell, BP",
+      "stationAddress": "Adres stacji",
+      "stationAddressPlaceholder": "np. ul. Główna 12",
+      "description": "Notatki",
+      "descriptionPlaceholder": "Dodatkowe informacje...",
+      "createSubmit": "Zapisz tankowanie",
+      "updateSubmit": "Zapisz zmiany",
+      "errors": {
+        "dateRequired": "Data jest wymagana",
+        "fuelLitersPositive": "Ilość paliwa musi być większa od zera",
+        "unitPricePositive": "Cena za litr musi być większa od zera",
+        "costPositive": "Koszt musi być większy od zera",
+        "odometerNonNegative": "Przebieg nie może być ujemny"
+      }
+    },
+    "toasts": {
+      "createdTitle": "Tankowanie dodane pomyślnie",
+      "createErrorTitle": "Nie udało się dodać tankowania",
+      "updatedTitle": "Tankowanie zaktualizowane pomyślnie",
+      "updateErrorTitle": "Nie udało się zaktualizować tankowania",
+      "deletedTitle": "Tankowanie usunięte pomyślnie",
+      "deleteErrorTitle": "Nie udało się usunąć tankowania"
+    }
+  },
+  "equipmentPage": {
+    "title": "Wyposażenie i akcesoria",
+    "description": "Rejestruj i śledź akcesoria, wyposażenie oraz części kupione do pojazdu.",
+    "addEquipment": "Dodaj wyposażenie",
+    "summary": {
+      "totalSpending": "Łączny koszt wyposażenia",
+      "totalItems": "Liczba elementów"
+    },
+    "filter": {
+      "search": "Szukaj wyposażenia...",
+      "startDate": "Od daty",
+      "endDate": "Do daty",
+      "reset": "Wyczyść filtry"
+    },
+    "table": {
+      "date": "Data",
+      "itemName": "Nazwa przedmiotu",
+      "cost": "Koszt",
+      "description": "Opis",
+      "actions": "Akcje"
+    },
+    "empty": {
+      "title": "Brak wyposażenia",
+      "description": "Zapisuj akcesoria, części, narzędzia lub sprzęt zakupiony do tego pojazdu.",
+      "createFirst": "Dodaj pierwszy element",
+      "noMatching": "Brak wpisów spełniających wybrane filtry."
+    },
+    "modals": {
+      "createTitle": "Dodaj wyposażenie",
+      "createDescription": "Zapisz nowy element wyposażenia dla pojazdu {{name}}.",
+      "updateTitle": "Edytuj wyposażenie",
+      "updateDescription": "Zaktualizuj szczegóły elementu wyposażenia.",
+      "deleteTitle": "Usuń wyposażenie",
+      "deletePrompt": "Czy na pewno chcesz usunąć ten element wyposażenia?",
+      "deleteHint": "Ten wpis wyposażenia zostanie trwale usunięty.",
+      "deleteConfirm": "Usuń wyposażenie"
+    },
+    "form": {
+      "date": "Data",
+      "itemName": "Nazwa przedmiotu",
+      "itemNamePlaceholder": "np. Opony zimowe, Wideorejestrator, Bagażnik dachowy",
+      "cost": "Koszt (PLN)",
+      "costPlaceholder": "np. 450.00",
+      "description": "Opis",
+      "descriptionPlaceholder": "np. Model, numer seryjny, uwagi...",
+      "createSubmit": "Zapisz wyposażenie",
+      "updateSubmit": "Zapisz zmiany",
+      "errors": {
+        "dateRequired": "Data jest wymagana",
+        "itemNameRequired": "Nazwa przedmiotu jest wymagana",
+        "costPositive": "Koszt musi być większy od zera"
+      }
+    },
+    "toasts": {
+      "createdTitle": "Wyposażenie zostało pomyślnie dodane",
+      "createErrorTitle": "Nie udało się dodać wyposażenia",
+      "updatedTitle": "Wyposażenie zostało pomyślnie zaktualizowane",
+      "updateErrorTitle": "Nie udało się zaktualizować wyposażenia",
+      "deletedTitle": "Wyposażenie zostało pomyślnie usunięte",
+      "deleteErrorTitle": "Nie udało się usunąć wyposażenia"
+    }
+  },
+  "maintenancePage": {
+    "title": "Historia serwisu i napraw",
+    "description": "Rejestruj przeglądy techniczne, naprawy, wymiany części i koszty bieżącej eksploatacji.",
+    "addMaintenance": "Dodaj serwis",
+    "addPreviousOwnerService": "Dodaj wpis poprzednika",
+    "sections": {
+      "all": "Wszystkie wpisy",
+      "ownMaintenance": "Własny serwis",
+      "previousOwnerServices": "Serwis poprzedniego właściciela"
+    },
+    "summary": {
+      "totalSpending": "Łączne wydatki na serwis",
+      "totalRecords": "Liczba wpisów serwisowych",
+      "previousOwner": "Poprzedni właściciel"
+    },
+    "filter": {
+      "search": "Szukaj serwisu, warsztatu...",
+      "startDate": "Od daty",
+      "endDate": "Do daty",
+      "section": "Sekcja",
+      "reset": "Wyczyść filtry"
+    },
+    "table": {
+      "date": "Data",
+      "section": "Sekcja",
+      "serviceProvider": "Warsztat / Wykonawca",
+      "odometer": "Przebieg",
+      "cost": "Koszt",
+      "description": "Opis",
+      "linked": "Powiązana",
+      "actions": "Akcje"
+    },
+    "empty": {
+      "title": "Brak wpisów serwisowych",
+      "description": "Prowadź kompletną książkę serwisową wymian oleju, filtrów, napraw i badań technicznych.",
+      "createFirst": "Dodaj pierwszy wpis serwisowy",
+      "previousOwnerTitle": "Brak wpisów poprzedniego właściciela",
+      "previousOwnerDescription": "Rejestruj wcześniejsze naprawy, wymiany rozrządu i serwisy wykonane przed Twoim zakupem.",
+      "previousOwnerCreateFirst": "Dodaj pierwszy wpis poprzednika",
+      "noMatching": "Brak wpisów serwisowych dla wybranych filtrów."
+    },
+    "modals": {
+      "createTitle": "Dodaj wpis serwisowy",
+      "createDescription": "Zarejestruj wykonany serwis lub naprawę dla pojazdu {{name}}.",
+      "createPreviousOwnerTitle": "Dodaj wpis poprzedniego właściciela",
+      "createPreviousOwnerDescription": "Zarejestruj wcześniejszą naprawę lub serwis wykonany przed Twoim zakupem dla {{name}}.",
+      "updateTitle": "Edytuj wpis serwisowy",
+      "updateDescription": "Zaktualizuj szczegóły wpisu serwisowego.",
+      "deleteTitle": "Usuń wpis serwisowy",
+      "deletePrompt": "Czy na pewno chcesz usunąć ten wpis serwisowy?",
+      "deleteHint": "Ten wpis serwisowy zostanie bezpowrotnie usunięty.",
+      "deleteConfirm": "Usuń wpis"
+    },
+    "form": {
+      "section": "Sekcja serwisu",
+      "date": "Data",
+      "cost": "Koszt (PLN)",
+      "costPlaceholder": "np. 350.00",
+      "odometer": "Przebieg (km)",
+      "odometerPlaceholder": "np. 154200",
+      "serviceProvider": "Warsztat / Wykonawca",
+      "serviceProviderPlaceholder": "np. Auto Serwis Kowalski, ASO Toyota",
+      "serviceAddress": "Adres warsztatu",
+      "serviceAddressPlaceholder": "np. ul. Opolska 12, Kraków",
+      "description": "Opis",
+      "descriptionPlaceholder": "np. Wymiana oleju 5W-30 + filtr oleju + filtr kabinowy",
+      "createSubmit": "Zapisz serwis",
+      "updateSubmit": "Zapisz zmiany",
+      "errors": {
+        "dateRequired": "Data jest wymagana",
+        "costPositive": "Koszt musi być dodatni",
+        "odometerNonNegative": "Przebieg nie może być ujemny"
+      }
+    },
+    "toasts": {
+      "createdTitle": "Wpis serwisowy dodany pomyślnie",
+      "createErrorTitle": "Nie udało się dodać wpisu serwisowego",
+      "updatedTitle": "Wpis serwisowy zaktualizowany pomyślnie",
+      "updateErrorTitle": "Nie udało się zaktualizować wpisu serwisowego",
+      "deletedTitle": "Wpis serwisowy usunięty pomyślnie",
+      "deleteErrorTitle": "Nie udało się usunąć wpisu serwisowego"
+    }
+  },
+  "spendings": {
+    "linkModal": {
+      "title": "Powiąż z transakcją",
+      "description": "Powiąż ten wydatek pojazdu z istniejącą transakcją bankową lub kartową.",
+      "spendingDetails": "Szczegóły wydatku",
+      "selectTransaction": "Wybierz transakcję",
+      "searchPlaceholder": "Szukaj po nazwie, kategorii lub kwocie...",
+      "exactDateChip": "Dokładna data ({{date}})",
+      "windowChip": "±3 Dni",
+      "allDatesChip": "Wszystkie daty",
+      "transportOnlyChip": "Kategoria Transport",
+      "allCategoriesChip": "Wszystkie kategorie",
+      "exactMatchBadge": "Zgodna kwota",
+      "noTransactionsFound": "Nie znaleziono wydatków spełniających kryteria.",
+      "linkSubmit": "Powiąż transakcję",
+      "linking": "Wiązanie..."
+    },
+    "unlinkModal": {
+      "title": "Odłącz od transakcji",
+      "prompt": "Czy na pewno chcesz odłączyć ten wydatek od powiązanej transakcji?",
+      "hint": "Transakcja finansowa nie zostanie usunięta, usunięte zostanie jedynie powiązanie z tym wpisem pojazdu.",
+      "confirm": "Odłącz transakcję",
+      "unlinking": "Odłączanie..."
+    },
+    "toasts": {
+      "linkedSuccess": "Pomyślnie powiązano wydatek pojazdu z transakcją",
+      "linkError": "Nie udało się powiązać wydatku z transakcją",
+      "unlinkedSuccess": "Pomyślnie odłączono wydatek od transakcji",
+      "unlinkError": "Nie udało się odłączyć wydatku od transakcji"
+    },
+    "badge": {
+      "linked": "Połączona",
+      "unlinked": "Niepołączona",
+      "viewTransaction": "Zobacz transakcję"
+    }
+  }
+}

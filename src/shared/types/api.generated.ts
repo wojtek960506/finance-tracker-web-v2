@@ -2902,6 +2902,1156 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/vehicles/summary": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get fleet summary and vehicles spending aggregations
+         * @description Return aggregated fleet totals and each vehicle with calculated spending totals, counts, and last odometer.
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["VehiclesSummaryResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/vehicles/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List vehicles
+         * @description Return all vehicles for the authenticated user.
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["VehicleListResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        /**
+         * Create vehicle
+         * @description Create a new vehicle for the authenticated user.
+         */
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["VehicleCreateInput"];
+                };
+            };
+            responses: {
+                /** @description Default Response */
+                201: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["VehicleResponse"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/vehicles/{vehicleId}/overview": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get vehicle overview and recent activity
+         * @description Return aggregated spending, fuel efficiency, maintenance breakdown, odometer stats, and unified recent activity feed for a vehicle.
+         */
+        get: {
+            parameters: {
+                query?: {
+                    activityLimit?: number;
+                };
+                header?: never;
+                path: {
+                    vehicleId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["VehicleOverviewResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/vehicles/{vehicleId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get vehicle by id or slug
+         * @description Return a single vehicle by MongoDB ObjectId or slug.
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    vehicleId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["VehicleResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        /**
+         * Delete vehicle
+         * @description Delete a vehicle by id or slug (only allowed if it has no associated records).
+         */
+        delete: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    vehicleId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                204: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        options?: never;
+        head?: never;
+        /**
+         * Update vehicle
+         * @description Update a vehicle by id or slug.
+         */
+        patch: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    vehicleId: string;
+                };
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["VehicleUpdateInput"];
+                };
+            };
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["VehicleResponse"];
+                    };
+                };
+            };
+        };
+        trace?: never;
+    };
+    "/api/vehicles/{vehicleId}/fuel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List fuel entries
+         * @description Return fuel entries for a vehicle with optional date/full-tank filtering and enriched calculation metrics.
+         */
+        get: {
+            parameters: {
+                query?: {
+                    startDate?: unknown;
+                    endDate?: unknown;
+                    isFullTank?: boolean;
+                    enriched?: boolean;
+                    cursor?: string;
+                    limit?: number;
+                };
+                header?: never;
+                path: {
+                    vehicleId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["VehicleFuelWithSummaryResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        /**
+         * Create fuel entry
+         * @description Create a new fuel log entry for a vehicle, enforcing chronological odometer sequence validation.
+         */
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    vehicleId: string;
+                };
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["VehicleFuelEntryCreateInput"];
+                };
+            };
+            responses: {
+                /** @description Default Response */
+                201: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["VehicleFuelEntryResponse"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/vehicles/{vehicleId}/fuel/{entryId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get single fuel entry
+         * @description Return raw details of a single fuel log entry.
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    vehicleId: string;
+                    entryId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["VehicleFuelEntryResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        /**
+         * Delete fuel entry
+         * @description Delete a single fuel log entry.
+         */
+        delete: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    vehicleId: string;
+                    entryId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                204: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        options?: never;
+        head?: never;
+        /**
+         * Update fuel entry
+         * @description Update a fuel log entry (re-validating odometer chronological sequence if date or odometer reading changes).
+         */
+        patch: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    vehicleId: string;
+                    entryId: string;
+                };
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["VehicleFuelEntryUpdateInput"];
+                };
+            };
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["VehicleFuelEntryResponse"];
+                    };
+                };
+            };
+        };
+        trace?: never;
+    };
+    "/api/vehicles/{vehicleId}/equipment": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List equipment items
+         * @description Return equipment items for a vehicle with optional date filtering and pagination.
+         */
+        get: {
+            parameters: {
+                query?: {
+                    startDate?: unknown;
+                    endDate?: unknown;
+                    cursor?: string;
+                    limit?: number;
+                };
+                header?: never;
+                path: {
+                    vehicleId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["VehicleEquipmentWithSummaryResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        /**
+         * Create equipment item
+         * @description Create a new equipment/accessory purchase record for a vehicle.
+         */
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    vehicleId: string;
+                };
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["VehicleEquipmentCreateInput"];
+                };
+            };
+            responses: {
+                /** @description Default Response */
+                201: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["VehicleEquipmentResponse"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/vehicles/{vehicleId}/equipment/{itemId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get single equipment item
+         * @description Return details of a single equipment item.
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    vehicleId: string;
+                    itemId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["VehicleEquipmentResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        /**
+         * Delete equipment item
+         * @description Delete a single equipment item.
+         */
+        delete: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    vehicleId: string;
+                    itemId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                204: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        options?: never;
+        head?: never;
+        /**
+         * Update equipment item
+         * @description Update an existing equipment item.
+         */
+        patch: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    vehicleId: string;
+                    itemId: string;
+                };
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["VehicleEquipmentUpdateInput"];
+                };
+            };
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["VehicleEquipmentResponse"];
+                    };
+                };
+            };
+        };
+        trace?: never;
+    };
+    "/api/vehicles/{vehicleId}/maintenance": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List maintenance records
+         * @description Return maintenance and service records for a vehicle with optional section, date filtering, and pagination.
+         */
+        get: {
+            parameters: {
+                query?: {
+                    section?: "ownMaintenance" | "previousOwnerServices";
+                    startDate?: unknown;
+                    endDate?: unknown;
+                    cursor?: string;
+                    limit?: number;
+                };
+                header?: never;
+                path: {
+                    vehicleId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["VehicleMaintenanceWithSummaryResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        /**
+         * Create maintenance record
+         * @description Create a new maintenance or service expense record for a vehicle.
+         */
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    vehicleId: string;
+                };
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["VehicleMaintenanceCreateInput"];
+                };
+            };
+            responses: {
+                /** @description Default Response */
+                201: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["VehicleMaintenanceResponse"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/vehicles/{vehicleId}/maintenance/{recordId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get single maintenance record
+         * @description Return details of a single maintenance record.
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    vehicleId: string;
+                    recordId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["VehicleMaintenanceResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        /**
+         * Delete maintenance record
+         * @description Delete a single maintenance record.
+         */
+        delete: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    vehicleId: string;
+                    recordId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                204: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        options?: never;
+        head?: never;
+        /**
+         * Update maintenance record
+         * @description Update an existing maintenance record.
+         */
+        patch: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    vehicleId: string;
+                    recordId: string;
+                };
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["VehicleMaintenanceUpdateInput"];
+                };
+            };
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["VehicleMaintenanceResponse"];
+                    };
+                };
+            };
+        };
+        trace?: never;
+    };
+    "/api/vehicles/spendings/link": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Link vehicle spendings to transaction
+         * @description Associate fuel, equipment, or maintenance spendings with a financial transaction.
+         */
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["LinkSpendingsToTransactionInput"];
+                };
+            };
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["SpendingLinkResponse"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/vehicles/spendings/unlink": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Unlink vehicle spending from transaction
+         * @description Remove transaction association from a fuel, equipment, or maintenance spending record.
+         */
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["UnlinkSpendingFromTransactionInput"];
+                };
+            };
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["SpendingLinkResponse"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/sports/categories/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List sport categories
+         * @description Return all sport categories for the authenticated user, including system categories.
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["NamedResourcesResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        /**
+         * Create sport category
+         * @description Create a new custom sport category for the authenticated user.
+         */
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["NamedResourceInput"];
+                };
+            };
+            responses: {
+                /** @description Default Response */
+                201: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["NamedResourceResponse"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/sports/categories/favorites": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List favorite sport categories
+         * @description Return all favorite sport categories for the authenticated user.
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["NamedResourcesResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/sports/categories/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get sport category by id
+         * @description Return a single sport category by id.
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description Resource id */
+                    id: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["NamedResourceResponse"];
+                    };
+                };
+            };
+        };
+        /**
+         * Update sport category (PUT)
+         * @description Update a custom sport category by id.
+         */
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description Resource id */
+                    id: string;
+                };
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["NamedResourceInput"];
+                };
+            };
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["NamedResourceResponse"];
+                    };
+                };
+            };
+        };
+        post?: never;
+        /**
+         * Delete sport category
+         * @description Delete a custom sport category by id.
+         */
+        delete: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description Resource id */
+                    id: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            acknowledged: boolean;
+                            deletedCount: number;
+                        };
+                    };
+                };
+            };
+        };
+        options?: never;
+        head?: never;
+        /**
+         * Update sport category (PATCH)
+         * @description Update a custom sport category by id.
+         */
+        patch: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description Resource id */
+                    id: string;
+                };
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["NamedResourceInput"];
+                };
+            };
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["NamedResourceResponse"];
+                    };
+                };
+            };
+        };
+        trace?: never;
+    };
+    "/api/sports/categories/{id}/favorite": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Favorite sport category
+         * @description Mark sport category as favorite for the authenticated user.
+         */
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description Resource id */
+                    id: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["NamedResourceResponse"];
+                    };
+                };
+            };
+        };
+        /**
+         * Unfavorite sport category
+         * @description Remove sport category from favorites for the authenticated user.
+         */
+        delete: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description Resource id */
+                    id: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            acknowledged: boolean;
+                            deletedCount: number;
+                        };
+                    };
+                };
+            };
+        };
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -3147,9 +4297,6 @@ export interface components {
             zeroIncomeBaseline: components["schemas"]["NetWorthZeroIncomeBaselineInput"];
             excludedCategories: components["schemas"]["ExcludedCategoryItemInput"][];
         };
-        WelcomeResponseInput: {
-            message: string;
-        };
         NamedResourceInput: {
             name: string;
         };
@@ -3163,6 +4310,321 @@ export interface components {
             isFavorite: boolean;
         };
         NamedResourcesResponseInput: components["schemas"]["NamedResourceResponseInput"][];
+        VehiclePaginationInput: {
+            nextCursor: string | null;
+            hasMore: boolean;
+            total: number;
+        };
+        VehicleEquipmentCreateInput: {
+            date: unknown;
+            itemName: string;
+            costPln: number;
+            description?: string | null;
+            transactionId?: string | null;
+        };
+        VehicleEquipmentUpdateInput: {
+            date?: unknown;
+            itemName?: string;
+            costPln?: number;
+            description?: string | null;
+            transactionId?: string | null;
+        };
+        VehicleEquipmentResponseInput: {
+            id: string;
+            ownerId: string;
+            vehicleId: string;
+            date: unknown;
+            itemName: string;
+            costPln: number;
+            description?: string | null;
+            transactionId?: string | null;
+            createdAt: unknown;
+            updatedAt: unknown;
+        };
+        VehicleEquipmentSummaryInput: {
+            totalCostPln: number;
+            totalItems: number;
+        };
+        VehicleEquipmentListResponseInput: components["schemas"]["VehicleEquipmentResponseInput"][];
+        VehicleEquipmentWithSummaryResponseInput: {
+            items: components["schemas"]["VehicleEquipmentResponseInput"][];
+            summary: components["schemas"]["VehicleEquipmentSummaryInput"];
+            pagination: components["schemas"]["VehiclePaginationInput"];
+        };
+        VehicleFuelEntryCreateInput: {
+            date: unknown;
+            fuelLiters: number;
+            /** @default true */
+            isFullTank: boolean;
+            unitPricePln: number;
+            costPln: number;
+            odometerKm: number;
+            stationBrand?: string | null;
+            stationAddress?: string | null;
+            description?: string | null;
+            transactionId?: string | null;
+        };
+        VehicleFuelEntryUpdateInput: {
+            date?: unknown;
+            fuelLiters?: number;
+            /** @default true */
+            isFullTank: boolean;
+            unitPricePln?: number;
+            costPln?: number;
+            odometerKm?: number;
+            stationBrand?: string | null;
+            stationAddress?: string | null;
+            description?: string | null;
+            transactionId?: string | null;
+        };
+        VehicleFuelEntryResponseInput: {
+            id: string;
+            ownerId: string;
+            vehicleId: string;
+            date: unknown;
+            fuelLiters: number;
+            isFullTank: boolean;
+            unitPricePln: number;
+            costPln: number;
+            odometerKm: number;
+            stationBrand?: string | null;
+            stationAddress?: string | null;
+            description?: string | null;
+            transactionId?: string | null;
+            createdAt: unknown;
+            updatedAt: unknown;
+        };
+        VehicleFuelEntryEnrichedResponseInput: {
+            id: string;
+            ownerId: string;
+            vehicleId: string;
+            date: unknown;
+            fuelLiters: number;
+            isFullTank: boolean;
+            unitPricePln: number;
+            costPln: number;
+            odometerKm: number;
+            stationBrand?: string | null;
+            stationAddress?: string | null;
+            description?: string | null;
+            transactionId?: string | null;
+            createdAt: unknown;
+            updatedAt: unknown;
+            distanceSincePreviousKm: number | null;
+            distanceSincePreviousFullKm: number | null;
+            fuelLitersToFull: number | null;
+            costToFullPln: number | null;
+            consumptionLPer100Km: number | null;
+            costPerKmPln: number | null;
+            kmPerLiter: number | null;
+        };
+        VehicleFuelSummaryInput: {
+            totalVolume: number;
+            totalCostPln: number;
+            avgConsumptionLPer100Km: number | null;
+            avgUnitPricePln: number | null;
+            totalCount: number;
+        };
+        VehicleFuelEntryListResponseInput: components["schemas"]["VehicleFuelEntryEnrichedResponseInput"][];
+        VehicleFuelWithSummaryResponseInput: {
+            items: components["schemas"]["VehicleFuelEntryEnrichedResponseInput"][];
+            summary: components["schemas"]["VehicleFuelSummaryInput"];
+            pagination: components["schemas"]["VehiclePaginationInput"];
+        };
+        VehicleMaintenanceCreateInput: {
+            /** @enum {string} */
+            section: "ownMaintenance" | "previousOwnerServices";
+            date: unknown;
+            costPln: number;
+            odometerKm?: number | null;
+            description?: string | null;
+            serviceProvider?: string | null;
+            serviceAddress?: string | null;
+            transactionId?: string | null;
+        };
+        VehicleMaintenanceUpdateInput: {
+            /** @enum {string} */
+            section?: "ownMaintenance" | "previousOwnerServices";
+            date?: unknown;
+            costPln?: number;
+            odometerKm?: number | null;
+            description?: string | null;
+            serviceProvider?: string | null;
+            serviceAddress?: string | null;
+            transactionId?: string | null;
+        };
+        VehicleMaintenanceResponseInput: {
+            id: string;
+            ownerId: string;
+            vehicleId: string;
+            /** @enum {string} */
+            section: "ownMaintenance" | "previousOwnerServices";
+            date: unknown;
+            costPln: number;
+            odometerKm?: number | null;
+            description?: string | null;
+            serviceProvider?: string | null;
+            serviceAddress?: string | null;
+            transactionId?: string | null;
+            createdAt: unknown;
+            updatedAt: unknown;
+        };
+        VehicleMaintenanceSummaryInput: {
+            totalCostPln: number;
+            totalRecords: number;
+        };
+        VehicleMaintenanceListResponseInput: components["schemas"]["VehicleMaintenanceResponseInput"][];
+        VehicleMaintenanceWithSummaryResponseInput: {
+            items: components["schemas"]["VehicleMaintenanceResponseInput"][];
+            summary: components["schemas"]["VehicleMaintenanceSummaryInput"];
+            pagination: components["schemas"]["VehiclePaginationInput"];
+        };
+        VehicleOverviewFuelStatsInput: {
+            totalSpentPln: number;
+            totalLiters: number;
+            avgConsumptionLPer100Km: number | null;
+            costPerKmPln: number | null;
+            entriesCount: number;
+        };
+        VehicleOverviewMaintenanceStatsInput: {
+            totalSpentPln: number;
+            entriesCount: number;
+        };
+        VehicleOverviewEquipmentStatsInput: {
+            totalSpentPln: number;
+            entriesCount: number;
+        };
+        VehicleOverviewStatsInput: {
+            currentOdometerKm: number | null;
+            minOdometerKm: number | null;
+            totalDistanceKm: number | null;
+            refuelingCount: number;
+            maintenanceCount: number;
+            equipmentCount: number;
+        };
+        VehicleOverviewActivityItemInput: {
+            id: string;
+            /** @enum {string} */
+            type: "fuel" | "maintenance" | "equipment";
+            date: unknown;
+            costPln: number;
+            title: string;
+            description?: string | null;
+            odometerKm?: number | null;
+            transactionId?: string | null;
+            fuelLiters?: number;
+            isFullTank?: boolean;
+            consumptionLPer100Km?: number | null;
+            /** @enum {string} */
+            maintenanceSection?: "ownMaintenance" | "previousOwnerServices";
+            serviceProvider?: string | null;
+        };
+        VehicleOverviewResponseInput: {
+            vehicleId: string;
+            totalSpentPln: number;
+            fuel: components["schemas"]["VehicleOverviewFuelStatsInput"];
+            maintenance: components["schemas"]["VehicleOverviewMaintenanceStatsInput"];
+            equipment: components["schemas"]["VehicleOverviewEquipmentStatsInput"];
+            stats: components["schemas"]["VehicleOverviewStatsInput"];
+            recentActivity: components["schemas"]["VehicleOverviewActivityItemInput"][];
+        };
+        VehicleCreateInput: {
+            name: string;
+            slug?: string;
+            brand?: string;
+            vehicleModel?: string;
+            /** @enum {string} */
+            type: "motorcycle" | "car" | "public_transport";
+            productionYear?: number;
+            notes?: string;
+        };
+        VehicleUpdateInput: {
+            name?: string;
+            slug?: string;
+            brand?: string;
+            vehicleModel?: string;
+            /** @enum {string} */
+            type?: "motorcycle" | "car" | "public_transport";
+            productionYear?: number;
+            notes?: string;
+        };
+        VehicleResponseInput: {
+            id: string;
+            ownerId: string;
+            slug: string;
+            name: string;
+            brand?: string;
+            vehicleModel?: string;
+            /** @enum {string} */
+            type: "motorcycle" | "car" | "public_transport";
+            productionYear?: number;
+            notes?: string;
+            createdAt: unknown;
+            updatedAt: unknown;
+        };
+        VehicleListResponseInput: components["schemas"]["VehicleResponseInput"][];
+        SpendingLinkItemInput: {
+            /** @enum {string} */
+            spendingType: "fuel" | "equipment" | "maintenance";
+            spendingId: string;
+        };
+        LinkSpendingsToTransactionInput: {
+            transactionId: string;
+            spendings: components["schemas"]["SpendingLinkItemInput"][];
+        };
+        UnlinkSpendingFromTransactionInput: {
+            /** @enum {string} */
+            spendingType: "fuel" | "equipment" | "maintenance";
+            spendingId: string;
+        };
+        SpendingLinkResponseInput: {
+            acknowledged: boolean;
+            modifiedCount: number;
+        };
+        VehicleSpendingSummaryInput: {
+            fuelTotalPln: number;
+            maintenanceTotalPln: number;
+            equipmentTotalPln: number;
+            totalSpentPln: number;
+            lastOdometerKm: number | null;
+            totalDistanceKm: number | null;
+            fuelEntriesCount: number;
+            maintenanceCount: number;
+            equipmentCount: number;
+        };
+        VehicleWithSpendingInput: {
+            id: string;
+            ownerId: string;
+            slug: string;
+            name: string;
+            brand?: string;
+            vehicleModel?: string;
+            /** @enum {string} */
+            type: "motorcycle" | "car" | "public_transport";
+            productionYear?: number;
+            notes?: string;
+            createdAt: unknown;
+            updatedAt: unknown;
+            spending: components["schemas"]["VehicleSpendingSummaryInput"];
+        };
+        GlobalVehiclesSummaryInput: {
+            totalVehicles: number;
+            totalSpentPln: number;
+            totalFuelSpentPln: number;
+            totalMaintenanceSpentPln: number;
+            totalEquipmentSpentPln: number;
+            totalFuelEntriesCount: number;
+            totalMaintenanceCount: number;
+            totalEquipmentCount: number;
+            totalDistanceKm: number;
+        };
+        VehiclesSummaryResponseInput: {
+            summary: components["schemas"]["GlobalVehiclesSummaryInput"];
+            vehicles: components["schemas"]["VehicleWithSpendingInput"][];
+        };
+        WelcomeResponseInput: {
+            message: string;
+        };
         LoginInput: {
             /** Format: email */
             email: string;
@@ -4068,9 +5530,6 @@ export interface components {
             zeroIncomeBaseline: components["schemas"]["NetWorthZeroIncomeBaseline"];
             excludedCategories: components["schemas"]["ExcludedCategoryItem"][];
         };
-        WelcomeResponse: {
-            message: string;
-        };
         NamedResource: {
             name: string;
         };
@@ -4084,6 +5543,344 @@ export interface components {
             isFavorite: boolean;
         };
         NamedResourcesResponse: components["schemas"]["NamedResourceResponse"][];
+        VehiclePagination: {
+            nextCursor: string | null;
+            hasMore: boolean;
+            total: number;
+        };
+        VehicleEquipmentCreate: {
+            /** Format: date-time */
+            date: string;
+            itemName: string;
+            costPln: number;
+            description?: string | null;
+            transactionId?: string | null;
+        };
+        VehicleEquipmentUpdate: {
+            /** Format: date-time */
+            date?: string;
+            itemName?: string;
+            costPln?: number;
+            description?: string | null;
+            transactionId?: string | null;
+        };
+        VehicleEquipmentResponse: {
+            id: string;
+            ownerId: string;
+            vehicleId: string;
+            /** Format: date-time */
+            date: string;
+            itemName: string;
+            costPln: number;
+            description?: string | null;
+            transactionId?: string | null;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            updatedAt: string;
+        };
+        VehicleEquipmentSummary: {
+            totalCostPln: number;
+            totalItems: number;
+        };
+        VehicleEquipmentListResponse: components["schemas"]["VehicleEquipmentResponse"][];
+        VehicleEquipmentWithSummaryResponse: {
+            items: components["schemas"]["VehicleEquipmentResponse"][];
+            summary: components["schemas"]["VehicleEquipmentSummary"];
+            pagination: components["schemas"]["VehiclePagination"];
+        };
+        VehicleFuelEntryCreate: {
+            /** Format: date-time */
+            date: string;
+            fuelLiters: number;
+            /** @default true */
+            isFullTank: boolean;
+            unitPricePln: number;
+            costPln: number;
+            odometerKm: number;
+            stationBrand?: string | null;
+            stationAddress?: string | null;
+            description?: string | null;
+            transactionId?: string | null;
+        };
+        VehicleFuelEntryUpdate: {
+            /** Format: date-time */
+            date?: string;
+            fuelLiters?: number;
+            /** @default true */
+            isFullTank: boolean;
+            unitPricePln?: number;
+            costPln?: number;
+            odometerKm?: number;
+            stationBrand?: string | null;
+            stationAddress?: string | null;
+            description?: string | null;
+            transactionId?: string | null;
+        };
+        VehicleFuelEntryResponse: {
+            id: string;
+            ownerId: string;
+            vehicleId: string;
+            /** Format: date-time */
+            date: string;
+            fuelLiters: number;
+            isFullTank: boolean;
+            unitPricePln: number;
+            costPln: number;
+            odometerKm: number;
+            stationBrand?: string | null;
+            stationAddress?: string | null;
+            description?: string | null;
+            transactionId?: string | null;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            updatedAt: string;
+        };
+        VehicleFuelEntryEnrichedResponse: {
+            id: string;
+            ownerId: string;
+            vehicleId: string;
+            /** Format: date-time */
+            date: string;
+            fuelLiters: number;
+            isFullTank: boolean;
+            unitPricePln: number;
+            costPln: number;
+            odometerKm: number;
+            stationBrand?: string | null;
+            stationAddress?: string | null;
+            description?: string | null;
+            transactionId?: string | null;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            updatedAt: string;
+            distanceSincePreviousKm: number | null;
+            distanceSincePreviousFullKm: number | null;
+            fuelLitersToFull: number | null;
+            costToFullPln: number | null;
+            consumptionLPer100Km: number | null;
+            costPerKmPln: number | null;
+            kmPerLiter: number | null;
+        };
+        VehicleFuelSummary: {
+            totalVolume: number;
+            totalCostPln: number;
+            avgConsumptionLPer100Km: number | null;
+            avgUnitPricePln: number | null;
+            totalCount: number;
+        };
+        VehicleFuelEntryListResponse: components["schemas"]["VehicleFuelEntryEnrichedResponse"][];
+        VehicleFuelWithSummaryResponse: {
+            items: components["schemas"]["VehicleFuelEntryEnrichedResponse"][];
+            summary: components["schemas"]["VehicleFuelSummary"];
+            pagination: components["schemas"]["VehiclePagination"];
+        };
+        VehicleMaintenanceCreate: {
+            /** @enum {string} */
+            section: "ownMaintenance" | "previousOwnerServices";
+            /** Format: date-time */
+            date: string;
+            costPln: number;
+            odometerKm?: number | null;
+            description?: string | null;
+            serviceProvider?: string | null;
+            serviceAddress?: string | null;
+            transactionId?: string | null;
+        };
+        VehicleMaintenanceUpdate: {
+            /** @enum {string} */
+            section?: "ownMaintenance" | "previousOwnerServices";
+            /** Format: date-time */
+            date?: string;
+            costPln?: number;
+            odometerKm?: number | null;
+            description?: string | null;
+            serviceProvider?: string | null;
+            serviceAddress?: string | null;
+            transactionId?: string | null;
+        };
+        VehicleMaintenanceResponse: {
+            id: string;
+            ownerId: string;
+            vehicleId: string;
+            /** @enum {string} */
+            section: "ownMaintenance" | "previousOwnerServices";
+            /** Format: date-time */
+            date: string;
+            costPln: number;
+            odometerKm?: number | null;
+            description?: string | null;
+            serviceProvider?: string | null;
+            serviceAddress?: string | null;
+            transactionId?: string | null;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            updatedAt: string;
+        };
+        VehicleMaintenanceSummary: {
+            totalCostPln: number;
+            totalRecords: number;
+        };
+        VehicleMaintenanceListResponse: components["schemas"]["VehicleMaintenanceResponse"][];
+        VehicleMaintenanceWithSummaryResponse: {
+            items: components["schemas"]["VehicleMaintenanceResponse"][];
+            summary: components["schemas"]["VehicleMaintenanceSummary"];
+            pagination: components["schemas"]["VehiclePagination"];
+        };
+        VehicleOverviewFuelStats: {
+            totalSpentPln: number;
+            totalLiters: number;
+            avgConsumptionLPer100Km: number | null;
+            costPerKmPln: number | null;
+            entriesCount: number;
+        };
+        VehicleOverviewMaintenanceStats: {
+            totalSpentPln: number;
+            entriesCount: number;
+        };
+        VehicleOverviewEquipmentStats: {
+            totalSpentPln: number;
+            entriesCount: number;
+        };
+        VehicleOverviewStats: {
+            currentOdometerKm: number | null;
+            minOdometerKm: number | null;
+            totalDistanceKm: number | null;
+            refuelingCount: number;
+            maintenanceCount: number;
+            equipmentCount: number;
+        };
+        VehicleOverviewActivityItem: {
+            id: string;
+            /** @enum {string} */
+            type: "fuel" | "maintenance" | "equipment";
+            /** Format: date-time */
+            date: string;
+            costPln: number;
+            title: string;
+            description?: string | null;
+            odometerKm?: number | null;
+            transactionId?: string | null;
+            fuelLiters?: number;
+            isFullTank?: boolean;
+            consumptionLPer100Km?: number | null;
+            /** @enum {string} */
+            maintenanceSection?: "ownMaintenance" | "previousOwnerServices";
+            serviceProvider?: string | null;
+        };
+        VehicleOverviewResponse: {
+            vehicleId: string;
+            totalSpentPln: number;
+            fuel: components["schemas"]["VehicleOverviewFuelStats"];
+            maintenance: components["schemas"]["VehicleOverviewMaintenanceStats"];
+            equipment: components["schemas"]["VehicleOverviewEquipmentStats"];
+            stats: components["schemas"]["VehicleOverviewStats"];
+            recentActivity: components["schemas"]["VehicleOverviewActivityItem"][];
+        };
+        VehicleCreate: {
+            name: string;
+            slug?: string;
+            brand?: string;
+            vehicleModel?: string;
+            /** @enum {string} */
+            type: "motorcycle" | "car" | "public_transport";
+            productionYear?: number;
+            notes?: string;
+        };
+        VehicleUpdate: {
+            name?: string;
+            slug?: string;
+            brand?: string;
+            vehicleModel?: string;
+            /** @enum {string} */
+            type?: "motorcycle" | "car" | "public_transport";
+            productionYear?: number;
+            notes?: string;
+        };
+        VehicleResponse: {
+            id: string;
+            ownerId: string;
+            slug: string;
+            name: string;
+            brand?: string;
+            vehicleModel?: string;
+            /** @enum {string} */
+            type: "motorcycle" | "car" | "public_transport";
+            productionYear?: number;
+            notes?: string;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            updatedAt: string;
+        };
+        VehicleListResponse: components["schemas"]["VehicleResponse"][];
+        SpendingLinkItem: {
+            /** @enum {string} */
+            spendingType: "fuel" | "equipment" | "maintenance";
+            spendingId: string;
+        };
+        LinkSpendingsToTransaction: {
+            transactionId: string;
+            spendings: components["schemas"]["SpendingLinkItem"][];
+        };
+        UnlinkSpendingFromTransaction: {
+            /** @enum {string} */
+            spendingType: "fuel" | "equipment" | "maintenance";
+            spendingId: string;
+        };
+        SpendingLinkResponse: {
+            acknowledged: boolean;
+            modifiedCount: number;
+        };
+        VehicleSpendingSummary: {
+            fuelTotalPln: number;
+            maintenanceTotalPln: number;
+            equipmentTotalPln: number;
+            totalSpentPln: number;
+            lastOdometerKm: number | null;
+            totalDistanceKm: number | null;
+            fuelEntriesCount: number;
+            maintenanceCount: number;
+            equipmentCount: number;
+        };
+        VehicleWithSpending: {
+            id: string;
+            ownerId: string;
+            slug: string;
+            name: string;
+            brand?: string;
+            vehicleModel?: string;
+            /** @enum {string} */
+            type: "motorcycle" | "car" | "public_transport";
+            productionYear?: number;
+            notes?: string;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            updatedAt: string;
+            spending: components["schemas"]["VehicleSpendingSummary"];
+        };
+        GlobalVehiclesSummary: {
+            totalVehicles: number;
+            totalSpentPln: number;
+            totalFuelSpentPln: number;
+            totalMaintenanceSpentPln: number;
+            totalEquipmentSpentPln: number;
+            totalFuelEntriesCount: number;
+            totalMaintenanceCount: number;
+            totalEquipmentCount: number;
+            totalDistanceKm: number;
+        };
+        VehiclesSummaryResponse: {
+            summary: components["schemas"]["GlobalVehiclesSummary"];
+            vehicles: components["schemas"]["VehicleWithSpending"][];
+        };
+        WelcomeResponse: {
+            message: string;
+        };
         Login: {
             /** Format: email */
             email: string;

@@ -1,0 +1,421 @@
+{
+  "title": "Vehicles",
+  "description": "Overview of your fleet, total spending, and individual vehicle costs.",
+  "newVehicle": "Add Vehicle",
+  "summary": {
+    "title": "Fleet Summary",
+    "totalSpending": "Total Spent",
+    "fuelSpending": "Fuel",
+    "maintenanceSpending": "Maintenance",
+    "equipmentSpending": "Equipment",
+    "totalVehicles": "Total Vehicles"
+  },
+  "card": {
+    "totalSpent": "Total Spent",
+    "odometer": "Odometer",
+    "productionYear": "Year",
+    "viewDetails": "View Vehicle",
+    "entriesCount": "Entries",
+    "fuel": "Fuel",
+    "maintenance": "Maint.",
+    "equipment": "Equip.",
+    "actionsMenu": "Vehicle actions"
+  },
+  "empty": {
+    "title": "No vehicles yet",
+    "description": "Add a car, motorcycle, or public transport card to start tracking fuel, maintenance, and equipment costs.",
+    "createFirst": "Add your first vehicle"
+  },
+  "loading": {
+    "title": "Loading vehicles...",
+    "description": "Please wait while we fetch your vehicle records and spendings."
+  },
+  "types": {
+    "car": "Car",
+    "motorcycle": "Motorcycle",
+    "public_transport": "Public Transport"
+  },
+  "actions": {
+    "backToAll": "Back to all vehicles",
+    "edit": "Edit",
+    "delete": "Delete",
+    "save": "Save",
+    "cancel": "Cancel",
+    "filterTitle": "Filters",
+    "add": "Add",
+    "resetFilters": "Reset Filters",
+    "linkTransaction": "Link to transaction",
+    "unlinkTransaction": "Unlink from transaction",
+    "filterStartDate": "From Date",
+    "filterEndDate": "To Date",
+    "loadMore": "Load More",
+    "loadMoreWithCount": "Load more ({{loaded}} of {{total}})",
+    "loadingMore": "Loading more...",
+    "showingCount": "Showing {{loaded}} of {{total}} records",
+    "showingAll": "Showing all {{total}} records"
+  },
+  "spendingTypes": {
+    "fuel": "Fuel",
+    "equipment": "Equipment",
+    "maintenance": "Maintenance"
+  },
+  "tabs": {
+    "overview": "Overview",
+    "fuel": "Fuel",
+    "equipment": "Equipment",
+    "maintenance": "Maintenance"
+  },
+  "singleVehicle": {
+    "loadingTitle": "Loading vehicle...",
+    "loadingDescription": "Please wait while we load vehicle details.",
+    "notFoundTitle": "Vehicle not found",
+    "notFoundDescription": "We could not find the requested vehicle. It may have been removed or the link is incorrect.",
+    "backToVehicles": "Back to all vehicles",
+    "editVehicle": "Edit Vehicle",
+    "deleteVehicle": "Delete Vehicle",
+    "openNavigation": "Open navigation",
+    "closeNavigation": "Close navigation"
+  },
+  "modals": {
+    "createTitle": "Add Vehicle",
+    "createDescription": "Add a new vehicle to track its fuel, maintenance, and equipment.",
+    "updateTitle": "Edit Vehicle",
+    "updateDescription": "Update details for {{name}}.",
+    "deleteTitle": "Delete Vehicle",
+    "deletePrompt": "Are you sure you want to delete {{name}}?",
+    "deleteHint": "This vehicle and its associated records will be permanently removed. This action cannot be undone.",
+    "deleteConfirm": "Delete Vehicle"
+  },
+  "form": {
+    "name": "Vehicle Name",
+    "namePlaceholder": "e.g. Daily Car, Weekend Motorcycle",
+    "type": "Vehicle Type",
+    "brand": "Brand",
+    "brandPlaceholder": "e.g. Toyota, Honda, Suzuki",
+    "model": "Model",
+    "modelPlaceholder": "e.g. Corolla, Civic, SV650",
+    "productionYear": "Production Year",
+    "yearPlaceholder": "e.g. 2018",
+    "slug": "Custom Slug",
+    "slugPlaceholder": "e.g. daily-car (optional)",
+    "notes": "Notes",
+    "notesPlaceholder": "Any notes or details about this vehicle...",
+    "createSubmit": "Create Vehicle",
+    "updateSubmit": "Save Changes",
+    "errors": {
+      "nameRequired": "Vehicle name is required",
+      "yearInvalid": "Year must be between 1900 and 2100"
+    }
+  },
+  "toasts": {
+    "createdTitle": "{{name}} created successfully",
+    "createErrorTitle": "Failed to create vehicle",
+    "updatedTitle": "{{name}} updated successfully",
+    "updateErrorTitle": "Failed to update vehicle",
+    "deletedTitle": "{{name}} deleted successfully",
+    "deleteErrorTitle": "Failed to delete vehicle"
+  },
+  "overview": {
+    "totalSpentTitle": "Total Spent",
+    "viewAll": "View all",
+    "stats": {
+      "currentOdometer": "Current Odometer",
+      "distanceLogged": "Distance Logged",
+      "refuelingSessions": "Refueling Sessions",
+      "maintenanceEvents": "Maintenance Events"
+    },
+    "breakdown": {
+      "title": "Spending Breakdown",
+      "subtitle": "Detailed costs across fuel, maintenance, and equipment",
+      "fuelTitle": "Fuel",
+      "totalFuel": "Total Fuel",
+      "avgConsumption": "Avg Consumption",
+      "costPerKm": "Cost per km",
+      "maintenanceTitle": "Maintenance",
+      "totalRecords": "Total Records",
+      "equipmentTitle": "Equipment",
+      "totalItems": "Total Items",
+      "viewSection": "View {{section}}"
+    },
+    "activity": {
+      "title": "Recent Activity",
+      "subtitle": "Latest chronological records across all categories",
+      "emptyTitle": "No activity yet",
+      "emptyDescription": "Logged refueling sessions, maintenance repairs, and equipment purchases will appear here.",
+      "fuelBadge": "Fuel",
+      "maintenanceBadge": "Maintenance",
+      "equipmentBadge": "Equipment",
+      "fullTank": "Full tank",
+      "partialTank": "Partial tank",
+      "linkedTransaction": "Linked"
+    },
+    "maintenanceSections": {
+      "ownMaintenance": "Own Maintenance",
+      "previousOwnerServices": "Previous Owner Services"
+    }
+  },
+  "fuelPage": {
+    "title": "Fuel Logs",
+    "description": "Refueling history, consumption statistics, and station details.",
+    "newEntry": "Add Refueling",
+    "summary": {
+      "totalVolume": "Total Volume",
+      "totalCost": "Total Spent",
+      "avgConsumption": "Avg Consumption",
+      "avgUnitPrice": "Avg Unit Price"
+    },
+    "filters": {
+      "startDate": "From Date",
+      "endDate": "To Date",
+      "all": "All",
+      "fullTankOnly": "Full tank only",
+      "reset": "Reset Filters"
+    },
+    "table": {
+      "date": "Date",
+      "odometer": "Odometer",
+      "distance": "Distance",
+      "volume": "Volume",
+      "unitPrice": "Unit Price",
+      "cost": "Cost",
+      "consumption": "Consumption",
+      "costPerKm": "Cost/km",
+      "station": "Gas Station",
+      "actions": "Actions",
+      "fullTankBadge": "Full"
+    },
+    "empty": {
+      "title": "No refueling entries",
+      "description": "Log your fill-ups to monitor fuel volume, consumption (L/100 km), and running costs.",
+      "createFirst": "Add first refueling",
+      "noMatching": "No refueling records match the selected filters."
+    },
+    "modals": {
+      "createTitle": "Add Refueling",
+      "createDescription": "Record a new fuel log entry for {{name}}.",
+      "updateTitle": "Edit Refueling",
+      "updateDescription": "Update refueling record details.",
+      "deleteTitle": "Delete Refueling",
+      "deletePrompt": "Are you sure you want to delete this refueling record?",
+      "deleteHint": "This fuel entry and its calculations will be permanently deleted.",
+      "deleteConfirm": "Delete Refueling"
+    },
+    "form": {
+      "date": "Date",
+      "odometer": "Odometer (km)",
+      "odometerPlaceholder": "e.g. 154200",
+      "fuelLiters": "Fuel Liters (L)",
+      "fuelLitersPlaceholder": "e.g. 45.50",
+      "unitPrice": "Unit Price (PLN/L)",
+      "unitPricePlaceholder": "e.g. 6.45",
+      "cost": "Total Cost (PLN)",
+      "costPlaceholder": "e.g. 293.48",
+      "isFullTank": "Full tank fill-up",
+      "isFullTankHint": "Mark as full tank to calculate consumption",
+      "stationBrand": "Gas Station Brand",
+      "stationBrandPlaceholder": "e.g. Orlen, Shell, BP",
+      "stationAddress": "Station Address",
+      "stationAddressPlaceholder": "e.g. Main St. 12",
+      "description": "Notes",
+      "descriptionPlaceholder": "Additional notes...",
+      "createSubmit": "Save Refueling",
+      "updateSubmit": "Save Changes",
+      "errors": {
+        "dateRequired": "Date is required",
+        "fuelLitersPositive": "Fuel liters must be positive",
+        "unitPricePositive": "Unit price must be positive",
+        "costPositive": "Total cost must be positive",
+        "odometerNonNegative": "Odometer reading cannot be negative"
+      }
+    },
+    "toasts": {
+      "createdTitle": "Refueling added successfully",
+      "createErrorTitle": "Failed to add refueling",
+      "updatedTitle": "Refueling updated successfully",
+      "updateErrorTitle": "Failed to update refueling",
+      "deletedTitle": "Refueling deleted successfully",
+      "deleteErrorTitle": "Failed to delete refueling"
+    }
+  },
+  "equipmentPage": {
+    "title": "Equipment & Accessories",
+    "description": "Log and track equipment, accessories, and gear purchased for this vehicle.",
+    "addEquipment": "Add Equipment",
+    "summary": {
+      "totalSpending": "Total Equipment Spent",
+      "totalItems": "Total Equipment Items"
+    },
+    "filter": {
+      "search": "Search equipment...",
+      "startDate": "From Date",
+      "endDate": "To Date",
+      "reset": "Reset Filters"
+    },
+    "table": {
+      "date": "Date",
+      "itemName": "Item Name",
+      "cost": "Cost",
+      "description": "Description",
+      "actions": "Actions"
+    },
+    "empty": {
+      "title": "No equipment items",
+      "description": "Log accessories, parts, tools, or gear purchased for this vehicle.",
+      "createFirst": "Add first equipment item",
+      "noMatching": "No equipment records match the selected filters."
+    },
+    "modals": {
+      "createTitle": "Add Equipment",
+      "createDescription": "Record a new equipment item for {{name}}.",
+      "updateTitle": "Edit Equipment",
+      "updateDescription": "Update equipment item details.",
+      "deleteTitle": "Delete Equipment",
+      "deletePrompt": "Are you sure you want to delete this equipment item?",
+      "deleteHint": "This equipment record will be permanently deleted.",
+      "deleteConfirm": "Delete Equipment"
+    },
+    "form": {
+      "date": "Date",
+      "itemName": "Item Name",
+      "itemNamePlaceholder": "e.g. Winter Tires, Dashcam, Roof Rack",
+      "cost": "Cost (PLN)",
+      "costPlaceholder": "e.g. 450.00",
+      "description": "Description",
+      "descriptionPlaceholder": "e.g. Model, serial number, notes...",
+      "createSubmit": "Save Equipment",
+      "updateSubmit": "Save Changes",
+      "errors": {
+        "dateRequired": "Date is required",
+        "itemNameRequired": "Item name is required",
+        "costPositive": "Cost must be positive"
+      }
+    },
+    "toasts": {
+      "createdTitle": "Equipment added successfully",
+      "createErrorTitle": "Failed to add equipment",
+      "updatedTitle": "Equipment updated successfully",
+      "updateErrorTitle": "Failed to update equipment",
+      "deletedTitle": "Equipment deleted successfully",
+      "deleteErrorTitle": "Failed to delete equipment"
+    }
+  },
+  "maintenancePage": {
+    "title": "Maintenance & Services",
+    "description": "Log vehicle services, repairs, technical inspections, and running maintenance costs.",
+    "addMaintenance": "Add Maintenance",
+    "addPreviousOwnerService": "Add Previous Service",
+    "sections": {
+      "all": "All Records",
+      "ownMaintenance": "Own Maintenance",
+      "previousOwnerServices": "Previous Owner Services"
+    },
+    "summary": {
+      "totalSpending": "Total Maintenance Spent",
+      "totalRecords": "Total Service Records",
+      "previousOwner": "Previous Owner Services"
+    },
+    "filter": {
+      "search": "Search services, providers...",
+      "startDate": "From Date",
+      "endDate": "To Date",
+      "section": "Section",
+      "reset": "Reset Filters"
+    },
+    "table": {
+      "date": "Date",
+      "section": "Section",
+      "serviceProvider": "Service Provider",
+      "odometer": "Odometer",
+      "cost": "Cost",
+      "description": "Description",
+      "linked": "Linked",
+      "actions": "Actions"
+    },
+    "empty": {
+      "title": "No maintenance records",
+      "description": "Keep a complete history of services, oil changes, repairs, and technical checkups.",
+      "createFirst": "Add first maintenance record",
+      "previousOwnerTitle": "No previous owner service records",
+      "previousOwnerDescription": "Log historical services, timing belt changes, or inspections performed prior to your ownership.",
+      "previousOwnerCreateFirst": "Add first previous service",
+      "noMatching": "No maintenance records match the selected filters."
+    },
+    "modals": {
+      "createTitle": "Add Maintenance Record",
+      "createDescription": "Record a new service or maintenance event for {{name}}.",
+      "createPreviousOwnerTitle": "Add Previous Owner Service",
+      "createPreviousOwnerDescription": "Record a historical service or repair performed prior to your ownership for {{name}}.",
+      "updateTitle": "Edit Maintenance Record",
+      "updateDescription": "Update maintenance record details.",
+      "deleteTitle": "Delete Maintenance Record",
+      "deletePrompt": "Are you sure you want to delete this maintenance record?",
+      "deleteHint": "This maintenance log entry will be permanently removed.",
+      "deleteConfirm": "Delete Record"
+    },
+    "form": {
+      "section": "Maintenance Section",
+      "date": "Date",
+      "cost": "Cost (PLN)",
+      "costPlaceholder": "e.g. 350.00",
+      "odometer": "Odometer (km)",
+      "odometerPlaceholder": "e.g. 154200",
+      "serviceProvider": "Service Provider / Workshop",
+      "serviceProviderPlaceholder": "e.g. Auto Serwis Kowalski, ASO Toyota",
+      "serviceAddress": "Workshop Address",
+      "serviceAddressPlaceholder": "e.g. ul. Opolska 12, Kraków",
+      "description": "Description",
+      "descriptionPlaceholder": "e.g. Engine oil replacement 5W-30 + oil filter + cabin filter",
+      "createSubmit": "Save Maintenance",
+      "updateSubmit": "Save Changes",
+      "errors": {
+        "dateRequired": "Date is required",
+        "costPositive": "Cost must be positive",
+        "odometerNonNegative": "Odometer cannot be negative"
+      }
+    },
+    "toasts": {
+      "createdTitle": "Maintenance record added successfully",
+      "createErrorTitle": "Failed to add maintenance record",
+      "updatedTitle": "Maintenance record updated successfully",
+      "updateErrorTitle": "Failed to update maintenance record",
+      "deletedTitle": "Maintenance record deleted successfully",
+      "deleteErrorTitle": "Failed to delete maintenance record"
+    }
+  },
+  "spendings": {
+    "linkModal": {
+      "title": "Link to Transaction",
+      "description": "Associate this vehicle expense with an existing bank or card transaction.",
+      "spendingDetails": "Spending Details",
+      "selectTransaction": "Select Transaction",
+      "searchPlaceholder": "Search by title, category, or amount...",
+      "exactDateChip": "Exact Date ({{date}})",
+      "windowChip": "±3 Days",
+      "allDatesChip": "All Dates",
+      "transportOnlyChip": "Transport Category",
+      "allCategoriesChip": "All Categories",
+      "exactMatchBadge": "Exact Amount",
+      "noTransactionsFound": "No expense transactions found matching criteria.",
+      "linkSubmit": "Link Transaction",
+      "linking": "Linking..."
+    },
+    "unlinkModal": {
+      "title": "Unlink from Transaction",
+      "prompt": "Are you sure you want to decouple this spending from its linked transaction?",
+      "hint": "The financial transaction will not be deleted, only the association with this vehicle record will be removed.",
+      "confirm": "Unlink Transaction",
+      "unlinking": "Unlinking..."
+    },
+    "toasts": {
+      "linkedSuccess": "Vehicle spending linked to transaction successfully",
+      "linkError": "Failed to link spending to transaction",
+      "unlinkedSuccess": "Vehicle spending unlinked from transaction successfully",
+      "unlinkError": "Failed to unlink spending from transaction"
+    },
+    "badge": {
+      "linked": "Linked",
+      "unlinked": "Unlinked",
+      "viewTransaction": "View transaction"
+    }
+  }
+}

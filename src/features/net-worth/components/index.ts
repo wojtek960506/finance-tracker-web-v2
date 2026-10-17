@@ -1,16 +1,2 @@
-export * from './capital-structure';
-export * from './financial-independence-page';
-export * from './monthly-cashflow-dynamics';
-export * from './net-worth-allocation-breakdown';
-export * from './net-worth-allocation-item';
-export * from './net-worth-allocation-progress-bar';
-export * from './net-worth-breakdown-row';
-export * from './net-worth-currency-breakdown';
-export * from './net-worth-currency-card';
-export * from './net-worth-empty-state';
-export * from './net-worth-independence-breakdown';
-export * from './net-worth-independence-card';
-export * from './net-worth-independence-cards';
-export * from './net-worth-page';
-export * from './net-worth-summary-card';
-export * from './net-worth-summary-cards';
+export { FinancialIndependencePage } from './financial-independence-page';
+export { NetWorthPage } from './net-worth-page';
