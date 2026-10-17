@@ -62,8 +62,8 @@ export const VehiclesEquipmentContent = () => {
     queryParams,
   );
 
-  const items = data?.items ?? [];
-  const summary = data?.summary;
+  const items = useMemo(() => data?.pages.flatMap((page) => page.items) ?? [], [data]);
+  const summary = data?.pages[0]?.summary;
 
   const filteredItems = useMemo(() => {
     if (!filters.search) return items;

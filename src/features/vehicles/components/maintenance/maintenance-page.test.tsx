@@ -75,6 +75,11 @@ const mockMaintenanceResponse: VehicleMaintenanceWithSummaryResponse = {
   },
 };
 
+const createMockInfiniteData = (response: VehicleMaintenanceWithSummaryResponse) => ({
+  pages: [response],
+  pageParams: [undefined],
+});
+
 const renderMaintenancePage = () => {
   const queryClient = createTestQueryClient();
   return render(
@@ -135,7 +140,7 @@ describe('VehiclesMaintenanceContent', () => {
 
   it('renders summary cards, section tabs, filter bar, and entries table with data', () => {
     vi.spyOn(vehiclesHooks, 'useMaintenance').mockReturnValue({
-      data: mockMaintenanceResponse,
+      data: createMockInfiniteData(mockMaintenanceResponse),
       isLoading: false,
       isFetching: false,
       isError: false,
@@ -177,7 +182,7 @@ describe('VehiclesMaintenanceContent', () => {
 
   it('filters maintenance items by search term', () => {
     vi.spyOn(vehiclesHooks, 'useMaintenance').mockReturnValue({
-      data: mockMaintenanceResponse,
+      data: createMockInfiniteData(mockMaintenanceResponse),
       isLoading: false,
       isFetching: false,
       isError: false,
@@ -196,7 +201,7 @@ describe('VehiclesMaintenanceContent', () => {
 
   it('switches section tab and updates query', () => {
     const useMaintenanceSpy = vi.spyOn(vehiclesHooks, 'useMaintenance').mockReturnValue({
-      data: mockMaintenanceResponse,
+      data: createMockInfiniteData(mockMaintenanceResponse),
       isLoading: false,
       isFetching: false,
       isError: false,
@@ -232,11 +237,11 @@ describe('VehiclesMaintenanceContent', () => {
 
   it('renders empty state when there are no maintenance items and adapts to section', () => {
     vi.spyOn(vehiclesHooks, 'useMaintenance').mockReturnValue({
-      data: {
+      data: createMockInfiniteData({
         items: [],
         summary: { totalCostPln: 0, totalRecords: 0 },
         pagination: { nextCursor: null, hasMore: false, total: 0 },
-      },
+      }),
       isLoading: false,
       isFetching: false,
       isError: false,
@@ -266,7 +271,7 @@ describe('VehiclesMaintenanceContent', () => {
 
   it('opens create modal when clicking Add Maintenance button', () => {
     vi.spyOn(vehiclesHooks, 'useMaintenance').mockReturnValue({
-      data: mockMaintenanceResponse,
+      data: createMockInfiniteData(mockMaintenanceResponse),
       isLoading: false,
       isFetching: false,
       isError: false,
@@ -281,7 +286,7 @@ describe('VehiclesMaintenanceContent', () => {
 
   it('opens update modal when clicking Edit button on a row', () => {
     vi.spyOn(vehiclesHooks, 'useMaintenance').mockReturnValue({
-      data: mockMaintenanceResponse,
+      data: createMockInfiniteData(mockMaintenanceResponse),
       isLoading: false,
       isFetching: false,
       isError: false,
@@ -300,7 +305,7 @@ describe('VehiclesMaintenanceContent', () => {
 
   it('opens delete modal when clicking Delete button on a row', () => {
     vi.spyOn(vehiclesHooks, 'useMaintenance').mockReturnValue({
-      data: mockMaintenanceResponse,
+      data: createMockInfiniteData(mockMaintenanceResponse),
       isLoading: false,
       isFetching: false,
       isError: false,
@@ -319,7 +324,7 @@ describe('VehiclesMaintenanceContent', () => {
 
   it('opens LinkSpendingModal when clicking link action button on an unlinked row', () => {
     vi.spyOn(vehiclesHooks, 'useMaintenance').mockReturnValue({
-      data: mockMaintenanceResponse,
+      data: createMockInfiniteData(mockMaintenanceResponse),
       isLoading: false,
       isFetching: false,
       isError: false,
@@ -337,7 +342,7 @@ describe('VehiclesMaintenanceContent', () => {
 
   it('renders linked transaction badge and opens UnlinkSpendingModal', () => {
     vi.spyOn(vehiclesHooks, 'useMaintenance').mockReturnValue({
-      data: mockMaintenanceResponse,
+      data: createMockInfiniteData(mockMaintenanceResponse),
       isLoading: false,
       isFetching: false,
       isError: false,

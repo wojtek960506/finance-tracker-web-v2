@@ -6,7 +6,7 @@ import {
   useSpendingModalState,
 } from '@vehicles/components/spendings';
 import { useFuelEntries, useVehicleRecordModals } from '@vehicles/hooks';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { SingleVehicleLayout, useVehicleContext } from '../single-vehicle';
@@ -57,8 +57,8 @@ export const VehiclesFuelContent = () => {
     filters,
   );
 
-  const entries = data?.items ?? [];
-  const summary = data?.summary;
+  const entries = useMemo(() => data?.pages.flatMap((page) => page.items) ?? [], [data]);
+  const summary = data?.pages[0]?.summary;
 
   const hasFilters = Boolean(filters.startDate || filters.endDate || filters.isFullTank);
 

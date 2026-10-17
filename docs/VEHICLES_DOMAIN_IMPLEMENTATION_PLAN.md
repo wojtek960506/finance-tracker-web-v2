@@ -220,13 +220,14 @@ flowchart TD
 ### ⏳ Phase 8: Cursor-Based Infinite Loading & Rendering Optimization (In Progress)
 
 - [x] **Step 1A: Pagination Constants & Localization (Completed)**
-  - Configured `DEFAULT_PAGE_LIMIT = 20` in `src/features/vehicles/consts.ts`.
+  - Configured `DEFAULT_PAGE_LIMIT = 50` in `src/features/vehicles/consts.ts`.
   - Added `loadMore`, `loadingMore`, and `showingCount` keys across all 4 locales (`en`, `pl`, `de`, `ru`).
 - [x] **Step 1B: Reusable Table Shell Cursor Pagination (Completed)**
   - Extended `VehicleTableShell` with progress counter and "Load More" action button.
   - Added unit test suite covering footer display, counter rendering, and load more button interactions.
-- [ ] **Step 1C: Infinite Query Hooks**
-  - Migrate `useFuelEntries`, `useEquipment`, and `useMaintenance` to `useInfiniteQuery`.
+- [x] **Step 1C: Infinite Query Hooks (Completed)**
+  - Migrated `useFuelEntries`, `useEquipment`, and `useMaintenance` to `useInfiniteQuery` without backward-compatibility shims.
+  - Flattened pages in feature views (`data?.pages.flatMap(...)`).
 - [ ] **Step 1D: Wire Cursor Props to Table Views & Pages**
   - Pass infinite pagination props to Fuel, Equipment, and Maintenance table components and pages.
 - [ ] **Step 2: DOM & Rendering Virtualization / Optimization**

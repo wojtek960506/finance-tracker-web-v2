@@ -6,6 +6,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { createTestQueryClient } from '@test-utils/create-test-query-client';
 
 import * as vehiclesApi from '../api';
+import { DEFAULT_PAGE_LIMIT } from '../consts';
 
 import { useEquipment } from './use-equipment';
 import { useFuelEntries } from './use-fuel-entries';
@@ -121,7 +122,11 @@ describe('Vehicle Overview Hooks', () => {
         expect(result.current.isSuccess).toBe(true);
       });
 
-      expect(vehiclesApi.getFuelEntries).toHaveBeenCalledWith('v-1', undefined);
+      expect(vehiclesApi.getFuelEntries).toHaveBeenCalledWith('v-1', {
+        cursor: undefined,
+        limit: DEFAULT_PAGE_LIMIT,
+      });
+      expect(result.current.data?.pages).toHaveLength(1);
     });
   });
 
@@ -141,7 +146,11 @@ describe('Vehicle Overview Hooks', () => {
         expect(result.current.isSuccess).toBe(true);
       });
 
-      expect(vehiclesApi.getMaintenance).toHaveBeenCalledWith('v-1', undefined);
+      expect(vehiclesApi.getMaintenance).toHaveBeenCalledWith('v-1', {
+        cursor: undefined,
+        limit: DEFAULT_PAGE_LIMIT,
+      });
+      expect(result.current.data?.pages).toHaveLength(1);
     });
   });
 
@@ -161,7 +170,11 @@ describe('Vehicle Overview Hooks', () => {
         expect(result.current.isSuccess).toBe(true);
       });
 
-      expect(vehiclesApi.getEquipment).toHaveBeenCalledWith('v-1', undefined);
+      expect(vehiclesApi.getEquipment).toHaveBeenCalledWith('v-1', {
+        cursor: undefined,
+        limit: DEFAULT_PAGE_LIMIT,
+      });
+      expect(result.current.data?.pages).toHaveLength(1);
     });
   });
 });

@@ -71,6 +71,11 @@ const mockEquipmentResponse: VehicleEquipmentWithSummaryResponse = {
   },
 };
 
+const createMockInfiniteData = (response: VehicleEquipmentWithSummaryResponse) => ({
+  pages: [response],
+  pageParams: [undefined],
+});
+
 const renderEquipmentPage = () => {
   const queryClient = createTestQueryClient();
   return render(
@@ -131,7 +136,7 @@ describe('VehiclesEquipmentContent', () => {
 
   it('renders summary cards, filter bar, and entries table with data', () => {
     vi.spyOn(vehiclesHooks, 'useEquipment').mockReturnValue({
-      data: mockEquipmentResponse,
+      data: createMockInfiniteData(mockEquipmentResponse),
       isLoading: false,
       isFetching: false,
       isError: false,
@@ -161,7 +166,7 @@ describe('VehiclesEquipmentContent', () => {
 
   it('filters equipment items by search term', () => {
     vi.spyOn(vehiclesHooks, 'useEquipment').mockReturnValue({
-      data: mockEquipmentResponse,
+      data: createMockInfiniteData(mockEquipmentResponse),
       isLoading: false,
       isFetching: false,
       isError: false,
@@ -180,11 +185,11 @@ describe('VehiclesEquipmentContent', () => {
 
   it('renders empty state when there are no equipment items', () => {
     vi.spyOn(vehiclesHooks, 'useEquipment').mockReturnValue({
-      data: {
+      data: createMockInfiniteData({
         items: [],
         summary: { totalCostPln: 0, totalItems: 0 },
         pagination: { nextCursor: null, hasMore: false, total: 0 },
-      },
+      }),
       isLoading: false,
       isFetching: false,
       isError: false,
@@ -204,7 +209,7 @@ describe('VehiclesEquipmentContent', () => {
 
   it('opens create modal when clicking Add Equipment button', () => {
     vi.spyOn(vehiclesHooks, 'useEquipment').mockReturnValue({
-      data: mockEquipmentResponse,
+      data: createMockInfiniteData(mockEquipmentResponse),
       isLoading: false,
       isFetching: false,
       isError: false,
@@ -219,7 +224,7 @@ describe('VehiclesEquipmentContent', () => {
 
   it('opens update modal when clicking Edit button on a row', () => {
     vi.spyOn(vehiclesHooks, 'useEquipment').mockReturnValue({
-      data: mockEquipmentResponse,
+      data: createMockInfiniteData(mockEquipmentResponse),
       isLoading: false,
       isFetching: false,
       isError: false,
@@ -238,7 +243,7 @@ describe('VehiclesEquipmentContent', () => {
 
   it('opens delete modal when clicking Delete button on a row', () => {
     vi.spyOn(vehiclesHooks, 'useEquipment').mockReturnValue({
-      data: mockEquipmentResponse,
+      data: createMockInfiniteData(mockEquipmentResponse),
       isLoading: false,
       isFetching: false,
       isError: false,
@@ -257,7 +262,7 @@ describe('VehiclesEquipmentContent', () => {
 
   it('opens LinkSpendingModal when clicking link action button on an unlinked row', () => {
     vi.spyOn(vehiclesHooks, 'useEquipment').mockReturnValue({
-      data: mockEquipmentResponse,
+      data: createMockInfiniteData(mockEquipmentResponse),
       isLoading: false,
       isFetching: false,
       isError: false,
@@ -275,7 +280,7 @@ describe('VehiclesEquipmentContent', () => {
 
   it('renders linked transaction badge and opens UnlinkSpendingModal', () => {
     vi.spyOn(vehiclesHooks, 'useEquipment').mockReturnValue({
-      data: mockEquipmentResponse,
+      data: createMockInfiniteData(mockEquipmentResponse),
       isLoading: false,
       isFetching: false,
       isError: false,

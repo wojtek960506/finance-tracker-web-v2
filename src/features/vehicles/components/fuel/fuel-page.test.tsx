@@ -94,6 +94,11 @@ const mockFuelResponse: VehicleFuelWithSummaryResponse = {
   },
 };
 
+const createMockInfiniteData = (response: VehicleFuelWithSummaryResponse) => ({
+  pages: [response],
+  pageParams: [undefined],
+});
+
 const renderFuelPage = () => {
   const queryClient = createTestQueryClient();
   return render(
@@ -154,7 +159,7 @@ describe('VehiclesFuelContent', () => {
 
   it('renders summary cards, filter bar, and entries table with data', () => {
     vi.spyOn(vehiclesHooks, 'useFuelEntries').mockReturnValue({
-      data: mockFuelResponse,
+      data: createMockInfiniteData(mockFuelResponse),
       isLoading: false,
       isFetching: false,
       isError: false,
@@ -182,7 +187,7 @@ describe('VehiclesFuelContent', () => {
 
   it('renders empty state when there are no fuel entries', () => {
     vi.spyOn(vehiclesHooks, 'useFuelEntries').mockReturnValue({
-      data: {
+      data: createMockInfiniteData({
         items: [],
         summary: {
           totalVolume: 0,
@@ -192,7 +197,7 @@ describe('VehiclesFuelContent', () => {
           totalCount: 0,
         },
         pagination: { nextCursor: null, hasMore: false, total: 0 },
-      },
+      }),
       isLoading: false,
       isFetching: false,
       isError: false,
@@ -212,7 +217,7 @@ describe('VehiclesFuelContent', () => {
 
   it('opens create modal when clicking Add Refueling button', () => {
     vi.spyOn(vehiclesHooks, 'useFuelEntries').mockReturnValue({
-      data: mockFuelResponse,
+      data: createMockInfiniteData(mockFuelResponse),
       isLoading: false,
       isFetching: false,
       isError: false,
@@ -227,7 +232,7 @@ describe('VehiclesFuelContent', () => {
 
   it('opens LinkSpendingModal when clicking link action button', () => {
     vi.spyOn(vehiclesHooks, 'useFuelEntries').mockReturnValue({
-      data: mockFuelResponse,
+      data: createMockInfiniteData(mockFuelResponse),
       isLoading: false,
       isFetching: false,
       isError: false,
@@ -249,10 +254,10 @@ describe('VehiclesFuelContent', () => {
       transactionId: 'tx-123',
     };
     vi.spyOn(vehiclesHooks, 'useFuelEntries').mockReturnValue({
-      data: {
+      data: createMockInfiniteData({
         ...mockFuelResponse,
         items: [entryWithTx],
-      },
+      }),
       isLoading: false,
       isFetching: false,
       isError: false,
