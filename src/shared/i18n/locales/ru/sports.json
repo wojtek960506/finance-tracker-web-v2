@@ -1,0 +1,89 @@
+{
+  "title": "Спорт",
+  "description": "Отслеживайте и анализируйте ваши расходы на спорт, экипировку и тренировки.",
+  "tabs": {
+    "overall": "Обзор",
+    "allCategories": "Категории",
+    "manageCategories": "Управление категориями"
+  },
+  "categories": {
+    "other": "Другое",
+    "addCategory": "Добавить категорию",
+    "editCategory": "Редактировать категорию",
+    "deleteCategory": "Удалить категорию",
+    "categoryName": "Название категории",
+    "system": "Системная",
+    "custom": "Пользовательская",
+    "favorites": "Избранное",
+    "allCategories": "Все категории",
+    "empty": "Категории пока не созданы."
+  },
+  "stats": {
+    "totalSpending": "Всего потрачено",
+    "totalEntries": "Всего записей",
+    "topCategory": "Главная категория",
+    "monthlyAverage": "В среднем за месяц",
+    "yearFilter": "Год",
+    "allYears": "За всё время",
+    "categoryBreakdown": "Расходы по категориям",
+    "yearlyTrend": "Годовые тренды",
+    "monthlyTrend": "Месячные тренды",
+    "spendingShare": "Доля расходов",
+    "emptyStats": "Нет данных о спортивных расходах за этот период."
+  },
+  "entries": {
+    "title": "Активности",
+    "newEntry": "Добавить активность",
+    "editEntry": "Редактировать активность",
+    "deleteEntry": "Удалить активность",
+    "itemName": "Предмет / Активность",
+    "cost": "Стоимость",
+    "category": "Категория",
+    "date": "Дата",
+    "description": "Описание",
+    "linkedTransaction": "Связанная транзакция",
+    "selectTransaction": "Выберите транзакцию (необязательно)",
+    "selectCategory": "Выберите категорию",
+    "empty": "Спортивных расходов пока нет.",
+    "emptyFiltered": "Нет активностей, соответствующих выбранным фильтрам.",
+    "deleteConfirmation": "Вы уверены, что хотите удалить «{{name}}»? Это действие нельзя отменить."
+  },
+  "filters": {
+    "searchPlaceholder": "Поиск по названию или активности...",
+    "allCategories": "Все категории",
+    "startDate": "С",
+    "endDate": "По",
+    "clearFilters": "Сбросить"
+  },
+  "sort": {
+    "dateDesc": "Дата: Сначала новые",
+    "dateAsc": "Дата: Сначала старые",
+    "costDesc": "Стоимость: По убыванию",
+    "costAsc": "Стоимость: По возрастанию"
+  },
+  "toasts": {
+    "entryCreatedSuccess": "Активность успешно добавлена.",
+    "entryCreateError": "Не удалось добавить активность.",
+    "entryUpdatedSuccess": "Активность успешно обновлена.",
+    "entryUpdateError": "Не удалось обновить активность.",
+    "entryDeletedSuccess": "Активность успешно удалена.",
+    "entryDeleteError": "Не удалось удалить активность.",
+    "categoryCreatedSuccess": "Категория успешно создана.",
+    "categoryCreateError": "Не удалось создать категорию.",
+    "categoryUpdatedSuccess": "Категория успешно обновлена.",
+    "categoryUpdateError": "Не удалось обновить категорию.",
+    "categoryDeletedSuccess": "Категория успешно удалена.",
+    "categoryDeleteError": "Не удалось удалить категорию.",
+    "favoriteError": "Не удалось обновить статус избранного.",
+    "unfavoriteError": "Не удалось удалить из избранного."
+  },
+  "actions": {
+    "save": "Сохранить",
+    "cancel": "Отмена",
+    "delete": "Удалить",
+    "edit": "Редактировать",
+    "manage": "Управление",
+    "add": "Добавить",
+    "loadMore": "Загрузить ещё"
+  }
+}

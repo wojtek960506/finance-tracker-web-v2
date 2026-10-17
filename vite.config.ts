@@ -88,6 +88,7 @@ export default defineConfig({
       '@test-utils': path.resolve(__dirname, './src/test-utils'),
       '@named-resources': path.resolve(__dirname, './src/features/named-resources'),
       '@vehicles': path.resolve(__dirname, './src/features/vehicles'),
+      '@sports': path.resolve(__dirname, './src/features/sports'),
     },
   },
 });

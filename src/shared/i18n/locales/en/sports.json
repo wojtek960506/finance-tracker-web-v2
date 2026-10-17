@@ -1,0 +1,89 @@
+{
+  "title": "Sports",
+  "description": "Track and analyze your sports expenditures, equipment, and activities.",
+  "tabs": {
+    "overall": "Overall",
+    "allCategories": "Categories",
+    "manageCategories": "Manage Categories"
+  },
+  "categories": {
+    "other": "Other",
+    "addCategory": "Add Category",
+    "editCategory": "Edit Category",
+    "deleteCategory": "Delete Category",
+    "categoryName": "Category Name",
+    "system": "System",
+    "custom": "Custom",
+    "favorites": "Favorites",
+    "allCategories": "All Categories",
+    "empty": "No categories created yet."
+  },
+  "stats": {
+    "totalSpending": "Total Spent",
+    "totalEntries": "Total Activities",
+    "topCategory": "Top Category",
+    "monthlyAverage": "Monthly Average",
+    "yearFilter": "Year",
+    "allYears": "All time",
+    "categoryBreakdown": "Category Spending",
+    "yearlyTrend": "Yearly Trends",
+    "monthlyTrend": "Monthly Trends",
+    "spendingShare": "Spending share",
+    "emptyStats": "No sports data available for this period."
+  },
+  "entries": {
+    "title": "Activities",
+    "newEntry": "Add Activity",
+    "editEntry": "Edit Activity",
+    "deleteEntry": "Delete Activity",
+    "itemName": "Activity / Item",
+    "cost": "Cost",
+    "category": "Category",
+    "date": "Date",
+    "description": "Description",
+    "linkedTransaction": "Linked Transaction",
+    "selectTransaction": "Select transaction (optional)",
+    "selectCategory": "Select category",
+    "empty": "No sport activities recorded yet.",
+    "emptyFiltered": "No activities match the selected filters.",
+    "deleteConfirmation": "Are you sure you want to delete \"{{name}}\"? This action cannot be undone."
+  },
+  "filters": {
+    "searchPlaceholder": "Search by item or activity name...",
+    "allCategories": "All categories",
+    "startDate": "From",
+    "endDate": "To",
+    "clearFilters": "Reset"
+  },
+  "sort": {
+    "dateDesc": "Date: Newest first",
+    "dateAsc": "Date: Oldest first",
+    "costDesc": "Cost: Highest first",
+    "costAsc": "Cost: Lowest first"
+  },
+  "toasts": {
+    "entryCreatedSuccess": "Activity added successfully.",
+    "entryCreateError": "Failed to add activity.",
+    "entryUpdatedSuccess": "Activity updated successfully.",
+    "entryUpdateError": "Failed to update activity.",
+    "entryDeletedSuccess": "Activity deleted successfully.",
+    "entryDeleteError": "Failed to delete activity.",
+    "categoryCreatedSuccess": "Category created successfully.",
+    "categoryCreateError": "Failed to create category.",
+    "categoryUpdatedSuccess": "Category updated successfully.",
+    "categoryUpdateError": "Failed to update category.",
+    "categoryDeletedSuccess": "Category deleted successfully.",
+    "categoryDeleteError": "Failed to delete category.",
+    "favoriteError": "Failed to update favorite status.",
+    "unfavoriteError": "Failed to remove from favorites."
+  },
+  "actions": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "manage": "Manage",
+    "add": "Add",
+    "loadMore": "Load More"
+  }
+}

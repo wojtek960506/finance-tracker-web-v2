@@ -1,0 +1,89 @@
+{
+  "title": "Sport",
+  "description": "Śledź i analizuj swoje wydatki na sport, sprzęt oraz aktywności.",
+  "tabs": {
+    "overall": "Przegląd",
+    "allCategories": "Kategorie",
+    "manageCategories": "Zarządzaj kategoriami"
+  },
+  "categories": {
+    "other": "Inne",
+    "addCategory": "Dodaj kategorię",
+    "editCategory": "Edytuj kategorię",
+    "deleteCategory": "Usuń kategorię",
+    "categoryName": "Nazwa kategorii",
+    "system": "Systemowa",
+    "custom": "Własna",
+    "favorites": "Ulubione",
+    "allCategories": "Wszystkie kategorie",
+    "empty": "Brak utworzonych kategorii."
+  },
+  "stats": {
+    "totalSpending": "Łączne wydatki",
+    "totalEntries": "Liczba aktywności",
+    "topCategory": "Główna kategoria",
+    "monthlyAverage": "Średnia miesięczna",
+    "yearFilter": "Rok",
+    "allYears": "Cały okres",
+    "categoryBreakdown": "Wydatki według kategorii",
+    "yearlyTrend": "Trendy roczne",
+    "monthlyTrend": "Trendy miesięczne",
+    "spendingShare": "Udział w wydatkach",
+    "emptyStats": "Brak danych o wydatkach w wybranym okresie."
+  },
+  "entries": {
+    "title": "Aktywności",
+    "newEntry": "Dodaj aktywność",
+    "editEntry": "Edytuj aktywność",
+    "deleteEntry": "Usuń aktywność",
+    "itemName": "Przedmiot / Aktywność",
+    "cost": "Koszt",
+    "category": "Kategoria",
+    "date": "Data",
+    "description": "Opis",
+    "linkedTransaction": "Powiązana transakcja",
+    "selectTransaction": "Wybierz transakcję (opcjonalnie)",
+    "selectCategory": "Wybierz kategorię",
+    "empty": "Brak zarejestrowanych wydatków sportowych.",
+    "emptyFiltered": "Brak aktywności spełniających wybrane filtry.",
+    "deleteConfirmation": "Czy na pewno chcesz usunąć „{{name}}”? Tej operacji nie można cofnąć."
+  },
+  "filters": {
+    "searchPlaceholder": "Szukaj po nazwie przedmiotu lub aktywności...",
+    "allCategories": "Wszystkie kategorie",
+    "startDate": "Od",
+    "endDate": "Do",
+    "clearFilters": "Wyczyść"
+  },
+  "sort": {
+    "dateDesc": "Data: Od najnowszych",
+    "dateAsc": "Data: Od najstarszych",
+    "costDesc": "Koszt: Od najwyższych",
+    "costAsc": "Koszt: Od najniższych"
+  },
+  "toasts": {
+    "entryCreatedSuccess": "Aktywność została dodana.",
+    "entryCreateError": "Nie udało się dodać aktywności.",
+    "entryUpdatedSuccess": "Aktywność została zaktualizowana.",
+    "entryUpdateError": "Nie udało się zaktualizować aktywności.",
+    "entryDeletedSuccess": "Aktywność została usunięta.",
+    "entryDeleteError": "Nie udało się usunąć aktywności.",
+    "categoryCreatedSuccess": "Kategoria została utworzona.",
+    "categoryCreateError": "Nie udało się utworzyć kategorii.",
+    "categoryUpdatedSuccess": "Kategoria została zaktualizowana.",
+    "categoryUpdateError": "Nie udało się zaktualizować kategorii.",
+    "categoryDeletedSuccess": "Kategoria została usunięta.",
+    "categoryDeleteError": "Nie udało się usunąć kategorii.",
+    "favoriteError": "Nie udało się zaktualizować statusu ulubionej kategorii.",
+    "unfavoriteError": "Nie udało się usunąć kategorii z ulubionych."
+  },
+  "actions": {
+    "save": "Zapisz",
+    "cancel": "Anuluj",
+    "delete": "Usuń",
+    "edit": "Edytuj",
+    "manage": "Zarządzaj",
+    "add": "Dodaj",
+    "loadMore": "Załaduj więcej"
+  }
+}
