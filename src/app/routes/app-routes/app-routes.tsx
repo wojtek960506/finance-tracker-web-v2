@@ -132,6 +132,17 @@ const VehiclesMaintenancePage = lazy(() =>
   })),
 );
 
+const SportsOverviewPage = lazy(() =>
+  import('@sports/components').then((m) => ({
+    default: m.SportsOverviewPage,
+  })),
+);
+const SportCategoryPage = lazy(() =>
+  import('@sports/components').then((m) => ({
+    default: m.SportCategoryPage,
+  })),
+);
+
 type RouteTitle = {
   key: string;
   namespace: 'common' | 'navigation';
@@ -307,7 +318,12 @@ export const PROTECTED_APP_ROUTES: AppRouteConfig[] = [
   },
   {
     path: '/sports',
-    element: <p>Sports will be there</p>,
+    element: <SportsOverviewPage />,
+    title: { namespace: 'navigation', key: 'sports' },
+  },
+  {
+    path: '/sports/categories/:categoryId',
+    element: <SportCategoryPage />,
     title: { namespace: 'navigation', key: 'sports' },
   },
   {
