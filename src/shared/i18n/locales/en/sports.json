@@ -75,7 +75,18 @@
     "categoryDeletedSuccess": "Category deleted successfully.",
     "categoryDeleteError": "Failed to delete category.",
     "favoriteError": "Failed to update favorite status.",
-    "unfavoriteError": "Failed to remove from favorites."
+    "unfavoriteError": "Failed to remove from favorites.",
+    "spendingsLinkedSuccess": "Activities linked to transaction successfully.",
+    "spendingsLinkError": "Failed to link activities to transaction.",
+    "spendingsUnlinkedSuccess": "Activity unlinked from transaction successfully.",
+    "spendingsUnlinkError": "Failed to unlink activity from transaction."
+  },
+  "spendings": {
+    "linkTitle": "Link to transaction",
+    "unlinkTitle": "Unlink from transaction",
+    "linkBatch": "Link selected ({{count}}) to transaction",
+    "unlinkConfirm": "Are you sure you want to unlink \"{{name}}\" from transaction?",
+    "selectTransaction": "Search transaction..."
   },
   "actions": {
     "save": "Save",

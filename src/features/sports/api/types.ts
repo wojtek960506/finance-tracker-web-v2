@@ -30,6 +30,25 @@ export type SportStatsMonth = components['schemas']['SportStatsMonth'];
 
 export type SportStatsResponse = components['schemas']['SportStatsResponse'];
 
+export type LinkSportSpendingsPayload =
+  components['schemas']['LinkSportSpendingsToTransaction'];
+
+export type UnlinkSportSpendingPayload =
+  components['schemas']['UnlinkSportSpendingFromTransaction'];
+
+export type SportSpendingLinkResponse =
+  components['schemas']['SportSpendingLinkResponse'];
+
+export interface SportSpendingTarget {
+  id: string;
+  costPln: number;
+  date: string;
+  itemName: string;
+  categoryId?: string;
+  categoryName?: string;
+  transactionId?: string | null;
+}
+
 export interface SportEntryFilterQuery {
   categoryId?: string;
   startDate?: string;

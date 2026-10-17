@@ -75,7 +75,18 @@
     "categoryDeletedSuccess": "Категория успешно удалена.",
     "categoryDeleteError": "Не удалось удалить категорию.",
     "favoriteError": "Не удалось обновить статус избранного.",
-    "unfavoriteError": "Не удалось удалить из избранного."
+    "unfavoriteError": "Не удалось удалить из избранного.",
+    "spendingsLinkedSuccess": "Активности успешно связаны с транзакцией.",
+    "spendingsLinkError": "Не удалось связать активности с транзакцией.",
+    "spendingsUnlinkedSuccess": "Связь активности с транзакцией успешно удалена.",
+    "spendingsUnlinkError": "Не удалось удалить связь активности с транзакцией."
+  },
+  "spendings": {
+    "linkTitle": "Связать с транзакцией",
+    "unlinkTitle": "Отвязать от транзакции",
+    "linkBatch": "Связать выбранные ({{count}}) с транзакцией",
+    "unlinkConfirm": "Вы уверены, что хотите отвязать «{{name}}» от транзакции?",
+    "selectTransaction": "Поиск транзакции..."
   },
   "actions": {
     "save": "Сохранить",

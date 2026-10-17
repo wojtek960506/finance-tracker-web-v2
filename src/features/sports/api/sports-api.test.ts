@@ -14,11 +14,13 @@ import {
   getSportEntries,
   getSportEntry,
   getSportStats,
+  linkSportSpendings,
   type SportCategory,
   type SportEntry,
   type SportEntryListResponse,
   type SportStatsResponse,
   unfavoriteSportCategory,
+  unlinkSportSpending,
   updateSportCategory,
   updateSportEntry,
 } from './index';
@@ -223,6 +225,33 @@ describe('Sports API', () => {
         params: { year: 2026 },
       });
       expect(res).toEqual(mockStats);
+    });
+  });
+
+  describe('Sport Spendings Linking', () => {
+    it('linkSportSpendings sends POST to /sports/spendings/link', async () => {
+      const mockLinkResponse = { acknowledged: true, modifiedCount: 2 };
+      vi.mocked(api.post).mockResolvedValueOnce({ data: mockLinkResponse });
+
+      const payload = {
+        transactionId: 'tx-1',
+        entryIds: ['entry-1', 'entry-2'],
+      };
+      const res = await linkSportSpendings(payload);
+
+      expect(api.post).toHaveBeenCalledWith('/sports/spendings/link', payload);
+      expect(res).toEqual(mockLinkResponse);
+    });
+
+    it('unlinkSportSpending sends POST to /sports/spendings/unlink', async () => {
+      const mockUnlinkResponse = { acknowledged: true, modifiedCount: 1 };
+      vi.mocked(api.post).mockResolvedValueOnce({ data: mockUnlinkResponse });
+
+      const payload = { entryId: 'entry-1' };
+      const res = await unlinkSportSpending(payload);
+
+      expect(api.post).toHaveBeenCalledWith('/sports/spendings/unlink', payload);
+      expect(res).toEqual(mockUnlinkResponse);
     });
   });
 });

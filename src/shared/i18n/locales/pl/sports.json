@@ -75,7 +75,18 @@
     "categoryDeletedSuccess": "Kategoria została usunięta.",
     "categoryDeleteError": "Nie udało się usunąć kategorii.",
     "favoriteError": "Nie udało się zaktualizować statusu ulubionej kategorii.",
-    "unfavoriteError": "Nie udało się usunąć kategorii z ulubionych."
+    "unfavoriteError": "Nie udało się usunąć kategorii z ulubionych.",
+    "spendingsLinkedSuccess": "Aktywności zostały powiązane z transakcją.",
+    "spendingsLinkError": "Nie udało się powiązać aktywności z transakcją.",
+    "spendingsUnlinkedSuccess": "Aktywność została odłączona od transakcji.",
+    "spendingsUnlinkError": "Nie udało się odłączyć aktywności od transakcji."
+  },
+  "spendings": {
+    "linkTitle": "Powiąż z transakcją",
+    "unlinkTitle": "Odłącz od transakcji",
+    "linkBatch": "Powiąż zaznaczone ({{count}}) z transakcją",
+    "unlinkConfirm": "Czy na pewno chcesz odłączyć „{{name}}” od transakcji?",
+    "selectTransaction": "Szukaj transakcji..."
   },
   "actions": {
     "save": "Zapisz",

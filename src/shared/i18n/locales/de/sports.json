@@ -75,7 +75,18 @@
     "categoryDeletedSuccess": "Kategorie erfolgreich gelöscht.",
     "categoryDeleteError": "Fehler beim Löschen der Kategorie.",
     "favoriteError": "Fehler beim Aktualisieren des Favoritenstatus.",
-    "unfavoriteError": "Fehler beim Entfernen aus Favoriten."
+    "unfavoriteError": "Fehler beim Entfernen aus Favoriten.",
+    "spendingsLinkedSuccess": "Aktivitäten erfolgreich mit Transaktion verknüpft.",
+    "spendingsLinkError": "Fehler beim Verknüpfen der Aktivitäten mit der Transaktion.",
+    "spendingsUnlinkedSuccess": "Aktivität erfolgreich von Transaktion getrennt.",
+    "spendingsUnlinkError": "Fehler beim Trennen der Aktivität von der Transaktion."
+  },
+  "spendings": {
+    "linkTitle": "Mit Transaktion verknüpfen",
+    "unlinkTitle": "Von Transaktion trennen",
+    "linkBatch": "Ausgewählte ({{count}}) mit Transaktion verknüpfen",
+    "unlinkConfirm": "Möchten Sie „{{name}}“ wirklich von der Transaktion trennen?",
+    "selectTransaction": "Transaktion suchen..."
   },
   "actions": {
     "save": "Speichern",
