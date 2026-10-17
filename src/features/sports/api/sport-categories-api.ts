@@ -41,7 +41,6 @@ export const favoriteSportCategory = async (id: string): Promise<SportCategory> 
   return res.data;
 };
 
-export const unfavoriteSportCategory = async (id: string): Promise<SportCategory> => {
-  const res = await api.delete<SportCategory>(`/sports/categories/${id}/unfavorite`);
-  return res.data;
+export const unfavoriteSportCategory = async (id: string): Promise<void> => {
+  await api.delete(`/sports/categories/${id}/favorite`);
 };

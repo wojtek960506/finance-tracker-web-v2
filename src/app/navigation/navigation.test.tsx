@@ -129,19 +129,23 @@ describe('Navigation', () => {
   it('uses left indicator position when navigation is from the left', () => {
     render(<Navigation />);
 
-    expect(screen.getByTestId('collapsible')).toHaveAttribute(
-      'data-indicator-position',
-      'left',
-    );
-    expect(screen.getByTestId('collapsible')).toHaveAttribute('data-open', 'false');
+    const collapsibles = screen.getAllByTestId('collapsible');
+    expect(collapsibles).toHaveLength(2);
+    expect(collapsibles[0]).toHaveAttribute('data-indicator-position', 'left');
+    expect(collapsibles[0]).toHaveAttribute('data-open', 'false');
+    expect(collapsibles[1]).toHaveAttribute('data-indicator-position', 'left');
+    expect(collapsibles[1]).toHaveAttribute('data-open', 'false');
   });
 
   it('passes through initial open state when provided', () => {
     useUIStore.getState().setNavigationItemExpanded('transactions', true);
+    useUIStore.getState().setNavigationItemExpanded('sports', true);
 
     render(<Navigation />);
 
-    expect(screen.getByTestId('collapsible')).toHaveAttribute('data-open', 'true');
+    const collapsibles = screen.getAllByTestId('collapsible');
+    expect(collapsibles[0]).toHaveAttribute('data-open', 'true');
+    expect(collapsibles[1]).toHaveAttribute('data-open', 'true');
   });
 
   it('uses right indicator position when navigation is from the right', () => {
@@ -149,10 +153,9 @@ describe('Navigation', () => {
 
     render(<Navigation />);
 
-    expect(screen.getByTestId('collapsible')).toHaveAttribute(
-      'data-indicator-position',
-      'right',
-    );
+    const collapsibles = screen.getAllByTestId('collapsible');
+    expect(collapsibles[0]).toHaveAttribute('data-indicator-position', 'right');
+    expect(collapsibles[1]).toHaveAttribute('data-indicator-position', 'right');
   });
 
   it('triggers collapsible actions for each navigation item', async () => {
@@ -160,7 +163,9 @@ describe('Navigation', () => {
 
     render(<Navigation />);
 
-    await user.click(screen.getByRole('button', { name: 'categories' }));
+    const categoriesButtons = screen.getAllByRole('button', { name: 'categories' });
+    await user.click(categoriesButtons[0]);
+    await user.click(categoriesButtons[1]);
     await user.click(screen.getByRole('button', { name: 'investments' }));
     await user.click(screen.getByRole('button', { name: 'paymentMethods' }));
     await user.click(screen.getByRole('button', { name: 'bankAccounts' }));

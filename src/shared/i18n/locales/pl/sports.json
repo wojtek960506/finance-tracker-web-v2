@@ -8,6 +8,7 @@
   },
   "categories": {
     "other": "Inne",
+    "otherCategory": "Inna kategoria",
     "addCategory": "Dodaj kategorię",
     "editCategory": "Edytuj kategorię",
     "deleteCategory": "Usuń kategorię",
@@ -16,7 +17,10 @@
     "custom": "Własna",
     "favorites": "Ulubione",
     "allCategories": "Wszystkie kategorie",
-    "empty": "Brak utworzonych kategorii."
+    "empty": "Brak utworzonych kategorii.",
+    "deleteConfirmation": "Czy na pewno chcesz usunąć kategorię \"{{name}}\"?",
+    "deleteHint": "Kategoria może zostać usunięta tylko wtedy, gdy nie jest używana przez żadną aktywność.",
+    "systemCategoryTooltip": "Kategorie systemowe nie mogą być modyfikowane ani usuwane."
   },
   "stats": {
     "totalSpending": "Łączne wydatki",
@@ -95,6 +99,7 @@
     "edit": "Edytuj",
     "manage": "Zarządzaj",
     "add": "Dodaj",
-    "loadMore": "Załaduj więcej"
+    "loadMore": "Załaduj więcej",
+    "close": "Zamknij"
   }
 }

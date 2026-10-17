@@ -8,6 +8,7 @@
   },
   "categories": {
     "other": "Other",
+    "otherCategory": "Other category",
     "addCategory": "Add Category",
     "editCategory": "Edit Category",
     "deleteCategory": "Delete Category",
@@ -16,7 +17,10 @@
     "custom": "Custom",
     "favorites": "Favorites",
     "allCategories": "All Categories",
-    "empty": "No categories created yet."
+    "empty": "No categories created yet.",
+    "deleteConfirmation": "Are you sure you want to delete category \"{{name}}\"?",
+    "deleteHint": "Category can only be deleted when it is not used by any sport activity.",
+    "systemCategoryTooltip": "System categories cannot be modified or deleted."
   },
   "stats": {
     "totalSpending": "Total Spent",
@@ -95,6 +99,7 @@
     "edit": "Edit",
     "manage": "Manage",
     "add": "Add",
-    "loadMore": "Load More"
+    "loadMore": "Load More",
+    "close": "Close"
   }
 }

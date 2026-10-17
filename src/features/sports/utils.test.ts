@@ -26,6 +26,17 @@ describe('Sports Utilities', () => {
       expect(getCategoryDisplayName(category, t)).toBe('Bieganie');
     });
 
+    it('returns translated key for system category with name otherCategory', () => {
+      const category = {
+        name: 'otherCategory',
+        type: 'system' as const,
+      };
+      const t = (key: string) =>
+        key === 'categories.otherCategory' ? 'Inna kategoria' : key;
+
+      expect(getCategoryDisplayName(category, t)).toBe('Inna kategoria');
+    });
+
     it('returns raw category name when system category has no categoryKey', () => {
       const category = {
         name: 'Siłownia',

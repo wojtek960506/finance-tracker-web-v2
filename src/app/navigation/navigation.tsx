@@ -25,6 +25,7 @@ import { Collapsible } from '@ui';
 import { NavigationItem } from './navigation-item';
 
 const TRANSACTIONS_NAVIGATION_ITEM_ID = 'transactions';
+const SPORTS_NAVIGATION_ITEM_ID = 'sports';
 
 export const Navigation = () => {
   const { t } = useTranslation('navigation');
@@ -38,6 +39,14 @@ export const Navigation = () => {
   const isTransactionsNavigationItemOpen = expandedNavigationItems.includes(
     TRANSACTIONS_NAVIGATION_ITEM_ID,
   );
+  const isSportsNavigationItemOpen = expandedNavigationItems.includes(
+    SPORTS_NAVIGATION_ITEM_ID,
+  );
+
+  const closeExpandedNavItems = () => {
+    setNavigationItemExpanded(TRANSACTIONS_NAVIGATION_ITEM_ID, false);
+    setNavigationItemExpanded(SPORTS_NAVIGATION_ITEM_ID, false);
+  };
 
   if (!authToken) return;
 
@@ -57,9 +66,7 @@ export const Navigation = () => {
           to="/net-worth"
           title={t('netWorth')}
           Icon={PieChart}
-          additionalAction={() =>
-            setNavigationItemExpanded(TRANSACTIONS_NAVIGATION_ITEM_ID, false)
-          }
+          additionalAction={closeExpandedNavItems}
         />
       </li>
       <li>
@@ -67,9 +74,7 @@ export const Navigation = () => {
           to="/financial-independence"
           title={t('financialIndependence')}
           Icon={ShieldCheck}
-          additionalAction={() =>
-            setNavigationItemExpanded(TRANSACTIONS_NAVIGATION_ITEM_ID, false)
-          }
+          additionalAction={closeExpandedNavItems}
         />
       </li>
 
@@ -152,9 +157,7 @@ export const Navigation = () => {
           to="/investments"
           title={t('investments')}
           Icon={ChartNoAxesColumn}
-          additionalAction={() =>
-            setNavigationItemExpanded(TRANSACTIONS_NAVIGATION_ITEM_ID, false)
-          }
+          additionalAction={closeExpandedNavItems}
         />
       </li>
       <li>
@@ -162,29 +165,48 @@ export const Navigation = () => {
           to="/vehicles"
           title={t('vehicles')}
           Icon={Car}
-          additionalAction={() =>
-            setNavigationItemExpanded(TRANSACTIONS_NAVIGATION_ITEM_ID, false)
-          }
+          additionalAction={closeExpandedNavItems}
         />
       </li>
       <li>
-        <NavigationItem
-          to="/sports"
-          title={t('sports')}
-          Icon={Bike}
-          additionalAction={() =>
-            setNavigationItemExpanded(TRANSACTIONS_NAVIGATION_ITEM_ID, false)
+        <Collapsible
+          header={
+            <NavigationItem
+              to="/sports"
+              title={t('sports')}
+              Icon={Bike}
+              end
+              additionalAction={() =>
+                setNavigationItemExpanded(SPORTS_NAVIGATION_ITEM_ID, false)
+              }
+            />
           }
-        />
+          indicatorPosition={fromLeft ? 'left' : 'right'}
+          isOpen={isSportsNavigationItemOpen}
+          onOpenChange={(isOpen) =>
+            setNavigationItemExpanded(SPORTS_NAVIGATION_ITEM_ID, isOpen)
+          }
+        >
+          <ul>
+            <li>
+              <NavigationItem
+                to="/sports/categories"
+                title={t('categories')}
+                Icon={Tags}
+                additionalAction={() =>
+                  setNavigationItemExpanded(SPORTS_NAVIGATION_ITEM_ID, true)
+                }
+              />
+            </li>
+          </ul>
+        </Collapsible>
       </li>
       <li>
         <NavigationItem
           to="/settings"
           title={t('settings')}
           Icon={Settings}
-          additionalAction={() =>
-            setNavigationItemExpanded(TRANSACTIONS_NAVIGATION_ITEM_ID, false)
-          }
+          additionalAction={closeExpandedNavItems}
         />
       </li>
       <li>

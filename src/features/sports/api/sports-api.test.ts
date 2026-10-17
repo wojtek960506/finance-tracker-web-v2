@@ -205,13 +205,14 @@ describe('Sports API', () => {
       expect(res).toEqual(mockCategory);
     });
 
-    it('unfavoriteSportCategory sends DELETE to /sports/categories/:id/unfavorite', async () => {
-      vi.mocked(api.delete).mockResolvedValueOnce({ data: mockCategory });
+    it('unfavoriteSportCategory sends DELETE to /sports/categories/:id/favorite', async () => {
+      vi.mocked(api.delete).mockResolvedValueOnce({
+        data: { acknowledged: true, deletedCount: 1 },
+      });
 
-      const res = await unfavoriteSportCategory('cat-1');
+      await unfavoriteSportCategory('cat-1');
 
-      expect(api.delete).toHaveBeenCalledWith('/sports/categories/cat-1/unfavorite');
-      expect(res).toEqual(mockCategory);
+      expect(api.delete).toHaveBeenCalledWith('/sports/categories/cat-1/favorite');
     });
   });
 

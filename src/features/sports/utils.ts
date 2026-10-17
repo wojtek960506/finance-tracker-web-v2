@@ -8,10 +8,19 @@ export const getCategoryDisplayName = (
   },
   t: (key: string, options?: { defaultValue: string }) => string,
 ): string => {
-  if (category.type === 'system' && category.categoryKey) {
-    return t(`categories.${category.categoryKey}`, {
-      defaultValue: category.name,
-    });
+  if (category.type === 'system') {
+    if (category.categoryKey) {
+      return t(`categories.${category.categoryKey}`, {
+        defaultValue: category.name,
+      });
+    }
+    if (category.name === 'otherCategory' || category.name === 'other') {
+      return t('categories.otherCategory', {
+        defaultValue: t('categories.other', {
+          defaultValue: category.name,
+        }),
+      });
+    }
   }
   return category.name;
 };

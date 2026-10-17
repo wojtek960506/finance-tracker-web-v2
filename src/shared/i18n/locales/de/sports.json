@@ -8,6 +8,7 @@
   },
   "categories": {
     "other": "Sonstiges",
+    "otherCategory": "Andere Kategorie",
     "addCategory": "Kategorie hinzufügen",
     "editCategory": "Kategorie bearbeiten",
     "deleteCategory": "Kategorie löschen",
@@ -16,7 +17,10 @@
     "custom": "Benutzerdefiniert",
     "favorites": "Favoriten",
     "allCategories": "Alle Kategorien",
-    "empty": "Noch keine Kategorien erstellt."
+    "empty": "Noch keine Kategorien erstellt.",
+    "deleteConfirmation": "Möchten Sie die Kategorie \"{{name}}\" wirklich löschen?",
+    "deleteHint": "Eine Kategorie kann nur gelöscht werden, wenn sie von keiner Sportaktivität verwendet wird.",
+    "systemCategoryTooltip": "Systemkategorien können weder geändert noch gelöscht werden."
   },
   "stats": {
     "totalSpending": "Gesamtausgaben",
@@ -95,6 +99,7 @@
     "edit": "Bearbeiten",
     "manage": "Verwalten",
     "add": "Hinzufügen",
-    "loadMore": "Mehr laden"
+    "loadMore": "Mehr laden",
+    "close": "Schließen"
   }
 }

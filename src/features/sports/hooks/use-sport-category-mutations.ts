@@ -135,5 +135,10 @@ export const useSportCategoryMutations = () => {
     isFavoriting: favoriteMutation.isPending,
     unfavoriteCategory: unfavoriteMutation.mutateAsync,
     isUnfavoriting: unfavoriteMutation.isPending,
+    createMutation,
+    updateMutation,
+    deleteMutation,
+    favoriteMutation,
+    unfavoriteMutation,
   };
 };

@@ -137,6 +137,11 @@ const SportsOverviewPage = lazy(() =>
     default: m.SportsOverviewPage,
   })),
 );
+const SportsCategoriesPage = lazy(() =>
+  import('@sports/components').then((m) => ({
+    default: m.SportsCategoriesPage,
+  })),
+);
 const SportCategoryPage = lazy(() =>
   import('@sports/components').then((m) => ({
     default: m.SportCategoryPage,
@@ -320,6 +325,11 @@ export const PROTECTED_APP_ROUTES: AppRouteConfig[] = [
     path: '/sports',
     element: <SportsOverviewPage />,
     title: { namespace: 'navigation', key: 'sports' },
+  },
+  {
+    path: '/sports/categories',
+    element: <SportsCategoriesPage />,
+    title: { namespace: 'navigation', key: 'categories' },
   },
   {
     path: '/sports/categories/:categoryId',
