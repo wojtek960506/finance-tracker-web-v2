@@ -47,7 +47,10 @@
     "linkTransaction": "Связать с транзакцией",
     "unlinkTransaction": "Отвязать от транзакции",
     "filterStartDate": "Дата с",
-    "filterEndDate": "Дата по"
+    "filterEndDate": "Дата по",
+    "loadMore": "Загрузить еще",
+    "loadingMore": "Загрузка...",
+    "showingCount": "Показано {{loaded}} из {{total}} записей"
   },
   "spendingTypes": {
     "fuel": "Топливо",

@@ -47,7 +47,10 @@
     "linkTransaction": "Mit Transaktion verknüpfen",
     "unlinkTransaction": "Von Transaktion trennen",
     "filterStartDate": "Datum von",
-    "filterEndDate": "Datum bis"
+    "filterEndDate": "Datum bis",
+    "loadMore": "Mehr laden",
+    "loadingMore": "Wird geladen...",
+    "showingCount": "Zeigt {{loaded}} von {{total}} Einträgen"
   },
   "spendingTypes": {
     "fuel": "Kraftstoff",

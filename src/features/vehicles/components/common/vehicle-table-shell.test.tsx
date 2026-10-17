@@ -1,5 +1,7 @@
-import { render, screen } from '@testing-library/react';
-import { describe, expect, it } from 'vitest';
+import '@shared/i18n';
+
+import { fireEvent, render, screen } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
 
 import { VehicleTableShell } from './vehicle-table-shell';
 
@@ -44,5 +46,64 @@ describe('VehicleTableShell', () => {
     expect(screen.getByText('Date Header')).toBeInTheDocument();
     expect(screen.getByText('Row 1')).toBeInTheDocument();
     expect(screen.getByTestId('mobile-card-1')).toBeInTheDocument();
+  });
+
+  it('renders progress counter and load more button when hasNextPage is true', () => {
+    const fetchNextPage = vi.fn();
+
+    render(
+      <VehicleTableShell
+        isEmpty={false}
+        emptyState={<div>No items</div>}
+        testId="test-entries-list"
+        headers={<th>Date Header</th>}
+        desktopRows={
+          <tr>
+            <td>Row 1</td>
+          </tr>
+        }
+        mobileCards={<div>Mobile Card 1</div>}
+        hasNextPage={true}
+        isFetchingNextPage={false}
+        fetchNextPage={fetchNextPage}
+        totalCount={50}
+        loadedCount={20}
+      />,
+    );
+
+    expect(screen.getByTestId('test-entries-list-pagination-footer')).toBeInTheDocument();
+    expect(screen.getByTestId('test-entries-list-counter')).toHaveTextContent(
+      'Showing 20 of 50 records',
+    );
+
+    const loadMoreBtn = screen.getByTestId('test-entries-list-load-more-button');
+    expect(loadMoreBtn).toBeInTheDocument();
+    expect(loadMoreBtn).not.toBeDisabled();
+
+    fireEvent.click(loadMoreBtn);
+    expect(fetchNextPage).toHaveBeenCalledTimes(1);
+  });
+
+  it('disables load more button when isFetchingNextPage is true', () => {
+    render(
+      <VehicleTableShell
+        isEmpty={false}
+        emptyState={<div>No items</div>}
+        testId="test-entries-list"
+        headers={<th>Date Header</th>}
+        desktopRows={
+          <tr>
+            <td>Row 1</td>
+          </tr>
+        }
+        mobileCards={<div>Mobile Card 1</div>}
+        hasNextPage={true}
+        isFetchingNextPage={true}
+        fetchNextPage={vi.fn()}
+      />,
+    );
+
+    const loadMoreBtn = screen.getByTestId('test-entries-list-load-more-button');
+    expect(loadMoreBtn).toBeDisabled();
   });
 });

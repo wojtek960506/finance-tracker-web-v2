@@ -27,6 +27,8 @@ export const MAINTENANCE_SECTIONS = ['ownMaintenance', 'previousOwnerServices'] 
 
 export const DEFAULT_MAINTENANCE_SECTION = 'ownMaintenance' as const;
 
+export const DEFAULT_PAGE_LIMIT = 50;
+
 export const SPENDING_TYPES = ['fuel', 'equipment', 'maintenance'] as const;
 
 export type SpendingTypeConfig = {

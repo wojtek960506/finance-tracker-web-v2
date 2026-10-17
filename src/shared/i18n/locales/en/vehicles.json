@@ -47,7 +47,10 @@
     "linkTransaction": "Link to transaction",
     "unlinkTransaction": "Unlink from transaction",
     "filterStartDate": "From Date",
-    "filterEndDate": "To Date"
+    "filterEndDate": "To Date",
+    "loadMore": "Load More",
+    "loadingMore": "Loading more...",
+    "showingCount": "Showing {{loaded}} of {{total}} records"
   },
   "spendingTypes": {
     "fuel": "Fuel",

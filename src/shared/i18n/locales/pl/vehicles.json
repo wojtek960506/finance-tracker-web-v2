@@ -47,7 +47,10 @@
     "linkTransaction": "Połącz z transakcją",
     "unlinkTransaction": "Odłącz transakcję",
     "filterStartDate": "Data od",
-    "filterEndDate": "Data do"
+    "filterEndDate": "Data do",
+    "loadMore": "Załaduj więcej",
+    "loadingMore": "Ładowanie...",
+    "showingCount": "Wyświetlono {{loaded}} z {{total}} wpisów"
   },
   "spendingTypes": {
     "fuel": "Paliwo",

@@ -80,8 +80,8 @@ flowchart TD
     P2 --> P3["Phase 3: Single-Vehicle Layout & Overview Dashboard ✅"]
     P3 --> P4["Phase 4: Fuel Refueling History & Consumption Metrics ✅"]
     P4 --> P5["Phase 5: Maintenance & Equipment Domain Views ✅"]
-    P5 --> P6["Phase 6: Financial Transaction Linking UI"]
-    P6 --> P7["Phase 7: Full Localization (4 Locales) & Final Verification"]
+    P5 --> P6["Phase 6: Financial Transaction Linking UI ✅"]
+    P6 --> P7["Phase 7: Full Localization (4 Locales) & Final Verification ✅"]
 ```
 
 ---
@@ -201,7 +201,7 @@ flowchart TD
 
 ---
 
-### ⏳ Phase 7: Full Localization (4 Locales), Polish & Final Verification
+### ✅ Phase 7: Full Localization (4 Locales), Polish & Final Verification (Completed)
 
 - [x] **Sub-phase 7.1: Localization Completeness**
   - Ensure all 4 locale files (`en`, `pl`, `de`, `ru`) in `src/shared/i18n/locales/` have 100% complete translations for `vehicles.json` and `vehicle-errors.json`.
@@ -214,3 +214,20 @@ flowchart TD
     pnpm tsc --noEmit
     npm run fix
     ```
+
+---
+
+### ⏳ Phase 8: Cursor-Based Infinite Loading & Rendering Optimization (In Progress)
+
+- [x] **Step 1A: Pagination Constants & Localization (Completed)**
+  - Configured `DEFAULT_PAGE_LIMIT = 20` in `src/features/vehicles/consts.ts`.
+  - Added `loadMore`, `loadingMore`, and `showingCount` keys across all 4 locales (`en`, `pl`, `de`, `ru`).
+- [x] **Step 1B: Reusable Table Shell Cursor Pagination (Completed)**
+  - Extended `VehicleTableShell` with progress counter and "Load More" action button.
+  - Added unit test suite covering footer display, counter rendering, and load more button interactions.
+- [ ] **Step 1C: Infinite Query Hooks**
+  - Migrate `useFuelEntries`, `useEquipment`, and `useMaintenance` to `useInfiniteQuery`.
+- [ ] **Step 1D: Wire Cursor Props to Table Views & Pages**
+  - Pass infinite pagination props to Fuel, Equipment, and Maintenance table components and pages.
+- [ ] **Step 2: DOM & Rendering Virtualization / Optimization**
+  - Apply `content-visibility: auto` and `contain-intrinsic-size` to table rows and mobile card containers.
