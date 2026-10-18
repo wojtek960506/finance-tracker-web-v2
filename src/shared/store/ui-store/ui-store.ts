@@ -4,8 +4,6 @@ import { persist } from 'zustand/middleware';
 type UIState = {
   isNavOpen: boolean;
   setIsNavOpen: (val: boolean) => void;
-  expandedNavigationItems: string[];
-  setNavigationItemExpanded: (itemId: string, isExpanded: boolean) => void;
   isTransactionsTotalsOpen: boolean;
   setIsTransactionsTotalsOpen: (val: boolean) => void;
   isTransactionsFiltersOpen: boolean;
@@ -18,7 +16,6 @@ type UIState = {
 export const UI_STORE_KEY = 'ui-store';
 const getDefaultPersistedUIState = () => ({
   isNavOpen: false,
-  expandedNavigationItems: [],
   isTransactionsTotalsOpen: false,
   isTransactionsFiltersOpen: false,
   expandedTransactionTotalCurrencies: null,
@@ -29,15 +26,6 @@ export const useUIStore = create<UIState>()(
     (set) => ({
       ...getDefaultPersistedUIState(),
       setIsNavOpen: (isNavOpen: boolean) => set({ isNavOpen }),
-      expandedNavigationItems: [],
-      setNavigationItemExpanded: (itemId: string, isExpanded: boolean) =>
-        set((state) => ({
-          expandedNavigationItems: isExpanded
-            ? [...new Set([...state.expandedNavigationItems, itemId])]
-            : state.expandedNavigationItems.filter(
-                (currentItemId) => currentItemId !== itemId,
-              ),
-        })),
       isTransactionsTotalsOpen: false,
       setIsTransactionsTotalsOpen: (isTransactionsTotalsOpen: boolean) =>
         set({ isTransactionsTotalsOpen }),
@@ -63,7 +51,6 @@ export const useUIStore = create<UIState>()(
       name: UI_STORE_KEY,
       partialize: (state) => ({
         isNavOpen: state.isNavOpen,
-        expandedNavigationItems: state.expandedNavigationItems,
         isTransactionsTotalsOpen: state.isTransactionsTotalsOpen,
         isTransactionsFiltersOpen: state.isTransactionsFiltersOpen,
         expandedTransactionTotalCurrencies: state.expandedTransactionTotalCurrencies,

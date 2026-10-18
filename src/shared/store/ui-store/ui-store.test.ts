@@ -7,7 +7,6 @@ describe('useUIStore', () => {
     window.localStorage.clear();
     useUIStore.setState({
       isNavOpen: false,
-      expandedNavigationItems: [],
       isTransactionsTotalsOpen: false,
       isTransactionsFiltersOpen: false,
       expandedTransactionTotalCurrencies: null,
@@ -24,16 +23,6 @@ describe('useUIStore', () => {
     expect(useUIStore.getState().isNavOpen).toBe(true);
   });
 
-  it('tracks expanded navigation items', () => {
-    useUIStore.getState().setNavigationItemExpanded('transactions', true);
-
-    expect(useUIStore.getState().expandedNavigationItems).toEqual(['transactions']);
-
-    useUIStore.getState().setNavigationItemExpanded('transactions', false);
-
-    expect(useUIStore.getState().expandedNavigationItems).toEqual([]);
-  });
-
   it('tracks expanded transaction total currencies', () => {
     useUIStore.getState().setTransactionTotalCurrencyExpanded('USD', true);
 
@@ -46,7 +35,6 @@ describe('useUIStore', () => {
 
   it('persists configured UI state', () => {
     useUIStore.getState().setIsNavOpen(true);
-    useUIStore.getState().setNavigationItemExpanded('transactions', true);
     useUIStore.getState().setIsTransactionsTotalsOpen(true);
     useUIStore.getState().setIsTransactionsFiltersOpen(true);
     useUIStore.getState().setTransactionTotalCurrencyExpanded('EUR', true);
@@ -55,7 +43,6 @@ describe('useUIStore', () => {
 
     expect(storedState.state).toMatchObject({
       isNavOpen: true,
-      expandedNavigationItems: ['transactions'],
       isTransactionsTotalsOpen: true,
       isTransactionsFiltersOpen: true,
       expandedTransactionTotalCurrencies: ['EUR'],
@@ -64,7 +51,6 @@ describe('useUIStore', () => {
 
   it('resets persisted UI state to defaults', () => {
     useUIStore.getState().setIsNavOpen(true);
-    useUIStore.getState().setNavigationItemExpanded('transactions', true);
     useUIStore.getState().setIsTransactionsTotalsOpen(true);
     useUIStore.getState().setIsTransactionsFiltersOpen(true);
     useUIStore.getState().setTransactionTotalCurrencyExpanded('EUR', true);
@@ -73,7 +59,6 @@ describe('useUIStore', () => {
 
     expect(useUIStore.getState()).toMatchObject({
       isNavOpen: false,
-      expandedNavigationItems: [],
       isTransactionsTotalsOpen: false,
       isTransactionsFiltersOpen: false,
       expandedTransactionTotalCurrencies: null,
