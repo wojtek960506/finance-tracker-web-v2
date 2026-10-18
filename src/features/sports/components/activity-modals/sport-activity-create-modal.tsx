@@ -1,11 +1,12 @@
 import { useTranslation } from 'react-i18next';
 
+import { ModalShell } from '@shared/ui';
+
 import { useSportEntryMutations } from '../../hooks';
 import type { SportEntryFormValues } from '../../schemas';
 import { getCategoryDisplayName } from '../../utils';
 
 import { SportActivityForm } from './sport-activity-form';
-import { SportActivityModalShell } from './sport-activity-modal-shell';
 import type { CreateSportActivityModalProps } from './types';
 
 export const CreateSportActivityModal = ({
@@ -41,7 +42,7 @@ export const CreateSportActivityModal = ({
   };
 
   return (
-    <SportActivityModalShell
+    <ModalShell
       isOpen={isOpen}
       onClose={onClose}
       title={t('modals.createTitle')}
@@ -60,6 +61,6 @@ export const CreateSportActivityModal = ({
         onSubmit={handleSubmit}
         onCancel={onClose}
       />
-    </SportActivityModalShell>
+    </ModalShell>
   );
 };

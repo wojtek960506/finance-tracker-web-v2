@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import type { VehicleType } from '@vehicles/api';
-import { VehicleFormActions, VehicleTypeBadge } from '@vehicles/components/common';
+import { VehicleTypeBadge } from '@vehicles/components/common';
 import { DEFAULT_VEHICLE_TYPE, VEHICLE_TYPES } from '@vehicles/consts';
 import {
   type VehicleFormInput,
@@ -11,7 +11,7 @@ import clsx from 'clsx';
 import { type SubmitHandler, useForm, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { Input, Label } from '@shared/ui';
+import { FormActions, Input, Label } from '@shared/ui';
 import { preventImplicitFormSubmit } from '@shared/utils';
 
 export type VehicleFormProps = {
@@ -188,7 +188,7 @@ export const VehicleForm = ({
         />
       </div>
 
-      <VehicleFormActions
+      <FormActions
         isPending={isPending}
         onCancel={onCancel}
         submitLabel={mode === 'create' ? t('form.createSubmit') : t('form.updateSubmit')}

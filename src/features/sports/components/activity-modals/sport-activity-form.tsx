@@ -2,7 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, type SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { DateInput, Input, Label } from '@shared/ui';
+import { DateInput, FormActions, Input, Label } from '@shared/ui';
 import { preventImplicitFormSubmit } from '@shared/utils';
 
 import {
@@ -12,7 +12,6 @@ import {
 } from '../../schemas';
 import { getCategoryDisplayName } from '../../utils';
 
-import { SportActivityFormActions } from './sport-activity-form-actions';
 import type { SportActivityFormProps } from './types';
 
 import {
@@ -165,7 +164,7 @@ export const SportActivityForm = ({
         )}
       </div>
 
-      <SportActivityFormActions
+      <FormActions
         isPending={isPending}
         onCancel={onCancel}
         submitLabel={

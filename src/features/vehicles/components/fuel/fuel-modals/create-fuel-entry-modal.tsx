@@ -4,12 +4,12 @@ import {
   type CreateFuelEntryPayload,
   type VehicleFuelEntry,
 } from '@vehicles/api';
-import { VehicleModalShell } from '@vehicles/components/common';
 import { vehiclesQueryKeys } from '@vehicles/consts';
 import type { FuelEntryFormValues } from '@vehicles/schemas';
 import { useTranslation } from 'react-i18next';
 
 import { normalizeApiError } from '@shared/api/api-error';
+import { ModalShell } from '@shared/ui';
 import { useToastStore } from '@store/toast-store';
 
 import { FuelForm } from './fuel-form';
@@ -71,7 +71,7 @@ export const CreateFuelEntryModal = ({
   };
 
   return (
-    <VehicleModalShell
+    <ModalShell
       isOpen={isOpen}
       onClose={onClose}
       title={t('fuelPage.modals.createTitle')}
@@ -84,6 +84,6 @@ export const CreateFuelEntryModal = ({
         onSubmit={handleSubmit}
         onCancel={onClose}
       />
-    </VehicleModalShell>
+    </ModalShell>
   );
 };

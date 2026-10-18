@@ -11,9 +11,7 @@ export {
   type VehicleDomainEmptyStateProps,
 } from './vehicle-domain-empty-state';
 export { VehicleFilterBar, type VehicleFilterBarProps } from './vehicle-filter-bar';
-export { VehicleFormActions, type VehicleFormActionsProps } from './vehicle-form-actions';
 export { VehicleItemActions, type VehicleItemActionsProps } from './vehicle-item-actions';
-export { VehicleModalShell, type VehicleModalShellProps } from './vehicle-modal-shell';
 export { VehiclePageError, type VehiclePageErrorProps } from './vehicle-page-error';
 export { VehiclePageLoading, type VehiclePageLoadingProps } from './vehicle-page-loading';
 export {
