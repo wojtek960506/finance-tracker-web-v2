@@ -107,6 +107,17 @@ describe('SportActivitiesTable', () => {
     ).toBeInTheDocument();
   });
 
+  it('renders skeleton loading view when isLoading is true and items is empty', () => {
+    render(
+      <MemoryRouter>
+        <SportActivitiesTable items={[]} hasFilters={false} isLoading={true} />
+      </MemoryRouter>,
+    );
+
+    expect(screen.getByTestId('sport-activities-table-loading')).toBeInTheDocument();
+    expect(screen.queryByTestId('activities-empty-state')).not.toBeInTheDocument();
+  });
+
   it('triggers item actions on desktop row', () => {
     const handleEdit = vi.fn();
     const handleDelete = vi.fn();

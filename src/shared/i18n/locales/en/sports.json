@@ -113,5 +113,23 @@
     "showingCount": "Showing {{loaded}} of {{total}} activities",
     "showingAll": "Showing all {{total}} activities",
     "close": "Close"
+  },
+  "modals": {
+    "createTitle": "Add Activity",
+    "createDescription": "Record a sports activity or purchase in {{category}}.",
+    "category": "Category",
+    "categoryPlaceholder": "Select category",
+    "date": "Date",
+    "itemName": "Activity / Item",
+    "itemNamePlaceholder": "e.g., Running shoes, Gym pass, Bicycle service",
+    "cost": "Cost (PLN)",
+    "costPlaceholder": "0.00",
+    "submitCreate": "Add Activity",
+    "errors": {
+      "categoryRequired": "Category is required",
+      "dateRequired": "Date is required",
+      "itemNameRequired": "Item name is required",
+      "costPositive": "Cost must be greater than 0"
+    }
   }
 }

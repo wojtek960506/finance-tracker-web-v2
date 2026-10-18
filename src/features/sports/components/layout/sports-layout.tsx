@@ -8,7 +8,7 @@ import { SportsHeader } from './sports-header';
 import { SportsTabs } from './sports-tabs';
 import type { SportsLayoutProps } from './types';
 
-export const SportsLayout = ({ children }: SportsLayoutProps) => {
+export const SportsLayout = ({ children, onOpenAddEntry }: SportsLayoutProps) => {
   const location = useLocation();
   const { categoryId: currentCategoryId } = useParams<{ categoryId?: string }>();
   const { data: categories = [], isLoading: isCategoriesLoading } = useSportCategories();
@@ -49,6 +49,7 @@ export const SportsLayout = ({ children }: SportsLayoutProps) => {
       <SportsHeader
         isMobileNavOpen={isMobileNavOpen}
         onToggleMobileNav={() => setIsMobileNavOpen((prev) => !prev)}
+        onOpenAddEntry={onOpenAddEntry}
       />
 
       <SportsTabs

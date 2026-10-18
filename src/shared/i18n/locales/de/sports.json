@@ -113,5 +113,23 @@
     "showingCount": "{{loaded}} von {{total}} Aktivitäten angezeigt",
     "showingAll": "Alle {{total}} Aktivitäten angezeigt",
     "close": "Schließen"
+  },
+  "modals": {
+    "createTitle": "Aktivität hinzufügen",
+    "createDescription": "Erfassen Sie eine sportliche Aktivität oder Ausgabe in {{category}}.",
+    "category": "Kategorie",
+    "categoryPlaceholder": "Kategorie auswählen",
+    "date": "Datum",
+    "itemName": "Aktivität / Artikel",
+    "itemNamePlaceholder": "z. B. Laufschuhe, Fitnessstudio-Pass, Fahrradservice",
+    "cost": "Kosten (PLN)",
+    "costPlaceholder": "0.00",
+    "submitCreate": "Aktivität hinzufügen",
+    "errors": {
+      "categoryRequired": "Kategorie ist erforderlich",
+      "dateRequired": "Datum ist erforderlich",
+      "itemNameRequired": "Name ist erforderlich",
+      "costPositive": "Kosten müssen größer als 0 sein"
+    }
   }
 }

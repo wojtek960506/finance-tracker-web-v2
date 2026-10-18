@@ -1,7 +1,14 @@
 import { useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { useSportCategories, useSportEntries, useSportStats } from '../../hooks';
+import type { SportEntry } from '../../api';
+import {
+  useSportCategories,
+  useSportEntries,
+  useSportRecordModals,
+  useSportStats,
+} from '../../hooks';
+import { CreateSportActivityModal } from '../activity-modals';
 import { SportsLayout } from '../layout';
 
 import { SportActivitiesTable } from './activities-table';
@@ -11,7 +18,13 @@ import { SportCategorySummary } from './sport-category-summary';
 import type { SportActivitiesFilters } from './types';
 import { calculateSportCategorySummary } from './utils';
 
-export const SportCategoryContent = () => {
+export interface SportCategoryContentProps {
+  onAddActivity?: () => void;
+}
+
+export const SportCategoryContent = ({
+  onAddActivity,
+}: SportCategoryContentProps = {}) => {
   const { categoryId } = useParams<{ categoryId: string }>();
 
   const [filters, setFilters] = useState<SportActivitiesFilters>({
@@ -65,6 +78,7 @@ export const SportCategoryContent = () => {
         categoryStats={categoryStats}
         colorIndex={categoryIndex !== -1 ? categoryIndex : 0}
         isLoading={isInitialLoading}
+        onAddActivity={onAddActivity}
       />
 
       <SportCategorySummary
@@ -73,12 +87,18 @@ export const SportCategoryContent = () => {
       />
 
       {(summary.totalEntries > 0 || items.length > 0 || hasActiveFilters) && (
-        <SportActivitiesFilterBar filters={filters} onFiltersChange={setFilters} />
+        <SportActivitiesFilterBar
+          filters={filters}
+          onFiltersChange={setFilters}
+          onAddActivity={onAddActivity}
+        />
       )}
 
       <SportActivitiesTable
         items={items}
         hasFilters={hasActiveFilters}
+        isLoading={isEntriesLoading && items.length === 0}
+        onAddFirstItem={onAddActivity}
         hasNextPage={hasNextPage}
         isFetchingNextPage={isFetchingNextPage}
         fetchNextPage={fetchNextPage}
@@ -90,9 +110,19 @@ export const SportCategoryContent = () => {
 };
 
 export const SportCategoryPage = () => {
+  const { categoryId } = useParams<{ categoryId: string }>();
+  const { data: categories = [] } = useSportCategories();
+  const { isCreateOpen, openCreate, closeCreate } = useSportRecordModals<SportEntry>();
+
   return (
-    <SportsLayout>
-      <SportCategoryContent />
+    <SportsLayout onOpenAddEntry={openCreate}>
+      <SportCategoryContent onAddActivity={openCreate} />
+      <CreateSportActivityModal
+        isOpen={isCreateOpen}
+        onClose={closeCreate}
+        defaultCategoryId={categoryId}
+        categories={categories}
+      />
     </SportsLayout>
   );
 };

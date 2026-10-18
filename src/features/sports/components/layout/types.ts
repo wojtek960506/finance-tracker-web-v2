@@ -4,6 +4,7 @@ import type { SportCategory } from '../../api/types';
 
 export interface SportsLayoutProps {
   children?: ReactNode;
+  onOpenAddEntry?: () => void;
 }
 
 export interface SportsHeaderProps {

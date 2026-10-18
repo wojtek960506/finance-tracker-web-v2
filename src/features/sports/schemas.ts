@@ -10,9 +10,11 @@ export const sportEntryFormSchema = z.object({
 });
 
 export type SportEntryFormValues = z.infer<typeof sportEntryFormSchema>;
+export type SportEntryFormInput = z.input<typeof sportEntryFormSchema>;
 
 export const sportCategoryFormSchema = z.object({
   name: z.string().trim().min(1, 'Category name is required').max(100),
 });
 
 export type SportCategoryFormValues = z.infer<typeof sportCategoryFormSchema>;
+export type SportCategoryFormInput = z.input<typeof sportCategoryFormSchema>;

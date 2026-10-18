@@ -40,7 +40,7 @@ export const SportsTabs = ({
           className={({ isActive }) =>
             clsx(
               'flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium',
-              'whitespace-nowrap transition-colors sm:text-sm shrink-0',
+              'whitespace-nowrap sm:text-sm shrink-0',
               isActive
                 ? 'bg-fg text-bg shadow-sm'
                 : 'text-text-muted hover:bg-bt-ghost-hover hover:text-fg',
@@ -64,7 +64,7 @@ export const SportsTabs = ({
               className={({ isActive }) =>
                 clsx(
                   'flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium',
-                  'whitespace-nowrap transition-colors sm:text-sm shrink-0',
+                  'whitespace-nowrap sm:text-sm shrink-0',
                   isActive
                     ? 'bg-fg text-bg shadow-sm'
                     : 'text-text-muted hover:bg-bt-ghost-hover hover:text-fg',
@@ -120,7 +120,6 @@ export const SportsTabs = ({
             className={({ isActive }) =>
               clsx(
                 'flex items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-semibold',
-                'transition-colors',
                 isActive
                   ? 'bg-fg text-bg shadow-xs'
                   : 'text-text-muted hover:bg-muted hover:text-fg',
@@ -144,7 +143,6 @@ export const SportsTabs = ({
                 className={({ isActive }) =>
                   clsx(
                     'flex items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-semibold',
-                    'transition-colors',
                     isActive
                       ? 'bg-fg text-bg shadow-xs'
                       : 'text-text-muted hover:bg-muted hover:text-fg',

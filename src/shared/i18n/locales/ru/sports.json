@@ -113,5 +113,23 @@
     "showingCount": "Показано {{loaded}} из {{total}} активностей",
     "showingAll": "Показаны все {{total}} активностей",
     "close": "Закрыть"
+  },
+  "modals": {
+    "createTitle": "Добавить активность",
+    "createDescription": "Зарегистрируйте активность или расход в категории {{category}}.",
+    "category": "Категория",
+    "categoryPlaceholder": "Выберите категорию",
+    "date": "Дата",
+    "itemName": "Активность / Предмет",
+    "itemNamePlaceholder": "напр., Беговые кроссовки, Абонемент в зал, Сервис велосипеда",
+    "cost": "Стоимость (PLN)",
+    "costPlaceholder": "0.00",
+    "submitCreate": "Добавить активность",
+    "errors": {
+      "categoryRequired": "Категория обязательна",
+      "dateRequired": "Дата обязательна",
+      "itemNameRequired": "Название обязательно",
+      "costPositive": "Стоимость должна быть больше 0"
+    }
   }
 }

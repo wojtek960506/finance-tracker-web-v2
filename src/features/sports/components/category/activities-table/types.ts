@@ -3,6 +3,7 @@ import type { SportEntry } from '../../../api';
 export interface SportActivitiesTableProps {
   items: SportEntry[];
   hasFilters: boolean;
+  isLoading?: boolean;
   onEditItem?: (item: SportEntry) => void;
   onDeleteItem?: (item: SportEntry) => void;
   onLinkItem?: (item: SportEntry) => void;

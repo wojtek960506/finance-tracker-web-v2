@@ -113,5 +113,23 @@
     "showingCount": "Wyświetlanie {{loaded}} z {{total}} aktywności",
     "showingAll": "Wyświetlanie wszystkich {{total}} aktywności",
     "close": "Zamknij"
+  },
+  "modals": {
+    "createTitle": "Dodaj aktywność",
+    "createDescription": "Zarejestruj aktywność lub wydatek w kategorii {{category}}.",
+    "category": "Kategoria",
+    "categoryPlaceholder": "Wybierz kategorię",
+    "date": "Data",
+    "itemName": "Przedmiot / Aktywność",
+    "itemNamePlaceholder": "np. Buty do biegania, Karnet na siłownię, Serwis roweru",
+    "cost": "Koszt (PLN)",
+    "costPlaceholder": "0.00",
+    "submitCreate": "Dodaj aktywność",
+    "errors": {
+      "categoryRequired": "Kategoria jest wymagana",
+      "dateRequired": "Data jest wymagana",
+      "itemNameRequired": "Nazwa jest wymagana",
+      "costPositive": "Koszt musi być większy niż 0"
+    }
   }
 }

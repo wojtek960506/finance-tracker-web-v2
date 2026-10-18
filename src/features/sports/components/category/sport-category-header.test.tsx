@@ -10,6 +10,7 @@ import { SportCategoryHeader } from './sport-category-header';
 const mockSystemCategory: SportCategory = {
   id: 'cat-sys-1',
   name: 'Gym',
+  nameNormalized: 'gym',
   type: 'system',
   isFavorite: false,
 };
@@ -17,6 +18,7 @@ const mockSystemCategory: SportCategory = {
 const mockCustomCategory: SportCategory = {
   id: 'cat-usr-1',
   name: 'Bouldering',
+  nameNormalized: 'bouldering',
   type: 'user',
   isFavorite: true,
 };

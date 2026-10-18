@@ -256,4 +256,19 @@ describe('SportCategoryPage', () => {
       }),
     );
   });
+
+  it('opens CreateSportActivityModal when header add activity button is clicked', async () => {
+    renderCategoryPage();
+
+    expect(screen.queryByTestId('create-sport-activity-modal')).not.toBeInTheDocument();
+
+    const addBtn = await screen.findByTestId('sports-add-entry-button');
+    expect(addBtn).toBeInTheDocument();
+
+    await act(async () => {
+      fireEvent.click(addBtn);
+    });
+
+    expect(screen.getByTestId('create-sport-activity-modal')).toBeInTheDocument();
+  });
 });
