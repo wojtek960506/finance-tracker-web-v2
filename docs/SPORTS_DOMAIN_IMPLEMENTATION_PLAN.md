@@ -146,7 +146,7 @@ flowchart TD
 
 ---
 
-### ⏳ Phase 4: Category Workspace & Activity Log Table (Next Step)
+### ✅ Phase 4: Category Workspace & Activity Log Table (Completed)
 
 - [x] **Sub-phase 4.1: Category Header & Summary Cards**
   - Implement `SportCategorySummary` showing category-specific stats:
@@ -158,25 +158,25 @@ flowchart TD
   - Date range filters (Start Date, End Date).
   - Sort selector (`date_desc`, `date_asc`, `cost_desc`, `cost_asc`).
   - Reset filters button.
-- [ ] **Sub-phase 4.3: Activities Log Table**
+- [x] **Sub-phase 4.3: Activities Log Table**
   - Responsive table / list for mobile and desktop.
   - Columns: Date, Activity / Item Name, Cost (PLN), Transaction Link Badge, Actions.
   - Empty state when category has no activities.
   - Pagination controls (`page`, `limit`).
-- [ ] **Sub-phase 4.4: Integration & Route Testing**
+- [x] **Sub-phase 4.4: Integration & Route Testing**
   - Mount in `SportCategoryPage` (`/sports/categories/:categoryId`).
   - Unit tests for filtering, sorting, and pagination.
 
 ---
 
-### ⏳ Phase 5: Activity CRUD Dialogs (Create, Edit, Delete)
+### ⏳ Phase 5: Activity CRUD Dialogs (Create, Edit, Delete) (Next Step)
 
 - [ ] **Sub-phase 5.1: Create Activity Dialog / Drawer**
-  - Form fields: Date, Item / Activity Name, Cost (PLN), Optional Description.
+  - Form fields: Date, Item / Activity Name, Cost (PLN) (no description field — name serves as description).
   - Category selector (pre-selected to current category).
   - Quick action button in `SportsHeader` and in category workspace table.
 - [ ] **Sub-phase 5.2: Edit Activity Dialog / Drawer**
-  - Pre-filled form with existing activity data.
+  - Pre-filled form with existing activity data (Date, Item Name, Cost).
   - Invalidate `sportsQueryKeys.entries()` and `sportsQueryKeys.stats()` on update.
 - [ ] **Sub-phase 5.3: Delete Activity Confirmation Modal**
   - Danger confirmation modal detailing item name, date, and cost.

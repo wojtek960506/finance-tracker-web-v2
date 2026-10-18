@@ -53,6 +53,8 @@
     "selectCategory": "Select category",
     "empty": "No sport activities recorded yet.",
     "emptyFiltered": "No activities match the selected filters.",
+    "emptyDescription": "Record your first sports activity or expenditure in this category.",
+    "actions": "Actions",
     "deleteConfirmation": "Are you sure you want to delete \"{{name}}\"? This action cannot be undone."
   },
   "filters": {
@@ -94,7 +96,9 @@
     "unlinkTitle": "Unlink from transaction",
     "linkBatch": "Link selected ({{count}}) to transaction",
     "unlinkConfirm": "Are you sure you want to unlink \"{{name}}\" from transaction?",
-    "selectTransaction": "Search transaction..."
+    "selectTransaction": "Search transaction...",
+    "linked": "Linked",
+    "unlinked": "Unlinked"
   },
   "actions": {
     "save": "Save",
@@ -104,6 +108,10 @@
     "manage": "Manage",
     "add": "Add",
     "loadMore": "Load More",
+    "loadMoreWithCount": "Load more ({{loaded}} of {{total}})",
+    "loadingMore": "Loading more...",
+    "showingCount": "Showing {{loaded}} of {{total}} activities",
+    "showingAll": "Showing all {{total}} activities",
     "close": "Close"
   }
 }

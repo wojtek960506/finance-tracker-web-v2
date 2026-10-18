@@ -53,6 +53,8 @@
     "selectCategory": "Kategorie auswählen",
     "empty": "Noch keine Sportausgaben erfasst.",
     "emptyFiltered": "Keine Aktivitäten entsprechen den ausgewählten Filtern.",
+    "emptyDescription": "Erfassen Sie Ihre erste Sportausgabe oder Aktivität in dieser Kategorie.",
+    "actions": "Aktionen",
     "deleteConfirmation": "Sind Sie sicher, dass Sie „{{name}}“ löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden."
   },
   "filters": {
@@ -94,7 +96,9 @@
     "unlinkTitle": "Von Transaktion trennen",
     "linkBatch": "Ausgewählte ({{count}}) mit Transaktion verknüpfen",
     "unlinkConfirm": "Möchten Sie „{{name}}“ wirklich von der Transaktion trennen?",
-    "selectTransaction": "Transaktion suchen..."
+    "selectTransaction": "Transaktion suchen...",
+    "linked": "Verknüpft",
+    "unlinked": "Nicht verknüpft"
   },
   "actions": {
     "save": "Speichern",
@@ -104,6 +108,10 @@
     "manage": "Verwalten",
     "add": "Hinzufügen",
     "loadMore": "Mehr laden",
+    "loadMoreWithCount": "Mehr laden ({{loaded}} von {{total}})",
+    "loadingMore": "Wird geladen...",
+    "showingCount": "{{loaded}} von {{total}} Aktivitäten angezeigt",
+    "showingAll": "Alle {{total}} Aktivitäten angezeigt",
     "close": "Schließen"
   }
 }

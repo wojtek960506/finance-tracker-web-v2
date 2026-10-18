@@ -53,6 +53,8 @@
     "selectCategory": "Wybierz kategorię",
     "empty": "Brak zarejestrowanych wydatków sportowych.",
     "emptyFiltered": "Brak aktywności spełniających wybrane filtry.",
+    "emptyDescription": "Zarejestruj swój pierwszy wydatek lub aktywność w tej kategorii.",
+    "actions": "Akcje",
     "deleteConfirmation": "Czy na pewno chcesz usunąć „{{name}}”? Tej operacji nie można cofnąć."
   },
   "filters": {
@@ -94,7 +96,9 @@
     "unlinkTitle": "Odłącz od transakcji",
     "linkBatch": "Powiąż zaznaczone ({{count}}) z transakcją",
     "unlinkConfirm": "Czy na pewno chcesz odłączyć „{{name}}” od transakcji?",
-    "selectTransaction": "Szukaj transakcji..."
+    "selectTransaction": "Szukaj transakcji...",
+    "linked": "Powiązana",
+    "unlinked": "Niepowiązana"
   },
   "actions": {
     "save": "Zapisz",
@@ -104,6 +108,10 @@
     "manage": "Zarządzaj",
     "add": "Dodaj",
     "loadMore": "Załaduj więcej",
+    "loadMoreWithCount": "Załaduj więcej ({{loaded}} z {{total}})",
+    "loadingMore": "Ładowanie...",
+    "showingCount": "Wyświetlanie {{loaded}} z {{total}} aktywności",
+    "showingAll": "Wyświetlanie wszystkich {{total}} aktywności",
     "close": "Zamknij"
   }
 }

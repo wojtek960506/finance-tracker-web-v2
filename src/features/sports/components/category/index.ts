@@ -1,3 +1,4 @@
+export * from './activities-table';
 export * from './sport-activities-filter-bar';
 export * from './sport-category-header';
 export * from './sport-category-page';

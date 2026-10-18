@@ -1,10 +1,10 @@
 import { useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
 import { useSportCategories, useSportEntries, useSportStats } from '../../hooks';
 import { SportsLayout } from '../layout';
 
+import { SportActivitiesTable } from './activities-table';
 import { SportActivitiesFilterBar } from './sport-activities-filter-bar';
 import { SportCategoryHeader } from './sport-category-header';
 import { SportCategorySummary } from './sport-category-summary';
@@ -13,7 +13,6 @@ import { calculateSportCategorySummary } from './utils';
 
 export const SportCategoryContent = () => {
   const { categoryId } = useParams<{ categoryId: string }>();
-  const { t } = useTranslation('sports');
 
   const [filters, setFilters] = useState<SportActivitiesFilters>({
     sort: 'date_desc',
@@ -21,7 +20,13 @@ export const SportCategoryContent = () => {
 
   const { data: categories = [], isLoading: isCategoriesLoading } = useSportCategories();
   const { data: stats, isLoading: isStatsLoading } = useSportStats(undefined);
-  const { data: entriesData, isLoading: isEntriesLoading } = useSportEntries({
+  const {
+    data: entriesData,
+    isLoading: isEntriesLoading,
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage,
+  } = useSportEntries({
     categoryId,
     ...filters,
   });
@@ -48,6 +53,7 @@ export const SportCategoryContent = () => {
   );
 
   const isInitialLoading = isCategoriesLoading || (isStatsLoading && isEntriesLoading);
+  const totalCount = entriesData?.pages[0]?.pagination.total ?? items.length;
 
   return (
     <div
@@ -70,16 +76,15 @@ export const SportCategoryContent = () => {
         <SportActivitiesFilterBar filters={filters} onFiltersChange={setFilters} />
       )}
 
-      {items.length === 0 && !isEntriesLoading && (
-        <div
-          className="rounded-xl border border-border bg-card-bg p-6 text-center text-fg"
-          data-testid="sport-category-empty-state"
-        >
-          <p className="text-sm text-text-muted">
-            {hasActiveFilters ? t('entries.emptyFiltered') : t('entries.empty')}
-          </p>
-        </div>
-      )}
+      <SportActivitiesTable
+        items={items}
+        hasFilters={hasActiveFilters}
+        hasNextPage={hasNextPage}
+        isFetchingNextPage={isFetchingNextPage}
+        fetchNextPage={fetchNextPage}
+        totalCount={totalCount}
+        loadedCount={items.length}
+      />
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import '@shared/i18n';
 
 import { QueryClientProvider } from '@tanstack/react-query';
-import { fireEvent, render, screen, within } from '@testing-library/react';
+import { act, fireEvent, render, screen, within } from '@testing-library/react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
@@ -193,5 +193,67 @@ describe('SportCategoryPage', () => {
 
     expect(await screen.findByTestId('sport-category-empty-state')).toBeInTheDocument();
     expect(screen.getByText('No sport activities recorded yet.')).toBeInTheDocument();
+  });
+
+  it('renders activities table rows when activities are returned', async () => {
+    vi.spyOn(entriesApi, 'getSportEntries').mockResolvedValue(mockEntriesResponse);
+
+    renderCategoryPage();
+
+    expect(await screen.findByTestId('activity-row-entry-1')).toBeInTheDocument();
+    expect(screen.getByTestId('activity-row-entry-2')).toBeInTheDocument();
+    expect(screen.getAllByText('Running Shoes').length).toBeGreaterThan(0);
+    expect(screen.getAllByText('Marathon Entry').length).toBeGreaterThan(0);
+  });
+
+  it('triggers next page fetch when clicking load more in category page', async () => {
+    const entriesSpy = vi
+      .spyOn(entriesApi, 'getSportEntries')
+      .mockImplementation((params) => {
+        if (params?.page === 2) {
+          return Promise.resolve({
+            items: [
+              {
+                ...mockEntriesResponse.items[0],
+                id: 'entry-3',
+                itemName: 'Trail Shoes',
+              },
+            ],
+            pagination: {
+              total: 3,
+              page: 2,
+              limit: 2,
+              totalPages: 2,
+            },
+          });
+        }
+        return Promise.resolve({
+          ...mockEntriesResponse,
+          pagination: {
+            total: 3,
+            page: 1,
+            limit: 2,
+            totalPages: 2,
+          },
+        });
+      });
+
+    renderCategoryPage();
+
+    const loadMoreBtn = await screen.findByTestId(
+      'sport-activities-table-load-more-button',
+    );
+    expect(loadMoreBtn).toBeInTheDocument();
+
+    await act(async () => {
+      fireEvent.click(loadMoreBtn);
+    });
+
+    expect(entriesSpy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        categoryId: 'cat-1',
+        page: 2,
+      }),
+    );
   });
 });
