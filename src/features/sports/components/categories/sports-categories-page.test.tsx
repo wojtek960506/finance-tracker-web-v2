@@ -10,18 +10,21 @@ const mockCategories: SportCategory[] = [
   {
     id: 'cat-sys-1',
     name: 'other',
+    nameNormalized: 'other',
     type: 'system',
     isFavorite: false,
   },
   {
     id: 'cat-usr-1',
     name: 'Bouldering',
+    nameNormalized: 'Bouldering',
     type: 'user',
     isFavorite: true,
   },
   {
     id: 'cat-usr-2',
     name: 'Swimming',
+    nameNormalized: 'Swimming',
     type: 'user',
     isFavorite: false,
   },

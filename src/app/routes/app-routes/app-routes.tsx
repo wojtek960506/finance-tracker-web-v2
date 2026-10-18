@@ -250,7 +250,7 @@ export const PROTECTED_APP_ROUTES: AppRouteConfig[] = [
   {
     path: '/transactions/categories',
     element: <NamedResourcesPage kind="categories" />,
-    title: { namespace: 'navigation', key: 'categories' },
+    title: { namespace: 'navigation', key: 'transactionCategories' },
   },
   {
     path: '/transactions/payment-methods',
@@ -329,7 +329,7 @@ export const PROTECTED_APP_ROUTES: AppRouteConfig[] = [
   {
     path: '/sports/categories',
     element: <SportsCategoriesPage />,
-    title: { namespace: 'navigation', key: 'categories' },
+    title: { namespace: 'navigation', key: 'sportsCategories' },
   },
   {
     path: '/sports/categories/:categoryId',

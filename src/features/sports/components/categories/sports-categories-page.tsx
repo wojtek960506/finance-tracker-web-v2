@@ -20,19 +20,17 @@ export const SportsCategoriesPage = () => {
 
   if (isLoading) {
     return (
-      <div className="flex h-full items-center justify-center p-4">
-        <LoadingCard
-          title={t('categories.allCategories')}
-          description={t('description')}
-          widthClassName="max-w-[35rem]"
-        />
-      </div>
+      <LoadingCard
+        title={t('categories.allCategories')}
+        description={t('description')}
+        widthClassName="max-w-[35rem]"
+      />
     );
   }
 
   if (error) {
     return (
-      <div className="m-auto flex w-full max-w-[35rem] flex-col gap-2 p-4 sm:gap-3">
+      <div className="mx-auto flex w-full max-w-[35rem] flex-col gap-2 sm:gap-3">
         <Card className="gap-4 rounded-3xl border-fg/20 bg-modal-bg/95 p-6 text-center sm:p-8">
           <h2 className="text-xl font-semibold sm:text-2xl">
             {t('toasts.categoryCreateError')}
@@ -56,7 +54,7 @@ export const SportsCategoriesPage = () => {
   return (
     <div
       className={clsx(
-        'mx-auto flex h-full min-h-0 w-full flex-col gap-2 overflow-hidden p-4 sm:gap-3',
+        'mx-auto flex h-full min-h-0 w-full flex-col gap-2 overflow-hidden sm:gap-3',
         'max-w-[35rem]',
       )}
       data-testid="sports-categories-page"

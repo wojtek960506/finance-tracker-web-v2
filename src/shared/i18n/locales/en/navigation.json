@@ -17,6 +17,8 @@
   "trashedTransactionDetails": "Trashed Transaction Details",
   "editTransaction": "Edit Transaction",
   "categories": "Categories",
+  "transactionCategories": "Transaction categories",
+  "sportsCategories": "Sports categories",
   "paymentMethods": "Payment Methods",
   "bankAccounts": "Bank Accounts",
   "vehicles": "Vehicles",

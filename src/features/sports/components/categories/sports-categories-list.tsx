@@ -31,7 +31,7 @@ export const SportsCategoriesList = ({
   }, [categories, i18n.language, t]);
 
   return (
-    <ul className="flex flex-col gap-2 sm:gap-2.5" data-testid="sports-categories-list">
+    <ul className="flex flex-col gap-2 sm:gap-3" data-testid="sports-categories-list">
       {sortedCategories.map((category) => (
         <li key={category.id}>
           <SportCategoryItem category={category} onDeleteRequest={onDeleteRequest} />

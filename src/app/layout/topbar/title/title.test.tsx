@@ -152,7 +152,7 @@ describe('Title', () => {
     expect(screen.queryByRole('link')).not.toBeInTheDocument();
   });
 
-  it('renders categories title on categories page', () => {
+  it('renders categories title on transaction categories page', () => {
     render(
       <MemoryRouter initialEntries={['/transactions/categories']}>
         <Title />
@@ -160,7 +160,19 @@ describe('Title', () => {
     );
 
     expect(
-      screen.getByRole('heading', { name: 'navigation:categories' }),
+      screen.getByRole('heading', { name: 'navigation:transactionCategories' }),
+    ).toBeInTheDocument();
+  });
+
+  it('renders sports categories title on sports categories page', () => {
+    render(
+      <MemoryRouter initialEntries={['/sports/categories']}>
+        <Title />
+      </MemoryRouter>,
+    );
+
+    expect(
+      screen.getByRole('heading', { name: 'navigation:sportsCategories' }),
     ).toBeInTheDocument();
   });
 

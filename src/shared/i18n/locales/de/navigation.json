@@ -17,6 +17,8 @@
   "trashedTransactionDetails": "Details der gelöschten Transaktion",
   "editTransaction": "Transaktion bearbeiten",
   "categories": "Kategorien",
+  "transactionCategories": "Transaktionskategorien",
+  "sportsCategories": "Sportkategorien",
   "paymentMethods": "Zahlungsmethoden",
   "bankAccounts": "Bankkonten",
   "vehicles": "Fahrzeuge",
