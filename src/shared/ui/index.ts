@@ -11,6 +11,7 @@ export * from './filter-bar';
 export * from './filter-pills';
 export * from './form-actions';
 export * from './input';
+export * from './item-actions';
 export * from './label';
 export * from './link';
 export * from './loading-card';

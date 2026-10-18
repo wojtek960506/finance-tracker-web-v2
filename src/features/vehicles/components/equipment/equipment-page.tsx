@@ -5,9 +5,11 @@ import {
   type SpendingTarget,
   useSpendingModalState,
 } from '@vehicles/components/spendings';
-import { useEquipment, useVehicleRecordModals } from '@vehicles/hooks';
+import { useEquipment } from '@vehicles/hooks';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+
+import { useRecordModals } from '@shared/hooks';
 
 import { SingleVehicleLayout, useVehicleContext } from '../single-vehicle';
 
@@ -35,7 +37,7 @@ export const VehiclesEquipmentContent = () => {
     deletingItem,
     openDelete: setDeletingItem,
     closeDelete: closeDeletingItem,
-  } = useVehicleRecordModals<VehicleEquipment>();
+  } = useRecordModals<VehicleEquipment>();
 
   const equipmentToSpendingTarget = (item: VehicleEquipment): SpendingTarget => ({
     id: item.id,

@@ -5,9 +5,11 @@ import {
   type SpendingTarget,
   useSpendingModalState,
 } from '@vehicles/components/spendings';
-import { useFuelEntries, useVehicleRecordModals } from '@vehicles/hooks';
+import { useFuelEntries } from '@vehicles/hooks';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+
+import { useRecordModals } from '@shared/hooks';
 
 import { SingleVehicleLayout, useVehicleContext } from '../single-vehicle';
 
@@ -35,7 +37,7 @@ export const VehiclesFuelContent = () => {
     deletingItem: deletingEntry,
     openDelete: setDeletingEntry,
     closeDelete: closeDeletingEntry,
-  } = useVehicleRecordModals<VehicleFuelEntryEnriched>();
+  } = useRecordModals<VehicleFuelEntryEnriched>();
 
   const { linkingTarget, unlinkingTarget, openLink, closeLink, openUnlink, closeUnlink } =
     useSpendingModalState();

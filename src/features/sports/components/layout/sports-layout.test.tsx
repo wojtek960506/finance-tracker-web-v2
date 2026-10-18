@@ -82,7 +82,7 @@ describe('SportsLayout', () => {
     renderLayout();
 
     expect(screen.getByTestId('sports-header')).toBeInTheDocument();
-    expect(screen.getByTestId('sports-tabs')).toBeInTheDocument();
+    expect(await screen.findByTestId('sports-tabs')).toBeInTheDocument();
     expect(screen.getByTestId('layout-child')).toBeInTheDocument();
 
     expect(await screen.findByTestId('sports-tab-category-cat-1')).toBeInTheDocument();
@@ -96,7 +96,7 @@ describe('SportsLayout', () => {
     renderLayout('/sports/categories/cat-2');
 
     expect(await screen.findByTestId('sports-tab-category-cat-2')).toBeInTheDocument();
-    expect(screen.getByTestId('sports-tab-category-cat-1')).toBeInTheDocument();
+    expect(await screen.findByTestId('sports-tab-category-cat-1')).toBeInTheDocument();
   });
 
   it('toggles mobile navigation when hamburger is clicked', async () => {
@@ -105,7 +105,7 @@ describe('SportsLayout', () => {
 
     renderLayout();
 
-    const toggleBtn = screen.getByTestId('sports-mobile-nav-toggle');
+    const toggleBtn = await screen.findByTestId('sports-mobile-nav-toggle');
     expect(screen.queryByTestId('sports-mobile-nav')).not.toBeInTheDocument();
 
     fireEvent.click(toggleBtn);

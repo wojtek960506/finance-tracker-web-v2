@@ -1,22 +1,23 @@
 import { act, renderHook } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
-import { useVehicleRecordModals } from './use-vehicle-record-modals';
+import { useRecordModals } from './use-record-modals';
 
-describe('useVehicleRecordModals', () => {
-  type TestItem = { id: string; name: string };
-  const mockItem: TestItem = { id: '1', name: 'Test' };
+type Item = { id: string; name: string };
 
-  it('initializes with all modals closed and null items', () => {
-    const { result } = renderHook(() => useVehicleRecordModals<TestItem>());
+describe('useRecordModals', () => {
+  const mockItem: Item = { id: '1', name: 'Test Item' };
+
+  it('initializes with all modal states closed and items null', () => {
+    const { result } = renderHook(() => useRecordModals<Item>());
 
     expect(result.current.isCreateOpen).toBe(false);
     expect(result.current.editingItem).toBeNull();
     expect(result.current.deletingItem).toBeNull();
   });
 
-  it('handles create modal open and close', () => {
-    const { result } = renderHook(() => useVehicleRecordModals<TestItem>());
+  it('manages create modal state correctly', () => {
+    const { result } = renderHook(() => useRecordModals<Item>());
 
     act(() => {
       result.current.openCreate();
@@ -27,10 +28,15 @@ describe('useVehicleRecordModals', () => {
       result.current.closeCreate();
     });
     expect(result.current.isCreateOpen).toBe(false);
+
+    act(() => {
+      result.current.setIsCreateOpen(true);
+    });
+    expect(result.current.isCreateOpen).toBe(true);
   });
 
-  it('handles edit modal open and close', () => {
-    const { result } = renderHook(() => useVehicleRecordModals<TestItem>());
+  it('manages editing item state correctly', () => {
+    const { result } = renderHook(() => useRecordModals<Item>());
 
     act(() => {
       result.current.openEdit(mockItem);
@@ -43,8 +49,8 @@ describe('useVehicleRecordModals', () => {
     expect(result.current.editingItem).toBeNull();
   });
 
-  it('handles delete modal open and close', () => {
-    const { result } = renderHook(() => useVehicleRecordModals<TestItem>());
+  it('manages deleting item state correctly', () => {
+    const { result } = renderHook(() => useRecordModals<Item>());
 
     act(() => {
       result.current.openDelete(mockItem);
@@ -57,8 +63,8 @@ describe('useVehicleRecordModals', () => {
     expect(result.current.deletingItem).toBeNull();
   });
 
-  it('closes all modals when closeAll is called', () => {
-    const { result } = renderHook(() => useVehicleRecordModals<TestItem>());
+  it('resets all states when closeAll is called', () => {
+    const { result } = renderHook(() => useRecordModals<Item>());
 
     act(() => {
       result.current.openCreate();

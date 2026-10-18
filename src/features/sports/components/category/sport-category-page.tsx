@@ -1,15 +1,11 @@
 import { useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
+import { useRecordModals } from '@shared/hooks';
 import { PageLoading } from '@shared/ui';
 
 import type { SportEntry } from '../../api';
-import {
-  useSportCategories,
-  useSportEntries,
-  useSportRecordModals,
-  useSportStats,
-} from '../../hooks';
+import { useSportCategories, useSportEntries, useSportStats } from '../../hooks';
 import { CreateSportActivityModal } from '../activity-modals';
 import { SportsLayout } from '../layout';
 
@@ -111,7 +107,7 @@ export const SportCategoryContent = ({
 export const SportCategoryPage = () => {
   const { categoryId } = useParams<{ categoryId: string }>();
   const { data: categories = [] } = useSportCategories();
-  const { isCreateOpen, openCreate, closeCreate } = useSportRecordModals<SportEntry>();
+  const { isCreateOpen, openCreate, closeCreate } = useRecordModals<SportEntry>();
 
   return (
     <SportsLayout>

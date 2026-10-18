@@ -1,10 +1,11 @@
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { useRecordModals } from '@shared/hooks';
 import { Button, LoadingCard } from '@shared/ui';
 
 import type { SportEntry } from '../../api';
-import { useSportCategories, useSportRecordModals, useSportStats } from '../../hooks';
+import { useSportCategories, useSportStats } from '../../hooks';
 import { CreateSportActivityModal } from '../activity-modals';
 import { SportsLayout } from '../layout';
 
@@ -96,7 +97,7 @@ export const SportsOverviewContent = ({
 };
 
 export const SportsOverviewPage = () => {
-  const { isCreateOpen, openCreate, closeCreate } = useSportRecordModals<SportEntry>();
+  const { isCreateOpen, openCreate, closeCreate } = useRecordModals<SportEntry>();
   const { data: categories = [] } = useSportCategories();
 
   return (
