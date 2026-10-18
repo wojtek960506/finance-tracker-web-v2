@@ -1,5 +1,5 @@
 {
-  "newCategory": "Новая категория",
+  "newCategory": "Новая категория транзакции",
   "newPaymentMethod": "Новый способ оплаты",
   "newAccount": "Новый банковский счёт",
   "category": "категорию",
@@ -61,5 +61,10 @@
   "atm": "Банкомат",
   "card": "Карта",
   "cash": "Наличные",
-  "bankTransfer": "Банковский перевод"
+  "bankTransfer": "Банковский перевод",
+  "sport": "Спорт",
+  "sports": "Спорт",
+  "transport": "Транспорт",
+  "investment": "Инвестиции",
+  "investments": "Инвестиции"
 }

@@ -1,5 +1,5 @@
 {
-  "newCategory": "New category",
+  "newCategory": "New transaction category",
   "newPaymentMethod": "New payment method",
   "newAccount": "New bank account",
   "category": "category",
@@ -61,5 +61,10 @@
   "atm": "ATM",
   "card": "Card",
   "cash": "Cash",
-  "bankTransfer": "Bank transfer"
+  "bankTransfer": "Bank transfer",
+  "sport": "Sport",
+  "sports": "Sport",
+  "transport": "Transport",
+  "investment": "Investments",
+  "investments": "Investments"
 }

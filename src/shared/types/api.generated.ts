@@ -4052,6 +4052,297 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/sports/stats/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Return aggregate sport expenditure statistics with category breakdown, yearly trends, and monthly distribution. */
+        get: {
+            parameters: {
+                query?: {
+                    year?: number;
+                };
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["SportStatsResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/sports/spendings/link": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Link sport spendings to transaction
+         * @description Associate one or more sport entries with a financial transaction.
+         */
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["LinkSportSpendingsToTransactionInput"];
+                };
+            };
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["SportSpendingLinkResponse"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/sports/spendings/unlink": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Unlink sport spending from transaction
+         * @description Remove transaction association from a sport entry record.
+         */
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["UnlinkSportSpendingFromTransactionInput"];
+                };
+            };
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["SportSpendingLinkResponse"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/sports/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List sport entries
+         * @description Return paginated sport expenditure entries with optional filtering by category, date range, search query, and sorting.
+         */
+        get: {
+            parameters: {
+                query?: {
+                    categoryId?: string;
+                    startDate?: unknown;
+                    endDate?: unknown;
+                    search?: string;
+                    sort?: "date_desc" | "date_asc" | "cost_desc" | "cost_asc";
+                    page?: number;
+                    limit?: number;
+                };
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["SportEntryListResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        /**
+         * Create sport entry
+         * @description Create a new sport expenditure record.
+         */
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["SportEntryCreateInput"];
+                };
+            };
+            responses: {
+                /** @description Default Response */
+                201: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["SportEntryResponse"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/sports/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get sport entry by id
+         * @description Return a single sport entry record by its id.
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["SportEntryResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        /**
+         * Delete sport entry
+         * @description Delete a single sport entry record.
+         */
+        delete: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                204: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        options?: never;
+        head?: never;
+        /**
+         * Update sport entry
+         * @description Partially update an existing sport expenditure record.
+         */
+        patch: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: string;
+                };
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["SportEntryUpdateInput"];
+                };
+            };
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["SportEntryResponse"];
+                    };
+                };
+            };
+        };
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -4310,6 +4601,90 @@ export interface components {
             isFavorite: boolean;
         };
         NamedResourcesResponseInput: components["schemas"]["NamedResourceResponseInput"][];
+        SportEntryCategoryResponseInput: {
+            id: string;
+            name: string;
+            /** @enum {string} */
+            type: "user" | "system";
+        };
+        SportEntryCreateInput: {
+            categoryId: string;
+            date: unknown;
+            itemName: string;
+            costPln: number;
+            description?: string | null;
+            transactionId?: string | null;
+        };
+        SportEntryUpdateInput: {
+            categoryId?: string;
+            date?: unknown;
+            itemName?: string;
+            costPln?: number;
+            description?: string | null;
+            transactionId?: string | null;
+        };
+        SportEntryResponseInput: {
+            id: string;
+            ownerId: string;
+            categoryId: string;
+            category: components["schemas"]["SportEntryCategoryResponseInput"];
+            date: unknown;
+            itemName: string;
+            costPln: number;
+            description?: string | null;
+            transactionId?: string | null;
+            createdAt: unknown;
+            updatedAt: unknown;
+        };
+        SportPaginationInput: {
+            total: number;
+            page: number;
+            limit: number;
+            totalPages: number;
+        };
+        SportEntryListResponseInput: {
+            items: components["schemas"]["SportEntryResponseInput"][];
+            pagination: components["schemas"]["SportPaginationInput"];
+        };
+        LinkSportSpendingsToTransactionInput: {
+            transactionId: string;
+            entryIds: string[];
+        };
+        UnlinkSportSpendingFromTransactionInput: {
+            entryId: string;
+        };
+        SportSpendingLinkResponseInput: {
+            acknowledged: boolean;
+            modifiedCount: number;
+        };
+        SportStatsCategoryInput: {
+            categoryId: string;
+            categoryName: string;
+            categoryKey?: string | null;
+            /** @enum {string} */
+            type: "user" | "system";
+            totalCostPln: number;
+            entryCount: number;
+            percentage: number;
+        };
+        SportStatsYearInput: {
+            year: number;
+            totalCostPln: number;
+            entryCount: number;
+        };
+        SportStatsMonthInput: {
+            year: number;
+            month: number;
+            totalCostPln: number;
+            entryCount: number;
+        };
+        SportStatsResponseInput: {
+            totalCostPln: number;
+            totalEntries: number;
+            byCategory: components["schemas"]["SportStatsCategoryInput"][];
+            byYear: components["schemas"]["SportStatsYearInput"][];
+            byMonth?: components["schemas"]["SportStatsMonthInput"][];
+        };
         VehiclePaginationInput: {
             nextCursor: string | null;
             hasMore: boolean;
@@ -5543,6 +5918,95 @@ export interface components {
             isFavorite: boolean;
         };
         NamedResourcesResponse: components["schemas"]["NamedResourceResponse"][];
+        SportEntryCategoryResponse: {
+            id: string;
+            name: string;
+            /** @enum {string} */
+            type: "user" | "system";
+        };
+        SportEntryCreate: {
+            categoryId: string;
+            /** Format: date-time */
+            date: string;
+            itemName: string;
+            costPln: number;
+            description?: string | null;
+            transactionId?: string | null;
+        };
+        SportEntryUpdate: {
+            categoryId?: string;
+            /** Format: date-time */
+            date?: string;
+            itemName?: string;
+            costPln?: number;
+            description?: string | null;
+            transactionId?: string | null;
+        };
+        SportEntryResponse: {
+            id: string;
+            ownerId: string;
+            categoryId: string;
+            category: components["schemas"]["SportEntryCategoryResponse"];
+            /** Format: date-time */
+            date: string;
+            itemName: string;
+            costPln: number;
+            description?: string | null;
+            transactionId?: string | null;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            updatedAt: string;
+        };
+        SportPagination: {
+            total: number;
+            page: number;
+            limit: number;
+            totalPages: number;
+        };
+        SportEntryListResponse: {
+            items: components["schemas"]["SportEntryResponse"][];
+            pagination: components["schemas"]["SportPagination"];
+        };
+        LinkSportSpendingsToTransaction: {
+            transactionId: string;
+            entryIds: string[];
+        };
+        UnlinkSportSpendingFromTransaction: {
+            entryId: string;
+        };
+        SportSpendingLinkResponse: {
+            acknowledged: boolean;
+            modifiedCount: number;
+        };
+        SportStatsCategory: {
+            categoryId: string;
+            categoryName: string;
+            categoryKey?: string | null;
+            /** @enum {string} */
+            type: "user" | "system";
+            totalCostPln: number;
+            entryCount: number;
+            percentage: number;
+        };
+        SportStatsYear: {
+            year: number;
+            totalCostPln: number;
+            entryCount: number;
+        };
+        SportStatsMonth: {
+            year: number;
+            month: number;
+            totalCostPln: number;
+            entryCount: number;
+        };
+        SportStatsResponse: {
+            totalCostPln: number;
+            totalEntries: number;
+            byCategory: components["schemas"]["SportStatsCategory"][];
+            byYear: components["schemas"]["SportStatsYear"][];
+            byMonth?: components["schemas"]["SportStatsMonth"][];
+        };
         VehiclePagination: {
             nextCursor: string | null;
             hasMore: boolean;

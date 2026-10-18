@@ -1,8 +1,7 @@
-import { VehicleDateRangeFilter, VehicleFilterBar } from '@vehicles/components/common';
 import { Plus } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
-import { ButtonWithIcon, FilterPills } from '@shared/ui';
+import { ButtonWithIcon, DateRangeFilter, FilterBar, FilterPills } from '@shared/ui';
 
 export type FuelFilters = {
   startDate?: string;
@@ -28,9 +27,11 @@ export const FuelFilterBar = ({
   );
 
   return (
-    <VehicleFilterBar
+    <FilterBar
       testId="fuel-filter-bar"
       toggleTestId="toggle-fuel-filters-button"
+      filterLabel={t('actions.filterTitle')}
+      resetLabel={t('actions.resetFilters')}
       hasActiveFilters={hasActiveFilters}
       onResetFilters={() => onFiltersChange({})}
       actionButton={
@@ -43,13 +44,14 @@ export const FuelFilterBar = ({
         />
       }
     >
-      <VehicleDateRangeFilter
+      <DateRangeFilter
         startDate={filters.startDate}
         endDate={filters.endDate}
         onStartDateChange={(startDate) => onFiltersChange({ ...filters, startDate })}
         onEndDateChange={(endDate) => onFiltersChange({ ...filters, endDate })}
         startDateLabel={t('fuelPage.filters.startDate')}
         endDateLabel={t('fuelPage.filters.endDate')}
+        inputClassName="xl:w-52"
       />
 
       {/* Filter Pills */}
@@ -73,6 +75,6 @@ export const FuelFilterBar = ({
           }
         />
       </div>
-    </VehicleFilterBar>
+    </FilterBar>
   );
 };

@@ -15,6 +15,7 @@ const mocks = vi.hoisted(() => ({
   logout: vi.fn().mockResolvedValue(undefined),
   fromLeft: { value: true },
   navigate: vi.fn(),
+  location: { pathname: '/' },
 }));
 
 vi.mock('@shared/hooks', () => ({
@@ -27,7 +28,11 @@ vi.mock('@shared/hooks', () => ({
 vi.mock('react-router-dom', async () => {
   const actual =
     await vi.importActual<typeof import('react-router-dom')>('react-router-dom');
-  return { ...actual, useNavigate: () => mocks.navigate };
+  return {
+    ...actual,
+    useNavigate: () => mocks.navigate,
+    useLocation: () => mocks.location,
+  };
 });
 
 vi.mock('@context/navigation-context', () => ({
@@ -54,18 +59,30 @@ vi.mock('@ui', () => ({
     header,
     children,
     indicatorPosition,
+    indicatorClassName,
     isOpen,
+    onOpenChange,
   }: {
     header: ReactNode;
     children: ReactNode;
     indicatorPosition: 'left' | 'right';
+    indicatorClassName?: string;
     isOpen?: boolean;
+    onOpenChange?: (open: boolean) => void;
   }) => (
     <div
       data-testid="collapsible"
       data-indicator-position={indicatorPosition}
+      data-indicator-classname={indicatorClassName || undefined}
       data-open={String(isOpen)}
     >
+      <button
+        type="button"
+        data-testid="collapsible-toggle"
+        onClick={() => onOpenChange?.(!isOpen)}
+      >
+        toggle
+      </button>
       <div data-testid="collapsible-header">{header}</div>
       <div data-testid="collapsible-body">{children}</div>
     </div>
@@ -107,11 +124,11 @@ describe('Navigation', () => {
   beforeEach(() => {
     mocks.authToken.value = 'token';
     mocks.fromLeft.value = true;
+    mocks.location = { pathname: '/' };
     vi.clearAllMocks();
     window.localStorage.clear();
     useUIStore.setState({
       isNavOpen: false,
-      expandedNavigationItems: [],
       isTransactionsTotalsOpen: false,
       isTransactionsFiltersOpen: false,
       expandedTransactionTotalCurrencies: null,
@@ -129,19 +146,52 @@ describe('Navigation', () => {
   it('uses left indicator position when navigation is from the left', () => {
     render(<Navigation />);
 
-    expect(screen.getByTestId('collapsible')).toHaveAttribute(
-      'data-indicator-position',
-      'left',
-    );
-    expect(screen.getByTestId('collapsible')).toHaveAttribute('data-open', 'false');
+    const collapsibles = screen.getAllByTestId('collapsible');
+    expect(collapsibles).toHaveLength(2);
+    expect(collapsibles[0]).toHaveAttribute('data-indicator-position', 'left');
+    expect(collapsibles[0]).toHaveAttribute('data-open', 'false');
+    expect(collapsibles[1]).toHaveAttribute('data-indicator-position', 'left');
+    expect(collapsibles[1]).toHaveAttribute('data-open', 'false');
   });
 
-  it('passes through initial open state when provided', () => {
-    useUIStore.getState().setNavigationItemExpanded('transactions', true);
+  it('opens transactions collapsible and highlights chevron on transactions child route', () => {
+    mocks.location = { pathname: '/transactions/categories' };
 
     render(<Navigation />);
 
-    expect(screen.getByTestId('collapsible')).toHaveAttribute('data-open', 'true');
+    const collapsibles = screen.getAllByTestId('collapsible');
+    expect(collapsibles[0]).toHaveAttribute('data-open', 'true');
+    expect(collapsibles[0]).toHaveAttribute(
+      'data-indicator-classname',
+      'text-active-nav',
+    );
+    expect(collapsibles[1]).toHaveAttribute('data-open', 'false');
+    expect(collapsibles[1]).not.toHaveAttribute('data-indicator-classname');
+  });
+
+  it('does not highlight transactions chevron on transactions index route', () => {
+    mocks.location = { pathname: '/transactions' };
+
+    render(<Navigation />);
+
+    const collapsibles = screen.getAllByTestId('collapsible');
+    expect(collapsibles[0]).toHaveAttribute('data-open', 'true');
+    expect(collapsibles[0]).not.toHaveAttribute('data-indicator-classname');
+  });
+
+  it('opens sports collapsible and highlights chevron on sports child route', () => {
+    mocks.location = { pathname: '/sports/categories' };
+
+    render(<Navigation />);
+
+    const collapsibles = screen.getAllByTestId('collapsible');
+    expect(collapsibles[0]).toHaveAttribute('data-open', 'false');
+    expect(collapsibles[0]).not.toHaveAttribute('data-indicator-classname');
+    expect(collapsibles[1]).toHaveAttribute('data-open', 'true');
+    expect(collapsibles[1]).toHaveAttribute(
+      'data-indicator-classname',
+      'text-active-nav',
+    );
   });
 
   it('uses right indicator position when navigation is from the right', () => {
@@ -149,28 +199,22 @@ describe('Navigation', () => {
 
     render(<Navigation />);
 
-    expect(screen.getByTestId('collapsible')).toHaveAttribute(
-      'data-indicator-position',
-      'right',
-    );
+    const collapsibles = screen.getAllByTestId('collapsible');
+    expect(collapsibles[0]).toHaveAttribute('data-indicator-position', 'right');
+    expect(collapsibles[1]).toHaveAttribute('data-indicator-position', 'right');
   });
 
-  it('triggers collapsible actions for each navigation item', async () => {
+  it('allows toggling collapsibles via onOpenChange', async () => {
     const user = userEvent.setup();
 
     render(<Navigation />);
 
-    await user.click(screen.getByRole('button', { name: 'categories' }));
-    await user.click(screen.getByRole('button', { name: 'investments' }));
-    await user.click(screen.getByRole('button', { name: 'paymentMethods' }));
-    await user.click(screen.getByRole('button', { name: 'bankAccounts' }));
-    await user.click(screen.getByRole('button', { name: 'transactionsTrash' }));
-    await user.click(screen.getByRole('button', { name: 'vehicles' }));
-    await user.click(screen.getByRole('button', { name: 'sports' }));
-    await user.click(screen.getByRole('button', { name: 'settings' }));
-    await user.click(screen.getByRole('button', { name: 'transactions' }));
+    const toggles = screen.getAllByTestId('collapsible-toggle');
+    const collapsibles = screen.getAllByTestId('collapsible');
 
-    expect(useUIStore.getState().expandedNavigationItems).toEqual([]);
+    expect(collapsibles[0]).toHaveAttribute('data-open', 'false');
+    await user.click(toggles[0]);
+    expect(collapsibles[0]).toHaveAttribute('data-open', 'true');
   });
 
   it('logs out and clears cached data when the logout item is clicked', async () => {
@@ -186,7 +230,6 @@ describe('Navigation', () => {
     expect(mocks.removeAuthToken).toHaveBeenCalled();
     expect(mocks.clear).toHaveBeenCalled();
     expect(mocks.navigate).toHaveBeenCalledWith('/login', { replace: true });
-    expect(useUIStore.getState().expandedNavigationItems).toEqual([]);
     expect(useUIStore.getState().isNavOpen).toBe(false);
 
     deferredLogout.resolve();

@@ -4,5 +4,9 @@
   "saving": "Speichern...",
   "deleting": "Löschen...",
   "loading": "Laden...",
-  "loadingDescription": "Bitte warten, während die Seite vorbereitet wird."
+  "loadingDescription": "Bitte warten, während die Seite vorbereitet wird.",
+  "filters": "Filter",
+  "resetFilters": "Filter zurücksetzen",
+  "startDate": "Startdatum",
+  "endDate": "Enddatum"
 }

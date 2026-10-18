@@ -1,6 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import type { MaintenanceSection } from '@vehicles/api';
-import { VehicleFormActions } from '@vehicles/components/common';
 import { DEFAULT_MAINTENANCE_SECTION, MAINTENANCE_SECTIONS } from '@vehicles/consts';
 import {
   type MaintenanceFormInput,
@@ -11,7 +10,7 @@ import clsx from 'clsx';
 import { Controller, type SubmitHandler, useForm, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { DateInput, Input, Label } from '@shared/ui';
+import { DateInput, FormActions, Input, Label } from '@shared/ui';
 import { preventImplicitFormSubmit } from '@shared/utils';
 
 import { MaintenanceSectionBadge } from '../maintenance-section-badge';
@@ -233,7 +232,7 @@ export const MaintenanceForm = ({
         />
       </div>
 
-      <VehicleFormActions
+      <FormActions
         isPending={isPending}
         onCancel={onCancel}
         submitLabel={

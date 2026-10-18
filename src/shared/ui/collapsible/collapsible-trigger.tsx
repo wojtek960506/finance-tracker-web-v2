@@ -10,6 +10,7 @@ type CollapsibleTriggerProps = {
   indicatorPosition: 'left' | 'right';
   triggerMode: 'split' | 'full-row';
   triggerClassName?: string;
+  indicatorClassName?: string;
   onToggle: () => void;
   contentId: string;
 };
@@ -22,6 +23,7 @@ export const CollapsibleTrigger = ({
   indicatorPosition,
   triggerMode,
   triggerClassName,
+  indicatorClassName,
   onToggle,
   contentId,
 }: CollapsibleTriggerProps) => {
@@ -55,7 +57,11 @@ export const CollapsibleTrigger = ({
           )}
         >
           <FullRowTriggerIcon
-            className={clsx(ICON_CLASS_NAME, actualIsOpen && 'rotate-180')}
+            className={clsx(
+              ICON_CLASS_NAME,
+              actualIsOpen && 'rotate-180',
+              indicatorClassName,
+            )}
           />
           {header}
         </div>
@@ -76,6 +82,7 @@ export const CollapsibleTrigger = ({
           className={clsx(
             ICON_CLASS_NAME,
             actualIsOpen && (isIndicatorLeft ? 'rotate-90' : '-rotate-90'),
+            indicatorClassName,
           )}
         />
       </Button>

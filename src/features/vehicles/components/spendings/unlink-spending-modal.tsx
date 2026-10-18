@@ -1,8 +1,9 @@
-import { DeleteVehicleRecordModal } from '@vehicles/components/common';
 import { SPENDING_TYPE_CONFIG } from '@vehicles/consts';
 import { formatDate, formatPln } from '@vehicles/utils';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
+
+import { DeleteRecordModal } from '@shared/ui';
 
 import type { UnlinkSpendingModalProps } from './types';
 import { useSpendingLinking } from './use-spending-linking';
@@ -38,7 +39,7 @@ export const UnlinkSpendingModal = ({
   };
 
   return (
-    <DeleteVehicleRecordModal
+    <DeleteRecordModal
       isOpen={isOpen}
       onClose={onClose}
       onConfirm={handleConfirm}
@@ -80,6 +81,6 @@ export const UnlinkSpendingModal = ({
           {formatPln(target.costPln, lang)}
         </span>
       </div>
-    </DeleteVehicleRecordModal>
+    </DeleteRecordModal>
   );
 };

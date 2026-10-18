@@ -50,9 +50,11 @@ export const MainLayout = ({ children }: { children: ReactNode }) => {
               {t('hi')}, {data.firstName} {data.lastName}
             </p>
           )}
-          <NavigationProvider fromLeft={isDrawerFromLeft}>
-            <Navigation />
-          </NavigationProvider>
+          {isAuthenticated && (
+            <NavigationProvider fromLeft={isDrawerFromLeft}>
+              <Navigation key={data?.id} />
+            </NavigationProvider>
+          )}
         </Drawer>
         <Toaster />
       </div>

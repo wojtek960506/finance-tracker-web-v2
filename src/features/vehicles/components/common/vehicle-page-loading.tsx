@@ -1,22 +1,21 @@
 import { useTranslation } from 'react-i18next';
 
-import { LoadingCard } from '@shared/ui';
+import { PageLoading, type PageLoadingProps } from '@shared/ui';
 
-export type VehiclePageLoadingProps = {
-  title?: string;
-  description?: string;
-};
+export type VehiclePageLoadingProps = PageLoadingProps;
 
-export const VehiclePageLoading = ({ title, description }: VehiclePageLoadingProps) => {
+export const VehiclePageLoading = ({
+  title,
+  description,
+  ...props
+}: VehiclePageLoadingProps) => {
   const { t } = useTranslation('vehicles');
 
   return (
-    <div className="flex h-64 items-center justify-center p-4">
-      <LoadingCard
-        title={title || t('singleVehicle.loadingTitle')}
-        description={description || t('singleVehicle.loadingDescription')}
-        widthClassName="max-w-[35rem]"
-      />
-    </div>
+    <PageLoading
+      title={title || t('singleVehicle.loadingTitle')}
+      description={description || t('singleVehicle.loadingDescription')}
+      {...props}
+    />
   );
 };

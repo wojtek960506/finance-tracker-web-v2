@@ -14,6 +14,7 @@ type CollapsibleProps = {
   contentInset?: 'default' | 'none';
   className?: string;
   triggerClassName?: string;
+  indicatorClassName?: string;
   contentClassName?: string;
 };
 
@@ -28,6 +29,7 @@ export const Collapsible = ({
   contentInset = 'default',
   className,
   triggerClassName,
+  indicatorClassName,
   contentClassName,
 }: CollapsibleProps) => {
   const [uncontrolledIsOpen, setUncontrolledIsOpen] = useState(isInitiallyOpen ?? false);
@@ -52,6 +54,7 @@ export const Collapsible = ({
         indicatorPosition={indicatorPosition}
         triggerMode={triggerMode}
         triggerClassName={triggerClassName}
+        indicatorClassName={indicatorClassName}
         onToggle={handleToggle}
         contentId={contentId}
       />

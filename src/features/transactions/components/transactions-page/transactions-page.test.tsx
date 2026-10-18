@@ -95,7 +95,6 @@ describe('TransactionsPage', () => {
     window.localStorage.clear();
     useUIStore.setState({
       isNavOpen: false,
-      expandedNavigationItems: [],
       isTransactionsTotalsOpen: false,
       isTransactionsFiltersOpen: false,
       expandedTransactionTotalCurrencies: null,

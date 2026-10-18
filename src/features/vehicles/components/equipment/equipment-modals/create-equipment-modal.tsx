@@ -4,12 +4,12 @@ import {
   type CreateEquipmentPayload,
   type VehicleEquipment,
 } from '@vehicles/api';
-import { VehicleModalShell } from '@vehicles/components/common';
 import { vehiclesQueryKeys } from '@vehicles/consts';
 import type { EquipmentFormValues } from '@vehicles/schemas';
 import { useTranslation } from 'react-i18next';
 
 import { normalizeApiError } from '@shared/api/api-error';
+import { ModalShell } from '@shared/ui';
 import { useToastStore } from '@store/toast-store';
 
 import { EquipmentForm } from './equipment-form';
@@ -67,7 +67,7 @@ export const CreateEquipmentModal = ({
   };
 
   return (
-    <VehicleModalShell
+    <ModalShell
       isOpen={isOpen}
       onClose={onClose}
       title={t('equipmentPage.modals.createTitle')}
@@ -80,6 +80,6 @@ export const CreateEquipmentModal = ({
         onSubmit={handleSubmit}
         onCancel={onClose}
       />
-    </VehicleModalShell>
+    </ModalShell>
   );
 };

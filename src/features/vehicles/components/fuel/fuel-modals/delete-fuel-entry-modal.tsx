@@ -1,7 +1,8 @@
 import { deleteFuelEntry, type VehicleFuelEntryEnriched } from '@vehicles/api';
-import { DeleteVehicleRecordModal } from '@vehicles/components/common';
 import { useDeleteVehicleRecordMutation } from '@vehicles/hooks';
 import { useTranslation } from 'react-i18next';
+
+import { DeleteRecordModal } from '@shared/ui';
 
 export type DeleteFuelEntryModalProps = {
   vehicleId: string;
@@ -34,7 +35,7 @@ export const DeleteFuelEntryModal = ({
   if (!entry) return null;
 
   return (
-    <DeleteVehicleRecordModal
+    <DeleteRecordModal
       isOpen={isOpen}
       onClose={onClose}
       onConfirm={() => deleteMutation.mutate()}

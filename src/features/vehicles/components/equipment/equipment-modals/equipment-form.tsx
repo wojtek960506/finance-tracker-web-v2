@@ -1,5 +1,4 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { VehicleFormActions } from '@vehicles/components/common';
 import {
   type EquipmentFormInput,
   equipmentFormSchema,
@@ -8,7 +7,7 @@ import {
 import { Controller, type SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { DateInput, Input, Label } from '@shared/ui';
+import { DateInput, FormActions, Input, Label } from '@shared/ui';
 import { preventImplicitFormSubmit } from '@shared/utils';
 
 export type EquipmentFormProps = {
@@ -142,7 +141,7 @@ export const EquipmentForm = ({
         />
       </div>
 
-      <VehicleFormActions
+      <FormActions
         isPending={isPending}
         onCancel={onCancel}
         submitLabel={

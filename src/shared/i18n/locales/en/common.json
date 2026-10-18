@@ -4,5 +4,9 @@
   "saving": "Saving...",
   "deleting": "Deleting...",
   "loading": "Loading...",
-  "loadingDescription": "Please wait while we prepare the page."
+  "loadingDescription": "Please wait while we prepare the page.",
+  "filters": "Filters",
+  "resetFilters": "Reset filters",
+  "startDate": "Start date",
+  "endDate": "End date"
 }

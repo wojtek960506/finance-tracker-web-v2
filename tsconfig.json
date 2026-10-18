@@ -23,7 +23,9 @@
       "@test-utils": ["src/test-utils/index.ts"],
       "@named-resources/*": ["src/features/named-resources/*"],
       "@vehicles/*": ["src/features/vehicles/*"],
-      "@vehicles": ["src/features/vehicles/index.ts"]
+      "@vehicles": ["src/features/vehicles/index.ts"],
+      "@sports/*": ["src/features/sports/*"],
+      "@sports": ["src/features/sports/index.ts"]
     }
   }
 }

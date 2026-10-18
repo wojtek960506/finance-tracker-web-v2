@@ -1,5 +1,5 @@
 {
-  "newCategory": "Nowa kategoria",
+  "newCategory": "Nowa kategoria transakcji",
   "newPaymentMethod": "Nowa metoda płatności",
   "newAccount": "Nowe konto bankowe",
   "category": "kategoria",
@@ -61,5 +61,10 @@
   "atm": "Bankomat",
   "card": "Karta",
   "cash": "Gotówka",
-  "bankTransfer": "Przelew bankowy"
+  "bankTransfer": "Przelew bankowy",
+  "sport": "Sport",
+  "sports": "Sport",
+  "transport": "Transport",
+  "investment": "Inwestycje",
+  "investments": "Inwestycje"
 }

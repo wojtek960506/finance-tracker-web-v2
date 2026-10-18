@@ -1,4 +1,5 @@
 import { useQueryClient } from '@tanstack/react-query';
+import clsx from 'clsx';
 import {
   Banknote,
   Bike,
@@ -13,8 +14,9 @@ import {
   Trash2,
   WalletCards,
 } from 'lucide-react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { logout } from '@auth/api';
 import { useNavigation } from '@context/navigation-context';
@@ -24,20 +26,34 @@ import { Collapsible } from '@ui';
 
 import { NavigationItem } from './navigation-item';
 
-const TRANSACTIONS_NAVIGATION_ITEM_ID = 'transactions';
-
 export const Navigation = () => {
   const { t } = useTranslation('navigation');
 
+  const { pathname } = useLocation();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { authToken, removeAuthToken } = useAuthToken();
   const { fromLeft } = useNavigation();
-  const { expandedNavigationItems, setNavigationItemExpanded, resetPersistedUIState } =
-    useUIStore();
-  const isTransactionsNavigationItemOpen = expandedNavigationItems.includes(
-    TRANSACTIONS_NAVIGATION_ITEM_ID,
-  );
+  const { resetPersistedUIState } = useUIStore();
+
+  const isTransactionsRoute = pathname.startsWith('/transactions');
+  const isSportsRoute = pathname.startsWith('/sports');
+  const isTransactionsChildActive = isTransactionsRoute && pathname !== '/transactions';
+  const isSportsChildActive = isSportsRoute && pathname !== '/sports';
+
+  const [isTransactionsOpen, setIsTransactionsOpen] = useState(isTransactionsRoute);
+  const [isSportsOpen, setIsSportsOpen] = useState(isSportsRoute);
+  const [prevPathname, setPrevPathname] = useState(pathname);
+
+  if (pathname !== prevPathname) {
+    setPrevPathname(pathname);
+    if (isTransactionsRoute) {
+      setIsTransactionsOpen(true);
+    }
+    if (isSportsRoute) {
+      setIsSportsOpen(true);
+    }
+  }
 
   if (!authToken) return;
 
@@ -53,23 +69,13 @@ export const Navigation = () => {
   return (
     <ul className="text-base sm:text-lg">
       <li>
-        <NavigationItem
-          to="/net-worth"
-          title={t('netWorth')}
-          Icon={PieChart}
-          additionalAction={() =>
-            setNavigationItemExpanded(TRANSACTIONS_NAVIGATION_ITEM_ID, false)
-          }
-        />
+        <NavigationItem to="/net-worth" title={t('netWorth')} Icon={PieChart} />
       </li>
       <li>
         <NavigationItem
           to="/financial-independence"
           title={t('financialIndependence')}
           Icon={ShieldCheck}
-          additionalAction={() =>
-            setNavigationItemExpanded(TRANSACTIONS_NAVIGATION_ITEM_ID, false)
-          }
         />
       </li>
 
@@ -81,16 +87,12 @@ export const Navigation = () => {
               title={t('transactions')}
               Icon={Banknote}
               end
-              additionalAction={() =>
-                setNavigationItemExpanded(TRANSACTIONS_NAVIGATION_ITEM_ID, false)
-              }
             />
           }
           indicatorPosition={fromLeft ? 'left' : 'right'}
-          isOpen={isTransactionsNavigationItemOpen}
-          onOpenChange={(isOpen) =>
-            setNavigationItemExpanded(TRANSACTIONS_NAVIGATION_ITEM_ID, isOpen)
-          }
+          indicatorClassName={clsx(isTransactionsChildActive && 'text-active-nav')}
+          isOpen={isTransactionsOpen}
+          onOpenChange={setIsTransactionsOpen}
         >
           <ul>
             <li>
@@ -98,9 +100,6 @@ export const Navigation = () => {
                 to="/transactions/categories"
                 title={t('categories')}
                 Icon={Tags}
-                additionalAction={() =>
-                  setNavigationItemExpanded(TRANSACTIONS_NAVIGATION_ITEM_ID, true)
-                }
               />
             </li>
             <li>
@@ -108,9 +107,6 @@ export const Navigation = () => {
                 to="/transactions/payment-methods"
                 title={t('paymentMethods')}
                 Icon={WalletCards}
-                additionalAction={() =>
-                  setNavigationItemExpanded(TRANSACTIONS_NAVIGATION_ITEM_ID, true)
-                }
               />
             </li>
             <li>
@@ -118,9 +114,6 @@ export const Navigation = () => {
                 to="/transactions/accounts"
                 title={t('bankAccounts')}
                 Icon={Landmark}
-                additionalAction={() =>
-                  setNavigationItemExpanded(TRANSACTIONS_NAVIGATION_ITEM_ID, true)
-                }
               />
             </li>
             <li>
@@ -128,9 +121,6 @@ export const Navigation = () => {
                 to="/transactions/statistics"
                 title={t('transactionStatistics')}
                 Icon={Banknote}
-                additionalAction={() =>
-                  setNavigationItemExpanded(TRANSACTIONS_NAVIGATION_ITEM_ID, true)
-                }
               />
             </li>
             <li>
@@ -138,9 +128,6 @@ export const Navigation = () => {
                 to="/transactions/trash"
                 title={t('transactionsTrash')}
                 Icon={Trash2}
-                additionalAction={() =>
-                  setNavigationItemExpanded(TRANSACTIONS_NAVIGATION_ITEM_ID, true)
-                }
               />
             </li>
           </ul>
@@ -152,40 +139,32 @@ export const Navigation = () => {
           to="/investments"
           title={t('investments')}
           Icon={ChartNoAxesColumn}
-          additionalAction={() =>
-            setNavigationItemExpanded(TRANSACTIONS_NAVIGATION_ITEM_ID, false)
-          }
         />
       </li>
       <li>
-        <NavigationItem
-          to="/vehicles"
-          title={t('vehicles')}
-          Icon={Car}
-          additionalAction={() =>
-            setNavigationItemExpanded(TRANSACTIONS_NAVIGATION_ITEM_ID, false)
-          }
-        />
+        <NavigationItem to="/vehicles" title={t('vehicles')} Icon={Car} />
       </li>
       <li>
-        <NavigationItem
-          to="/sports"
-          title={t('sports')}
-          Icon={Bike}
-          additionalAction={() =>
-            setNavigationItemExpanded(TRANSACTIONS_NAVIGATION_ITEM_ID, false)
-          }
-        />
+        <Collapsible
+          header={<NavigationItem to="/sports" title={t('sports')} Icon={Bike} end />}
+          indicatorPosition={fromLeft ? 'left' : 'right'}
+          indicatorClassName={clsx(isSportsChildActive && 'text-active-nav')}
+          isOpen={isSportsOpen}
+          onOpenChange={setIsSportsOpen}
+        >
+          <ul>
+            <li>
+              <NavigationItem
+                to="/sports/categories"
+                title={t('categories')}
+                Icon={Tags}
+              />
+            </li>
+          </ul>
+        </Collapsible>
       </li>
       <li>
-        <NavigationItem
-          to="/settings"
-          title={t('settings')}
-          Icon={Settings}
-          additionalAction={() =>
-            setNavigationItemExpanded(TRANSACTIONS_NAVIGATION_ITEM_ID, false)
-          }
-        />
+        <NavigationItem to="/settings" title={t('settings')} Icon={Settings} />
       </li>
       <li>
         <NavigationItem

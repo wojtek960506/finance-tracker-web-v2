@@ -7,6 +7,7 @@ import { MainLayout } from './main-layout';
 const mocks = vi.hoisted(() => ({
   isNavOpen: { value: true },
   setIsNavOpen: vi.fn(),
+  isAuthenticated: { value: true },
 }));
 
 vi.mock('@tanstack/react-query', () => ({
@@ -14,7 +15,10 @@ vi.mock('@tanstack/react-query', () => ({
 }));
 
 vi.mock('@shared/hooks', () => ({
-  useAuthToken: () => ({ isAuthenticated: false, isAuthResolved: true }),
+  useAuthToken: () => ({
+    isAuthenticated: mocks.isAuthenticated.value,
+    isAuthResolved: true,
+  }),
 }));
 
 vi.mock('react-i18next', () => ({
@@ -58,6 +62,8 @@ vi.mock('./topbar', () => ({
 
 describe('MainLayout', () => {
   it('renders children and layout controls', () => {
+    mocks.isAuthenticated.value = true;
+
     render(
       <MainLayout>
         <div>Content</div>
@@ -71,7 +77,20 @@ describe('MainLayout', () => {
     expect(screen.getByTestId('toaster')).toBeInTheDocument();
   });
 
+  it('does not render navigation when not authenticated', () => {
+    mocks.isAuthenticated.value = false;
+
+    render(
+      <MainLayout>
+        <div>Content</div>
+      </MainLayout>,
+    );
+
+    expect(screen.queryByTestId('navigation')).not.toBeInTheDocument();
+  });
+
   it('closes the drawer via onClose', async () => {
+    mocks.isAuthenticated.value = true;
     const user = userEvent.setup();
 
     render(

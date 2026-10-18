@@ -5,12 +5,12 @@ import {
   type MaintenanceSection,
   type VehicleMaintenance,
 } from '@vehicles/api';
-import { VehicleModalShell } from '@vehicles/components/common';
 import { vehiclesQueryKeys } from '@vehicles/consts';
 import type { MaintenanceFormValues } from '@vehicles/schemas';
 import { useTranslation } from 'react-i18next';
 
 import { normalizeApiError } from '@shared/api/api-error';
+import { ModalShell } from '@shared/ui';
 import { useToastStore } from '@store/toast-store';
 
 import { MaintenanceForm } from './maintenance-form';
@@ -81,7 +81,7 @@ export const CreateMaintenanceModal = ({
     : t('maintenancePage.modals.createDescription', { name: vehicleName });
 
   return (
-    <VehicleModalShell
+    <ModalShell
       isOpen={isOpen}
       onClose={onClose}
       title={title}
@@ -95,6 +95,6 @@ export const CreateMaintenanceModal = ({
         onSubmit={handleSubmit}
         onCancel={onClose}
       />
-    </VehicleModalShell>
+    </ModalShell>
   );
 };

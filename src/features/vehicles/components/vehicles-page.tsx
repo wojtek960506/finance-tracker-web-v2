@@ -2,10 +2,11 @@ import clsx from 'clsx';
 import { Plus } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
+import { useRecordModals } from '@shared/hooks';
 import { ButtonWithIcon, LoadingCard } from '@shared/ui';
 
 import type { VehicleWithSpending } from '../api';
-import { useAllVehiclesSummary, useVehicleRecordModals } from '../hooks';
+import { useAllVehiclesSummary } from '../hooks';
 
 import {
   AllVehiclesEmptyState,
@@ -30,7 +31,7 @@ export const VehiclesPage = () => {
     deletingItem: vehicleToDelete,
     openDelete: handleDeleteVehicle,
     closeDelete,
-  } = useVehicleRecordModals<VehicleWithSpending>();
+  } = useRecordModals<VehicleWithSpending>();
 
   const { vehicles, summary, hasVehicles, isLoading, error } = useAllVehiclesSummary();
 

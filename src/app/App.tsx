@@ -40,6 +40,7 @@ function App() {
   useEffect(() => {
     return subscribeToAuthSessionEvents({
       onLogin: () => {
+        useUIStore.getState().resetPersistedUIState();
         if (getAuthToken()) return;
 
         void refreshAuthToken();

@@ -4,5 +4,9 @@
   "saving": "Zapisywanie...",
   "deleting": "Usuwanie...",
   "loading": "Ładowanie...",
-  "loadingDescription": "Proszę czekać, trwa przygotowywanie strony."
+  "loadingDescription": "Proszę czekać, trwa przygotowywanie strony.",
+  "filters": "Filtry",
+  "resetFilters": "Resetuj filtry",
+  "startDate": "Data początkowa",
+  "endDate": "Data końcowa"
 }

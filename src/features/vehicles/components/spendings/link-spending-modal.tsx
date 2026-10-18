@@ -4,13 +4,12 @@ import clsx from 'clsx';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Button, Modal } from '@shared/ui';
+import { Button, Modal, TransactionCombobox } from '@shared/ui';
 import type { Transaction } from '@transactions/api';
 
-import { TransactionCombobox } from './transaction-combobox';
 import type { DateFilterOption, LinkSpendingModalProps } from './types';
 import { useSpendingLinking } from './use-spending-linking';
-import { formatDateOnly } from './utils';
+import { formatDateOnly, isTransportCategory } from './utils';
 
 export const LinkSpendingModal = ({
   isOpen,
@@ -158,8 +157,12 @@ export const LinkSpendingModal = ({
           targetDate={target.date}
           targetAmount={target.costPln}
           dateFilter={dateFilter}
-          categoryFilter="transport"
+          categoryPredicate={isTransportCategory}
           disabled={isLinking}
+          searchPlaceholder={t('spendings.linkModal.searchPlaceholder')}
+          loadingPlaceholder={t('spendings.linkModal.linking')}
+          emptyMessage={t('spendings.linkModal.noTransactionsFound')}
+          exactMatchBadgeText={t('spendings.linkModal.exactMatchBadge')}
         />
 
         {/* Action Buttons */}

@@ -1,8 +1,12 @@
-import { VehicleDateRangeFilter, VehicleFilterBar } from '@vehicles/components/common';
 import { Plus } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
-import { ButtonWithIcon, SearchFilterInput } from '@shared/ui';
+import {
+  ButtonWithIcon,
+  DateRangeFilter,
+  FilterBar,
+  SearchFilterInput,
+} from '@shared/ui';
 
 export type EquipmentFilters = {
   search?: string;
@@ -28,10 +32,11 @@ export const EquipmentFilterBar = ({
   );
 
   return (
-    <VehicleFilterBar
+    <FilterBar
       testId="equipment-filter-bar"
       toggleTestId="toggle-equipment-filters-button"
       resetTestId="reset-equipment-filters-button"
+      filterLabel={t('actions.filterTitle')}
       resetLabel={t('equipmentPage.filter.reset')}
       hasActiveFilters={hasActiveFilters}
       onResetFilters={() => onFiltersChange({})}
@@ -62,14 +67,15 @@ export const EquipmentFilterBar = ({
       </div>
 
       {/* Date range pickers */}
-      <VehicleDateRangeFilter
+      <DateRangeFilter
         startDate={filters.startDate}
         endDate={filters.endDate}
         onStartDateChange={(startDate) => onFiltersChange({ ...filters, startDate })}
         onEndDateChange={(endDate) => onFiltersChange({ ...filters, endDate })}
         startDateLabel={t('equipmentPage.filter.startDate')}
         endDateLabel={t('equipmentPage.filter.endDate')}
+        inputClassName="xl:w-52"
       />
-    </VehicleFilterBar>
+    </FilterBar>
   );
 };

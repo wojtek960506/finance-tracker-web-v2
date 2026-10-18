@@ -82,4 +82,19 @@ describe('Collapsible', () => {
       'true',
     );
   });
+
+  it('applies indicatorClassName to the trigger indicator icon', () => {
+    const { container } = render(
+      <Collapsible
+        header={<span>Header</span>}
+        indicatorPosition="left"
+        indicatorClassName="text-active-nav"
+      >
+        <div>Content</div>
+      </Collapsible>,
+    );
+
+    const icon = container.querySelector('svg');
+    expect(icon).toHaveClass('text-active-nav');
+  });
 });

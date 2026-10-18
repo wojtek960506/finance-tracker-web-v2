@@ -1,7 +1,8 @@
 import { deleteMaintenance, type VehicleMaintenance } from '@vehicles/api';
-import { DeleteVehicleRecordModal } from '@vehicles/components/common';
 import { useDeleteVehicleRecordMutation } from '@vehicles/hooks';
 import { useTranslation } from 'react-i18next';
+
+import { DeleteRecordModal } from '@shared/ui';
 
 import { MaintenanceSectionBadge } from '../maintenance-section-badge';
 
@@ -36,7 +37,7 @@ export const DeleteMaintenanceModal = ({
   if (!item) return null;
 
   return (
-    <DeleteVehicleRecordModal
+    <DeleteRecordModal
       isOpen={isOpen}
       onClose={onClose}
       onConfirm={() => deleteMutation.mutate()}
@@ -56,6 +57,6 @@ export const DeleteMaintenanceModal = ({
         </div>
         {item.description && <p className="text-text-muted">{item.description}</p>}
       </div>
-    </DeleteVehicleRecordModal>
+    </DeleteRecordModal>
   );
 };

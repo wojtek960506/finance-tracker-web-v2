@@ -132,6 +132,22 @@ const VehiclesMaintenancePage = lazy(() =>
   })),
 );
 
+const SportsOverviewPage = lazy(() =>
+  import('@sports/components').then((m) => ({
+    default: m.SportsOverviewPage,
+  })),
+);
+const SportsCategoriesPage = lazy(() =>
+  import('@sports/components').then((m) => ({
+    default: m.SportsCategoriesPage,
+  })),
+);
+const SportCategoryPage = lazy(() =>
+  import('@sports/components').then((m) => ({
+    default: m.SportCategoryPage,
+  })),
+);
+
 type RouteTitle = {
   key: string;
   namespace: 'common' | 'navigation';
@@ -234,7 +250,7 @@ export const PROTECTED_APP_ROUTES: AppRouteConfig[] = [
   {
     path: '/transactions/categories',
     element: <NamedResourcesPage kind="categories" />,
-    title: { namespace: 'navigation', key: 'categories' },
+    title: { namespace: 'navigation', key: 'transactionCategories' },
   },
   {
     path: '/transactions/payment-methods',
@@ -307,7 +323,17 @@ export const PROTECTED_APP_ROUTES: AppRouteConfig[] = [
   },
   {
     path: '/sports',
-    element: <p>Sports will be there</p>,
+    element: <SportsOverviewPage />,
+    title: { namespace: 'navigation', key: 'sports' },
+  },
+  {
+    path: '/sports/categories',
+    element: <SportsCategoriesPage />,
+    title: { namespace: 'navigation', key: 'sportsCategories' },
+  },
+  {
+    path: '/sports/categories/:categoryId',
+    element: <SportCategoryPage />,
     title: { namespace: 'navigation', key: 'sports' },
   },
   {
