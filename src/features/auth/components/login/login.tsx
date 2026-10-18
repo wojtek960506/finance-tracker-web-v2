@@ -5,6 +5,7 @@ import { useSearchParams } from 'react-router-dom';
 
 import { login } from '@auth/api';
 import { useAuthToken } from '@shared/hooks';
+import { useUIStore } from '@store/ui-store';
 
 import type { LoginFormValues } from './login-form/utils/utils';
 import { LoginForm } from './login-form';
@@ -32,6 +33,7 @@ export const Login = () => {
   const [lastEmail, setLastEmail] = useState<string | null>(null);
 
   const { setAuthToken } = useAuthToken();
+  const { resetPersistedUIState } = useUIStore();
   const catchLoginError = useCatchLoginError(setUnverifiedEmail);
 
   const handleSubmit = async ({ email, password }: LoginFormValues) => {
@@ -39,6 +41,7 @@ export const Login = () => {
       setIsLoginPending(true);
       setLastEmail(email);
       const res = await login(email, password);
+      resetPersistedUIState();
       setAuthToken(res, { broadcast: true });
     } catch (error) {
       catchLoginError(error, email);
