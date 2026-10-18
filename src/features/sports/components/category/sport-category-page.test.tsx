@@ -1,7 +1,7 @@
 import '@shared/i18n';
 
 import { QueryClientProvider } from '@tanstack/react-query';
-import { render, screen, within } from '@testing-library/react';
+import { fireEvent, render, screen, within } from '@testing-library/react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
@@ -107,7 +107,7 @@ describe('SportCategoryPage', () => {
     vi.spyOn(statsApi, 'getSportStats').mockResolvedValue(mockStats);
   });
 
-  it('renders category header and summary cards when data is loaded', async () => {
+  it('renders category header, summary cards, and filter bar when data is loaded', async () => {
     vi.spyOn(entriesApi, 'getSportEntries').mockResolvedValue(mockEntriesResponse);
 
     renderCategoryPage();
@@ -121,9 +121,64 @@ describe('SportCategoryPage', () => {
     const summary = screen.getByTestId('sport-category-summary');
     expect(summary).toBeInTheDocument();
     expect(within(summary).getByText('1,200.00 PLN')).toBeInTheDocument();
+
+    expect(screen.getByTestId('sport-activities-filter-bar')).toBeInTheDocument();
   });
 
-  it('renders empty state message when category has no entries', async () => {
+  it('queries entries with filter when search query is entered', async () => {
+    const entriesSpy = vi
+      .spyOn(entriesApi, 'getSportEntries')
+      .mockResolvedValue(mockEntriesResponse);
+
+    renderCategoryPage();
+
+    await screen.findByTestId('sport-activities-filter-bar');
+
+    const searchInput = screen.getByTestId('activities-search-input');
+    fireEvent.change(searchInput, { target: { value: 'Shoes' } });
+
+    expect(entriesSpy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        categoryId: 'cat-1',
+        search: 'Shoes',
+      }),
+    );
+  });
+
+  it('renders empty filtered state message when filters match no activities', async () => {
+    vi.spyOn(entriesApi, 'getSportEntries').mockResolvedValueOnce(mockEntriesResponse);
+
+    renderCategoryPage();
+
+    await screen.findByTestId('sport-activities-filter-bar');
+
+    // Simulate search yielding 0 results
+    vi.spyOn(entriesApi, 'getSportEntries').mockResolvedValueOnce({
+      items: [],
+      pagination: {
+        total: 0,
+        page: 1,
+        limit: 50,
+        totalPages: 0,
+      },
+    });
+
+    const searchInput = screen.getByTestId('activities-search-input');
+    fireEvent.change(searchInput, { target: { value: 'Nonexistent' } });
+
+    expect(
+      await screen.findByText('No activities match the selected filters.'),
+    ).toBeInTheDocument();
+  });
+
+  it('renders default empty state message when category has no entries at all', async () => {
+    vi.spyOn(statsApi, 'getSportStats').mockResolvedValueOnce({
+      totalCostPln: 0,
+      totalEntries: 0,
+      byCategory: [],
+      byYear: [],
+    });
+
     vi.spyOn(entriesApi, 'getSportEntries').mockResolvedValue({
       items: [],
       pagination: {
@@ -137,5 +192,6 @@ describe('SportCategoryPage', () => {
     renderCategoryPage();
 
     expect(await screen.findByTestId('sport-category-empty-state')).toBeInTheDocument();
+    expect(screen.getByText('No sport activities recorded yet.')).toBeInTheDocument();
   });
 });

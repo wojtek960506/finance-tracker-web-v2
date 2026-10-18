@@ -56,6 +56,7 @@
     "deleteConfirmation": "Sind Sie sicher, dass Sie „{{name}}“ löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden."
   },
   "filters": {
+    "title": "Filter",
     "searchPlaceholder": "Nach Artikel- oder Aktivitätsname suchen...",
     "allCategories": "Alle Kategorien",
     "startDate": "Von",

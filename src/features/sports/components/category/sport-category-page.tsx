@@ -1,22 +1,29 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
 import { useSportCategories, useSportEntries, useSportStats } from '../../hooks';
 import { SportsLayout } from '../layout';
 
+import { SportActivitiesFilterBar } from './sport-activities-filter-bar';
 import { SportCategoryHeader } from './sport-category-header';
 import { SportCategorySummary } from './sport-category-summary';
+import type { SportActivitiesFilters } from './types';
 import { calculateSportCategorySummary } from './utils';
 
 export const SportCategoryContent = () => {
   const { categoryId } = useParams<{ categoryId: string }>();
   const { t } = useTranslation('sports');
 
+  const [filters, setFilters] = useState<SportActivitiesFilters>({
+    sort: 'date_desc',
+  });
+
   const { data: categories = [], isLoading: isCategoriesLoading } = useSportCategories();
   const { data: stats, isLoading: isStatsLoading } = useSportStats(undefined);
   const { data: entriesData, isLoading: isEntriesLoading } = useSportEntries({
     categoryId,
+    ...filters,
   });
 
   const categoryIndex = categories.findIndex((c) => c.id === categoryId);
@@ -31,6 +38,13 @@ export const SportCategoryContent = () => {
   const summary = useMemo(
     () => calculateSportCategorySummary(items, categoryStats),
     [items, categoryStats],
+  );
+
+  const hasActiveFilters = Boolean(
+    filters.search ||
+    filters.startDate ||
+    filters.endDate ||
+    (filters.sort && filters.sort !== 'date_desc'),
   );
 
   const isInitialLoading = isCategoriesLoading || (isStatsLoading && isEntriesLoading);
@@ -52,12 +66,18 @@ export const SportCategoryContent = () => {
         isLoading={isEntriesLoading && items.length === 0}
       />
 
+      {(summary.totalEntries > 0 || items.length > 0 || hasActiveFilters) && (
+        <SportActivitiesFilterBar filters={filters} onFiltersChange={setFilters} />
+      )}
+
       {items.length === 0 && !isEntriesLoading && (
         <div
           className="rounded-xl border border-border bg-card-bg p-6 text-center text-fg"
           data-testid="sport-category-empty-state"
         >
-          <p className="text-sm text-text-muted">{t('entries.empty')}</p>
+          <p className="text-sm text-text-muted">
+            {hasActiveFilters ? t('entries.emptyFiltered') : t('entries.empty')}
+          </p>
         </div>
       )}
     </div>

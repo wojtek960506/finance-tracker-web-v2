@@ -1,4 +1,4 @@
-import type { SportCategory, SportStatsCategory } from '../../api';
+import type { SportCategory, SportEntrySortOption, SportStatsCategory } from '../../api';
 
 export interface SportCategorySummaryData {
   totalCostPln: number;
@@ -20,5 +20,20 @@ export interface SportCategoryHeaderProps {
   colorIndex?: number;
   onAddActivity?: () => void;
   isLoading?: boolean;
+  'data-testid'?: string;
+}
+
+export interface SportActivitiesFilters {
+  search?: string;
+  startDate?: string;
+  endDate?: string;
+  sort?: SportEntrySortOption;
+}
+
+export interface SportActivitiesFilterBarProps {
+  filters: SportActivitiesFilters;
+  onFiltersChange: (filters: SportActivitiesFilters) => void;
+  onAddActivity?: () => void;
+  className?: string;
   'data-testid'?: string;
 }

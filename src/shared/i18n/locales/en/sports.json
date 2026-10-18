@@ -56,6 +56,7 @@
     "deleteConfirmation": "Are you sure you want to delete \"{{name}}\"? This action cannot be undone."
   },
   "filters": {
+    "title": "Filters",
     "searchPlaceholder": "Search by item or activity name...",
     "allCategories": "All categories",
     "startDate": "From",

@@ -56,6 +56,7 @@
     "deleteConfirmation": "Вы уверены, что хотите удалить «{{name}}»? Это действие нельзя отменить."
   },
   "filters": {
+    "title": "Фильтры",
     "searchPlaceholder": "Поиск по названию или активности...",
     "allCategories": "Все категории",
     "startDate": "С",

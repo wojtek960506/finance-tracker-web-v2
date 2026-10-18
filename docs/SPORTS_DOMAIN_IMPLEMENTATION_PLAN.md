@@ -153,7 +153,7 @@ flowchart TD
     - Total spent in category (PLN)
     - Total activities logged
     - Spendings linked to transactions count & amount
-- [ ] **Sub-phase 4.2: Activities Filter Bar**
+- [x] **Sub-phase 4.2: Activities Filter Bar**
   - Search by item name / notes.
   - Date range filters (Start Date, End Date).
   - Sort selector (`date_desc`, `date_asc`, `cost_desc`, `cost_asc`).
