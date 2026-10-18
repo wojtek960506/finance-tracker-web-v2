@@ -33,6 +33,9 @@
     "yearlyTrend": "Yearly Trends",
     "monthlyTrend": "Monthly Trends",
     "spendingShare": "Spending share",
+    "linkedSpending": "Linked to Transactions",
+    "linkedActivities": "Linked Activities",
+    "linkedRatio": "{{linked}} of {{total}} linked",
     "emptyStats": "No sports data available for this period."
   },
   "entries": {

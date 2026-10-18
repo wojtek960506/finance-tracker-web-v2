@@ -33,6 +33,9 @@
     "yearlyTrend": "Годовые тренды",
     "monthlyTrend": "Месячные тренды",
     "spendingShare": "Доля расходов",
+    "linkedSpending": "Связано с транзакциями",
+    "linkedActivities": "Связанные активности",
+    "linkedRatio": "{{linked}} из {{total}} привязано",
     "emptyStats": "Нет данных о спортивных расходах за этот период."
   },
   "entries": {

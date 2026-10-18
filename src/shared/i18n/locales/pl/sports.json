@@ -33,6 +33,9 @@
     "yearlyTrend": "Trendy roczne",
     "monthlyTrend": "Trendy miesięczne",
     "spendingShare": "Udział w wydatkach",
+    "linkedSpending": "Powiązane z transakcjami",
+    "linkedActivities": "Powiązane aktywności",
+    "linkedRatio": "{{linked}} z {{total}} powiązanych",
     "emptyStats": "Brak danych o wydatkach w wybranym okresie."
   },
   "entries": {
