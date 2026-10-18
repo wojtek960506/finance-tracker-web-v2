@@ -1,7 +1,9 @@
 import '@shared/i18n';
 
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, screen, waitFor } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
+
+import { renderWithProviders } from '@test-utils';
 
 import type { SportCategory } from '../../api';
 
@@ -29,7 +31,7 @@ describe('SportActivityForm', () => {
     const onSubmit = vi.fn();
     const onCancel = vi.fn();
 
-    render(
+    renderWithProviders(
       <SportActivityForm
         categories={mockCategories}
         mode="create"
@@ -52,7 +54,7 @@ describe('SportActivityForm', () => {
     const onSubmit = vi.fn();
     const onCancel = vi.fn();
 
-    render(
+    renderWithProviders(
       <SportActivityForm
         categories={mockCategories}
         defaultValues={{ categoryId: 'cat-1', date: '2026-05-10' }}
@@ -87,7 +89,7 @@ describe('SportActivityForm', () => {
     const onSubmit = vi.fn();
     const onCancel = vi.fn();
 
-    render(
+    renderWithProviders(
       <SportActivityForm
         categories={mockCategories}
         mode="create"
@@ -106,7 +108,7 @@ describe('SportActivityForm', () => {
     const onSubmit = vi.fn();
     const onCancel = vi.fn();
 
-    render(
+    renderWithProviders(
       <SportActivityForm
         categories={mockCategories}
         mode="create"
@@ -119,5 +121,39 @@ describe('SportActivityForm', () => {
     fireEvent.keyDown(nameInput, { key: 'Enter', code: 'Enter' });
 
     expect(onSubmit).not.toHaveBeenCalled();
+  });
+
+  it('renders add category button and opens modal when isCategoryDisabled is false', () => {
+    renderWithProviders(
+      <SportActivityForm
+        categories={mockCategories}
+        mode="create"
+        onSubmit={vi.fn()}
+        onCancel={vi.fn()}
+      />,
+    );
+
+    const addCatBtn = screen.getByTestId('sport-activity-add-category-button');
+    expect(addCatBtn).toBeInTheDocument();
+
+    fireEvent.click(addCatBtn);
+    expect(screen.getByTestId('create-sport-category-modal')).toBeInTheDocument();
+  });
+
+  it('disables category select and hides add category button when isCategoryDisabled is true', () => {
+    renderWithProviders(
+      <SportActivityForm
+        categories={mockCategories}
+        isCategoryDisabled={true}
+        mode="create"
+        onSubmit={vi.fn()}
+        onCancel={vi.fn()}
+      />,
+    );
+
+    expect(
+      screen.queryByTestId('sport-activity-add-category-button'),
+    ).not.toBeInTheDocument();
+    expect(screen.getByTestId('sport-activity-category-select')).toBeDisabled();
   });
 });

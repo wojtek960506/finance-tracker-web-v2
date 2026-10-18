@@ -1,9 +1,15 @@
-import { Activity } from 'lucide-react';
+import { Activity, Plus } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
-import { Card } from '@shared/ui';
+import { ButtonWithIcon, Card } from '@shared/ui';
 
-export const SportsOverviewEmptyState = () => {
+export interface SportsOverviewEmptyStateProps {
+  onAddActivity?: () => void;
+}
+
+export const SportsOverviewEmptyState = ({
+  onAddActivity,
+}: SportsOverviewEmptyStateProps = {}) => {
   const { t } = useTranslation('sports');
 
   return (
@@ -18,6 +24,15 @@ export const SportsOverviewEmptyState = () => {
       <p className="mt-1.5 max-w-md text-xs text-text-muted sm:text-sm">
         {t('entries.empty')}
       </p>
+      {onAddActivity && (
+        <ButtonWithIcon
+          icon={Plus}
+          label={t('entries.newEntry')}
+          onClick={onAddActivity}
+          className="mt-4"
+          data-testid="sports-overview-empty-add-button"
+        />
+      )}
     </Card>
   );
 };

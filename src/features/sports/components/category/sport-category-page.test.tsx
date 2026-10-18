@@ -265,12 +265,15 @@ describe('SportCategoryPage', () => {
     );
   });
 
-  it('opens CreateSportActivityModal when header add activity button is clicked', async () => {
+  it('opens CreateSportActivityModal when filter bar add button is clicked and only one add button exists', async () => {
+    vi.spyOn(entriesApi, 'getSportEntries').mockResolvedValue(mockEntriesResponse);
     renderCategoryPage();
 
     expect(screen.queryByTestId('create-sport-activity-modal')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('sports-add-entry-button')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('category-add-activity-button')).not.toBeInTheDocument();
 
-    const addBtn = await screen.findByTestId('sports-add-entry-button');
+    const addBtn = await screen.findByTestId('activities-add-button');
     expect(addBtn).toBeInTheDocument();
 
     await act(async () => {

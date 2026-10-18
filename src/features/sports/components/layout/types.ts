@@ -8,6 +8,7 @@ export interface SportsLayoutProps {
 }
 
 export interface SportsHeaderProps {
+  hasNavigation?: boolean;
   isMobileNavOpen: boolean;
   onToggleMobileNav: () => void;
   onOpenManageCategories?: () => void;

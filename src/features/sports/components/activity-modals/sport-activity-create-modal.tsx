@@ -14,6 +14,7 @@ export const CreateSportActivityModal = ({
   onClose,
   categories,
   defaultCategoryId,
+  isCategoryDisabled = Boolean(defaultCategoryId),
   onSuccess,
 }: CreateSportActivityModalProps) => {
   const { t } = useTranslation('sports');
@@ -58,6 +59,7 @@ export const CreateSportActivityModal = ({
         defaultValues={{ categoryId: defaultCategoryId }}
         mode="create"
         isPending={isCreating}
+        isCategoryDisabled={isCategoryDisabled}
         onSubmit={handleSubmit}
         onCancel={onClose}
       />

@@ -68,7 +68,7 @@ export const SportCategoryContent = ({
   );
 
   const isInitialLoading =
-    isCategoriesLoading || (isEntriesLoading && items.length === 0);
+    isCategoriesLoading || isStatsLoading || (isEntriesLoading && items.length === 0);
 
   if (isInitialLoading) {
     return <PageLoading testId="sport-category-loading" />;
@@ -85,23 +85,19 @@ export const SportCategoryContent = ({
         category={currentCategory}
         categoryStats={categoryStats}
         colorIndex={categoryIndex !== -1 ? categoryIndex : 0}
-        onAddActivity={onAddActivity}
       />
 
       <SportCategorySummary summary={summary} />
 
-      {(summary.totalEntries > 0 || items.length > 0 || hasActiveFilters) && (
-        <SportActivitiesFilterBar
-          filters={filters}
-          onFiltersChange={setFilters}
-          onAddActivity={onAddActivity}
-        />
-      )}
+      <SportActivitiesFilterBar
+        filters={filters}
+        onFiltersChange={setFilters}
+        onAddActivity={onAddActivity}
+      />
 
       <SportActivitiesTable
         items={items}
         hasFilters={hasActiveFilters}
-        onAddFirstItem={onAddActivity}
         hasNextPage={hasNextPage}
         isFetchingNextPage={isFetchingNextPage}
         fetchNextPage={fetchNextPage}
@@ -118,7 +114,7 @@ export const SportCategoryPage = () => {
   const { isCreateOpen, openCreate, closeCreate } = useSportRecordModals<SportEntry>();
 
   return (
-    <SportsLayout onOpenAddEntry={openCreate}>
+    <SportsLayout>
       <SportCategoryContent onAddActivity={openCreate} />
       <CreateSportActivityModal
         isOpen={isCreateOpen}

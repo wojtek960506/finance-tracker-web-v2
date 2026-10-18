@@ -7,6 +7,7 @@ import { Button, ButtonWithIcon } from '@shared/ui';
 import type { SportsHeaderProps } from './types';
 
 export const SportsHeader = ({
+  hasNavigation = true,
   isMobileNavOpen,
   onToggleMobileNav,
   onOpenManageCategories,
@@ -31,22 +32,24 @@ export const SportsHeader = ({
         </div>
 
         {/* Mobile Nav Toggle */}
-        <div className="flex sm:hidden items-center gap-1.5 shrink-0">
-          <Button
-            type="button"
-            variant="ghost"
-            onClick={onToggleMobileNav}
-            className="p-1.5 text-text-muted hover:text-fg"
-            aria-label={
-              isMobileNavOpen
-                ? t('actions.close', { defaultValue: 'Close navigation' })
-                : t('actions.open', { defaultValue: 'Open navigation' })
-            }
-            data-testid="sports-mobile-nav-toggle"
-          >
-            {isMobileNavOpen ? <X className="size-5" /> : <Menu className="size-5" />}
-          </Button>
-        </div>
+        {hasNavigation && (
+          <div className="flex sm:hidden items-center gap-1.5 shrink-0">
+            <Button
+              type="button"
+              variant="ghost"
+              onClick={onToggleMobileNav}
+              className="p-1.5 text-text-muted hover:text-fg"
+              aria-label={
+                isMobileNavOpen
+                  ? t('actions.close', { defaultValue: 'Close navigation' })
+                  : t('actions.open', { defaultValue: 'Open navigation' })
+              }
+              data-testid="sports-mobile-nav-toggle"
+            >
+              {isMobileNavOpen ? <X className="size-5" /> : <Menu className="size-5" />}
+            </Button>
+          </div>
+        )}
       </div>
 
       {/* Header Actions */}

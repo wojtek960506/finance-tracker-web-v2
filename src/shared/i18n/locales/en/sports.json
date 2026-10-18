@@ -125,8 +125,14 @@
     "cost": "Cost (PLN)",
     "costPlaceholder": "0.00",
     "submitCreate": "Add Activity",
+    "createCategoryTitle": "New sports category",
+    "createCategoryDescription": "Create a new sports category to organize your activities.",
+    "categoryName": "Category name",
+    "categoryNamePlaceholder": "e.g., Tennis, Swimming, Climbing",
+    "submitCreateCategory": "Create category",
     "errors": {
       "categoryRequired": "Category is required",
+      "categoryNameRequired": "Category name is required",
       "dateRequired": "Date is required",
       "itemNameRequired": "Item name is required",
       "costPositive": "Cost must be greater than 0"

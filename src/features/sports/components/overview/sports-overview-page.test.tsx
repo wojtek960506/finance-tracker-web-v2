@@ -73,7 +73,7 @@ describe('SportsOverviewPage', () => {
     expect(statsSpy).toHaveBeenCalledWith({ year: 2025 });
   });
 
-  it('renders empty state when there are no entries', async () => {
+  it('renders empty state when there are no entries and opens modal on add activity click', async () => {
     vi.spyOn(statsApi, 'getSportStats').mockResolvedValueOnce({
       totalCostPln: 0,
       totalEntries: 0,
@@ -84,5 +84,27 @@ describe('SportsOverviewPage', () => {
     renderPage();
 
     expect(await screen.findByTestId('sports-overview-empty-state')).toBeInTheDocument();
+
+    const emptyAddBtn = screen.getByTestId('sports-overview-empty-add-button');
+    expect(emptyAddBtn).toBeInTheDocument();
+
+    fireEvent.click(emptyAddBtn);
+
+    expect(screen.getByTestId('create-sport-activity-modal')).toBeInTheDocument();
+  });
+
+  it('opens CreateSportActivityModal when header add entry button is clicked', async () => {
+    vi.spyOn(statsApi, 'getSportStats').mockResolvedValueOnce(mockStats);
+
+    renderPage();
+
+    await screen.findByTestId('sports-stats-cards');
+
+    const headerAddBtn = screen.getByTestId('sports-add-entry-button');
+    expect(headerAddBtn).toBeInTheDocument();
+
+    fireEvent.click(headerAddBtn);
+
+    expect(screen.getByTestId('create-sport-activity-modal')).toBeInTheDocument();
   });
 });

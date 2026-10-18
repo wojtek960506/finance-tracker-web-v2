@@ -125,8 +125,14 @@
     "cost": "Koszt (PLN)",
     "costPlaceholder": "0.00",
     "submitCreate": "Dodaj aktywność",
+    "createCategoryTitle": "Nowa kategoria sportu",
+    "createCategoryDescription": "Utwórz nową kategorię, aby organizować aktywności.",
+    "categoryName": "Nazwa kategorii",
+    "categoryNamePlaceholder": "np. Tenis, Pływanie, Wspinaczka",
+    "submitCreateCategory": "Utwórz kategorię",
     "errors": {
       "categoryRequired": "Kategoria jest wymagana",
+      "categoryNameRequired": "Nazwa kategorii jest wymagana",
       "dateRequired": "Data jest wymagana",
       "itemNameRequired": "Nazwa jest wymagana",
       "costPositive": "Koszt musi być większy niż 0"

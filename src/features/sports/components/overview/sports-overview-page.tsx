@@ -3,7 +3,9 @@ import { useTranslation } from 'react-i18next';
 
 import { Button, LoadingCard } from '@shared/ui';
 
-import { useSportStats } from '../../hooks';
+import type { SportEntry } from '../../api';
+import { useSportCategories, useSportRecordModals, useSportStats } from '../../hooks';
+import { CreateSportActivityModal } from '../activity-modals';
 import { SportsLayout } from '../layout';
 
 import { SportsCategoryBreakdown } from './sports-category-breakdown';
@@ -12,11 +14,16 @@ import { SportsStatsCards } from './sports-stats-cards';
 import { SportsTrendChart } from './sports-trend-chart';
 import { SportsYearFilter } from './sports-year-filter';
 
-// TODO: Revisit this file and clean it up.
-export const SportsOverviewContent = () => {
+export interface SportsOverviewContentProps {
+  onAddActivity?: () => void;
+}
+
+export const SportsOverviewContent = ({
+  onAddActivity,
+}: SportsOverviewContentProps = {}) => {
   const { t } = useTranslation('sports');
   const [selectedYear, setSelectedYear] = useState<number | undefined>(undefined);
-  const { data: allTimeStats } = useSportStats(undefined);
+  const { data: allTimeStats, isLoading: isAllTimeLoading } = useSportStats(undefined);
   const {
     data: stats,
     isLoading,
@@ -30,7 +37,7 @@ export const SportsOverviewContent = () => {
     return Array.from(new Set(years)).sort((a, b) => b - a);
   }, [allTimeStats?.byYear, stats?.byYear]);
 
-  if (isLoading) {
+  if (isLoading || isAllTimeLoading) {
     return (
       <div className="flex h-full items-center justify-center p-4">
         <LoadingCard
@@ -69,7 +76,7 @@ export const SportsOverviewContent = () => {
       )}
 
       {/* Empty State */}
-      {isEmpty && <SportsOverviewEmptyState />}
+      {isEmpty && <SportsOverviewEmptyState onAddActivity={onAddActivity} />}
 
       {/* Stats Content */}
       {!isEmpty && (
@@ -89,9 +96,17 @@ export const SportsOverviewContent = () => {
 };
 
 export const SportsOverviewPage = () => {
+  const { isCreateOpen, openCreate, closeCreate } = useSportRecordModals<SportEntry>();
+  const { data: categories = [] } = useSportCategories();
+
   return (
-    <SportsLayout>
-      <SportsOverviewContent />
+    <SportsLayout onOpenAddEntry={openCreate}>
+      <SportsOverviewContent onAddActivity={openCreate} />
+      <CreateSportActivityModal
+        isOpen={isCreateOpen}
+        onClose={closeCreate}
+        categories={categories}
+      />
     </SportsLayout>
   );
 };

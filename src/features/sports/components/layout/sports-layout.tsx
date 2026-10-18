@@ -38,6 +38,8 @@ export const SportsLayout = ({ children, onOpenAddEntry }: SportsLayoutProps) =>
     );
   }, [allTimeStats, categories, currentCategoryId, isStatsLoading]);
 
+  const hasRecords = Boolean(allTimeStats && allTimeStats.totalEntries > 0);
+
   return (
     <div
       className={clsx(
@@ -47,17 +49,20 @@ export const SportsLayout = ({ children, onOpenAddEntry }: SportsLayoutProps) =>
       data-testid="sports-layout"
     >
       <SportsHeader
+        hasNavigation={hasRecords}
         isMobileNavOpen={isMobileNavOpen}
         onToggleMobileNav={() => setIsMobileNavOpen((prev) => !prev)}
-        onOpenAddEntry={onOpenAddEntry}
+        onOpenAddEntry={hasRecords ? onOpenAddEntry : undefined}
       />
 
-      <SportsTabs
-        categories={visibleCategories}
-        isLoading={isCategoriesLoading || isStatsLoading}
-        isMobileNavOpen={isMobileNavOpen}
-        onCloseMobileNav={() => setIsMobileNavOpen(false)}
-      />
+      {hasRecords && (
+        <SportsTabs
+          categories={visibleCategories}
+          isLoading={isCategoriesLoading || isStatsLoading}
+          isMobileNavOpen={isMobileNavOpen}
+          onCloseMobileNav={() => setIsMobileNavOpen(false)}
+        />
+      )}
 
       <div className="min-h-0 flex-1 overflow-y-auto pt-1">{children ?? <Outlet />}</div>
     </div>

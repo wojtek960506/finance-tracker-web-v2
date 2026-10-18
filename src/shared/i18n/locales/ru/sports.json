@@ -125,8 +125,14 @@
     "cost": "Стоимость (PLN)",
     "costPlaceholder": "0.00",
     "submitCreate": "Добавить активность",
+    "createCategoryTitle": "Новая спортивная категория",
+    "createCategoryDescription": "Создайте новую спортивную категорию для упорядочивания активностей.",
+    "categoryName": "Название категории",
+    "categoryNamePlaceholder": "напр., Теннис, Плавание, Скалолазание",
+    "submitCreateCategory": "Создать категорию",
     "errors": {
       "categoryRequired": "Категория обязательна",
+      "categoryNameRequired": "Название категории обязательно",
       "dateRequired": "Дата обязательна",
       "itemNameRequired": "Название обязательно",
       "costPositive": "Стоимость должна быть больше 0"
