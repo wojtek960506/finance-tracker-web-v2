@@ -117,6 +117,8 @@
   "modals": {
     "createTitle": "Aktivität hinzufügen",
     "createDescription": "Erfassen Sie eine sportliche Aktivität oder Ausgabe in {{category}}.",
+    "editTitle": "Aktivität bearbeiten",
+    "editDescription": "Details zur Aktivität oder Ausgabe aktualisieren.",
     "category": "Kategorie",
     "categoryPlaceholder": "Kategorie auswählen",
     "date": "Datum",
@@ -125,6 +127,7 @@
     "cost": "Kosten (PLN)",
     "costPlaceholder": "0.00",
     "submitCreate": "Aktivität hinzufügen",
+    "submitEdit": "Änderungen speichern",
     "createCategoryTitle": "Neue Sportkategorie",
     "createCategoryDescription": "Erstelle eine neue Sportkategorie, um deine Aktivitäten zu organisieren.",
     "categoryName": "Kategoriename",

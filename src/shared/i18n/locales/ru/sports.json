@@ -117,6 +117,8 @@
   "modals": {
     "createTitle": "Добавить активность",
     "createDescription": "Зарегистрируйте активность или расход в категории {{category}}.",
+    "editTitle": "Редактировать активность",
+    "editDescription": "Обновите информацию об активности или расходе.",
     "category": "Категория",
     "categoryPlaceholder": "Выберите категорию",
     "date": "Дата",
@@ -125,6 +127,7 @@
     "cost": "Стоимость (PLN)",
     "costPlaceholder": "0.00",
     "submitCreate": "Добавить активность",
+    "submitEdit": "Сохранить изменения",
     "createCategoryTitle": "Новая спортивная категория",
     "createCategoryDescription": "Создайте новую спортивную категорию для упорядочивания активностей.",
     "categoryName": "Название категории",

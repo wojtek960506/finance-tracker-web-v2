@@ -214,7 +214,9 @@ export const SportActivityForm = ({
           isPending={isPending}
           onCancel={onCancel}
           submitLabel={
-            mode === 'create' ? t('modals.submitCreate') : t('entries.editEntry')
+            mode === 'create'
+              ? t('modals.submitCreate')
+              : t('modals.submitEdit', { defaultValue: t('entries.editEntry') })
           }
           submitTestId="sport-activity-form-submit"
           cancelTestId="sport-activity-form-cancel"

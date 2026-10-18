@@ -117,6 +117,8 @@
   "modals": {
     "createTitle": "Add Activity",
     "createDescription": "Record a sports activity or purchase in {{category}}.",
+    "editTitle": "Edit Activity",
+    "editDescription": "Update activity or purchase details.",
     "category": "Category",
     "categoryPlaceholder": "Select category",
     "date": "Date",
@@ -125,6 +127,7 @@
     "cost": "Cost (PLN)",
     "costPlaceholder": "0.00",
     "submitCreate": "Add Activity",
+    "submitEdit": "Save Changes",
     "createCategoryTitle": "New sports category",
     "createCategoryDescription": "Create a new sports category to organize your activities.",
     "categoryName": "Category name",

@@ -1,4 +1,4 @@
-import { PaginationFooter, type PaginationFooterProps } from '@shared/ui';
+import { PaginationFooter } from '@shared/ui';
 
 import type { SportActivitiesPaginationProps } from './types';
 

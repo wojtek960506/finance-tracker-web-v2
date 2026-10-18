@@ -20,3 +20,11 @@ export interface CreateSportActivityModalProps {
   isCategoryDisabled?: boolean;
   onSuccess?: (item: SportEntry) => void;
 }
+
+export interface UpdateSportActivityModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  categories: SportCategory[];
+  item: SportEntry | null;
+  onSuccess?: (item: SportEntry) => void;
+}
