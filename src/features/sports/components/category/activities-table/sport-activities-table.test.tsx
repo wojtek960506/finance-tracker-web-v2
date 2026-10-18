@@ -1,6 +1,6 @@
 import '@shared/i18n';
 
-import { act, fireEvent, render, screen } from '@testing-library/react';
+import { act, fireEvent, render, screen, within } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { describe, expect, it, vi } from 'vitest';
 
@@ -135,6 +135,22 @@ describe('SportActivitiesTable', () => {
     const deleteBtn = screen.getByTestId('delete-activity-entry-2');
     fireEvent.click(deleteBtn);
     expect(handleDelete).toHaveBeenCalledWith(mockItems[1]);
+  });
+
+  it('triggers edit action from mobile card dropdown menu', () => {
+    const handleEdit = vi.fn();
+
+    renderTable({
+      onEditItem: handleEdit,
+    });
+
+    const mobileCard = screen.getByTestId('activity-card-entry-1');
+    const menuTrigger = within(mobileCard).getByRole('button', { name: 'Actions' });
+    fireEvent.click(menuTrigger);
+
+    const editOption = screen.getByText('Edit');
+    fireEvent.click(editOption);
+    expect(handleEdit).toHaveBeenCalledWith(mockItems[0]);
   });
 
   it('renders pagination controls and triggers fetchNextPage on load more click', async () => {

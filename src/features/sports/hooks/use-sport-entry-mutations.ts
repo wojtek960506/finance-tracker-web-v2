@@ -18,13 +18,21 @@ export const useSportEntryMutations = () => {
   const queryClient = useQueryClient();
   const pushToast = useToastStore((state) => state.pushToast);
 
-  const invalidateEntriesAndStats = () => {
+  const invalidateEntriesAndStats = (transactionId?: string | null) => {
     void queryClient.invalidateQueries({
       queryKey: sportsQueryKeys.entries(),
     });
     void queryClient.invalidateQueries({
       queryKey: sportsQueryKeys.stats(),
     });
+    if (transactionId) {
+      void queryClient.invalidateQueries({
+        queryKey: ['transactions'],
+      });
+      void queryClient.invalidateQueries({
+        queryKey: ['transaction', transactionId],
+      });
+    }
   };
 
   const createMutation = useMutation({
@@ -67,9 +75,14 @@ export const useSportEntryMutations = () => {
   });
 
   const deleteMutation = useMutation({
-    mutationFn: (id: string) => deleteSportEntry(id),
-    onSuccess: () => {
-      invalidateEntriesAndStats();
+    mutationFn: (args: string | { id: string; transactionId?: string | null }) => {
+      const id = typeof args === 'string' ? args : args.id;
+      return deleteSportEntry(id);
+    },
+    onSuccess: (_data, variables) => {
+      const transactionId =
+        typeof variables === 'string' ? undefined : variables.transactionId;
+      invalidateEntriesAndStats(transactionId);
       pushToast({
         variant: 'success',
         title: t('toasts.entryDeletedSuccess'),

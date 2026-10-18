@@ -1,29 +1,16 @@
-import type { ReactNode } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Button, type ButtonVariant, Modal } from '@shared/ui';
+import { Button } from '../button';
+import { Modal } from '../modal';
 
-export type DeleteVehicleRecordModalProps = {
-  isOpen: boolean;
-  onClose: () => void;
-  onConfirm: () => void;
-  isPending: boolean;
-  title: string;
-  prompt: string;
-  hint?: string;
-  hintClassName?: string;
-  confirmLabel: string;
-  cancelLabel?: string;
-  testIdPrefix: string;
-  confirmVariant?: ButtonVariant;
-  children?: ReactNode;
-};
+import type { DeleteRecordModalProps } from './types';
 
-export const DeleteVehicleRecordModal = ({
+export const DeleteRecordModal = <T = unknown,>({
   isOpen,
   onClose,
   onConfirm,
-  isPending,
+  isPending: externalIsPending,
   title,
   prompt,
   hint,
@@ -32,9 +19,28 @@ export const DeleteVehicleRecordModal = ({
   cancelLabel,
   testIdPrefix,
   confirmVariant = 'destructive',
+  item,
   children,
-}: DeleteVehicleRecordModalProps) => {
+}: DeleteRecordModalProps<T>) => {
   const { t: tCommon } = useTranslation('common');
+  const [internalPending, setInternalPending] = useState(false);
+  const isPending = externalIsPending ?? internalPending;
+
+  if (item === null) {
+    return null;
+  }
+
+  const handleConfirm = async () => {
+    try {
+      setInternalPending(true);
+      await onConfirm();
+    } finally {
+      setInternalPending(false);
+    }
+  };
+
+  const renderedContent =
+    typeof children === 'function' ? (item ? children(item) : null) : children;
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} ariaLabel={title}>
@@ -44,7 +50,7 @@ export const DeleteVehicleRecordModal = ({
           <p className="text-xs text-text-muted">{prompt}</p>
         </header>
 
-        {children}
+        {renderedContent}
 
         {hint && <p className={hintClassName}>{hint}</p>}
 
@@ -62,11 +68,11 @@ export const DeleteVehicleRecordModal = ({
           <Button
             type="button"
             variant={confirmVariant}
-            onClick={onConfirm}
+            onClick={() => void handleConfirm()}
             disabled={isPending}
             data-testid={`confirm-delete-${testIdPrefix}-button`}
           >
-            {isPending ? tCommon('loading') : confirmLabel}
+            {isPending ? tCommon('loading') : confirmLabel || tCommon('delete')}
           </Button>
         </div>
       </div>

@@ -1,7 +1,8 @@
 import { deleteEquipment, type VehicleEquipment } from '@vehicles/api';
-import { DeleteVehicleRecordModal } from '@vehicles/components/common';
 import { useDeleteVehicleRecordMutation } from '@vehicles/hooks';
 import { useTranslation } from 'react-i18next';
+
+import { DeleteRecordModal } from '@shared/ui';
 
 export type DeleteEquipmentModalProps = {
   vehicleId: string;
@@ -34,7 +35,7 @@ export const DeleteEquipmentModal = ({
   if (!item) return null;
 
   return (
-    <DeleteVehicleRecordModal
+    <DeleteRecordModal
       isOpen={isOpen}
       onClose={onClose}
       onConfirm={() => deleteMutation.mutate()}
@@ -49,6 +50,6 @@ export const DeleteEquipmentModal = ({
         <p className="font-semibold text-fg">{item.itemName}</p>
         {item.description && <p className="mt-1 text-text-muted">{item.description}</p>}
       </div>
-    </DeleteVehicleRecordModal>
+    </DeleteRecordModal>
   );
 };

@@ -282,4 +282,52 @@ describe('SportCategoryPage', () => {
 
     expect(screen.getByTestId('create-sport-activity-modal')).toBeInTheDocument();
   });
+
+  it('opens UpdateSportActivityModal prefilled when edit button is clicked in table', async () => {
+    vi.spyOn(entriesApi, 'getSportEntries').mockResolvedValue(mockEntriesResponse);
+    renderCategoryPage();
+
+    expect(screen.queryByTestId('update-sport-activity-modal')).not.toBeInTheDocument();
+
+    const editBtn = await screen.findByTestId('edit-activity-entry-1');
+    expect(editBtn).toBeInTheDocument();
+
+    await act(async () => {
+      fireEvent.click(editBtn);
+    });
+
+    const updateModal = screen.getByTestId('update-sport-activity-modal');
+    expect(updateModal).toBeInTheDocument();
+
+    const nameInput = screen.getByTestId('sport-activity-item-name-input');
+    expect(nameInput).toHaveValue('Running Shoes');
+  });
+
+  it('opens DeleteRecordModal when delete button is clicked in table and triggers delete', async () => {
+    vi.spyOn(entriesApi, 'getSportEntries').mockResolvedValue(mockEntriesResponse);
+    const deleteSpy = vi
+      .spyOn(entriesApi, 'deleteSportEntry')
+      .mockResolvedValue(undefined);
+    renderCategoryPage();
+
+    expect(screen.queryByTestId('delete-sport-activity-modal')).not.toBeInTheDocument();
+
+    const deleteBtn = await screen.findByTestId('delete-activity-entry-1');
+    expect(deleteBtn).toBeInTheDocument();
+
+    await act(async () => {
+      fireEvent.click(deleteBtn);
+    });
+
+    const deleteModal = screen.getByTestId('delete-sport-activity-modal');
+    expect(deleteModal).toBeInTheDocument();
+    expect(within(deleteModal).getByText('Running Shoes')).toBeInTheDocument();
+
+    const confirmBtn = screen.getByTestId('confirm-delete-sport-activity-button');
+    await act(async () => {
+      fireEvent.click(confirmBtn);
+    });
+
+    expect(deleteSpy).toHaveBeenCalledWith('entry-1');
+  });
 });

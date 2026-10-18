@@ -1,8 +1,4 @@
 export {
-  DeleteVehicleRecordModal,
-  type DeleteVehicleRecordModalProps,
-} from './delete-vehicle-record-modal';
-export {
   VehicleDomainEmptyState,
   type VehicleDomainEmptyStateProps,
 } from './vehicle-domain-empty-state';

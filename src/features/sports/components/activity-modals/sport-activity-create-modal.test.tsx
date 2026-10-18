@@ -113,4 +113,23 @@ describe('CreateSportActivityModal', () => {
 
     expect(onClose).not.toHaveBeenCalled();
   });
+
+  it('shows validation error when submitting with empty item name', async () => {
+    renderWithProviders(
+      <CreateSportActivityModal
+        isOpen={true}
+        onClose={vi.fn()}
+        categories={mockCategories}
+        defaultCategoryId="cat-1"
+      />,
+    );
+
+    const submitBtn = screen.getByTestId('sport-activity-form-submit');
+    fireEvent.click(submitBtn);
+
+    await waitFor(() => {
+      expect(screen.getByText('Item name is required')).toBeInTheDocument();
+    });
+    expect(entriesApi.createSportEntry).not.toHaveBeenCalled();
+  });
 });

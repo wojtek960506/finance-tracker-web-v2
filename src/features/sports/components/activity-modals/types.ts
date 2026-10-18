@@ -28,3 +28,10 @@ export interface UpdateSportActivityModalProps {
   item: SportEntry | null;
   onSuccess?: (item: SportEntry) => void;
 }
+
+export interface DeleteSportActivityModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  item: SportEntry | null;
+  onSuccess?: () => void;
+}

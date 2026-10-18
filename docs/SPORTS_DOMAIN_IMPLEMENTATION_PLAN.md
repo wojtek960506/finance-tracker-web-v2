@@ -169,19 +169,19 @@ flowchart TD
 
 ---
 
-### ⏳ Phase 5: Activity CRUD Dialogs (Create, Edit, Delete) (Next Step)
+### ✅ Phase 5: Activity CRUD Dialogs (Create, Edit, Delete)
 
-- [ ] **Sub-phase 5.1: Create Activity Dialog / Drawer**
+- [x] **Sub-phase 5.1: Create Activity Dialog / Drawer**
   - Form fields: Date, Item / Activity Name, Cost (PLN) (no description field — name serves as description).
   - Category selector (pre-selected to current category).
   - Quick action button in `SportsHeader` and in category workspace table.
-- [ ] **Sub-phase 5.2: Edit Activity Dialog / Drawer**
+- [x] **Sub-phase 5.2: Edit Activity Dialog / Drawer**
   - Pre-filled form with existing activity data (Date, Item Name, Cost).
   - Invalidate `sportsQueryKeys.entries()` and `sportsQueryKeys.stats()` on update.
-- [ ] **Sub-phase 5.3: Delete Activity Confirmation Modal**
+- [x] **Sub-phase 5.3: Delete Activity Confirmation Modal**
   - Danger confirmation modal detailing item name, date, and cost.
   - Handle unlinking automatically if linked to a transaction.
-- [ ] **Sub-phase 5.4: Unit Tests for Activity Modals**
+- [x] **Sub-phase 5.4: Unit Tests for Activity Modals**
   - Form validation error tests, successful mutation submissions, and modal transitions.
 
 ---

@@ -5,6 +5,7 @@ export * from './card';
 export * from './collapsible';
 export * from './date-input';
 export * from './date-range-filter';
+export * from './delete-record-modal';
 export * from './drawer';
 export * from './dropdown';
 export * from './filter-bar';
