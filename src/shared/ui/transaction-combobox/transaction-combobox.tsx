@@ -1,5 +1,4 @@
 import { useQuery } from '@tanstack/react-query';
-import { formatDate, formatPln } from '@vehicles/utils';
 import clsx from 'clsx';
 import { Check, Sparkles } from 'lucide-react';
 import { useMemo } from 'react';
@@ -11,8 +10,8 @@ import {
   type TransactionFilters,
 } from '@transactions/api';
 
-import type { CategoryFilterOption, DateFilterOption } from './types';
-import { formatDateOnly, getDateWindow, isTransportCategory } from './utils';
+import type { TransactionComboboxProps } from './types';
+import { formatDate, formatDateOnly, formatPln, getDateWindow } from './utils';
 
 import {
   Combobox,
@@ -23,26 +22,20 @@ import {
   ComboboxList,
 } from '@/components/ui/combobox';
 
-export type TransactionComboboxProps = {
-  value: Transaction | null;
-  onChange: (tx: Transaction | null) => void;
-  targetDate: string;
-  targetAmount: number;
-  dateFilter: DateFilterOption;
-  categoryFilter?: CategoryFilterOption;
-  disabled?: boolean;
-};
-
 export const TransactionCombobox = ({
   value,
   onChange,
   targetDate,
   targetAmount,
-  dateFilter,
-  categoryFilter: _categoryFilter = 'transport',
+  dateFilter = 'exact',
+  categoryPredicate,
   disabled = false,
+  searchPlaceholder,
+  loadingPlaceholder,
+  emptyMessage,
+  exactMatchBadgeText,
 }: TransactionComboboxProps) => {
-  const { t, i18n } = useTranslation('vehicles');
+  const { t: tCommon, i18n } = useTranslation('common');
   const lang = i18n.language;
 
   const queryFilters: TransactionFilters = useMemo(() => {
@@ -50,11 +43,11 @@ export const TransactionCombobox = ({
       transactionType: 'expense',
     };
 
-    if (dateFilter === 'exact') {
+    if (targetDate && dateFilter === 'exact') {
       const day = formatDateOnly(targetDate);
       filters.startDate = day;
       filters.endDate = day;
-    } else if (dateFilter === 'window') {
+    } else if (targetDate && dateFilter === 'window') {
       const windowRange = getDateWindow(targetDate, 3);
       filters.startDate = windowRange.startDate;
       filters.endDate = windowRange.endDate;
@@ -70,34 +63,49 @@ export const TransactionCombobox = ({
   });
 
   const filteredAndSortedTransactions = useMemo(() => {
-    const items = rawTransactions.filter((tx) => {
-      // Exclude transactions that do not have standard expense category in Transport
-      const catName = 'category' in tx ? tx.category?.name : undefined;
-      return isTransportCategory(catName);
-    });
+    let items = rawTransactions;
 
-    return items.sort((a, b) => {
-      const aExact = Math.abs(a.amount - targetAmount) < 0.001;
-      const bExact = Math.abs(b.amount - targetAmount) < 0.001;
-      if (aExact && !bExact) return -1;
-      if (!aExact && bExact) return 1;
+    if (categoryPredicate) {
+      items = items.filter((tx) => {
+        const catName = 'category' in tx ? tx.category?.name : undefined;
+        return categoryPredicate(catName);
+      });
+    }
 
-      const aCat = 'category' in a ? a.category?.name : undefined;
-      const bCat = 'category' in b ? b.category?.name : undefined;
-      const aIsTransport = isTransportCategory(aCat);
-      const bIsTransport = isTransportCategory(bCat);
-      if (aIsTransport && !bIsTransport) return -1;
-      if (!aIsTransport && bIsTransport) return 1;
+    return [...items].sort((a, b) => {
+      if (targetAmount !== undefined) {
+        const aExact = Math.abs(a.amount - targetAmount) < 0.001;
+        const bExact = Math.abs(b.amount - targetAmount) < 0.001;
+        if (aExact && !bExact) return -1;
+        if (!aExact && bExact) return 1;
+      }
+
+      if (categoryPredicate) {
+        const aCat = 'category' in a ? a.category?.name : undefined;
+        const bCat = 'category' in b ? b.category?.name : undefined;
+        const aMatches = categoryPredicate(aCat);
+        const bMatches = categoryPredicate(bCat);
+        if (aMatches && !bMatches) return -1;
+        if (!aMatches && bMatches) return 1;
+      }
 
       return new Date(b.date).getTime() - new Date(a.date).getTime();
     });
-  }, [rawTransactions, targetAmount]);
+  }, [rawTransactions, targetAmount, categoryPredicate]);
 
   const formatTransactionLabel = (tx: Transaction) => {
     const desc = tx.description || 'Expense';
     const cat = 'category' in tx && tx.category?.name ? ` [${tx.category.name}]` : '';
     return `${formatDateOnly(tx.date)} • ${desc}${cat} • ${tx.amount} ${tx.currency}`;
   };
+
+  const resolvedSearchPlaceholder =
+    searchPlaceholder ?? tCommon('search', { defaultValue: 'Search...' });
+  const resolvedLoadingPlaceholder =
+    loadingPlaceholder ?? tCommon('loading', { defaultValue: 'Loading...' });
+  const resolvedEmptyMessage =
+    emptyMessage ?? tCommon('noResults', { defaultValue: 'No transactions found.' });
+  const resolvedExactMatchBadge = exactMatchBadgeText ?? 'Exact Amount';
 
   return (
     <div className="flex flex-col gap-1.5" data-testid="transaction-combobox">
@@ -111,11 +119,7 @@ export const TransactionCombobox = ({
       >
         <ComboboxInput
           className="w-full"
-          placeholder={
-            isLoading
-              ? t('spendings.linkModal.linking')
-              : t('spendings.linkModal.searchPlaceholder')
-          }
+          placeholder={isLoading ? resolvedLoadingPlaceholder : resolvedSearchPlaceholder}
           disabled={disabled || isLoading}
           showClear
           data-testid="transaction-combobox-input"
@@ -123,11 +127,12 @@ export const TransactionCombobox = ({
 
         <ComboboxContent>
           <ComboboxEmpty className="p-4 text-center text-xs text-text-muted">
-            {t('spendings.linkModal.noTransactionsFound')}
+            {resolvedEmptyMessage}
           </ComboboxEmpty>
           <ComboboxList>
             {(tx) => {
-              const isExact = Math.abs(tx.amount - targetAmount) < 0.001;
+              const isExact =
+                targetAmount !== undefined && Math.abs(tx.amount - targetAmount) < 0.001;
               const catName = 'category' in tx ? tx.category?.name : undefined;
               const isSelected = value?.id === tx.id;
 
@@ -160,7 +165,7 @@ export const TransactionCombobox = ({
                           )}
                         >
                           <Sparkles className="size-3" />
-                          {t('spendings.linkModal.exactMatchBadge')}
+                          {resolvedExactMatchBadge}
                         </span>
                       )}
                     </div>

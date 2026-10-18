@@ -24,3 +24,4 @@ export * from './page-loading';
 export * from './pagination-footer';
 export * from './search-filter-input';
 export * from './toast';
+export * from './transaction-combobox';
