@@ -98,7 +98,29 @@
     "unlinkConfirm": "Are you sure you want to unlink \"{{name}}\" from transaction?",
     "selectTransaction": "Search transaction...",
     "linked": "Linked",
-    "unlinked": "Unlinked"
+    "unlinked": "Unlinked",
+    "linkModal": {
+      "title": "Link to Transaction",
+      "description": "Associate this sports activity with an existing expense transaction.",
+      "searchPlaceholder": "Search by title, category, or amount...",
+      "exactDateChip": "Exact Date ({{date}})",
+      "windowChip": "±3 Days",
+      "allDatesChip": "All Dates",
+      "sportOnlyChip": "Sport Category",
+      "allCategoriesChip": "All Categories",
+      "exactMatchBadge": "Exact Amount",
+      "noTransactionsFound": "No expense transactions found matching criteria.",
+      "linkSubmit": "Link Transaction",
+      "linking": "Linking...",
+      "multipleActivities": "{{count}} activities selected"
+    },
+    "unlinkModal": {
+      "title": "Unlink from Transaction",
+      "prompt": "Are you sure you want to decouple this activity from its linked transaction?",
+      "hint": "The financial transaction will not be deleted, only the association with this sport activity will be removed.",
+      "confirm": "Unlink Transaction",
+      "unlinking": "Unlinking..."
+    }
   },
   "actions": {
     "save": "Save",
@@ -121,6 +143,7 @@
     "editDescription": "Update activity or purchase details.",
     "category": "Category",
     "categoryPlaceholder": "Select category",
+    "newCategory": "New",
     "date": "Date",
     "itemName": "Activity / Item",
     "itemNamePlaceholder": "e.g., Running shoes, Gym pass, Bicycle service",

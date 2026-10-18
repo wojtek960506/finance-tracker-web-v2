@@ -3,13 +3,14 @@ import { useParams } from 'react-router-dom';
 import { useRecordModals } from '@shared/hooks';
 
 import type { SportEntry } from '../../api';
-import { useSportCategories } from '../../hooks';
+import { useSportCategories, useSportSpendingModalState } from '../../hooks';
 import {
   CreateSportActivityModal,
   DeleteSportActivityModal,
   UpdateSportActivityModal,
 } from '../activity-modals';
 import { SportsLayout } from '../layout';
+import { SportSpendingModals, toSportSpendingTarget } from '../spendings';
 
 import { SportCategoryContent } from './sport-category-content';
 
@@ -28,12 +29,31 @@ export const SportCategoryPage = () => {
     closeDelete,
   } = useRecordModals<SportEntry>();
 
+  const {
+    linkingTargets,
+    unlinkingTarget,
+    openLink,
+    closeLink,
+    openUnlink,
+    closeUnlink,
+  } = useSportSpendingModalState();
+
+  const handleLinkActivity = (item: SportEntry) => {
+    openLink(toSportSpendingTarget(item));
+  };
+
+  const handleUnlinkActivity = (item: SportEntry) => {
+    openUnlink(toSportSpendingTarget(item));
+  };
+
   return (
     <SportsLayout>
       <SportCategoryContent
         onAddActivity={openCreate}
         onEditActivity={openEdit}
         onDeleteActivity={openDelete}
+        onLinkActivity={handleLinkActivity}
+        onUnlinkActivity={handleUnlinkActivity}
       />
       <CreateSportActivityModal
         isOpen={isCreateOpen}
@@ -51,6 +71,12 @@ export const SportCategoryPage = () => {
         isOpen={Boolean(deletingItem)}
         onClose={closeDelete}
         item={deletingItem}
+      />
+      <SportSpendingModals
+        linkingTargets={linkingTargets}
+        unlinkingTarget={unlinkingTarget}
+        onCloseLink={closeLink}
+        onCloseUnlink={closeUnlink}
       />
     </SportsLayout>
   );

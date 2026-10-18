@@ -17,12 +17,16 @@ export interface SportCategoryContentProps {
   onAddActivity?: () => void;
   onEditActivity?: (item: SportEntry) => void;
   onDeleteActivity?: (item: SportEntry) => void;
+  onLinkActivity?: (item: SportEntry) => void;
+  onUnlinkActivity?: (item: SportEntry) => void;
 }
 
 export const SportCategoryContent = ({
   onAddActivity,
   onEditActivity,
   onDeleteActivity,
+  onLinkActivity,
+  onUnlinkActivity,
 }: SportCategoryContentProps = {}) => {
   const { categoryId } = useParams<{ categoryId: string }>();
 
@@ -97,6 +101,8 @@ export const SportCategoryContent = ({
         hasFilters={hasActiveFilters}
         onEditItem={onEditActivity}
         onDeleteItem={onDeleteActivity}
+        onLinkItem={onLinkActivity}
+        onUnlinkItem={onUnlinkActivity}
         hasNextPage={hasNextPage}
         isFetchingNextPage={isFetchingNextPage}
         fetchNextPage={fetchNextPage}

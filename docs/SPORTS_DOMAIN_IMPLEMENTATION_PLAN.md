@@ -188,12 +188,14 @@ flowchart TD
 
 ### ⏳ Phase 6: Financial Transaction Linking UI
 
-- [ ] **Sub-phase 6.1: Link Activity to Transaction Dialog**
+- [x] **Sub-phase 6.1: Link Activity to Transaction Dialog**
   - Modal displaying recent eligible transactions for linking.
-  - Support linking multiple sport activities to a single transaction.
-  - Connect with `useSportSpendingLinking` mutation hook.
-- [ ] **Sub-phase 6.2: Unlink Activity Confirmation Modal**
-  - Modal displaying linked transaction details before severing relationship.
+  - Support linking single and multiple sport activities to a single transaction.
+  - Connect with `useSportSpendingLinking` mutation hook and shared `TransactionCombobox`.
+  - Filter transactions by `sport` system category with date window options (exact, ±3 days, all).
+- [x] **Sub-phase 6.2: Unlink Activity Confirmation Modal**
+  - Modal displaying linked activity details before severing relationship.
+  - Powered by shared `DeleteRecordModal` with warning styling.
 - [ ] **Sub-phase 6.3: Transaction Details Integration**
   - Visual indicators in transactions domain for transactions linked to sports activities.
   - Jump-to-sport action from transaction drawer.

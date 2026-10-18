@@ -125,13 +125,13 @@ export const SportActivityForm = ({
                 variant="outline"
                 onClick={() => setIsCreateCategoryOpen(true)}
                 disabled={isPending}
-                title={t('categories.addCategory')}
-                aria-label={t('categories.addCategory')}
+                title={t('modals.newCategory')}
+                aria-label={t('modals.newCategory')}
                 className="shrink-0 gap-1 px-3 py-1 text-xs"
                 data-testid="sport-activity-add-category-button"
               >
                 <Plus className="size-4" />
-                <span className="hidden sm:inline">{t('categories.addCategory')}</span>
+                <span className="hidden sm:inline">{t('modals.newCategory')}</span>
               </Button>
             )}
           </div>

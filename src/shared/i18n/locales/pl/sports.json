@@ -98,7 +98,29 @@
     "unlinkConfirm": "Czy na pewno chcesz odłączyć „{{name}}” od transakcji?",
     "selectTransaction": "Szukaj transakcji...",
     "linked": "Powiązana",
-    "unlinked": "Niepowiązana"
+    "unlinked": "Niepowiązana",
+    "linkModal": {
+      "title": "Powiąż z transakcją",
+      "description": "Powiąż ten wydatek sportowy z istniejącą transakcją wydatkową.",
+      "searchPlaceholder": "Szukaj po tytule, kategorii lub kwocie...",
+      "exactDateChip": "Dokładna data ({{date}})",
+      "windowChip": "±3 dni",
+      "allDatesChip": "Wszystkie daty",
+      "sportOnlyChip": "Kategoria Sport",
+      "allCategoriesChip": "Wszystkie kategorie",
+      "exactMatchBadge": "Dokładna kwota",
+      "noTransactionsFound": "Nie znaleziono pasujących transakcji wydatkowych.",
+      "linkSubmit": "Powiąż transakcję",
+      "linking": "Powiązywanie...",
+      "multipleActivities": "Wybrano {{count}} aktywności"
+    },
+    "unlinkModal": {
+      "title": "Odłącz od transakcji",
+      "prompt": "Czy na pewno chcesz odłączyć tę aktywność od powiązanej transakcji?",
+      "hint": "Transakcja finansowa nie zostanie usunięta, usunięte zostanie jedynie powiązanie z tą aktywnością.",
+      "confirm": "Odłącz transakcję",
+      "unlinking": "Odłączanie..."
+    }
   },
   "actions": {
     "save": "Zapisz",
@@ -121,6 +143,7 @@
     "editDescription": "Zaktualizuj szczegóły aktywności lub wydatku.",
     "category": "Kategoria",
     "categoryPlaceholder": "Wybierz kategorię",
+    "newCategory": "Nowa",
     "date": "Data",
     "itemName": "Przedmiot / Aktywność",
     "itemNamePlaceholder": "np. Buty do biegania, Karnet na siłownię, Serwis roweru",

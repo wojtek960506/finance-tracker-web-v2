@@ -98,7 +98,29 @@
     "unlinkConfirm": "Möchten Sie „{{name}}“ wirklich von der Transaktion trennen?",
     "selectTransaction": "Transaktion suchen...",
     "linked": "Verknüpft",
-    "unlinked": "Nicht verknüpft"
+    "unlinked": "Nicht verknüpft",
+    "linkModal": {
+      "title": "Mit Transaktion verknüpfen",
+      "description": "Verknüpfen Sie diese Sportaktivität mit einer bestehenden Ausgabentransaktion.",
+      "searchPlaceholder": "Nach Titel, Kategorie oder Betrag suchen...",
+      "exactDateChip": "Exaktes Datum ({{date}})",
+      "windowChip": "±3 Tage",
+      "allDatesChip": "Alle Daten",
+      "sportOnlyChip": "Kategorie Sport",
+      "allCategoriesChip": "Alle Kategorien",
+      "exactMatchBadge": "Exakter Betrag",
+      "noTransactionsFound": "Keine passenden Ausgabentransaktionen gefunden.",
+      "linkSubmit": "Transaktion verknüpfen",
+      "linking": "Wird verknüpft...",
+      "multipleActivities": "{{count}} Aktivitäten ausgewählt"
+    },
+    "unlinkModal": {
+      "title": "Von Transaktion trennen",
+      "prompt": "Möchten Sie diese Aktivität wirklich von der verknüpften Transaktion trennen?",
+      "hint": "Die Finanztransaktion wird nicht gelöscht, nur die Verknüpfung mit dieser Sportaktivität wird aufgehoben.",
+      "confirm": "Transaktion trennen",
+      "unlinking": "Wird getrennt..."
+    }
   },
   "actions": {
     "save": "Speichern",
@@ -121,6 +143,7 @@
     "editDescription": "Details zur Aktivität oder Ausgabe aktualisieren.",
     "category": "Kategorie",
     "categoryPlaceholder": "Kategorie auswählen",
+    "newCategory": "Neu",
     "date": "Datum",
     "itemName": "Aktivität / Artikel",
     "itemNamePlaceholder": "z. B. Laufschuhe, Fitnessstudio-Pass, Fahrradservice",
