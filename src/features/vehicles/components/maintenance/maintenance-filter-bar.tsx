@@ -1,9 +1,13 @@
 import type { MaintenanceSection } from '@vehicles/api';
-import { VehicleDateRangeFilter, VehicleFilterBar } from '@vehicles/components/common';
 import { Plus } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
-import { ButtonWithIcon, SearchFilterInput } from '@shared/ui';
+import {
+  ButtonWithIcon,
+  DateRangeFilter,
+  FilterBar,
+  SearchFilterInput,
+} from '@shared/ui';
 
 import type { MaintenanceFilters } from './types';
 
@@ -27,10 +31,11 @@ export const MaintenanceFilterBar = ({
   );
 
   return (
-    <VehicleFilterBar
+    <FilterBar
       testId="maintenance-filter-bar"
       toggleTestId="toggle-maintenance-filters-button"
       resetTestId="reset-maintenance-filters-button"
+      filterLabel={t('actions.filterTitle')}
       resetLabel={t('maintenancePage.filter.reset')}
       hasActiveFilters={hasActiveFilters}
       onResetFilters={() => onFiltersChange({})}
@@ -65,14 +70,15 @@ export const MaintenanceFilterBar = ({
       </div>
 
       {/* Date range pickers */}
-      <VehicleDateRangeFilter
+      <DateRangeFilter
         startDate={filters.startDate}
         endDate={filters.endDate}
         onStartDateChange={(startDate) => onFiltersChange({ ...filters, startDate })}
         onEndDateChange={(endDate) => onFiltersChange({ ...filters, endDate })}
         startDateLabel={t('maintenancePage.filter.startDate')}
         endDateLabel={t('maintenancePage.filter.endDate')}
+        inputClassName="xl:w-52"
       />
-    </VehicleFilterBar>
+    </FilterBar>
   );
 };

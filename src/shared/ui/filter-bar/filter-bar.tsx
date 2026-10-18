@@ -1,43 +1,41 @@
 import clsx from 'clsx';
 import { Filter, RotateCcw } from 'lucide-react';
-import { type ReactNode, useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Button } from '@shared/ui';
+import { Button } from '@shared/ui/button';
 
-export type VehicleFilterBarProps = {
-  testId: string;
-  toggleTestId: string;
-  resetTestId?: string;
-  resetLabel?: string;
-  hasActiveFilters: boolean;
-  onResetFilters?: () => void;
-  actionButton: ReactNode;
-  children: ReactNode;
-};
+import type { FilterBarProps } from './types';
 
-export const VehicleFilterBar = ({
-  testId,
-  toggleTestId,
+export const FilterBar = ({
+  testId = 'filter-bar',
+  toggleTestId = 'filter-toggle-button',
   resetTestId = 'filter-reset-button',
+  containerTestId = 'filter-bar-container',
+  filterLabel,
   resetLabel,
   hasActiveFilters,
   onResetFilters,
   actionButton,
   children,
-}: VehicleFilterBarProps) => {
-  const { t } = useTranslation('vehicles');
+  className,
+}: FilterBarProps) => {
+  const { t } = useTranslation('common');
   const [isExpanded, setIsExpanded] = useState(false);
+
+  const resolvedFilterLabel = filterLabel ?? t('filters');
+  const resolvedResetLabel = resetLabel ?? t('resetFilters');
 
   return (
     <div
       className={clsx(
         'flex flex-col gap-3 rounded-2xl border border-border bg-modal-bg p-3 sm:p-3.5',
         'xl:flex-row xl:items-center xl:justify-between',
+        className,
       )}
       data-testid={testId}
     >
-      {/* Top Mobile Controls: Toggle on left, Action button on right */}
+      {/* Mobile Top Controls: Filter Toggle + Action Button */}
       <div className="flex items-center justify-between gap-2.5 xl:contents">
         <Button
           type="button"
@@ -52,32 +50,31 @@ export const VehicleFilterBar = ({
               : 'border-border bg-card-bg text-text-muted hover:text-fg',
           )}
           aria-expanded={isExpanded}
-          aria-label={t('actions.filterTitle')}
+          aria-label={resolvedFilterLabel}
           data-testid={toggleTestId}
         >
           <Filter
             className={clsx(
-              'size-5 shrink-0',
+              'size-4 shrink-0',
               hasActiveFilters ? 'text-bt-primary' : 'text-text-muted',
             )}
           />
-          <span className="hidden sm:inline text-xs font-semibold sm:text-sm">
-            {t('actions.filterTitle')}
-          </span>
+          <span className="text-xs font-semibold sm:text-sm">{resolvedFilterLabel}</span>
           {hasActiveFilters && <span className="size-2 rounded-full bg-bt-primary" />}
         </Button>
 
         {actionButton}
       </div>
 
-      {/* Filter items: collapsible on mobile, always visible on desktop */}
+      {/* Filter inputs container */}
       <div
         className={clsx(
-          'w-full flex-col gap-3 border-t border-border/40 pt-3',
+          'w-full flex-col gap-2.5 border-t border-border/40 pt-2.5',
           'xl:w-auto xl:border-t-0 xl:pt-0 xl:flex-row xl:items-center xl:gap-3 xl:flex-wrap',
           'xl:order-first',
           isExpanded ? 'flex' : 'hidden xl:flex',
         )}
+        data-testid={containerTestId}
       >
         {children}
 
@@ -93,7 +90,7 @@ export const VehicleFilterBar = ({
             data-testid={resetTestId}
           >
             <RotateCcw className="size-3.5 shrink-0" />
-            <span>{resetLabel ?? t('actions.resetFilters')}</span>
+            <span>{resolvedResetLabel}</span>
           </Button>
         )}
       </div>

@@ -3,23 +3,27 @@ import '@shared/i18n';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
-import { VehicleDateRangeFilter } from './vehicle-date-range-filter';
+import { DateRangeFilter } from './date-range-filter';
 
-describe('VehicleDateRangeFilter', () => {
+describe('DateRangeFilter', () => {
   it('renders start and end date inputs with accessible labels', () => {
     render(
-      <VehicleDateRangeFilter
+      <DateRangeFilter
         startDate="2026-01-01"
         endDate="2026-01-31"
         onStartDateChange={vi.fn()}
         onEndDateChange={vi.fn()}
         startDateLabel="Custom From Date"
         endDateLabel="Custom To Date"
+        startDateTestId="test-start-date"
+        endDateTestId="test-end-date"
       />,
     );
 
     expect(screen.getByLabelText('Custom From Date')).toBeInTheDocument();
     expect(screen.getByLabelText('Custom To Date')).toBeInTheDocument();
+    expect(screen.getByTestId('test-start-date')).toBeInTheDocument();
+    expect(screen.getByTestId('test-end-date')).toBeInTheDocument();
   });
 
   it('triggers change handlers when clear buttons are clicked', () => {
@@ -27,7 +31,7 @@ describe('VehicleDateRangeFilter', () => {
     const handleEndChange = vi.fn();
 
     render(
-      <VehicleDateRangeFilter
+      <DateRangeFilter
         startDate="2026-01-01"
         endDate="2026-01-31"
         onStartDateChange={handleStartChange}
@@ -45,5 +49,19 @@ describe('VehicleDateRangeFilter', () => {
 
     fireEvent.click(clearButtons[1]);
     expect(handleEndChange).toHaveBeenCalledWith(undefined);
+  });
+
+  it('uses default common translations when labels are omitted', () => {
+    render(
+      <DateRangeFilter
+        startDate="2026-01-01"
+        endDate="2026-01-31"
+        onStartDateChange={vi.fn()}
+        onEndDateChange={vi.fn()}
+      />,
+    );
+
+    expect(screen.getByLabelText('Start date')).toBeInTheDocument();
+    expect(screen.getByLabelText('End date')).toBeInTheDocument();
   });
 });
