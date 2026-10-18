@@ -134,7 +134,8 @@
     "loadingMore": "Loading more...",
     "showingCount": "Showing {{loaded}} of {{total}} activities",
     "showingAll": "Showing all {{total}} activities",
-    "close": "Close"
+    "close": "Close",
+    "open": "Open"
   },
   "modals": {
     "createTitle": "Add Activity",

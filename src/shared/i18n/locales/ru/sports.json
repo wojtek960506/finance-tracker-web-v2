@@ -134,7 +134,8 @@
     "loadingMore": "Загрузка...",
     "showingCount": "Показано {{loaded}} из {{total}} активностей",
     "showingAll": "Показаны все {{total}} активностей",
-    "close": "Закрыть"
+    "close": "Закрыть",
+    "open": "Открыть"
   },
   "modals": {
     "createTitle": "Добавить активность",
