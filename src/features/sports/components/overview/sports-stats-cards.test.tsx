@@ -62,4 +62,27 @@ describe('SportsStatsCards', () => {
 
     expect(screen.getByTestId('stats-card-top-category')).toHaveTextContent('-');
   });
+
+  it('translates top category when it is system otherCategory', () => {
+    const systemCategoryStats: SportStatsResponse = {
+      totalCostPln: 1000,
+      totalEntries: 5,
+      byCategory: [
+        {
+          categoryId: 'cat-system-other',
+          categoryName: 'otherCategory',
+          categoryKey: 'othercategory',
+          type: 'system',
+          totalCostPln: 1000,
+          entryCount: 5,
+          percentage: 100,
+        },
+      ],
+      byYear: [{ year: 2026, totalCostPln: 1000, entryCount: 5 }],
+    };
+
+    render(<SportsStatsCards stats={systemCategoryStats} />);
+
+    expect(screen.getByText('Other category')).toBeInTheDocument();
+  });
 });

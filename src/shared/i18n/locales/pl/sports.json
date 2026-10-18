@@ -9,6 +9,12 @@
   "categories": {
     "other": "Inne",
     "otherCategory": "Inna kategoria",
+    "othercategory": "Inna kategoria",
+    "sport": "Sport",
+    "sports": "Sport",
+    "transport": "Transport",
+    "investment": "Inwestycje",
+    "investments": "Inwestycje",
     "addCategory": "Nowa kategoria sportu",
     "editCategory": "Edytuj kategorię",
     "deleteCategory": "Usuń kategorię",

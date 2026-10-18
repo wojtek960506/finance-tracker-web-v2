@@ -61,5 +61,10 @@
   "atm": "Bankomat",
   "card": "Karta",
   "cash": "Gotówka",
-  "bankTransfer": "Przelew bankowy"
+  "bankTransfer": "Przelew bankowy",
+  "sport": "Sport",
+  "sports": "Sport",
+  "transport": "Transport",
+  "investment": "Inwestycje",
+  "investments": "Inwestycje"
 }

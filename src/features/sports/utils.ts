@@ -3,17 +3,26 @@ import { SPORTS_CATEGORY_COLORS } from './consts';
 export const getCategoryDisplayName = (
   category: {
     name: string;
-    type: 'user' | 'system';
+    type?: 'user' | 'system';
     categoryKey?: string | null;
   },
   t: (key: string, options?: { defaultValue: string }) => string,
 ): string => {
+  const normalizedKey = category.categoryKey?.toLowerCase();
+
   if (category.type === 'system') {
     if (category.categoryKey) {
-      return t(`categories.${category.categoryKey}`, {
-        defaultValue: category.name,
+      const keyToUse =
+        normalizedKey === 'othercategory' ? 'otherCategory' : category.categoryKey;
+      return t(`categories.${keyToUse}`, {
+        defaultValue: normalizedKey
+          ? t(`categories.${normalizedKey}`, {
+              defaultValue: category.name,
+            })
+          : category.name,
       });
     }
+
     if (category.name === 'otherCategory' || category.name === 'other') {
       return t('categories.otherCategory', {
         defaultValue: t('categories.other', {
@@ -21,7 +30,23 @@ export const getCategoryDisplayName = (
         }),
       });
     }
+
+    const normalizedName = category.name.toLowerCase();
+    return t(`categories.${category.name}`, {
+      defaultValue: t(`categories.${normalizedName}`, {
+        defaultValue: category.name,
+      }),
+    });
   }
+
+  if (category.name === 'otherCategory' || category.name === 'other') {
+    return t('categories.otherCategory', {
+      defaultValue: t('categories.other', {
+        defaultValue: category.name,
+      }),
+    });
+  }
+
   return category.name;
 };
 

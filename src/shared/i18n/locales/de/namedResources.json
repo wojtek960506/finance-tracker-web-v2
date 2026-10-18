@@ -61,5 +61,10 @@
   "atm": "Geldautomat",
   "card": "Karte",
   "cash": "Bargeld",
-  "bankTransfer": "Banküberweisung"
+  "bankTransfer": "Banküberweisung",
+  "sport": "Sport",
+  "sports": "Sport",
+  "transport": "Transport",
+  "investment": "Investitionen",
+  "investments": "Investitionen"
 }

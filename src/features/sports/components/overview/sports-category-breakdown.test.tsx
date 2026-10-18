@@ -58,4 +58,26 @@ describe('SportsCategoryBreakdown', () => {
 
     expect(container.firstChild).toBeNull();
   });
+
+  it('translates system otherCategory with categoryKey othercategory', () => {
+    const categories: SportStatsCategory[] = [
+      {
+        categoryId: 'cat-system-other',
+        categoryName: 'otherCategory',
+        categoryKey: 'othercategory',
+        type: 'system',
+        totalCostPln: 500,
+        entryCount: 2,
+        percentage: 100,
+      },
+    ];
+
+    render(
+      <MemoryRouter>
+        <SportsCategoryBreakdown categories={categories} totalCostPln={500} />
+      </MemoryRouter>,
+    );
+
+    expect(screen.getByText('Other category')).toBeInTheDocument();
+  });
 });

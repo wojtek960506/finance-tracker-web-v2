@@ -61,5 +61,10 @@
   "atm": "ATM",
   "card": "Card",
   "cash": "Cash",
-  "bankTransfer": "Bank transfer"
+  "bankTransfer": "Bank transfer",
+  "sport": "Sport",
+  "sports": "Sport",
+  "transport": "Transport",
+  "investment": "Investments",
+  "investments": "Investments"
 }

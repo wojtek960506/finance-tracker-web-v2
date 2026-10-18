@@ -9,6 +9,12 @@
   "categories": {
     "other": "Другое",
     "otherCategory": "Другая категория",
+    "othercategory": "Другая категория",
+    "sport": "Спорт",
+    "sports": "Спорт",
+    "transport": "Транспорт",
+    "investment": "Инвестиции",
+    "investments": "Инвестиции",
     "addCategory": "Новая категория спорта",
     "editCategory": "Редактировать категорию",
     "deleteCategory": "Удалить категорию",

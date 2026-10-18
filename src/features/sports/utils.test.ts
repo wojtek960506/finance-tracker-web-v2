@@ -37,15 +37,38 @@ describe('Sports Utilities', () => {
       expect(getCategoryDisplayName(category, t)).toBe('Inna kategoria');
     });
 
-    it('returns raw category name when system category has no categoryKey', () => {
+    it('returns translated key for system category with categoryKey othercategory from stats', () => {
       const category = {
-        name: 'Siłownia',
+        name: 'otherCategory',
+        type: 'system' as const,
+        categoryKey: 'othercategory',
+      };
+      const t = (key: string) =>
+        key === 'categories.otherCategory' ? 'Inna kategoria' : key;
+
+      expect(getCategoryDisplayName(category, t)).toBe('Inna kategoria');
+    });
+
+    it('returns translated key for system category with name sport', () => {
+      const category = {
+        name: 'sport',
+        type: 'system' as const,
+      };
+      const t = (key: string) => (key === 'categories.sport' ? 'Sport' : key);
+
+      expect(getCategoryDisplayName(category, t)).toBe('Sport');
+    });
+
+    it('returns raw category name when system category has unknown name and no categoryKey', () => {
+      const category = {
+        name: 'CustomGym',
         type: 'system' as const,
         categoryKey: null,
       };
-      const t = (key: string) => key;
+      const t = (_key: string, options?: { defaultValue: string }) =>
+        options?.defaultValue ?? _key;
 
-      expect(getCategoryDisplayName(category, t)).toBe('Siłownia');
+      expect(getCategoryDisplayName(category, t)).toBe('CustomGym');
     });
   });
 
