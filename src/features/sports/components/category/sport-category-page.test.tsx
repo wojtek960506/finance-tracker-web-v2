@@ -107,6 +107,14 @@ describe('SportCategoryPage', () => {
     vi.spyOn(statsApi, 'getSportStats').mockResolvedValue(mockStats);
   });
 
+  it('renders PageLoading spinner while category or entries are loading', () => {
+    vi.spyOn(entriesApi, 'getSportEntries').mockReturnValue(new Promise(() => {}));
+
+    renderCategoryPage();
+
+    expect(screen.getByTestId('sport-category-loading')).toBeInTheDocument();
+  });
+
   it('renders category header, summary cards, and filter bar when data is loaded', async () => {
     vi.spyOn(entriesApi, 'getSportEntries').mockResolvedValue(mockEntriesResponse);
 

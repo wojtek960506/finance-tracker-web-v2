@@ -1,6 +1,8 @@
 import { useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
+import { PageLoading } from '@shared/ui';
+
 import type { SportEntry } from '../../api';
 import {
   useSportCategories,
@@ -65,7 +67,13 @@ export const SportCategoryContent = ({
     (filters.sort && filters.sort !== 'date_desc'),
   );
 
-  const isInitialLoading = isCategoriesLoading || (isStatsLoading && isEntriesLoading);
+  const isInitialLoading =
+    isCategoriesLoading || (isEntriesLoading && items.length === 0);
+
+  if (isInitialLoading) {
+    return <PageLoading testId="sport-category-loading" />;
+  }
+
   const totalCount = entriesData?.pages[0]?.pagination.total ?? items.length;
 
   return (
@@ -77,14 +85,10 @@ export const SportCategoryContent = ({
         category={currentCategory}
         categoryStats={categoryStats}
         colorIndex={categoryIndex !== -1 ? categoryIndex : 0}
-        isLoading={isInitialLoading}
         onAddActivity={onAddActivity}
       />
 
-      <SportCategorySummary
-        summary={summary}
-        isLoading={isEntriesLoading && items.length === 0}
-      />
+      <SportCategorySummary summary={summary} />
 
       {(summary.totalEntries > 0 || items.length > 0 || hasActiveFilters) && (
         <SportActivitiesFilterBar
@@ -97,7 +101,6 @@ export const SportCategoryContent = ({
       <SportActivitiesTable
         items={items}
         hasFilters={hasActiveFilters}
-        isLoading={isEntriesLoading && items.length === 0}
         onAddFirstItem={onAddActivity}
         hasNextPage={hasNextPage}
         isFetchingNextPage={isFetchingNextPage}
