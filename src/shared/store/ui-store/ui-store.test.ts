@@ -33,7 +33,7 @@ describe('useUIStore', () => {
     expect(useUIStore.getState().expandedTransactionTotalCurrencies).toEqual([]);
   });
 
-  it('persists configured UI state', () => {
+  it('persists configured UI state without transient nav state', () => {
     useUIStore.getState().setIsNavOpen(true);
     useUIStore.getState().setIsTransactionsTotalsOpen(true);
     useUIStore.getState().setIsTransactionsFiltersOpen(true);
@@ -41,12 +41,12 @@ describe('useUIStore', () => {
 
     const storedState = JSON.parse(window.localStorage.getItem(UI_STORE_KEY) ?? '{}');
 
-    expect(storedState.state).toMatchObject({
-      isNavOpen: true,
+    expect(storedState.state).toEqual({
       isTransactionsTotalsOpen: true,
       isTransactionsFiltersOpen: true,
       expandedTransactionTotalCurrencies: ['EUR'],
     });
+    expect(storedState.state.isNavOpen).toBeUndefined();
   });
 
   it('resets persisted UI state to defaults', () => {

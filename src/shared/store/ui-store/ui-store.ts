@@ -15,7 +15,6 @@ type UIState = {
 
 export const UI_STORE_KEY = 'ui-store';
 const getDefaultPersistedUIState = () => ({
-  isNavOpen: false,
   isTransactionsTotalsOpen: false,
   isTransactionsFiltersOpen: false,
   expandedTransactionTotalCurrencies: null,
@@ -24,8 +23,9 @@ const getDefaultPersistedUIState = () => ({
 export const useUIStore = create<UIState>()(
   persist(
     (set) => ({
-      ...getDefaultPersistedUIState(),
+      isNavOpen: false,
       setIsNavOpen: (isNavOpen: boolean) => set({ isNavOpen }),
+      ...getDefaultPersistedUIState(),
       isTransactionsTotalsOpen: false,
       setIsTransactionsTotalsOpen: (isTransactionsTotalsOpen: boolean) =>
         set({ isTransactionsTotalsOpen }),
@@ -45,12 +45,15 @@ export const useUIStore = create<UIState>()(
                 ),
           };
         }),
-      resetPersistedUIState: () => set(getDefaultPersistedUIState()),
+      resetPersistedUIState: () =>
+        set({
+          isNavOpen: false,
+          ...getDefaultPersistedUIState(),
+        }),
     }),
     {
       name: UI_STORE_KEY,
       partialize: (state) => ({
-        isNavOpen: state.isNavOpen,
         isTransactionsTotalsOpen: state.isTransactionsTotalsOpen,
         isTransactionsFiltersOpen: state.isTransactionsFiltersOpen,
         expandedTransactionTotalCurrencies: state.expandedTransactionTotalCurrencies,
