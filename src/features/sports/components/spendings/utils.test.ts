@@ -34,10 +34,11 @@ describe('sports spendings utils', () => {
           name: 'Running',
           type: 'user',
         },
+        categoryId: 'cat-1',
         transactionId: 'tx-123',
         createdAt: '2026-10-15T10:00:00.000Z',
         updatedAt: '2026-10-15T10:00:00.000Z',
-        userId: 'u-1',
+        ownerId: 'u-1',
       };
 
       const target = toSportSpendingTarget(entry);
