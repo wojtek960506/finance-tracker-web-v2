@@ -1,4 +1,5 @@
 import { useQueryClient } from '@tanstack/react-query';
+import clsx from 'clsx';
 import {
   Banknote,
   Bike,
@@ -37,6 +38,8 @@ export const Navigation = () => {
 
   const isTransactionsRoute = pathname.startsWith('/transactions');
   const isSportsRoute = pathname.startsWith('/sports');
+  const isTransactionsChildActive = isTransactionsRoute && pathname !== '/transactions';
+  const isSportsChildActive = isSportsRoute && pathname !== '/sports';
 
   const [isTransactionsOpen, setIsTransactionsOpen] = useState(isTransactionsRoute);
   const [isSportsOpen, setIsSportsOpen] = useState(isSportsRoute);
@@ -87,6 +90,7 @@ export const Navigation = () => {
             />
           }
           indicatorPosition={fromLeft ? 'left' : 'right'}
+          indicatorClassName={clsx(isTransactionsChildActive && 'text-active-nav')}
           isOpen={isTransactionsOpen}
           onOpenChange={setIsTransactionsOpen}
         >
@@ -144,6 +148,7 @@ export const Navigation = () => {
         <Collapsible
           header={<NavigationItem to="/sports" title={t('sports')} Icon={Bike} end />}
           indicatorPosition={fromLeft ? 'left' : 'right'}
+          indicatorClassName={clsx(isSportsChildActive && 'text-active-nav')}
           isOpen={isSportsOpen}
           onOpenChange={setIsSportsOpen}
         >

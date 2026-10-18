@@ -59,18 +59,21 @@ vi.mock('@ui', () => ({
     header,
     children,
     indicatorPosition,
+    indicatorClassName,
     isOpen,
     onOpenChange,
   }: {
     header: ReactNode;
     children: ReactNode;
     indicatorPosition: 'left' | 'right';
+    indicatorClassName?: string;
     isOpen?: boolean;
     onOpenChange?: (open: boolean) => void;
   }) => (
     <div
       data-testid="collapsible"
       data-indicator-position={indicatorPosition}
+      data-indicator-classname={indicatorClassName || undefined}
       data-open={String(isOpen)}
     >
       <button
@@ -151,24 +154,44 @@ describe('Navigation', () => {
     expect(collapsibles[1]).toHaveAttribute('data-open', 'false');
   });
 
-  it('opens transactions collapsible by default on transactions route', () => {
+  it('opens transactions collapsible and highlights chevron on transactions child route', () => {
     mocks.location = { pathname: '/transactions/categories' };
 
     render(<Navigation />);
 
     const collapsibles = screen.getAllByTestId('collapsible');
     expect(collapsibles[0]).toHaveAttribute('data-open', 'true');
+    expect(collapsibles[0]).toHaveAttribute(
+      'data-indicator-classname',
+      'text-active-nav',
+    );
     expect(collapsibles[1]).toHaveAttribute('data-open', 'false');
+    expect(collapsibles[1]).not.toHaveAttribute('data-indicator-classname');
   });
 
-  it('opens sports collapsible by default on sports route', () => {
+  it('does not highlight transactions chevron on transactions index route', () => {
+    mocks.location = { pathname: '/transactions' };
+
+    render(<Navigation />);
+
+    const collapsibles = screen.getAllByTestId('collapsible');
+    expect(collapsibles[0]).toHaveAttribute('data-open', 'true');
+    expect(collapsibles[0]).not.toHaveAttribute('data-indicator-classname');
+  });
+
+  it('opens sports collapsible and highlights chevron on sports child route', () => {
     mocks.location = { pathname: '/sports/categories' };
 
     render(<Navigation />);
 
     const collapsibles = screen.getAllByTestId('collapsible');
     expect(collapsibles[0]).toHaveAttribute('data-open', 'false');
+    expect(collapsibles[0]).not.toHaveAttribute('data-indicator-classname');
     expect(collapsibles[1]).toHaveAttribute('data-open', 'true');
+    expect(collapsibles[1]).toHaveAttribute(
+      'data-indicator-classname',
+      'text-active-nav',
+    );
   });
 
   it('uses right indicator position when navigation is from the right', () => {
