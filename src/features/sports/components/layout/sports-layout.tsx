@@ -1,8 +1,8 @@
 import clsx from 'clsx';
-import { useState } from 'react';
-import { Outlet, useLocation } from 'react-router-dom';
+import { useMemo, useState } from 'react';
+import { Outlet, useLocation, useParams } from 'react-router-dom';
 
-import { useSportCategories } from '../../hooks';
+import { useSportCategories, useSportStats } from '../../hooks';
 
 import { SportsHeader } from './sports-header';
 import { SportsTabs } from './sports-tabs';
@@ -10,7 +10,9 @@ import type { SportsLayoutProps } from './types';
 
 export const SportsLayout = ({ children }: SportsLayoutProps) => {
   const location = useLocation();
-  const { data: categories = [], isLoading } = useSportCategories();
+  const { categoryId: currentCategoryId } = useParams<{ categoryId?: string }>();
+  const { data: categories = [], isLoading: isCategoriesLoading } = useSportCategories();
+  const { data: allTimeStats, isLoading: isStatsLoading } = useSportStats(undefined);
 
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const [prevPathname, setPrevPathname] = useState(location.pathname);
@@ -19,6 +21,22 @@ export const SportsLayout = ({ children }: SportsLayoutProps) => {
     setPrevPathname(location.pathname);
     setIsMobileNavOpen(false);
   }
+
+  const visibleCategories = useMemo(() => {
+    if (!allTimeStats) {
+      return isStatsLoading ? [] : categories;
+    }
+
+    const activeCategoryIds = new Set(
+      allTimeStats.byCategory
+        .filter((cat) => cat.entryCount > 0)
+        .map((cat) => cat.categoryId),
+    );
+
+    return categories.filter(
+      (cat) => activeCategoryIds.has(cat.id) || cat.id === currentCategoryId,
+    );
+  }, [allTimeStats, categories, currentCategoryId, isStatsLoading]);
 
   return (
     <div
@@ -34,8 +52,8 @@ export const SportsLayout = ({ children }: SportsLayoutProps) => {
       />
 
       <SportsTabs
-        categories={categories}
-        isLoading={isLoading}
+        categories={visibleCategories}
+        isLoading={isCategoriesLoading || isStatsLoading}
         isMobileNavOpen={isMobileNavOpen}
         onCloseMobileNav={() => setIsMobileNavOpen(false)}
       />
