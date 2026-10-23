@@ -25,7 +25,9 @@
       "@vehicles/*": ["src/features/vehicles/*"],
       "@vehicles": ["src/features/vehicles/index.ts"],
       "@sports/*": ["src/features/sports/*"],
-      "@sports": ["src/features/sports/index.ts"]
+      "@sports": ["src/features/sports/index.ts"],
+      "@dashboard/*": ["src/features/dashboard/*"],
+      "@dashboard": ["src/features/dashboard/index.ts"]
     }
   }
 }

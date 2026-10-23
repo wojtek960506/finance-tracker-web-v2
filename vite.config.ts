@@ -89,6 +89,7 @@ export default defineConfig({
       '@named-resources': path.resolve(__dirname, './src/features/named-resources'),
       '@vehicles': path.resolve(__dirname, './src/features/vehicles'),
       '@sports': path.resolve(__dirname, './src/features/sports'),
+      '@dashboard': path.resolve(__dirname, './src/features/dashboard'),
     },
   },
 });

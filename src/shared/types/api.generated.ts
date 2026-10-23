@@ -2902,6 +2902,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/dashboard/summary": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get consolidated home dashboard summary
+         * @description Returns aggregated metrics for transactions, investments, vehicles, sports, and the latest transactions.
+         */
+        get: operations["get_dashboard_summary"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/vehicles/summary": {
         parameters: {
             query?: never;
@@ -4514,80 +4534,6 @@ export interface components {
             };
             instruments: components["schemas"]["InvestmentInstrumentSummaryInput"][];
         };
-        NetWorthTotalsInput: {
-            total: number;
-            liquidCash: number;
-            investments: number;
-        };
-        NetWorthCurrencyBreakdownInput: {
-            /** @enum {string} */
-            currency: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
-            cash: number;
-            investments: number;
-            total: number;
-            normalizedTotal?: number;
-        };
-        NetWorthAllocationItemInput: {
-            /** @enum {string} */
-            category: "cash" | "share" | "fund" | "termDeposit" | "savings";
-            amount: number;
-            percentage: number;
-        };
-        NetWorthResponseInput: {
-            /** @enum {string} */
-            baseCurrency?: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
-            netWorth: components["schemas"]["NetWorthTotalsInput"];
-            byCurrency: {
-                [key: string]: components["schemas"]["NetWorthCurrencyBreakdownInput"];
-            };
-            allocation: {
-                [key: string]: components["schemas"]["NetWorthAllocationItemInput"];
-            };
-        };
-        NetWorthIndependencePeriodInput: {
-            startDate: string;
-            endDate: string;
-            monthsCount: number;
-        };
-        NetWorthIndependenceCapitalInput: {
-            total: number;
-            liquidCash: number;
-            savings: number;
-            liquidCapital: number;
-            lockedInvestments: number;
-        };
-        NetWorthIndependenceMonthlyAveragesInput: {
-            grossExpenses: number;
-            nonWorkIncome: number;
-            workIncome: number;
-            totalIncome: number;
-            netBurnRate: number;
-        };
-        NetWorthIndependenceHorizonInput: {
-            netWorthMonths: number | null;
-            liquidCapitalMonths: number | null;
-            liquidCashMonths: number | null;
-            isPerpetual: boolean;
-        };
-        NetWorthZeroIncomeBaselineInput: {
-            netWorthMonths: number | null;
-            liquidCapitalMonths: number | null;
-            liquidCashMonths: number | null;
-        };
-        ExcludedCategoryItemInput: {
-            id: string;
-            name: string;
-        };
-        NetWorthIndependenceResponseInput: {
-            /** @enum {string} */
-            baseCurrency?: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
-            period: components["schemas"]["NetWorthIndependencePeriodInput"];
-            netWorth: components["schemas"]["NetWorthIndependenceCapitalInput"];
-            monthlyAverages: components["schemas"]["NetWorthIndependenceMonthlyAveragesInput"];
-            independence: components["schemas"]["NetWorthIndependenceHorizonInput"];
-            zeroIncomeBaseline: components["schemas"]["NetWorthZeroIncomeBaselineInput"];
-            excludedCategories: components["schemas"]["ExcludedCategoryItemInput"][];
-        };
         NamedResourceInput: {
             name: string;
         };
@@ -4601,449 +4547,6 @@ export interface components {
             isFavorite: boolean;
         };
         NamedResourcesResponseInput: components["schemas"]["NamedResourceResponseInput"][];
-        SportEntryCategoryResponseInput: {
-            id: string;
-            name: string;
-            /** @enum {string} */
-            type: "user" | "system";
-        };
-        SportEntryCreateInput: {
-            categoryId: string;
-            date: unknown;
-            itemName: string;
-            costPln: number;
-            description?: string | null;
-            transactionId?: string | null;
-        };
-        SportEntryUpdateInput: {
-            categoryId?: string;
-            date?: unknown;
-            itemName?: string;
-            costPln?: number;
-            description?: string | null;
-            transactionId?: string | null;
-        };
-        SportEntryResponseInput: {
-            id: string;
-            ownerId: string;
-            categoryId: string;
-            category: components["schemas"]["SportEntryCategoryResponseInput"];
-            date: unknown;
-            itemName: string;
-            costPln: number;
-            description?: string | null;
-            transactionId?: string | null;
-            createdAt: unknown;
-            updatedAt: unknown;
-        };
-        SportPaginationInput: {
-            total: number;
-            page: number;
-            limit: number;
-            totalPages: number;
-        };
-        SportEntryListResponseInput: {
-            items: components["schemas"]["SportEntryResponseInput"][];
-            pagination: components["schemas"]["SportPaginationInput"];
-        };
-        LinkSportSpendingsToTransactionInput: {
-            transactionId: string;
-            entryIds: string[];
-        };
-        UnlinkSportSpendingFromTransactionInput: {
-            entryId: string;
-        };
-        SportSpendingLinkResponseInput: {
-            acknowledged: boolean;
-            modifiedCount: number;
-        };
-        SportStatsCategoryInput: {
-            categoryId: string;
-            categoryName: string;
-            categoryKey?: string | null;
-            /** @enum {string} */
-            type: "user" | "system";
-            totalCostPln: number;
-            entryCount: number;
-            percentage: number;
-        };
-        SportStatsYearInput: {
-            year: number;
-            totalCostPln: number;
-            entryCount: number;
-        };
-        SportStatsMonthInput: {
-            year: number;
-            month: number;
-            totalCostPln: number;
-            entryCount: number;
-        };
-        SportStatsResponseInput: {
-            totalCostPln: number;
-            totalEntries: number;
-            byCategory: components["schemas"]["SportStatsCategoryInput"][];
-            byYear: components["schemas"]["SportStatsYearInput"][];
-            byMonth?: components["schemas"]["SportStatsMonthInput"][];
-        };
-        VehiclePaginationInput: {
-            nextCursor: string | null;
-            hasMore: boolean;
-            total: number;
-        };
-        VehicleEquipmentCreateInput: {
-            date: unknown;
-            itemName: string;
-            costPln: number;
-            description?: string | null;
-            transactionId?: string | null;
-        };
-        VehicleEquipmentUpdateInput: {
-            date?: unknown;
-            itemName?: string;
-            costPln?: number;
-            description?: string | null;
-            transactionId?: string | null;
-        };
-        VehicleEquipmentResponseInput: {
-            id: string;
-            ownerId: string;
-            vehicleId: string;
-            date: unknown;
-            itemName: string;
-            costPln: number;
-            description?: string | null;
-            transactionId?: string | null;
-            createdAt: unknown;
-            updatedAt: unknown;
-        };
-        VehicleEquipmentSummaryInput: {
-            totalCostPln: number;
-            totalItems: number;
-        };
-        VehicleEquipmentListResponseInput: components["schemas"]["VehicleEquipmentResponseInput"][];
-        VehicleEquipmentWithSummaryResponseInput: {
-            items: components["schemas"]["VehicleEquipmentResponseInput"][];
-            summary: components["schemas"]["VehicleEquipmentSummaryInput"];
-            pagination: components["schemas"]["VehiclePaginationInput"];
-        };
-        VehicleFuelEntryCreateInput: {
-            date: unknown;
-            fuelLiters: number;
-            /** @default true */
-            isFullTank: boolean;
-            unitPricePln: number;
-            costPln: number;
-            odometerKm: number;
-            stationBrand?: string | null;
-            stationAddress?: string | null;
-            description?: string | null;
-            transactionId?: string | null;
-        };
-        VehicleFuelEntryUpdateInput: {
-            date?: unknown;
-            fuelLiters?: number;
-            /** @default true */
-            isFullTank: boolean;
-            unitPricePln?: number;
-            costPln?: number;
-            odometerKm?: number;
-            stationBrand?: string | null;
-            stationAddress?: string | null;
-            description?: string | null;
-            transactionId?: string | null;
-        };
-        VehicleFuelEntryResponseInput: {
-            id: string;
-            ownerId: string;
-            vehicleId: string;
-            date: unknown;
-            fuelLiters: number;
-            isFullTank: boolean;
-            unitPricePln: number;
-            costPln: number;
-            odometerKm: number;
-            stationBrand?: string | null;
-            stationAddress?: string | null;
-            description?: string | null;
-            transactionId?: string | null;
-            createdAt: unknown;
-            updatedAt: unknown;
-        };
-        VehicleFuelEntryEnrichedResponseInput: {
-            id: string;
-            ownerId: string;
-            vehicleId: string;
-            date: unknown;
-            fuelLiters: number;
-            isFullTank: boolean;
-            unitPricePln: number;
-            costPln: number;
-            odometerKm: number;
-            stationBrand?: string | null;
-            stationAddress?: string | null;
-            description?: string | null;
-            transactionId?: string | null;
-            createdAt: unknown;
-            updatedAt: unknown;
-            distanceSincePreviousKm: number | null;
-            distanceSincePreviousFullKm: number | null;
-            fuelLitersToFull: number | null;
-            costToFullPln: number | null;
-            consumptionLPer100Km: number | null;
-            costPerKmPln: number | null;
-            kmPerLiter: number | null;
-        };
-        VehicleFuelSummaryInput: {
-            totalVolume: number;
-            totalCostPln: number;
-            avgConsumptionLPer100Km: number | null;
-            avgUnitPricePln: number | null;
-            totalCount: number;
-        };
-        VehicleFuelEntryListResponseInput: components["schemas"]["VehicleFuelEntryEnrichedResponseInput"][];
-        VehicleFuelWithSummaryResponseInput: {
-            items: components["schemas"]["VehicleFuelEntryEnrichedResponseInput"][];
-            summary: components["schemas"]["VehicleFuelSummaryInput"];
-            pagination: components["schemas"]["VehiclePaginationInput"];
-        };
-        VehicleMaintenanceCreateInput: {
-            /** @enum {string} */
-            section: "ownMaintenance" | "previousOwnerServices";
-            date: unknown;
-            costPln: number;
-            odometerKm?: number | null;
-            description?: string | null;
-            serviceProvider?: string | null;
-            serviceAddress?: string | null;
-            transactionId?: string | null;
-        };
-        VehicleMaintenanceUpdateInput: {
-            /** @enum {string} */
-            section?: "ownMaintenance" | "previousOwnerServices";
-            date?: unknown;
-            costPln?: number;
-            odometerKm?: number | null;
-            description?: string | null;
-            serviceProvider?: string | null;
-            serviceAddress?: string | null;
-            transactionId?: string | null;
-        };
-        VehicleMaintenanceResponseInput: {
-            id: string;
-            ownerId: string;
-            vehicleId: string;
-            /** @enum {string} */
-            section: "ownMaintenance" | "previousOwnerServices";
-            date: unknown;
-            costPln: number;
-            odometerKm?: number | null;
-            description?: string | null;
-            serviceProvider?: string | null;
-            serviceAddress?: string | null;
-            transactionId?: string | null;
-            createdAt: unknown;
-            updatedAt: unknown;
-        };
-        VehicleMaintenanceSummaryInput: {
-            totalCostPln: number;
-            totalRecords: number;
-        };
-        VehicleMaintenanceListResponseInput: components["schemas"]["VehicleMaintenanceResponseInput"][];
-        VehicleMaintenanceWithSummaryResponseInput: {
-            items: components["schemas"]["VehicleMaintenanceResponseInput"][];
-            summary: components["schemas"]["VehicleMaintenanceSummaryInput"];
-            pagination: components["schemas"]["VehiclePaginationInput"];
-        };
-        VehicleOverviewFuelStatsInput: {
-            totalSpentPln: number;
-            totalLiters: number;
-            avgConsumptionLPer100Km: number | null;
-            costPerKmPln: number | null;
-            entriesCount: number;
-        };
-        VehicleOverviewMaintenanceStatsInput: {
-            totalSpentPln: number;
-            entriesCount: number;
-        };
-        VehicleOverviewEquipmentStatsInput: {
-            totalSpentPln: number;
-            entriesCount: number;
-        };
-        VehicleOverviewStatsInput: {
-            currentOdometerKm: number | null;
-            minOdometerKm: number | null;
-            totalDistanceKm: number | null;
-            refuelingCount: number;
-            maintenanceCount: number;
-            equipmentCount: number;
-        };
-        VehicleOverviewActivityItemInput: {
-            id: string;
-            /** @enum {string} */
-            type: "fuel" | "maintenance" | "equipment";
-            date: unknown;
-            costPln: number;
-            title: string;
-            description?: string | null;
-            odometerKm?: number | null;
-            transactionId?: string | null;
-            fuelLiters?: number;
-            isFullTank?: boolean;
-            consumptionLPer100Km?: number | null;
-            /** @enum {string} */
-            maintenanceSection?: "ownMaintenance" | "previousOwnerServices";
-            serviceProvider?: string | null;
-        };
-        VehicleOverviewResponseInput: {
-            vehicleId: string;
-            totalSpentPln: number;
-            fuel: components["schemas"]["VehicleOverviewFuelStatsInput"];
-            maintenance: components["schemas"]["VehicleOverviewMaintenanceStatsInput"];
-            equipment: components["schemas"]["VehicleOverviewEquipmentStatsInput"];
-            stats: components["schemas"]["VehicleOverviewStatsInput"];
-            recentActivity: components["schemas"]["VehicleOverviewActivityItemInput"][];
-        };
-        VehicleCreateInput: {
-            name: string;
-            slug?: string;
-            brand?: string;
-            vehicleModel?: string;
-            /** @enum {string} */
-            type: "motorcycle" | "car" | "public_transport";
-            productionYear?: number;
-            notes?: string;
-        };
-        VehicleUpdateInput: {
-            name?: string;
-            slug?: string;
-            brand?: string;
-            vehicleModel?: string;
-            /** @enum {string} */
-            type?: "motorcycle" | "car" | "public_transport";
-            productionYear?: number;
-            notes?: string;
-        };
-        VehicleResponseInput: {
-            id: string;
-            ownerId: string;
-            slug: string;
-            name: string;
-            brand?: string;
-            vehicleModel?: string;
-            /** @enum {string} */
-            type: "motorcycle" | "car" | "public_transport";
-            productionYear?: number;
-            notes?: string;
-            createdAt: unknown;
-            updatedAt: unknown;
-        };
-        VehicleListResponseInput: components["schemas"]["VehicleResponseInput"][];
-        SpendingLinkItemInput: {
-            /** @enum {string} */
-            spendingType: "fuel" | "equipment" | "maintenance";
-            spendingId: string;
-        };
-        LinkSpendingsToTransactionInput: {
-            transactionId: string;
-            spendings: components["schemas"]["SpendingLinkItemInput"][];
-        };
-        UnlinkSpendingFromTransactionInput: {
-            /** @enum {string} */
-            spendingType: "fuel" | "equipment" | "maintenance";
-            spendingId: string;
-        };
-        SpendingLinkResponseInput: {
-            acknowledged: boolean;
-            modifiedCount: number;
-        };
-        VehicleSpendingSummaryInput: {
-            fuelTotalPln: number;
-            maintenanceTotalPln: number;
-            equipmentTotalPln: number;
-            totalSpentPln: number;
-            lastOdometerKm: number | null;
-            totalDistanceKm: number | null;
-            fuelEntriesCount: number;
-            maintenanceCount: number;
-            equipmentCount: number;
-        };
-        VehicleWithSpendingInput: {
-            id: string;
-            ownerId: string;
-            slug: string;
-            name: string;
-            brand?: string;
-            vehicleModel?: string;
-            /** @enum {string} */
-            type: "motorcycle" | "car" | "public_transport";
-            productionYear?: number;
-            notes?: string;
-            createdAt: unknown;
-            updatedAt: unknown;
-            spending: components["schemas"]["VehicleSpendingSummaryInput"];
-        };
-        GlobalVehiclesSummaryInput: {
-            totalVehicles: number;
-            totalSpentPln: number;
-            totalFuelSpentPln: number;
-            totalMaintenanceSpentPln: number;
-            totalEquipmentSpentPln: number;
-            totalFuelEntriesCount: number;
-            totalMaintenanceCount: number;
-            totalEquipmentCount: number;
-            totalDistanceKm: number;
-        };
-        VehiclesSummaryResponseInput: {
-            summary: components["schemas"]["GlobalVehiclesSummaryInput"];
-            vehicles: components["schemas"]["VehicleWithSpendingInput"][];
-        };
-        WelcomeResponseInput: {
-            message: string;
-        };
-        LoginInput: {
-            /** Format: email */
-            email: string;
-            password: string;
-        };
-        ResendVerificationInput: {
-            /** Format: email */
-            email: string;
-        };
-        VerifyEmailInput: {
-            token: string;
-        };
-        AccessTokenInput: {
-            accessToken: string;
-        };
-        UsersResponseInput: components["schemas"]["UserResponseInput"][];
-        UserResponseInput: {
-            firstName: string;
-            lastName: string;
-            /** Format: email */
-            email: string;
-            id: string;
-            emailVerifiedAt: unknown | null;
-            emailVerificationMethod: ("legacy-backfill" | "self-verified") | null;
-            createdAt: unknown;
-            updatedAt: unknown;
-        };
-        UserCreateInput: {
-            firstName: string;
-            lastName: string;
-            /** Format: email */
-            email: string;
-            password: string;
-        };
-        TestUserCreateInput: {
-            username: string;
-            totalTransactions?: number;
-        };
-        TestUserCreateResponseInput: {
-            userId: string;
-            /** Format: email */
-            email: string;
-            insertedTransactionsCount: number;
-        };
         TransactionStandardInput: {
             date: unknown;
             description: string;
@@ -5649,6 +5152,564 @@ export interface components {
         TestTransactionsCreateResponseInput: {
             insertedCount: number;
         };
+        DashboardTransactionCurrencyItemInput: {
+            totalItems: number;
+            totalExpenseAmount: number;
+            totalIncomeAmount: number;
+        };
+        DashboardTransactionsSummaryInput: {
+            totalItems: number;
+            totalExpenseAmount: number;
+            totalIncomeAmount: number;
+            byCurrency?: {
+                [key: string]: components["schemas"]["DashboardTransactionCurrencyItemInput"];
+            };
+        };
+        DashboardInvestmentsSummaryInput: {
+            totalCurrentValue: number;
+            totalNetInvested: number;
+            totalPnL: number;
+            roiPercentage: number;
+            instrumentsCount: number;
+        };
+        DashboardVehiclesSummaryInput: {
+            totalVehicles: number;
+            totalSpentPln: number;
+            totalFuelSpentPln: number;
+            totalMaintenanceSpentPln: number;
+            totalEquipmentSpentPln: number;
+        };
+        DashboardSportsSummaryInput: {
+            totalCostPln: number;
+            totalEntries: number;
+            categoriesCount: number;
+        };
+        DashboardSummaryResponseInput: {
+            /** @enum {string} */
+            baseCurrency: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            transactions: components["schemas"]["DashboardTransactionsSummaryInput"];
+            investments: components["schemas"]["DashboardInvestmentsSummaryInput"];
+            vehicles: components["schemas"]["DashboardVehiclesSummaryInput"];
+            sports: components["schemas"]["DashboardSportsSummaryInput"];
+            recentTransactions: components["schemas"]["TransactionResponseInput"][];
+        };
+        NetWorthTotalsInput: {
+            total: number;
+            liquidCash: number;
+            investments: number;
+        };
+        NetWorthCurrencyBreakdownInput: {
+            /** @enum {string} */
+            currency: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            cash: number;
+            investments: number;
+            total: number;
+            normalizedTotal?: number;
+        };
+        NetWorthAllocationItemInput: {
+            /** @enum {string} */
+            category: "cash" | "share" | "fund" | "termDeposit" | "savings";
+            amount: number;
+            percentage: number;
+        };
+        NetWorthResponseInput: {
+            /** @enum {string} */
+            baseCurrency?: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            netWorth: components["schemas"]["NetWorthTotalsInput"];
+            byCurrency: {
+                [key: string]: components["schemas"]["NetWorthCurrencyBreakdownInput"];
+            };
+            allocation: {
+                [key: string]: components["schemas"]["NetWorthAllocationItemInput"];
+            };
+        };
+        NetWorthIndependencePeriodInput: {
+            startDate: string;
+            endDate: string;
+            monthsCount: number;
+        };
+        NetWorthIndependenceCapitalInput: {
+            total: number;
+            liquidCash: number;
+            savings: number;
+            liquidCapital: number;
+            lockedInvestments: number;
+        };
+        NetWorthIndependenceMonthlyAveragesInput: {
+            grossExpenses: number;
+            nonWorkIncome: number;
+            workIncome: number;
+            totalIncome: number;
+            netBurnRate: number;
+        };
+        NetWorthIndependenceHorizonInput: {
+            netWorthMonths: number | null;
+            liquidCapitalMonths: number | null;
+            liquidCashMonths: number | null;
+            isPerpetual: boolean;
+        };
+        NetWorthZeroIncomeBaselineInput: {
+            netWorthMonths: number | null;
+            liquidCapitalMonths: number | null;
+            liquidCashMonths: number | null;
+        };
+        ExcludedCategoryItemInput: {
+            id: string;
+            name: string;
+        };
+        NetWorthIndependenceResponseInput: {
+            /** @enum {string} */
+            baseCurrency?: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            period: components["schemas"]["NetWorthIndependencePeriodInput"];
+            netWorth: components["schemas"]["NetWorthIndependenceCapitalInput"];
+            monthlyAverages: components["schemas"]["NetWorthIndependenceMonthlyAveragesInput"];
+            independence: components["schemas"]["NetWorthIndependenceHorizonInput"];
+            zeroIncomeBaseline: components["schemas"]["NetWorthZeroIncomeBaselineInput"];
+            excludedCategories: components["schemas"]["ExcludedCategoryItemInput"][];
+        };
+        SportEntryCategoryResponseInput: {
+            id: string;
+            name: string;
+            /** @enum {string} */
+            type: "user" | "system";
+        };
+        SportEntryCreateInput: {
+            categoryId: string;
+            date: unknown;
+            itemName: string;
+            costPln: number;
+            description?: string | null;
+            transactionId?: string | null;
+        };
+        SportEntryUpdateInput: {
+            categoryId?: string;
+            date?: unknown;
+            itemName?: string;
+            costPln?: number;
+            description?: string | null;
+            transactionId?: string | null;
+        };
+        SportEntryResponseInput: {
+            id: string;
+            ownerId: string;
+            categoryId: string;
+            category: components["schemas"]["SportEntryCategoryResponseInput"];
+            date: unknown;
+            itemName: string;
+            costPln: number;
+            description?: string | null;
+            transactionId?: string | null;
+            createdAt: unknown;
+            updatedAt: unknown;
+        };
+        SportPaginationInput: {
+            total: number;
+            page: number;
+            limit: number;
+            totalPages: number;
+        };
+        SportEntryListResponseInput: {
+            items: components["schemas"]["SportEntryResponseInput"][];
+            pagination: components["schemas"]["SportPaginationInput"];
+        };
+        LinkSportSpendingsToTransactionInput: {
+            transactionId: string;
+            entryIds: string[];
+        };
+        UnlinkSportSpendingFromTransactionInput: {
+            entryId: string;
+        };
+        SportSpendingLinkResponseInput: {
+            acknowledged: boolean;
+            modifiedCount: number;
+        };
+        SportStatsCategoryInput: {
+            categoryId: string;
+            categoryName: string;
+            categoryKey?: string | null;
+            /** @enum {string} */
+            type: "user" | "system";
+            totalCostPln: number;
+            entryCount: number;
+            percentage: number;
+        };
+        SportStatsYearInput: {
+            year: number;
+            totalCostPln: number;
+            entryCount: number;
+        };
+        SportStatsMonthInput: {
+            year: number;
+            month: number;
+            totalCostPln: number;
+            entryCount: number;
+        };
+        SportStatsResponseInput: {
+            totalCostPln: number;
+            totalEntries: number;
+            byCategory: components["schemas"]["SportStatsCategoryInput"][];
+            byYear: components["schemas"]["SportStatsYearInput"][];
+            byMonth?: components["schemas"]["SportStatsMonthInput"][];
+        };
+        VehiclePaginationInput: {
+            nextCursor: string | null;
+            hasMore: boolean;
+            total: number;
+        };
+        VehicleEquipmentCreateInput: {
+            date: unknown;
+            itemName: string;
+            costPln: number;
+            description?: string | null;
+            transactionId?: string | null;
+        };
+        VehicleEquipmentUpdateInput: {
+            date?: unknown;
+            itemName?: string;
+            costPln?: number;
+            description?: string | null;
+            transactionId?: string | null;
+        };
+        VehicleEquipmentResponseInput: {
+            id: string;
+            ownerId: string;
+            vehicleId: string;
+            date: unknown;
+            itemName: string;
+            costPln: number;
+            description?: string | null;
+            transactionId?: string | null;
+            createdAt: unknown;
+            updatedAt: unknown;
+        };
+        VehicleEquipmentSummaryInput: {
+            totalCostPln: number;
+            totalItems: number;
+        };
+        VehicleEquipmentListResponseInput: components["schemas"]["VehicleEquipmentResponseInput"][];
+        VehicleEquipmentWithSummaryResponseInput: {
+            items: components["schemas"]["VehicleEquipmentResponseInput"][];
+            summary: components["schemas"]["VehicleEquipmentSummaryInput"];
+            pagination: components["schemas"]["VehiclePaginationInput"];
+        };
+        VehicleFuelEntryCreateInput: {
+            date: unknown;
+            fuelLiters: number;
+            /** @default true */
+            isFullTank: boolean;
+            unitPricePln: number;
+            costPln: number;
+            odometerKm: number;
+            stationBrand?: string | null;
+            stationAddress?: string | null;
+            description?: string | null;
+            transactionId?: string | null;
+        };
+        VehicleFuelEntryUpdateInput: {
+            date?: unknown;
+            fuelLiters?: number;
+            /** @default true */
+            isFullTank: boolean;
+            unitPricePln?: number;
+            costPln?: number;
+            odometerKm?: number;
+            stationBrand?: string | null;
+            stationAddress?: string | null;
+            description?: string | null;
+            transactionId?: string | null;
+        };
+        VehicleFuelEntryResponseInput: {
+            id: string;
+            ownerId: string;
+            vehicleId: string;
+            date: unknown;
+            fuelLiters: number;
+            isFullTank: boolean;
+            unitPricePln: number;
+            costPln: number;
+            odometerKm: number;
+            stationBrand?: string | null;
+            stationAddress?: string | null;
+            description?: string | null;
+            transactionId?: string | null;
+            createdAt: unknown;
+            updatedAt: unknown;
+        };
+        VehicleFuelEntryEnrichedResponseInput: {
+            id: string;
+            ownerId: string;
+            vehicleId: string;
+            date: unknown;
+            fuelLiters: number;
+            isFullTank: boolean;
+            unitPricePln: number;
+            costPln: number;
+            odometerKm: number;
+            stationBrand?: string | null;
+            stationAddress?: string | null;
+            description?: string | null;
+            transactionId?: string | null;
+            createdAt: unknown;
+            updatedAt: unknown;
+            distanceSincePreviousKm: number | null;
+            distanceSincePreviousFullKm: number | null;
+            fuelLitersToFull: number | null;
+            costToFullPln: number | null;
+            consumptionLPer100Km: number | null;
+            costPerKmPln: number | null;
+            kmPerLiter: number | null;
+        };
+        VehicleFuelSummaryInput: {
+            totalVolume: number;
+            totalCostPln: number;
+            avgConsumptionLPer100Km: number | null;
+            avgUnitPricePln: number | null;
+            totalCount: number;
+        };
+        VehicleFuelEntryListResponseInput: components["schemas"]["VehicleFuelEntryEnrichedResponseInput"][];
+        VehicleFuelWithSummaryResponseInput: {
+            items: components["schemas"]["VehicleFuelEntryEnrichedResponseInput"][];
+            summary: components["schemas"]["VehicleFuelSummaryInput"];
+            pagination: components["schemas"]["VehiclePaginationInput"];
+        };
+        VehicleMaintenanceCreateInput: {
+            /** @enum {string} */
+            section: "ownMaintenance" | "previousOwnerServices";
+            date: unknown;
+            costPln: number;
+            odometerKm?: number | null;
+            description?: string | null;
+            serviceProvider?: string | null;
+            serviceAddress?: string | null;
+            transactionId?: string | null;
+        };
+        VehicleMaintenanceUpdateInput: {
+            /** @enum {string} */
+            section?: "ownMaintenance" | "previousOwnerServices";
+            date?: unknown;
+            costPln?: number;
+            odometerKm?: number | null;
+            description?: string | null;
+            serviceProvider?: string | null;
+            serviceAddress?: string | null;
+            transactionId?: string | null;
+        };
+        VehicleMaintenanceResponseInput: {
+            id: string;
+            ownerId: string;
+            vehicleId: string;
+            /** @enum {string} */
+            section: "ownMaintenance" | "previousOwnerServices";
+            date: unknown;
+            costPln: number;
+            odometerKm?: number | null;
+            description?: string | null;
+            serviceProvider?: string | null;
+            serviceAddress?: string | null;
+            transactionId?: string | null;
+            createdAt: unknown;
+            updatedAt: unknown;
+        };
+        VehicleMaintenanceSummaryInput: {
+            totalCostPln: number;
+            totalRecords: number;
+        };
+        VehicleMaintenanceListResponseInput: components["schemas"]["VehicleMaintenanceResponseInput"][];
+        VehicleMaintenanceWithSummaryResponseInput: {
+            items: components["schemas"]["VehicleMaintenanceResponseInput"][];
+            summary: components["schemas"]["VehicleMaintenanceSummaryInput"];
+            pagination: components["schemas"]["VehiclePaginationInput"];
+        };
+        VehicleOverviewFuelStatsInput: {
+            totalSpentPln: number;
+            totalLiters: number;
+            avgConsumptionLPer100Km: number | null;
+            costPerKmPln: number | null;
+            entriesCount: number;
+        };
+        VehicleOverviewMaintenanceStatsInput: {
+            totalSpentPln: number;
+            entriesCount: number;
+        };
+        VehicleOverviewEquipmentStatsInput: {
+            totalSpentPln: number;
+            entriesCount: number;
+        };
+        VehicleOverviewStatsInput: {
+            currentOdometerKm: number | null;
+            minOdometerKm: number | null;
+            totalDistanceKm: number | null;
+            refuelingCount: number;
+            maintenanceCount: number;
+            equipmentCount: number;
+        };
+        VehicleOverviewActivityItemInput: {
+            id: string;
+            /** @enum {string} */
+            type: "fuel" | "maintenance" | "equipment";
+            date: unknown;
+            costPln: number;
+            title: string;
+            description?: string | null;
+            odometerKm?: number | null;
+            transactionId?: string | null;
+            fuelLiters?: number;
+            isFullTank?: boolean;
+            consumptionLPer100Km?: number | null;
+            /** @enum {string} */
+            maintenanceSection?: "ownMaintenance" | "previousOwnerServices";
+            serviceProvider?: string | null;
+        };
+        VehicleOverviewResponseInput: {
+            vehicleId: string;
+            totalSpentPln: number;
+            fuel: components["schemas"]["VehicleOverviewFuelStatsInput"];
+            maintenance: components["schemas"]["VehicleOverviewMaintenanceStatsInput"];
+            equipment: components["schemas"]["VehicleOverviewEquipmentStatsInput"];
+            stats: components["schemas"]["VehicleOverviewStatsInput"];
+            recentActivity: components["schemas"]["VehicleOverviewActivityItemInput"][];
+        };
+        VehicleCreateInput: {
+            name: string;
+            slug?: string;
+            brand?: string;
+            vehicleModel?: string;
+            /** @enum {string} */
+            type: "motorcycle" | "car" | "public_transport";
+            productionYear?: number;
+            notes?: string;
+        };
+        VehicleUpdateInput: {
+            name?: string;
+            slug?: string;
+            brand?: string;
+            vehicleModel?: string;
+            /** @enum {string} */
+            type?: "motorcycle" | "car" | "public_transport";
+            productionYear?: number;
+            notes?: string;
+        };
+        VehicleResponseInput: {
+            id: string;
+            ownerId: string;
+            slug: string;
+            name: string;
+            brand?: string;
+            vehicleModel?: string;
+            /** @enum {string} */
+            type: "motorcycle" | "car" | "public_transport";
+            productionYear?: number;
+            notes?: string;
+            createdAt: unknown;
+            updatedAt: unknown;
+        };
+        VehicleListResponseInput: components["schemas"]["VehicleResponseInput"][];
+        SpendingLinkItemInput: {
+            /** @enum {string} */
+            spendingType: "fuel" | "equipment" | "maintenance";
+            spendingId: string;
+        };
+        LinkSpendingsToTransactionInput: {
+            transactionId: string;
+            spendings: components["schemas"]["SpendingLinkItemInput"][];
+        };
+        UnlinkSpendingFromTransactionInput: {
+            /** @enum {string} */
+            spendingType: "fuel" | "equipment" | "maintenance";
+            spendingId: string;
+        };
+        SpendingLinkResponseInput: {
+            acknowledged: boolean;
+            modifiedCount: number;
+        };
+        VehicleSpendingSummaryInput: {
+            fuelTotalPln: number;
+            maintenanceTotalPln: number;
+            equipmentTotalPln: number;
+            totalSpentPln: number;
+            lastOdometerKm: number | null;
+            totalDistanceKm: number | null;
+            fuelEntriesCount: number;
+            maintenanceCount: number;
+            equipmentCount: number;
+        };
+        VehicleWithSpendingInput: {
+            id: string;
+            ownerId: string;
+            slug: string;
+            name: string;
+            brand?: string;
+            vehicleModel?: string;
+            /** @enum {string} */
+            type: "motorcycle" | "car" | "public_transport";
+            productionYear?: number;
+            notes?: string;
+            createdAt: unknown;
+            updatedAt: unknown;
+            spending: components["schemas"]["VehicleSpendingSummaryInput"];
+        };
+        GlobalVehiclesSummaryInput: {
+            totalVehicles: number;
+            totalSpentPln: number;
+            totalFuelSpentPln: number;
+            totalMaintenanceSpentPln: number;
+            totalEquipmentSpentPln: number;
+            totalFuelEntriesCount: number;
+            totalMaintenanceCount: number;
+            totalEquipmentCount: number;
+            totalDistanceKm: number;
+        };
+        VehiclesSummaryResponseInput: {
+            summary: components["schemas"]["GlobalVehiclesSummaryInput"];
+            vehicles: components["schemas"]["VehicleWithSpendingInput"][];
+        };
+        WelcomeResponseInput: {
+            message: string;
+        };
+        LoginInput: {
+            /** Format: email */
+            email: string;
+            password: string;
+        };
+        ResendVerificationInput: {
+            /** Format: email */
+            email: string;
+        };
+        VerifyEmailInput: {
+            token: string;
+        };
+        AccessTokenInput: {
+            accessToken: string;
+        };
+        UsersResponseInput: components["schemas"]["UserResponseInput"][];
+        UserResponseInput: {
+            firstName: string;
+            lastName: string;
+            /** Format: email */
+            email: string;
+            id: string;
+            emailVerifiedAt: unknown | null;
+            emailVerificationMethod: ("legacy-backfill" | "self-verified") | null;
+            createdAt: unknown;
+            updatedAt: unknown;
+        };
+        UserCreateInput: {
+            firstName: string;
+            lastName: string;
+            /** Format: email */
+            email: string;
+            password: string;
+        };
+        TestUserCreateInput: {
+            username: string;
+            totalTransactions?: number;
+        };
+        TestUserCreateResponseInput: {
+            userId: string;
+            /** Format: email */
+            email: string;
+            insertedTransactionsCount: number;
+        };
         InvestmentInstrument: {
             name: string;
             /** @enum {string} */
@@ -5831,80 +5892,6 @@ export interface components {
             };
             instruments: components["schemas"]["InvestmentInstrumentSummary"][];
         };
-        NetWorthTotals: {
-            total: number;
-            liquidCash: number;
-            investments: number;
-        };
-        NetWorthCurrencyBreakdown: {
-            /** @enum {string} */
-            currency: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
-            cash: number;
-            investments: number;
-            total: number;
-            normalizedTotal?: number;
-        };
-        NetWorthAllocationItem: {
-            /** @enum {string} */
-            category: "cash" | "share" | "fund" | "termDeposit" | "savings";
-            amount: number;
-            percentage: number;
-        };
-        NetWorthResponse: {
-            /** @enum {string} */
-            baseCurrency?: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
-            netWorth: components["schemas"]["NetWorthTotals"];
-            byCurrency: {
-                [key: string]: components["schemas"]["NetWorthCurrencyBreakdown"];
-            };
-            allocation: {
-                [key: string]: components["schemas"]["NetWorthAllocationItem"];
-            };
-        };
-        NetWorthIndependencePeriod: {
-            startDate: string;
-            endDate: string;
-            monthsCount: number;
-        };
-        NetWorthIndependenceCapital: {
-            total: number;
-            liquidCash: number;
-            savings: number;
-            liquidCapital: number;
-            lockedInvestments: number;
-        };
-        NetWorthIndependenceMonthlyAverages: {
-            grossExpenses: number;
-            nonWorkIncome: number;
-            workIncome: number;
-            totalIncome: number;
-            netBurnRate: number;
-        };
-        NetWorthIndependenceHorizon: {
-            netWorthMonths: number | null;
-            liquidCapitalMonths: number | null;
-            liquidCashMonths: number | null;
-            isPerpetual: boolean;
-        };
-        NetWorthZeroIncomeBaseline: {
-            netWorthMonths: number | null;
-            liquidCapitalMonths: number | null;
-            liquidCashMonths: number | null;
-        };
-        ExcludedCategoryItem: {
-            id: string;
-            name: string;
-        };
-        NetWorthIndependenceResponse: {
-            /** @enum {string} */
-            baseCurrency?: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
-            period: components["schemas"]["NetWorthIndependencePeriod"];
-            netWorth: components["schemas"]["NetWorthIndependenceCapital"];
-            monthlyAverages: components["schemas"]["NetWorthIndependenceMonthlyAverages"];
-            independence: components["schemas"]["NetWorthIndependenceHorizon"];
-            zeroIncomeBaseline: components["schemas"]["NetWorthZeroIncomeBaseline"];
-            excludedCategories: components["schemas"]["ExcludedCategoryItem"][];
-        };
         NamedResource: {
             name: string;
         };
@@ -5918,479 +5905,6 @@ export interface components {
             isFavorite: boolean;
         };
         NamedResourcesResponse: components["schemas"]["NamedResourceResponse"][];
-        SportEntryCategoryResponse: {
-            id: string;
-            name: string;
-            /** @enum {string} */
-            type: "user" | "system";
-        };
-        SportEntryCreate: {
-            categoryId: string;
-            /** Format: date-time */
-            date: string;
-            itemName: string;
-            costPln: number;
-            description?: string | null;
-            transactionId?: string | null;
-        };
-        SportEntryUpdate: {
-            categoryId?: string;
-            /** Format: date-time */
-            date?: string;
-            itemName?: string;
-            costPln?: number;
-            description?: string | null;
-            transactionId?: string | null;
-        };
-        SportEntryResponse: {
-            id: string;
-            ownerId: string;
-            categoryId: string;
-            category: components["schemas"]["SportEntryCategoryResponse"];
-            /** Format: date-time */
-            date: string;
-            itemName: string;
-            costPln: number;
-            description?: string | null;
-            transactionId?: string | null;
-            /** Format: date-time */
-            createdAt: string;
-            /** Format: date-time */
-            updatedAt: string;
-        };
-        SportPagination: {
-            total: number;
-            page: number;
-            limit: number;
-            totalPages: number;
-        };
-        SportEntryListResponse: {
-            items: components["schemas"]["SportEntryResponse"][];
-            pagination: components["schemas"]["SportPagination"];
-        };
-        LinkSportSpendingsToTransaction: {
-            transactionId: string;
-            entryIds: string[];
-        };
-        UnlinkSportSpendingFromTransaction: {
-            entryId: string;
-        };
-        SportSpendingLinkResponse: {
-            acknowledged: boolean;
-            modifiedCount: number;
-        };
-        SportStatsCategory: {
-            categoryId: string;
-            categoryName: string;
-            categoryKey?: string | null;
-            /** @enum {string} */
-            type: "user" | "system";
-            totalCostPln: number;
-            entryCount: number;
-            percentage: number;
-        };
-        SportStatsYear: {
-            year: number;
-            totalCostPln: number;
-            entryCount: number;
-        };
-        SportStatsMonth: {
-            year: number;
-            month: number;
-            totalCostPln: number;
-            entryCount: number;
-        };
-        SportStatsResponse: {
-            totalCostPln: number;
-            totalEntries: number;
-            byCategory: components["schemas"]["SportStatsCategory"][];
-            byYear: components["schemas"]["SportStatsYear"][];
-            byMonth?: components["schemas"]["SportStatsMonth"][];
-        };
-        VehiclePagination: {
-            nextCursor: string | null;
-            hasMore: boolean;
-            total: number;
-        };
-        VehicleEquipmentCreate: {
-            /** Format: date-time */
-            date: string;
-            itemName: string;
-            costPln: number;
-            description?: string | null;
-            transactionId?: string | null;
-        };
-        VehicleEquipmentUpdate: {
-            /** Format: date-time */
-            date?: string;
-            itemName?: string;
-            costPln?: number;
-            description?: string | null;
-            transactionId?: string | null;
-        };
-        VehicleEquipmentResponse: {
-            id: string;
-            ownerId: string;
-            vehicleId: string;
-            /** Format: date-time */
-            date: string;
-            itemName: string;
-            costPln: number;
-            description?: string | null;
-            transactionId?: string | null;
-            /** Format: date-time */
-            createdAt: string;
-            /** Format: date-time */
-            updatedAt: string;
-        };
-        VehicleEquipmentSummary: {
-            totalCostPln: number;
-            totalItems: number;
-        };
-        VehicleEquipmentListResponse: components["schemas"]["VehicleEquipmentResponse"][];
-        VehicleEquipmentWithSummaryResponse: {
-            items: components["schemas"]["VehicleEquipmentResponse"][];
-            summary: components["schemas"]["VehicleEquipmentSummary"];
-            pagination: components["schemas"]["VehiclePagination"];
-        };
-        VehicleFuelEntryCreate: {
-            /** Format: date-time */
-            date: string;
-            fuelLiters: number;
-            /** @default true */
-            isFullTank: boolean;
-            unitPricePln: number;
-            costPln: number;
-            odometerKm: number;
-            stationBrand?: string | null;
-            stationAddress?: string | null;
-            description?: string | null;
-            transactionId?: string | null;
-        };
-        VehicleFuelEntryUpdate: {
-            /** Format: date-time */
-            date?: string;
-            fuelLiters?: number;
-            /** @default true */
-            isFullTank: boolean;
-            unitPricePln?: number;
-            costPln?: number;
-            odometerKm?: number;
-            stationBrand?: string | null;
-            stationAddress?: string | null;
-            description?: string | null;
-            transactionId?: string | null;
-        };
-        VehicleFuelEntryResponse: {
-            id: string;
-            ownerId: string;
-            vehicleId: string;
-            /** Format: date-time */
-            date: string;
-            fuelLiters: number;
-            isFullTank: boolean;
-            unitPricePln: number;
-            costPln: number;
-            odometerKm: number;
-            stationBrand?: string | null;
-            stationAddress?: string | null;
-            description?: string | null;
-            transactionId?: string | null;
-            /** Format: date-time */
-            createdAt: string;
-            /** Format: date-time */
-            updatedAt: string;
-        };
-        VehicleFuelEntryEnrichedResponse: {
-            id: string;
-            ownerId: string;
-            vehicleId: string;
-            /** Format: date-time */
-            date: string;
-            fuelLiters: number;
-            isFullTank: boolean;
-            unitPricePln: number;
-            costPln: number;
-            odometerKm: number;
-            stationBrand?: string | null;
-            stationAddress?: string | null;
-            description?: string | null;
-            transactionId?: string | null;
-            /** Format: date-time */
-            createdAt: string;
-            /** Format: date-time */
-            updatedAt: string;
-            distanceSincePreviousKm: number | null;
-            distanceSincePreviousFullKm: number | null;
-            fuelLitersToFull: number | null;
-            costToFullPln: number | null;
-            consumptionLPer100Km: number | null;
-            costPerKmPln: number | null;
-            kmPerLiter: number | null;
-        };
-        VehicleFuelSummary: {
-            totalVolume: number;
-            totalCostPln: number;
-            avgConsumptionLPer100Km: number | null;
-            avgUnitPricePln: number | null;
-            totalCount: number;
-        };
-        VehicleFuelEntryListResponse: components["schemas"]["VehicleFuelEntryEnrichedResponse"][];
-        VehicleFuelWithSummaryResponse: {
-            items: components["schemas"]["VehicleFuelEntryEnrichedResponse"][];
-            summary: components["schemas"]["VehicleFuelSummary"];
-            pagination: components["schemas"]["VehiclePagination"];
-        };
-        VehicleMaintenanceCreate: {
-            /** @enum {string} */
-            section: "ownMaintenance" | "previousOwnerServices";
-            /** Format: date-time */
-            date: string;
-            costPln: number;
-            odometerKm?: number | null;
-            description?: string | null;
-            serviceProvider?: string | null;
-            serviceAddress?: string | null;
-            transactionId?: string | null;
-        };
-        VehicleMaintenanceUpdate: {
-            /** @enum {string} */
-            section?: "ownMaintenance" | "previousOwnerServices";
-            /** Format: date-time */
-            date?: string;
-            costPln?: number;
-            odometerKm?: number | null;
-            description?: string | null;
-            serviceProvider?: string | null;
-            serviceAddress?: string | null;
-            transactionId?: string | null;
-        };
-        VehicleMaintenanceResponse: {
-            id: string;
-            ownerId: string;
-            vehicleId: string;
-            /** @enum {string} */
-            section: "ownMaintenance" | "previousOwnerServices";
-            /** Format: date-time */
-            date: string;
-            costPln: number;
-            odometerKm?: number | null;
-            description?: string | null;
-            serviceProvider?: string | null;
-            serviceAddress?: string | null;
-            transactionId?: string | null;
-            /** Format: date-time */
-            createdAt: string;
-            /** Format: date-time */
-            updatedAt: string;
-        };
-        VehicleMaintenanceSummary: {
-            totalCostPln: number;
-            totalRecords: number;
-        };
-        VehicleMaintenanceListResponse: components["schemas"]["VehicleMaintenanceResponse"][];
-        VehicleMaintenanceWithSummaryResponse: {
-            items: components["schemas"]["VehicleMaintenanceResponse"][];
-            summary: components["schemas"]["VehicleMaintenanceSummary"];
-            pagination: components["schemas"]["VehiclePagination"];
-        };
-        VehicleOverviewFuelStats: {
-            totalSpentPln: number;
-            totalLiters: number;
-            avgConsumptionLPer100Km: number | null;
-            costPerKmPln: number | null;
-            entriesCount: number;
-        };
-        VehicleOverviewMaintenanceStats: {
-            totalSpentPln: number;
-            entriesCount: number;
-        };
-        VehicleOverviewEquipmentStats: {
-            totalSpentPln: number;
-            entriesCount: number;
-        };
-        VehicleOverviewStats: {
-            currentOdometerKm: number | null;
-            minOdometerKm: number | null;
-            totalDistanceKm: number | null;
-            refuelingCount: number;
-            maintenanceCount: number;
-            equipmentCount: number;
-        };
-        VehicleOverviewActivityItem: {
-            id: string;
-            /** @enum {string} */
-            type: "fuel" | "maintenance" | "equipment";
-            /** Format: date-time */
-            date: string;
-            costPln: number;
-            title: string;
-            description?: string | null;
-            odometerKm?: number | null;
-            transactionId?: string | null;
-            fuelLiters?: number;
-            isFullTank?: boolean;
-            consumptionLPer100Km?: number | null;
-            /** @enum {string} */
-            maintenanceSection?: "ownMaintenance" | "previousOwnerServices";
-            serviceProvider?: string | null;
-        };
-        VehicleOverviewResponse: {
-            vehicleId: string;
-            totalSpentPln: number;
-            fuel: components["schemas"]["VehicleOverviewFuelStats"];
-            maintenance: components["schemas"]["VehicleOverviewMaintenanceStats"];
-            equipment: components["schemas"]["VehicleOverviewEquipmentStats"];
-            stats: components["schemas"]["VehicleOverviewStats"];
-            recentActivity: components["schemas"]["VehicleOverviewActivityItem"][];
-        };
-        VehicleCreate: {
-            name: string;
-            slug?: string;
-            brand?: string;
-            vehicleModel?: string;
-            /** @enum {string} */
-            type: "motorcycle" | "car" | "public_transport";
-            productionYear?: number;
-            notes?: string;
-        };
-        VehicleUpdate: {
-            name?: string;
-            slug?: string;
-            brand?: string;
-            vehicleModel?: string;
-            /** @enum {string} */
-            type?: "motorcycle" | "car" | "public_transport";
-            productionYear?: number;
-            notes?: string;
-        };
-        VehicleResponse: {
-            id: string;
-            ownerId: string;
-            slug: string;
-            name: string;
-            brand?: string;
-            vehicleModel?: string;
-            /** @enum {string} */
-            type: "motorcycle" | "car" | "public_transport";
-            productionYear?: number;
-            notes?: string;
-            /** Format: date-time */
-            createdAt: string;
-            /** Format: date-time */
-            updatedAt: string;
-        };
-        VehicleListResponse: components["schemas"]["VehicleResponse"][];
-        SpendingLinkItem: {
-            /** @enum {string} */
-            spendingType: "fuel" | "equipment" | "maintenance";
-            spendingId: string;
-        };
-        LinkSpendingsToTransaction: {
-            transactionId: string;
-            spendings: components["schemas"]["SpendingLinkItem"][];
-        };
-        UnlinkSpendingFromTransaction: {
-            /** @enum {string} */
-            spendingType: "fuel" | "equipment" | "maintenance";
-            spendingId: string;
-        };
-        SpendingLinkResponse: {
-            acknowledged: boolean;
-            modifiedCount: number;
-        };
-        VehicleSpendingSummary: {
-            fuelTotalPln: number;
-            maintenanceTotalPln: number;
-            equipmentTotalPln: number;
-            totalSpentPln: number;
-            lastOdometerKm: number | null;
-            totalDistanceKm: number | null;
-            fuelEntriesCount: number;
-            maintenanceCount: number;
-            equipmentCount: number;
-        };
-        VehicleWithSpending: {
-            id: string;
-            ownerId: string;
-            slug: string;
-            name: string;
-            brand?: string;
-            vehicleModel?: string;
-            /** @enum {string} */
-            type: "motorcycle" | "car" | "public_transport";
-            productionYear?: number;
-            notes?: string;
-            /** Format: date-time */
-            createdAt: string;
-            /** Format: date-time */
-            updatedAt: string;
-            spending: components["schemas"]["VehicleSpendingSummary"];
-        };
-        GlobalVehiclesSummary: {
-            totalVehicles: number;
-            totalSpentPln: number;
-            totalFuelSpentPln: number;
-            totalMaintenanceSpentPln: number;
-            totalEquipmentSpentPln: number;
-            totalFuelEntriesCount: number;
-            totalMaintenanceCount: number;
-            totalEquipmentCount: number;
-            totalDistanceKm: number;
-        };
-        VehiclesSummaryResponse: {
-            summary: components["schemas"]["GlobalVehiclesSummary"];
-            vehicles: components["schemas"]["VehicleWithSpending"][];
-        };
-        WelcomeResponse: {
-            message: string;
-        };
-        Login: {
-            /** Format: email */
-            email: string;
-            password: string;
-        };
-        ResendVerification: {
-            /** Format: email */
-            email: string;
-        };
-        VerifyEmail: {
-            token: string;
-        };
-        AccessToken: {
-            accessToken: string;
-        };
-        UsersResponse: components["schemas"]["UserResponse"][];
-        UserResponse: {
-            firstName: string;
-            lastName: string;
-            /** Format: email */
-            email: string;
-            id: string;
-            emailVerifiedAt: string | null;
-            emailVerificationMethod: ("legacy-backfill" | "self-verified") | null;
-            /** Format: date-time */
-            createdAt: string;
-            /** Format: date-time */
-            updatedAt: string;
-        };
-        UserCreate: {
-            firstName: string;
-            lastName: string;
-            /** Format: email */
-            email: string;
-            password: string;
-        };
-        TestUserCreate: {
-            username: string;
-            totalTransactions?: number;
-        };
-        TestUserCreateResponse: {
-            userId: string;
-            /** Format: email */
-            email: string;
-            insertedTransactionsCount: number;
-        };
         TransactionStandard: {
             /** Format: date-time */
             date: string;
@@ -7042,6 +6556,594 @@ export interface components {
         TestTransactionsCreateResponse: {
             insertedCount: number;
         };
+        DashboardTransactionCurrencyItem: {
+            totalItems: number;
+            totalExpenseAmount: number;
+            totalIncomeAmount: number;
+        };
+        DashboardTransactionsSummary: {
+            totalItems: number;
+            totalExpenseAmount: number;
+            totalIncomeAmount: number;
+            byCurrency?: {
+                [key: string]: components["schemas"]["DashboardTransactionCurrencyItem"];
+            };
+        };
+        DashboardInvestmentsSummary: {
+            totalCurrentValue: number;
+            totalNetInvested: number;
+            totalPnL: number;
+            roiPercentage: number;
+            instrumentsCount: number;
+        };
+        DashboardVehiclesSummary: {
+            totalVehicles: number;
+            totalSpentPln: number;
+            totalFuelSpentPln: number;
+            totalMaintenanceSpentPln: number;
+            totalEquipmentSpentPln: number;
+        };
+        DashboardSportsSummary: {
+            totalCostPln: number;
+            totalEntries: number;
+            categoriesCount: number;
+        };
+        DashboardSummaryResponse: {
+            /** @enum {string} */
+            baseCurrency: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            transactions: components["schemas"]["DashboardTransactionsSummary"];
+            investments: components["schemas"]["DashboardInvestmentsSummary"];
+            vehicles: components["schemas"]["DashboardVehiclesSummary"];
+            sports: components["schemas"]["DashboardSportsSummary"];
+            recentTransactions: components["schemas"]["TransactionResponse"][];
+        };
+        NetWorthTotals: {
+            total: number;
+            liquidCash: number;
+            investments: number;
+        };
+        NetWorthCurrencyBreakdown: {
+            /** @enum {string} */
+            currency: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            cash: number;
+            investments: number;
+            total: number;
+            normalizedTotal?: number;
+        };
+        NetWorthAllocationItem: {
+            /** @enum {string} */
+            category: "cash" | "share" | "fund" | "termDeposit" | "savings";
+            amount: number;
+            percentage: number;
+        };
+        NetWorthResponse: {
+            /** @enum {string} */
+            baseCurrency?: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            netWorth: components["schemas"]["NetWorthTotals"];
+            byCurrency: {
+                [key: string]: components["schemas"]["NetWorthCurrencyBreakdown"];
+            };
+            allocation: {
+                [key: string]: components["schemas"]["NetWorthAllocationItem"];
+            };
+        };
+        NetWorthIndependencePeriod: {
+            startDate: string;
+            endDate: string;
+            monthsCount: number;
+        };
+        NetWorthIndependenceCapital: {
+            total: number;
+            liquidCash: number;
+            savings: number;
+            liquidCapital: number;
+            lockedInvestments: number;
+        };
+        NetWorthIndependenceMonthlyAverages: {
+            grossExpenses: number;
+            nonWorkIncome: number;
+            workIncome: number;
+            totalIncome: number;
+            netBurnRate: number;
+        };
+        NetWorthIndependenceHorizon: {
+            netWorthMonths: number | null;
+            liquidCapitalMonths: number | null;
+            liquidCashMonths: number | null;
+            isPerpetual: boolean;
+        };
+        NetWorthZeroIncomeBaseline: {
+            netWorthMonths: number | null;
+            liquidCapitalMonths: number | null;
+            liquidCashMonths: number | null;
+        };
+        ExcludedCategoryItem: {
+            id: string;
+            name: string;
+        };
+        NetWorthIndependenceResponse: {
+            /** @enum {string} */
+            baseCurrency?: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+            period: components["schemas"]["NetWorthIndependencePeriod"];
+            netWorth: components["schemas"]["NetWorthIndependenceCapital"];
+            monthlyAverages: components["schemas"]["NetWorthIndependenceMonthlyAverages"];
+            independence: components["schemas"]["NetWorthIndependenceHorizon"];
+            zeroIncomeBaseline: components["schemas"]["NetWorthZeroIncomeBaseline"];
+            excludedCategories: components["schemas"]["ExcludedCategoryItem"][];
+        };
+        SportEntryCategoryResponse: {
+            id: string;
+            name: string;
+            /** @enum {string} */
+            type: "user" | "system";
+        };
+        SportEntryCreate: {
+            categoryId: string;
+            /** Format: date-time */
+            date: string;
+            itemName: string;
+            costPln: number;
+            description?: string | null;
+            transactionId?: string | null;
+        };
+        SportEntryUpdate: {
+            categoryId?: string;
+            /** Format: date-time */
+            date?: string;
+            itemName?: string;
+            costPln?: number;
+            description?: string | null;
+            transactionId?: string | null;
+        };
+        SportEntryResponse: {
+            id: string;
+            ownerId: string;
+            categoryId: string;
+            category: components["schemas"]["SportEntryCategoryResponse"];
+            /** Format: date-time */
+            date: string;
+            itemName: string;
+            costPln: number;
+            description?: string | null;
+            transactionId?: string | null;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            updatedAt: string;
+        };
+        SportPagination: {
+            total: number;
+            page: number;
+            limit: number;
+            totalPages: number;
+        };
+        SportEntryListResponse: {
+            items: components["schemas"]["SportEntryResponse"][];
+            pagination: components["schemas"]["SportPagination"];
+        };
+        LinkSportSpendingsToTransaction: {
+            transactionId: string;
+            entryIds: string[];
+        };
+        UnlinkSportSpendingFromTransaction: {
+            entryId: string;
+        };
+        SportSpendingLinkResponse: {
+            acknowledged: boolean;
+            modifiedCount: number;
+        };
+        SportStatsCategory: {
+            categoryId: string;
+            categoryName: string;
+            categoryKey?: string | null;
+            /** @enum {string} */
+            type: "user" | "system";
+            totalCostPln: number;
+            entryCount: number;
+            percentage: number;
+        };
+        SportStatsYear: {
+            year: number;
+            totalCostPln: number;
+            entryCount: number;
+        };
+        SportStatsMonth: {
+            year: number;
+            month: number;
+            totalCostPln: number;
+            entryCount: number;
+        };
+        SportStatsResponse: {
+            totalCostPln: number;
+            totalEntries: number;
+            byCategory: components["schemas"]["SportStatsCategory"][];
+            byYear: components["schemas"]["SportStatsYear"][];
+            byMonth?: components["schemas"]["SportStatsMonth"][];
+        };
+        VehiclePagination: {
+            nextCursor: string | null;
+            hasMore: boolean;
+            total: number;
+        };
+        VehicleEquipmentCreate: {
+            /** Format: date-time */
+            date: string;
+            itemName: string;
+            costPln: number;
+            description?: string | null;
+            transactionId?: string | null;
+        };
+        VehicleEquipmentUpdate: {
+            /** Format: date-time */
+            date?: string;
+            itemName?: string;
+            costPln?: number;
+            description?: string | null;
+            transactionId?: string | null;
+        };
+        VehicleEquipmentResponse: {
+            id: string;
+            ownerId: string;
+            vehicleId: string;
+            /** Format: date-time */
+            date: string;
+            itemName: string;
+            costPln: number;
+            description?: string | null;
+            transactionId?: string | null;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            updatedAt: string;
+        };
+        VehicleEquipmentSummary: {
+            totalCostPln: number;
+            totalItems: number;
+        };
+        VehicleEquipmentListResponse: components["schemas"]["VehicleEquipmentResponse"][];
+        VehicleEquipmentWithSummaryResponse: {
+            items: components["schemas"]["VehicleEquipmentResponse"][];
+            summary: components["schemas"]["VehicleEquipmentSummary"];
+            pagination: components["schemas"]["VehiclePagination"];
+        };
+        VehicleFuelEntryCreate: {
+            /** Format: date-time */
+            date: string;
+            fuelLiters: number;
+            /** @default true */
+            isFullTank: boolean;
+            unitPricePln: number;
+            costPln: number;
+            odometerKm: number;
+            stationBrand?: string | null;
+            stationAddress?: string | null;
+            description?: string | null;
+            transactionId?: string | null;
+        };
+        VehicleFuelEntryUpdate: {
+            /** Format: date-time */
+            date?: string;
+            fuelLiters?: number;
+            /** @default true */
+            isFullTank: boolean;
+            unitPricePln?: number;
+            costPln?: number;
+            odometerKm?: number;
+            stationBrand?: string | null;
+            stationAddress?: string | null;
+            description?: string | null;
+            transactionId?: string | null;
+        };
+        VehicleFuelEntryResponse: {
+            id: string;
+            ownerId: string;
+            vehicleId: string;
+            /** Format: date-time */
+            date: string;
+            fuelLiters: number;
+            isFullTank: boolean;
+            unitPricePln: number;
+            costPln: number;
+            odometerKm: number;
+            stationBrand?: string | null;
+            stationAddress?: string | null;
+            description?: string | null;
+            transactionId?: string | null;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            updatedAt: string;
+        };
+        VehicleFuelEntryEnrichedResponse: {
+            id: string;
+            ownerId: string;
+            vehicleId: string;
+            /** Format: date-time */
+            date: string;
+            fuelLiters: number;
+            isFullTank: boolean;
+            unitPricePln: number;
+            costPln: number;
+            odometerKm: number;
+            stationBrand?: string | null;
+            stationAddress?: string | null;
+            description?: string | null;
+            transactionId?: string | null;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            updatedAt: string;
+            distanceSincePreviousKm: number | null;
+            distanceSincePreviousFullKm: number | null;
+            fuelLitersToFull: number | null;
+            costToFullPln: number | null;
+            consumptionLPer100Km: number | null;
+            costPerKmPln: number | null;
+            kmPerLiter: number | null;
+        };
+        VehicleFuelSummary: {
+            totalVolume: number;
+            totalCostPln: number;
+            avgConsumptionLPer100Km: number | null;
+            avgUnitPricePln: number | null;
+            totalCount: number;
+        };
+        VehicleFuelEntryListResponse: components["schemas"]["VehicleFuelEntryEnrichedResponse"][];
+        VehicleFuelWithSummaryResponse: {
+            items: components["schemas"]["VehicleFuelEntryEnrichedResponse"][];
+            summary: components["schemas"]["VehicleFuelSummary"];
+            pagination: components["schemas"]["VehiclePagination"];
+        };
+        VehicleMaintenanceCreate: {
+            /** @enum {string} */
+            section: "ownMaintenance" | "previousOwnerServices";
+            /** Format: date-time */
+            date: string;
+            costPln: number;
+            odometerKm?: number | null;
+            description?: string | null;
+            serviceProvider?: string | null;
+            serviceAddress?: string | null;
+            transactionId?: string | null;
+        };
+        VehicleMaintenanceUpdate: {
+            /** @enum {string} */
+            section?: "ownMaintenance" | "previousOwnerServices";
+            /** Format: date-time */
+            date?: string;
+            costPln?: number;
+            odometerKm?: number | null;
+            description?: string | null;
+            serviceProvider?: string | null;
+            serviceAddress?: string | null;
+            transactionId?: string | null;
+        };
+        VehicleMaintenanceResponse: {
+            id: string;
+            ownerId: string;
+            vehicleId: string;
+            /** @enum {string} */
+            section: "ownMaintenance" | "previousOwnerServices";
+            /** Format: date-time */
+            date: string;
+            costPln: number;
+            odometerKm?: number | null;
+            description?: string | null;
+            serviceProvider?: string | null;
+            serviceAddress?: string | null;
+            transactionId?: string | null;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            updatedAt: string;
+        };
+        VehicleMaintenanceSummary: {
+            totalCostPln: number;
+            totalRecords: number;
+        };
+        VehicleMaintenanceListResponse: components["schemas"]["VehicleMaintenanceResponse"][];
+        VehicleMaintenanceWithSummaryResponse: {
+            items: components["schemas"]["VehicleMaintenanceResponse"][];
+            summary: components["schemas"]["VehicleMaintenanceSummary"];
+            pagination: components["schemas"]["VehiclePagination"];
+        };
+        VehicleOverviewFuelStats: {
+            totalSpentPln: number;
+            totalLiters: number;
+            avgConsumptionLPer100Km: number | null;
+            costPerKmPln: number | null;
+            entriesCount: number;
+        };
+        VehicleOverviewMaintenanceStats: {
+            totalSpentPln: number;
+            entriesCount: number;
+        };
+        VehicleOverviewEquipmentStats: {
+            totalSpentPln: number;
+            entriesCount: number;
+        };
+        VehicleOverviewStats: {
+            currentOdometerKm: number | null;
+            minOdometerKm: number | null;
+            totalDistanceKm: number | null;
+            refuelingCount: number;
+            maintenanceCount: number;
+            equipmentCount: number;
+        };
+        VehicleOverviewActivityItem: {
+            id: string;
+            /** @enum {string} */
+            type: "fuel" | "maintenance" | "equipment";
+            /** Format: date-time */
+            date: string;
+            costPln: number;
+            title: string;
+            description?: string | null;
+            odometerKm?: number | null;
+            transactionId?: string | null;
+            fuelLiters?: number;
+            isFullTank?: boolean;
+            consumptionLPer100Km?: number | null;
+            /** @enum {string} */
+            maintenanceSection?: "ownMaintenance" | "previousOwnerServices";
+            serviceProvider?: string | null;
+        };
+        VehicleOverviewResponse: {
+            vehicleId: string;
+            totalSpentPln: number;
+            fuel: components["schemas"]["VehicleOverviewFuelStats"];
+            maintenance: components["schemas"]["VehicleOverviewMaintenanceStats"];
+            equipment: components["schemas"]["VehicleOverviewEquipmentStats"];
+            stats: components["schemas"]["VehicleOverviewStats"];
+            recentActivity: components["schemas"]["VehicleOverviewActivityItem"][];
+        };
+        VehicleCreate: {
+            name: string;
+            slug?: string;
+            brand?: string;
+            vehicleModel?: string;
+            /** @enum {string} */
+            type: "motorcycle" | "car" | "public_transport";
+            productionYear?: number;
+            notes?: string;
+        };
+        VehicleUpdate: {
+            name?: string;
+            slug?: string;
+            brand?: string;
+            vehicleModel?: string;
+            /** @enum {string} */
+            type?: "motorcycle" | "car" | "public_transport";
+            productionYear?: number;
+            notes?: string;
+        };
+        VehicleResponse: {
+            id: string;
+            ownerId: string;
+            slug: string;
+            name: string;
+            brand?: string;
+            vehicleModel?: string;
+            /** @enum {string} */
+            type: "motorcycle" | "car" | "public_transport";
+            productionYear?: number;
+            notes?: string;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            updatedAt: string;
+        };
+        VehicleListResponse: components["schemas"]["VehicleResponse"][];
+        SpendingLinkItem: {
+            /** @enum {string} */
+            spendingType: "fuel" | "equipment" | "maintenance";
+            spendingId: string;
+        };
+        LinkSpendingsToTransaction: {
+            transactionId: string;
+            spendings: components["schemas"]["SpendingLinkItem"][];
+        };
+        UnlinkSpendingFromTransaction: {
+            /** @enum {string} */
+            spendingType: "fuel" | "equipment" | "maintenance";
+            spendingId: string;
+        };
+        SpendingLinkResponse: {
+            acknowledged: boolean;
+            modifiedCount: number;
+        };
+        VehicleSpendingSummary: {
+            fuelTotalPln: number;
+            maintenanceTotalPln: number;
+            equipmentTotalPln: number;
+            totalSpentPln: number;
+            lastOdometerKm: number | null;
+            totalDistanceKm: number | null;
+            fuelEntriesCount: number;
+            maintenanceCount: number;
+            equipmentCount: number;
+        };
+        VehicleWithSpending: {
+            id: string;
+            ownerId: string;
+            slug: string;
+            name: string;
+            brand?: string;
+            vehicleModel?: string;
+            /** @enum {string} */
+            type: "motorcycle" | "car" | "public_transport";
+            productionYear?: number;
+            notes?: string;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            updatedAt: string;
+            spending: components["schemas"]["VehicleSpendingSummary"];
+        };
+        GlobalVehiclesSummary: {
+            totalVehicles: number;
+            totalSpentPln: number;
+            totalFuelSpentPln: number;
+            totalMaintenanceSpentPln: number;
+            totalEquipmentSpentPln: number;
+            totalFuelEntriesCount: number;
+            totalMaintenanceCount: number;
+            totalEquipmentCount: number;
+            totalDistanceKm: number;
+        };
+        VehiclesSummaryResponse: {
+            summary: components["schemas"]["GlobalVehiclesSummary"];
+            vehicles: components["schemas"]["VehicleWithSpending"][];
+        };
+        WelcomeResponse: {
+            message: string;
+        };
+        Login: {
+            /** Format: email */
+            email: string;
+            password: string;
+        };
+        ResendVerification: {
+            /** Format: email */
+            email: string;
+        };
+        VerifyEmail: {
+            token: string;
+        };
+        AccessToken: {
+            accessToken: string;
+        };
+        UsersResponse: components["schemas"]["UserResponse"][];
+        UserResponse: {
+            firstName: string;
+            lastName: string;
+            /** Format: email */
+            email: string;
+            id: string;
+            emailVerifiedAt: string | null;
+            emailVerificationMethod: ("legacy-backfill" | "self-verified") | null;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            updatedAt: string;
+        };
+        UserCreate: {
+            firstName: string;
+            lastName: string;
+            /** Format: email */
+            email: string;
+            password: string;
+        };
+        TestUserCreate: {
+            username: string;
+            totalTransactions?: number;
+        };
+        TestUserCreateResponse: {
+            userId: string;
+            /** Format: email */
+            email: string;
+            insertedTransactionsCount: number;
+        };
     };
     responses: never;
     parameters: never;
@@ -7050,4 +7152,28 @@ export interface components {
     pathItems: never;
 }
 export type $defs = Record<string, never>;
-export type operations = Record<string, never>;
+export interface operations {
+    get_dashboard_summary: {
+        parameters: {
+            query?: {
+                baseCurrency?: "USD" | "EUR" | "PLN" | "GBP" | "JPY" | "CHF" | "CAD" | "AUD" | "NZD" | "SEK" | "NOK" | "DKK" | "CZK" | "HUF" | "RON" | "BGN" | "TRY" | "UAH" | "INR" | "CNY" | "HKD" | "SGD" | "ZAR" | "BRL" | "MXN" | "ARS" | "CLP" | "COP" | "KRW" | "IDR" | "MYR" | "THB" | "AED" | "SAR" | "ILS" | "EGP";
+                recentLimit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Default Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DashboardSummaryResponse"];
+                };
+            };
+        };
+    };
+}
